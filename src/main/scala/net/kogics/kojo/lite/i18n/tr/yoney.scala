@@ -53,7 +53,7 @@ trait VectorMethodsInTurkish {
     def yinelemesizİşlevle[B](işlev: A => B): Yöney[A] = y.distinctBy(işlev)
     def yazıYap: Yazı = y.mkString
     def yazıYap(ara: Yazı): Yazı = y.mkString(ara)
-    def yazıYap(baş: Yazı, ara: Yazı, son: Yazı): Yazı = y.mkString(baş, ara, son)
+    def yazıYap(başı: Yazı, ara: Yazı, sonu: Yazı): Yazı = y.mkString(başı, ara, sonu)
     def tersi = y.reverse
     def değiştir[B >: A](yeri: Sayı, değeri: B): Yöney[B] = y.updated(yeri, değeri)
     def herbiriİçin[S](işlev: A => S): Birim = y.foreach(işlev)

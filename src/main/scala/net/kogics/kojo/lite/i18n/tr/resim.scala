@@ -245,9 +245,9 @@ class Resim(val p: richBuiltins.Picture) {
   def saydamlığıKur(s: Kesir) = p.setOpacity(s)
   def canlan = tepkiVer _
   def tepkiVer(fn: Resim => Birim) = {
-    val bu = this
+    val buİşlev = this
     p.react(new Function1[richBuiltins.Picture, Unit] {
-      def apply(p: richBuiltins.Picture) = fn(bu)
+      def apply(p: richBuiltins.Picture) = fn(buİşlev)
     })
 
   }

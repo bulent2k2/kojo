@@ -72,7 +72,7 @@ case class Eşlem[A,D](val m: Map[A,D]) {
 
   def yazıYap: Yazı = m.mkString
   def yazıYap(ara: Yazı): Yazı = m.mkString(ara)
-  def yazıYap(baş: Yazı, ara: Yazı, son: Yazı): Yazı = m.mkString(baş, ara, son)
+  def yazıYap(başı: Yazı, ara: Yazı, sonu: Yazı): Yazı = m.mkString(başı, ara, sonu)
   def değiştir(a: A, d: D) = m.clone().addOne(a -> d)
   def varMı(deneme: ((A, D)) => İkil): İkil = m.exists(deneme)
 
@@ -157,7 +157,7 @@ trait MapMethodsInTurkish {
 
     def yazıYap: Yazı = m.mkString
     def yazıYap(ara: Yazı): Yazı = m.mkString(ara)
-    def yazıYap(baş: Yazı, ara: Yazı, son: Yazı): Yazı = m.mkString(baş, ara, son)
+    def yazıYap(başı: Yazı, ara: Yazı, sonu: Yazı): Yazı = m.mkString(başı, ara, sonu)
     def varMı(deneme: ((A, D)) => İkil): İkil = m.exists(deneme)
 
     def hepsiDoğruMu(deneme: ((A, D)) => İkil): İkil = m.forall(deneme)

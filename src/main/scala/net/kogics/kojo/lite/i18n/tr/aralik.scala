@@ -17,9 +17,9 @@
 package net.kogics.kojo.lite.i18n.tr
 
 // translating Range
-case class Aralık(ilk: Sayı, son: Sayı, adım: Sayı = 1) {
+case class Aralık(ilki: Sayı, sonuncu: Sayı, adım: Sayı = 1) {
   type Dizi[B] = Seq[B]
-  val r = Range(ilk, son, adım)
+  val r = Range(ilki, sonuncu, adım)
   val başı = r.head
   val sonu = r.last
   val uzunluğu = r.size
@@ -46,15 +46,15 @@ case class Aralık(ilk: Sayı, son: Sayı, adım: Sayı = 1) {
 }
 
 object Aralık {
-  def apply(ilk: Sayı, son: Sayı, adım: Sayı = 1) = new Aralık(ilk, son, adım)
-  def kapalı(ilk: Sayı, son: Sayı, adım: Sayı = 1) = new Aralık(
-    ilk,
-    if (adım > 0) son+1 else son-1,
+  def apply(ilki: Sayı, sonuncu: Sayı, adım: Sayı = 1) = new Aralık(ilki, sonuncu, adım)
+  def kapalı(ilki: Sayı, sonuncu: Sayı, adım: Sayı = 1) = new Aralık(
+    ilki,
+    if (adım > 0) sonuncu+1 else sonuncu-1,
     adım)
   // copied from class Builtins ../../Builtins.scala
-  def kesirden(ilk: Kesir, son: Kesir, adım: Kesir) = Range.BigDecimal(ilk, son, adım)
-  def kesirdenAçık(ilk: Kesir, son: Kesir, adım: Kesir) = Range.BigDecimal(ilk, son, adım)
-  def kesirdenKapalı(ilk: Kesir, son: Kesir, adım: Kesir) = Range.BigDecimal.inclusive(ilk, son, adım)
+  def kesirden(ilki: Kesir, sonuncu: Kesir, adım: Kesir) = Range.BigDecimal(ilki, sonuncu, adım)
+  def kesirdenAçık(ilki: Kesir, sonuncu: Kesir, adım: Kesir) = Range.BigDecimal(ilki, sonuncu, adım)
+  def kesirdenKapalı(ilki: Kesir, sonuncu: Kesir, adım: Kesir) = Range.BigDecimal.inclusive(ilki, sonuncu, adım)
 }
 
 // also see: trait IntMethodsInTurkish in sayi.scala
@@ -68,7 +68,7 @@ trait RangeMethodsInTurkish {
     // todo: duplicate above
 
     def işle[B](f: Sayı => B) = r.map(f)
-    def elekle(dene: Sayı => İkil) = r.withFilter(dene)
+    def elekle(deneme: Sayı => İkil) = r.withFilter(deneme)
     def düzİşle[B](f: Sayı => IterableOnce[B]) = r.flatMap(f)
     def herbiriİçin(f: (Sayı) => Unit) = r.foreach(f)
     def indirge(iş: (Sayı, Sayı) => Sayı): Sayı = diziye.reduce(iş)

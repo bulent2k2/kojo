@@ -100,7 +100,7 @@ trait ArrayMethodsInTurkish {
     def yinelemesizİşlevle[T2](işlev: T => T2): Col = d.distinctBy(işlev)
     def yazıYap: Yazı = d.mkString
     def yazıYap(ara: Yazı): Yazı = d.mkString(ara)
-    def yazıYap(baş: Yazı, ara: Yazı, son: Yazı): Yazı = d.mkString(baş, ara, son)
+    def yazıYap(başı: Yazı, ara: Yazı, sonu: Yazı): Yazı = d.mkString(başı, ara, sonu)
     def tersi = d.reverse
     def değiştir[S >: T:ClassTag](yeri: Sayı, değeri: S): Dizik[S] = d.updated(yeri, değeri)
     def değiştirYerinde(yeri: Sayı, değeri: T): Birim = d.update(yeri, değeri)

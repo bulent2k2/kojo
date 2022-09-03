@@ -343,8 +343,8 @@ object Color extends CommonColors {
   private def hsbToHsl(h: Double, s: Double, v: Double) = {
     val hh = h
     var ll = (2 - s) * v
-    val den = if (ll <= 1) ll else 2 - ll
-    val ss = s * v / den
+    val de = if (ll <= 1) ll else 2 - ll // What is den? Clashes with a scala keyword in Turkish
+    val ss = s * v / de
     ll /= 2
     (hh, ss, ll)
   }

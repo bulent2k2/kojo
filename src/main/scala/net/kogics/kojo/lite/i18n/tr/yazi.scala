@@ -63,7 +63,7 @@ trait StringMethodsInTurkish {
     def yinelemesizİşlevle[T2](işlev: Harf => T2): Yazı = y.distinctBy(işlev)
     def yazıYap: Yazı = y.mkString
     def yazıYap(ara: Yazı): Yazı = y.mkString(ara)
-    def yazıYap(baş: Yazı, ara: Yazı, son: Yazı): Yazı = y.mkString(baş, ara, son)
+    def yazıYap(başı: Yazı, ara: Yazı, sonu: Yazı): Yazı = y.mkString(başı, ara, sonu)
     def tersi = y.reverse
     def değiştir(yeri: Sayı, değeri: Harf): Yazı = y.updated(yeri, değeri)
     // todo: doesn't compile
