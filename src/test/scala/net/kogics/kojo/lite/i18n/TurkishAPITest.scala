@@ -176,23 +176,23 @@ import net.kogics.kojo.staging
     } catch {
       case _: Throwable => true
     }
-    pass should be(true)
+    pass2 should be(true)
   }
 
   test("Translation of util.Random.shuffle should work") {
-    val deste = Dizi(1, 2, 3, 4, 5)
+    val beşKartlıEl = Dizi(1, 2, 3, 4, 5)
     var count = 0
-    while (rastgeleKarıştır(deste) == Dizi(1, 2, 3, 4, 5)) count += 1
+    while (rastgeleKarıştır(beşKartlıEl) == Dizi(1, 2, 3, 4, 5)) count += 1
     count < 10 should be(true)
     val d2 = Dizin(1, 2, 3, 4, 5)
-    while (rastgeleKarıştır(deste) == Dizi(1, 2, 3, 4, 5)) count += 1
+    while (rastgeleKarıştır(beşKartlıEl) == Dizi(1, 2, 3, 4, 5)) count += 1
     count < 20 should be(true)
   }
 
   test("Translation of Range should work") {
     val a = new Aralık(1, 10, 3)
-    a.ilk shouldBe 1
-    a.son shouldBe 10
+    a.ilki shouldBe 1
+    a.sonuncu shouldBe 10
     a.adım shouldBe 3
     a.dizine shouldBe List(1, 4, 7)
     a.yazı() shouldBe "Aralık(1, 4, 7)"
@@ -730,6 +730,7 @@ import net.kogics.kojo.staging
     k.ekle(11); k.başı should be(11); k.boyu should be(1)
     k.ekleHepsini(Dizi(10, 20, 30)); k.başı should be(11); k.boyu should be(4)
   }
+
   /* 
   // See: ~/src/kojo/git/kojo/src/test/scala/net/kogics/kojo/turtle/TurtleTest2.scala
   // ~/src/kojo/git/kojo/src/test/scala/net/kogics/kojo/lite/TestEnv.scala

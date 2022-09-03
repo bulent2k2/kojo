@@ -186,14 +186,14 @@ object TurkishAPI extends tr.ArrayMethodsInTurkish with tr.CalendarAndTimeUtilsI
     def uzaklık(öbürü: Kaplumbağa) = englishTurtle.distanceTo(öbürü.englishTurtle)
     def çevir(öbürü: Kaplumbağa) = englishTurtle.towards(öbürü.englishTurtle)
     // get f: Turtle => Unit from g: Kaplumbağa => Birim
-    val bu = this // Function1 has its own this
+    val buİşlev = this // Function1 has its own this
     def davran(işlev: Kaplumbağa => Birim) = {
-      val f = new Function1[Turtle, Unit] { def apply(t: Turtle) = işlev(bu) }
+      val f = new Function1[Turtle, Unit] { def apply(t: Turtle) = işlev(buİşlev) }
       englishTurtle.act(f)
     }
     def canlan = tepkiVer _
     def tepkiVer(işlev: Kaplumbağa => Birim) = {
-      val f = new Function1[Turtle, Unit] { def apply(t: Turtle) = işlev(bu) }
+      val f = new Function1[Turtle, Unit] { def apply(t: Turtle) = işlev(buİşlev) }
       englishTurtle.react(f)
     }
   }
@@ -263,8 +263,8 @@ object TurkishAPI extends tr.ArrayMethodsInTurkish with tr.CalendarAndTimeUtilsI
     RepeatCommands.repeatFor(dizi) { diziKomut }
   }
 
-  def yineleİlktenSona(ilk: Sayı, son: Sayı)(diziKomut: Sayı => Birim): Birim = {
-    RepeatCommands.repeatFor(ilk to son) { diziKomut }
+  def yineleİlktenSona(ilki: Sayı, sonu: Sayı)(diziKomut: Sayı => Birim): Birim = {
+    RepeatCommands.repeatFor(ilki to sonu) { diziKomut }
   }
 
   //simple IO
