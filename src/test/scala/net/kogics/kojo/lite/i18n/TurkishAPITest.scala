@@ -798,4 +798,23 @@ import net.kogics.kojo.staging
   }
 
    */
+
+  test("Translations of keywords should work") {
+    dez x = 1
+    x should be(1)
+    den y = 2
+    y *= 2
+    y should be(4)
+    dez deneme: İkil = eğer (y < x) { yanlış } yoksa { doğru }
+    deneme should be(doğru)
+    tanım t1(söz: Yazı): Sayı = söz eşle {
+      durum "merhaba" => 1
+      durum "dünya" => 2
+      durum _ => 3
+    }
+    t1("merhaba") should be(1)
+    t1("dünya") should be(2)
+    t1("foo bar") should be(3)
+  }
+
 }

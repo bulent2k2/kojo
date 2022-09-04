@@ -2,6 +2,8 @@ lazy val scalaVer = "2.13.6"
 name := "Kojo"
 version := "2.9"
 scalaVersion := scalaVer
+scalaHome := Some(file("./scala-tr/build/pack"))
+
 run / fork := true
 scalacOptions := Seq("-feature", "-deprecation")
 run / javaOptions ++= Seq("-Xmx1024m", "-Xss1m", "-XX:+UseConcMarkSweepGC", "-XX:+CMSClassUnloadingEnabled")

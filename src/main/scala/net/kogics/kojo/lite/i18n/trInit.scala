@@ -49,7 +49,6 @@ object TurkishAPI extends tr.ArrayMethodsInTurkish with tr.CalendarAndTimeUtilsI
   type HerDeğer=tr.HerDeğer
   type HerGönder=tr.HerGönder
   type Yok=tr.Yok
-  val  yok: Yok = tr.yok
   type Hiç=tr.Hiç
   type Boya=tr.Boya
   type Hız=tr.Hız
@@ -88,10 +87,8 @@ object TurkishAPI extends tr.ArrayMethodsInTurkish with tr.CalendarAndTimeUtilsI
   type İşlev2[D1,D2,R] = tr.İşlev2[D1,D2,R]
   type İşlev3[D1,D2,D3,R] = tr.İşlev3[D1,D2,D3,R]
 
-  val (doğru, yanlış, yavaş, orta, hızlı, çokHızlı, noktaSayısı, santim, inç) = (tr.doğru, tr.yanlış, tr.yavaş, tr.orta, tr.hızlı, tr.çokHızlı, tr.noktaSayısı, tr.santim, tr.inç)
+  val (yavaş, orta, hızlı, çokHızlı, noktaSayısı, santim, inç) = (tr.yavaş, tr.orta, tr.hızlı, tr.çokHızlı, tr.noktaSayısı, tr.santim, tr.inç)
 
-  // todo
-  // val Harf = tr.Harf
   val Nokta = tr.Nokta
 
   type ÇiniDünyası = tr.ÇiniDünyası

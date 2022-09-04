@@ -1,0 +1,22 @@
+To bump up the scala compiler, say to 2.13.9, we would need to repeat what I did for 2.13.6:
+(0) Create a new repo scala-2.13.6-tr from the source code 'scala-2.13.6.tar.gz' found in [Assets](https://github.com/scala/scala/releases/tag/v2.13.6)
+    E.g., https://github.com/bulent2k2/scala-2.13.6-tr
+(1) Clone and build scala compiler from that repo
+    - But first do the few changes to two files as in:
+      https://github.com/bulent2k2/scala-2.13.6-tr/commit/8fafc8c0ff86e3b12269c4380bad8c14ff1f3bd5
+      -- src/reflect/scala/reflect/internal/StdNames.scala
+      -- src/compiler/scala/tools/nsc/ast/parser/Scanners.scala
+      And optionally:
+      -- src/compiler/scala/tools/nsc/Main.scala
+    - Make sure to use java 8 or 11 and not 15.
+      See: https://stackoverflow.com/questions/73514108/runtime-exception-using-local-build-of-scala-compiler-java-lang-nosuchmethoder
+      ben@Bulents-MacBook-Pro kojo % java -version
+      java version "1.8.0_271"
+      Java(TM) SE Runtime Environment (build 1.8.0_271-b09)
+      Java HotSpot(TM) 64-Bit Server VM (build 25.271-b09, mixed mode)
+      ben@Bulents-MacBook-Pro kojo %
+    - sbt
+    - dist/mkPack
+(2) Copy lib folder including contents from <path-to-your-clone>/scala-2.13.6-tr/build/pack/lib
+    to ./build/pack/lib and override the old jars.
+    E.g., /Users/ben/src/scala-2.13.6-tr/build/pack
