@@ -405,9 +405,9 @@ class CompilerAndRunner(
               completions.foreach { completion =>
                 try {
                   completion match {
-                    case pcompiler.TypeMember(sym, tpe, true, inherited, viaView) if !sym.isConstructor /*&& nameMatches(sym)*/ =>
+                    case pcompiler.TypeMember(sym, tpe, true, inherited, viaView, aliasInfo) if !sym.isConstructor /*&& nameMatches(sym)*/ =>
                       elb += pcompiler.mkCompletionProposal(sym, tpe, inherited, viaView)
-                    case pcompiler.ScopeMember(sym, tpe, true, _) if !sym.isConstructor /*&& nameMatches(sym)*/ =>
+                    case pcompiler.ScopeMember(sym, tpe, true, _, aliasInfo) if !sym.isConstructor /*&& nameMatches(sym)*/ =>
                       elb += pcompiler.mkCompletionProposal(sym, tpe, false, pcompiler.NoSymbol)
                     case _ =>
                   }

@@ -1,4 +1,6 @@
-lazy val scalaVer = "2.13.6"
+// this is using latest from 2.13.x which is going to result in 2.13.9 soon (after now: 2022.09.05)
+// However, to get the right dependencies, we pretend that we are using 2.13.8.
+lazy val scalaVer = "2.13.8"
 name := "Kojo"
 version := "2.9"
 scalaVersion := scalaVer

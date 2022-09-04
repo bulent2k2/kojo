@@ -1,4 +1,19 @@
-To bump up the scala compiler, say to 2.13.8, we would need to repeat what I did for 2.13.6:
+This is for scala 2.13.x:
+interregnum after the latest stable release of 2.13.8 and before the
+future release 2.13.9
+
+To switch the scala compiler to use the version with Turkish keyword support, just do the following:
+    cd ~/src
+    git clone https://github.com/bulent2k2/scala-2
+    cd ~/src/scala-2
+    git checkout turkish_keyword_2.13.N  // pick the right N as per the scala version in build.sbt
+    sbt dist/mkPack
+    cp ~/src/scala-2/build/pack/lib/*.jar ~/src/kojo/git/kojo/scala-tr/build/pack/lib/
+
+To bump up the scala compiler, say to 2.13.8, we can clone my fork of
+scala-2 and use the appropriate turkish_keyword_<tag> branch as above.
+No need to repeat what I did for 2.13.6 which is below for the record only:
+
 (0) - Fork scala/scala in GitHub (e.g., https://github.com/bulent2k2/scala-2)
     - Copy release tags to the fork:
       git remote add upstream https://github.com/scala/scala
