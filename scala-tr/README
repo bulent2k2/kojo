@@ -1,13 +1,23 @@
-To bump up the scala compiler, say to 2.13.9, we would need to repeat what I did for 2.13.6:
-(0) Create a new repo scala-2.13.6-tr from the source code 'scala-2.13.6.tar.gz' found in [Assets](https://github.com/scala/scala/releases/tag/v2.13.6)
-    E.g., https://github.com/bulent2k2/scala-2.13.6-tr
-(1) Clone and build scala compiler from that repo
-    - But first do the few changes to two files as in:
-      https://github.com/bulent2k2/scala-2.13.6-tr/commit/8fafc8c0ff86e3b12269c4380bad8c14ff1f3bd5
+To bump up the scala compiler, say to 2.13.8, we would need to repeat what I did for 2.13.6:
+(0) - Fork scala/scala in GitHub (e.g., https://github.com/bulent2k2/scala-2)
+    - Copy release tags to the fork:
+      git remote add upstream https://github.com/scala/scala
+      git fetch upstream
+      git push --tags
+    - Create a branch from the relevant release tag:
+      git branch tr_keywords_2.13.8 v2.13.8
+    - Work on the branch:
+      git checkout tr_keywords_2.13.8
+(1) Build the compiler
+    - But first do the few changes to the following files:
       -- src/reflect/scala/reflect/internal/StdNames.scala
       -- src/compiler/scala/tools/nsc/ast/parser/Scanners.scala
       And optionally:
       -- src/compiler/scala/tools/nsc/Main.scala
+      The code to change is shown in commit:
+        https://github.com/bulent2k2/scala-2/commit/a81b2ce4931da9f55f3c7bb49b58778b3fda53ca
+      or,
+        https://github.com/bulent2k2/scala-2.13.6-tr/commit/8fafc8c0ff86e3b12269c4380bad8c14ff1f3bd5
     - Make sure to use java 8 or 11 and not 15.
       See: https://stackoverflow.com/questions/73514108/runtime-exception-using-local-build-of-scala-compiler-java-lang-nosuchmethoder
       ben@Bulents-MacBook-Pro kojo % java -version
@@ -17,6 +27,8 @@ To bump up the scala compiler, say to 2.13.9, we would need to repeat what I did
       ben@Bulents-MacBook-Pro kojo %
     - sbt
     - dist/mkPack
-(2) Copy lib folder including contents from <path-to-your-clone>/scala-2.13.6-tr/build/pack/lib
+(2) - Push the local branch to your repo
+      git push -u origin tr_keywords_2.13.8
+(3) Copy lib folder including contents from <path-to-your-clone>/scala-2/build/pack/lib
     to ./build/pack/lib and override the old jars.
-    E.g., /Users/ben/src/scala-2.13.6-tr/build/pack
+    E.g., /Users/ben/src/scala-2/build/pack
