@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<install4j version="9.0.5" transformSequenceNumber="9">
-  <directoryPresets config="/home/lalit/work/kojo/installer/icons" />
-  <application name="Kojo Learning Environment" applicationId="0071-0523-9450-8404" mediaDir="/home/lalit/kojo_installers/install4j" mediaFilePattern="${compiler:sys.shortName}_${compiler:sys.platform}_${compiler:sys.version}${compiler:sys.withJre}" pack200Compression="true" shortName="Kojo" publisher="Kogics Foundation" publisherWeb="www.kogics.net/kojo" version="2.9.23" macVolumeId="41bac862080108f9" javaMinVersion="1.8" javaMaxVersion="11" jdkMode="jdk" jdkName="JDK 1.8">
+<install4j version="10.0.1" transformSequenceNumber="10">
+  <directoryPresets config="/Users/ben/src/kojo/git/kojo/installer/icons" />
+  <application name="Koco Öğrenim Ortamı" applicationId="0071-0523-9450-8404" mediaDir="/Users/ben/src/kojo/git/kojo/installer.i4j" mediaFilePattern="${compiler:sys.shortName}_${compiler:sys.platform}_${compiler:sys.version}${compiler:sys.withJre}" pack200Compression="true" shortName="Koco" publisher="Kogics Foundation" publisherWeb="www.kogics.net/kojo" version="2.9.23" macVolumeId="41bac862080108f9" javaMinVersion="1.8" javaMaxVersion="11" jdkMode="jdk" jdkName="JDK 1.8">
+    <languages>
+      <principalLanguage id="tr" />
+    </languages>
     <searchSequence>
       <registry />
       <envVar name="JAVA_HOME" />
@@ -33,12 +36,12 @@
       </modules>
     </jreBundles>
   </application>
-  <files preserveSymlinks="false">
+  <files>
     <mountPoints>
       <mountPoint id="58" />
     </mountPoints>
     <entries>
-      <dirEntry mountPoint="58" file="/home/lalit/work/kojo/installerbuild" subDirectory="installerbuild" />
+      <dirEntry mountPoint="58" file="/Users/ben/src/kojo/git/kojo/installerbuild" subDirectory="installerbuild" />
     </entries>
   </files>
   <launchers>
@@ -52,11 +55,11 @@
       <macStaticAssociationActions mode="selected" />
       <vmOptionsFile mode="none" />
       <iconImageFiles>
-        <file path="/home/lalit/work/kojo/installer/icons/kojo16.png" />
-        <file path="/home/lalit/work/kojo/installer/icons/kojo32.png" />
-        <file path="/home/lalit/work/kojo/installer/icons/kojo48.png" />
-        <file path="/home/lalit/work/kojo/installer/icons/kojo64.png" />
-        <file path="/home/lalit/work/kojo/installer/icons/kojo128.png" />
+        <file path="/Users/ben/src/kojo/git/kojo/installer/icons/kojo16.png" />
+        <file path="/Users/ben/src/kojo/git/kojo/installer/icons/kojo32.png" />
+        <file path="/Users/ben/src/kojo/git/kojo/installer/icons/kojo48.png" />
+        <file path="/Users/ben/src/kojo/git/kojo/installer/icons/kojo64.png" />
+        <file path="/Users/ben/src/kojo/git/kojo/installer/icons/kojo128.png" />
       </iconImageFiles>
     </launcher>
   </launchers>
@@ -67,33 +70,32 @@
           <property name="customIconImageFiles">
             <add>
               <object class="com.install4j.api.beans.ExternalFile">
-                <string>/home/lalit/work/kojo/installer/icons/kojo16.png</string>
+                <string>/Users/ben/src/kojo/git/kojo/installer/icons/kojo16.png</string>
               </object>
             </add>
             <add>
               <object class="com.install4j.api.beans.ExternalFile">
-                <string>/home/lalit/work/kojo/installer/icons/kojo32.png</string>
+                <string>/Users/ben/src/kojo/git/kojo/installer/icons/kojo32.png</string>
               </object>
             </add>
             <add>
               <object class="com.install4j.api.beans.ExternalFile">
-                <string>/home/lalit/work/kojo/installer/icons/kojo48.png</string>
+                <string>/Users/ben/src/kojo/git/kojo/installer/icons/kojo48.png</string>
               </object>
             </add>
             <add>
               <object class="com.install4j.api.beans.ExternalFile">
-                <string>/home/lalit/work/kojo/installer/icons/kojo64.png</string>
+                <string>/Users/ben/src/kojo/git/kojo/installer/icons/kojo64.png</string>
               </object>
             </add>
             <add>
               <object class="com.install4j.api.beans.ExternalFile">
-                <string>/home/lalit/work/kojo/installer/icons/kojo128.png</string>
+                <string>/Users/ben/src/kojo/git/kojo/installer/icons/kojo128.png</string>
               </object>
             </add>
           </property>
           <property name="frameHeight" type="int" value="500" />
           <property name="frameWidth" type="int" value="700" />
-          <property name="useCustomIcon" type="boolean" value="true" />
         </serializedBean>
         <startup>
           <screen id="1" beanClass="com.install4j.runtime.beans.screens.StartupScreen" rollbackBarrierExitCode="0">
@@ -164,7 +166,7 @@ return console.askOkCancel(message, true);
                       <entry>
                         <string>en</string>
                         <object class="com.install4j.api.beans.ExternalFile">
-                          <string>/home/lalit/work/kojo/installerbuild/licenses/Kojoi-license.txt</string>
+                          <string>/Users/ben/src/kojo/git/kojo/installerbuild/licenses/Kojoi-license.txt</string>
                         </object>
                       </entry>
                     </property>
@@ -277,7 +279,7 @@ return console.askOkCancel(message, true);
                       <string>${installer:sys.installationDir}/bin/kojo</string>
                     </object>
                   </property>
-                  <property name="name" type="string">Kojo Learning Environment</property>
+                  <property name="name" type="string">Koco Learning Environment</property>
                 </serializedBean>
                 <condition>context.getBooleanVariable("createDesktopLinkAction")</condition>
               </action>
@@ -615,14 +617,14 @@ return console.askYesNo(message, true);
     <unixInstaller name="Unix Installer" id="60">
       <jreBundle includedJre="linux-amd64-11.0.6" />
     </unixInstaller>
-    <windows name="Windows" id="244" jreBitType="32">
+    <windows name="Windows" id="244" architecture="32">
       <jreBundle includedJre="windows-x86-1.8.0_202" />
     </windows>
     <macos name="macOS Single Bundle" id="508" launcherId="239" />
     <unixInstaller name="Unix Installer NoJava" id="514">
       <jreBundle jreBundleSource="none" />
     </unixInstaller>
-    <windows name="Windows64" id="600">
+    <windows name="Windows64" id="600" architecture="64">
       <jreBundle jdkProviderId="JBR" release="11.0.6-b765.25" />
     </windows>
   </mediaSets>
@@ -630,4 +632,5 @@ return console.askYesNo(message, true);
     <mediaSet refId="508" />
     <mediaSet refId="514" />
   </buildIds>
+  <buildOptions verbose="true" />
 </install4j>
