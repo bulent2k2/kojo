@@ -130,13 +130,13 @@ object dict {
   // https://docs.scala-lang.org/scala3/reference/syntax.html
   // TODO: make sure these are not used in any turkish samples or turkish translation code!
   // They are in abc-order:
-  //   at baskın bazı birlikte bu damgalı den dene deste dez doğru durum eğer eşle geriDön getir
+  //   baskın bazı bildir birlikte bu damgalı den dene deste dez doğru durum eğer eşle geriDön getir
   //   için koru miskin nesne sakla son sonunda soyut sınıf tanım tür ver yakala yanlış yap
   //   yayar yeni yineleDoğruKaldıkça yok yoksa örtük özellik üst
   val turkishKeywords = List(
-    "at",
     "baskın",
     "bazı",
+    "bildir",
     "birlikte",
     "bu",
     "damgalı",
@@ -209,7 +209,7 @@ object dict {
     "super" -> "üst",
     "this" -> "bu",
     "then" -> "yoksa",
-    "throw" -> "at",
+    "throw" -> "bildir", // "at" fails due to variable name in sbt compiler-bridge
     "trait" -> "özellik",
     "true" -> "doğru",
     "try" -> "dene",
