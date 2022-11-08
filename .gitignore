@@ -25,3 +25,10 @@ log
 .bloop
 .metals
 .vscode
+installer.i4j/Koco_*
+installer.i4j/Kojo_*
+installer.i4j/TAG
+installer.i4j/md5sums
+installer.i4j/output.txt
+installer.i4j/sha256sums
+installer.i4j/updates.xml

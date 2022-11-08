@@ -40,7 +40,7 @@ trait OptionMethodsInTurkish {
 
   implicit class BelkiYöntemleri[T](b: Belki[T]) {
     def al = b.get
-    def alYoksa[T](t: T) = b.getOrElse(t)
+    def alYoksa[T2 >: T](t: => T2): T2 = b.getOrElse(t)
 
     def varMı: İkil = b.nonEmpty
     def yokMu: İkil = b.isEmpty
