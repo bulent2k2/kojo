@@ -817,4 +817,22 @@ import net.kogics.kojo.staging
     t1("foo bar") should be(3)
   }
 
+  test("Translation of hashCode overriding to work") {
+    case class Foo(a: Int)
+    val x = Foo(1)
+    val y = Foo(1)
+    x == y should be(true)
+    x != y should be(false)
+    var counter = 1
+    case class Bar(a: Int) extends Eşsizlik {
+      val no = counter
+      counter += 1
+      tanım kıymaKodu = no.kıymaKodu
+      println(kıymaKodu)
+    }
+    val p = Bar(1)
+    val q = Bar(1)
+    p != q should be(true)
+  }
+
 }

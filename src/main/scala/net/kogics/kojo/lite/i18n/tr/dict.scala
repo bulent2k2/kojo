@@ -200,7 +200,7 @@ object dict {
     "new" -> "yeni",
     "null" -> "yok",
     "object" -> "nesne",
-    "override" -> "baskın", // override def -> baskın (üstüne) tanım
+    "override" -> "baskın", // override def -> baskın (üstüne ya da yeniden) tanım TODO
     "package" -> "deste",
     "private" -> "sakla",
     "protected" -> "koru",
