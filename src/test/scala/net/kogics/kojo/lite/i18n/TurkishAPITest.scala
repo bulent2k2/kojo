@@ -832,6 +832,7 @@ import net.kogics.kojo.staging
     }
     val p = Bar(1)
     val q = Bar(1)
+    p == q should be(false)
     p != q should be(true)
   }
 
