@@ -827,7 +827,7 @@ import net.kogics.kojo.staging
     case class Bar(a: Int) extends Eşsizlik {
       val no = counter
       counter += 1
-      tanım kıymaKodu = no.kıymaKodu
+      def kıymaKodu = no.kıymaKodu
       println(kıymaKodu)
     }
     val p = Bar(1)
