@@ -817,7 +817,7 @@ import net.kogics.kojo.staging
     t1("foo bar") should be(3)
   }
 
-  test("Translation of hashCode overriding to work") {
+  test("Translation of hashCode overriding to work. V1 in English") {
     case class Foo(a: Int)
     val x = Foo(1)
     val y = Foo(1)
@@ -834,6 +834,21 @@ import net.kogics.kojo.staging
     val q = Bar(1)
     p == q should be(false)
     p != q should be(true)
+  }
+
+  test("Translation of hashCode overriding to work. V2 in Turkish") {
+    durum sınıf Foo(a: Sayı)
+    dez x = Foo(1); dez y = Foo(1)
+    (x == y && !(x != y)) should be(true)
+
+    den sayaç = 1
+    durum sınıf Bar(a: Sayı) yayar Eşsizlik {
+      dez no = sayaç; sayaç += 1
+      tanım kıymaKodu = no.kıymaKodu
+      satıryaz(kıymaKodu)
+    }
+    dez p = Bar(1); dez q = Bar(1)
+    (p != q && !(p == q)) should be(true)
   }
 
 }
