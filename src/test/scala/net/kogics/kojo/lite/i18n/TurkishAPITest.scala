@@ -852,7 +852,7 @@ import net.kogics.kojo.staging
   }
 
   test("Translation of toString overriding to work. V1 in English") {
-    case class Foo(a: Int, b: Double) extends BaskınYazıyaİşleviİle {
+    case class Foo(a: Int, b: Double) extends BaskınYazıyaYöntemiyle {
       override def yazıya = s"Bar($a,$b)"
     }
     val f = Foo(1, 2.3)
@@ -860,7 +860,7 @@ import net.kogics.kojo.staging
   }
 
   test("Translation of toString overriding to work. V2 in Turkish") {
-    durum sınıf Falan(a: Sayı, b: Kesir) yayar BaskınYazıyaİşleviİle {
+    durum sınıf Falan(a: Sayı, b: Kesir) yayar BaskınYazıyaYöntemiyle {
       baskın tanım yazıya = s"Filan($a,$b)"
     }
     dez f = Falan(1, 2.3)
