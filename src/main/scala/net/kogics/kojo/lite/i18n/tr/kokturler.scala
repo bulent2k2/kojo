@@ -18,6 +18,11 @@ package net.kogics.kojo.lite.i18n.tr
 
 // her nesne, herneyse! java Object?
 trait CoreTypeMethodsInTurkish {
+  özellik BaskınYazıyaİşleviİle {
+    tanım yazıya: Yazı
+    baskın tanım toString = yazıya
+  }
+
   özellik Eşsizlik {
     tanım kıymaKodu: Sayı
     baskın tanım hashCode = kıymaKodu

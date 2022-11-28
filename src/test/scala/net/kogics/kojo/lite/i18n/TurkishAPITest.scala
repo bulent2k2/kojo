@@ -851,4 +851,20 @@ import net.kogics.kojo.staging
     (p != q && !(p == q)) should be(true)
   }
 
+  test("Translation of toString overriding to work. V1 in English") {
+    case class Foo(a: Int, b: Double) extends BaskınYazıyaİşleviİle {
+      override def yazıya = s"Bar($a,$b)"
+    }
+    val f = Foo(1, 2.3)
+    f.toString should be("Bar(1,2.3)")
+  }
+
+  test("Translation of toString overriding to work. V2 in Turkish") {
+    durum sınıf Falan(a: Sayı, b: Kesir) yayar BaskınYazıyaİşleviİle {
+      baskın tanım yazıya = s"Filan($a,$b)"
+    }
+    dez f = Falan(1, 2.3)
+    f.toString should be("Filan(1,2.3)")
+    f.yazıya should be("Filan(1,2.3)")
+  }
 }
