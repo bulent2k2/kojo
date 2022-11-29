@@ -130,7 +130,7 @@ pages += Page(
     <a href={link("Literals")}>Yalın Değerler, Sayılar, Kesirler ve Yazılar</a> <br/>
     <a href={link("Functions")}>İşlevler</a> <br/>
     <a href={link("OandC")}>Nesneler ve Sınıflar</a> <br/>
-    <a href={link("PMS")}>Desen Eşleme ve Switch ve Case Komutları</a> <br/>
+    <a href={link("PMS")}>Desen Eşleme, Eşle ve Durum Komutları</a> <br/>
     <a href={link("BTree")}>İleri Eşleme Yöntemleri - İkil Ağaç</a> <br/>
     <a href={link("STI")}>Dingin Türleme ve Tür Çıkarımı</a> <br/>
     <a href={link("FAO")}>İşlevler de Birer Nesnedir</a> <br/>
@@ -153,7 +153,12 @@ pages += Page(
     "Bu sayfayı en başa hatta Başlayalım adlı ilk sayfadan da öne koyduk. Çünkü hem okuması, anlaması ve oynaması daha kolay hem de daha görsel ve onun için de biraz daha cazip. Kojo'nun kaplumağacığını zaten iyi tanıyorsan bir sonraki sayfaya atlayıp Scala yani epey ciddi bir yazılım dili öğrenmeye başlayabilirsin.".p,
     "Kaplumbağacığı hareket ettirerek ona çizgi çizdirten pek çok komutumuz var. Çoğunu aşağıdaki tabloda bulacaksın. Onlara tıklayıver ki kaplumbağacık neler yapabiliyor göresin. Tablodaki sırayı izlemene gerek yok (sadece ilk örnek hariç. Ona ileride gerek olacak çünkü üçgen işlevini tanımlıyor). İstediklerine birkaç kere tıklayabilirsin. Tuvalimizi silmek için sağ tıklayıp Temizle komutuna tıkla.".p,
     "Aşağıdaki ilk örnekte üçgen adında bir işlev (ya da komut) tanımlıyoruz. Ne yaptığını anladın mı? Tıklayınca göreceksin. Bir üçgen çiziyor. Bu komutu ilerdeki örneklerde de kullanacağız. Henüz tıklamadıysan şimdi tıkla. Farkettin mi bir satırda birden çok komut da çağırabiliyoruz. Aralarına noktalı virgül koymamız gerekiyor sadece. 'yinele' komutumuz da bir komut dizisini tekrar tekrar çağırmakta çok faydalı olur.".p,
-    """tanım üçgen() = yinele(3){ ileri(100); sağ(120) }
+    """tanım üçgen() = {
+    yinele(3) { 
+        ileri(100)
+        sağ(120)
+    }
+}
 sil()
 üçgen()
 sol()
@@ -247,10 +252,9 @@ pages += Page(
       row("doğru".c, "true".c, "", "Mantıksal doğru. Eğer komuduna girdi olarak kullanılabilir."),
       row("yanlış".c, "false".c, "", "Mantıksal yanlış. Eğer komuduna girdi olarak kullanılabilir."),
       row("baskın".c, "override".c, "", "Daha temel bir türden (üst sınıf da denir) gelen yöntemleri yeniden tanımlarken gerekir."),
-      row("bu".c, "this".c, "", "Bir sınıfın tanımının içinde kendi nesnelerinden bahsetmek için kullanılabilen adıl. Ya da eski adıyla bu zamiri!"),
 //    row("".c, "".c, "", ""),
     ),
-    "18 sözcükle neler neler yapabiliriz yakında göreceksin. Bu kılavuzda hiç kullanmadığımız diğer anahtar sözcükler de aşağıda. İngilizcelerinin A'dan Z'ye sıralamasına uyduk".p,
+    "17 sözcükle neler neler yapabiliriz yakında göreceksin. Bu kılavuzda hiç kullanmadığımız diğer anahtar sözcükler de aşağıda. İngilizcelerinin A'dan Z'ye sıralamasına uyduk".p,
     table(
       row("soyut".c, "abstract".c, "", "Ender kullanılır. https://docs.scala-lang.org/scala3/book/domain-modeling-tools.html#abstract-classes"),
       row("yakala".c, "catch".c, "", "Kural dışı bir durum varsa işe yarar."),
@@ -268,6 +272,7 @@ pages += Page(
       row("geriDön".c, "return".c, "", "İşlevden prematüre geri dönüş için. Hiç kullanma daha iyi."),
       row("damgalı".c, "sealed".c, "", "Bu dosya dışında değişiklik yapılmasın türüme der."),
       row("üst".c, "super".c, "", "Üst türden bahsetmek gerekirse."),
+      row("bu".c, "this".c, "", "Bir sınıfın tanımının içinde kendi nesnelerinden bahsetmek için kullanılabilen adıl. Ya da eski adıyla bu zamiri!"),
       row("bildir".c, "throw".c, "", "Kuraldışı durumlarda kullanılır. Atmak anlamındaki emrin adı. At diyemedik bazı teknik sorunlardan ötürü. Zaten bildirmek daha kibar oldu."),
       row("özellik".c, "trait".c, "", "Temel bir tür tanımlamak için çok faydalıdır."),
       row("dene".c, "try".c, "", "Kural dışı durumları sınır içine alır."),
@@ -411,7 +416,7 @@ satıryaz("ortak paydaların en büyüğü: " + y)
     """için ( i <- 1 |-| 4 ) yaz("merhaba!")""".c,
     """Bunun ingilizcesi de şöyle:""".p,
     """için ( i <- 1 to 4 ) yaz("merhaba!")""".c,
-    "'to' sözcüğü de bizim yapım/çekim ekimiz gibi, birden dörde kadar derken dörde sözcüğündeki '-e' anlamında. İngilizceyle Türkçe ne kadar farklı sanki, değil mi? Bir de bana sorun. 22 yaşında yaşamak için Amerika'ya gittiğimde, ki daha önce yurtdışına çıktığım günler sayılıdır, o kadar zorluk çektim ki! Güya iyi biliyordum hem de İngilizceyi! İşimize dönelim: Aralık burada birden dörde kadar olan sayılar elbet. 'i' değişkeni 1 değeriyle başlıyor ve her tekrarda bir artıyor. Son sayı burada 4. Ama sonuncu sayıya gelmeden hemen önce durmak istersek '|-' yerine '|-|' imgesini kullanıyoruz:".p,
+    "'to' sözcüğü de bizim yapım/çekim ekimiz gibi, birden dörde kadar derken dörde sözcüğündeki '-e' anlamında. İngilizceyle Türkçe ne kadar farklı sanki, değil mi? Bir de bana sorun. 22 yaşında yaşamak için Amerika'ya gittiğimde, ki daha önce yurtdışına çıktığım günler sayılıdır, o kadar zorluk çektim ki! Güya iyi biliyordum hem de İngilizceyi! İşimize dönelim: Aralık burada birden dörde kadar olan sayılar elbet. 'i' değişkeni 1 değeriyle başlıyor ve her tekrarda bir artıyor. Son sayı burada 4. Ama sonuncu sayıya gelmeden hemen önce durmak istersek '|-|' yerine '|-' imgesini kullanıyoruz:".p,
     """için ( i <- 1 |- 12 )  {
   dez kare = i*i
   satıryaz(i, kare)
@@ -423,13 +428,13 @@ satıryaz("ortak paydaların en büyüğü: " + y)
 }""".c,
     """İngilizce'de 'until 12', 12'ye kadar anlamina geliyor.""".p,
     "Biliyor musun, bu yineleme işlemlerini birden çok boyutta yapmak bilgisayarla çok kolay. Birden fazla aralık vereceğiz ve her aralık için de bir değişken (aslında değişiyor gibi göründüğüne bakma, bunlar da değişmez). Tek dikkat etmemiz gereken ikisi arasına bir noktalı virgül koymak. Bakın ne kolay!".p,
-    """için(i <- 1 |- 5 ; j <- "abc") satıryaz(i, j)""".c,
+    """için (i <- 1 |- 5 ; j <- "abc") satıryaz(i, j)""".c,
     """Bakın şu işe! Sayı yerine harfler kullandık! "için" yapısı içinde kullandığımız kümeler illa da sayılardan oluşmak zorunda değil yani. Genel olarak biz bunlara küme tekerleme diyebiliriz (İngilizcesi: iterating through a set or collection) yani teker teker her küme elemanını ele alıyoruz. "abc" yazısı da aslında bir harf kümesi ya da kolleksiyonu. Bakın hep küme ya da kolleksiyon dedim. Bu kavramlar yakın ama ufak farklılıkları var. Daha sonra bunlara verilen anlamı daha iyi anlayacağız. Şu anda çok da önemli değil gerçekten. Neyse. Harflerle tekerlemeye bir örnek daha verelim ve devam edelim:""".p,
     """için(c<-"merhaba!") satıryaz(c)""".c,
     "Bu 'için' komudu aslında çok faydalı. Sadece çıktı için kullanılmıyor. Anahtar sözcük 'ver' ile birlikte kullanarak bir dizi değer oluşturabiliriz. Bir küçük örnekle yetinelim şimdilik:".p,
     """dez neKi = için(i <- 1 |- 5 ; j <- "abc") ver(i, j)
        satıryaz(neKi)""".c,
-    "Şimdi de matematik, bilhassa kartezyen geometrisi sevenlere bir süprizimiz var. Kaplumbağacığı kullanarak bir eğri çizelim. Neyin eğrisi? İki boyutlu bir poligon. Genel olarak a*x^2 + b*x + c diye yazabiliriz. Yine bu çok faydalı olan 'için' yapısıyla:".p,
+    "Şimdi de matematik, bilhassa kartezyen geometrisi sevenlere bir süprizimiz var. Kaplumbağacığı kullanarak bir eğri çizelim. Neyin eğrisi? İki boyutlu bir polinom, yani çok terimli bir matematiksel deyiş. Genel olarak a*x^2 + b*x + c diye yazabiliriz. Yine bu çok faydalı olan 'için' yapısıyla:".p,
     """sil
 tanım eğri(x: Kesir) = 0.001 * x * x + 0.5 * x + 10   // eğri adında yeni bir işlev tanımlayıverdik. Bunu daha sonra daha iyi anlayacağız. 
 gridiGöster(); eksenleriGöster() // kare çizgileri ve x ve y eksenlerini çizelim
@@ -437,7 +442,7 @@ dez aralık = 200
 atla(-aralık,eğri(-aralık))
 için(x <- -aralık+10 |-| aralık; eğer (x % 10 == 0)) noktayaGit(x, eğri(x))
 """.c,
-    "Eksenleri silelim. Ve bir sonraki bölüme devam edelim!".p,
+    "Eksenleri silelim. Ve bir sonraki bölümle devam edelim!".p,
     "eksenleriGizle(); gridiGizle()".c
   )
 )
@@ -588,15 +593,16 @@ pages += Page(
     "Yeni bir sınıf tanımladığında yeni tür bir ya da daha çok nesne tanımlamış oluyorsun. Bu yeni tür, daha önce tanımlanmış, hatta Scala'yla hazır gelen Sayı, Kesir gibi türlerin hepsiyle bir tutulur. Yani Scala hiç ayırım yapmaz! Scala'nın türler ve sınıflar arasında taraf tutmaması, yani herşeyin bir nesne ve her nesnenin de bir türü olması ne kadar yararlıdır yakında göreceğiz.".p,
     "Haydi iki boyutlu bir nokta tanımı yaparak başlayalım yeni türler üretmeye! İki tane değişkeni olacak, x ve y. Sınıf adlarını da geleneksel olarak büyük harfle başlıyoruz, Sayı, Harf gibi temel türlerde olduğu gibi. Ama sınıf içindeki değerler, değişkenler ve yöntemler küçük harflerle yazılıyor.".p,
 
-    """// class sınıfın İngilizcesi. Anahtar kelimemiz class:
-class Nokta {
+    """// Anahtar kelimemiz sınıf:
+sınıf Nokta {
     den x = 0
     den y = 0
 }
-// x ve y için başlangıç değeri gerekli. Ve 0 mantıklı gibi. Ama daha da iyi bir çözüm bulacağız yakında..
+// x ve y için başlangıç değeri gerekli. Ve 0 mantıklı gibi.
+// Ama daha da iyi bir çözüm bulacağız yakında..
 """.c,
-    """Bakın nesnenin tanımı şimdilik bu kadar! Daha doğrusu sınıf belirlendi. Yeni bir tür yarattık bile. Bu sınıfın bir elemanı, yani bu türden yeni bir nesne oluşturmak da çok kolay. Yeni anlamına gelen İngilizce 'new' anahtar sözcüğünü kullanıyoruz:""".p,
-    "dez n = new Nokta".c,
+    """Bakın nesnenin tanımı şimdilik bu kadar! Daha doğrusu sınıf belirlendi. Yeni bir tür yarattık bile. Bu sınıfın bir elemanı, yani bu türden yeni bir nesne oluşturmak da çok kolay. Sizi fazla şaşırtmayacak 'yeni' anahtar sözcüğünü kullanıyoruz:""".p,
+    "dez n = yeni Nokta".c,
     """Nesnenin iç değerlerini ele almak ya da değiştirmek için de nesnenin adına nokta yani '.' ekliyor arkasından da iç değişkenin adını yazıyoruz:""".p,
     """n.x = 3
 n.y = 4
@@ -604,34 +610,34 @@ n.y = 4
     "İç değişkenlerin değerini okumak için de aynı şeyi yapıyoruz:".p,
     "satıryaz(n.x, n.y)".c,
     "Bu biraz zahmetli oldu yanlız. Her yeni nokta için x ve y değerlerini bu şekilde belirlememiz fazla zamanımızı alıyor. Bunun daha kolay bir yolu var. Nesneyi oluştururken noktanın koordinatlarını girmek daha kullanışlı olurdu. Bunun için yapmamız gereken değişiklik küçük:".p,
-    "class Nokta(den x: Sayı, den y: Sayı)".c,
+    "sınıf Nokta(den x: Sayı, den y: Sayı)".c,
     "Sonrada yeni bir nokta tanımlayalım:".p,
-    "dez n = new Nokta(3, 4)".c,
+    "dez n = yeni Nokta(3, 4)".c,
     "Bakın ilk nokta tanımda 0 değerini vererek x ve y'nin Sayı türünde olduğunu belirlemiştik aslında. İkinci tanımda ise tür bilgisini açık açık verdik. Mantıklı, değil mi? Derleyici ne yapması gerektiğini biliyor iki durumda da. Herneyse, bu biraz ileri bir yazılım kavramı oldu. Biz noktalara dönelim. Her nokta aslında iki boyutlu bir vektör demektir. İki noktayı toplamak demek iki vektörü birbirine eklemek demek. Nasıl yapacağız? Nokta sınıfına yeni bir yöntem eklemek en mantıklısı. Deneyelim:".p,
-    """class Nokta(den x:Sayı, den y:Sayı) {
+    """sınıf Nokta(den x:Sayı, den y:Sayı) {
     tanım vektörToplama(yeniNokta: Nokta): Nokta = {
-        new Nokta(x + yeniNokta.x, y + yeniNokta.y)
+        yeni Nokta(x + yeniNokta.x, y + yeniNokta.y)
     }
 }""".c,
     "Bakın bu basit bir işlev ama sınıf tanımının içinde olması onu özel bir yöntem haline getiriyor. Neden özel? Çünkü nesnenin iç değerlerini okuyabiliyor ve iç değişkenlerini değiştirebiliyor. Bakın şimdi iki vektörü birbirine ekleyelim, bakalım ne bulacağız:".p,
-    """dez n1 = new Nokta(3,4)
-dez n2 = new Nokta(7,1)
+    """dez n1 = yeni Nokta(3,4)
+dez n2 = yeni Nokta(7,1)
 dez n3 = n1.vektörToplama(n2)
 satıryaz(n3.x, n3.y)
 """.c,
     """Eğer Java yazılım yazmayı biliyorsan bu çok tanıdık gelecektir. Ama "n1+n2" yazmak çok daha doğal olurdu, değil mi? Scala ile mümkün! Gelin deneyelim. Hatta vektör çıkarmayı da tanımlayıverelim:""".p,
-    """class Nokta(den x: Sayı, den y:Sayı) yayar BaskınYazıyaYöntemiyle {
+    """sınıf Nokta(den x: Sayı, den y:Sayı) yayar BaskınYazıyaYöntemiyle {
     tanım +(yeniNokta: Nokta): Nokta = {
-        new Nokta(x + yeniNokta.x, y + yeniNokta.y)
+        yeni Nokta(x + yeniNokta.x, y + yeniNokta.y)
     }
     tanım -(yeniNokta: Nokta): Nokta = {
-       new Nokta(x - yeniNokta.x, y - yeniNokta.y)
+       yeni Nokta(x - yeniNokta.x, y - yeniNokta.y)
     }
     baskın tanım yazıya = "Nokta("+x+", "+y+")"
 }
 """.c,
-"""Bu örnekle iki özel/anahtar sözcükle tanışıyoruz. 'yayar' ve 'baskın'. İkincisi daha kolay. Onunla başlayalım: üstüne yazmak ya da yeniden tanımlamak anlamlarına geliyor. Neyin üzerine yazıyor ve tekrar tanımlıyoruz? 'yazıya' adlı işlevi. Peki aslı nereden geliyor ki tekrar tanımlayalım? Hani dedik ya herşey bir nesne. Gerçekten de adı Nesne olan bir tür var ve aslında bütün türlerin temelini oluşturuyor. Bu temel sınıf ne demek daha sonraya bırakalım. Ama bilmemiz gereken şey şu: bu temel sınıfın 'yazıya' adlı bir yöntemi var ve bu yöntemin her nesne için çalışması gerek. Bu yöntem her nesneyi okunabilecek bir yazı olarak ifade ediyor:""".p,
-    """dez n0 = new Nesne()
+"""Bu örnekle iki özel/anahtar sözcükle tanışıyoruz. 'yayar' ve 'baskın'. İkincisi daha kolay. Onunla başlayalım: üstüne yazmak ya da yeniden tanımlamak anlamlarına geliyor. Neyin üzerine yazıyor ve tekrar tanımlıyoruz? 'yazıya' adlı işlevi. Peki aslı nereden geliyor ki tekrar tanımlayalım? Hani dedik ya herşey bir nesne. Gerçekten de adı Nesne olan bir tür var ve aslında bütün türlerin temelini oluşturuyor. Bu temel sınıf ne demek daha sonraya bırakalım. Ama bilmemiz gereken şey şu: bu temel sınıfın 'yazıya' adlı bir yöntemi var ve bu yöntemin her nesne için çalışması gerek. Bu yöntem her nesneyi okunabilecek bir yazı olarak ifade ediyor. Aslında o temel (ya da üst) sınıf İngilizce'yle yazılı. 'yazıya' değil 'toString' adında. Onun için şöyle de yazabiliriz:""".p,
+    """dez n0 = yeni Nesne()
 satıryaz(n0.yazıya)
 // her tür kendisi için yazıya yöntemini yeniden tanımlıyor:
 dez n1 = 9
@@ -639,27 +645,41 @@ satıryaz(n1.yazıya)
 
 dez n2 = Dizin(9, 99)
 satıryaz(n2.yazıya)
-// bu 'case class' nedir birazdan göreceğiz!
-case class AkıllıSayı(dez sayı: Sayı) /* yayar BaskınYazıyaYöntemiyle */ {
+// bu 'durum sınıf' nedir birazdan göreceğiz!
+durum sınıf AkıllıSayı(dez sayı: Sayı) /* yayar BaskınYazıyaYöntemiyle */ {
     baskın tanım toString = "Ben bir sayıyım. Değerim de " + sayı + "'dur."
     // baskın tanım yazıya = "Ben bir sayıyım. Değerim de " + sayı + "'dur."
 }
 
 dez n3 = AkıllıSayı(99)
-satıryaz(n3) // yazıya yöntemini açık açık söylememiz bile gerekmiyor! Leb demeden leblebiyi anlıyor akıllı Scala derleyicisi 8-)
+satıryaz(n3.yazıya)
 """.c,
-    """Biz şimdi noktalarımıza dönelim. Nokta sınıfı hazır. Noktalar tanımlayalım:""".p,
-    """dez n1 = new Nokta(3,4)
-dez n2 = new Nokta(7,2)
-dez n3 = new Nokta(-2,2)
+    """Çalıştı, değil mi? Şimdi AkıllıSayı türümüzü tanımladığımız satırdaki '/*' ve '*/' imgelerini silip tekrar dene! Derleyici bir hata verecek ve şöyle diyecek:""".p,
+    """Error[10,13]: class AkıllıSayı needs to be abstract.""".p,
+    """Missing implementation for member of trait BaskınYazıyaYöntemiyle:""".p,
+    """  def yazıya: net.kogics.kojo.lite.i18n.tr.Yazı = ???""".p,
+    """Bu sorunu çözmek için de 'toString' tanımını silelim ve altındaki 'sayıya' tanımını etkinleştirelim:""".p,
+"""durum sınıf AkıllıSayı(dez sayı: Sayı) yayar BaskınYazıyaYöntemiyle {
+    baskın tanım yazıya = "Ben bir sayıyım. Değerim de " + sayı + "'dur."
+}
+
+dez n3 = AkıllıSayı(99)
+satıryaz(n3)
+// 'yazıya' yöntemini açık açık söylememiz bile gerekmiyor!
+// Leb demeden leblebiyi anlıyor akıllı Scala derleyicisi 8-)
+// ve gizlice 'yazıya' yöntemini çağırıyor ki 'satıryaz' doğru çalışsın.
+""".c,
+    """Geldik 'yayar' anahtar sözcüğüne. Bu nesne odaklı yazılımın ana konularından biri. İki bölüm sonra Ağaç ve Yaprak türleri oluştururken detaylıca inceleyeceğiz. Ama kısacası daha temel bir türün özelliklerini kullanan bir alt tür oluşturmak istersek 'yayar' sözcüğünu kullanıyoruz. Buradaki temel tür BaskınYazıyaYöntemiyle. Onun sayesinde 'toString' yerine Türkçesi olan 'yazıya' yöntemini yeniden tanımlayınca herşey güzelce çalışıyor. Tam anlaması biraz zor olabilir. Hiç dert etme. Sırası gelince hemen anlayıvereceksin.""".p,
+    """Biz şimdi noktalarımıza dönelim. Nokta sınıfı hazır. Birkaç nokta tanımlayalım:""".p,
+    """dez n1 = yeni Nokta(3,4)
+dez n2 = yeni Nokta(7,2)
+dez n3 = yeni Nokta(-2,2)
 dez n4 = n1+n2-n3
 satıryaz(n4)
 """.c,
-    "Bu çok daha okunaklı, değil mi? Kocaman bir vektör cebiri yaratmak işten bile değil Scala ve Kojo'yla!".p,
-    "Scala'da her sınıfın varsayılan bir 'toString' yöntemi var. Türkçeye 'yazıya' adıyla çevirdik. Bu yöntem nesnelerin yazıyla ifade edilmelerini sağlıyor ki, örneğin satıryaz komutuna girdi olabilsin. Varsayılan yöntem o nesneye özgü bir numara ve tür adı içerir. Biz onu tekrar tanımlamış ve daha okunur hale getirmiştik yukarıda.".p,
-
-    """Yukarıda basit bir örneğini gördüğümüz 'case' anahtar sözcüğüyle sınıf tasarımı biraz daha kolaylaşıyor. Bu 'case' sözcüğü yazılımda önemli bir kavrama işaret ediyor. İleride göreceğimiz 'match' anahtar sözcüğüyle beraber de kullanılıyor. İngilizce'de durum, olay ve olgu gibi anlamlara gelir. Kullandıkça daha iyi anlayacağız.""".p,
-    """case class Nokta(x: Sayı, y: Sayı) {
+    "Bu çok daha okunaklı, değil mi? Scala ve Kojo'yla kocaman bir vektör cebiri (ya da tam türkçesiyle yöney ölçülümü) yaratmak işten bile değil!".p,
+    """Yukarıda basit bir örneğini gördüğümüz 'durum' anahtar sözcüğüyle sınıf tasarımı biraz daha kolaylaşıyor. Bu 'durum' sözcüğü yazılımda önemli bir kavrama işaret ediyor. İleride göreceğimiz 'eşle' anahtar sözcüğüyle beraber de kullanılıyor. İngilizce'de durum, olay ve olgu gibi anlamlara gelir. Kullandıkça daha iyi anlayacağız.""".p,
+    """durum sınıf Nokta(x: Sayı, y: Sayı) {
     tanım +(yeniNokta: Nokta) = Nokta(x + yeniNokta.x, y + yeniNokta.y)
     tanım -(yeniNokta: Nokta) = Nokta(x - yeniNokta.x, y - yeniNokta.y)
 }
@@ -668,12 +688,12 @@ dez n2 = Nokta(7, 2)
 dez n3 = Nokta(-2, 2)
 """.c,
     "n1+n2-n3".c,
-    """Burada 'case' sayesinde "new" anahtar sözcüğüne gerek kalmadı. n1, n2 ve n3 nesnelerini yaratmak için sadece 'Nokta(...)' yetti. Bu Scala derleyicisinin Java derleyicisinden daha becerili olduğunu ortaya koyan örneklerden biri.""".p,
-    """İki husus daha var üzerinde durmamızda fayda olan. 1. + ve - işlevleri tanımlarken 'tanım' anahtar sözcüğünü kullandık ama eşittir işaretinden sonra kıvrık parantezlere gerek duymadık. Bunun nedeni basit. Sağ tarafta sadece bir tane deyiş ya da sadece bir tane komut varsa kıvrık parantezlere gerek kalmıyor. Bu sadece 'case class' içinde değil bütün 'tanım' işlevleri için geçerli. 2. + ve - yöntemlerinin tanımında çıktı türü belirtmeye de gerek duymadık. Bu Scala derleyicisinin çok faydalı becerilerinden biridir: tanımda kullanılan deyiş ve komutlara bakarak çıktı türünü kendisi belirliyiveriyor! Buna İngilizce'de özel bir ad takılmıştır: "type inference" yani tür çıkarımı. """.p,
+    """Burada 'durum' sayesinde "yeni" anahtar sözcüğüne gerek kalmadı. n1, n2 ve n3 nesnelerini yaratmak için sadece 'Nokta(...)' yetti. Bu Scala derleyicisinin Java derleyicisinden daha becerili olduğunu ortaya koyan örneklerden biri.""".p,
+    """İki husus daha var üzerinde durmamızda fayda olan. 1. + ve - işlevleri tanımlarken 'tanım' anahtar sözcüğünü kullandık ama eşittir işaretinden sonra kıvrık parantezlere gerek duymadık. Bunun nedeni basit. Sağ tarafta sadece bir tane deyiş ya da sadece bir tane komut varsa kıvrık parantezlere gerek kalmıyor. Bu sadece 'durum sınıf' içinde değil bütün 'tanım' işlevleri için geçerli. 2. + ve - yöntemlerinin tanımında çıktı türü belirtmeye de gerek duymadık. Bu Scala derleyicisinin çok faydalı becerilerinden biridir: tanımda kullanılan deyiş ve komutlara bakarak çıktı türünü kendisi belirliyiveriyor! Buna İngilizce'de özel bir ad takılmıştır: "type inference" yani tür çıkarımı. """.p,
     "Herşey bir nesne demiştik. Bunu anımsamakta fayda var. Peki o zaman neden Java gibi nesneye yönelik dillerdeki biçimde yazmadık:".p,
     "n1.+(n2.-(n3)) // n1.+(n2).-(n3) ?".c,
     "Scala'nin sözdizimini kolaylaştıran ve kodun daha okunur hale gelmesini sağlayan becerilerinden biri sayesinde oldu. Parantezleri eklememize gerek kalmıyor çünkü derleyici onların nerede olması gerektiğini biliyor. Derleyicinin böyle becerikli olması bir tesadüf değil elbette. Scala DSL tasarımını desteklemeyi amaçlamış. DSL İngilizce Domain Specific Language sözcüklerinin başharfleri. Değişik uğraş alanlarının kendine özgü terimleri var elbet. Onları Scala kullanarak tanımlayıp uzmanlarının kolaylıkla kullanmalarını sağlayabiliyor uzman Scala mühendisleri. Şimdilik bilgin olsun. İlerde örneklerini gördükçe daha anlamlı olacak bu bahsettiklerimiz.".p,
-    "Sayılar da herşey gibi birer nesne. Ayrıca matematik işlemleri de özel değil. Onlar da hep bir nesne türü üzerinde tanımlı birer işlev yani yöntem. Örneğin + yöntemunu 1 sayısı üzerinde kullanmanın ikinci bir yolu da nesne adı ve sonra nokta koyup yöntem adını eklemek. Scala için  '+' , '-' , '*' ve '/' gibi matematik işlemlerinin hepsi birer yöntem:".p,
+    "Sayılar da herşey gibi birer nesne. Ayrıca matematik işlemleri de özel değil. Onlar da hep bir nesne türü üzerinde tanımlı birer işlev yani yöntem. Örneğin + yöntemini 1 sayısı üzerinde kullanmanın ikinci bir yolu da nesne adı ve sonra nokta koyup yöntem adını eklemek. Scala için  '+' , '-' , '*' ve '/' gibi matematik işlemlerinin hepsi birer yöntem:".p,
     "1.+(2)".c,
     "Son kere anımsatalım: Scala'da herşey bir nesne ve herşeyin bir türü (ya da sınıfı) var. Bütün işlevler de bir yöntem ve hep bir nesne ve türe bağlı".p,
     """Bu arada son yazdığımız satıra dikkat. Scala derleyicisi "1." deyişini "1.0" yani kesirli bir sayı sanmadı. Yoksa, bir çift parantez daha gerekecekti ve şöyle yazacaktık:""".p,
@@ -684,36 +704,36 @@ dez n3 = Nokta(-2, 2)
 
 pages += Page(
   name = "PMS",
-  body =tPage("Desen Eşleme ve Switch ve Case Komutları",
+  body =tPage("Desen Eşleme, Eşle ve Durum Komutları",
     "Desen Eşleme".h2,
-    "Program akışını değiştirmenin bazı yollarını görmüştük. Bilhassa eğer/yoksa yapısıyla akış nasıl dallandırılır biliyorsun. Şimdi de switch/case yapısıyla akışı aynı anda birden fazla dala ayırmayı görelim. C ve Java gibi daha eski dillerde de vardır switch/case. Scala bu kavramı daha da geneller ve cebirsel desen eşleme yapmayı sağlar! Bunu böyle anlamak mümkün değil elbet. Desene ingilizcede 'pattern' deniyor. 'Design patterns' ve 'pattern matching' gibi terimler çok yaygındır bilgisayar mühendisliğinde. Türkçeye 'tasarım desenleri' ve 'desen eşleme' diye çevirebiliriz. Desen yerine örüntü sözcüğü de var, ama onu pek duyan ve kullanan yok. Neyse biz gelin birkaç örnekle gizemi çözüverelim. İlk önce geleneksel ve daha basit kullanışıyla başlayalım: ".p,
+    "Program akışını değiştirmenin bazı yollarını görmüştük. Bilhassa eğer/yoksa yapısıyla akış nasıl dallandırılır biliyorsun. Şimdi de eşle/durum yapısıyla akışı aynı anda birden fazla dala ayırmayı görelim. C ve Java gibi daha eski dillerde de vardır benzeri yapılar. Scala bu kavramı daha da geneller ve cebirsel desen eşleme yapmayı sağlar! Bunu böyle anlamak mümkün değil elbet. Desene ingilizcede 'pattern' deniyor. 'Design patterns' ve 'pattern matching' gibi terimler çok yaygındır bilgisayar mühendisliğinde. Türkçeye 'tasarım desenleri' ve 'desen eşleme' diye çevirebiliriz. Desen yerine örüntü sözcüğü de var, ama onu pek duyan ve kullanan yok. Neyse biz gelin birkaç örnekle gizemi çözüverelim. İlk önce geleneksel ve daha basit kullanışıyla başlayalım: ".p,
     """tanım sayıdanYazıya(s: Sayı){
-  s match {
-    case 1 => satıryaz("Bir")
-    case 2 => satıryaz("İki")
-    case 5 => satıryaz("Beş")
-    case _ => satıryaz("Hata")
+  s eşle {
+    durum 1 => satıryaz("Bir")
+    durum 2 => satıryaz("İki")
+    durum 5 => satıryaz("Beş")
+    durum _ => satıryaz("Hata")
   }
 }""".c, 
     "sayıdanYazıya(5)".c,
-    """Burada her 'case' satırında kullandığımız '=>' iminin adı kalın ok imi olsun. Bu imden önce gelen desen ondan sonra gelen komut dizisi ya da deyişle eşleşiyor. Son örneğimizde 1 sayısı "Bir" yazısıyla eşleşiyor. Son desen olarak kullandığımız '_' imi herşey demek. Yani 's' sayısı ne olursa olsun artık eşini buluyor. Bu yapıda kullandığımız 'match' anahtar sözcüğü hemen hemen bütün işlevler gibi bir değere sahip. Onun için son örneği daha da kısa ve öz bir şekilde yazalım:""".p,
+    """Burada her 'durum' satırında kullandığımız '=>' iminin adı kalın ok imi olsun. Bu imden önce gelen desen ondan sonra gelen komut dizisi ya da deyişle eşleşiyor. Son örneğimizde 1 sayısı "Bir" yazısıyla eşleşiyor. Son desen olarak kullandığımız '_' imi herşey demek. Yani 's' sayısı ne olursa olsun artık eşini buluyor. Bu yapıda kullandığımız 'eşle' anahtar sözcüğü hemen hemen bütün işlevler gibi bir değere sahip. Onun için son örneği daha da kısa ve öz bir şekilde yazalım:""".p,
     """tanım sayıdanYazıya(s: Sayı) {
-  satıryaz(s match {
-    case 1 => "Bir"
-    case 2 => "İki"
-    case 5 => "Beş"
-    case _ => "Hata"
+  satıryaz(s eşle {
+    durum 1 => "Bir"
+    durum 2 => "İki"
+    durum 5 => "Beş"
+    durum _ => "Hata"
   })
 }
 """.c,
     "sayıdanYazıya(3)".c,
     "İşin güzel tarafı yukarıdaki eşleşmeyi tam tersine çevirmek de mümkün (Java ve C'deyse yapamazdık bunu):".p,
     """tanım yazıdanSayıya(y: Yazı) {
-  satıryaz(y match {
-    case "Bir" => 1
-    case "İki" => 2 
-    case "Beş" => 5
-    case _ => 0
+  satıryaz(y eşle {
+    durum "Bir" => 1
+    durum "İki" => 2 
+    durum "Beş" => 5
+    durum _ => 0
     }
   )
 }
@@ -721,11 +741,11 @@ pages += Page(
     """yazıdanSayıya("Beş")""".c,
     """İngilizce'de açık açık okuyabildiğimiz bir yazıyı sayıya çevirmeye "encoding", tersine de "decoding" derler. Son örnekle encoding, ondan öncekiyle de decoding yapmış olduk. Haberin olsun. Desen eşlemeyle bir nesnenin türüne göre de farklı işlemler yapmak kolaylaşır. Hemen bir örnek görelim:""".p,
     """tanım nedir(a: Her): Yazı = {
-    a match {
-        case x: Sayı  => "Bir Sayı"
-        case x: Yazı  => "Bir Yazı"
-        case x: Kesir => "Bir Kesir"
-        case _        => "Kim bilir ne türdür?"
+    a eşle {
+        durum x: Sayı  => "Bir Sayı"
+        durum x: Yazı  => "Bir Yazı"
+        durum x: Kesir => "Bir Kesir"
+        durum _        => "Kim bilir ne türdür?"
     }
 }
 
@@ -736,7 +756,7 @@ pages += Page(
  */
 satıryaz(nedir("text"), nedir(2), nedir(2F))
 """.c,
-    "Bakın bu yöntem 'case class' kullanarak yarattığımız türleri işlemekte o kadar faydalıdır ki, bir sonraki bölümü tamamen ona ayırdık.".p
+    "Bakın bu yöntem 'durum sınıf' kullanarak yarattığımız türleri işlemekte o kadar faydalıdır ki, bir sonraki bölümü tamamen ona ayırdık.".p
   )
 )
 
@@ -753,19 +773,19 @@ pages += Page(
  */     
 """.c,                
     "İlk görevimiz çatal ve yaprak türlerini tanımlamak. Şimdi sorun şu. Her çatal iki dala ayrılıyor ama her iki dal da ya başka bir çatal olabilir ya da bir yaprak olabilir! Yani çatalın iki çocuğu olmalı ve bu çocuklar sadece bu iki türden biri olmalılar, ya bir çatal ya da bir yaprak, ama başka da hiç bir tür olmamalılar. Yanlışlıkla bir sayı, yazı ya da dizin olursa başımız derdfe girer (buna type unsafe, yani tür güvensizliği derler ve eski çağlarda bilgisayar programcılarını çok terletmiştir). Scala bu zorluğu sınıf hiyerarşisi dediğimiz yöntemle çözer. İlk önce genel bir ağaç türü ya da sınıfı oluşturalım sonra da buna iki tane alt tür ekleyelim. Bakın nasıl da kolay:".p,
-    """class Ağaç
-case class Çatal(anahtar: Yazı, sol: Ağaç, sağ: Ağaç) extends Ağaç
-case class Yaprak(anahtar: Yazı, değer: Sayı) extends Ağaç
+    """sınıf Ağaç
+durum sınıf Çatal(anahtar: Yazı, sol: Ağaç, sağ: Ağaç) yayar Ağaç
+durum sınıf Yaprak(anahtar: Yazı, değer: Sayı) yayar Ağaç
 """.c,
-    """Çatal ve Yaprak için Ağaç türünün alt türü deriz. Bunu uzatmak anlamına gelen 'extends' özel sözcüğüyle belirliyoruz. Ağaç da üst tür olarak bilinecek bundan sonra. Çatal ve Yaprak alt türlerine ataları olan Ağaç üst türünün bütün özellikleri miras kalır, hem de Ağaç daha ölmeden! :-) Bakın çok ilginç birşey daha göreceğiz hemen şimdi. Bir değerin türü Ağaç olsun diyeceğiz ama onun gerçek değeri bir Yaprak ya da Çatal olabilecek:""".p,
+    """Çatal ve Yaprak için Ağaç türünün alt türü deriz. Bunu 'yayar' özel sözcüğüyle belirliyoruz. Ağaç da üst tür olarak bilinecek bundan sonra. Çatal ve Yaprak alt türlerine ataları olan Ağaç üst türünün bütün özellikleri miras kalır, hem de Ağaç daha ölmeden! :-) Bakın çok ilginç birşey daha göreceğiz hemen şimdi. Bir değerin türü Ağaç olsun diyeceğiz ama onun gerçek değeri bir Yaprak ya da Çatal olabilecek:""".p,
     """dez ağaç1: Ağaç = Yaprak("c", 24)""".c,
     "Bu nasıl oluyor? Yaprak Ağaç'ın uzantısıydı ya. O sayede Ağaç deyince genel olarak ya Çatal ya da Yaprak demiş oluyoruz. Bu sayede Çatal'ın tanımındaki sol ve sağ değerlerinin türü neden Ağaç oldu anladık değil mi? Ama tersini yapamayız ona göre. Neden? Çünkü Yaprak dedik mi artık yeterince özelleşmiş oluyor ve anahtar ve değeri olarak bir sayı gerekiyor. Ne Ağaç ne de Çatal'da bir sayı yok, değil mi?".p,
     "Şimdi en başta bahsettiğimiz arama işlevine geldi sıra. Desen eşleme değil mi bu kısmın adı?".p,
     "Bakın bu işlev ağacımızı alacak ve özyineleme yöntemiyle verimli arama işlemini gerçekleştirecek. Yani bir çatala geldiğinde kendi kendini sağ ya da sol küçük ağaç ile tekrar çağıracak. Ama eğer bir yaprak görürse elbette yineleme duracak. Desen nerede o zaman? Küçük ağaç bir çatal mı yoksa yaprak mı onu belirleyecek desenlerimiz (ya da örüntülerimiz). Çok lafa gerek yok. Yazılımcık yalın ve kendi kendini anlatıveriyor:".p,
     """tanım bul(ağaç: Ağaç, anahtar: Yazı): Sayı = {
-  ağaç match {
-    case Yaprak(a, değer)   => eğer (a == anahtar) değer yoksa 0
-    case Çatal(a, sol, sağ) => bul((eğer (a >= anahtar) sol yoksa sağ), anahtar)
+  ağaç eşle {
+    durum Yaprak(a, değer)   => eğer (a == anahtar) değer yoksa 0
+    durum Çatal(a, sol, sağ) => bul((eğer (a >= anahtar) sol yoksa sağ), anahtar)
   }
 }
 
@@ -779,17 +799,17 @@ dez ağaç = Çatal("b", Çatal("a", Yaprak("a", 30), Yaprak("b", 10)), Yaprak("
  *     a,30  b,10       
  */     
 """.c,
-    "'case class' sayesinde Çatal ve Yaprak nesnelerini kolayca tanımladık. Haydi şimdi yapalım bir iki arama:".p,
+    "'durum sınıf' sayesinde Çatal ve Yaprak nesnelerini kolayca tanımladık. Haydi şimdi yapalım bir iki arama:".p,
     """bul(ağaç, "a")  // 30""".c,
     """bul(ağaç, "c")  // 20""".c,
     "Bu kadarla kalmaz elbet. Ağaca yeni anahtar/değer çiftleri eklemek için de bir işlev iyi olur. Ha, bir de yaprağı koparmak gerekebilir. Bütün bu işlevleri yeni bir İkilAğaç sınıfı tanımlayıp içine koymaya ne dersin? Onu sana bırakıyorum. Biraz düşün, Kojo'da birşeyler yazıp çiziştir bakalım. Çok daha iyi öğreneceksin o sayede. Kolay gelsin!".p,
     "Bu arada desenler/örüntüler yukarda gördüğümüz gibi değişken olmak zorunda değil. Yalın bir değer de kullanabiliriz örüntü olarak. Bir önceki bölümde de görmüştük hani sayıdan yazıya ve tersini yaparken.".p,
     "Bir örnek daha verelim yine de. Diyelim ki (c -> 20) çiftinin bulunmasını istemiyoruz. Nedense. Bakın nasıl kolay:".p,
     """tanım bul2(ağaç: Ağaç, anahtar: Yazı): Sayı = {
-  ağaç match {
-    case Çatal(a, sol, sağ) => bul2(eğer (a >= anahtar) sol yoksa sağ, anahtar)
-    case Yaprak("c", _)     => 0
-    case Yaprak(a, değer)   => eğer (a == anahtar) değer yoksa 0
+  ağaç eşle {
+    durum Çatal(a, sol, sağ) => bul2(eğer (a >= anahtar) sol yoksa sağ, anahtar)
+    durum Yaprak("c", _)     => 0
+    durum Yaprak(a, değer)   => eğer (a == anahtar) değer yoksa 0
   }
 }
 
@@ -817,9 +837,9 @@ pages += Page(
   body = tPage("İşlevler de Birer Nesnedir",
     "İşlevler de Birer Nesnedir".h2,
     """Scala dilinde herşey bir nesnedir demiştik. İşlevler de aynen öyle! Bir işlevi başka işlevlere girdi yapabiliriz. Bir işlevin çıktısı da bir işlev olabilir. Ayrıca değişkenlerin ya da değişmezlerin değeri de bir işlevin kendisi olabilir. Bunların örneklerini biraz sonra göreceğiz. Bu özellikler Scala dilinin çok faydalı bir becerisidir. Karşımıza sık sık çıkan bazı zorlukları çok kısa ve güzel bir şekilde çözmemizi sağlarlar. Bunlar arasında program akışını yönlendirme teknikleri de var. Örneğin, Scala dilinde yazılmış eski adı "Actors" yeni adıyla "Akka" birimi (İngilizce'de module ya da library denen ve başka yazılımlar tarafından kullanılan bir yazılım bütününe birim denir) işlevleri nesne gibi kullanarak eşzamanlı işlevlerin yazılımlarını kolaylaştırır. Ama biz dizinlerin kullanılmasıyla başlayalım. Bakın göreceksiniz işlevlerin nesne olarak kullanılmasına güzel bir giriş olacak.""".p,
-    """Nesneleri bir dizi olarak ele almak çok doğal ve faydalı, değil mi? Ne tür örnekler geliyor senin aklına? Her sözcük, örneğin, bir dizi harften oluşur. Gün içersinde yaptığımız şeyleri bir dizi eylem olarak düşünebiliriz. Scala dili Dizin adını verdiğimiz bir tür tanımlamıştır. Bunu daha önce pek görmedik. Ama aslında çok basit bir kavram. Dizin türü bir dizi nesneyi ele almayı ve işlemeyi çok kolaylaştırır ve hemen hemen her yazılımcık ve daha büyük yazılımlarda sık sık kullanılır. Dizin içindeki nesnelerin belli bir sırası vardır. Dizin türünün sunduğu pek çok yöntem ve komut sayesinde Dizin tanımlamak ve işlemek kolaylaşır. Daha önce Nokta sınıfıyla gördüğümüz gibi Dizin oluşturmanın bir yolu Dizin sınıfının yapıcı yöntemunu (constructor) kullanmak. Bu yapıcı yöntema bir ya da daha çok girdi sokarız ve yapıcı o girdilerin oluşturduğu bir Dizin yapıverir. İlk örneğimizle hemen başlayalım. Bir dizi sayı oluşturalım. Bu dizinin türü "Dizin[Sayı]" olacak. Buradaki köşeli parantezler dizinin içindeki elemanların türünü belirliyor, yani Sayı. Her eleman bir Sayı olduğu için Scala tür çıkarımı yaparak 'dzn' değişmezinin türünü Dizin[Sayı] olarak belirler. Yani bizim bunu açık açık yazmak için zahmet etmemiz gerekmez.""".p,
+    """Nesneleri bir dizi olarak ele almak çok doğal ve faydalı, değil mi? Ne tür örnekler geliyor senin aklına? Her sözcük, örneğin, bir dizi harften oluşur. Gün içersinde yaptığımız şeyleri bir dizi eylem olarak düşünebiliriz. Scala dili Dizin adını verdiğimiz bir tür tanımlamıştır. Bunu daha önce pek görmedik. Ama aslında çok basit bir kavram. Dizin türü bir dizi nesneyi ele almayı ve işlemeyi çok kolaylaştırır ve hemen hemen her yazılımcık ve daha büyük yazılımlarda sık sık kullanılır. Dizin içindeki nesnelerin belli bir sırası vardır. Dizin türünün sunduğu pek çok yöntem ve komut sayesinde Dizin tanımlamak ve işlemek kolaylaşır. Daha önce Nokta sınıfıyla gördüğümüz gibi Dizin oluşturmanın bir yolu Dizin sınıfının yapıcı yöntemini (constructor) kullanmak. Bu yapıcı yönteme bir ya da daha çok girdi sokarız ve yapıcı o girdilerin oluşturduğu bir Dizin yapıverir. İlk örneğimizle hemen başlayalım. Bir dizi sayı oluşturalım. Bu dizinin türü "Dizin[Sayı]" olacak. Buradaki köşeli parantezler dizinin içindeki elemanların türünü belirliyor, yani Sayı. Her eleman bir Sayı olduğu için Scala tür çıkarımı yaparak 'dzn' değişmezinin türünü Dizin[Sayı] olarak belirler. Yani bizim bunu açık açık yazmak için zahmet etmemiz gerekmez.""".p,
     "dez dzn = Dizin(1, 7, 2, 8, 5, 6, 3, 9, 14, 12, 4, 10)".c,
-    "Tamam, şimdi elimizde bir dizin var. Dizinleri kullanmanın üç temel yöntemu var: 'başı, kuyruğu ve ::'. Her dizinin bir başı var. 'başı' yöntemu bize ilk elemanı verir. 'kuyruğu' yöntemu, dizinin başı hariç diğer elemanlarından oluşan kısmını verir. Ve son olarak da çift iki nokta üstüste yani '::' bir dizinin başına yeni bir eleman, yani yeni bir baş ekler. Bu baş ve kuyruk deyişi sana yılanları anımsattıysa haklısın. Dizinler yılanlara benziyor: hep başından tutmakta fayda var! Şaka bir yana Dizin türü çok gelişmiştir ve daha pek çok kullanışlı yöntemu vardır. 'Dizinlerin Kullanılışı' kısmında daha pek çok Dizin yöntemu göreceğiz.".p,
+    "Tamam, şimdi elimizde bir dizin var. Dizinleri kullanmanın üç temel yöntemi var: 'başı, kuyruğu ve ::'. Her dizinin bir başı var. 'başı' yöntemi bize ilk elemanı verir. 'kuyruğu' yöntemi, dizinin başı hariç diğer elemanlarından oluşan kısmını verir. Ve son olarak da çift iki nokta üstüste yani '::' bir dizinin başına yeni bir eleman, yani yeni bir baş ekler. Bu baş ve kuyruk deyişi sana yılanları anımsattıysa haklısın. Dizinler yılanlara benziyor: hep başından tutmakta fayda var! Şaka bir yana Dizin türü çok gelişmiştir ve daha pek çok kullanışlı yöntemi vardır. 'Dizinlerin Kullanılışı' kısmında daha pek çok Dizin yöntemi göreceğiz.".p,
     "'başı' ilk yani en soldaki elemanı verir. dzn örneğinde bu '1' olacak.".p,
     "satıryaz(dzn.başı)".c,
     "'kuyruğu' başı yani ilk elemanı atlar ve dizinin gerisini verir. Bakın en baştaki 1 sayısı yok kuyrukta:".p,
@@ -827,14 +847,14 @@ pages += Page(
     "'::' soldaki elemanı sağdaki dizinin başına ekleyerek oluşan yeni dizini verir.".p,
     "satıryaz(23 :: dzn)".c,
     "Burada önemli bir gözlem yapalım. Bu yöntemler dzn dizisini değiştirmez! Hep yeni bir Dizin üretirler. Bunun için Dizin türüne değişmez (immutable) bir veri yapısı da denir.".p,
-    "Bu üç temel yöntemla aklına gelen her dizini tanımlayabilir ve dizinlerle yapılabilecek ne varsa yapabilirsin. Bir örnek olarak gel bizim örnek dizinimizin içindeki tek sayıları bulalım:".p,
+    "Bu üç temel yöntemle aklına gelen her dizini tanımlayabilir ve dizinlerle yapılabilecek ne varsa yapabilirsin. Bir örnek olarak gel bizim örnek dizinimizin içindeki tek sayıları bulalım:".p,
     """tanım tek(girdi: Dizin[Sayı]): Dizin[Sayı] = {
     eğer (girdi == Boş) Boş
     yoksa eğer (girdi.başı % 2 == 1) girdi.başı :: tek(girdi.kuyruğu)
     yoksa tek(girdi.kuyruğu)
 }
 """.c,
-    "Farkettin mi? Bu işlev dizinin başına bakar ve duruma göre kuyrukla özyineler, yani kendi kendini çağırır. Bunu yaparken 'kuyruğu' yöntemunu kullanır ve bu sayede dizinin elemanlarını teker teker ele alır. 'Boş' özel bir değer ve içi boş olan diziyi belirtiyor. Unutmadan, içi boş olan tek dizi var aynı yegane boş küme gibi. Boş yerine şöyle de yazabilirdik: Dizin[Sayı](). Neyseki Boş tanımlanmış. Daha kısa ve anlaşılır oldu değil mi? Dizinin sonuna gelince özyineleme son bulur ve tek sayılardan oluşan yeni bir Dizin çıkar ortaya.".p,
+    "Farkettin mi? Bu işlev dizinin başına bakar ve duruma göre kuyrukla özyineler, yani kendi kendini çağırır. Bunu yaparken 'kuyruğu' yöntemini kullanır ve bu sayede dizinin elemanlarını teker teker ele alır. 'Boş' özel bir değer ve içi boş olan diziyi belirtiyor. Unutmadan, içi boş olan tek dizi var aynı yegane boş küme gibi. Boş yerine şöyle de yazabilirdik: Dizin[Sayı](). Neyseki Boş tanımlanmış. Daha kısa ve anlaşılır oldu değil mi? Dizinin sonuna gelince özyineleme son bulur ve tek sayılardan oluşan yeni bir Dizin çıkar ortaya.".p,
     "Haydi deneyelim.".p,
     "tek(dzn)".c,
     "Ne kadar yalın bir çözüm, değil mi? Tek yerine çift sayıları bulmak da artık çok kolay:".p,
@@ -858,7 +878,7 @@ pages += Page(
 }
 """.c,
     "ele(dzn, tekMi)".c,
-    """'ele' işlevinin ilk girdisinin adı girdi ve bu bizim sayı dizimiz. İkinci arguman ise eleme koşulumuz, yani yeni tanımladığımız işlev. Türünü nasıl yazdık farkedelim: koşulun türü bir sayıyı girdi olarak alıp bir İkil veren, yani koşul sağlanıyorsa doğru yoksa da yanlış diyen bir işlev. 'ele' adlı yöntemumuz her işlevi girdi olarak kabul etmez. Sadece Sayı alıp İkil veren işlev türü ile çalışır. 'ele' yöntemunun içinde de 'koşul' adlı değeri aynı diğer işlevler gibi kullandık. Bu ele adlı işlevi daha önceki tek ve çift işlevleriyle karşılaştırmanı öneririm. Genellemenin nasıl yapıldığını iyice özümsemende fayda var. Bu genelleme günlük hayattaki istisnası bol onun için de bizi sık sık yanıltan genellemelere benzemez. Zararı yok sayılır (ikinci bir girdi girmemiz gerekiyor, yani zahmeti biraz arttı) ama kazancı çok. Birazdan bir kaç örnek daha görünce daha iyi anlayacaksın. Bu arada, eğer çok istersek bu zararı iyice yok edebiliriz. Örneğin, bu işlevi sık sık tek sayıları bulmak için kullanacaksak, şöyle yapalım ki iyice kolaylaylaşsın kullanımı:""".p,
+    """'ele' işlevinin ilk girdisinin adı girdi ve bu bizim sayı dizimiz. İkinci arguman ise eleme koşulumuz, yani yeni tanımladığımız işlev. Türünü nasıl yazdık farkedelim: koşulun türü bir sayıyı girdi olarak alıp bir İkil veren, yani koşul sağlanıyorsa doğru yoksa da yanlış diyen bir işlev. 'ele' adlı yöntemimiz her işlevi girdi olarak kabul etmez. Sadece Sayı alıp İkil veren işlev türü ile çalışır. 'ele' yönteminin içinde de 'koşul' adlı değeri aynı diğer işlevler gibi kullandık. Bu ele adlı işlevi daha önceki tek ve çift işlevleriyle karşılaştırmanı öneririm. Genellemenin nasıl yapıldığını iyice özümsemende fayda var. Bu genelleme günlük hayattaki istisnası bol onun için de bizi sık sık yanıltan genellemelere benzemez. Zararı yok sayılır (ikinci bir girdi girmemiz gerekiyor, yani zahmeti biraz arttı) ama kazancı çok. Birazdan bir kaç örnek daha görünce daha iyi anlayacaksın. Bu arada, eğer çok istersek bu zararı iyice yok edebiliriz. Örneğin, bu işlevi sık sık tek sayıları bulmak için kullanacaksak, şöyle yapalım ki iyice kolaylaylaşsın kullanımı:""".p,
     """tanım ele(girdi: Dizin[Sayı], koşul: (Sayı) => İkil = tekMi): Dizin[Sayı] = {
     eğer (girdi == Boş) Boş
     yoksa eğer (koşul(girdi.başı)) girdi.başı :: ele(girdi.kuyruğu, koşul)
@@ -875,7 +895,7 @@ pages += Page(
     "Geri geri de gidebiliriz:".p, "30 |-| -35 adım -5".c,
     """Aralık(30, -36, -5)
 Aralık.kapalı(30, -35, -5)""".c,
-    "Aralığın sonuna dizine yöntemunu ekle bakalım ne olacak. İngilizcesi toList. Aralıkları araya sıkıştırdık, umarım kafa karıştırmadık. Hemen konumuza dönelım. Nerede kalmıştık? Bir sayı dizisı içinden herhangi bir koşula göre bazı sayıları seçmek istiyorduk. Ama tek sayıları seçmek varsayılan koşulumuz olsun dedik. Deneyelim hemen:".p,
+    "Aralığın sonuna dizine yöntemini ekle bakalım ne olacak. İngilizcesi toList. Aralıkları araya sıkıştırdık, umarım kafa karıştırmadık. Hemen konumuza dönelım. Nerede kalmıştık? Bir sayı dizisı içinden herhangi bir koşula göre bazı sayıları seçmek istiyorduk. Ama tek sayıları seçmek varsayılan koşulumuz olsun dedik. Deneyelim hemen:".p,
     """ele(ilkOnSayı)""".c,
     """Aynı 'tek' adını verdiğimiz işlev gibi çalıştı, değil mi? Ama, ele adlı işlevimiz hala daha genel. İstersek ikinci arguman olarak başka bir koşul girer, başka tür bir eleme yaparız. Hemen geliyor bir örnek!""".p,
     "Çift sayıları bulmak için de benzer bir yöntem kullanabiliriz elbet. Yani çiftMi diye yeni bir işlev tanımlar ve sonra kullanırız. Ama adsız (anonymous) bir işlev kullanarak çok daha kısaca ifade edebiliriz dileğimizi. Ne demek adsız? Yani 'tanım' özel sözcüğünü kullanmadan ve işlevin adını vermeden bir işlev tanımlayacağız. Bu işlev basitçe girdiyi alacak ve onu değerlendirecek. Bu özel yöntemde '=>' imini kullanıyoruz. Solunda girdiler, sağında da işlevin eylemleri gelecek.".p,
@@ -901,7 +921,7 @@ Aralık.kapalı(30, -35, -5)""".c,
     "Ya da bir cümle içindeki uzunca sözcükleri seçmek için de kullanabiliriz aynı genellenmiş ele adlı işlevimizi:".p,
     """dez dizinler = Dizin("Bugün", "sizi", "gördüğüme", "çok", "memnun", "oldum", "Nasılsınız")""".c,
     """ele(dizinler, (v: Yazı) => v.boyu > 4)""".c,
-    "Yazı türünün 'boyu' adlı yöntemu yazıda kaç harf olduğunu gösterir. Dizinlerle ilgili bölümde de göreceğimiz gibi Dizin türünün 'ele' adlı bir yöntemu var. Onu kullanarak da benzer eleme işlemlerini yapabiliriz:".p,
+    "Yazı türünün 'boyu' adlı yöntemi yazıda kaç harf olduğunu gösterir. Dizinlerle ilgili bölümde de göreceğimiz gibi Dizin türünün 'ele' adlı bir yöntemi var. Onu kullanarak da benzer eleme işlemlerini yapabiliriz:".p,
     "dizinler.ele((v: Yazı) => v.boyu < 5)".c,
     "Bu genelleyici işlevlere daha sonra yine bakacağız ve başka özelliklerini keşfedeceğiz. Ama şimdilik konumuza dönelim ve işlevleri nesne olarak kullanmaya bakalım.".p,
     "'İşlevler De Birer Nesnedir' Hakkında Başka Birkaç Şey Daha".h3,
@@ -916,7 +936,7 @@ Aralık.kapalı(30, -35, -5)""".c,
     "Bir kaç tane daha yaygın kullanımı olan örnekler görelim. Bunlar dizinleri işlemekte çok faydalı olurlar. Sen de yakında göreceksin.".p,
     "düzİşle (flatMap)".h4,
     "dizinler.düzİşle(_.dizine)".c,
-    "Flat İngilizce'de kat kat olmayan yani düz anlamında kullanılır. Bu örnekte bizim yazı dizinimizi aldık, içindeki her bir yazıyı ilk önce 'dizine' yöntemunu kullanarak birer harf dizisine çevirdik ve onlarin hepsini birleştirdik. Sonucunu gördün, değil mi? 'düzİşle' yerine 'işle' (map) yöntemunu kullanarak aradaki farkı daha iyi anlarsın. map İngilizce'de hem harita hem de eşlemek anlamlarına gelir. Ama matematikte ve bilgisayar biliminde yeni bir anlam kazanmıştır. Bir çerçeveden başka bir çerçeveye geçiş, birinci çerçeveyi işleyerek ikinci çerçeveye varış gibi anlamlara gelir. Ama anlatması zor. Nasıl çalıştığını görüp anlayıverelim:".p,
+    "Flat İngilizce'de kat kat olmayan yani düz anlamında kullanılır. Bu örnekte bizim yazı dizinimizi aldık, içindeki her bir yazıyı ilk önce 'dizine' yöntemini kullanarak birer harf dizisine çevirdik ve onlarin hepsini birleştirdik. Sonucunu gördün, değil mi? 'düzİşle' yerine 'işle' (map) yöntemini kullanarak aradaki farkı daha iyi anlarsın. map İngilizce'de hem harita hem de eşlemek anlamlarına gelir. Ama matematikte ve bilgisayar biliminde yeni bir anlam kazanmıştır. Bir çerçeveden başka bir çerçeveye geçiş, birinci çerçeveyi işleyerek ikinci çerçeveye varış gibi anlamlara gelir. Ama anlatması zor. Nasıl çalıştığını görüp anlayıverelim:".p,
     "dizinler.işle(_.dizine)".c,
     "sıralamak (sort)".h4,
     "Sort da sıraya dizmek anlamına gelir. sırayaSok (sortWith) yöntemiyle kendi girdiğimiz bir koşul ile sıralıyoruz. Sözcükleri a'dan z'ye sıralayalım:".p,
@@ -925,7 +945,7 @@ Aralık.kapalı(30, -35, -5)""".c,
     "dizinler.sırayaSok(_ > _)".c,
     "Farkettiysen büyük harfliler başta geliyor. Onun yerine harflerin büyük küçük olduğuna bakmadan sıralamak istersek şöyle yaparız:".p,
     "dizinler.sırayaSok(_.büyükHarfe < _.büyükHarfe)".c,
-    "Yani hepsini büyük harfe çeviriverdik karşılaştırmadan önce. İştediğimiz koşulu girerek istediğimiz şekilde sıralama yapıverdik. Yani sıralama yöntemunu baştan yazmamız gerekmedi. İşte işlevlerin nesne olmasının faydaları!".p,
+    "Yani hepsini büyük harfe çeviriverdik karşılaştırmadan önce. İştediğimiz koşulu girerek istediğimiz şekilde sıralama yapıverdik. Yani sıralama yöntemini baştan yazmamız gerekmedi. İşte işlevlerin nesne olmasının faydaları!".p,
     "katlama (fold)".h4,
     "Soldan ve sağdan katlama bir dizinin elemanlarını bir araya getirmekte kullanılan çok yaygın ve faydalı yöntemlerdir. Elemanları nasıl bir araya getirmek istediğimizi iki girdi alan bir işlev girerek belirtiriz. Bu birleştirme işlemi soldan ya da sağdan başlar. Ve başlarken de yine girdiğimiz bir değer kullanır. Yani iki tane girdisi var bu katlama yöntemlerinin.".p,
     "Bu iki girdiyi daha kolay okunsun diye iki parantez grubuyla gireriz. Birazdan bunu 'tanım' komuduyla işlevi tanımlarken nasıl yapıldığını göreceğiz.".p,
@@ -968,7 +988,7 @@ için (i <- 1 |-| 4) { ileri(100); sağ() }
     """tanım topla(s: Sayı*) = s.indirge(_ + _)""".c,
     """topla(1, 2, 3)""".c,
     """topla(4, 5, 6, 7, 8, 9, 10)""".c,
-    "Girdinin türünden sonra gelen yıldız imi, yani '*' sayesinde 's' girdisi tek bir sayı değil bir dizi sayı oluveriyor. Onun için de 'indirge' (ingilizcesi reduce) yöntemunu kullandık. Bu soldanKatla yöntemuna benzer ama daha basittir. Bakın girilen bütün sayıları toplamak bu kadar kolay. Bazı istisnalara da bakalım, ne olacak?".p,
+    "Girdinin türünden sonra gelen yıldız imi, yani '*' sayesinde 's' girdisi tek bir sayı değil bir dizi sayı oluveriyor. Onun için de 'indirge' (ingilizcesi reduce) yöntemini kullandık. Bu soldanKatla yöntemine benzer ama daha basittir. Bakın girilen bütün sayıları toplamak bu kadar kolay. Bazı istisnalara da bakalım, ne olacak?".p,
     """topla(99) // pek toplamaya gerek olmasa da yine de tek değerle de çalışması güzel!""".c,
     """topla() // Bak ne oldu? Bunu onarabilir misin?""".c,
     "Bu yıldızlı girdiden önce yıldızsız yani normal girdiler de tanımlayabiliriz. Ama yıldızlı yani yinelenen girdi en son gelmelidir.".p
@@ -979,7 +999,7 @@ pages += Page(
   name = "Tup",
   body = tPage("Sıralamalar (Tuple)",
     "Sıralamalar (Tuple)".h3,
-    "Diyelim ki bir işlevimiz var ve birden çok çıktısı olsun istiyoruz. Ya da bir koleksiyon oluşturacağız ama her elemanı birden fazla değer tutsun istiyoruz. Sözle anlamak zor, sabır, hemen örnek vereceğiz aşagıda. Bu tür durumlarda yeni bir tür tanımlamak zor olmaz elbet. Yeni bir sınıf nasıl oluşturulur gördük. Ama biraz zahmetli elbette. Epey kod yazmak gerekebiliyor, 'case class' bile olsa. Sadece kod yazmak değil esas zorluk anlamlı isimler bulmak ve onları uzun uzun kullanmak aslında. Gerçekten gerekmedikçe yeni adlar üretmek zorunda kalmasak çok iyi olur, değil mi? Uzun lafın kısası, Scala dili, adsız değerleri gerektiği anda ve gerektiği yerde sıralamamıza izin vererek bu sorunu güzelce çözer. Sıralama dedik ya, İngilizce'si 'tuple' parantez içinde virgülle ayrılan bir ya da daha çok değerin bir araya gelmesinden ibaret. İşin güzel tarafı değerlerin türleri aynı olmak zorunda değil. Örneğin:".p,
+    "Diyelim ki bir işlevimiz var ve birden çok çıktısı olsun istiyoruz. Ya da bir koleksiyon oluşturacağız ama her elemanı birden fazla değer tutsun istiyoruz. Sözle anlamak zor, sabır, hemen örnek vereceğiz aşagıda. Bu tür durumlarda yeni bir tür tanımlamak zor olmaz elbet. Yeni bir sınıf nasıl oluşturulur gördük. Ama biraz zahmetli elbette. Epey kod yazmak gerekebiliyor, 'durum sınıf' bile olsa. Sadece kod yazmak değil esas zorluk anlamlı isimler bulmak ve onları uzun uzun kullanmak aslında. Gerçekten gerekmedikçe yeni adlar üretmek zorunda kalmasak çok iyi olur, değil mi? Uzun lafın kısası, Scala dili, adsız değerleri gerektiği anda ve gerektiği yerde sıralamamıza izin vererek bu sorunu güzelce çözer. Sıralama dedik ya, İngilizce'si 'tuple' parantez içinde virgülle ayrılan bir ya da daha çok değerin bir araya gelmesinden ibaret. İşin güzel tarafı değerlerin türleri aynı olmak zorunda değil. Örneğin:".p,
     "(3, 'c')".c,
     """(3.14, "pi sayısının yaklaşık değeri, 22/7 olarak da bilinir")""".c,
     """(22/7, 22/7.0, 3.14, "pi")""".c,
@@ -1001,7 +1021,7 @@ satıryaz((3, 'c')._2)""".c,
     """dez yazı = "Kojo ile oyun oynayarak Scala dilini öğrenmek ve hatta işlevsel ve nesneye yönelik yazılım becerisi edinmek harika değil mi """".c,
     """dez sözcükDizini = yazı.böl(" ")""".c,
     "Bu hesaplamayı yapmak için uygulamayı düşündüğümüz yöntem şu: ilk önce harfleri büyültelim sonra da sıraya sokalım.".p,
-    "Ondan sonra da katlama (fold) yöntemunu kullanarak arka arkaya tekrar eden harfleri sayıvereceğiz. Daha önce ne görmüştük? Katlama işlevi iki girdi alıyor: bir başlangıç değeri, bir de bir dizin, yani bizim sıraya sokulmuş harf dizimiz. Katlama ilk başlangıç değerini dizinin ilk elemanıyla bir işleme sokacak. Ne işlemi mi? Biz ne istersek o! Burada teker teker ele aldığımız harfler değişmedikçe sayısını bir artıracağımız bir sayacımız olacak. Yeni gelen harf değişik olursa yeni bir sayaç tanımlayacağız. Her sayaç tabii ki birden başlayacak. Karmaşık mı geldi biraz? Çok doğal. Görüp biraz üstünde düşününce daha anlaşılır olacak. Ne de olsa ileri yazılım tekniği bu!".p,
+    "Ondan sonra da katlama (fold) yöntemini kullanarak arka arkaya tekrar eden harfleri sayıvereceğiz. Daha önce ne görmüştük? Katlama işlevi iki girdi alıyor: bir başlangıç değeri, bir de bir dizin, yani bizim sıraya sokulmuş harf dizimiz. Katlama ilk başlangıç değerini dizinin ilk elemanıyla bir işleme sokacak. Ne işlemi mi? Biz ne istersek o! Burada teker teker ele aldığımız harfler değişmedikçe sayısını bir artıracağımız bir sayacımız olacak. Yeni gelen harf değişik olursa yeni bir sayaç tanımlayacağız. Her sayaç tabii ki birden başlayacak. Karmaşık mı geldi biraz? Çok doğal. Görüp biraz üstünde düşününce daha anlaşılır olacak. Ne de olsa ileri yazılım tekniği bu!".p,
     "Kısaca söylemek gerekirse amacımız ikili sıralamalardan oluşan bir dizin oluşturmak. Her ikilinin birinci alanında bir harf ikinci alanında da kaç tane olduğunu tutan sayacı olacak. Bu dizin harflerin sıklığını sunacak bize.".p,
 """// Tek satırda epey iş var. Teker teker bak istersen
 dez harfler = sözcükDizini.düzİşle(_.dizine).işle(_.büyükHarfe).sırayaSok(_ < _)
@@ -1010,20 +1030,20 @@ dez g1 = sözcükDizini.düzİşle(_.dizine); satıryaz("g1", g1)
 dez g2 = g1.işle(_.büyükHarfe); satıryaz("g2", g2)
 """.c,
 
-    """Şimdi de katlama yöntemimiz gelsin bakalım. Başladığımızda sunum boş olacak elbet. Nasıl tanımlarız istediğimiz boş dizini? "Dizin[(Harf, Sayı)]()" yani bir dizi (harf, sayaç) çifti. soldanKatla yöntemumuz ikinci girdi olarak ne bekler anımsadın mı? Bir işlev! Nasıl bir işlev gerekiyor biraz daha iyi tahmin edebilirsin belki şimdi. Adsız işlev olacak, bir. İki tane girdisi olacak, iki. İlk girdisi bizim çift dizinimiz, ikinci girdi de harflerden biri.""".p,
+    """Şimdi de katlama yöntemimiz gelsin bakalım. Başladığımızda sunum boş olacak elbet. Nasıl tanımlarız istediğimiz boş dizini? "Dizin[(Harf, Sayı)]()" yani bir dizi (harf, sayaç) çifti. soldanKatla yöntemimiz ikinci girdi olarak ne bekler anımsadın mı? Bir işlev! Nasıl bir işlev gerekiyor biraz daha iyi tahmin edebilirsin belki şimdi. Adsız işlev olacak, bir. İki tane girdisi olacak, iki. İlk girdisi bizim çift dizinimiz, ikinci girdi de harflerden biri.""".p,
 
 """dez sıklık = harfler.soldanKatla(Dizin[(Harf, Sayı)]()) {
-    case ((önceki, sayaç) :: kuyruk, harf) eğer (önceki == harf) => (önceki, sayaç + 1) :: kuyruk
-    case (sunum, harf)                                         => (harf, 1) :: sunum
+    durum ((önceki, sayaç) :: kuyruk, harf) eğer (önceki == harf) => (önceki, sayaç + 1) :: kuyruk
+    durum (sunum, harf)                                         => (harf, 1) :: sunum
 }
 """.c,
     "Bunu anlayamadım diye üzülme sakın! Daha önce görmediğimiz bir kaç becerisi var Scala derleyicisinin burada!".p,
 
-    "1) adsız işlevimizi tanımlarken 'case' yani desen/örüntü eşleme yapısı kullanabiliriz. Bunun için normal parantez yerine kıvrık parantez kullanmamız yeter. 'match' özel sözcüğüne gerek kalmadı. Ondan önce gelen değişmezlere de! Yani bu epey faydalı bir kısa yol oluyor ve bunu iyi bilmekte fayda var! Normal, yani kısaltılmamış halini anımsayalım hemen:".p,
-    "(a, b) => (a, b) match {case ... => ...; case ... => ...}".p,
-    "match ve ondan önceki hiç birşeye gerek kalmıyor!".p,
+    "1) adsız işlevimizi tanımlarken 'durum' yani desen/örüntü eşleme yapısı kullanabiliriz. Bunun için normal parantez yerine kıvrık parantez kullanmamız yeter. 'eşle' özel sözcüğüne gerek kalmadı. Ondan önce gelen değişmezlere de! Yani bu epey faydalı bir kısa yol oluyor ve bunu iyi bilmekte fayda var! Normal, yani kısaltılmamış halini anımsayalım hemen:".p,
+    "(a, b) => (a, b) eşle {durum ... => ...; durum ... => ...}".p,
+    "eşle ve ondan önceki hiç birşeye gerek kalmıyor!".p,
 
-    "2) desen eşleme yani örüntülü eşleme yapmak için kullanmıştık bu 'case' yöntemini. Burada da 'case' sözcüğünden hemen sonra gelen kısımda elimizdeki iki girdiyi çözümlüyoruz. Biraz önce de dediğimiz gibi ilk girdi ufak ufak oluşturduğumuz yeni dizinimiz. '(önceki, sayaç) :: kuyruk' yeni kurduğumuz dizinin başı ve kuyruğuyla eşleşiyor ve onların üçüne de isim takıveriyor. kuyruk bariz. baş eleman da bir önceki harf ve ondan şu ana kadar kaç tane saydığımızı tutan sayaç. 'kuyruk' değerinden sonra gelen 'harf' ise katlama işlemini yaptığımız 'harfler' dizinindeki harflerden biri. Katlama işlevi her harfin üstünden teker teker geçecek elbet.".p,
+    "2) desen eşleme yani örüntülü eşleme yapmak için kullanmıştık bu 'durum' yöntemini. Burada da 'durum' sözcüğünden hemen sonra gelen kısımda elimizdeki iki girdiyi çözümlüyoruz. Biraz önce de dediğimiz gibi ilk girdi ufak ufak oluşturduğumuz yeni dizinimiz. '(önceki, sayaç) :: kuyruk' yeni kurduğumuz dizinin başı ve kuyruğuyla eşleşiyor ve onların üçüne de isim takıveriyor. kuyruk bariz. baş eleman da bir önceki harf ve ondan şu ana kadar kaç tane saydığımızı tutan sayaç. 'kuyruk' değerinden sonra gelen 'harf' ise katlama işlemini yaptığımız 'harfler' dizinindeki harflerden biri. Katlama işlevi her harfin üstünden teker teker geçecek elbet.".p,
 
     "3) ve son! İlk desen/örüntü eşleme satırında bir de koşul girdik 'eğer' diyerek. Bu çok önemli. Yeni bir harfe geçip geçmediğimize dikkat etmemiz gerek! Eğer en son saydığımız harften aynısı geldiyse sayaçı arttırmalıyız. Yoksa yeni bir sayaç başlatmalı.".p,
 
@@ -1066,8 +1086,8 @@ satıryaz(harfSıklığı(harfler))""".c,
     """dez harfSıklığı = "Kojo ile oyun oynayarak Scala dilini öğrenmek ve hatta işlevsel ve nesneye yönelik yazılım becerisi edinmek harika değil mi".
     böl(" ").düzİşle(_.dizine).işle(_.büyükHarfe).sırayaSok(_ < _).
     soldanKatla(Dizin[(Harf, Sayı)]()) {
-        case ((önceki, sayaç) :: kuyruk, harf) eğer (önceki == harf) => (önceki, sayaç + 1) :: kuyruk
-        case (sunum, harf)                                         => (harf, 1) :: sunum
+        durum ((önceki, sayaç) :: kuyruk, harf) eğer (önceki == harf) => (önceki, sayaç + 1) :: kuyruk
+        durum (sunum, harf)                                           => (harf, 1) :: sunum
     }
 
 satıryaz(harfSıklığı.
@@ -1092,7 +1112,7 @@ pages += Page(
       row("piSayısı".c,"pi sayısı, 3.14159265 .... yani yarıçapı 1 olan dairenin çevre uzunluğunun yarısıdır.")
     ),
     "Trigonometri fonksiyonları".h3,
-    "Trigonometrik işlevler girdi olarak radyan birimi kullanırlar. Radyan kavramını anlatan çok güzel bir örneğimiz var Kojo'da. Örnekler menüsünde en altta Matematik Öğrenme Birimleri menüsü var. Onun en altında 'Açı Nedir?' var. Ona tıklayıver. Günlük hayatta biz 90 derece, 180 derece gibi bize daha doğal gelen derece birimini kullanırız açıları ifade etmek için. Radyandan dereceye çevirmek için 'dereceye' yöntemunu, tersini yapmak için de 'radyana' yöntemunu kullanabiliriz. Bilmemiz gereken tek şey şu: 2*pi radyan 360 dereceye eşittir. Aşağıda sıraladığımız yöntemlerden başka yay yöntemleri de var.".p,
+    "Trigonometrik işlevler girdi olarak radyan birimi kullanırlar. Radyan kavramını anlatan çok güzel bir örneğimiz var Kojo'da. Örnekler menüsünde en altta Matematik Öğrenme Birimleri menüsü var. Onun en altında 'Açı Nedir?' var. Ona tıklayıver. Günlük hayatta biz 90 derece, 180 derece gibi bize daha doğal gelen derece birimini kullanırız açıları ifade etmek için. Radyandan dereceye çevirmek için 'dereceye' yöntemini, tersini yapmak için de 'radyana' yöntemini kullanabiliriz. Bilmemiz gereken tek şey şu: 2*pi radyan 360 dereceye eşittir. Aşağıda sıraladığımız yöntemlerden başka yay yöntemleri de var.".p,
     "Kısa not: aşağıdaki tanımlarda G1, G2, ... ile fonksiyona girilen değerleri ifade ediyoruz kısaca. Yani işlevAdı(G1, G2, G3, ...). ".p,
     table(
       row("sinüs(piSayısı/6)".c,"G1 girdisinin yani burada Pi/6 değerinin sinüsü."),
@@ -1172,8 +1192,8 @@ pages += Page(
     """3 :: 5 :: Boş""".c,
     """3 :: (5 :: Boş)""".c,
     """(3 :: 5) :: Boş""".c,
-    "Ne oldu? Burada iki değişik işlemle karşı karşıyayız. * imi ile :: imi farklı çalışıyor. Son örneğimiz çalışmadı çünkü :: yani bir dizinin kuyruğuyla başını birleştirip yeni bir dizin oluşturan birleştirme işlemi sağdaki değeri temel alıp onun yöntemu olan :: işlemine soldaki değeri girdi olarak giriyor ve sonunda yeni bir dizin çıktısı veriyor. Son örnekteki hata nereden kaynaklandı şimdi daha iyi anladık. Ama * işlemi öbür taraftan çalışıyor, yani soldaki değer temel alınıyor onun yöntemu olarak * çagırılıyor ve ona sağdaki değer girdi oluyor. Scala bu durumu düzenlemek ve programcıya iki seçenek de sunmak için şunu yapıyor: işlemin adına bakıyor ve son karakteri seçiyor. Eğer son karakter ':' ise, yani iki nokta üstüste ise, sağdan birleşme yapıyor ve sağdaki değerin üzerindeki yöntemu çağırıyor ve soldaki değeri giriyor o yöntema. Adlarının son karakteri ':' olmayan yöntemlerse öbür türlü çalışıyor, yani yukarıda gördüğümüz * örneğindeki gibi soldaki değerin yöntemu çağrılıyor ve sağdaki değer girdi oluyor. Yani a * b yazarsak derleyici a.*(b) görmüş gibi çalışıyor, ama a *: b yazarsak b.*:(a) gibi çalışıyor. Bir örnekle alıştırma yapalım ki tam pekişsin. Diyelim ki iki sayıyı önce toplayıp sonra toplamını ikinci sayıyla çarpmak istiyoruz. Bunu da çok yapacağız. O zaman bir nesne türü yani sınıf tanımlayıverelim:".p,
-    """case class Deneme(s: Sayı) {
+    "Ne oldu? Burada iki değişik işlemle karşı karşıyayız. * imi ile :: imi farklı çalışıyor. Son örneğimiz çalışmadı çünkü :: yani bir dizinin kuyruğuyla başını birleştirip yeni bir dizin oluşturan birleştirme işlemi sağdaki değeri temel alıp onun yöntemi olan :: işlemine soldaki değeri girdi olarak giriyor ve sonunda yeni bir dizin çıktısı veriyor. Son örnekteki hata nereden kaynaklandı şimdi daha iyi anladık. Ama * işlemi öbür taraftan çalışıyor, yani soldaki değer temel alınıyor onun yöntemi olarak * çagırılıyor ve ona sağdaki değer girdi oluyor. Scala bu durumu düzenlemek ve programcıya iki seçenek de sunmak için şunu yapıyor: işlemin adına bakıyor ve son karakteri seçiyor. Eğer son karakter ':' ise, yani iki nokta üstüste ise, sağdan birleşme yapıyor ve sağdaki değerin üzerindeki yöntemi çağırıyor ve soldaki değeri giriyor o yönteme. Adlarının son karakteri ':' olmayan yöntemlerse öbür türlü çalışıyor, yani yukarıda gördüğümüz * örneğindeki gibi soldaki değerin yöntemi çağrılıyor ve sağdaki değer girdi oluyor. Yani a * b yazarsak derleyici a.*(b) görmüş gibi çalışıyor, ama a *: b yazarsak b.*:(a) gibi çalışıyor. Bir örnekle alıştırma yapalım ki tam pekişsin. Diyelim ki iki sayıyı önce toplayıp sonra toplamını ikinci sayıyla çarpmak istiyoruz. Bunu da çok yapacağız. O zaman bir nesne türü yani sınıf tanımlayıverelim:".p,
+    """durum sınıf Deneme(s: Sayı) {
     tanım +*(x: Deneme) = (s + x.s) * x.s
     tanım +:(x: Deneme) = (s + x.s) * x.s
 }
@@ -1181,15 +1201,15 @@ dez (a,b) = (Deneme(5), Deneme(3))""".c,
     "Şimdi de bütün seçenekleri deneyelim:".p,
     "(a +* b, b +* a, a +: b, b +: a)".c,    
     "Umarım faydalı olmuştur. Sen de birşeyler dene, hem parmakların hem de beynin daha iyi öğrensin!".p,
-    "Bu vesileyle daha büyük bir örnek görelim ve bilgisayarın temeli olan mantığa giriş yapalım. Mantık nedir bilir misin? Belki iyi tanımazsın ama bildiğinden eminim çünkü mantık bizim altıncı hissimiz gibidir. Mantıksızlık hiç hoşumuza gitmez. Bak şöyle yazabiliriz mantık işlemlerinin temelini. Bunu okurken + * x ve ! gibi imlerin tanımlarını nasıl yaptığımıza da dikkat!".p,
-    """case class Önerge(doğruMu: İkil) {
+    "Bu vesileyle daha büyük bir örnek görelim ve bilgisayarın temeli olan mantığa giriş yapalım. Mantık nedir bilir misin? Belki iyi tanımazsın ama bildiğinden eminim çünkü mantık bizim altıncı hissimiz gibidir. Mantıksızlık hiç hoşumuza gitmez. Bak şöyle yazabiliriz mantık işlemlerinin temelini. Bunu okurken + * x ve ! gibi imlerin tanımlarını nasıl yaptığımıza da dikkat!".p,  // ttodo: unary_ below
+    """durum sınıf Önerge(doğruMu: İkil) yayar BaskınYazıyaYöntemiyle {
     tanım tersi = Önerge(!doğruMu)
     tanım ve(öbürü: Önerge) = eğer (doğruMu) öbürü yoksa bu
     tanım veya(öbürü: Önerge) = eğer (doğruMu) bu yoksa öbürü
     tanım yada(öbürü: Önerge) = (bu veya öbürü) ve (bu ve öbürü).tersi
     tanım eşittir(öbürü: Önerge) = doğruMu == öbürü.doğruMu
 
-    tanım unary_!(): Önerge = bu.tersi
+    tanım unary_!(): Önerge = bu.tersi  // ! imi nesnenin önüne gelsin ve girdisiz yöntem olsun istiyoruz. Onun için bu 'unary_' gerekli.
     tanım *(öbürü: Önerge) = bu ve öbürü
     tanım +(öbürü: Önerge) = bu veya öbürü
     tanım x(öbürü: Önerge) = bu yada öbürü
@@ -1197,7 +1217,7 @@ dez (a,b) = (Deneme(5), Deneme(3))""".c,
     tanım ==>(öbürü: Önerge) = bu.tersi veya öbürü
     tanım <=>(öbürü: Önerge) = (bu ==> öbürü) ve (öbürü ==> bu)
 
-    override tanım toString = eğer (doğruMu) "doğru" yoksa "yanlış"
+    baskın tanım yazıya = eğer (doğruMu) "doğru" yoksa "yanlış"
     tanım to01 = eğer (doğruMu) "1" yoksa "0"
 }
 
@@ -1283,7 +1303,7 @@ sil
 den gerekYokAslında = "böyle değişkenlere\n"
 gerekYokAslında += "pek de gerek yok"
 yazı(gerekYokAslında)""".c,
-    "Sanırım hemen hemen bütün nesnelerin yazıya diye bir yöntemu var. Bu yöntem nesnenin neye benzediğini yazı olarak ortaya koyar ve çok faydalıdır. Mantık önermeleri için tanımladığımız sınıfı anımsadın mı? Bir önceki bölüme bakıver istersen. Orada kendi yazıya yöntemumuzu tanımlamış ve kullanmıştık.".p,
+    "Sanırım hemen hemen bütün nesnelerin yazıya diye bir yöntemi var. Bu yöntem nesnenin neye benzediğini yazı olarak ortaya koyar ve çok faydalıdır. Mantık önermeleri için tanımladığımız sınıfı anımsadın mı? Bir önceki bölüme bakıver istersen. Orada kendi yazıya yöntemimizi tanımlamış ve kullanmıştık.".p,
     """dez x = (2).yazıya + " " + (3.1F).yazıya
 satıryaz(x)
 """.c, 
@@ -1367,14 +1387,14 @@ pages += Page(
       row("dzn.boyu".c,"Kaç eleman olduğunu söyler"),
       row("""dzn.işle(söz => söz + "?")""".c,"""dizinin her sözcüğünün sonuna soru işareti ekleyerek yeni bir dizi oluşturur"""),
       row("""dzn.işle { söz =>
-    söz match {
-        case "." => "?"
-        case s   => s
+    söz eşle {
+        durum "." => "?"
+        durum s   => s
     }
 }.herbiriİçin(satıryaz)""".c,"""Bir önceki gibi ama noktaları soru işaretiyle değiştirip yazalım."""),
       row("""dzn.işle {
-    case "." => "?"
-    case s   => s
+    durum "." => "?"
+    durum s   => s
 }.herbiriİçin(satıryaz)""".c, "Bir öncekinin kısa yazılışı"),
       row("""dzn.yazıYap(", ")""".c,"Diziden elemanları arasına virgül koyarak bir yazı yapar"),
       row("dzn.eleDeğilse(söz => söz.boyu == 1)".c,"Dizinin bir kopyasını verir ama bir harfli elemanları atlar"),
@@ -1465,24 +1485,25 @@ oyunSüresiniGeriyeSayarakGöster(60, "Süre bitti", yeşil) // oyun 60 saniye s
     """sil()
 görünür()
 canlandırmaHızınıKur(100)
-den zıpladı = yanlış
+den (zıpladı, bilmem) = (yanlış, yanlış)
 tuşaBasınca { t =>
-    t match {
-        case tuşlar.VK_LEFT  => açıyaDön(180)  // sola git
-        case tuşlar.VK_RIGHT => açıyaDön(0)    // sağa git
-        case tuşlar.VK_UP    => açıyaDön(90)   // yukarı
-        case tuşlar.VK_DOWN  => açıyaDön(270)  // aşağı
-        case tuşlar.VK_Z     => zıpla(20); zıpladı = doğru    
-        case _           => // diğer tuşlar sadece ilerletsin
+    t eşle {
+        durum tuşlar.VK_LEFT  => açıyaDön(180)  // sola git
+        durum tuşlar.VK_RIGHT => açıyaDön(0)    // sağa git
+        durum tuşlar.VK_UP    => açıyaDön(90)   // yukarı
+        durum tuşlar.VK_DOWN  => açıyaDön(270)  // aşağı
+        durum tuşlar.VK_Z     => zıpla(20); zıpladı = doğru    
+        durum tuşlar.VK_A     => atla(fareKonumu.x,fareKonumu.y); zıpladı = doğru
+        durum tuşlar.VK_N     => noktayaGit(fareKonumu.x,fareKonumu.y); zıpladı = doğru
+        durum tuşlar.VK_SPACE => // büyük boşluk tuşu sadece ilerletsin
+        durum _               => bilmem = doğru // diğer tuşlar
     }
-    eğer (zıpladı) {
-        zıpladı = yanlış
-    } yoksa {
-     ileri(20)
+    eğer (bilmem) { bilmem = yanlış } yoksa {
+        eğer (zıpladı) { zıpladı = yanlış } yoksa { ileri(20)}
     }
 }
 tuvaliEtkinleştir()""".c,
-    "Hayal gücünü kullan, yazılımcığı değiştir (örneğin 45 derece döndürmek için komut ekleyebilirsin), tekrar çalıştır. Yazılımcık düzenleme ekranında 'tuşlar.' yazdıktan sonra (ama tırnak işaretleri olmadan!) kontrol tuşunu basık tutup büyük boşluk tuşuna bas ki başka hangi tuşları kullanabileceğini gör.".p,
+    "Hayal gücünü kullan, yazılımcığı değiştir (örneğin 45 derece döndürmek, yay ya da çember çizmek için komutlar ekleyebilirsin), tekrar çalıştır. Yazılımcık düzenleme ekranında 'tuşlar.' yazdıktan sonra (ama tırnak işaretleri olmadan!) kontrol tuşunu basık tutup büyük boşluk tuşuna bas ki başka hangi tuşları kullanabileceğini gör.".p,
 
     "Saat".h3,
     "Bir saat yapalım mı?".p,
@@ -1552,18 +1573,18 @@ dez sonundaDur = doğru // her desenin bir durağı var. Ondan sonra fazla bir �
 // deseni seçelim:
 dez seç = 1
 // blok1 ve blok2 bir kaç füze yolluyor ve sonra 1000. nesil civarı gibi duruyor.
-dez (desen, adı, durak) = seç match {
-    case 0 => (üçlüler, "üçlüler", 20)
-    case 1 => (kayGit, "kayGit", 500) /* makineli tüfek gibi */
-    case 2 => (esaslı, "esaslı", 1111) /* Yaklaşık 1000 nesil canlı sonra peryodik */
-    case 3 => (dokuzcanlı, "dokuzcanlı", 130) /* 131 nesil sonra can kalmıyor */
-    case 4 => (blok1, "blok1", 1200) //
-    case 5 => (blok2, "blok2", 1200) //
-    case 6 => (küçücük, "küçücük", 700) //
-    case 7 => (ü2a, "ü2a", 60) // üçlülere ek
-    case 8 => (ü2b, "ü2b", 60) // benzeri
-    case 9 => (dörtlü, "dörtlü", 30) // üçlü üretiyor
-    case _ => (tohum, "tohum", 2200) // ne muhteşem bir meşe palamudu!
+dez (desen, adı, durak) = seç eşle {
+    durum 0 => (üçlüler, "üçlüler", 20)
+    durum 1 => (kayGit, "kayGit", 500) /* makineli tüfek gibi */
+    durum 2 => (esaslı, "esaslı", 1111) /* Yaklaşık 1000 nesil canlı sonra peryodik */
+    durum 3 => (dokuzcanlı, "dokuzcanlı", 130) /* 131 nesil sonra can kalmıyor */
+    durum 4 => (blok1, "blok1", 1200) //
+    durum 5 => (blok2, "blok2", 1200) //
+    durum 6 => (küçücük, "küçücük", 700) //
+    durum 7 => (ü2a, "ü2a", 60) // üçlülere ek
+    durum 8 => (ü2b, "ü2b", 60) // benzeri
+    durum 9 => (dörtlü, "dörtlü", 30) // üçlü üretiyor
+    durum _ => (tohum, "tohum", 2200) // ne muhteşem bir meşe palamudu!
 }
 
 dünya = başlangıç(dünya, desen)
@@ -1654,7 +1675,7 @@ tanım dörtlü = Dizin((0, 0), (1, 0), (-1, 0), (0, 2)) // dokuzcanlı'nın alt
     """// KS arttıkça oyun zorlaşır. Bir kenarda kaç tane nokta olsun?
 dez KS = 4; dez AS = KS * KS
 dez YÇ = 20 // bu da noktaların yarıçapı
-case class Çizgi(n1: Nokta, n2: Nokta) { // her çizgi iki noktayı bağlar
+durum sınıf Çizgi(n1: Nokta, n2: Nokta) { // her çizgi iki noktayı bağlar
     den çizgi = birDoğruÇiz(n1.x, n1.y, n2.x, n2.y) // bir doğru çizer
 }
 tanım birDoğruÇiz(llx: Kesir, lly: Kesir, urx: Kesir, ury: Kesir) = {
@@ -1666,7 +1687,7 @@ tanım birDoğruÇiz(llx: Kesir, lly: Kesir, urx: Kesir, ury: Kesir) = {
 // bütün çizgiler. boş küme olarak başlarız
 den çizgiler = Yöney[Çizgi]()
 // Noktayı tuvalde kaydıracağız. Yeri değişince ona bağlı çizgileri tekrar çizmemiz gerek
-case class Nokta(den x: Kesir, den y: Kesir) {
+durum sınıf Nokta(den x: Kesir, den y: Kesir) {
     dez n = götür(x, y) * boyaRengi(mavi) -> Resim.daire(YÇ)
     n.çiz
     tanım yeniKonum(yeniX: Kesir, yeniY: Kesir) {

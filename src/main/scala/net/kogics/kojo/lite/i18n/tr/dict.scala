@@ -17,9 +17,21 @@
 package net.kogics.kojo.lite.i18n.tr
 
 object dict {
+  val miscCreativeMapping = Map(
+    "hesap" -> "ölçüm",
+    "cebir" -> "ölçülüm",
+    "polynomial" -> "çok terimli",
+    "recurse" -> "özyinele",
+    "recursive" -> "özyineli",
+    "recursion" -> "özyineleme",
+  )
+
   // skala kılavuzunda kullanma sırasıyla (yaklaşık olarak)
   // excludes scala (2 and 3) and java keywords which are in the next map
   val otherCommonWords = Map(
+    "programlama" -> "yazılım",
+    "kelime" -> "sözcük", // ttodo!
+    "method" -> "yöntem", // ttodo! metod yerine yöntem sözcüğünü kullan!
     "set" -> "kur",
     "to" -> "|-| anlamı: ilkSayıdanSonSayıyaKadar", // 1 to 4 -> Aralık.kapalı(1, 4)
     "until" -> "|- anlamı: ilkSayıdanSonSayıyaKadarAmaSonSayıHariç", // 1 until 4 -> Aralık(1, 4)
@@ -150,13 +162,13 @@ object dict {
     "eşle",
     "geriDön",
     "getir",
+    "gizli",
     "için",
     "koru",
     "miskin",
     "nesne",
     "örtük",
     "özellik",
-    "sakla",
     "son",
     "sonunda",
     "soyut",
@@ -202,7 +214,7 @@ object dict {
     "object" -> "nesne",
     "override" -> "baskın", // override def -> baskın (üstüne ya da yeniden) tanım TODO
     "package" -> "deste",
-    "private" -> "sakla",
+    "private" -> "gizli", // sakla?
     "protected" -> "koru",
     "return" -> "geriDön",
     "sealed" -> "damgalı",
