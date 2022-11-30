@@ -2,7 +2,7 @@
  * Copyright (C) 2009 Anthony Bagwell
  * Copyright (C) 2009 Phil Bagwell <pbagwell@bluewin.ch>
  * Copyright (C) 2011 Lalit Pant <pant.lalit@gmail.com>
- * Copyright (C) 2021 Bülent Başaran <ben@scala.org>
+ * Copyright (C) 2022 Bülent Başaran <ben@scala.org>
  *
  * The contents of this file are subject to the GNU General Public License
  * Version 3 (the "License"); you may not use this file
