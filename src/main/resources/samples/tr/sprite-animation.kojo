@@ -12,7 +12,7 @@ artalanıKur(Renk(200, 200, 200))
 // artalana bir resim koymak istersen onu bizim kaplumbağacığa giydir
 kaplumbağa0.giysiKur(Background.trainTrack)  // todo
 
-val k1 = yeniKaplumbağa(-50, -180, Costume.womanWaving)
+dez k1 = yeniKaplumbağa(-50, -180, Costume.womanWaving)
 k1.davran { kap =>
     yineleDoğruysa(kap.konum.y < 40) {
         kap.konumuDeğiştir(0.6, 0.9)
@@ -21,7 +21,7 @@ k1.davran { kap =>
     }
 }
 
-val k2 = yeniKaplumbağa(-250, 180)
+dez k2 = yeniKaplumbağa(-250, 180)
 k2.giysileriKur(Costume.bat1, Costume.bat2)
 k2.giysiyiBüyült(0.5)
 k2.davran { kap =>

@@ -6,21 +6,21 @@ eksenleriGöster()
 gridiGöster()
 yaklaş(0.75, 500, 300)
 
-val a = 20.0 // başlangıç ivmesi
-val b = 10.0 // başlangıç hızı. Bunu -100 ya da -200 yapmayı dene!
+dez a = 20.0 // başlangıç ivmesi
+dez b = 10.0 // başlangıç hızı. Bunu -100 ya da -200 yapmayı dene!
 
-val araba = yeniKaplumbağa(0, 0, Costume.car)
+dez araba = yeniKaplumbağa(0, 0, Costume.car)
 
-val konumEğrisi = yeniKaplumbağa(0, 0, Costume.pencil)
+dez konumEğrisi = yeniKaplumbağa(0, 0, Costume.pencil)
 konumEğrisi.kalemRenginiKur(mavi)
 
-val hızEğrisi = yeniKaplumbağa(0, b, Costume.pencil)
+dez hızEğrisi = yeniKaplumbağa(0, b, Costume.pencil)
 hızEğrisi.kalemRenginiKur(yeşil)
 
-val t0 = buSaniye // göreceli olarak bu anın zamanı
-val geçenZaman = yeniKaplumbağa(100, -50)
+dez t0 = buSaniye // göreceli olarak bu anın zamanı
+dez geçenZaman = yeniKaplumbağa(100, -50)
 
-def zamanıGöster(t: Yazı) {
+tanım zamanıGöster(t: Yazı) {
     geçenZaman.sil()
     geçenZaman.gizle()
     geçenZaman.kalemRenginiKur(mavi)
@@ -28,10 +28,10 @@ def zamanıGöster(t: Yazı) {
 }
 
 canlandır {
-    val t = buSaniye - t0 // program başlayalı beri kaç saniye geçmiş
+    dez t = buSaniye - t0 // program başlayalı beri kaç saniye geçmiş
     // kinematik denklemlerle arabanın hızını ve ivmesini hesaplayalım
-    val h = b + a * t 
-    val x = b * t + 0.5 * a * t * t 
+    dez h = b + a * t 
+    dez x = b * t + 0.5 * a * t * t 
     araba.konumuKur(x, 10)
     konumEğrisi.ilerle(t * 50, x)
     hızEğrisi.ilerle(t * 50, h)
@@ -39,8 +39,8 @@ canlandır {
 }
 
 tuşaBasınca { t =>
-    t match {
-      case tuşlar.VK_ESCAPE => durdur()  // sol üst tuş
-      case _ =>
+    t eşle {
+      durum tuşlar.VK_ESCAPE => durdur()  // sol üst tuş
+      durum _ =>
     }
 }
