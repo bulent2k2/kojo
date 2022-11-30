@@ -40,11 +40,9 @@ dez sayfaAra = Page(
       bir bak. Orada pek çok küçücük örnek var. Onları olduğu gibi çalıştırmak,
       sonra istediğin gibi değiştirip tekrar çalıştırmak çok kolay.
       </p> <p>
-      Yanlız, epey uzun bir kılavuz. Tam 18 tane sayfası den ki bazıları epey uzun.
-      Ama hepsini sırayla okuman gerekmez. İlk iki sayfasını, yani girişi ve
-      <em> Başlayalım </em> safyalarını okuduktan sonra, sona yakın olan
-      <em> Kaplumbağacığın Kullanılışı </em> ve <em> Çizim ve Oyun </em>
-      adlı sayfalara bak. Onlardan çok şey öğreneceksin.
+      Yanlız, epey uzun bir kılavuz. Giriş dahil 19 bölümden oluşuyor.
+      Ama hepsini sırayla okuman gerekmez. İlk iki bölümü okuduktan sonra
+      sona yakın olan <em> Çizim ve Oyun </em> bölümüne bak. Onlardan çok şey öğreneceksin.
       </p> <p> Ondan sonra sırayla hepsini oku. Bu sayede sonradan anlayacaksın ki bilgisayar
       programlamayı öğrenivermişsin. Ondan sonrası sana ve hevesine kalmış.
       </p>

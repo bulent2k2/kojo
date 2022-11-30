@@ -152,7 +152,7 @@ pages += Page(
   body = tPage("Kaplumbağacığın Kullanılışı",
     "Bu sayfayı en başa hatta Başlayalım adlı ilk sayfadan da öne koyduk. Çünkü hem okuması, anlaması ve oynaması daha kolay hem de daha görsel ve onun için de biraz daha cazip. Kojo'nun kaplumağacığını zaten iyi tanıyorsan bir sonraki sayfaya atlayıp Scala yani epey ciddi bir yazılım dili öğrenmeye başlayabilirsin.".p,
     "Kaplumbağacığı hareket ettirerek ona çizgi çizdirten pek çok komutumuz var. Çoğunu aşağıdaki tabloda bulacaksın. Onlara tıklayıver ki kaplumbağacık neler yapabiliyor göresin. Tablodaki sırayı izlemene gerek yok (sadece ilk örnek hariç. Ona ileride gerek olacak çünkü üçgen işlevini tanımlıyor). İstediklerine birkaç kere tıklayabilirsin. Tuvalimizi silmek için sağ tıklayıp Temizle komutuna tıkla.".p,
-    "Aşağıdaki ilk örnekte üçgen adında bir işlev (ya da komut) tanımlıyoruz. Ne yaptığını anladın mı? Tıklayınca göreceksin. Bir üçgen çiziyor. Bu komutu ilerdeki örneklerde de kullanacağız. Henüz tıklamadıysan şimdi tıkla. Farkettin mi bir satırda birden çok komut da çağırabiliyoruz. Aralarına noktalı virgül koymamız gerekiyor sadece. 'yinele' komutumuz da bir komut dizisini tekrar tekrar çağırmakta çok faydalı olur.".p,
+    "Aşağıdaki ilk örnekte üçgen adında bir işlev (ya da komut) tanımlıyoruz. Ne yaptığını anladın mı? Tıklayınca göreceksin. Bir üçgen çiziyor. Bu komutu ilerdeki örneklerde de kullanacağız. Henüz tıklamadıysan şimdi tıkla. Farkettin mi 'yinele' komuduyla 'ileri' ve 'sağ' komutlarını üçer kere çağırıyoruz.".p,
     """tanım üçgen() = {
     yinele(3) { 
         ileri(100)
@@ -164,11 +164,18 @@ sil()
 sol()
 üçgen()
 """.c,
+    "Tıkladın ve kaplumbağanın iki tane üçgen çizmesini seyrettin, değil mi? Bu kılavuzdaki her açık turkuaz renkli gözlere tıklamayı unutma. Genelde sırayla tıklamanda fayda var. Ama, bazıların birden çok da tıklayabilirsin. Bazılarını da es geçebilirsin. Rahat takıl. Biraz oku, biraz tıkla. Tıkladıktan sonra 'Yazılımcılık Düzenleyicisi' adlı göze geçip değişiklikler yap ve üstündeki küçük yeşil üçgene basarak tekrar çalıştır. İçinden geldiği gibi davran ki daha keyifle keşfedesin bilgisayar programlamayı!".p,
     table(
       row("ileri(100)".c, "100 adım ilerler"),
+      row("sil()".c, "Tuvali temizler ve başlangıç noktasına döndürür"),
       row("geri(50)".c,"50 adım geriye gider"),
+      row("ileri(100)".c, "Buna gerek yok, yukarda bahsettik. Ama tekrar tıklayasın diye yineledik. Tekrar edeyim birden çok tıklamakta hiçbir zarar yok!"),
+      row("eksenleriGöster()".c, "X ve Y eksenlerini gösterir"),
+      row("gridiGöster()".c, "Tuvalin gridini çizer"),
       row("konumuKur(150, 100)".c, "Çizgi çizmeden koordinatları verilen (x, y) noktasına gider. Ama baktığı doğrultu değişmez"),
-      row("noktayaGit(20, 30)".c, "Doğrultusunu koordinatları verilen noktaya çevirir ve o noktaya kadar ilerier"),
+      row("noktayaGit(0, -100)".c, "Doğrultusunu koordinatları verilen noktaya çevirir ve o noktaya kadar ilerler"),
+      row("eksenleriGizle()".c, "Eksenleri saklar"),
+      row("gridiGizle()".c, "Gridi gizler"),
       row("dön(30)".c, "Saat yönünün tersine doğru 30 derece döner. Eksi girersen saat yönünde döner"),
       row("sağ()".c, "Sağa döner. Yani saat yönünde 90 derece döner"),
       row("sağ(60)".c, "Sağa doğru 60 derece döner"),
@@ -179,7 +186,6 @@ sol()
       row("doğrultu".c, "Şu anda baktığımız doğrultuyu açı olarak çıktıyla bildirir. 180 sola bakıyor demek. 270 de aşağıya"),
       row("ev()".c, "Evine yani (0, 0) noktasına döner ve 90 dereceye yani yukarı bakar"),
       row("konum".c, "Şu andaki konumu çıktı olarak bildirir"),
-
       row("""sil
 kalemiKaldır()
 ileri(100)
@@ -203,28 +209,33 @@ görünmez()
 ileri(100)
 görünür()
 dön(120)
-ileri(100)""".c, "görünmez ve görünür komutları da böyle"),
-      row("""yazı("Merhaba Kardeş!"); ileri(); yazı(Dizin(3, 1, 4, 1, 5))""".c, "Bulunduğu noktaya yazı yazdırabiliriz"),
+ileri(100)""".c, "görünmez ve görünür komutları da böyle da böyle çalışıyor. Kaplumbağacık görünmese de çizim yapmaya devam edebiliyor"),
+      row("""sil
+yazı("Merhaba Kardeş!")
+zıpla()
+yazı(Aralık(10, 0, -1))
+zıpla()
+yazı(Dizi(1, 2, 3))
+zıpla()""".c, "Bulunduğu noktaya yazı yazdırabiliriz. İngilizce'den çevirdiğimiz bazı türlerin adı İngilizce olabilir. Şaşırmatsın seni!"),
       row("""sil()
 ileri(-100)
 canlandırmaHızınıKur(10)
 dön(120)
-ileri(100)""".c, "Kaplumbağacığın hızını belirlemek için bir süre giriyoruz. 100 adımı girdiğimiz kadar milisaniyede atıveriyor. Epey hızlı canım! Başlangıçta 1000milisaniye, yani bir saniye alıyor 100 adım atmak. "),
+ileri(100)""".c, "Kaplumbağacığın hızını belirlemek için bir süre giriyoruz. 100 adımı girdiğimiz kadar milisaniyede atıveriyor. Epey hızlı canım! Başlangıçta 100 adım atmak 1000 milisaniye yani bir saniye alıyor."),
       row("canlandırmaHızı".c, "100 adımı şu anda kaç milisaniyede attığını bildirir"),
       row("""yeniKaplumbağa(50, 50)
 dez yk2 = yeniKaplumbağa(100, 100)
 yk2.geri(180)
+// ikinci kaplumbağacığı da hızlandıralım:
+yk2.canlandırmaHızınıKur(10)
+yk2.sol()
+yk2.ileri(300)
 """.c, "Verilen (x, y) noktasında yeni bir kaplumbağa canlandırır. İlk yeni kaplumbağaya ad takmayı unuttuk!"),
       row("kaplumbağa0".c, "Başlangıçtaki kaplumbağamızın adı"),
       row("kaplumbağa0.geri(100)".c, "Onu yöntemleriyle de çağırabiliriz"),
-      row("sil()".c, "Tuvali temizler ve başlangıç noktasına döndürür"),
       row("""sil()
 üçgen()
 yaklaş(0.5, 10, 10)""".c, "(oran, x, y) Tuvali verilen oran kadar büyültür ya da küçültür ve verilen noktayı tam tuvalin merkezine getirir"),
-      row("gridiGöster()".c, "Tuvalin gridini çizer"),
-      row("gridiGizle()".c, "Gridi gizler"),
-      row("eksenleriGöster()".c, "X ve Y eksenlerini gösterir"),
-      row("eksenleriGizle()".c, "Eksenleri saklar")
     )
   )
 )
@@ -232,18 +243,18 @@ yaklaş(0.5, 10, 10)""".c, "(oran, x, y) Tuvali verilen oran kadar büyültür y
 pages += Page(
   name = "ANA",
   body = tPage("Anahtar Sözcükler",
-    "Türkçemizde kimbilir kaç bin kelime var? Hepsini bilmek mümkün değil elbet. Ama yine de birbirimizi anlamakta pek zorluk çekmiyoruz. Bilgisayar dillerindeyse durum çok farklı. Bilgisayar dillerinin derleyicileri olduğunu ve yazdığımız yazılımı donanımın anlayacağı sayılara çevirdiğini duymuş olabilirsin. Bunu yapabilmek için genelde her bilgisayar dili çok küçük ama çok becerikli bir sözlükle çalışır. Bu sözlükteki kelimelere 'anahtar sözcükler' deriz. Scala dilinin anahtar sözcüklerinin en önemlilerini bu kılavuzda örnekleriyle görecek ve öğreneceğiz. Yine de bu sayfada hepsini görelim ve İngilizcelerinin ne olduğunu bilelim. Gelecekte işe yarayabilir.".p,
-    "Aşağıda ilk sütunda kılavuzda kullanış sırasına göre anahtar sözcükler var. İkinci sütunda anahtar sözcüğün İngilizce'si var. Keyword diye de bilinir. Eğer o 'keyword' İngilizce bir sözcüğün kısaltmasıysa o sözcüğün kendisi de üçüncü sütunda. Son sütunda da ufak bir açıklamayla yetindik. Kılavuzumuzun diğer sayfaları daha geniş açıklamalar verecek.".p,
+    "Türkçemizde kimbilir kaç bin kelime var? Hepsini bilmek mümkün değil elbet. Ayrıca pek çok kelimenin birden çok anlamı oluyor. Hatta bazen anlamları belirsiz bile olabiliyor ve sözlüğe bakmamız yetmiyor, ne demek istediniz diye soruyoruz. Ama yine de birbirimizi anlamakta genelde zorlanmıyoruz. Bilgisayar dillerindeyse durum çok farklı. Hem çok daha az sözcük gerekli hem de sözcüklerin anlamı çok daha belirli.".p,
+    "Bilgisayar dillerinin derleyicileri olduğunu ve yazdığımız yazılımları donanımın anlayacağı 0 ve 1 sayılarına çevirdiğini duymuş olabilirsin. Bunu yapabilmek için genelde derleyiciler çok küçük ama çok becerikli bir sözlükle yazılır. Bu sözlükteki kelimelere 'anahtar' ya da 'özel' sözcükler deriz. Scala dilinin anahtar sözcüklerinin en önemlilerini bu kılavuzda örnekleriyle görecek ve öğreneceğiz. Yine de bu sayfada hepsini yazdık ki ilerde İngilizcelerini bilmek gerekince gelip bakabilelim.".p,
+    "Bu bölümü gerisini şimdi atla istersen. Sonra merak ettikçe gelip bakarsın. İstersen hızlıca bir göz at. Zaten detaylarını görmeden aşağıdaki açıklamalar pek anlamlı olmaz. Şimdilik bilmemiz gereken tek şey, herşeyin çok küçücük bir anahtar kelimeler sözlüğüyle başladığı. Onun için bir bilgisayar dili öğrenmek yabancı bir dil öğrenmekten çok daha kolay aslında! Tabii bir de kaplumbağacığın anladığı komut sözcükleri var. Bir önceki bölümde bir kısmını gördük ve öğrendik. Ama onlar da zaten bizim dilimizdeki anlamlarına çok yakın, değil mi?".p,
+    "Aşağıdaki her satırda bir anahtar sözcük var. İlk sütun, kılavuzdaki kullanış sırasına göre sıralı. Sonra gelip bulmak kolay olsun diye. İkinci sütunda anahtar sözcüğün İngilizce'si var. Keyword diye de bilinir. Eğer o keyword, İngilizce bir sözcüğün kısaltmasıysa o sözcüğün kendisi de üçüncü sütunda. Son sütunda da ufak bir açıklamayla yetindik. Kılavuzumuzun diğer sayfaları daha geniş açıklamalar verecek.".p,
     table(
-      row("tanım".c, "def".c, "define", "İlk bölümde kaplumbağacığa üçgen çizdirmek için örneğini görmüştük. Bu anahtar sözcük yeni bir işlev tanımlar ve ona bir ad takar. Bu yeni ad da derleyicinin sözlüğüne eklenmiş olur!"),
-      row("dez".c, "val".c, "value", "İlk bölümdeki yeni kaplumbağacığa ad takmamızı sağlayan anahtar sözcük. Bilinen ve değişmez bir değere bir ad takar. Bu yeni ad da sözlüğe eklenmiş olur."),
+      row("tanım".c, "def".c, "define", "İlk bölümde kaplumbağacığa üçgen çizdirmek için kullanmıştık. Bu anahtar sözcük yeni bir işlev tanımlar ve ona bir ad takar. Bu yeni ad da derleyicinin sözlüğüne eklenmiş olur!"),
+      row("dez".c, "val".c, "value", "İlk bölümdeki yeni kaplumbağacığa ad takmamızı sağlayan anahtar sözcük. Bilinen ve değişmez bir değere bir ad takar. Bu yeni ad da yazılımcığın özel sözlüğünee eklenmiş olur."),
       row("den".c, "var".c, "variable", "Yeni bir değişken tanımlar ve ona bir ad takar. Bu yeni ad da sözlüğe eklenmiş olur."),
       row("eğer".c, "if".c, "", "Bir çatallanma yani kara verme durumu tanımlar. Duruma göre iki seçenekten birini seçer derleyici."),
       row("yoksa".c, "else".c, "", "eğer sözcüğünden sonra kullanılır."),
-      row("yineleDoğruKaldıkça".c, "while".c, "", "Bir koşul doğru kaldıkça yinelenen bir döngü tanımlar."),
-      row("yap".c, "do".c, "", "Önce döngünün komutları sonra koşulu yazılsın dersen bu sözcükle olur."),
       row("için".c, "for".c, "", "İşlevsel bir döngü tanımlar. Çok daha iyi bir yöntemdir!"),
-      row("ver".c, "yield".c, "", "İçin komudunun içinde nesne vermek için kullanılır."),
+      row("ver".c, "yield".c, "", "İçin komudunun içinde teker teker nesne çıktısı vermek için kullanılır."),
       row("sınıf".c, "class".c, "", "Yeni bir tür tanımlar. Nesne odaklı yazılımın ana birim taşıdır."),
       row("durum".c, "case".c, "", "İki durum da kullanılır. Daha becerikli bir sınıf tanımlamaya ve örüntü/desen eşlemeye yarar."),
       row("yayar".c, "extends".c, "", "Bir türün başka bir türü yaymasına yarar. İleri bir konudur. Hafifçe değindik sadece."),
@@ -254,28 +265,33 @@ pages += Page(
       row("baskın".c, "override".c, "", "Daha temel bir türden (üst sınıf da denir) gelen yöntemleri yeniden tanımlarken gerekir."),
 //    row("".c, "".c, "", ""),
     ),
-    "17 sözcükle neler neler yapabiliriz yakında göreceksin. Bu kılavuzda hiç kullanmadığımız diğer anahtar sözcükler de aşağıda. İngilizcelerinin A'dan Z'ye sıralamasına uyduk".p,
+    "Yukarıdaki 15 sözcükle neler neler yapabiliriz yakında göreceğiz. Bu kılavuzda hiç kullanmadığımız diğer anahtar sözcükler de aşağıda. İngilizcelerinin A'dan Z'ye sıralamasına uyduk. Örnek ve Sergi yazılımcıklarında ender de olsa kullanılıyorlar. Ama şu ikisini de unutmayalım:".p,
     table(
-      row("soyut".c, "abstract".c, "", "Ender kullanılır. https://docs.scala-lang.org/scala3/book/domain-modeling-tools.html#abstract-classes"),
-      row("yakala".c, "catch".c, "", "Kural dışı bir durum varsa işe yarar."),
+      row("yineleDoğruKaldıkça".c, "while".c, "", "Bir koşul doğru kaldıkça yinelenen bir döngü tanımlar. Koşul baştan yanlışsa döngüye hiç girmez."),
+      row("yap".c, "do".c, "", "Önce 'yineleDoğruKaldıkça' döngüsün komutları en az bir kere çalışsın sonra da koşuluna bakılsın dersen bu sözcükle olur."),
+    ),
+    "Bunlar eski programlama dilerinde çok faydalı komutlardı. Ama Scala'da pek gerek yok. Kullanılmasalar daha iyi olur. Onun için adını da uzun tuttuk. Kılavuzumuzda da az yer verdik.".p,
+    table(
+      row("soyut".c, "abstract".c, "", "Ender kullanılır.".link("docs.scala-lang.org/scala3/book/domain-modeling-tools.html#abstract-classes")),
+      row("yakala".c, "catch".c, "", "Kuraldışı bir durum varsa işe yarar. 'dene' ile birlikte kullanılır."),
       row("son".c, "final".c, "", "Baskın komuduyla yeniden tanımlanmasını istemediğimiz nesneler ve türler için gerekir."),
       row("sonunda".c, "finally".c, "", "dene ve yakala komutlarıyla birlikte işe yarar."),
       row("forsome".c, "bazı".c, "", "Bu Scala3'te yok. Sadece Scala2'de var. Unut daha iyi!"),
-      row("örtük".c, "implicit".c, "", "İşte usta yazıcılar için faydalı bir komut."),
-      row("getir".c, "import".c, "", "Başka bir yazılımın kullanılmasına yarar."),
+      row("örtük".c, "implicit".c, "", "İşte usta yazıcılar için çok faydalı bir komut. Ama Scala3'te daha iyisi var."),
+      row("getir".c, "import".c, "", "Başka bir yazılımın bizim yazılımcığımız içinde kullanılmasını sağlar."),
       row("miskin".c, "lazy".c, "", "Miskinlik de çok faydalıdır bazı durumlarda."),
-      row("yok".c, "null".c, "", "Bu java'dan kalma. Hiç kullanma!"),
+      row("yok".c, "null".c, "", "Bu Java'dan kalma. Hiç kullanma!"),
       row("nesne".c, "object".c, "", "Bazen sınıfa gerek olmaz. Tek nesne yeter. Bazen de sınıfa destek olur."),
-      row("deste".c, "package".c, "", "Büyük yazılımları deste deste düzenlemeye yarar."),
+      row("deste".c, "package".c, "", "Büyük yazılımları deste deste düzenlemeye yarar. Sonra 'getir' ile kullanılır."),
       row("gizli".c, "private".c, "", "Dışarıya gizli nesneler ve türler tanımlamak için."),
       row("koru".c, "protected".c, "", "Alt türlere açık dışarıya gizli."),
       row("geriDön".c, "return".c, "", "İşlevden prematüre geri dönüş için. Hiç kullanma daha iyi."),
-      row("damgalı".c, "sealed".c, "", "Bu dosya dışında değişiklik yapılmasın türüme der."),
-      row("üst".c, "super".c, "", "Üst türden bahsetmek gerekirse."),
+      row("damgalı".c, "sealed".c, "", "Bir dosya dışında değişiklik yapılmasını istemediğimiz türler için kullanırız."),
+      row("üst".c, "super".c, "", "Bir üst türden bahsetmek gerekirse."),
       row("bu".c, "this".c, "", "Bir sınıfın tanımının içinde kendi nesnelerinden bahsetmek için kullanılabilen adıl. Ya da eski adıyla bu zamiri!"),
       row("bildir".c, "throw".c, "", "Kuraldışı durumlarda kullanılır. Atmak anlamındaki emrin adı. At diyemedik bazı teknik sorunlardan ötürü. Zaten bildirmek daha kibar oldu."),
-      row("özellik".c, "trait".c, "", "Temel bir tür tanımlamak için çok faydalıdır."),
-      row("dene".c, "try".c, "", "Kural dışı durumları sınır içine alır."),
+      row("özellik".c, "trait".c, "", "Temel bir tür tanımlamak için çok faydalıdır. Ama onun yerine 'sınıf' da kullanılabilir."),
+      row("dene".c, "try".c, "", "Kuraldışı durumları sınır içine alır."),
       row("tür".c, "type".c, "", "Bir türe yeni bir ad takar."),
       row("birlikte".c, "with".c, "", "Bir türün bir türü başka bir türle birlikte yaymasına yarar. İleri bir konudur. Bu kılavuzda henüz anlatmadık."),
 //    row("".c, "".c, "", ""),
@@ -289,7 +305,8 @@ pages += Page(
   body = tPage("Başlayalım",
     "Başlayalım".h2,
     "Kılavuzumuzda pek çok yazılımcık örneği bulacaksın. Onları buradan kolaylıkla çalıştırabilirsin. Herhangi birinin üstüne tıkladığında o örnek, yazılımcık düzenleyicisine taşınır ve çalışır. Yani hepsini yazmana gerek yok. Hatta yazılımcığı çalıştırma düğmesine bile tıklamaya gerek kalmıyor. Ayrıca, işin bir güzel yanı da şu: istediğin değişiklileri orada yapıp tekrar çalıştırabilirsin. Bunun için düzenleyicinin hemen üzerindeki yeşil üçgene tıklaman yeter. Haydi şimdi bunu deneyelim. Aşağıdaki mesajı Bülent yerine kendi adını yazıp tekrar çalıştırıver. Bu arada benim adım Bülent. Bu satırları siz Türkçe severler için severek çevirdim.".p,
-    """satıryaz("merhaba dünya! kaplumbağacık ve Bülent'ten hepinize selamlar, sevgiler")""".c,
+    """satıryaz("merhaba dünya ve kaplumbağacık")
+satıryaz("Bülent'ten hepinize selamlar, sevgiler")""".c,
     "Yaptığın değişikliğin sonucunu Çıktı Gözünde ya da Çizim Tuvalinde hemen göreceksin.".p,
     "Bu kılavuz ilk sayfada gördüğün bölümlerden oluşuyor. Bir sonraki bölüme geçmek için, ya da bir önceki bölüme dönmek için bu pencerenin altındaki sağa ve sola bakan mavi daire içindeki beyaz üçgenlere tıkla. İlgini çeken bölüme de kolaylıkla atlayabilirsin istersen. Bunun için ilk sayfaya geri dönüp ordaki mavi ve altı çizili başlıklardan herhangi birine tıklayabilirsin. İlk sayfaya dönmek için en üstte solda menü yazıyor ya, ona tıklayıver. En alttaki mavi daire içindeki kareye basarsan bu kılavuzdan çıkıp Kojo'nun normal düzenine dönebilirsin. Çıkınca kılavuzda son seçtiğin yazılımcık kapanmaz. Onun üzerinde değişikler yapıp çalıştırmaya odaklanabilirsin.".p,
     "Daha önce çalışan bir yazılıma dönmek de kolay: yazılım düzenleyicisinin üst kısmındaki menünün ortasında sağa ve sola bakan mavi oklara tıkla. Seçtiğin yazılımı düzenlemeye kaldığın yerden devam edebilirsin. Her örneği deneyebilir, istediğine geri dönüp değişiklikler yapıp tekrar çalıştırabilirsin. Değişik fikirler dener, yazılım dilini daha iyi tanıyıp yazım, yazılım gramer (syntax) kurallarını daha çabuk öğrenebilirsin. Yazılımcık düzenleyicisindeki programları diske kaydedebilir ve sonra oradan geri yükleyebilirsin. Bunun için Dosya menüsüdeki komutları kullan.".p,
@@ -307,50 +324,58 @@ sağ(120)
     "Öyleyse, başlayalım mı artık?".p,
     "Deyişler".h2,
     "Basit matematiksel deyişler pek şaşırtıcı gelmeyecektir. Tanıdık matematik işlemleri ve öncelikleri Scala'da da geçerlidir. İşlemleri daha açık açık sıralamak için parantez kullanılır.".p,
-    "1+2".c,
-    "3+4*(2-3)".c,
-    """23%5  // Tabanlı aritmetik işlemi yani tabana bölünce ne kalıyorsa onu verir""".c,
-    "6/4".c,
+    "1 + 2".c,
+    "3 + 4 * (2 - 3)".c,
+    """23 % 5""".c,
+    "Tabanlı aritmetik işlemi yaptık. ani tabana bölünce ne kalıyorsa onu bulduk".p,
+    "6 / 4".c,
     "Bu son işlemde önemli bir nokta var. Tam sayılar bölününce sonuç yine bir tam sayı olur ve kalan dikkate alınmaz. Ufak bir değişiklikle kesirli ve daha doğru bir işlem yapabiliriz:".p,
-    "6/4.0".c,
+    "6 / 4.0".c,
     "Biraz daha uzun bir işlem yapalım:".p,
-    "3.5*9.4+7/5".c,
+    "3.5 * 9.4 + 7 / 5".c,
     """Scala tam ve kesirli gibi değişik bir kaç sayı tipini tanır. Hepsinin bir tür adı var. Örneğin Sayı, Uzun, İriSayı, Kesir, vb. Bunları ileride detaylı olarak inceleyeceğiz. Yukarıdaki iki örnekten 4.0 ve 3.5 kesir (İngilizcesi Double), 4 ve 6 ise birer tam sayıdır (İngilizcede Integer, kısaca Int). Eğer bir matematiksel deyiş bir kaç tür sayı içiriyorsa Scala derleyicisi mümkünse sayının türünü biraz zorlayarak değiştirebilir.""".p,
     """Bir deyişin sonucunu bir değişken (aslında çoğunlukla bir değişmez değer) kullanarak kaydedip daha sonra yine kullanabiliriz. Değişken ve değişmez değer isimleri (ve sonra göreceğimiz başka tür isimler) harf, sayı ve * / + - : = ! < > & ^ | gibi semboller kullanarak yazılır. Örneğin, "FutbolTopu", "BilardoTopuBeyaz1", "yardımHattı", "*+" and "res4" (result yani sonuç)...""".p,
     """Bunun için iki yöntem vardır: "den" ve "dez" anahtar sözcükleri. "dez" sözcüğüyle sabit ve hiç değişmeyecek değerleri ve sonuçları saklayabiliriz. Bunlara değişmez değer, ya da kısaca değişmez diyelim. Ya neden bir de "den" anahtar sözcüğü var? Aşağıda bir örnekle ikisinin farkını hemen anlayacağız. "dez" ile tanımlanan değerlerin sabit olması (ingilizcede 'immutable value') aslında çok önemli bir işlevsel yazılım (functional programming) kavramıdır, ama bunu daha sonra yeri gelince daha iyi anlayacağız. Şimdilik mümkün oldukça 'den' yerine 'dez' komutunu kullanmaya dikkat edelim. Bu sayede yazılımın başka bir yerindeki değişkenleri yanlışlıkla bozamayız.""".p,
-    "dez noktaSayısı=34+5".c,
+    "dez noktaSayısı = 34 + 5".c,
     """Bir ya da daha fazla sayıda işlemin sonucunu çıktı gözüne 'satıryaz(deyiş1, deyiş2, deyişn)' komutunu kullanarak yazabiliriz. Deyişler arasına virgül koymayı unutmayalım. Gerekmez ama istersek virgülden sonra boşluk bırakarak yazılımın okunuşu biraz daha kolaylaştırabiliriz. Ama çıktı da durum başka. Orada boşluk bırakmak nasıl olur yakında göreceğiz.""".p,
-    """satıryaz(noktaSayısı,3+2,noktaSayısı/2, 3.9/2.3)
-den boy=noktaSayısı+4
+    """satıryaz(noktaSayısı, 3 + 2, noktaSayısı / 2, 3.9 / 2.3)
+den boy = noktaSayısı + 4
 satıryaz(boy)""".c,
     "Farkettiniz mi, çıktı gözü her değerin adını ve değerini yazmakla kalmıyor ikisinin arasında o değerin türünü de yazıyor, Int (Sayı), Double (Kesir) vb. Şimdi deneyelim,".p,
-    """noktaSayısı=10 // bu hata verir. dez ile tanımlanan değişkenlerin değerleri değiştirilemez""".c,
-    """'error' hata demek. Scala derleyicisi (compiler), 'reassignment to val' yani sabit bir değeri değiştirmek hata olur diyor ve izin vermiyor.""".p,
-    """boy+=4 // yani boyunu 4 nokta uzatalım
+    """noktaSayısı = 10""".c,
+    """Bu hata verdi, değil mi? 'dez' ile tanımlanan değişkenlerin değerleri değiştirilemez. Scala derleyicisi (compiler), 'Error: reassignment to val' yani sabit bir değeri değiştirmek hata olur diyor ve izin vermiyor. 'error' hata demek.""".p,
+    """dez x = 3.14
+x = 3.1415""".c,
+    "Şimdi boyunu 4 nokta uzatalım:".p,
+    """boy += 4
 satıryaz(boy)""".c,
     """Okuyanları bilgilendirmek ve kendimize anımsatmak için satır sonlarına // yani iki taksim ya da bölüm işaretinden sonra bir açıklama yazabiliriz. Bir satıra sığmıyorsa /* ile başlayıp */ ile biten daha uzun açıklamalar ekleyebiliriz. Scala derleyicisi bunları göz ardı eder ve bu sayede bilgisayarın kafası karışmaz 8-).""".p,
     """/*
   Çok satırlı bir açıklama örneği
   Fahrenayttan santigrata çevirelim
 */
-dez dereceF = 98.4
-// Tek satırda açıklama: 0C = 32F. 9F artış 5C artışa denk
-satıryaz(dereceF, "derece Fahrenayt", (dereceF-32)*5/9, "derece Santigrat")  // satır sonu açıklama
+dez dereceF = 98.4 // vucüt termometresi bunu göstersin
+satıryaz(dereceF, "derece Fahrenayt",
+         (dereceF-32)*5/9, "derece Santigrat") 
 """.c,
-    "'satıryaz' komutuyla yazı da yazdık yukarıda gördüğün gibi. Böyle çift tırnaklar içine alınan yazıların türüne Yazı (İngilizcesi String) diyoruz. Bu tür, sadece yazı yazmak için değil, yazılarla işlemler yapmak için de kullanılabilir:".p,
+"satıryaz' komutuyla yazı da yazdık yukarıda gördüğün gibi. Böyle çift tırnaklar içine alınan yazıların türüne Yazı (İngilizcesi String) diyoruz. Bu tür, sadece yazı yazmak için değil, yazılarla işlemler yapmak için de kullanılabilir:".p,
     """dez adım = "Mustafa Kemal"
 dez mesaj = "Merhaba " + adım
 satıryaz(mesaj)
 """.c,
     "Toplama işareti sanki toplama yaparmış gibi yazıları birbirine ekleyiveriyor. Mantıklı değil mi? Yazı türüyle daha neler yazılabilir neler! İki bölüm sonra başka örnekler de göreceğiz.".p,
     "Duymuşsundur eminim, bilgisayar devreleri aslında 2, 3, 4 gibi sayıları bile bilmez. Onun yerine sadece 0 ve 1 sayılarını tanır. Hatta tanımak dedik de aslında sadece voltaj değerlerini ve elektrik akımlarını tanır onlar. Bu uzun, ilginç ve çok keyifli bir öyküdür. Benim gibi elektrik mühendisi olmak istersen, bana emaille selam ve sorularını yollayabilirsin. Neyse, konumuza dönelim. Daha büyük sayılarla işlemler yapmak için bilgisayar onları bir 0 ve 1 dizisi olarak ele alır ve içindeki sayısız mantık devreleri sayesinde toplama, çıkarma, çarpma, bölme ve hatta türev ve integral alma gibi daha ileri matematik işlemlerini kolayca ve hiç üşenmeden halleder. Bunların detayı bilgisayar uzmanlarının işi. Biz 0 ve 1 dizilerine dönelim, çünkü herşey onlarla başlıyor! İngilizcede 'binary arithmetic' denir. Biz çift tabanlı sayma diyelim. Her sayı, 0 ve 1'lerden oluşan bir dizi olduğu için, direk onun parçacıkları üzerinde de işlemler yapabiliriz. Bu işlemlere 'bitwise' yani parçacık işlemi denir. Bu 0 ve 1 dizilerinin her bir elemanına İngilizcede 'bit' denir. Saçlarımızda yaşayan ve zararsız küçük böcekcikler değil elbet! İngilizcede azıcık, küçücük anlamlarına geliyor. Biz parçacık diyelim istersen. Çok uzattık. Kusura kalma. Şimdi parçacıkları teker teker nasıl işleme sokarız bir kaç örnek görelim:".p,
-    """3&2 // mantıksal 've' işlemi de denir (ingilizcesi 'logic and'). Sadece 1 ve 1 sonuç olarak 1 verir. Girdilerden biri 0 olursa sonucu da 0 olur.""".c,
-    """1|2 // mantıksal veya (or) işlemi. Sadece 0 veya 0 sonuç olarak 0 verir. Biri 1 olursa sonuç da 1 olur. """.c,
-    """1^2 // mantıksal dışlayan veya işlemi (xor yani exclusive or). Sadece biri 1 öbürü 0 olunca 1 verir. """.c,
-    """1<<2 // parçacıkları iki kere sola kaydır """.c,
-    """-24>>2 // sağa kaydır ama eksiyse eksi kalsın """.c,
-    """-14>>>2 // sağa kaydırıyor ama sonuca bakın! Ben anlamadım vallahi. Ya sen?""".c,
-    "Bakın bu çok ilginç. Parçacıkları sola kaydırmak ikiyle çarpmaya denk! Sağa kaydırmaksa ikiye bölmeye benzemiyor mu? Bu daha önce de dediğim gibi uzmanlık konusu. Üzerinde yazılmış pekçok bilimsel makale ve ders kitapları var. Hatta bazıları çok azımızın anlayabileceği yüksek ihtisas kitapları! Bugünlük bu kadarı fazla bile. Ama sen istersen bu yazılımcığı kurcala. Dene. Bakarsın uzman olmak istersin. Neden olmasın?".p,
+    "3 & 2".c,
+    "Bu '&' imiyle mantıksal 've' işlemi yapıyoruz (ingilizcesi 'logic and'). Sadece 1 ve 1 sonuç olarak 1 verir. Girdilerden biri 0 olursa sonucu da 0 olur. '|' da mantıksal veya (or) işlemi. Sadece 0 veya 0 sonuç olarak 0 verir. Biri 1 olursa sonuç da 1 olur:".p,
+    "1 | 2".c,
+    "Mantıksal dışlayan veya işlemi (xor yani exclusive or) aşağıda. Sadece biri 1 öbürü 0 olunca 1 verir:".p,
+    "1 ^ 2".c,
+    "Parçacıkları sola kaydırmak ikiyle çarpaya denk! İki kere kaydırsak ne olur:".p,
+    "1 << 2".c,
+    "sağa kaydır ama eksiyse eksi kalsın:".p,
+    "-24 >> 2".c,
+    "-14 >>> 2".c,
+    "Sağa kaydırıyor ama sonuca bakın! Ben anlamadım vallahi. Ya sen? Bakın bu çok ilginç. Parçacıkları sola kaydırmak ikiyle çarpmaya denk! Sağa kaydırmaksa ikiye bölmeye benzemiyor mu? Bu daha önce de dediğim gibi uzmanlık konusu. Üzerinde yazılmış pekçok bilimsel makale ve ders kitapları var. Hatta bazıları çok azımızın anlayabileceği yüksek ihtisas kitapları! Bugünlük bu kadarı fazla bile. Ama sen istersen bu yazılımcığı kurcala. Ama -14 yerine 14'ü dene. Mavi üçgene bas ki sonucu hemen göresin. Bakarsın uzman olmak istersin. Neden olmasın?".p,
     "Farkında mısınız? Bu kadarcık bilgiyle bile artık çok güçlü bir hesap makinemiz oldu. Ama dahası var! Bir sonraki bölümde program akışı nasıl düzenlenir öğrenecek ve yazılımcıklarımızı çok daha becerikli hale getireceğiz.".p
   )
 )
@@ -366,29 +391,33 @@ pages += Page(
     """Bunu daha kısa da yazabiliriz. 'eğer/yoksa' deyişi hep bir değer verir. Bakın bunu da satıryaz komutuyla yazıyoruz.""".p,
     """satıryaz(eğer(doğru) "Doğru" yoksa "Doğru değil")""".c,
     """Kulladığımız koşulun geçerli olması için 'doğru' ya da 'yanlış' (İngilizcede 'true' veya 'false') değerlerinden birini vermesi gerekir. Bu değerlerin türüne biz İkil deriz (İngilizcesi Boolean). Bu koşulu sağlayan işlemlere karşılaştırma işlemi deriz. Bunlar matematiksel işlemler ya da benzerleri olabilir. İlk önce matematiksel olanları, yani sayıları karşılaştıran işlemleri görelim. Başka tür değerleri (örneğin sözcükleri) karşılaştırmayı sonraya bırakalım.""".p,
-    """1>2 // büyüktür""".c,
-    """1<2 // küçüktür""".c,
-    """1==2 // eşittir""".c,
-    """1>=2 // büyük ya da eşittir""".c,
-    """1!=2 // eşit değil""".c,
-    """1<=2 // küçük ya da eşittir""".c,
+    """1 > 2 // büyüktür""".c,
+    """1 < 2 // küçüktür""".c,
+    """1 == 2 // eşittir""".c,
+    """1 >= 2 // büyük ya da eşittir""".c,
+    """1 != 2 // eşit değil""".c,
+    """1 <= 2 // küçük ya da eşittir""".c,
     "eğer/yoksa yapısının nasıl çalıştığını anlamak çok kolay. Koşul doğruysa 'yoksa' sözcüğünden önceki komutlar çalıştırılırlar. Yok, eğer koşul doğru değilse, o halde 'yoksa' sözcüğünden sonraki komutlar çalıştırılır. Scala ve diğer işlevsel dillere benzemeyen yazılım dilleri (örneğin, C, Java, Python), eğer/yoksa yapısını sadece akışı belirlemek için kullanırlar. Ama Scala, Haskell ve diğer işlevsel diller gibi, eğer/yoksa yapısından bir değer beklerler. Onun için 'eğer' genelde tek başına kullanılamaz. Arkasından hemen 'yoksa' gelir ve iki durumda da bir değer geri bildirilir. Bunun bir istisnası da vardır, ama onu da sonraya bırakalım. Bakın bu örneklerde koşul olarak hep yalın sayıları karşılaştırıyoruz. Ama elbette başka 'dez' değerler ve komutlar da kullanabiliriz. Yeter ki bir İkil, yani doğru ya da yanlış değeri olsun.".p,
-    """eğer(1>2) 4 yoksa 5 // büyüktür""".c,
-    """eğer (1<2) 6 yoksa 7 // küçüktür""".c,
-    """dez deneme1=eğer (1==2) 8 yoksa 9 // eşittir""".c,
-    """dez kitapsa = 6>=3
+    """eğer (1>2) 4 yoksa 5""".c,
+    """eğer (1<2) 6 yoksa 7""".c,
+    """dez deneme1 = eğer (1==2) 8 yoksa 9""".c,
+    """dez kitapsa = 6 >= 3 // bu doğru
 dez değer = 16
 dez sayı = 10
-dez satış = eğer (kitapsa) değer*sayı yoksa {
-  dez birim = değer/sayı // { ve } içinde bir dizi deyiş ya da bir dizi komut. Tabii hem deyiş hem de komutlar da olabilir...
-  birim*3  // dizinin değeri içindeki bu son deyişin değeri olacak
+dez satış = eğer (kitapsa) değer * sayı yoksa {
+  dez birim = değer / sayı
+  birim * 3
 }
 yaz(satış) // doğru mu?""".c,
+    "{ ve } içinde bir dizi deyiş ya da bir dizi komut yazabiliyoruz. satış değeri dizi içindeki en son deyişin değeri olur.".p,
     "Gerçek hayatta da olduğu gibi bazen bir kaç koşul bir araya gelir. Bu durumda iki tane mantıksal işlem kullanırız. Bunlardan birincisi '&&' mantıksal 'Ve' anlamına gelir. İkincisi de '||'  mantıksal 'Veya' anlamına gelir. Bunları sakın parçacıkları işleyen '&' ve '|' işlemleriyle karıştırmayalım. Aslında ilişkili ve benzer kavramlar. Ama dikkat edelim. Çok uzatmadan birkaç örnek görelim, göreceksin çok doğal gelecek. Ne de olsa mantık hepimizde var. ".p,
-    """dez kitapsa = 6>=3
-dez değer=16
-dez sayı=10
-dez satış=eğer (((kitapsa)&&(değer>5))||(sayı>30))değer*sayı yoksa değer/sayı""".c,
+    """dez kitapsa = 6 >= 3
+dez değer = 16
+dez sayı = 10
+dez satış =
+    eğer ( (kitapsa && değer > 5) || ( sayı > 30) ) değer * sayı
+    yoksa değer / sayı
+yaz(satış)""".c,
     "yineleDoğruKaldıkça".h2,
     """Bu yapı bilhassa eski yazılım dillerinde çok kullanılır. İngilizce'de pek çok farklı anlama gelen 'while' sözcüğü komut olarak kullanılır. Türkçemize 'o halde' ya da 'o sırada' diye de çevirebiliriz. Genel olarak, "yineleDoğruKaldıkça (koşul) dizi/deyiş" yapısı kullanarak komut dizisini tekrar tekrar çalıştırabiliriz. Koşul sağlandığı sürece yineleme devam eder. Koşul değişince, yani artık doğru olmadığında yineleme son bulur. Bir örnekle anlamak çok daha kolay olacak. Ama ilk önce bir değişkenle başlayalım:""".p,
     """den toplam = 18
@@ -432,17 +461,18 @@ satıryaz("ortak paydaların en büyüğü: " + y)
     """Bakın şu işe! Sayı yerine harfler kullandık! "için" yapısı içinde kullandığımız kümeler illa da sayılardan oluşmak zorunda değil yani. Genel olarak biz bunlara küme tekerleme diyebiliriz (İngilizcesi: iterating through a set or collection) yani teker teker her küme elemanını ele alıyoruz. "abc" yazısı da aslında bir harf kümesi ya da kolleksiyonu. Bakın hep küme ya da kolleksiyon dedim. Bu kavramlar yakın ama ufak farklılıkları var. Daha sonra bunlara verilen anlamı daha iyi anlayacağız. Şu anda çok da önemli değil gerçekten. Neyse. Harflerle tekerlemeye bir örnek daha verelim ve devam edelim:""".p,
     """için(c<-"merhaba!") satıryaz(c)""".c,
     "Bu 'için' komudu aslında çok faydalı. Sadece çıktı için kullanılmıyor. Anahtar sözcük 'ver' ile birlikte kullanarak bir dizi değer oluşturabiliriz. Bir küçük örnekle yetinelim şimdilik:".p,
-    """dez neKi = için(i <- 1 |- 5 ; j <- "abc") ver(i, j)
-       satıryaz(neKi)""".c,
+    """dez ikililer = için(i <- 1 |- 5 ; j <- "abc") ver(i, j)
+yaz(ikililer)""".c,
     "Şimdi de matematik, bilhassa kartezyen geometrisi sevenlere bir süprizimiz var. Kaplumbağacığı kullanarak bir eğri çizelim. Neyin eğrisi? İki boyutlu bir polinom, yani çok terimli bir matematiksel deyiş. Genel olarak a*x^2 + b*x + c diye yazabiliriz. Yine bu çok faydalı olan 'için' yapısıyla:".p,
     """sil
-tanım eğri(x: Kesir) = 0.001 * x * x + 0.5 * x + 10   // eğri adında yeni bir işlev tanımlayıverdik. Bunu daha sonra daha iyi anlayacağız. 
-gridiGöster(); eksenleriGöster() // kare çizgileri ve x ve y eksenlerini çizelim
+tanım eğri(x: Kesir) = 0.001 * x * x + 0.5 * x + 10
+gridiGöster(); eksenleriGöster()
 dez aralık = 200
 atla(-aralık,eğri(-aralık))
 için(x <- -aralık+10 |-| aralık; eğer (x % 10 == 0)) noktayaGit(x, eğri(x))
 """.c,
-    "Eksenleri silelim. Ve bir sonraki bölümle devam edelim!".p,
+    "'eğri' adında yeni bir işlev tanımlayıverdik. Bunu daha sonra daha iyi anlayacağız.".p,
+    "Şimdilik x ve y eksenlerini ve kare çizgileri silelim. Ve bir sonraki bölümle devam edelim!".p,
     "eksenleriGizle(); gridiGizle()".c
   )
 )
@@ -485,8 +515,9 @@ eğer (x1 == x2) satıryaz("kim korkar d'den?!")""".c,
     "dez kısaSayı: Kısa = 1024".c,
     """dez sorunYok: Lokma = 127
 dez sorunsuz: Lokma = -128
-dez hataVerir: Lokma = 128 // hata verir. "Error... type mismatch" gibi birşeyler der derleyici. Yani türler uyuşmadı diyor. 128 sayısı Lokma'ya sığmıyor.
+dez hataVerir: Lokma = 128
 """.c,
+    """Son satır hata verdi. "Error... type mismatch" gibi birşeyler dedi. Yani türler uyuşmadı diyor. 128 sayısı Lokma'ya sığmıyor.""".p,
     "Kesirli sayılar".h3,
     "Kesirli sayıları yalın olarak ifade etmek için nokta kullanırız elbet. Sıfır dışında bir sayıyla başlarlar. İşin ilginci sonuna E veya e harfi ekleyebiliriz. O İngilizce exponent yani üssü anlamına gelir ve hemen arkasından bir tam sayı (eksi de olabilir) ekleriz. Örneklerle anlamak daha kolay olacak.:-".p,
     "9.876".c,
@@ -496,9 +527,9 @@ dez hataVerir: Lokma = 128 // hata verir. "Error... type mismatch" gibi birşeyl
     """2e3 // yani 2000. üç sıfır ekliyoruz yani
 3e-2 // yani 0.03. yüzle çarparsak 3 oluyor, fark ettin mi?
 0.5e1 // 5.0 yazsak daha açık olurdu. Sadece daha iyi anlamak için
-7.8e9 // şu anda, yani 2020'nin son günlerinde, yeryüzündeki insan kardeşlerimizin sayısı buymuş!
+8e9
 """.c,
-    "Nüfusumuz kaç oldu?".link("www.worldometers.info/world-population"),
+    "Son satır şu anda, yani 2022'nin son günlerinde, yeryüzündeki insan kardeşlerimizin sayısını gösteriyor! Nüfusumuz kaç oldu?".link("www.worldometers.info/world-population"),
     """Varsayılan, kesirli yalın sayıların Kesir türünde olmasıdır. Ama istersen UfakKesir de olabilirler. Sonuna f ya da F getirmen yeter. Bu İngilizce "float" sözcüğünden gelir o da bizim noktanın adı "floating point" olduğu için. Eğer Kesir olduğunu açık etmek istersen sonuna d veya D getiriver. O da "double" sözcüğünün baş harfi. Neden double? Çünkü UfakKesir 32 parçacık kullanırken, Kesir 64, yani iki katı parçacık yani daha çok bellek kullanır. Bellek büyüdükçe de hassasiyet artar. Öte yandan ne kadar çok bellek kullanırsak, hem belleğin sınırlarını aşma tehlikesi artar hem de program daha yavaş çalışır. Onun için bazı programları yazarken hangi tür sayıları seçeceğimize çok dikkat ederiz.""".p,
     "dez ufakkesir1 = 1.5324F".c,
     "dez ufak2 = 3e5f".c,
@@ -560,11 +591,14 @@ tanım enbop(x: Uzun, y: Uzun): Uzun = eğer (y == 0) x yoksa enbop(y, x % y)
     """Bu tanımı daha önce "yineleDoğruKaldıkça" komutuyla yaptığımız tanımla karşılaştırmanda fayda var.""".p,
     "enbop(96, 128)".c,
     "Şimdi de daha renkli bir özyineleme görelim. Bu işlev kendini iki kere çagırarak kaplumbağacığa bir ağacın dallarını çizdiriyor. Bu tür ağaçlara ikil ağaç (binary tree) deriz. Sen de beğendin mi? Özyineleme nasıl duruyor? Yukarıdaki 'enbop' işlevinde y'nin değeri sıfır olunca. Aşagıda ise uzaklık dört ya da daha küçük olduğunda.".p,
-    """tanım ağaç(boy: Kesir) {
+    """tanım ağaç (boy: Kesir) {
     // sayıya yöntemi kesirli sayıyı tam sayıya çeviriyor
     // yani boy 1.75 olursa boy.sayıya 1 oluyor
-    tanım renk = Renk(boy.sayıya % 255, mutlakDeğer(255 - boy * 3).sayıya % 255, 125)
-    eğer (boy > 4) {
+    tanım renk = Renk(
+        boy.sayıya % 255,
+        mutlakDeğer(255 - boy * 3).sayıya % 255,
+        125)
+    eğer(boy > 4) {
         kalemKalınlığınıKur(boy / 7)
         kalemRenginiKur(renk)
         ileri(boy)
@@ -579,8 +613,7 @@ tanım enbop(x: Uzun, y: Uzun): Uzun = eğer (y == 0) x yoksa enbop(y, x % y)
 sil()
 hızıKur(hızlı)
 konumuKur(100, -200)
-ağaç(90) // 100, 120 ve 150 gibi boyları da dene!
-""".c
+ağaç(90) // 100, 120 ve 150 gibi boyları da dene!""".c
   )
 )
 
@@ -782,39 +815,39 @@ durum sınıf Yaprak(anahtar: Yazı, değer: Sayı) yayar Ağaç
     "Bu nasıl oluyor? Yaprak Ağaç'ın uzantısıydı ya. O sayede Ağaç deyince genel olarak ya Çatal ya da Yaprak demiş oluyoruz. Bu sayede Çatal'ın tanımındaki sol ve sağ değerlerinin türü neden Ağaç oldu anladık değil mi? Ama tersini yapamayız ona göre. Neden? Çünkü Yaprak dedik mi artık yeterince özelleşmiş oluyor ve anahtar ve değeri olarak bir sayı gerekiyor. Ne Ağaç ne de Çatal'da bir sayı yok, değil mi?".p,
     "Şimdi en başta bahsettiğimiz arama işlevine geldi sıra. Desen eşleme değil mi bu kısmın adı?".p,
     "Bakın bu işlev ağacımızı alacak ve özyineleme yöntemiyle verimli arama işlemini gerçekleştirecek. Yani bir çatala geldiğinde kendi kendini sağ ya da sol küçük ağaç ile tekrar çağıracak. Ama eğer bir yaprak görürse elbette yineleme duracak. Desen nerede o zaman? Küçük ağaç bir çatal mı yoksa yaprak mı onu belirleyecek desenlerimiz (ya da örüntülerimiz). Çok lafa gerek yok. Yazılımcık yalın ve kendi kendini anlatıveriyor:".p,
-    """tanım bul(ağaç: Ağaç, anahtar: Yazı): Sayı = {
+    """tanım bul(ağaç: Ağaç, ne: Yazı): Sayı = {
   ağaç eşle {
-    durum Yaprak(a, değer)   => eğer (a == anahtar) değer yoksa 0
-    durum Çatal(a, sol, sağ) => bul((eğer (a >= anahtar) sol yoksa sağ), anahtar)
+    durum Yaprak(a, değer)   => eğer (a == ne) değer yoksa 0
+    durum Çatal(a, sol, sağ) => bul((eğer (a >= ne) sol yoksa sağ), ne)
   }
 }
 
 // Bir örnek gerek. İkil ağacımızı şöyle olsun:
-dez ağaç = Çatal("b", Çatal("a", Yaprak("a", 30), Yaprak("b", 10)), Yaprak("c", 20))
+dez ağaç = Çatal("b",
+  Çatal("a", Yaprak("a", 30), Yaprak("b", 10)),
+  Yaprak("c", 20))
 /*
  *           [b]
  *          /  \
  *        [a]  c,20
  *       /  \
  *     a,30  b,10       
- */     
-""".c,
+ */""".c,
     "'durum sınıf' sayesinde Çatal ve Yaprak nesnelerini kolayca tanımladık. Haydi şimdi yapalım bir iki arama:".p,
     """bul(ağaç, "a")  // 30""".c,
     """bul(ağaç, "c")  // 20""".c,
     "Bu kadarla kalmaz elbet. Ağaca yeni anahtar/değer çiftleri eklemek için de bir işlev iyi olur. Ha, bir de yaprağı koparmak gerekebilir. Bütün bu işlevleri yeni bir İkilAğaç sınıfı tanımlayıp içine koymaya ne dersin? Onu sana bırakıyorum. Biraz düşün, Kojo'da birşeyler yazıp çiziştir bakalım. Çok daha iyi öğreneceksin o sayede. Kolay gelsin!".p,
     "Bu arada desenler/örüntüler yukarda gördüğümüz gibi değişken olmak zorunda değil. Yalın bir değer de kullanabiliriz örüntü olarak. Bir önceki bölümde de görmüştük hani sayıdan yazıya ve tersini yaparken.".p,
     "Bir örnek daha verelim yine de. Diyelim ki (c -> 20) çiftinin bulunmasını istemiyoruz. Nedense. Bakın nasıl kolay:".p,
-    """tanım bul2(ağaç: Ağaç, anahtar: Yazı): Sayı = {
+    """tanım bul2(ağaç: Ağaç, ne: Yazı): Sayı = {
   ağaç eşle {
-    durum Çatal(a, sol, sağ) => bul2(eğer (a >= anahtar) sol yoksa sağ, anahtar)
+    durum Çatal(a, sol, sağ) => bul2(eğer (a >= ne) sol yoksa sağ, ne)
     durum Yaprak("c", _)     => 0
-    durum Yaprak(a, değer)   => eğer (a == anahtar) değer yoksa 0
+    durum Yaprak(a, değer)   => eğer (a == ne) değer yoksa 0
   }
 }
 
-bul2(ağaç, "c")  // 0
-""".c,
+bul2(ağaç, "c")  // 0""".c,
     "Burada yine '_' imini joker gibi kullanarak bütün değerlerle eşleşmesini sağladık. Ayrıca bilelim ki bu eşleştirme işlemi yukarıdan aşağıya sırayla gidiyor. İlk eşleşme ile iş bitiyor. Bariz tabii ama yine de benden söylemesi.".p,
     "Burada örneğini gördüğümüz sınıf hierarşisi ve alt türlerin üst türü uzatması, OOP, yani nesneye yönelik yazılımdaki en temel kavramlardan. Desen eşleme yöntemi sayesinde alt türleri birbirinden ayırıp gereğini yapabiliyoruz. Ne dahice, değil mi?!".p)
 )
@@ -916,10 +949,18 @@ Aralık.kapalı(30, -35, -5)""".c,
 """.c,
     "ele(dzn, (v: Sayı) => v % 2 == 0)".c,
     "Aynı eskisi gibi çalıştı! Ama işin iyi tarafı çok daha genel oldu bu haliyle. Bak şimdi kesirli sayılar arasından sadece beşten büyük olanları seçmek de çok kolay olacak:".p,
-    """dez kesirler = Dizin(1.5, 7.4, 2.3, 8.1, 5.6, 6.2, 3.5, 9.2, 14.6, 12.91, 4.23, 10.04)""".c,
+    """dez kesirler = Dizin(
+    1.5, 7.4, 2.3,
+    8.1, 5.6, 6.2,
+    3.5, 9.2, 14.6,
+    12.91, 4.23, 10.04)""".c,
     """ele(kesirler, (v: Kesir) => v > 5)""".c,
     "Ya da bir cümle içindeki uzunca sözcükleri seçmek için de kullanabiliriz aynı genellenmiş ele adlı işlevimizi:".p,
-    """dez dizinler = Dizin("Bugün", "sizi", "gördüğüme", "çok", "memnun", "oldum", "Nasılsınız")""".c,
+    """dez dizinler = Dizin(
+    "Bugün", "sizi",
+    "gördüğüme", "çok",
+    "memnun", "oldum",
+    "Nasılsınız")""".c,
     """ele(dizinler, (v: Yazı) => v.boyu > 4)""".c,
     "Yazı türünün 'boyu' adlı yöntemi yazıda kaç harf olduğunu gösterir. Dizinlerle ilgili bölümde de göreceğimiz gibi Dizin türünün 'ele' adlı bir yöntemi var. Onu kullanarak da benzer eleme işlemlerini yapabiliriz:".p,
     "dizinler.ele((v: Yazı) => v.boyu < 5)".c,
@@ -955,7 +996,8 @@ Aralık.kapalı(30, -35, -5)""".c,
     "Soldan işleyeceğiz. İkinci girdimiz adsız bir işlev ve iki sayıyı topluyor: '_+_'. Bunun kapsama olduğunu da biliyoruz, yani dizinin içindeki bütün elemanların üstünden geçecek. İlk önce ilk girdisi olan 0 ile dizinin başındaki 1'i toplar ve 1 bulur. Sonra ona ikinci eleman olan 7'yi ekler ve böylece sonuna kadar gider.".p,
     "Tekrarlardan Kurtulalım".h4,
     "Diyelim ki bir cümlemiz var ve içinde hangi harfleri kullandığımızı bulmak istiyoruz. Örneğin,".p,
-    """dez dilek = Dizin("Haydi", "gelin", "bir", "oyun", "oynayalım", "hep", "beraber")""".c,
+    """dez dilek = Dizin("Haydi", "gelin", "bir",
+    "oyun", "oynayalım", "hep", "beraber")""".c,
     """dilek.düzİşle(_.dizine).işle(_.büyükHarfe).yinelemesiz.sırayaSok(_ < _)""".c,
     "'düzİşle' sözcüklerin bütün harflerini tek bir dizine sokuyor. Daha önce de gördüğümüz 'işle' harfleri büyük harfe çeviriyor. 'yinelemesiz' yöntemi sadece farklı harfleri veriyor, tekrarları vermiyor. En sonunda da a'dan z'ye sıralıyoruz.".p,
     
@@ -989,7 +1031,8 @@ için (i <- 1 |-| 4) { ileri(100); sağ() }
     """topla(1, 2, 3)""".c,
     """topla(4, 5, 6, 7, 8, 9, 10)""".c,
     "Girdinin türünden sonra gelen yıldız imi, yani '*' sayesinde 's' girdisi tek bir sayı değil bir dizi sayı oluveriyor. Onun için de 'indirge' (ingilizcesi reduce) yöntemini kullandık. Bu soldanKatla yöntemine benzer ama daha basittir. Bakın girilen bütün sayıları toplamak bu kadar kolay. Bazı istisnalara da bakalım, ne olacak?".p,
-    """topla(99) // pek toplamaya gerek olmasa da yine de tek değerle de çalışması güzel!""".c,
+    """topla(99)""".c,
+    "Pek toplamaya gerek olmasa da yine de tek değerle de çalışması güzel!".p,
     """topla() // Bak ne oldu? Bunu onarabilir misin?""".c,
     "Bu yıldızlı girdiden önce yıldızsız yani normal girdiler de tanımlayabiliriz. Ama yıldızlı yani yinelenen girdi en son gelmelidir.".p
   )

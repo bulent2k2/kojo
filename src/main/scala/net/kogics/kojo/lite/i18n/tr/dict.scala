@@ -24,6 +24,10 @@ object dict {
     "recurse" -> "özyinele",
     "recursive" -> "özyineli",
     "recursion" -> "özyineleme",
+    "exception" -> "kuraldışı",
+    "runtime" -> "çalışmasırası",
+    "compile" -> "derleme",
+    "compiler" -> "derleyici",
   )
 
   // skala kılavuzunda kullanma sırasıyla (yaklaşık olarak)
