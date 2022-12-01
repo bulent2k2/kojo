@@ -1203,7 +1203,17 @@ pages += Page(
       row("rastgeleRenk".c,"Matematikle ilgisi yok gibi. Ama adı üstünde. Resim çizerken işe yarayabilir."),
       row("rastgeleŞeffafRenk".c,"Deneyerek daha iyi anlarsın."),
       row("rastgeleDiziden(Dizi(1, 3, 5))".c,"G1 girdisindeki diziden rastgele seçer."),
-      row("rastgeleDiziden(Dizi(1.0, 10.0, 100.0), Dizi(0.9, 0.09, 0.01))".c,"G2 girdisinde verilen ağırlık oranlarını kullanarak G1'den rastgele seçer."),
+      row("""rastgeleDiziden(
+  Dizi(1.0, 10.0, 100.0),
+  Dizi(0.9, 0.09, 0.01))""".c,"G2 girdisinde verilen ağırlık oranlarını kullanarak G1'den rastgele seçer."),
+      row("""yaz({
+    için (i <- 1 |-| 1000) ver
+    rastgeleDiziden(
+        Dizi(1.0, 10.0, 100.0),
+        Dizi(0.9, 0.09, 0.01))
+}.
+    ele(_ > 10).
+    topla)""".c, "Bir önceki örneği bin kere çalıştıralım ve 10'dan büyük yani 100 gelenleri toplayalım. Birkaç kere çalıştırarak farklı farklı sonuçlar görecebilirsin. Bir de sadece 10 gelenleri toplamayı dene istersen. 100 gelme olasılığı %10. Ama deneysel olarak ne çıkıyor nasıl bulabiliriz?"),
       row("rastgeleKarıştır((1 |-| 6).dizine)".c,"Girilen dizini ya da diziyi karıştırır.")
     )
   )
