@@ -139,6 +139,10 @@ object dict {
     "ListBuffer" -> "EsnekDizin", // used in StoryTeller.scala
     "mutable" -> "değişir",
     "immutable" -> "değişmez",
+    "execution" -> "işletim",
+    "application" -> "uygulanış",
+    "" -> "",
+    "" -> "",
     "" -> "",
     "" -> "",
   )

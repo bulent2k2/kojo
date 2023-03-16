@@ -30,7 +30,7 @@ import net.kogics.kojo.kmath.KEasing
 
 // Keep in alphabetical order
 object TurkishAPI extends tr.ArrayMethodsInTurkish with tr.CalendarAndTimeUtilsInTurkish with tr.CharMethodsInTurkish with
-    tr.ColorMethodsInTurkish with tr.CoreTypeMethodsInTurkish with tr.GeoMethodsInTurkish with
+    tr.ColorMethodsInTurkish with tr.CoreTypeMethodsInTurkish with tr.FutureMethodsInTurkish with tr.GeoMethodsInTurkish with
     tr.LazyListMethodsInTurkish with tr.ListMethodsInTurkish with tr.MapMethodsInTurkish with
     tr.MathMethodsInTurkish with tr.NumMethodsInTurkish with tr.OptionMethodsInTurkish with
     tr.PartialFunctionMethodsInTurkish with tr.QueueMethodsInTurkish with tr.RangeMethodsInTurkish with
@@ -105,8 +105,8 @@ object TurkishAPI extends tr.ArrayMethodsInTurkish with tr.CalendarAndTimeUtilsI
   trait TurkishTurtle {
     def englishTurtle: Turtle
     def sil(): Birim = englishTurtle.clear()  // bbx: does this do anything? See sil def below..
-    def göster = görünür _
-    def gizle = görünmez _
+    def göster = görünür()
+    def gizle = görünmez()
     def görünür() = englishTurtle.visible()
     def görünmez() = englishTurtle.invisible()
     def ileri(adım: Kesir) = englishTurtle.forward(adım)
@@ -145,12 +145,14 @@ object TurkishAPI extends tr.ArrayMethodsInTurkish with tr.CalendarAndTimeUtilsI
     def yazı(t: Her) = englishTurtle.write(t)
     // ~/src/kojo/git/kojo/src/main/scala/net/kogics/kojo/turtle/Turtle.scala
     // ../../turtle/Turtle.scala
-    def yazıBoyunuKur(boyutKur: Sayı) = englishTurtle.setPenFontSize(boyutKur)
+    def yazıBoyunuKur(boy: Sayı) = englishTurtle.setPenFontSize(boy)
     def yazıYüzünüKur(yy: Yazıyüzü) = englishTurtle.setPenFont(yy)
     def yay(yarıçap: Kesir, açı: Kesir) = englishTurtle.arc(yarıçap, math.round(açı).toInt)
     def dön(açı: Kesir, yarıçap: Kesir) = englishTurtle.turn(açı, yarıçap)
     def dön(açı: Kesir) = englishTurtle.turn(açı)
-    def daire(yarıçap: Kesir) = englishTurtle.circle(yarıçap)
+    def üçgen(en: Kesir = 25): Birim = { yinele(3) { ileri(en); sağ(120) } }
+    def daire(yarıçap: Kesir = 25) = englishTurtle.circle(yarıçap)
+    def kare(en: Kesir = 25): Birim = { yinele(4) { ileri(en); sağ(90) } }
     def konumuKur(x: Kesir, y: Kesir) = englishTurtle.setPosition(x, y)
     // ../../xscala/help.scala
     // ../../core/TurtleMover.scala
@@ -174,6 +176,7 @@ object TurkishAPI extends tr.ArrayMethodsInTurkish with tr.CalendarAndTimeUtilsI
     def giysiyiBüyült(oran: Kesir) = englishTurtle.scaleCostume(oran)
     def hızıKur(hız: Hız) = englishTurtle.setSpeed(hız)
     def nokta(çap: Sayı): Birim = englishTurtle.dot(çap)
+    def nokta() = englishTurtle.dot(25)
   }
 
   class Kaplumbağa(override val englishTurtle: Turtle) extends TurkishTurtle {

@@ -42,6 +42,15 @@ trait NumMethodsInTurkish {
     def unapplySeq(ss: Sayılar) = Vector.unapplySeq(ss)
   }
 
+  implicit class ByteMethods(a: Lokma) {
+    type S = Byte
+    def yazıya = a.toString
+    def kesire = a.toDouble
+    def mutlakDeğer = a.abs
+    def enİrisi(b: S) = a max b
+    def enUfağı(b: S) = a min b
+  }
+
   implicit class BigIntMethods(a: İriSayı) {
     type S = İriSayı
     def yazıya = a.toString
@@ -67,6 +76,7 @@ trait NumMethodsInTurkish {
   implicit class SayıYöntemleri(a: Sayı) {
     def |-(b: Sayı): Range = a until b
     def |-|(b: Sayı): Range = a to b
+    def harfe = a.toChar
     def yazıya = a.toString
     def kesire = a.toDouble
     def mutlakDeğer = a.abs

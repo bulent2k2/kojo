@@ -19,7 +19,6 @@ package net.kogics.kojo.lite.i18n.tr
 trait CharMethodsInTurkish {
   type Harf = Char
 
-  // todo: move to harf.scala?
   object Harf {
     def sayıMı(h: Harf): İkil = Character.isDigit(h)
     def harfMi(h: Harf): İkil = Character.isLetter(h)
