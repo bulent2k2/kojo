@@ -68,7 +68,7 @@ def update(m: Model, msg: Msg): Model = msg match {
         val p = m.player
         val gameOver =
             cd.collidesWithEdge(p.x, p.y, p.w, p.h) ||
-                m.hunters.exists { h =>
+                newm.hunters.exists { h =>
                     cd.collidesWith(p.x, p.y, p.w, p.h, h.x, h.y, h.w, h.h)
                 }
         newm.copy(gameOver = gameOver)
@@ -97,11 +97,11 @@ def view(m: Model): Picture = {
         picStack(viewPics)
 }
 
-val tickSub: Sub[Msg] = Subscriptions.onAnimationFrame {
+val tickSub = Subscriptions.onAnimationFrame {
     Tick
 }
 
-val keyDownSub: Sub[Msg] = Subscriptions.onKeyDown { keyCode =>
+val keyDownSub = Subscriptions.onKeyDown { keyCode =>
     keyCode match {
         case Kc.VK_LEFT  => MoveLeft
         case Kc.VK_RIGHT => MoveRight
