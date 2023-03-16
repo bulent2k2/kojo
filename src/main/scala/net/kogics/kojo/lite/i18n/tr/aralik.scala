@@ -28,11 +28,12 @@ case class Aralık(ilki: Sayı, sonuncu: Sayı, adım: Sayı = 1) {
   def yazı() = toString()
   def herÖgeİçin(komutlar: (Sayı) => Birim) = r.foreach(komutlar)
   override def toString() = {
-    val yazı = if (r.size <= 10) r.mkString("(", ", ", ")")
-    else {
-      val (başı, sonu) = (r.take(5), r.drop(r.size - 5))
-      başı.mkString("(", ", ", " ...") + sonu.mkString(" ", ", ", ")")
-    }
+    val yazı =
+      if (r.size <= 10) r.mkString("(", ", ", ")")
+      else {
+        val (başı, sonu) = (r.take(5), r.drop(r.size - 5))
+        başı.mkString("(", ", ", " ...") + sonu.mkString(" ", ", ", ")")
+      }
     s"Aralık$yazı"
   }
   def map[B](f: Sayı => B) = r.map(f)
