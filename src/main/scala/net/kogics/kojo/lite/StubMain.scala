@@ -15,6 +15,7 @@
 package net.kogics.kojo.lite
 
 import java.io.File
+
 import javax.swing.JOptionPane
 
 import scala.collection.mutable.ArrayBuffer
@@ -96,8 +97,7 @@ trait StubMain {
     }
     def maybeMarlin = {
       if (System.getProperty("java.vendor", "").toLowerCase.contains("jetbrains"))
-        "-Dsun.java2d.renderer=sun.java2d.marlin.MarlinRenderingEngine"
-      else ""
+        "-Dsun.java2d.renderer=sun.java2d.marlin.MarlinRenderingEngine" else ""
     }
 
     def cmsGC =
@@ -132,10 +132,8 @@ trait StubMain {
       val pythonVer = Utils.appProperty("python.version").getOrElse("3.8")
       Utils.appProperty("python.home") match {
         case Some(phome) =>
-          libraryPath.append(
-            File.pathSeparator + s"$phome/lib" +
-              File.pathSeparatorChar + s"$phome/lib/python$pythonVer/site-packages/jep"
-          )
+          libraryPath.append(File.pathSeparator + s"$phome/lib" +
+            File.pathSeparatorChar + s"$phome/lib/python$pythonVer/site-packages/jep")
         case None =>
       }
       libraryPath.toString
@@ -164,18 +162,17 @@ trait StubMain {
     val command =
       Seq(
         javaExec,
-        "-cp",
-        classpath,
+        "-cp", classpath,
         s"-Djava.library.path=$libPath"
       ) ++ cmdArgs.split(' ')
 
     log(s"Java VM args: $cmdArgs")
-    Process(command, None, extraEnv: _*) !
+    Process(command, None, extraEnv: _*)!
   }
 
   def createCp(xs: List[String]): String = {
     val ourCp = new StringBuilder
-    //    Bad stuff on the classpath can clobber the launch of the Real Kojo
+    //    Bad stuff on the classpath can clobber the launch of the Real Kojo     
     //    val oldCp = System.getenv("CLASSPATH")
     //    if (oldCp != null) {
     //      ourCp.append(oldCp)

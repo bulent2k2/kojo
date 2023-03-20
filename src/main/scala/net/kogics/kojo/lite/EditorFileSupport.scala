@@ -1,10 +1,9 @@
 package net.kogics.kojo.lite
 
-import java.io.File
 import javax.swing.JOptionPane
-
-import net.kogics.kojo.util.RichFile
+import java.io.File
 import net.kogics.kojo.util.Utils
+import net.kogics.kojo.util.RichFile
 
 trait EditorFileSupport { self: ScriptEditor =>
   var openedFile: Option[File] = None
@@ -43,8 +42,7 @@ trait EditorFileSupport { self: ScriptEditor =>
       if (fileChanged) {
         val doSave = JOptionPane.showConfirmDialog(
           kojoCtx.frame,
-          Utils.loadString("S_FileChanged").format(openedFile.get.getName, openedFile.get.getName)
-        )
+          Utils.loadString("S_FileChanged").format(openedFile.get.getName, openedFile.get.getName))
         if (doSave == JOptionPane.CANCEL_OPTION || doSave == JOptionPane.CLOSED_OPTION) {
           throw new RuntimeException("Cancel File Close")
         }
@@ -88,7 +86,9 @@ trait EditorFileSupport { self: ScriptEditor =>
 
   def saveAs(file: java.io.File): Unit = {
     if (file.exists) {
-      val doSave = JOptionPane.showConfirmDialog(kojoCtx.frame, Utils.loadString("S_FileExists").format(file.getName))
+      val doSave = JOptionPane.showConfirmDialog(
+        kojoCtx.frame,
+        Utils.loadString("S_FileExists") format (file.getName))
       if (doSave == JOptionPane.CANCEL_OPTION || doSave == JOptionPane.CLOSED_OPTION) {
         throw new RuntimeException("Cancel File SaveAs")
       }

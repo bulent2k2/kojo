@@ -14,34 +14,28 @@
  */
 package net.kogics.kojo.codex
 
-import java.io.File
-import java.net.URI
-
-import org.apache.hc.client5.http.classic.methods.HttpGet
-import org.apache.hc.client5.http.classic.methods.HttpPost
+import org.apache.hc.client5.http.classic.methods.{HttpGet, HttpPost}
 import org.apache.hc.client5.http.cookie.BasicCookieStore
-import org.apache.hc.client5.http.entity.mime.FileBody
-import org.apache.hc.client5.http.entity.mime.HttpMultipartMode
-import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder
-import org.apache.hc.client5.http.entity.mime.StringBody
+import org.apache.hc.client5.http.entity.mime.{FileBody, HttpMultipartMode, MultipartEntityBuilder, StringBody}
 import org.apache.hc.client5.http.impl.classic.HttpClients
+import org.apache.hc.core5.http.ContentType
 import org.apache.hc.core5.http.io.entity.EntityUtils
 import org.apache.hc.core5.http.io.support.ClassicRequestBuilder
-import org.apache.hc.core5.http.ContentType
+
+import java.io.File
+import java.net.URI
 
 class UploadTooBigException(msg: String) extends RuntimeException(msg)
 
 class CodexSession(server: String) {
   val cookieStore = new BasicCookieStore()
-  val client = HttpClients
-    .custom()
+  val client = HttpClients.custom()
     .setDefaultCookieStore(cookieStore)
     .disableRedirectHandling()
     .build()
 
   def login(email: String, password: String): Unit = {
-    val login = ClassicRequestBuilder
-      .post()
+    val login = ClassicRequestBuilder.post()
       .setUri(new URI(s"$server/login"))
       .addParameter("email", email)
       .addParameter("password", password)
@@ -67,8 +61,7 @@ class CodexSession(server: String) {
     val codeBody = new StringBody(code, ContentType.MULTIPART_FORM_DATA);
     val fileBody = new FileBody(image, ContentType.IMAGE_PNG)
 
-    val mpEntity = MultipartEntityBuilder
-      .create()
+    val mpEntity = MultipartEntityBuilder.create()
       .setMode(HttpMultipartMode.LEGACY)
       .addPart("title", titleBody)
       .addPart("category", catBody)
