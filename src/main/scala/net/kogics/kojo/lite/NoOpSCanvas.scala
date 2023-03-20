@@ -5,15 +5,16 @@ import java.awt.Color
 import java.awt.Paint
 import java.util.concurrent.Future
 
-import edu.umd.cs.piccolo.activities.PActivity
-import edu.umd.cs.piccolo.util.PBounds
-import edu.umd.cs.piccolo.PCamera
-import edu.umd.cs.piccolo.PCanvas
-import edu.umd.cs.piccolo.PLayer
 import net.kogics.kojo.core.Picture
 import net.kogics.kojo.core.SCanvas
 import net.kogics.kojo.core.Turtle
 import net.kogics.kojo.core.UnitLen
+
+import edu.umd.cs.piccolo.PCamera
+import edu.umd.cs.piccolo.PCanvas
+import edu.umd.cs.piccolo.PLayer
+import edu.umd.cs.piccolo.activities.PActivity
+import edu.umd.cs.piccolo.util.PBounds
 
 class NoOpSCanvas extends SCanvas {
   def clear(): Unit = {}
@@ -82,3 +83,5 @@ class NoOpSCanvas extends SCanvas {
   def resetPanAndZoom(): Unit = {}
   def disablePanAndZoom(): Unit = {}
 }
+
+

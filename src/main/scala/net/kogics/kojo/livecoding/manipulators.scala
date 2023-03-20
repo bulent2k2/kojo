@@ -15,8 +15,9 @@
 package net.kogics.kojo.livecoding
 
 import java.awt.Color
-import javax.swing.text.JTextComponent
+
 import javax.swing.JFrame
+import javax.swing.text.JTextComponent
 
 import net.kogics.kojo.doodle
 

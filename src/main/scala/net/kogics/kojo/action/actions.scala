@@ -16,21 +16,22 @@
 package net.kogics.kojo
 package action
 
-import java.awt.event.ActionEvent
 import java.awt.Color
+import java.awt.event.ActionEvent
+
 import javax.swing.AbstractAction
 import javax.swing.Action
 import javax.swing.JColorChooser
 
-import core.CodeExecutionSupport
 import net.kogics.kojo.lite.EditorFileSupport
 import net.kogics.kojo.util.Utils
+
+import core.CodeExecutionSupport
 
 class ChooseColor(execSupport: CodeExecutionSupport) extends AbstractAction(Utils.loadString("S_ChooseColor")) {
   val ctx = execSupport.kojoCtx
   def actionPerformed(e: ActionEvent): Unit = {
-    val sColor =
-      JColorChooser.showDialog(execSupport.kojoCtx.frame, util.Utils.stripDots(e.getActionCommand), ctx.lastColor)
+    val sColor = JColorChooser.showDialog(execSupport.kojoCtx.frame, util.Utils.stripDots(e.getActionCommand), ctx.lastColor)
     if (sColor != null) {
       val cprint = execSupport.showOutput(_: String, _: Color)
       cprint("\u2500" * 3 + "\n", sColor)
@@ -43,7 +44,7 @@ class ChooseColor(execSupport: CodeExecutionSupport) extends AbstractAction(Util
         "Color(%d, %d, %d)".format(sColor.getRed, sColor.getGreen, sColor.getBlue)
       }
       println(color)
-      println("Example usage: setPenColor(%s)".format(color))
+      println("Example usage: setPenColor(%s)" format (color))
       cprint("\u2500" * 3 + "\n", sColor)
       ctx.lastColor = sColor
     }
@@ -61,7 +62,7 @@ object CloseFile {
 }
 
 class CloseFile(fileSupport: EditorFileSupport)
-    extends AbstractAction(Utils.loadString("S_Close"), Utils.loadIcon("/images/extra/close.gif")) {
+  extends AbstractAction(Utils.loadString("S_Close"), Utils.loadIcon("/images/extra/close.gif")) {
   setEnabled(false)
   CloseFile.action = this
 
@@ -76,7 +77,7 @@ class CloseFile(fileSupport: EditorFileSupport)
 }
 
 class NewFile(fileSupport: EditorFileSupport)
-    extends AbstractAction(Utils.loadString("S_New"), Utils.loadIcon("/images/extra/new.gif")) {
+  extends AbstractAction(Utils.loadString("S_New"), Utils.loadIcon("/images/extra/new.gif")) {
 
   val saveAs = new SaveAs(fileSupport)
 

@@ -16,7 +16,6 @@ package net.kogics.kojo
 package history
 
 import scala.collection.mutable
-
 import net.kogics.kojo.core.HistoryItem
 import net.kogics.kojo.core.HistoryListener
 import net.kogics.kojo.core.HistorySaver
@@ -115,7 +114,7 @@ class CommandHistory private[kojo] (historySaver: HistorySaver) extends core.Com
   def apply(idx: Int) = history(idx)
 
   def ensureVisible(idx: Int): Unit = {
-    listener.foreach { _.ensureVisible(idx) }
+    listener foreach { _ ensureVisible (idx) }
   }
 
   def ensureLastEntryVisible(): Unit = {
@@ -161,7 +160,7 @@ class CommandHistory private[kojo] (historySaver: HistorySaver) extends core.Com
       allHistory.foreach { hi =>
         internalAdd(hi)
       }
-      listener.foreach { _.historyReady() }
+      listener foreach { _.historyReady() }
     }
   }
 

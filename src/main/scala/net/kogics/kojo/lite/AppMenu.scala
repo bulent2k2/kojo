@@ -14,16 +14,14 @@
  */
 package net.kogics.kojo.lite
 
+import java.awt.{Component, Dimension, Insets}
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
-import java.awt.Component
-import java.awt.Dimension
-import java.awt.Insets
+
 import javax.swing._
 import javax.swing.event.PopupMenuEvent
 import javax.swing.event.PopupMenuListener
 import javax.swing.text.html.HTMLEditorKit
-
 import net.kogics.kojo.action.CloseFile
 import net.kogics.kojo.action.LoadFrom
 import net.kogics.kojo.action.NewFile
@@ -150,7 +148,7 @@ trait AppMenu {
       val item = new JMenuItem(label)
       item.addActionListener(new ActionListener {
         def actionPerformed(ev: ActionEvent): Unit = {
-          // loadAndRunResource(root + file)
+          //loadAndRunResource(root + file)
           loadAndRunLocalizedResource(root, file)
         }
       })
@@ -257,9 +255,6 @@ trait AppMenu {
     animGameMenu.add(menuItemFor("S_LunarLander", "lunar-lander.kojo"))
     animGameMenu.add(menuItemFor("S_PulsatingLamp", "lamp-animation.kojo"))
     animGameMenu.add(menuItemFor("S_PulsatingLamp2", "lamp-animation2.kojo"))
-    animGameMenu.add(menuItemFor("S_DynamicSquare", "animated-square-creation.kojo"))
-    animGameMenu.add(menuItemFor("S_Fireworks", "fireworks-canvas.kojo"))
-    animGameMenu.add(menuItemFor("S_Fireworks2", "fireworks.kojo"))
     animGameMenu.add(menuItemFor("S_TangramSkier", "tangram-skier.kojo"))
     animGameMenu.add(menuItemFor("S_Pong", "pong.kojo"))
     animGameMenu.add(menuItemFor("S_MemoryCards", "memory-cards.kojo"))
@@ -327,7 +322,6 @@ trait AppMenu {
     showcaseMenu.add(menuItemFor("S_Mandel", "mandelbrot.kojo"))
     showcaseMenu.add(menuItemFor("S_Mondrian", "genart-mondrian.kojo"))
     showcaseMenu.add(menuItemFor("S_Delaunay", "genart-delaunay.kojo"))
-    showcaseMenu.add(menuItemFor("S_Fireworks", "fireworks-canvas.kojo"))
     showcaseMenu.add(menuItemFor("S_Collidium", "collidium.kojo"))
     showcaseMenu.add(menuItemFor("S_CarRide", "car-ride.kojo"))
     showcaseMenu.add(menuItemForInstalledFile("S_Platformer", "examples/tiledgame/game.kojo"))
@@ -460,7 +454,7 @@ trait AppMenu {
               Version: ${Versions.KojoVersion}  <em>${Versions.KojoRevision}</em><br/>
               Build date: ${Versions.KojoBuildDate}<br/>
               <em>Java version: ${Versions.JavaVersion}. Scala version: ${Versions.ScalaVersion}</em> <br/><br/>
-              Copyright &copy; 2009-2023 Lalit Pant (pant.lalit@gmail.com) as per contributions.<br/>
+              Copyright &copy; 2009-2022 Lalit Pant (pant.lalit@gmail.com) as per contributions.<br/>
               Copyright &copy; Project contributors as per contributions.<br/><br/>
               Please visit <em>http://www.kogics.net/kojo</em> for more information about Kojo.<br/><br/>
               <strong>Kojo</strong> Contributors:<ul>
