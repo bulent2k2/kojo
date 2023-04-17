@@ -25,6 +25,11 @@ import net.kogics.kojo.lite.i18n.TurkishAPI.Kaplumbağa
 import net.kogics.kojo.lite.Builtins
 import net.kogics.kojo.lite.CoreBuiltins
 import net.kogics.kojo.picture
+import net.kogics.kojo.kmath.KEasing
+// From:       ~/src/kojo/git/kojo/src/main/scala/net/kogics/kojo/kmath/easing.scala
+// Which uses: ~/src/kojo/git/kojo/src/main/java/net/kogics/kojo/util/Easing.java
+// KEasing used in ../../Builtins.scala
+// val easing in ../../CoreBuiltins.scala
 
 // this is to hold names to go to top level of TurkishAPI (and kojo editor)
 object res {
@@ -312,6 +317,7 @@ class Resim(val p: richBuiltins.Picture) {
 // ../../picture/package.scala
 // ../../Builtins.scala  object Picture
 object Resim {
+
   type Yazıyüzü = java.awt.Font
   def apply(işlev: => Birim): Resim = new Resim(richBuiltins.Picture(işlev))
   def çiz(r: Resim) = richBuiltins.draw(r.p)
@@ -401,4 +407,7 @@ object Resim {
   def süz(r: Resim, süzgeç: Bellekteİmgeİşlemi): Resim = new Resim(richBuiltins.filterPicture(r.p, süzgeç))
   def süz(rd: Bellekteİmge, süzgeç: Bellekteİmgeİşlemi) = richBuiltins.filterImage(rd, süzgeç)
   // todo: more
+
+  type YumuşakGeçiş = KEasing
+  val yumuşakGeçiş = net.kogics.kojo.kmath.KEasing
 }

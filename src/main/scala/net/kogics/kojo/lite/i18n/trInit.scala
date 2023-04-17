@@ -25,7 +25,6 @@ import java.util.concurrent.Future // todo
 
 import edu.umd.cs.piccolo.activities.PActivity // todo
 import net.kogics.kojo.core.Turtle
-import net.kogics.kojo.kmath.KEasing
 import net.kogics.kojo.lite.Builtins
 import net.kogics.kojo.lite.CoreBuiltins
 import net.kogics.kojo.xscala.RepeatCommands
@@ -66,7 +65,6 @@ object TurkishAPI
   type HerDeğer = tr.HerDeğer
   type HerGönder = tr.HerGönder
   type Yok = tr.Yok
-  val yok: Yok = tr.yok
   type Hiç = tr.Hiç
   type Boya = tr.Boya
   type Hız = tr.Hız
@@ -105,8 +103,8 @@ object TurkishAPI
   type İşlev2[D1, D2, R] = tr.İşlev2[D1, D2, R]
   type İşlev3[D1, D2, D3, R] = tr.İşlev3[D1, D2, D3, R]
 
-  val (doğru, yanlış, yavaş, orta, hızlı, çokHızlı, noktaSayısı, santim, inç) =
-    (tr.doğru, tr.yanlış, tr.yavaş, tr.orta, tr.hızlı, tr.çokHızlı, tr.noktaSayısı, tr.santim, tr.inç)
+  val (yavaş, orta, hızlı, çokHızlı, noktaSayısı, santim, inç) =
+    (tr.yavaş, tr.orta, tr.hızlı, tr.çokHızlı, tr.noktaSayısı, tr.santim, tr.inç)
 
   val Nokta = tr.Nokta
 
@@ -438,7 +436,7 @@ object TurkishAPI
       süreSaniyeOlarak: Kesir,
       ilkEvre: Dizi[Kesir],
       sonEvre: Dizi[Kesir],
-      kolaylaştırma: KEasing,
+      kolaylaştırma: Resim.YumuşakGeçiş,
       resimci: Dizi[Kesir] => Resim,
       bitinceGizle: İkil
   ) = {
@@ -450,9 +448,17 @@ object TurkishAPI
     def sonsuzYinelenme = a.repeatedForever
     // todo: more to come
   }
+  object YumuşakGeçiş {
+    val DörtlüGirdiÇıktı = Resim.yumuşakGeçiş.QuadInOut
+    val Doğrusal = Resim.yumuşakGeçiş.Linear
+    // more to come. See: ~/src/kojo/git/kojo/src/main/scala/net/kogics/kojo/kmath/easing.scala
+  }
   def canlandırmaDizisi(canlandırmalar: richBuiltins.Animation*) = richBuiltins.animSeq(canlandırmalar)
   def canlandırmaDizisi(canlandırmalar: collection.Seq[richBuiltins.Animation]) =
     richBuiltins.animSeq(canlandırmalar.toSeq)
+  def canlandırmaEşzamanlı(canlandırmalar: richBuiltins.Animation*) = richBuiltins.animPar(canlandırmalar)
+  def canlandırmaEşzamanlı(canlandırmalar: collection.Seq[richBuiltins.Animation]) =
+    richBuiltins.animPar(canlandırmalar.toSeq)
   def oynat(canlandırma: richBuiltins.Animation) = richBuiltins.run(canlandırma)
   def artalandaOynat(kod: => Unit) = richBuiltins.runInBackground(kod)
   def fareKonumu = richBuiltins.mousePosition

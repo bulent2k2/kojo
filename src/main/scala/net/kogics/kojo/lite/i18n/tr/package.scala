@@ -49,7 +49,6 @@ package object tr {
   type HerDeğer = AnyVal
   type HerGönder = AnyRef // Gönderge, gönderme todo...
   type Yok = Null
-  val yok: Yok = null
   type Hiç = Nothing
 
   type Boya = Paint
@@ -94,7 +93,6 @@ package object tr {
     def unapply(p: Nokta) = Some((p.x, p.y))
   }
 
-  //val (doğru, yanlış) = (true, false)
   val (yavaş, orta, hızlı, çokHızlı) = (Slow, Medium, Fast, SuperFast)
   val (noktaSayısı, santim, inç) = (Pixel, Cm, Inch)
 
