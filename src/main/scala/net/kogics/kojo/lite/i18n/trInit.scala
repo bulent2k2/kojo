@@ -122,8 +122,8 @@ object TurkishAPI
   trait TurkishTurtle {
     def englishTurtle: Turtle
     def sil(): Birim = englishTurtle.clear() // bbx: does this do anything? See sil def below..
-    def göster = görünür _
-    def gizle = görünmez _
+    def göster = görünür()
+    def gizle = görünmez()
     def görünür() = englishTurtle.visible()
     def görünmez() = englishTurtle.invisible()
     def ileri(adım: Kesir) = englishTurtle.forward(adım)

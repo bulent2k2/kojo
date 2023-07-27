@@ -79,7 +79,7 @@ dez sayfaAra = Page(
     bir bak. Orada pek çok küçücük örnek var. Onları olduğu gibi çalıştırmak,
   sonra istediğin gibi değiştirip tekrar çalıştırmak çok kolay.
     </p> <p>
-    Yanlız, epey uzun bir kılavuz. Giriş dahil 19 bölümden oluşuyor.
+    Yanlız kılavuz epey uzun. Giriş dahil 19 bölümden oluşuyor.
     Ama hepsini sırayla okuman gerekmez. İlk iki bölümü okuduktan sonra
     sona yakın olan <em> Çizim ve Oyun </em> bölümüne bak. Onlardan çok şey öğreneceksin.
     </p> <p> Ondan sonra sırayla hepsini oku. Bu sayede sonradan anlayacaksın ki bilgisayar
@@ -98,7 +98,7 @@ dez sayfaİlk = Page(
 
   Kojo çok becerikli bir öğrenim ortamı. Kojo diye yazılıyor ama Koco diye okunuyor. <br/><br/>
 
-  Hemen oynayarak öğrenmek için <b>Örnekler</b> ve <b>Sergi</b> menülerine bak. Ya da sayfayı çevir (aşağıdaki mavi yuvarlak içindeki beyaz üçgene bas) ve bu kılavuzu okumaya devam et. Göreceksin çok kolay. <br/><br/>
+  Hemen oynayarak öğrenmek için şunlarla başlayabilirsin: <b>Araçlar</b> menüsündeki <em>Yeni Başlayanlar İçin Alıştırmalar</em>, <em> Komut Paleti</em> ve <em> Kaplumbağa Yöneticisi</em>. Ayrıca <b>Örnekler</b> menüsündeki yazılımcıklara da en baştan başlayarak bakmakta fayda var. Ya da sayfayı çevir (aşağıdaki mavi yuvarlak içindeki beyaz üçgene bas) ve bu kılavuzu okumaya devam et. Göreceksin çok kolay. <br/><br/>
 
   Kojo'nun kaplumbağacığı çok becerikli ve pek çok komuttan anlıyor. Komutların listesi bir sonraki sayfada. Aşağıdaki mavi düğmelerden sağdakine basarak o sayfaya gidebilirsin. Geri dönmek de kolay. Hadi hemen dene. <br/><br/>
 
@@ -168,7 +168,30 @@ dez sayfaKaplumbağanınAnladığıKomutlar = Page(
       row("nokta(30)".c, "30 kalınlığında bir kalemle bir nokta çiz", "zıpla; nokta(10)".c, "ileri(100); nokta".c),
       row("üçgen(30)".c, "Kenar uzunluğu 30 olan bir üçgen çiz"),
     ),
-    "".p
+    "Şimdilik son olsun birazcık daha uzun bir örnekle bitirelim bu sayfayı. Sakın irkilme, bu örneğin çoğu sayfanın başındaki ilk örnekle aynı. yinele(3) döngüsünü aynen aldık iki döngü içinde tekrar kullandık:".p,
+"""sil
+canlandırmaHızınıKur(2) // çokHızlı'dan iki kat daha hızlı
+// daha önce kullandığımız hızıKur(hız) komutuna benziyor,
+// ama daha hassas ayar yapmamıza yarıyor. Girdisi adım atma süresini belirliyor
+// onun için de bu iki komut ters çalışıyor:
+// hız tarifi ve karşılık gelen adım atma süreleri yaklaşık olarak şöyle:
+//   çokHızlı: 1
+//   hızlı:    10
+//   orta:     100 (varsayılan)
+//   yavaş:    1000
+yaklaş(0.2)
+kalemKalınlığınıKur(20)
+yinele(12) {
+    sağ(30)
+    yinele(10) {
+        ileri(20)
+        yinele(3) {  // gerisi ilk örnekle aynı
+            ileri(100)
+            dön(120)
+            ileri(100)
+        }
+    }
+}""".c
   )
 )
 
@@ -263,7 +286,7 @@ dez sayfaDiğerKomutlar = Page(
 // #yükle /samples/tr/kojo-kilavuz/turler
 
 // dez öykü = Story(sayfaKomutlar, sayfaİlk, sayfaAra, /* sayfaX, */ /* istediğin kadar sayfa ekleyebilirsin... */ sayfaSon)
-dez öykü = Story(sayfaİlk, sayfaKaplumbağanınAnladığıKomutlar, sayfaTuvalKomutları, sayfaDiğerKomutlar, sayfaAra, komutlarGenel.sayfa, türler.sayfa, /*ek.sayfa, sayfaX, sayfaY, */ /* istediğin kadar sayfa ekleyebilirsin... */ sayfaSon)
+dez öykü = Story(sayfaİlk, sayfaKaplumbağanınAnladığıKomutlar, sayfaTuvalKomutları, /* sayfaDiğerKomutlar, */ sayfaAra, komutlarGenel.sayfa, türler.sayfa, /*ek.sayfa, sayfaX, sayfaY, */ /* istediğin kadar sayfa ekleyebilirsin... */ sayfaSon)
 stClear() // öyküyü temizle
 stAddLinkHandler("example", öykü) {idx: Int =>
   stSetScript(codeExamples(idx))
