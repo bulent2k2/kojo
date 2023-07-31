@@ -27,6 +27,8 @@ import scala.reflect.internal.util.BatchSourceFile
 import scala.reflect.internal.util.OffsetPosition
 import scala.reflect.internal.util.Position
 import scala.reflect.internal.util.ScalaClassLoader.URLClassLoader
+import scala.tools.nsc.Global
+import scala.tools.nsc.Settings
 import scala.reflect.internal.Flags
 import scala.sys.process.Process
 import scala.sys.process.ProcessLogger
@@ -261,14 +263,13 @@ class CompilerAndRunner(
           SRSwitcher.restoreRunSettings()
         }
         if (runReporter.hasErrors) IR.Error else IR.Success
-      }
+      } getOrElse (IR.Error)
 
       val run = new compiler.Run
       reporter.reset()
       run.compileSources(List(new BatchSourceFile("scripteditor", code)))
       //    println(s"[Debug] Script checking done till phase: ${compiler.globalPhase.prev}")
-      if (reporter.hasErrors) IR.Error else IR.Success
-    } getOrElse (IR.Error)
+    if (reporter.hasErrors) IR.Error else IR.Success
   }
 
   def compileForExecing(code0: String): Results.Result = {
@@ -387,7 +388,8 @@ class CompilerAndRunner(
           compiler.printAllUnits()
           IR.Success
         }
-      }
+      } getOrElse (IR.Error)
+
       val run = new compiler.Run
       reporter.reset()
       run.compileSources(List(new BatchSourceFile("scripteditor", code)))
@@ -399,7 +401,6 @@ class CompilerAndRunner(
         compiler.printAllUnits()
         IR.Success
       }
-    } getOrElse (IR.Error)
   }
 
   // phase after which you want to stop
