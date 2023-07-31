@@ -17,7 +17,7 @@ package net.kogics.kojo
 
 import net.kogics.kojo.core.{Picture, Point, SCanvas}
 
-package object gaming {
+package object fpgaming {
   trait GameMsgSink[Msg] {
     def triggerIncrementalUpdate(msg: Msg): Unit
 

@@ -78,6 +78,14 @@ class ScalaCodeRunner2(val runContext: RunContext, val defaultMode: CodingMode) 
     println(s"Additional jars available (within libk) - $numLibkJars")
   }
 
+  def ensureExtensionDir(): Unit = {
+    val dir = new File(Utils.extensionsDir)
+    if (!dir.exists()) {
+      dir.mkdirs()
+    }
+  }
+
+  ensureExtensionDir()
   val extenstionDirs = Utils.dirsInDir(Utils.extensionsDir)
   if (extenstionDirs.length > 0) {
     println("\nScanning extensions...")
@@ -113,6 +121,10 @@ class ScalaCodeRunner2(val runContext: RunContext, val defaultMode: CodingMode) 
     codeRunner ! CompileRunCode(code)
   }
 
+  def compileExecCode(code: String): Unit = {
+    codeRunner ! CompileExecCode(code)
+  }
+
   def compileCode(code: String): Unit = {
     codeRunner ! CompileCode(code)
   }
@@ -127,6 +139,7 @@ class ScalaCodeRunner2(val runContext: RunContext, val defaultMode: CodingMode) 
   case class RunCode(code: String)
   case class RunWorksheet(code: String)
   case class CompileRunCode(code: String)
+  case class CompileExecCode(code: String)
   case class CompileCode(code: String)
   case class ParseCode(code: String, browseAst: Boolean)
   case class VarCompletionRequest(prefix: Option[String])
@@ -434,6 +447,37 @@ class ScalaCodeRunner2(val runContext: RunContext, val defaultMode: CodingMode) 
           InterruptionManager.onInterpreterFinish()
         }
 
+      case CompileExecCode(code) =>
+        try {
+          Log.info("CodeRunner actor compiling/execing code:\n---\n%s\n---\n".format(code))
+          InterruptionManager.onInterpreterStart(compilerAndRunner)
+          runContext.onInterpreterStart(code)
+
+          val ret = compileAndExec(code)
+          Log.info("CodeRunner actor done compiling/execing code. Return value %s".format(ret.toString))
+
+          if (ret == IR.Success) {
+            runContext.onRunSuccess()
+          }
+          else {
+            Utils.clearGuiBatchQ()
+            if (InterruptionManager.interruptionInProgress)
+              runContext.onRunSuccess() // user cancelled running code; no errors
+            else runContext.onRunError()
+          }
+        }
+        catch {
+          case _: InterruptedException =>
+            println("Code runner actor - Interrupted")
+          case t: Throwable =>
+            Log.log(Level.SEVERE, "CompilerAndRunner Problem", t)
+            runContext.onRunInterpError()
+        }
+        finally {
+          Log.info("CodeRunner actor doing final handling for code.")
+          InterruptionManager.onInterpreterFinish()
+        }
+
       case RunCode(code) =>
         runCode(code, false)
 
@@ -655,8 +699,12 @@ class ScalaCodeRunner2(val runContext: RunContext, val defaultMode: CodingMode) 
       compilerAndRunner.compileAndRun(code)
     }
 
+    def compileAndExec(code: String): IR.Result = {
+      compilerAndRunner.compileAndExec(code)
+    }
+
     def compile(code: String): IR.Result = {
-      compilerAndRunner.compile(code)
+      compilerAndRunner.compileForRunning(code)
     }
 
     def showIncompleteCodeMsg(code: String): Unit = {
