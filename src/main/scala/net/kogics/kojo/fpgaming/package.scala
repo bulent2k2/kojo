@@ -15,7 +15,10 @@
  */
 package net.kogics.kojo
 
-import net.kogics.kojo.core.{Picture, Point, SCanvas}
+import net.kogics.kojo.core.Picture
+import net.kogics.kojo.core.Point
+import net.kogics.kojo.core.SCanvas
+import net.kogics.kojo.util.Utils
 
 package object fpgaming {
   trait GameMsgSink[Msg] {
@@ -24,7 +27,7 @@ package object fpgaming {
     def triggerUpdate(msg: Msg): Unit
   }
 
-  trait Sub[Msg]
+  trait Sub[+Msg]
 
   trait NonTimerSub[Msg] extends Sub[Msg] {
     def activate(gameMsgSink: GameMsgSink[Msg]): Unit
@@ -66,9 +69,10 @@ package object fpgaming {
 
     case class OnMouseClick[Msg](mapper: Point => Msg)(implicit canvas: SCanvas) extends NonTimerSub[Msg] {
       def activate(gameMsgSink: GameMsgSink[Msg]): Unit = {
-        canvas.onMouseClick { case (x, y) =>
-          val msg = mapper(Point(x, y))
-          gameMsgSink.triggerUpdate(msg)
+        canvas.onMouseClick {
+          case (x, y) =>
+            val msg = mapper(Point(x, y))
+            gameMsgSink.triggerUpdate(msg)
         }
       }
 
@@ -87,18 +91,23 @@ package object fpgaming {
     def onMouseClick[Msg](mapper: Point => Msg)(implicit cavas: SCanvas): Sub[Msg] = OnMouseClick(mapper)
   }
 
+  trait CmdQ[+Msg] {
+    def run(): Msg
+  }
+
   class Game[Model, Msg](
-                          init: => Model,
-                          update: (Model, Msg) => Model,
-                          view: Model => Picture,
-                          subscriptions: Model => Seq[Sub[Msg]]
-                        )(implicit canvas: SCanvas) extends GameMsgSink[Msg] {
+      init: => Model,
+      update: (Model, Msg) => Model,
+      view: Model => Picture,
+      subscriptions: Model => Seq[Sub[Msg]]
+  )(implicit canvas: SCanvas)
+      extends GameMsgSink[Msg] {
     private var currModel: Model = _
     private var currSubs: Seq[Sub[Msg]] = _
     private var currView: Picture = _
     private var firstTime = true
 
-    var gameTimer = canvas.timer(20) {
+    private var gameTimer = canvas.timer(20) {
       if (firstTime) {
         firstTime = false
         currModel = init
@@ -110,53 +119,71 @@ package object fpgaming {
       else {
         fireTimerSubs()
         updateView()
+        checkForStop()
       }
     }
 
-    def timerSubs: Seq[TimerSub[Msg]] = currSubs.filter(_.isInstanceOf[TimerSub[Msg]]).asInstanceOf[Seq[TimerSub[Msg]]]
+    private def timerSubs: Seq[TimerSub[Msg]] =
+      currSubs.filter(_.isInstanceOf[TimerSub[Msg]]).asInstanceOf[Seq[TimerSub[Msg]]]
 
-    def nonTimerSubs: Seq[NonTimerSub[Msg]] = currSubs.filter(_.isInstanceOf[NonTimerSub[Msg]]).asInstanceOf[Seq[NonTimerSub[Msg]]]
+    private def nonTimerSubs: Seq[NonTimerSub[Msg]] =
+      currSubs.filter(_.isInstanceOf[NonTimerSub[Msg]]).asInstanceOf[Seq[NonTimerSub[Msg]]]
 
-    def updateView(): Unit = {
+    private def updateView(): Unit = {
       val oldView = currView
       currView = view(currModel)
       oldView.erase()
       currView.draw()
     }
 
-    def updateModelAndSubs(msg: Msg): Unit = {
+    private def updateModelAndSubs(msg: Msg): Unit = {
       currModel = update(currModel, msg)
       val oldSubs = currSubs
       currSubs = subscriptions(currModel)
       handleSubChanges(oldSubs, currSubs)
     }
 
-    def handleSubChanges(oldSubs: Seq[Sub[Msg]], newSubs: Seq[Sub[Msg]]): Unit = {
-      if (newSubs.length != oldSubs.length) {
-        val newSubsSet = Set(newSubs: _*)
-        oldSubs.foreach { sub =>
-          sub match {
-            case ntSub: NonTimerSub[Msg] =>
-              if (!newSubsSet.contains(ntSub)) {
-                ntSub.deactivate()
-              }
-            case _ =>
-          }
+    private def handleSubChanges(oldSubs: Seq[Sub[Msg]], newSubs: Seq[Sub[Msg]]): Unit = {
+      if (newSubs != oldSubs) {
+        lazy val newSubsSet = Set(newSubs: _*)
+        oldSubs.foreach {
+          case oldNtSub: NonTimerSub[Msg] =>
+            if (!newSubsSet.contains(oldNtSub)) {
+              oldNtSub.deactivate()
+            }
+          case _ =>
+        }
+
+        lazy val oldSubsSet = Set(oldSubs: _*)
+        newSubs.foreach {
+          case newNtSub: NonTimerSub[Msg] =>
+            if (!oldSubsSet.contains(newNtSub)) {
+              newNtSub.activate(this)
+            }
+          case _ =>
         }
       }
     }
 
-    def checkForStop(): Unit = {
+    private def checkForStop(): Unit = {
       if (currSubs.isEmpty) {
         canvas.stopAnimationActivity(gameTimer)
       }
     }
 
-    def fireTimerSubs(): Unit = {
+    private def fireTimerSubs(): Unit = {
       timerSubs.foreach { sub =>
         sub.fire(this)
       }
-      checkForStop()
+    }
+
+    def runCommandQuery(cmdQ: CmdQ[Msg]): Unit = {
+      Utils.runAsync {
+        val msg = cmdQ.run()
+        Utils.runInSwingThreadNonBatched {
+          triggerUpdate(msg)
+        }
+      }
     }
 
     def triggerIncrementalUpdate(msg: Msg): Unit = {
@@ -190,9 +217,15 @@ package object fpgaming {
     }
 
     def collidesWith(
-                      x1: Double, y1: Double, w1: Double, h1: Double,
-                      x2: Double, y2: Double, w2: Double, h2: Double
-                    ): Boolean = {
+        x1: Double,
+        y1: Double,
+        w1: Double,
+        h1: Double,
+        x2: Double,
+        y2: Double,
+        w2: Double,
+        h2: Double
+    ): Boolean = {
       import java.awt.geom.Rectangle2D
       val r1 = new Rectangle2D.Double(x1, y1, w1, h1)
       val r2 = new Rectangle2D.Double(x2, y2, w2, h2)
