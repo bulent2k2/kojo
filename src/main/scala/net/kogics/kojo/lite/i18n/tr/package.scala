@@ -79,7 +79,6 @@ package object tr {
     def unapply(p: Nokta) = Some((p.x, p.y))
   }
 
-  //val (doğru, yanlış) = (true, false)
   val (yavaş, orta, hızlı, çokHızlı) = (Slow, Medium, Fast, SuperFast)
   val (noktaSayısı, santim, inç) = (Pixel, Cm, Inch)
 

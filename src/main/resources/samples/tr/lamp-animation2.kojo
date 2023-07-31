@@ -32,9 +32,6 @@ tanım büyütme(dizi: Dizi[Kesir]) = dizi(0)
 
 tanım alevlendir(dizi: Dizi[Kesir]) = büyüt(büyütme(dizi)) -> alev
 
-/* todo: Çeviri yap:
-    easing          hoşGeçiş
-    QuadInOut       Dörtlü yani eğimli GirdiÇıktı */
-dez canlandırma = Geçiş(1, Dizi(1), Dizi(0.8), easing.QuadInOut, alevlendir, doğru)
+dez canlandırma = Geçiş(1, Dizi(1), Dizi(0.8), YumuşakGeçiş.DörtlüGirdiÇıktı, alevlendir, doğru)
 dez canlandırma2 = canlandırmaDizisi(canlandırma, canlandırma.tersten)
 oynat(canlandırma2.sonsuzYinelenme)

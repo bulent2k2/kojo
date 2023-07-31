@@ -20,6 +20,7 @@
 
 package net.kogics.kojo.lite.i18n
 
+
 import net.kogics.kojo.lite.{CoreBuiltins, Builtins}
 import net.kogics.kojo.xscala.RepeatCommands
 import net.kogics.kojo.core.Turtle
@@ -422,8 +423,16 @@ object TurkishAPI extends tr.ArrayMethodsInTurkish with tr.CalendarAndTimeUtilsI
     def sonsuzYinelenme = a.repeatedForever
     // todo: more to come
   }
+  object YumuşakGeçiş {
+    val DörtlüGirdiÇıktı = Resim.yumuşakGeçiş.QuadInOut
+    val Doğrusal = Resim.yumuşakGeçiş.Linear
+    // more to come. See: ~/src/kojo/git/kojo/src/main/scala/net/kogics/kojo/kmath/easing.scala
+  }
   def canlandırmaDizisi(canlandırmalar: richBuiltins.Animation*) = richBuiltins.animSeq(canlandırmalar)
   def canlandırmaDizisi(canlandırmalar: collection.Seq[richBuiltins.Animation]) = richBuiltins.animSeq(canlandırmalar.toSeq)
+  def canlandırmaEşzamanlı(canlandırmalar: richBuiltins.Animation*) = richBuiltins.animPar(canlandırmalar)
+  def canlandırmaEşzamanlı(canlandırmalar: collection.Seq[richBuiltins.Animation]) =
+    richBuiltins.animPar(canlandırmalar.toSeq)
   def oynat(canlandırma: richBuiltins.Animation) = richBuiltins.run(canlandırma)
   def artalandaOynat(kod: => Unit) = richBuiltins.runInBackground(kod)
   def fareKonumu = richBuiltins.mousePosition

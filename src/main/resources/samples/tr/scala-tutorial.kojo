@@ -65,20 +65,20 @@ pages += Page(
   name = "UT",
   body = tPage("Kaplumbağacığın Kullanılışı",
     "Bu sayfayı en başa hatta Başlayalım adlı ilk sayfadan da öne koyduk. Çünkü hem okuması, anlaması ve oynaması daha kolay hem de daha görsel ve onun için de biraz daha cazip. Kojo'nun kaplumağacığını zaten iyi tanıyorsan bir sonraki sayfaya atlayıp Scala yani epey ciddi bir yazılım dili öğrenmeye başlayabilirsin.".p,
-    "Kaplumbağacığı hareket ettirerek ona çizgi çizdirten pek çok komutumuz var. Çoğunu aşağıdaki tabloda bulacaksın. Onlara tıklayıver ki kaplumbağacık neler yapabiliyor göresin. Tablodaki sırayı izlemene gerek yok (sadece ilk örnek hariç. Ona ileride gerek olacak çünkü üçgen işlevini tanımlıyor). İstediklerine birkaç kere tıklayabilirsin. Tuvalimizi silmek için sağ tıklayıp Temizle komutuna tıkla.".p,
-    "Aşağıdaki ilk örnekte üçgen adında bir işlev (ya da komut) tanımlıyoruz. Ne yaptığını anladın mı? Tıklayınca göreceksin. Bir üçgen çiziyor. Bu komutu ilerdeki örneklerde de kullanacağız. Henüz tıklamadıysan şimdi tıkla. Farkettin mi 'yinele' komuduyla 'ileri' ve 'sağ' komutlarını üçer kere çağırıyoruz.".p,
-    """tanım üçgen() = {
+    "Kaplumbağacığı hareket ettirerek ona çizgi çizdirten pek çok komutumuz var. Çoğunu aşağıdaki tabloda bulacaksın. Onlara tıklayıver ki kaplumbağacık neler yapabiliyor göresin. Tablodaki sırayı izlemene gerek yok. İstediklerine birkaç kere tıklayabilirsin. Tuvalimizi silmek için sağ tıklayıp Temizle komutuna tıkla.".p,
+    "Aşağıdaki ilk örnekte bir işlev (ya da komut) tanımlıyoruz. Ne yaptığını anladın mı? Tıklayınca göreceksin. Bir üçgen çiziyor. Henüz tıklamadıysan şimdi tıkla. Farkettin mi 'yinele' komuduyla 'ileri' ve 'sağ' komutlarını üçer kere çağırıyoruz.".p,
+    """tanım birÜçgenÇiz() = {
     yinele(3) { 
         ileri(100)
         sağ(120)
     }
 }
 sil()
-üçgen()
+birÜçgenÇiz()
 sol()
-üçgen()
+birÜçgenÇiz()
 """.c,
-    "Tıkladın ve kaplumbağanın iki tane üçgen çizmesini seyrettin, değil mi? Bu kılavuzdaki her açık turkuaz renkli gözlere tıklamayı unutma. Genelde sırayla tıklamanda fayda var. Ama, bazıların birden çok da tıklayabilirsin. Bazılarını da es geçebilirsin. Rahat takıl. Biraz oku, biraz tıkla. Tıkladıktan sonra 'Yazılımcılık Düzenleyicisi' adlı göze geçip değişiklikler yap ve üstündeki küçük yeşil üçgene basarak tekrar çalıştır. İçinden geldiği gibi davran ki daha keyifle keşfedesin bilgisayar programlamayı!".p,
+    "Tıkladın ve kaplumbağanın iki tane üçgen çizmesini seyrettin, değil mi? Bu kılavuzdaki açık turkuaz renkli gözlerin her birine tıklamayı unutma. Genelde sırayla tıklamanda fayda var. Ama, bazıların birden çok da tıklayabilirsin. Bazılarını da es geçebilirsin. Rahat takıl. Biraz oku, biraz tıkla. Tıkladıktan sonra 'Yazılımcılık Düzenleyicisi' adlı göze geçip değişiklikler yap ve üstündeki küçük yeşil üçgene basarak tekrar çalıştır. İçinden geldiği gibi davran ki daha keyifle keşfedesin bilgisayar programlamayı!".p,
     table(
       row("ileri(100)".c, "100 adım ilerler"),
       row("sil()".c, "Tuvali temizler ve başlangıç noktasına döndürür"),
@@ -106,14 +106,14 @@ ileri(100)
 kalemiİndir()
 ileri(100)""".c, "kalem kalkıkken hareket ederse çizim yapmaz. Kalem inince çizmeye devam eder"), 
       row("""kalemRenginiKur(mavi)
-üçgen()""".c, "Ne renk çizmesini istiyoruz"),
+birÜçgenÇiz()""".c, "Rengini değiştirelim"),
       row("""sil()
 boyamaRenginiKur(kırmızı)
-üçgen()
-""".c, "Çizdiği şekillerin içini boyamasını istersek rengini seçiyoruz"),
+üçgen(80)
+""".c, "Çizimin içini boyayalım. Kojo'nun kendi üçgen komudu da var. Girdisini değiştirerek değişik boylarda üçgen çizebiliriz"),
       row("""sil()
 kalemKalınlığınıKur(10)
-üçgen()
+üçgen(90)
 kalemKalınlığınıKur(1)
   """.c, "Çizim yaptığı kalem kalınlığını giriyoruz"),
       row("ışınlarıAç()".c, "Dör yönü belirten farlar yansın"),
@@ -148,9 +148,10 @@ yk2.ileri(300)
       row("kaplumbağa0".c, "Başlangıçtaki kaplumbağamızın adı"),
       row("kaplumbağa0.geri(100)".c, "Onu yöntemleriyle de çağırabiliriz"),
       row("""sil()
-üçgen()
+üçgen(100)
 yaklaş(0.5, 10, 10)""".c, "(oran, x, y) Tuvali verilen oran kadar büyültür ya da küçültür ve verilen noktayı tam tuvalin merkezine getirir"),
-    )
+    ),
+    """İleri sayfalarda başka pekçok örnek göreceğiz. Matematiksel işlevleri sevenlere iki üç sayfa sonra kaplumbağalı bir süpriz de var: Kaplumbağamız "Yazılım Akışı, Eğer, Yoksa ve İçin Komutları" adlı sayfanın sonuna yakın hızla bir parabol çizecek! Devam etmek için aşağıdaki sağa bakan üçgenli düğmeye basmayı unutma. Geri dönmek için de sola bakana basabilirsin. Ya da yukarıdaki "Menü" yazısına basıp en başa gider ve istediğin sayfaya atlayabilirsin.""".p
   )
 )
 
@@ -159,7 +160,7 @@ pages += Page(
   body = tPage("Anahtar Sözcükler",
     "Türkçemizde kimbilir kaç bin kelime var? Hepsini bilmek mümkün değil elbet. Ayrıca pek çok kelimenin birden çok anlamı oluyor. Hatta bazen anlamları belirsiz bile olabiliyor ve sözlüğe bakmamız yetmiyor, ne demek istediniz diye soruyoruz. Ama yine de birbirimizi anlamakta genelde zorlanmıyoruz. Bilgisayar dillerindeyse durum çok farklı. Hem çok daha az sözcük gerekli hem de sözcüklerin anlamı çok daha belirli.".p,
     "Bilgisayar dillerinin derleyicileri olduğunu ve yazdığımız yazılımları donanımın anlayacağı 0 ve 1 sayılarına çevirdiğini duymuş olabilirsin. Bunu yapabilmek için genelde derleyiciler çok küçük ama çok becerikli bir sözlükle yazılır. Bu sözlükteki kelimelere 'anahtar' ya da 'özel' sözcükler deriz. Scala dilinin anahtar sözcüklerinin en önemlilerini bu kılavuzda örnekleriyle görecek ve öğreneceğiz. Yine de bu sayfada hepsini yazdık ki ilerde İngilizcelerini bilmek gerekince gelip bakabilelim.".p,
-    "Bu bölümü gerisini şimdi atla istersen. Sonra merak ettikçe gelip bakarsın. İstersen hızlıca bir göz at. Zaten detaylarını görmeden aşağıdaki açıklamalar pek anlamlı olmaz. Şimdilik bilmemiz gereken tek şey, herşeyin çok küçücük bir anahtar kelimeler sözlüğüyle başladığı. Onun için bir bilgisayar dili öğrenmek yabancı bir dil öğrenmekten çok daha kolay aslında! Tabii bir de kaplumbağacığın anladığı komut sözcükleri var. Bir önceki bölümde bir kısmını gördük ve öğrendik. Ama onlar da zaten bizim dilimizdeki anlamlarına çok yakın, değil mi?".p,
+    "Bu sayfanın gerisini şimdi atla istersen. Sonra merak ettikçe gelip bakarsın. İstersen hızlıca bir göz at. Zaten detaylarını görmeden aşağıdaki açıklamalar pek anlamlı olmaz. Şimdilik bilmemiz gereken tek şey, herşeyin çok küçücük bir anahtar kelimeler sözlüğüyle başladığı. Onun için bir bilgisayar dili öğrenmek yabancı bir dil öğrenmekten çok daha kolay aslında! Tabii bir de kaplumbağacığın anladığı komut sözcükler var. Bir önceki sayfada bir kısmını gördük ve öğrendik. Ama onlar da zaten bizim dilimizdeki anlamlarına çok yakın, değil mi?".p,
     "Aşağıdaki her satırda bir anahtar sözcük var. İlk sütun, kılavuzdaki kullanış sırasına göre sıralı. Sonra gelip bulmak kolay olsun diye. İkinci sütunda anahtar sözcüğün İngilizce'si var. Keyword diye de bilinir. Eğer o keyword, İngilizce bir sözcüğün kısaltmasıysa o sözcüğün kendisi de üçüncü sütunda. Son sütunda da ufak bir açıklamayla yetindik. Kılavuzumuzun diğer sayfaları daha geniş açıklamalar verecek.".p,
     table(
       row("tanım".c, "def".c, "define", "İlk bölümde kaplumbağacığa üçgen çizdirmek için kullanmıştık. Bu anahtar sözcük yeni bir işlev tanımlar ve ona bir ad takar. Bu yeni ad da derleyicinin sözlüğüne eklenmiş olur!"),
@@ -184,7 +185,7 @@ pages += Page(
       row("yineleDoğruKaldıkça".c, "while".c, "", "Bir koşul doğru kaldıkça yinelenen bir döngü tanımlar. Koşul baştan yanlışsa döngüye hiç girmez."),
       row("yap".c, "do".c, "", "Önce 'yineleDoğruKaldıkça' döngüsün komutları en az bir kere çalışsın sonra da koşuluna bakılsın dersen bu sözcükle olur."),
     ),
-    "Bunlar eski programlama dilerinde çok faydalı komutlardı. Ama Scala'da pek gerek yok. Kullanılmasalar daha iyi olur. Onun için adını da uzun tuttuk. Kılavuzumuzda da az yer verdik.".p,
+    "Bunlar eski programlama dilerinde çok faydalı komutlardı. Ama Scala'da pek gerek yok. Kullanılmasalar daha iyi olur. Onun için birincisinin adını da uzun tuttuk. Kılavuzumuzda da az yer verdik.".p,
     table(
       row("soyut".c, "abstract".c, "", "Ender kullanılır.".link("docs.scala-lang.org/scala3/book/domain-modeling-tools.html#abstract-classes")),
       row("yakala".c, "catch".c, "", "Kuraldışı bir durum varsa işe yarar. 'dene' ile birlikte kullanılır."),
@@ -209,6 +210,90 @@ pages += Page(
       row("tür".c, "type".c, "", "Bir türe yeni bir ad takar."),
       row("birlikte".c, "with".c, "", "Bir türün bir türü başka bir türle birlikte yaymasına yarar. İleri bir konudur. Bu kılavuzda henüz anlatmadık."),
 //    row("".c, "".c, "", ""),
+    ),
+    "Son olarak da alfabetik sırayla hepsini birbirine bağlıyalım, bulmak kolay olsun diye. Önce Türkçe'de sıralı:".p,
+    table(
+      row("baskın".c, "override".c),
+      row("bazı".c, "forsome".c),
+      row("bildir".c, "throw".c),
+      row("birlikte".c, "with".c),
+      row("bu".c, "this".c),
+      row("damgalı".c, "sealed".c),
+      row("den".c, "var".c),
+      row("dene".c, "try".c),
+      row("deste".c, "package".c),
+      row("dez".c, "val".c),
+      row("doğru".c, "true".c),
+      row("durum".c, "case".c),
+      row("eğer".c, "if".c),
+      row("eşle".c, "match".c),
+      row("geridön".c, "return".c),
+      row("getir".c, "import".c),
+      row("gizli".c, "private".c),
+      row("için".c, "for".c),
+      row("koru".c, "protected".c),
+      row("miskin".c, "lazy".c),
+      row("nesne".c, "object".c),
+      row("son".c, "final".c),
+      row("sonunda".c, "finally".c),
+      row("soyut".c, "abstract".c),
+      row("sınıf".c, "class".c),
+      row("tanım".c, "def".c),
+      row("tür".c, "type".c),
+      row("ver".c, "yield".c),
+      row("yakala".c, "catch".c),
+      row("yanlış".c, "false".c),
+      row("yap".c, "do".c),
+      row("yayar".c, "extends".c),
+      row("yeni".c, "new".c),
+      row("yineledoğrukaldıkça".c, "while".c),
+      row("yok".c, "null".c),
+      row("yoksa".c, "else".c),
+      row("örtük".c, "implicit".c),
+      row("özellik".c, "trait".c),
+      row("üst".c, "super".c)
+    ),
+    "Sonra da İngilizce sıralı:".p,
+    table(
+      row("abstract".c, "soyut".c),
+      row("case".c, "durum".c),
+      row("catch".c, "yakala".c),
+      row("class".c, "sınıf".c),
+      row("def".c, "tanım".c),
+      row("do".c, "yap".c),
+      row("else".c, "yoksa".c),
+      row("extends".c, "yayar".c),
+      row("false".c, "yanlış".c),
+      row("final".c, "son".c),
+      row("finally".c, "sonunda".c),
+      row("for".c, "için".c),
+      row("forsome".c, "bazı".c),
+      row("if".c, "eğer".c),
+      row("implicit".c, "örtük".c),
+      row("import".c, "getir".c),
+      row("lazy".c, "miskin".c),
+      row("match".c, "eşle".c),
+      row("new".c, "yeni".c),
+      row("null".c, "yok".c),
+      row("object".c, "nesne".c),
+      row("override".c, "baskın".c),
+      row("package".c, "deste".c),
+      row("private".c, "gizli".c),
+      row("protected".c, "koru".c),
+      row("return".c, "geridön".c),
+      row("sealed".c, "damgalı".c),
+      row("super".c, "üst".c),
+      row("this".c, "bu".c),
+      row("throw".c, "bildir".c),
+      row("trait".c, "özellik".c),
+      row("true".c, "doğru".c),
+      row("try".c, "dene".c),
+      row("type".c, "tür".c),
+      row("val".c, "dez".c),
+      row("var".c, "den".c),
+      row("while".c, "yineledoğrukaldıkça".c),
+      row("with".c, "birlikte".c),
+      row("yield".c, "ver".c),
     ),
     "İşte hepsi bu kadar! Yabancı dil öğrenmekten çok daha kolay değil mi ama?".p
   )
@@ -379,12 +464,13 @@ satıryaz("ortak paydaların en büyüğü: " + y)
 yaz(ikililer)""".c,
     "Şimdi de matematik, bilhassa kartezyen geometrisi sevenlere bir süprizimiz var. Kaplumbağacığı kullanarak bir eğri çizelim. Neyin eğrisi? İki boyutlu bir polinom, yani çok terimli bir matematiksel deyiş. Genel olarak a*x^2 + b*x + c diye yazabiliriz. Yine bu çok faydalı olan 'için' yapısıyla:".p,
     """sil
-tanım eğri(x: Kesir) = 0.001 * x * x + 0.5 * x + 10
+yaklaşXY(0.9, 0.5, 60, 400)
+tanım eğri(x: Kesir) = 0.01 * x * x - 0.5 * x - 10
 gridiGöster(); eksenleriGöster()
 dez aralık = 200
 atla(-aralık,eğri(-aralık))
-için(x <- -aralık+10 |-| aralık; eğer (x % 10 == 0)) noktayaGit(x, eğri(x))
-""".c,
+hızıKur(orta)
+için(x <- -aralık+10 |-| aralık+100; eğer (x % 10 == 0)) noktayaGit(x, eğri(x))""".c,
     "'eğri' adında yeni bir işlev tanımlayıverdik. Bunu daha sonra daha iyi anlayacağız.".p,
     "Şimdilik x ve y eksenlerini ve kare çizgileri silelim. Ve bir sonraki bölümle devam edelim!".p,
     "eksenleriGizle(); gridiGizle()".c

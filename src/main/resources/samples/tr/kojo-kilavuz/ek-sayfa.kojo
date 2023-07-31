@@ -27,8 +27,7 @@ satıryaz("Merhaba " + girdi + "! Ne var ne yok?")"""
         row("satıryaz".c, "println".c),
         row("satıroku".c, "readln".c),
       ),
-      "Bu da bitiriş paragrafından bir öncesi.".p,
-      "Artık bitti bu küçük örnek. Umarız faydalı olmuştur".p,
+      "Daha çok komut var, inşallah yakında hepsini ekleriz buraya.".p,
       gülerYüz.p
     )
   )
