@@ -12,16 +12,11 @@ den dy = 8; den dx = -8.0 // topun hızı: d delta yani değişim ya da derivati
 den rx = 0.0; den ry = 0.0 // raketin konumu
 den ıska = 0 // top kaç kere kaçtı, saymak için
 den vuruş = 0 // kaç kere raketle vurduğumuzu da sayalım
-raket.kondur(fareKonumu) // raketi fareyle kontrol ediyoruz
 canlandır {
-    rx = fareKonumu.x; ry = fareKonumu.y 
-    rx = eğer (rx > -150) rx yoksa -150 // ama çok yaklaşmasın duvara!
-    rx = eğer (rx < 200) rx yoksa 200   // ve çok uzaklaşmasın
-    ry = eğer (-100 < ry) ry yoksa -100 // çok aşağıya ve çok yukarıya da gitmesin
-    ry = eğer (ry < 100 - rb) ry yoksa 100 - rb
-    raket.kondur(rx, ry)
+    raket.kondur(fareKonumu)  // raketi fareyle kontrol ediyoruz
     top.kondur(x, y) // topun yerini değiştirelim
     // top rakete çarpıyor mu?
+    rx = fareKonumu.x; ry = fareKonumu.y
     dx = eğer ((dx > 0) && (mutlakDeğer(rx - x) < 10) &&
         (y > ry) && (y < ry + rb)) {vuruş += 1; -1.1*dx} yoksa dx
     // topun konumunu güncelleyelim, duvarlara bakalım
