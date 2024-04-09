@@ -217,5 +217,8 @@ trait Picture extends InputAware {
   def withPosition(x: Double, y: Double): Picture
   def withZIndex(idx: Int): Picture
   def withClipping(clipShape: Shape): Picture
+  def withClipping(clipPic: Picture): Picture
+  def withMask(maskPic: Picture): Picture
   def withPenCapJoin(capJoin: (Int, Int)): Picture
+  def withNoPen(): Picture
 }

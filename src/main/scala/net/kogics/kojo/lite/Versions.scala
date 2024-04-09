@@ -2,9 +2,9 @@ package net.kogics.kojo.lite
 
 object Versions {
   val KojoMajorVersion = "2.9"
-  val KojoVersion = "2.9.24"
-  val KojoRevision = "r27"
-  val KojoBuildDate = "15 February 2023"
+  val KojoVersion = "2.9.27"
+  val KojoRevision = "r3"
+  val KojoBuildDate = "20 Nov 2023"
   val JavaVersion = {
     val jrv = System.getProperty("java.runtime.version")
     val arch = System.getProperty("os.arch")

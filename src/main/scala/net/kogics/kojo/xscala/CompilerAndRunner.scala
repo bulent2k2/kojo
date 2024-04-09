@@ -16,6 +16,7 @@
 package net.kogics.kojo
 package xscala
 
+import java.io.File
 import java.net.URL
 
 import scala.collection.mutable.ListBuffer
@@ -26,7 +27,10 @@ import scala.reflect.internal.util.OffsetPosition
 import scala.reflect.internal.util.Position
 import scala.reflect.internal.util.ScalaClassLoader.URLClassLoader
 import scala.reflect.internal.Flags
+import scala.sys.process.Process
+import scala.sys.process.ProcessLogger
 import scala.tools.nsc.interactive
+import scala.tools.nsc.interpreter.Results
 import scala.tools.nsc.io.VirtualDirectory
 import scala.tools.nsc.reporters.Reporter
 import scala.tools.nsc.Global
@@ -91,18 +95,34 @@ class CompilerAndRunner(
 
   val virtualDirectory = new VirtualDirectory("(memory)", None)
 
-  def makeSettings2() = {
-    val stng = makeSettings()
-    stng.outputDirs.setSingleOutput(virtualDirectory)
+  val execClassLocation = "%s/kojo_%s".format(
+    System.getProperty("java.io.tmpdir"),
+    System.getProperty("user.name")
+  )
+  val execClassDir = new File(execClassLocation)
+  if (!execClassDir.exists()) {
+    execClassDir.mkdirs()
+  }
+
+  def makeRunSettings = {
+    val settings = makeSettings()
+    settings.outputDirs.setSingleOutput(virtualDirectory)
     //    stng.deprecation.value = true
     //    stng.feature.value = true
     //    stng.unchecked.value = true
-    stng
+    settings
   }
 
-  val settings = makeSettings2()
+  def makeExecSettings: Settings = {
+    val settings = makeSettings()
+    settings.outputDirs.setSingleOutput(execClassLocation)
+    settings
+  }
 
-  val compilerClasspath: List[URL] = new PathResolver(settings).resultAsURLs.toList
+  val runSettings = makeRunSettings
+  lazy val execSettings = makeExecSettings
+
+  val compilerClasspath: List[URL] = new PathResolver(runSettings).resultAsURLs.toList
   var classLoader = makeClassLoader
   // needed to prevent pcompiler from making the interp's classloader as
   // its context loader (which causes a mem leak)
@@ -114,12 +134,15 @@ class CompilerAndRunner(
   }
   private def loadByName(s: String): Class[_] = classLoader.loadClass(s)
 
-  val reporter = new Reporter {
+  trait KojoReporter extends Reporter {
+    def lineMod: Int
+    def offsetMod: Int
+
     override def info0(position: Position, msg: String, severity: Severity, force: Boolean): Unit = {
       //      severity.count += 1
       lazy val line =
-        position.line - prefixLines - 1 // we added an extra line after the prefix in the code template. Take it off
-      lazy val offset = position.start - offsetDelta - 1 // we added an extra newline char after the prefix
+        position.line - lineMod
+      lazy val offset = position.point - offsetMod
       severity match {
         case ERROR if position.isDefined =>
           listener.error(msg, line, position.column, offset, position.lineContent)
@@ -133,19 +156,73 @@ class CompilerAndRunner(
     }
   }
 
+  val runReporter = new KojoReporter {
+    def lineMod = prefixLines + 1 // we added an extra line after the prefix in the code template.
+    def offsetMod = offsetDelta + 1 // we added an extra newline char after the prefix
+  }
+
+  val execReporter = new KojoReporter {
+    def lineMod = 0
+    def offsetMod = 0
+  }
+
   val compiler = classLoader.asContext {
-    new Global(settings, reporter)
+    new Global(runSettings, runReporter)
+  }
+
+  object SRSwitcher {
+    val Run = 1
+    val Exec = 2
+    private var prevMode = Run
+
+    private var verbose = false
+    private def debugPrintln(s: => String): Unit = {
+      if (verbose) {
+        println(s)
+      }
+    }
+
+    def adjust(currMode: Int): Unit = {
+      if (prevMode == Exec && currMode == Run) {
+        debugPrintln("Changing to compiler run settings/reporter")
+        compiler.currentSettings = runSettings
+        compiler.reporter = runReporter
+        prevMode = Run
+      }
+      if (prevMode == Run && currMode == Exec) {
+        debugPrintln("Changing to compiler exec settings/reporter")
+        compiler.currentSettings = execSettings
+        compiler.reporter = execReporter
+        prevMode = Exec
+      }
+    }
+
+    def newRunSettings(setReporter: Boolean): Unit = {
+      debugPrintln("Changing to *new* compiler run settings")
+      compiler.currentSettings = makeRunSettings
+      if (setReporter && prevMode == Exec) {
+        debugPrintln("Changing to compiler run reporter")
+        compiler.reporter = runReporter
+      }
+      prevMode = Run
+    }
+
+    def restoreRunSettings(): Unit = {
+      debugPrintln("Restoring compiler run settings")
+      compiler.currentSettings = runSettings
+      verbose = if (System.getProperty("kojo.compiler.sr.verbose") == "true") true else false
+    }
   }
 
   def pfxWithCounter = "%s%d%s".format(prefixHeader, counter, prefix)
 
-  def compilerCode(code00: String): Option[String] = {
+  def codeForRunning(code0: String): Option[String] = {
     try {
-      val (code0, inclLines, includedChars) = Utils.preProcessInclude(code00)
+      val (code, inclLines, includedChars) = Utils.preProcessInclude(code0)
       val pfx = pfxWithCounter
       includedLines = inclLines
       offsetDelta = pfx.length + includedChars
-      Some(codeTemplate.format(pfx, code0))
+      Some(codeTemplate.format(pfx, code))
     }
     catch {
       case t: Throwable =>
@@ -153,32 +230,61 @@ class CompilerAndRunner(
     }
   }
 
-  def compile(code0: String, stopPhase: List[String] = List("cleanup")) = {
-    compilerCode(code0)
+  def codeForExecing(code0: String): Option[String] = {
+    try {
+      val (code, inclLines, includedChars) = Utils.preProcessInclude(code0)
+      includedLines = inclLines
+      offsetDelta = includedChars
+      Some(code)
+    }
+    catch {
+      case t: Throwable =>
+        listener.message(Utils.exceptionMessage(t)); None
+    }
+  }
+
+  def compileForRunning(code0: String, stopPhase: List[String] = List("cleanup")): Results.Result = {
+    codeForRunning(code0)
       .map { code =>
+        SRSwitcher.adjust(SRSwitcher.Run)
+        var sChanged = false
         if (compiler.settings.stopAfter.value != stopPhase) {
-          // There seems to be a bug in the PhasesSetting contains method
-          // which makes the compiler not see the new stopAfter value
-          // So we make a new Settings
-          compiler.currentSettings = makeSettings2()
+          SRSwitcher.newRunSettings(false)
+          sChanged = true
           compiler.settings.stopAfter.value = stopPhase
         }
 
         val run = new compiler.Run
-        reporter.reset()
+        runReporter.reset()
         run.compileSources(List(new BatchSourceFile("scripteditor", code)))
         //    println(s"[Debug] Script checking done till phase: ${compiler.globalPhase.prev}")
-        if (reporter.hasErrors) IR.Error else IR.Success
+        if (sChanged) {
+          SRSwitcher.restoreRunSettings()
+        }
+        if (runReporter.hasErrors) IR.Error else IR.Success
       }
       .getOrElse(IR.Error)
   }
 
-  def compileAndRun(code0: String) = {
+  def compileForExecing(code0: String): Results.Result = {
+    codeForExecing(code0)
+      .map { code =>
+        SRSwitcher.adjust(SRSwitcher.Exec)
+        val run = new compiler.Run
+        execReporter.reset()
+        run.compileSources(List(new BatchSourceFile("scripteditor", code)))
+        //    println(s"[Debug] Script checking done till phase: ${compiler.globalPhase.prev}")
+        if (execReporter.hasErrors) IR.Error else IR.Success
+      }
+      .getOrElse(IR.Error)
+  }
+
+  def compileAndRun(code0: String): Results.Result = {
     if (!runContext.isStoryRunning) {
       virtualDirectory.clear()
     }
     counter += 1
-    val result = compile(code0, Nil)
+    val result = compileForRunning(code0, Nil)
 
     if (result == IR.Success) {
       if (Thread.interrupted) {
@@ -215,23 +321,61 @@ class CompilerAndRunner(
     }
   }
 
+  var execedProc: Option[Process] = None
+
+  def deleteOldExecClassfiles(): Unit = {
+    // this is on the context classloader for the compiler. Need to re-look at that
+    virtualDirectory.clear()
+
+    execClassDir.listFiles().foreach { f =>
+      val deleted = f.delete()
+      if (!deleted) {
+        println(s"Unable to delete old classfile - ${f.getName}")
+      }
+    }
+  }
+
+  def compileAndExec(code0: String): Results.Result = {
+    execedProc.foreach { proc =>
+      if (proc.isAlive()) {
+        proc.destroy()
+      }
+    }
+
+    deleteOldExecClassfiles()
+
+    val result = compileForExecing(code0)
+    if (result == IR.Success) {
+      if (Thread.interrupted) {
+        IR.Error
+      }
+      else {
+        execedProc = Some(execCompiled(processLogger))
+        IR.Success
+      }
+    }
+    else {
+      IR.Error
+    }
+  }
+
   def stop(interpThread: Thread): Unit = {
     interpThread.interrupt()
   }
 
   def parse(code0: String, browseAst: Boolean) = {
-    compilerCode(code0)
+    codeForRunning(code0)
       .map { code =>
-        compiler.currentSettings = makeSettings2()
+        SRSwitcher.newRunSettings(true)
         compiler.settings.stopAfter.value = stopPhase()
         if (browseAst) {
           compiler.settings.browse.value = stopPhase()
         }
         val run = new compiler.Run
-        reporter.reset()
+        runReporter.reset()
         run.compileSources(List(new BatchSourceFile("scripteditor", code)))
-
-        if (reporter.hasErrors) {
+        SRSwitcher.restoreRunSettings()
+        if (runReporter.hasErrors) {
           IR.Error
         }
         else {
@@ -336,7 +480,7 @@ class CompilerAndRunner(
   def typeAt(code0: String, offset: Int): String = {
     import interactive._
 
-    compilerCode(code0)
+    codeForRunning(code0)
       .map { code =>
         classLoader.asContext {
           val source = new BatchSourceFile("scripteditor", code)
@@ -390,7 +534,7 @@ class CompilerAndRunner(
   private def completionQuery(code0: String, offset: Int, selection: Boolean): List[CompletionInfo] = {
     import interactive._
 
-    compilerCode(code0)
+    codeForRunning(code0)
       .map { code =>
         classLoader.asContext {
           val source = new BatchSourceFile("scripteditor", code)
@@ -441,5 +585,85 @@ class CompilerAndRunner(
         }
       }
       .getOrElse(Nil)
+  }
+
+  val processLogger = new ProcessLogger {
+    override def out(s: => String): Unit = {
+      println(s"[child-proc] $s")
+    }
+
+    override def err(s: => String): Unit = {
+      println(s"[child-proc-stderr] $s")
+    }
+
+    override def buffer[T](f: => T): T = ???
+  }
+
+  def execCompiled(logger: ProcessLogger): Process = {
+    val classpath =
+      s"$execClassLocation${File.pathSeparator}${System.getProperty("java.class.path")}"
+
+    val javaHome = System.getProperty("java.home")
+    val javaExec =
+      if (new File(javaHome + "/bin/javaw.exe").exists)
+        javaHome + "/bin/javaw"
+      else
+        javaHome + "/bin/java"
+
+    val extraArgs = if (Utils.isLinux) "-Dsun.java2d.xrender=false " else ""
+
+    val maxMem = {
+      Utils.appProperty("memory.max") match {
+        case Some(d) => d
+        case None    => if (System.getProperty("sun.arch.data.model", "32") == "64") "2g" else "768m"
+      }
+    }
+
+    val libPath: String = ""
+    val extraEnv: Seq[(String, String)] = Seq()
+
+    lazy val javaMajorVersion = {
+      val version = System.getProperty("java.specification.version").split('.')
+      val major =
+        if (version(0) == "1") version(1) // 1.8 is 8
+        else version(0) // later versions are 9, 10, etc
+      major.toInt
+    }
+
+    def isJava8 = javaMajorVersion == 8
+
+    def cmsGC =
+      "-XX:+UseConcMarkSweepGC -XX:+CMSClassUnloadingEnabled"
+
+    def reflectiveAccess = {
+      "--add-opens java.desktop/javax.swing.text.html=ALL-UNNAMED " +
+        "--add-opens java.desktop/sun.awt=ALL-UNNAMED " +
+        "--add-opens java.desktop/sun.swing=ALL-UNNAMED " +
+        "--add-opens java.desktop/sun.swing.table=ALL-UNNAMED " +
+        "--add-opens java.base/java.lang=ALL-UNNAMED"
+    }
+
+    def noScaling =
+      "-Dsun.java2d.uiScale.enabled=false"
+
+    val javaVersionSpecificArgs = {
+      if (isJava8)
+        cmsGC
+      else
+        s"$reflectiveAccess $noScaling"
+    }
+
+    val cmdArgs = s"-client -Xms128m -Xmx$maxMem -Xss1m $javaVersionSpecificArgs ${extraArgs}Launcher"
+
+    val command =
+      Seq(
+        javaExec,
+        "-cp",
+        classpath,
+      ) ++ cmdArgs.split(' ')
+
+    val cwd = new File(runContext.baseDir)
+    val pb = Process(command, cwd, extraEnv: _*)
+    pb.run(logger)
   }
 }

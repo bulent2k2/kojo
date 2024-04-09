@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<install4j version="10.0.3" transformSequenceNumber="10">
+<install4j version="10.0.6" transformSequenceNumber="10">
   <directoryPresets config="/Users/ben/src/kojo/git/kojo/installer/icons" />
-  <application name="Koco Öğrenim Ortamı" applicationId="0071-0523-9450-8404" mediaDir="/Users/ben/src/kojo/git/kojo/installer.i4j" mediaFilePattern="${compiler:sys.shortName}_${compiler:sys.platform}_${compiler:sys.version}${compiler:sys.withJre}" shortName="Koco" publisher="Kogics Foundation" publisherWeb="www.kogics.net/kojo" version="2.9.24-tr-20221201" macVolumeId="41bac862080108f9" javaMinVersion="1.8" javaMaxVersion="17" jdkMode="jdk" jdkName="JDK 1.8">
+  <application name="Koco Öğrenim Ortamı" applicationId="0071-0523-9450-8404" mediaDir="/Users/ben/src/kojo/git/kojo/installer.i4j" mediaFilePattern="${compiler:sys.shortName}_${compiler:sys.platform}_${compiler:sys.version}${compiler:sys.withJre}" shortName="Koco" publisher="Kogics Foundation" publisherWeb="www.kogics.net/kojo" version="2.9.24-tr-20240409" macVolumeId="41bac862080108f9" javaMinVersion="1.8" javaMaxVersion="17" jdkMode="jdk" jdkName="JDK 1.8">
     <languages>
       <principalLanguage id="tr" />
     </languages>
@@ -9,7 +9,7 @@
       <registry />
       <envVar name="JAVA_HOME" />
     </searchSequence>
-    <jreBundles jdkProviderId="JBR" release="17/17.0.5-b469.71">
+    <jreBundles jdkProviderId="JBR" release="17/17.0.7-b829.16">
       <modules>
         <module name="java.base" />
         <module name="java.compiler" />
@@ -619,7 +619,7 @@ return console.askYesNo(message, true);
     <windows name="Windows" id="244" architecture="32">
       <jreBundle includedJre="windows-x86-1.8.0_202" />
     </windows>
-    <macos name="macOS Single Bundle" id="508" launcherId="239" />
+    <macos name="macOS Single Bundle" id="508" architecture="universal" launcherId="239" />
     <unixInstaller name="Unix Installer NoJava" id="514">
       <jreBundle jreBundleSource="none" />
     </unixInstaller>
