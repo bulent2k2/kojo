@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<install4j version="10.0.1" transformSequenceNumber="10">
+<install4j version="10.0.6" transformSequenceNumber="10">
   <directoryPresets config="/Users/ben/src/kojo/git/kojo/installer/icons" />
-  <application name="Koco Öğrenim Ortamı" applicationId="0071-0523-9450-8404" mediaDir="/Users/ben/src/kojo/git/kojo/installer.i4j" mediaFilePattern="${compiler:sys.shortName}_${compiler:sys.platform}_${compiler:sys.version}${compiler:sys.withJre}" pack200Compression="true" shortName="Koco" publisher="Kogics Foundation" publisherWeb="www.kogics.net/kojo" version="2.9.23" macVolumeId="41bac862080108f9" javaMinVersion="1.8" javaMaxVersion="11" jdkMode="jdk" jdkName="JDK 1.8">
+  <application name="Koco Öğrenim Ortamı" applicationId="0071-0523-9450-8404" mediaDir="/Users/ben/src/kojo/git/kojo/installer.i4j" mediaFilePattern="${compiler:sys.shortName}_${compiler:sys.platform}_${compiler:sys.version}${compiler:sys.withJre}" shortName="Koco" publisher="Kogics Foundation" publisherWeb="www.kogics.net/kojo" version="2.9.28-tr-20240719" macVolumeId="41bac862080108f9" javaMinVersion="1.8" javaMaxVersion="17" jdkMode="jdk" jdkName="JDK 1.8">
     <languages>
       <principalLanguage id="tr" />
     </languages>
@@ -9,7 +9,7 @@
       <registry />
       <envVar name="JAVA_HOME" />
     </searchSequence>
-    <jreBundles jdkProviderId="JBR" release="11/11.0.13-b1751.21">
+    <jreBundles jdkProviderId="JBR" release="17/17.0.7-b829.16">
       <modules>
         <module name="java.base" />
         <module name="java.compiler" />
@@ -52,7 +52,6 @@
           <scanDirectory location="lib" failOnError="false" />
         </classPath>
       </java>
-      <macStaticAssociationActions mode="selected" />
       <vmOptionsFile mode="none" />
       <iconImageFiles>
         <file path="/Users/ben/src/kojo/git/kojo/installer/icons/kojo16.png" />
@@ -67,6 +66,33 @@
     <applications>
       <application id="installer" beanClass="com.install4j.runtime.beans.applications.InstallerApplication">
         <serializedBean>
+          <property name="customIconImageFiles">
+            <add>
+              <object class="com.install4j.api.beans.ExternalFile">
+                <string>/Users/ben/src/kojo/git/kojo/installer/icons/kojo16.png</string>
+              </object>
+            </add>
+            <add>
+              <object class="com.install4j.api.beans.ExternalFile">
+                <string>/Users/ben/src/kojo/git/kojo/installer/icons/kojo32.png</string>
+              </object>
+            </add>
+            <add>
+              <object class="com.install4j.api.beans.ExternalFile">
+                <string>/Users/ben/src/kojo/git/kojo/installer/icons/kojo48.png</string>
+              </object>
+            </add>
+            <add>
+              <object class="com.install4j.api.beans.ExternalFile">
+                <string>/Users/ben/src/kojo/git/kojo/installer/icons/kojo64.png</string>
+              </object>
+            </add>
+            <add>
+              <object class="com.install4j.api.beans.ExternalFile">
+                <string>/Users/ben/src/kojo/git/kojo/installer/icons/kojo128.png</string>
+              </object>
+            </add>
+          </property>
           <property name="frameHeight" type="int" value="500" />
           <property name="frameWidth" type="int" value="700" />
         </serializedBean>
@@ -593,7 +619,7 @@ return console.askYesNo(message, true);
     <windows name="Windows" id="244" architecture="32">
       <jreBundle includedJre="windows-x86-1.8.0_202" />
     </windows>
-    <macos name="macOS Single Bundle" id="508" launcherId="239" />
+    <macos name="macOS Single Bundle" id="508" architecture="universal" launcherId="239" />
     <unixInstaller name="Unix Installer NoJava" id="514">
       <jreBundle jreBundleSource="none" />
     </unixInstaller>
@@ -601,9 +627,11 @@ return console.askYesNo(message, true);
       <jreBundle jdkProviderId="JBR" release="11.0.6-b765.25" />
     </windows>
   </mediaSets>
-  <buildIds>
+  <buildIds buildAll="false">
+    <mediaSet refId="60" />
     <mediaSet refId="508" />
     <mediaSet refId="514" />
+    <mediaSet refId="600" />
   </buildIds>
   <buildOptions verbose="true" />
 </install4j>
