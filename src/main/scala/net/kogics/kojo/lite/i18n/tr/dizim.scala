@@ -26,6 +26,8 @@ object EsnekDizim {
   def boş[T] = new EsnekDizim[T](ArrayBuffer.empty[T])
 }
 class EsnekDizim[T](val a: ArrayBuffer[T]) {
+  type Col = EsnekDizim[T]
+  type C2[A] = EsnekDizim[A]
   def apply(yer: Sayı) = a(yer)
   def sayı = a.size
   def ekle(eleman: T) = { a.append(eleman); this }
@@ -34,6 +36,15 @@ class EsnekDizim[T](val a: ArrayBuffer[T]) {
   def sil() = a.clear()
   def dizi = a.toSeq
   def diziye = a.toSeq
+  def boşMu: İkil = a.isEmpty
+  def doluMu: İkil = a.nonEmpty
+
+  def ele(deneme: T => İkil): Col = new EsnekDizim(a.filter(deneme))
+  def eleYerinde(deneme: T => İkil): this.type = { a.filterInPlace(deneme); this }
+
+  def işle[B](işlev: T => B): C2[B] = new EsnekDizim(a.map(işlev))
+  def herbiriİçin[B](işlev: T => B): Birim = a.foreach(işlev)
+  
   // todo: more to come
 }
 

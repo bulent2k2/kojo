@@ -86,7 +86,6 @@ package object tr {
   type GeoYol = java.awt.geom.GeneralPath
   type GeoNokta = VertexShape
   type Grafik2B = scala.swing.Graphics2D
-
   object Nokta {
     type Kesir = Double
     def apply(x: Kesir, y: Kesir) = new Point(x, y)

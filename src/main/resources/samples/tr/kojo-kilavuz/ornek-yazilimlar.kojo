@@ -188,9 +188,9 @@ ileri
 """
 
 dez kod120 = """yinele(3) {
-    gizle
+    gizle()
     ileri(100)
-    göster
+    göster()
     dön(120)
     ileri(100)
 }"""

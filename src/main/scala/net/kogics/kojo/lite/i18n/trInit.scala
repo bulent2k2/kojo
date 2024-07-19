@@ -33,6 +33,7 @@ import net.kogics.kojo.xscala.RepeatCommands
 object TurkishAPI
     extends tr.ArrayMethodsInTurkish
     with tr.CalendarAndTimeUtilsInTurkish
+    with tr.CanvasDrawInTurkish
     with tr.CharMethodsInTurkish
     with tr.ColorMethodsInTurkish
     with tr.CoreTypeMethodsInTurkish
@@ -42,6 +43,7 @@ object TurkishAPI
     with tr.ListMethodsInTurkish
     with tr.MapMethodsInTurkish
     with tr.MathMethodsInTurkish
+    with tr.MusicUtilsInTurkish
     with tr.NumMethodsInTurkish
     with tr.OptionMethodsInTurkish
     with tr.PartialFunctionMethodsInTurkish
@@ -122,8 +124,8 @@ object TurkishAPI
   trait TurkishTurtle {
     def englishTurtle: Turtle
     def sil(): Birim = englishTurtle.clear() // bbx: does this do anything? See sil def below..
-    def göster = görünür()
-    def gizle = görünmez()
+    def göster() = görünür()
+    def gizle() = görünmez()
     def görünür() = englishTurtle.visible()
     def görünmez() = englishTurtle.invisible()
     def ileri(adım: Kesir) = englishTurtle.forward(adım)
@@ -472,6 +474,7 @@ object TurkishAPI
     val işlev2 = new Function1[Evre, richBuiltins.Picture] { def apply(e: Evre) = işlev(e).p }
     richBuiltins.animateWithRedraw(ilkEvre, sonrakiEvre, işlev2)
   }
+  def canlandırTuvalÇizimle(görüntüyüÇiz: TuvalÇizim => Birim): Birim = richBuiltins.animateWithCanvasDraw(görüntüyüÇiz)
   def durdur() = richBuiltins.stopAnimation()
   def canlandırmaBaşlayınca(işlev: => Birim) = richBuiltins.tCanvas.onAnimationStart(işlev)
   def canlandırmaBitince(işlev: => Birim) = richBuiltins.tCanvas.onAnimationStop(işlev)
@@ -613,6 +616,11 @@ object TurkishAPI
   def a_kalıp() = println("Kalıbı kullan") // todo: geçici. Bakınız tr/help.scala
   def def_türkçe() = println("def")
 
+  lazy val rb = richBuiltins
+  def başlangıçNoktasıÜstSolKöşeOlsun() = rb.originTopLeft()
+  def başlangıçNoktasıAltSolKöşeOlsun() = rb.originBottomLeft()
+  def notaÇal(frekans: Sayı, süreMiliSaniye: Sayı, ses: Sayı = 80): Birim = rb.playNote(frekans, süreMiliSaniye, ses)
+  def notaÇalgısınıKur(çalgı: Sayı): Birim = rb.setNoteInstrument(çalgı)
   // more to come (:-)
 }
 
