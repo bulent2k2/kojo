@@ -1,5 +1,6 @@
 silVeSakla()
 başlangıçNoktasıAltSolKöşeOlsun()
+// artalanıKur(siyah)
 
 notaÇalgısınıKur(Çalgı.AkustikBas)
 notaÇal(50, 150) // nota, süre
@@ -11,9 +12,10 @@ dez tuvalBoyu = tuvalAlanı.boyu.sayıya
 
 sınıf Parçacık(x0: Kesir, y0: Kesir, arıRenk: Kesir, tohum: İkil) {
     den yer = Yöney2B(x0, y0)
-    gizli den hız =
+    gizli den hız = {
         eğer (tohum) Yöney2B(0, rastgele(5, 12))
         yoksa rastgelePatlamaYöneyi
+    }
     gizli den ivme = Yöney2B(0, 0)
     gizli den yaşamSüresi = 255.0
     gizli den patladıMı = yanlış
@@ -21,7 +23,7 @@ sınıf Parçacık(x0: Kesir, y0: Kesir, arıRenk: Kesir, tohum: İkil) {
     tanım rastgelePatlamaYöneyi: Yöney2B =
         Yöney2B(rastgeleNormalKesir, rastgeleNormalKesir) * rastgeleKesir(2, 4)
 
-    tanım kuvvetiUygula(kuvvet: Yöney2B) = ivme += kuvvet
+    tanım kuvvetiUygula(kuvvet: Yöney2B) = { ivme += kuvvet }
 
     tanım patlasınMı: İkil = !patladıMı && yaşamSüresi <= 0
 
@@ -44,6 +46,8 @@ sınıf Parçacık(x0: Kesir, y0: Kesir, arıRenk: Kesir, tohum: İkil) {
             yaşamSüresi = 0
         }
     }
+
+    // gizli dez nokta = Resim.daire(1)
 
     tanım göster(tuval: TuvalÇizim) {
         tuval.fırça(Renk.adas(arıRenk, 1, 0.5, yaşamSüresi / 255))

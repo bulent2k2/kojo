@@ -1,155 +1,131 @@
-cleari()
-originBottomLeft()
-setBackground(black)
+silVeSakla()
+başlangıçNoktasıAltSolKöşeOlsun()
+artalanıKur(siyah)
 
-setNoteInstrument(Instrument.ACOUSTIC_BASS)
-playNote(50, 150)
-playNote(45, 200)
+notaÇalgısınıKur(Çalgı.AkustikBas)
+notaÇal(50, 150) // nota, süre
+notaÇal(45, 200)
 
-val cb = canvasBounds
-val gravity = Vector2D(0, -0.1)
+dez yerçekimi = Yöney2B(0, -0.1)
+dez tuvalEni = tuvalAlanı.eni.sayıya
+dez tuvalBoyu = tuvalAlanı.boyu.sayıya
 
-class Particle(x0: Double, y0: Double, hu: Double, seed: Boolean) {
-    var location = Vector2D(x0, y0)
-    private var velocity =
-        if (seed) Vector2D(0, random(5, 12))
-        else randomExplosionVector
-    private var acceleration = Vector2D(0, 0)
-    private var lifespan = 255.0
-    private var exploded = false
+sınıf Parçacık(x0: Kesir, y0: Kesir, arıRenk: Kesir, tohum: İkil) {
+    den yer = Yöney2B(x0, y0)
+    gizli den hız = {
+        eğer (tohum) Yöney2B(0, rastgele(5, 12))
+        yoksa rastgelePatlamaYöneyi
+    }
+    gizli den ivme = Yöney2B(0, 0)
+    gizli den yaşamSüresi = 255.0
+    gizli den patladıMı = yanlış
 
-    private val pic = Picture.circle(1)
+    tanım rastgelePatlamaYöneyi: Yöney2B =
+        Yöney2B(rastgeleNormalKesir, rastgeleNormalKesir) * rastgeleKesir(2, 4)
 
-    def randomExplosionVector: Vector2D = {
-        val rv1 = Vector2D(randomNormalDouble, randomNormalDouble)
-        val r1 = randomDouble(2, 4)
-        rv1 * r1
+    tanım kuvvetiUygula(kuvvet: Yöney2B) = { ivme += kuvvet }
+
+    tanım patlasınMı: İkil = !patladıMı && yaşamSüresi <= 0
+
+    tanım ölüMü: İkil = eğer (tohum) patladıMı yoksa yaşamSüresi <= 0
+
+    tanım patla() {
+        notaÇal(15, 30, 127) // nota, süre, ses
+        patladıMı = doğru
     }
 
-    def applyForce(force: Vector2D) {
-        acceleration += force
-    }
-
-    def shouldExplode: Boolean = !exploded && lifespan <= 0
-
-    def checkExplode() {
-        if (seed && velocity.y < 0) {
-            lifespan = 0
+    tanım adım() {
+        hız += ivme
+        yer += hız
+        eğer (!tohum) {
+            yaşamSüresi -= 5
+            hız *= 0.95
+        }
+        ivme *= 0
+        eğer (tohum && hız.y < 0) {
+            yaşamSüresi = 0
         }
     }
 
-    def isDead: Boolean = {
-        if (seed) exploded else lifespan <= 0
-    }
-
-    def explode() {
-        // note, duration, volume
-        playNote(15, 30, 127)
-        exploded = true
-    }
-
-    def step() {
-        velocity += acceleration
-        location += velocity
-        if (!seed) {
-            lifespan -= 5
-            velocity *= 0.95
+    gizli dez nokta = Resim.daire(1)
+    
+    tanım göster() {
+        eğer (ölüMü) {
+            nokta.sil()
         }
-        acceleration *= 0
-        checkExplode()
-    }
-
-    def view() {
-        if (isDead) {
-            pic.erase()
+        yoksa eğer (nokta.çizili) {
+            dez renk = Renk.adas(arıRenk, 1, 0.5, yaşamSüresi / 255)
+            nokta.kalemRenginiKur(renk)
+            nokta.boyamaRenginiKur(renk)
+            nokta.kalemKalınlığınıKur(eğer(tohum) 4 yoksa 2)
+            nokta.konumuKur(yer.x, yer.y)
         }
-        else if (pic.isDrawn) {
-            val clr = cm.hsla(hu, 1, 0.5, lifespan / 255)
-            pic.setPenColor(clr)
-            pic.setFillColor(clr)
-            if (seed) {
-                pic.setPenThickness(3)
-            }
-            else {
-                pic.setPenThickness(2)
-            }
-            pic.setPosition(location.x, location.y)
-        }
-        else {
-            pic.draw()
+        yoksa {
+            nokta.çiz()
         }
     }
 }
 
-class Firework() {
-    private val hu = random(360)
-    private val firework = new Particle(random(cwidth), 0, hu, true)
-    private val particles = ArrayBuffer.empty[Particle]
+sınıf HavaiFişek() {
+    gizli dez arıRenk = rastgele(360)
+    gizli dez havaiFişek = yeni Parçacık (rastgele(tuvalEni), 0, arıRenk, doğru)
+    gizli dez parçacıklar = EsnekDizim.boş[Parçacık]
 
-    def done: Boolean = {
-        if (firework.isDead & particles.isEmpty) true else false
+    tanım bittiMi: İkil = {
+        eğer (havaiFişek.ölüMü & parçacıklar.boşMu) doğru yoksa yanlış
     }
 
-    def step() {
-        particles.filterInPlace(p => !p.isDead)
+    tanım adım() {
+        parçacıklar.eleYerinde(p => !p.ölüMü)
 
-        if (!firework.isDead) {
-            firework.applyForce(gravity)
-            firework.step()
+        eğer (!havaiFişek.ölüMü) {
+            havaiFişek.kuvvetiUygula(yerçekimi)
+            havaiFişek.adım()
 
-            if (firework.shouldExplode) {
-                repeat(100) {
-                    particles.append(
-                        new Particle(firework.location.x, firework.location.y, hu, false)
+            eğer (havaiFişek.patlasınMı) {
+                yinele(100) {
+                    parçacıklar.ekle(
+                        yeni Parçacık (havaiFişek.yer.x, havaiFişek.yer.y, arıRenk, yanlış)
                     )
                 }
-                firework.explode()
+                havaiFişek.patla()
             }
         }
-
-        repeatFor(particles) { p =>
-            p.applyForce(gravity)
-            p.step()
+        parçacıklar.herbiriİçin { p =>
+            p.kuvvetiUygula(yerçekimi)
+            p.adım()
         }
     }
 
-    def view() {
-        firework.view()
-        repeatFor(particles) { p =>
-            p.view()
+    tanım göster() {
+        havaiFişek.göster()
+        parçacıklar.herbiriİçin { p =>
+            p.göster()
         }
     }
-
-    def dead: Boolean = {
-        if (particles.isEmpty) true else false
-    }
 }
 
-val fireworks = ArrayBuffer.empty[Firework]
+dez havaifişek = EsnekDizim.boş[HavaiFişek]
 
-def updateState() {
-    fireworks.filterInPlace(f => !f.done)
-    if (randomDouble(1) < 0.08) {
-        fireworks.append(new Firework())
+tanım evreyiGüncelle() {
+    havaifişek.eleYerinde(f => !f.bittiMi)
+    eğer (rastgeleKesir(1) < 0.08) {
+        havaifişek.ekle(yeni HavaiFişek ())
     }
-    repeatFor(fireworks) { f =>
-        f.step()
-    }
+    havaifişek.herbiriİçin { _.adım() }
 }
 
-def viewState() {
-    repeatFor(fireworks) { f =>
-        f.view()
-    }
+tanım evreyiGöster() {
+    havaifişek.herbiriİçin { _.göster() }
 }
 
-animate {
-    updateState()
-    viewState()
+canlandır {
+    evreyiGüncelle()
+    evreyiGöster()
 }
 
-// Inspired  by
-// https://github.com/CodingTrain/Coding-Challenges/tree/main/027_FireWorks/Processing/CC_027_FireWorks_2D
+// Esin kaynağı:
+//   https://github.com/CodingTrain/Coding-Challenges/tree/main/027_FireWorks/Processing/CC_027_FireWorks_2D
 
-// For more details, check out:
-// https://github.com/litan/kojo-examples/tree/main/fireworks
+// Ayrıntılı detay için:
+//   https://github.com/litan/kojo-examples/tree/main/fireworks

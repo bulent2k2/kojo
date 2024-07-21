@@ -38,7 +38,7 @@ def init: Model =
     )
 
 val speed = 5
-val cd = new net.kogics.kojo.gaming.CollisionDetector()
+val cd = new net.kogics.kojo.fpgaming.CollisionDetector()
 def update(m: Model, msg: Msg): Model = msg match {
     case MoveLeft =>
         val player = m.player
