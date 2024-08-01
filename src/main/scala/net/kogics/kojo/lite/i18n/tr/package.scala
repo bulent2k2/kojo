@@ -28,6 +28,8 @@ import net.kogics.kojo.core.Inch
 import net.kogics.kojo.core.Medium
 import net.kogics.kojo.core.Pixel
 import net.kogics.kojo.core.Point
+// ../../../core/shapes.scala
+// ~/src/kojo/git/kojo/src/main/scala/net/kogics/kojo/core/shapes.scala
 import net.kogics.kojo.core.Rectangle
 import net.kogics.kojo.core.Slow
 import net.kogics.kojo.core.Speed

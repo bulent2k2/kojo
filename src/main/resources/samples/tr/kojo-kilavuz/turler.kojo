@@ -50,6 +50,17 @@ satıryaz(ey)"""
     işle(s => 10 * s * s).
     herbiriİçin(yaz)"""
 
+  dez kod2010 = """dez ay_uzunluk = ay.Yazıgirdisi(60)
+dez ay_renkler = ay.Salındıraç("mavi", "yeşil", "sarı")
+"""
+
+  dez kod2020 = """dez solAltKöşe = Nokta(tuvalAlanı.x, tuvalAlanı.y)
+dez sağAltKöşe = Nokta(tuvalAlanı.x + tuvalAlanı.eni, tuvalAlanı.y)
+dez solÜstKöşe = Nokta(tuvalAlanı.x, tuvalAlanı.Y)
+dez sağÜstKöşe = Nokta(tuvalAlanı.x + tuvalAlanı.eni, tuvalAlanı.Y)
+dez hepsi = yeni Dikdörtgen(solAltKöşe, sağÜstKöşe)
+yaz(hepsi)
+"""
   dez sayfa = Page(
     name = "türler",
     body = tPage("Her değerin bir Türü var",
@@ -106,8 +117,6 @@ satıryaz(ey)"""
         row("".c, "".c, "".c),
         row("Gelecek".c, "Future".c, "".c, "scala.concurrent"),
         row("İşletimBağlamı".c, "ExecutionContext".c, "".c, "scala.concurrent"),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
         // trInit.scala
         row("".c, "".c, "".c),
         row("Sayılar".c, "Vector[Int]".c, kod1020.c),
@@ -122,30 +131,15 @@ satıryaz(ey)"""
         row("Yöney2B".c, "Vector2D".c, "".c, "net.kogics.kojo.util'den"),
         row("Resim".c, "Picture".c, "".c),
         row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
         row("BuAn".c, "Now".c, "BuAn().yazıya".c, "Now adında bir tür yok, ama BuAn adında bir durum sınıfımız yani türümüz var"),
         row("Takvim".c, "Calendar".c, "".c, "java.util"),
         row("Tarih".c, "Date".c, "".c, "java.util"),
         row("SaatDilimi".c, "TimeZone".c, "".c, "java.util"),
         row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
         row("Bölümselİşlev".c, "PartialFunction".c, "".c),
         row("İşlev1".c, "Function1".c, "".c),
         row("İşlev2".c, "Function2".c, "".c),
         row("İşlev3".c, "Function3".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, kodXX.c),
       ),
       "İlerledikçe faydalı olacak türler".p,
       table(
@@ -169,17 +163,10 @@ satıryaz(ey)"""
       ),
       "Tür eşi olmayan nesnelerin işimize yarayan pekçok yöntemi var:".p,
       table(
-        row("ay".c, "".c, "arayüz'ün kısaltması"),
-        row("tuvalAlanı".c, "".c, "arayüz'ün kısaltması"),
+        row("ay".c, "UI".c, "arayüz'ün kısaltması", kod2010.c),
+        row("tuvalAlanı".c, "canvasBounds".c, "tuval alanı hakkında faydalı bilgiler", kod2020.c),
       ),
-      "Foo:".p,
-      table(
-        row("e sayısı", "ikinin karekökü", "eksi birinki", "4", "5".c, "komik oldu!"),
-        row("dez e = 2.718".c, "dez b = 1.4142".c, "dez i = karekökü(-1)".c, "(2, 4)".c, "(2, 5)".c, "(2, 6)".c),
-        row("sütun", "sayısı", "farklı", "olsa", "da", "olur", gülerYüz)
-      ),
-      "Bu da bitiriş paragrafından bir öncesi.".p,
-      "Artık bitti bu küçük örnek. Umarız faydalı oldu...".p
+      "Şimdilik bu kadar. Devamı yarın".p,
     )
   )
 

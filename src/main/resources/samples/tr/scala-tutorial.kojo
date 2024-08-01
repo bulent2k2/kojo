@@ -116,7 +116,7 @@ kalemKalınlığınıKur(10)
 üçgen(90)
 kalemKalınlığınıKur(1)
   """.c, "Çizim yaptığı kalem kalınlığını giriyoruz"),
-      row("ışınlarıAç()".c, "Dör yönü belirten farlar yansın"),
+      row("ışınlarıAç()".c, "Dört yönü belirten farlar yansın"),
       row("ışınlarıKapat()".c, "Farları söndürelim"),
       row("""sil()
 görünmez()
@@ -164,9 +164,9 @@ pages += Page(
     "Aşağıdaki her satırda bir anahtar sözcük var. İlk sütun, kılavuzdaki kullanış sırasına göre sıralı. Sonra gelip bulmak kolay olsun diye. İkinci sütunda anahtar sözcüğün İngilizce'si var. Keyword diye de bilinir. Eğer o keyword, İngilizce bir sözcüğün kısaltmasıysa o sözcüğün kendisi de üçüncü sütunda. Son sütunda da ufak bir açıklamayla yetindik. Kılavuzumuzun diğer sayfaları daha geniş açıklamalar verecek.".p,
     table(
       row("tanım".c, "def".c, "define", "İlk bölümde kaplumbağacığa üçgen çizdirmek için kullanmıştık. Bu anahtar sözcük yeni bir işlev tanımlar ve ona bir ad takar. Bu yeni ad da derleyicinin sözlüğüne eklenmiş olur!"),
-      row("dez".c, "val".c, "value", "İlk bölümdeki yeni kaplumbağacığa ad takmamızı sağlayan anahtar sözcük. Bilinen ve değişmez bir değere bir ad takar. Bu yeni ad da yazılımcığın özel sözlüğünee eklenmiş olur."),
+      row("dez".c, "val".c, "value", "İlk bölümdeki yeni kaplumbağacığa ad takmamızı sağlayan anahtar sözcük. Bilinen ve değişmez bir değere bir ad takar. Bu yeni ad da yazılımcığın özel sözlüğüne eklenmiş olur."),
       row("den".c, "var".c, "variable", "Yeni bir değişken tanımlar ve ona bir ad takar. Bu yeni ad da sözlüğe eklenmiş olur."),
-      row("eğer".c, "if".c, "", "Bir çatallanma yani kara verme durumu tanımlar. Duruma göre iki seçenekten birini seçer derleyici."),
+      row("eğer".c, "if".c, "", "Bir çatallanma yani karar verme durumu tanımlar. Duruma göre iki seçenekten birini seçer derleyici."),
       row("yoksa".c, "else".c, "", "eğer sözcüğünden sonra kullanılır."),
       row("için".c, "for".c, "", "İşlevsel bir döngü tanımlar. Çok daha iyi bir yöntemdir!"),
       row("ver".c, "yield".c, "", "İçin komudunun içinde teker teker nesne çıktısı vermek için kullanılır."),
@@ -204,7 +204,7 @@ pages += Page(
       row("damgalı".c, "sealed".c, "", "Bir dosya dışında değişiklik yapılmasını istemediğimiz türler için kullanırız."),
       row("üst".c, "super".c, "", "Bir üst türden bahsetmek gerekirse."),
       row("bu".c, "this".c, "", "Bir sınıfın tanımının içinde kendi nesnelerinden bahsetmek için kullanılabilen adıl. Ya da eski adıyla bu zamiri!"),
-      row("bildir".c, "throw".c, "", "Kuraldışı durumlarda kullanılır. Atmak anlamındaki emrin adı. At diyemedik bazı teknik sorunlardan ötürü. Zaten bildirmek daha kibar oldu."),
+      row("bildir".c, "throw".c, "", "Kuraldışı durumlarda kullanılır. 'Throw' atmak demek. Emir ya da istek kipi 'at' olacaktı. Ama bazı teknik sorunlardan ötürü olmadı. Zaten bildir sözcüğü daha kibar oldu, değil mi?"),
       row("özellik".c, "trait".c, "", "Temel bir tür tanımlamak için çok faydalıdır. Ama onun yerine 'sınıf' da kullanılabilir."),
       row("dene".c, "try".c, "", "Kuraldışı durumları sınır içine alır."),
       row("tür".c, "type".c, "", "Bir türe yeni bir ad takar."),
@@ -326,7 +326,7 @@ sağ(120)
     "1 + 2".c,
     "3 + 4 * (2 - 3)".c,
     """23 % 5""".c,
-    "Tabanlı aritmetik işlemi yaptık. ani tabana bölünce ne kalıyorsa onu bulduk".p,
+    "Tabanlı aritmetik işlemi yaptık. 5 tabanında. Yani 5'e bölünce ne kalıyorsa onu bulduk".p,
     "6 / 4".c,
     "Bu son işlemde önemli bir nokta var. Tam sayılar bölününce sonuç yine bir tam sayı olur ve kalan dikkate alınmaz. Ufak bir değişiklikle kesirli ve daha doğru bir işlem yapabiliriz:".p,
     "6 / 4.0".c,
@@ -336,7 +336,7 @@ sağ(120)
     """Bir deyişin sonucunu bir değişken (aslında çoğunlukla bir değişmez değer) kullanarak kaydedip daha sonra yine kullanabiliriz. Değişken ve değişmez değer isimleri (ve sonra göreceğimiz başka tür isimler) harf, sayı ve * / + - : = ! < > & ^ | gibi semboller kullanarak yazılır. Örneğin, "FutbolTopu", "BilardoTopuBeyaz1", "yardımHattı", "*+" and "res4" (result yani sonuç)...""".p,
     """Bunun için iki yöntem vardır: "den" ve "dez" anahtar sözcükleri. "dez" sözcüğüyle sabit ve hiç değişmeyecek değerleri ve sonuçları saklayabiliriz. Bunlara değişmez değer, ya da kısaca değişmez diyelim. Ya neden bir de "den" anahtar sözcüğü var? Aşağıda bir örnekle ikisinin farkını hemen anlayacağız. "dez" ile tanımlanan değerlerin sabit olması (ingilizcede 'immutable value') aslında çok önemli bir işlevsel yazılım (functional programming) kavramıdır, ama bunu daha sonra yeri gelince daha iyi anlayacağız. Şimdilik mümkün oldukça 'den' yerine 'dez' komutunu kullanmaya dikkat edelim. Bu sayede yazılımın başka bir yerindeki değişkenleri yanlışlıkla bozamayız.""".p,
     "dez noktaSayısı = 34 + 5".c,
-    """Bir ya da daha fazla sayıda işlemin sonucunu çıktı gözüne 'satıryaz(deyiş1, deyiş2, deyişn)' komutunu kullanarak yazabiliriz. Deyişler arasına virgül koymayı unutmayalım. Gerekmez ama istersek virgülden sonra boşluk bırakarak yazılımın okunuşu biraz daha kolaylaştırabiliriz. Ama çıktı da durum başka. Orada boşluk bırakmak nasıl olur yakında göreceğiz.""".p,
+    """Bir ya da daha fazla sayıda işlemin sonucunu çıktı gözüne 'satıryaz(deyiş1, deyiş2, deyişn)' komutunu kullanarak yazabiliriz. Deyişler arasına virgül koymayı unutmayalım. Gerekmez ama istersek virgülden sonra boşluk bırakarak yazılımın okunuşu biraz daha kolaylaştırabiliriz. Ama Çıktı Gözünde durum başka. Orada boşluk bırakmak nasıl olur yakında göreceğiz.""".p,
     """satıryaz(noktaSayısı, 3 + 2, noktaSayısı / 2, 3.9 / 2.3)
 den boy = noktaSayısı + 4
 satıryaz(boy)""".c,
@@ -357,21 +357,26 @@ dez dereceF = 98.4 // vucüt termometresi bunu göstersin
 satıryaz(dereceF, "derece Fahrenayt",
          (dereceF-32)*5/9, "derece Santigrat") 
 """.c,
-"satıryaz' komutuyla yazı da yazdık yukarıda gördüğün gibi. Böyle çift tırnaklar içine alınan yazıların türüne Yazı (İngilizcesi String) diyoruz. Bu tür, sadece yazı yazmak için değil, yazılarla işlemler yapmak için de kullanılabilir:".p,
+"'satıryaz' komutuyla yazı yazdık, yukarıda gördüğün gibi. Böyle çift tırnaklar içine alınan yazıların türüne Yazı (İngilizcesi String) diyoruz. Bu tür, sadece yazı yazmak için değil, yazılarla işlemler yapmak için de kullanılabilir:".p,
     """dez adım = "Mustafa Kemal"
 dez mesaj = "Merhaba " + adım
 satıryaz(mesaj)
 """.c,
     "Toplama işareti sanki toplama yaparmış gibi yazıları birbirine ekleyiveriyor. Mantıklı değil mi? Yazı türüyle daha neler yazılabilir neler! İki bölüm sonra başka örnekler de göreceğiz.".p,
-    "Duymuşsundur eminim, bilgisayar devreleri aslında 2, 3, 4 gibi sayıları bile bilmez. Onun yerine sadece 0 ve 1 sayılarını tanır. Hatta tanımak dedik de aslında sadece voltaj değerlerini ve elektrik akımlarını tanır onlar. Bu uzun, ilginç ve çok keyifli bir öyküdür. Benim gibi elektrik mühendisi olmak istersen, bana emaille selam ve sorularını yollayabilirsin. Neyse, konumuza dönelim. Daha büyük sayılarla işlemler yapmak için bilgisayar onları bir 0 ve 1 dizisi olarak ele alır ve içindeki sayısız mantık devreleri sayesinde toplama, çıkarma, çarpma, bölme ve hatta türev ve integral alma gibi daha ileri matematik işlemlerini kolayca ve hiç üşenmeden halleder. Bunların detayı bilgisayar uzmanlarının işi. Biz 0 ve 1 dizilerine dönelim, çünkü herşey onlarla başlıyor! İngilizcede 'binary arithmetic' denir. Biz çift tabanlı sayma diyelim. Her sayı, 0 ve 1'lerden oluşan bir dizi olduğu için, direk onun parçacıkları üzerinde de işlemler yapabiliriz. Bu işlemlere 'bitwise' yani parçacık işlemi denir. Bu 0 ve 1 dizilerinin her bir elemanına İngilizcede 'bit' denir. Saçlarımızda yaşayan ve zararsız küçük böcekcikler değil elbet! İngilizcede azıcık, küçücük anlamlarına geliyor. Biz parçacık diyelim istersen. Çok uzattık. Kusura kalma. Şimdi parçacıkları teker teker nasıl işleme sokarız bir kaç örnek görelim:".p,
+    "Duymuşsundur eminim, bilgisayar devreleri aslında 2, 3, 4 gibi sayıları bile bilmez. Onun yerine sadece 0 ve 1 sayılarını tanır. Hatta tanımak dedik de aslında sadece voltaj değerlerini ve elektrik akımlarını tanır onlar. Bu uzun, ilginç ve çok keyifli bir öyküdür. Benim gibi elektrik mühendisi olmak istersen, bana emaille selam ve sorularını yollayabilirsin. Neyse, konumuza dönelim. Daha büyük sayılarla işlemler yapmak için bilgisayar onları bir 0 ve 1 dizisi olarak ele alır ve içindeki sayısız mantık devreleri sayesinde toplama, çıkarma, çarpma, bölme ve hatta türev ve integral alma gibi daha ileri matematik işlemlerini kolayca ve hiç üşenmeden halleder. Bunların detayı bilgisayar uzmanlarının işi. Biz 0 ve 1 dizilerine dönelim, çünkü herşey onlarla başlıyor! İngilizcede 'binary arithmetic' denir. Biz iki tabanlı sayma diyelim. Her sayı, 0 ve 1'lerden oluşan bir dizi olduğu için, direk onun parçacıkları üzerinde de işlemler yapabiliriz. Bu işlemlere 'bitwise' yani parçacıksal işlem denir. Böyle 0 ve 1 dizilerinin her bir elemanına İngilizcede 'bit' denir. Saçlarımızda yaşayan ve zararsız küçük böcekcikler değil elbet! İngilizcede azıcık, küçücük anlamlarına geliyor. Biz parçacık diyelim istersen. Çok uzattık. Kusura kalma. Şimdi parçacıkları teker teker nasıl işleme sokarız bir kaç örnek görelim:".p,
     "3 & 2".c,
     "Bu '&' imiyle mantıksal 've' işlemi yapıyoruz (ingilizcesi 'logic and'). Sadece 1 ve 1 sonuç olarak 1 verir. Girdilerden biri 0 olursa sonucu da 0 olur. '|' da mantıksal veya (or) işlemi. Sadece 0 veya 0 sonuç olarak 0 verir. Biri 1 olursa sonuç da 1 olur:".p,
     "1 | 2".c,
     "Mantıksal dışlayan veya işlemi (xor yani exclusive or) aşağıda. Sadece biri 1 öbürü 0 olunca 1 verir:".p,
     "1 ^ 2".c,
-    "Parçacıkları sola kaydırmak ikiyle çarpaya denk! İki kere kaydırsak ne olur:".p,
+    "Parçacıkları sola kaydırmak ikiyle çarpaya denk! İki kere kaydırsak ne olur?".p,
     "1 << 2".c,
-    "sağa kaydır ama eksiyse eksi kalsın:".p,
+    "Ya 10, 20 ya da 30 kere kaydırsak?".p,
+    "yaz(1 << 10)".c,
+    "yaz(1 << 20)".c,
+    "yaz(1 << 30)".c,
+    "Nasıl da hızlı büyüdü, değil mi? 10 kere kaydırmak, 2'yi on kere kendisiyle çarpmak demek, yani iki üssü ona denk. O da 1024 ediyor. Binden birazcık fazla. 2 üssü 20, bir milyonu; 2 üssü 30 da bir milyarı geçti...".p,
+    "Sağa kaydır ama eksiyse eksi kalsın:".p,
     "-24 >> 2".c,
     "-14 >>> 2".c,
     "Sağa kaydırıyor ama sonuca bakın! Ben anlamadım vallahi. Ya sen? Bakın bu çok ilginç. Parçacıkları sola kaydırmak ikiyle çarpmaya denk! Sağa kaydırmaksa ikiye bölmeye benzemiyor mu? Bu daha önce de dediğim gibi uzmanlık konusu. Üzerinde yazılmış pekçok bilimsel makale ve ders kitapları var. Hatta bazıları çok azımızın anlayabileceği yüksek ihtisas kitapları! Bugünlük bu kadarı fazla bile. Ama sen istersen bu yazılımcığı kurcala. Ama -14 yerine 14'ü dene. Mavi üçgene bas ki sonucu hemen göresin. Bakarsın uzman olmak istersin. Neden olmasın?".p,
