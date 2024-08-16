@@ -85,11 +85,11 @@ birÜçgenÇiz()
       row("geri(50)".c,"50 adım geriye gider"),
       row("ileri(100)".c, "Buna gerek yok, yukarda bahsettik. Ama tekrar tıklayasın diye yineledik. Tekrar edeyim birden çok tıklamakta hiçbir zarar yok!"),
       row("eksenleriGöster()".c, "X ve Y eksenlerini gösterir"),
-      row("gridiGöster()".c, "Tuvalin gridini çizer"),
+      row("ızgarayıGöster()".c, "Tuvalin ızgarasını çizer"),
       row("konumuKur(150, 100)".c, "Çizgi çizmeden koordinatları verilen (x, y) noktasına gider. Ama baktığı doğrultu değişmez"),
       row("noktayaGit(0, -100)".c, "Doğrultusunu koordinatları verilen noktaya çevirir ve o noktaya kadar ilerler"),
       row("eksenleriGizle()".c, "Eksenleri saklar"),
-      row("gridiGizle()".c, "Gridi gizler"),
+      row("ızgarayıGizle()".c, "Izgarayı gizler"),
       row("dön(30)".c, "Saat yönünün tersine doğru 30 derece döner. Eksi girersen saat yönünde döner"),
       row("sağ()".c, "Sağa döner. Yani saat yönünde 90 derece döner"),
       row("sağ(60)".c, "Sağa doğru 60 derece döner"),
@@ -471,14 +471,14 @@ yaz(ikililer)""".c,
     """sil
 yaklaşXY(0.9, 0.5, 60, 400)
 tanım eğri(x: Kesir) = 0.01 * x * x - 0.5 * x - 10
-gridiGöster(); eksenleriGöster()
+ızgarayıGöster(); eksenleriGöster()
 dez aralık = 200
 atla(-aralık,eğri(-aralık))
 hızıKur(orta)
 için(x <- -aralık+10 |-| aralık+100; eğer (x % 10 == 0)) noktayaGit(x, eğri(x))""".c,
     "'eğri' adında yeni bir işlev tanımlayıverdik. Bunu daha sonra daha iyi anlayacağız.".p,
     "Şimdilik x ve y eksenlerini ve kare çizgileri silelim. Ve bir sonraki bölümle devam edelim!".p,
-    "eksenleriGizle(); gridiGizle()".c
+    "eksenleriGizle(); ızgarayıGizle()".c
   )
 )
 
@@ -1477,7 +1477,7 @@ pages += Page(
     "Eğer ilgilenip daha çok örnek görmek istersen, Kojo'nun web sayfasına da bak. Henüz sadece İngilizce. Resim yerine Picture diyecek. Ama ordaki örnekler de sana bir fikir verecektir.".p,
     "Resim adlı birim birçok komut, işlem ve bir de çizim döngüsü sunuyor bize. Bunları kullanarak epey gelişmiş şekiller, resimler ve grafikler çizebiliriz. Çizim döngüsünü kullanarak grafikleri canlandırabilir ve istersek fare ve tuşlarla kontrol ekleyerek oyuna çevirebiliriz.".p,
     "İlk örnekle başlayalım. Önce ekranı temizliyoruz. Sonra bir top çiziyor ve canlandırma döngüsünün içinde topun nasıl hareket edeceğini tanımlıyoruz. Resim birimi, bu döngüyü yaklaşık yirmibeş milisaniyede bir yineleyerek çalıştırıyor. Bilgisayarın hızına göre saniyede yaklaşık olarak 40 kere tekrar tekrar resim çizebiliyor yani. Bu da bizim gözümüzün değişiklikleri görme hızından fazla olduğu için bize canlı ve harektli gibi görünüyor. Bu temel kavramları ve komutları kullanarak pekçok ilginç canlı, hareketli grafik çizebilirsin.".p,
-    """silVeSakla(); gridiGöster(); eksenleriGöster()
+    """silVeSakla(); ızgarayıGöster(); eksenleriGöster()
 dez yç = 10 // topumuzun yarıçapı
 dez top = Resim.daire(yç) // resmi
 çiz(top) // bu da tuvale çiziveriyor topu

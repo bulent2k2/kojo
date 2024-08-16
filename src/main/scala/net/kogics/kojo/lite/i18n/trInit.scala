@@ -57,6 +57,7 @@ object TurkishAPI
 
   var builtins: CoreBuiltins = _ // unstable reference to module
   lazy val richBuiltins = builtins.asInstanceOf[Builtins]
+  lazy val rb = richBuiltins // todo: refactor code below to use rb
 
   import net.kogics.kojo.lite.i18n.tr // todo: better here than at the top scope?
   // Imports are intransitive (not visibly transitive). So, we "export" the ones that should be on the interface
@@ -119,7 +120,7 @@ object TurkishAPI
 
   def belirt(belit: İkil, mesaj: => Any): Birim = assert(belit, mesaj)
   def gerekli(gerekçe: İkil, mesaj: => Any): Birim = require(gerekçe, mesaj)
-  def yeniMp3Çalar = new tr.Mp3Çalar(richBuiltins.newMp3Player)
+  def yeniMp3Çalar = new tr.Mp3Çalar(rb.newMp3Player)
 
   trait TurkishTurtle {
     def englishTurtle: Turtle
@@ -334,41 +335,41 @@ object TurkishAPI
   def yeniKaplumbağa(x: Kesir, y: Kesir, giysiDosyası: Yazı) = new Kaplumbağa(x, y, giysiDosyası)
 
   def buradaDur = burdaDur _
-  def burdaDur(mesaj: Any) = richBuiltins.breakpoint(mesaj)
+  def burdaDur(mesaj: Any) = rb.breakpoint(mesaj)
 
-  def sayıOku(istem: Yazı = "") = richBuiltins.readInt(istem)
-  def kesirOku(istem: Yazı = "") = richBuiltins.readDouble(istem)
+  def sayıOku(istem: Yazı = "") = rb.readInt(istem)
+  def kesirOku(istem: Yazı = "") = rb.readDouble(istem)
 
-  def resimİndir(httpAdresi: Yazı) = richBuiltins.preloadImage(httpAdresi)
-  def müzikİndir(httpAdresi: Yazı) = richBuiltins.preloadMp3(httpAdresi)
+  def resimİndir(httpAdresi: Yazı) = rb.preloadImage(httpAdresi)
+  def müzikİndir(httpAdresi: Yazı) = rb.preloadMp3(httpAdresi)
 
-  def müzikMp3üÇal(mp3dosyası: Yazı) = richBuiltins.playMp3(mp3dosyası)
-  def sesMp3üÇal(mp3dosyası: Yazı) = richBuiltins.playMp3Sound(mp3dosyası)
-  def müzikMp3üÇalDöngülü(mp3dosyası: Yazı) = richBuiltins.playMp3Loop(mp3dosyası)
+  def müzikMp3üÇal(mp3dosyası: Yazı) = rb.playMp3(mp3dosyası)
+  def sesMp3üÇal(mp3dosyası: Yazı) = rb.playMp3Sound(mp3dosyası)
+  def müzikMp3üÇalDöngülü(mp3dosyası: Yazı) = rb.playMp3Loop(mp3dosyası)
 
   def Mp3ÇalıyorMu = müzikMp3üÇalıyorMu
   def Mp3üDurdur() = müzikMp3üKapat()
   def Mp3DöngüsünüDurdur() = müzikMp3DöngüsünüKapat()
-  def müzikMp3üÇalıyorMu = richBuiltins.isMp3Playing
-  def müzikÇalıyorMu = richBuiltins.isMusicPlaying
-  def müzikMp3üKapat() = richBuiltins.stopMp3()
-  def müzikMp3DöngüsünüKapat() = richBuiltins.stopMp3Loop()
+  def müzikMp3üÇalıyorMu = rb.isMp3Playing
+  def müzikÇalıyorMu = rb.isMusicPlaying
+  def müzikMp3üKapat() = rb.stopMp3()
+  def müzikMp3DöngüsünüKapat() = rb.stopMp3Loop()
   def müziğiDurdur() = müziğiKapat()
-  def müziğiKapat() = richBuiltins.stopMusic()
+  def müziğiKapat() = rb.stopMusic()
 
-  def kojoVarsayılanBakışaçısınıKur() = richBuiltins.switchToDefaultPerspective()
-  def kojoVarsayılanİkinciBakışaçısınıKur() = richBuiltins.switchToDefault2Perspective()
-  def kojoYazılımcıkBakışaçısınıKur() = richBuiltins.switchToScriptEditingPerspective()
-  def kojoÇalışmaSayfalıBakışaçısınıKur() = richBuiltins.switchToWorksheetPerspective()
-  def kojoÖyküBakışaçısınıKur() = richBuiltins.switchToStoryViewingPerspective()
-  def kojoGeçmişBakışaçısınıKur() = richBuiltins.switchToHistoryBrowsingPerspective()
-  def kojoÇıktılıÖyküBakışaçısınıKur() = richBuiltins.switchToOutputStoryViewingPerspective()
+  def kojoVarsayılanBakışaçısınıKur() = rb.switchToDefaultPerspective()
+  def kojoVarsayılanİkinciBakışaçısınıKur() = rb.switchToDefault2Perspective()
+  def kojoYazılımcıkBakışaçısınıKur() = rb.switchToScriptEditingPerspective()
+  def kojoÇalışmaSayfalıBakışaçısınıKur() = rb.switchToWorksheetPerspective()
+  def kojoÖyküBakışaçısınıKur() = rb.switchToStoryViewingPerspective()
+  def kojoGeçmişBakışaçısınıKur() = rb.switchToHistoryBrowsingPerspective()
+  def kojoÇıktılıÖyküBakışaçısınıKur() = rb.switchToOutputStoryViewingPerspective()
 
-  def tümEkranÇıktı() = richBuiltins.toggleFullScreenOutput()
+  def tümEkranÇıktı() = rb.toggleFullScreenOutput()
   def tümEkranTuval() = tümEkran()
-  def tümEkran() = richBuiltins.toggleFullScreenCanvas()
+  def tümEkran() = rb.toggleFullScreenCanvas()
   object tuvalAlanı {
-    def ta = richBuiltins.canvasBounds
+    def ta = rb.canvasBounds
     def eni = en
     def boyu = boy
     def en: Kesir = ta.width
@@ -382,16 +383,16 @@ object TurkishAPI
   def yatayMerkezKonumu(uzunluk: Kesir): Kesir = tuvalAlanı.x + (tuvalAlanı.en - uzunluk) / 2
   def dikeyMerkezKonumu(uzunluk: Kesir): Kesir = tuvalAlanı.y + (tuvalAlanı.boy - uzunluk) / 2
 
-  def ekranTazelemeHızınıKur(saniyedeKaçKere: Sayı) = richBuiltins.setRefreshRate(saniyedeKaçKere)
-  def ekranTazelemeHızınıGöster(renk: Renk, yazıBoyu: Sayı = 15): Birim = { // richBuiltins.showFps(renk, yazıBoyu)
-    val cb = richBuiltins.canvasBounds
+  def ekranTazelemeHızınıKur(saniyedeKaçKere: Sayı) = rb.setRefreshRate(saniyedeKaçKere)
+  def ekranTazelemeHızınıGöster(renk: Renk, yazıBoyu: Sayı = 15): Birim = { // rb.showFps(renk, yazıBoyu)
+    val cb = rb.canvasBounds
     @volatile var frameCnt = 0
-    val fpsLabel = richBuiltins.Picture.textu("eth: ", yazıBoyu, renk)
+    val fpsLabel = rb.Picture.textu("eth: ", yazıBoyu, renk)
     fpsLabel.setPosition(cb.x + 10, cb.y + cb.height - 10)
-    richBuiltins.draw(fpsLabel)
-    fpsLabel.forwardInputTo(richBuiltins.TSCanvas.stageArea)
+    rb.draw(fpsLabel)
+    fpsLabel.forwardInputTo(rb.TSCanvas.stageArea)
 
-    richBuiltins.TSCanvas.timer(1000) {
+    rb.TSCanvas.timer(1000) {
       fpsLabel.update(s"eth: $frameCnt")
       frameCnt = 0
     }
@@ -401,37 +402,39 @@ object TurkishAPI
   }
 
   // ../DrawingCanvasAPI.scala
-  def yaklaş(oran: Kesir) = richBuiltins.tCanvas.zoom(oran)
-  def yaklaş(oran: Kesir, xMerkez: Kesir, yMerkez: Kesir) = richBuiltins.tCanvas.zoom(oran, xMerkez, yMerkez)
+  def yaklaş(oran: Kesir) = rb.tCanvas.zoom(oran)
+  def yaklaş(oran: Kesir, xMerkez: Kesir, yMerkez: Kesir) = rb.tCanvas.zoom(oran, xMerkez, yMerkez)
   def yaklaşXY(xOran: Kesir, yOran: Kesir, xMerkez: Kesir, yMerkez: Kesir) =
-    richBuiltins.tCanvas.zoomXY(xOran, yOran, xMerkez, yMerkez)
-  def yaklaşmayıSil() = richBuiltins.tCanvas.resetPanAndZoom()
-  def yaklaşmayaİzinVerme() = richBuiltins.tCanvas.disablePanAndZoom()
-  def tuvaliKaydır(x: Kesir, y: Kesir) = richBuiltins.tCanvas.scroll(x, y)
-  def tuvaliDöndür(açı: Kesir) = richBuiltins.tCanvas.viewRotate(açı)
+    rb.tCanvas.zoomXY(xOran, yOran, xMerkez, yMerkez)
+  def yaklaşmayıSil() = rb.tCanvas.resetPanAndZoom()
+  def yaklaşmayaİzinVerme() = rb.tCanvas.disablePanAndZoom()
+  def tuvaliKaydır(x: Kesir, y: Kesir) = rb.tCanvas.scroll(x, y)
+  def tuvaliDöndür(açı: Kesir) = rb.tCanvas.viewRotate(açı)
 
-  def tuşaBasılıMı(tuş: Sayı) = richBuiltins.isKeyPressed(tuş)
-  def tuşaBasınca(iş: Sayı => Birim) = richBuiltins.tCanvas.onKeyPress(iş)
-  def tuşuBırakınca(iş: Sayı => Birim) = richBuiltins.tCanvas.onKeyRelease(iş)
-  def fareyeTıklıyınca(iş: (Kesir, Kesir) => Birim) = richBuiltins.tCanvas.onMouseClick(iş)
-  def fareyiSürükleyince(iş: (Kesir, Kesir) => Birim) = richBuiltins.tCanvas.onMouseDrag(iş)
-  def fareKımıldayınca(iş: (Kesir, Kesir) => Birim) = richBuiltins.tCanvas.onMouseMove(iş)
+  def tuşaBasılıMı(tuş: Sayı) = rb.isKeyPressed(tuş)
+  def tuşaBasınca(iş: Sayı => Birim) = rb.tCanvas.onKeyPress(iş)
+  def tuşuBırakınca(iş: Sayı => Birim) = rb.tCanvas.onKeyRelease(iş)
+  def fareyeTıklıyınca(iş: (Kesir, Kesir) => Birim) = rb.tCanvas.onMouseClick(iş)
+  def fareyiSürükleyince(iş: (Kesir, Kesir) => Birim) = rb.tCanvas.onMouseDrag(iş)
+  def fareKımıldayınca(iş: (Kesir, Kesir) => Birim) = rb.tCanvas.onMouseMove(iş)
 
-  def gridiGöster() = richBuiltins.tCanvas.gridOn()
-  def gridiGizle() = richBuiltins.tCanvas.gridOff()
-  def eksenleriGöster() = richBuiltins.tCanvas.axesOn()
-  def eksenleriGizle() = richBuiltins.tCanvas.axesOff()
-  def açıÖlçeriGöster(): richBuiltins.Picture = açıÖlçeriGöster(-tuvalAlanı.en / 2, -tuvalAlanı.boy / 2)
-  def açıÖlçeriGöster(x: Kesir, y: Kesir): richBuiltins.Picture = richBuiltins.tCanvas.showProtractor(x, y)
-  def açıÖlçeriGizle() = richBuiltins.tCanvas.hideProtractor()
-  def cetveliGöster(): richBuiltins.Picture = cetveliGöster(-tuvalAlanı.en / 2, tuvalAlanı.boy / 2)
-  def cetveliGöster(x: Kesir, y: Kesir): richBuiltins.Picture = richBuiltins.tCanvas.showScale(x, y)
+  def gridiGöster() = rb.tCanvas.gridOn()
+  def gridiGizle() = rb.tCanvas.gridOff()
+  def ızgarayıGöster() = gridiGöster()
+  def ızgarayıGizle() = gridiGizle()
+  def eksenleriGöster() = rb.tCanvas.axesOn()
+  def eksenleriGizle() = rb.tCanvas.axesOff()
+  def açıÖlçeriGöster(): rb.Picture = açıÖlçeriGöster(-tuvalAlanı.en / 2, -tuvalAlanı.boy / 2)
+  def açıÖlçeriGöster(x: Kesir, y: Kesir): rb.Picture = rb.tCanvas.showProtractor(x, y)
+  def açıÖlçeriGizle() = rb.tCanvas.hideProtractor()
+  def cetveliGöster(): rb.Picture = cetveliGöster(-tuvalAlanı.en / 2, tuvalAlanı.boy / 2)
+  def cetveliGöster(x: Kesir, y: Kesir): rb.Picture = rb.tCanvas.showScale(x, y)
 
-  def çizimiKaydet(dosyaAdı: Yazı) = richBuiltins.tCanvas.exportImage(dosyaAdı)
-  def çizimiKaydet(dosyaAdı: Yazı, en: Sayı, boy: Sayı) = richBuiltins.tCanvas.exportImage(dosyaAdı, en, boy)
-  def çizimiKaydetBoy(dosyaAdı: Yazı, boy: Sayı) = richBuiltins.tCanvas.exportImageH(dosyaAdı, boy)
-  def çizimiKaydetEn(dosyaAdı: Yazı, en: Sayı) = richBuiltins.tCanvas.exportImageW(dosyaAdı, en)
-  def çizimiPulBoyundaKaydet(dosyaAdı: Yazı, boy: Sayı) = richBuiltins.tCanvas.exportThumbnail(dosyaAdı, boy)
+  def çizimiKaydet(dosyaAdı: Yazı) = rb.tCanvas.exportImage(dosyaAdı)
+  def çizimiKaydet(dosyaAdı: Yazı, en: Sayı, boy: Sayı) = rb.tCanvas.exportImage(dosyaAdı, en, boy)
+  def çizimiKaydetBoy(dosyaAdı: Yazı, boy: Sayı) = rb.tCanvas.exportImageH(dosyaAdı, boy)
+  def çizimiKaydetEn(dosyaAdı: Yazı, en: Sayı) = rb.tCanvas.exportImageW(dosyaAdı, en)
+  def çizimiPulBoyundaKaydet(dosyaAdı: Yazı, boy: Sayı) = rb.tCanvas.exportThumbnail(dosyaAdı, boy)
 
   // todo: help doc
   def Geçiş(
@@ -442,10 +445,10 @@ object TurkishAPI
       resimci: Dizi[Kesir] => Resim,
       bitinceGizle: İkil
   ) = {
-    val resimci2 = new Function1[Dizi[Kesir], richBuiltins.Picture] { def apply(d: Dizi[Kesir]) = resimci(d).p }
-    richBuiltins.Transition(süreSaniyeOlarak, ilkEvre, sonEvre, kolaylaştırma, resimci2, bitinceGizle)
+    val resimci2 = new Function1[Dizi[Kesir], rb.Picture] { def apply(d: Dizi[Kesir]) = resimci(d).p }
+    rb.Transition(süreSaniyeOlarak, ilkEvre, sonEvre, kolaylaştırma, resimci2, bitinceGizle)
   }
-  implicit class trForReverse(a: richBuiltins.Animation) {
+  implicit class trForReverse(a: rb.Animation) {
     def tersten = a.reversed
     def sonsuzYinelenme = a.repeatedForever
     // todo: more to come
@@ -455,37 +458,37 @@ object TurkishAPI
     val Doğrusal = Resim.yumuşakGeçiş.Linear
     // more to come. See: ~/src/kojo/git/kojo/src/main/scala/net/kogics/kojo/kmath/easing.scala
   }
-  def canlandırmaDizisi(canlandırmalar: richBuiltins.Animation*) = richBuiltins.animSeq(canlandırmalar)
-  def canlandırmaDizisi(canlandırmalar: collection.Seq[richBuiltins.Animation]) =
-    richBuiltins.animSeq(canlandırmalar.toSeq)
-  def canlandırmaEşzamanlı(canlandırmalar: richBuiltins.Animation*) = richBuiltins.animPar(canlandırmalar)
-  def canlandırmaEşzamanlı(canlandırmalar: collection.Seq[richBuiltins.Animation]) =
-    richBuiltins.animPar(canlandırmalar.toSeq)
-  def oynat(canlandırma: richBuiltins.Animation) = richBuiltins.run(canlandırma)
-  def artalandaOynat(kod: => Unit) = richBuiltins.runInBackground(kod)
-  def fareKonumu = richBuiltins.mousePosition
-  def yorumla(komutDizisi: Yazı) = richBuiltins.interpret(komutDizisi)
-  def yineleSayaçla(miliSaniye: Uzun)(işlev: => Birim) = richBuiltins.tCanvas.timer(miliSaniye)(işlev)
-  def canlandır(işlev: => Birim) = richBuiltins.tCanvas.animate(işlev)
+  def canlandırmaDizisi(canlandırmalar: rb.Animation*) = rb.animSeq(canlandırmalar)
+  def canlandırmaDizisi(canlandırmalar: collection.Seq[rb.Animation]) =
+    rb.animSeq(canlandırmalar.toSeq)
+  def canlandırmaEşzamanlı(canlandırmalar: rb.Animation*) = rb.animPar(canlandırmalar)
+  def canlandırmaEşzamanlı(canlandırmalar: collection.Seq[rb.Animation]) =
+    rb.animPar(canlandırmalar.toSeq)
+  def oynat(canlandırma: rb.Animation) = rb.run(canlandırma)
+  def artalandaOynat(kod: => Unit) = rb.runInBackground(kod)
+  def fareKonumu = rb.mousePosition
+  def yorumla(komutDizisi: Yazı) = rb.interpret(komutDizisi)
+  def yineleSayaçla(miliSaniye: Uzun)(işlev: => Birim) = rb.tCanvas.timer(miliSaniye)(işlev)
+  def canlandır(işlev: => Birim) = rb.tCanvas.animate(işlev)
   def canlandırEvreyle[Evre](ilkEvre: Evre)(işlev: Evre => Evre): Future[PActivity] =
-    richBuiltins.tCanvas.animateWithState(ilkEvre)(işlev)
-  def canlandırmayıDurdur(etkinlik: Future[PActivity]) = richBuiltins.tCanvas.stopAnimationActivity(etkinlik)
+    rb.tCanvas.animateWithState(ilkEvre)(işlev)
+  def canlandırmayıDurdur(etkinlik: Future[PActivity]) = rb.tCanvas.stopAnimationActivity(etkinlik)
   def canlandırYenidenÇizerek[Evre](ilkEvre: Evre, sonrakiEvre: Evre => Evre, işlev: Evre => Resim): Birim = {
-    val işlev2 = new Function1[Evre, richBuiltins.Picture] { def apply(e: Evre) = işlev(e).p }
-    richBuiltins.animateWithRedraw(ilkEvre, sonrakiEvre, işlev2)
+    val işlev2 = new Function1[Evre, rb.Picture] { def apply(e: Evre) = işlev(e).p }
+    rb.animateWithRedraw(ilkEvre, sonrakiEvre, işlev2)
   }
-  def canlandırTuvalÇizimle(görüntüyüÇiz: TuvalÇizim => Birim): Birim = richBuiltins.animateWithCanvasDraw(görüntüyüÇiz)
-  def durdur() = richBuiltins.stopAnimation()
-  def canlandırmaBaşlayınca(işlev: => Birim) = richBuiltins.tCanvas.onAnimationStart(işlev)
-  def canlandırmaBitince(işlev: => Birim) = richBuiltins.tCanvas.onAnimationStop(işlev)
-  def tuvaliEtkinleştir() = richBuiltins.activateCanvas()
-  def yazılımcıkDüzenleyicisiniEtkinleştir() = richBuiltins.activateEditor()
+  def canlandırTuvalÇizimle(görüntüyüÇiz: TuvalÇizim => Birim): Birim = rb.animateWithCanvasDraw(görüntüyüÇiz)
+  def durdur() = rb.stopAnimation()
+  def canlandırmaBaşlayınca(işlev: => Birim) = rb.tCanvas.onAnimationStart(işlev)
+  def canlandırmaBitince(işlev: => Birim) = rb.tCanvas.onAnimationStop(işlev)
+  def tuvaliEtkinleştir() = rb.activateCanvas()
+  def yazılımcıkDüzenleyicisiniEtkinleştir() = rb.activateEditor()
 
-  def çıktıArtalanınıKur(renk: Renk) = richBuiltins.setOutputBackground(renk)
-  def çıktıYazıRenginiKur(renk: Renk) = richBuiltins.setOutputTextColor(renk)
-  def çıktıYazıYüzüBoyunuKur(boy: Sayı) = richBuiltins.setOutputTextFontSize(boy)
-  def tuvalBoyutOranınınKur(oran: Kesir) = richBuiltins.setDrawingCanvasAspectRatio(oran)
-  def tuvalBoyutlarınıKur(en: Sayı, boy: Sayı) = richBuiltins.setDrawingCanvasSize(en, boy)
+  def çıktıArtalanınıKur(renk: Renk) = rb.setOutputBackground(renk)
+  def çıktıYazıRenginiKur(renk: Renk) = rb.setOutputTextColor(renk)
+  def çıktıYazıYüzüBoyunuKur(boy: Sayı) = rb.setOutputTextFontSize(boy)
+  def tuvalBoyutOranınınKur(oran: Kesir) = rb.setDrawingCanvasAspectRatio(oran)
+  def tuvalBoyutlarınıKur(en: Sayı, boy: Sayı) = rb.setDrawingCanvasSize(en, boy)
 
   def süreTut(komut: => Birim): Birim = {
     val t0 = buSaniye
@@ -502,7 +505,7 @@ object TurkishAPI
       kx: Kesir = 10,
       ky: Kesir = 50
   ) =
-    richBuiltins.showGameTime(süreSaniyeOlarak, mesaj, renk, yazıBoyu, kx, ky)
+    rb.showGameTime(süreSaniyeOlarak, mesaj, renk, yazıBoyu, kx, ky)
   def oyunSüresiniGeriyeSayarakGöster(
       süreSaniyeOlarak: Sayı,
       mesaj: Yazı,
@@ -510,10 +513,10 @@ object TurkishAPI
       yazıBoyu: Sayı = 15,
       kx: Kesir = 10,
       ky: Kesir = 50
-  ) = richBuiltins.showGameTimeCountdown(süreSaniyeOlarak, mesaj, renk, yazıBoyu, kx, ky)
+  ) = rb.showGameTimeCountdown(süreSaniyeOlarak, mesaj, renk, yazıBoyu, kx, ky)
 
-  def sırayaSok(kaçSaniyeSonra: Kesir)(komut: => Birim) = richBuiltins.schedule(kaçSaniyeSonra)(komut)
-  def sırayaSok(n: Sayı, kaçSaniyeSonra: Kesir)(komut: => Birim) = richBuiltins.scheduleN(n, kaçSaniyeSonra)(komut)
+  def sırayaSok(kaçSaniyeSonra: Kesir)(komut: => Birim) = rb.schedule(kaçSaniyeSonra)(komut)
+  def sırayaSok(n: Sayı, kaçSaniyeSonra: Kesir)(komut: => Birim) = rb.scheduleN(n, kaçSaniyeSonra)(komut)
 
   type Yöney2B = tr.Yöney2B
   type Resim = tr.Resim
@@ -584,7 +587,7 @@ object TurkishAPI
   def çiz(r2: Resim) = r.çiz(r2)
   def çiz(rler: Resim*) = r.çiz(rler: _*)
   def çiz(rler: collection.Seq[Resim]) = r.çiz(rler)
-  def çizVeSakla(resimler: Resim*) = richBuiltins.drawAndHide(resimler.map(_.p): _*)
+  def çizVeSakla(resimler: Resim*) = rb.drawAndHide(resimler.map(_.p): _*)
   val (çizMerkezde, çizSahne, çizMerkezdeYazı, merkezeTaşı) =
     (r.çizMerkezde _, r.çizSahne _, r.çizMerkezdeYazı _, r.merkezeTaşı _)
   val (sahneKenarındanYansıtma, engeldenYansıtma) = (r.sahneKenarındanYansıtma _, r.engeldenYansıtma _)
@@ -611,12 +614,11 @@ object TurkishAPI
     çıktı
   }
 
-  def DokumaBoya(dosya: Yazı, x: Kesir, y: Kesir) = richBuiltins.TexturePaint(dosya, x, y)
+  def DokumaBoya(dosya: Yazı, x: Kesir, y: Kesir) = rb.TexturePaint(dosya, x, y)
 
   def a_kalıp() = println("Kalıbı kullan") // todo: geçici. Bakınız tr/help.scala
   def def_türkçe() = println("def")
 
-  lazy val rb = richBuiltins
   def başlangıçNoktasıÜstSolKöşeOlsun() = rb.originTopLeft()
   def başlangıçNoktasıAltSolKöşeOlsun() = rb.originBottomLeft()
   def notaÇal(frekans: Sayı, süreMiliSaniye: Sayı, ses: Sayı = 80): Birim = rb.playNote(frekans, süreMiliSaniye, ses)
