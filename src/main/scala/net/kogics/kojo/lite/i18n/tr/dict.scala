@@ -14,6 +14,14 @@
  * rights and limitations under the License.
  *
  */
+/*
+   Koco version tag:
+     KojoRevision = "r8-tr"
+     KojoBuildDate = "24 Ağustos 2024"
+   Ref Kojo version: ../../Versions.scala
+   I do not check in to Version.scala.
+   Makes it hard to sync by fork with Lalit's base.
+ */
 package net.kogics.kojo.lite.i18n.tr
 
 object dict {
@@ -291,6 +299,7 @@ object dict {
     "scala" -> "#tr skala",
     "tutorial" -> "kılavuz",
     "cheat-sheet" -> "kılavuzcuk",
+    "tuple" -> "sıralama",
   )
 
   val type2en = Map()
