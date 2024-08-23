@@ -135,19 +135,25 @@ satıryaz("Kaplumbağa bütün yazıyüzlerini" ++
     " yazabilmek için\nkuzeye" ++
     s" doğru epey yol aldı: y=${konum.y}")"""
 
-dez kod60b = """// buna birkaç kere tıklayarak
-// tuvalde yukarı gidebilirsin:
-tuvaliKaydır(0, 400)
-// 311'inci yazıyüzünü bulmak
-// için 19 kere tıkladım:
-satıryaz(yazıyüzleri(311))"""
+dez kod60b = """// buna her tıklayışında
+// tuval bir sayfa yukarı kayar
+tuvaliKaydır(0, tuvalAlanı.boyu)
+"""
 
 dez kod60c = """//bu da aşağı dönmek için:
-tuvaliKaydır(0, -400)"""
+tuvaliKaydır(0, -tuvalAlanı.boyu)"""
+
+dez kod60d = """dez yy = yazıyüzleri(127)
+satıryaz(s"Sistemde ${yazıyüzleri.boyu} tane yazı yüzü var. Birinin adı: $yy.")
+satıryaz("Onunla tuvale birşeyler yazalım:")
+silVeSakla
+kalemRenginiKur(mor)
+yazıYüzünüKur(yazıyüzü(yy,18))
+yazı("Yazma denemesi yapalım...")"""
 
 dez kod70 = """silVeSakla
 eksenleriGöster
-gridiGöster
+ızgarayıGöster
 zıpla(4)
 yazı("1234")
 sol; zıpla(50); sağ
