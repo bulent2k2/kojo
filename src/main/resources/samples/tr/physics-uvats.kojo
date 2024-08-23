@@ -1,15 +1,18 @@
-// Mekanik simülasyon == kinematik bir canlandırma, hepsi fizik
+// Sabit ivmeyle hızlanan bir arabayı simüle edelim
+// Hızının ve konumunun değişimini de çiziyoruz
 
-tümEkran()
+// 'd' veya esc (Escape) tuşuna basarak durdurabilirsin
+
+// tümEkran()
 silVeSakla()
 eksenleriGöster()
-gridiGöster()
-yaklaş(0.75, 500, 300)
+ızgarayıGöster()
+yaklaş(0.60, 400, 300)
 
-dez a = 20.0 // başlangıç ivmesi
+dez a = 20.0 // ivme
 dez b = 10.0 // başlangıç hızı. Bunu -100 ya da -200 yapmayı dene!
 
-dez araba = yeniKaplumbağa(0, 0, Costume.car)
+dez araba = yeniKaplumbağa(0, 0, Costume.car) // todo
 
 dez konumEğrisi = yeniKaplumbağa(0, 0, Costume.pencil)
 konumEğrisi.kalemRenginiKur(mavi)
@@ -38,8 +41,10 @@ canlandır {
     zamanıGöster(f"Zaman: $t%.1f saniye")
 }
 
+tuvaliEtkinleştir()
 tuşaBasınca { t =>
     t eşle {
+      durum tuşlar.VK_D => durdur()
       durum tuşlar.VK_ESCAPE => durdur()  // sol üst tuş
       durum _ =>
     }
