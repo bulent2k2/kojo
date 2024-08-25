@@ -84,7 +84,7 @@ sınıf Oyuncu(çiniX: Sayı, çiniY: Sayı, dünya: ÇiniDünyası) {
     }
 
     tanım çarpışmalarBirAdımİleri() {
-        eğer (tuşaBasılıMı(tuşlar.VK_RIGHT)) {
+        eğer (tuşaBasılıMı(tuşlar.sağ)) {
             sağaMıBakıyor = doğru
             resmiGüncelle(sağaKoşu)
             ancılResim.götür(yatayHız, 0)
@@ -92,7 +92,7 @@ sınıf Oyuncu(çiniX: Sayı, çiniY: Sayı, dünya: ÇiniDünyası) {
                 dünya.soldakiÇiniyeTaşı(ancılResim)
             }
         }
-        yoksa eğer (tuşaBasılıMı(tuşlar.VK_LEFT)) {
+        yoksa eğer (tuşaBasılıMı(tuşlar.sol)) {
             sağaMıBakıyor = yanlış
             resmiGüncelle(solaKoşu)
             ancılResim.götür(-yatayHız, 0)
@@ -109,7 +109,7 @@ sınıf Oyuncu(çiniX: Sayı, çiniY: Sayı, dünya: ÇiniDünyası) {
             }
         }
 
-        eğer (tuşaBasılıMı(tuşlar.VK_UP)) {
+        eğer (tuşaBasılıMı(tuşlar.yukarı)) {
             eğer (!zıplıyorMu) {
                 dikeyHız = 5
             }

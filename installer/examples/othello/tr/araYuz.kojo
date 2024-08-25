@@ -457,9 +457,9 @@ sınıf Arayüz( // tahtayı ve taşları çizelim ve canlandıralım
 
     tuşaBasınca { t =>
         t eşle {
-            durum tuşlar.VK_RIGHT => ileri()
-            durum tuşlar.VK_LEFT  => geri()
-            durum tuşlar.VK_UP =>
+            durum tuşlar.sağ    => ileri()
+            durum tuşlar.sol    => geri()
+            durum tuşlar.yukarı =>
                 eğer (!bilgisayarŞimdiAramaYapıyor) {
                     artalandaOynat { öneri() }
                 }

@@ -106,16 +106,16 @@ canlandırmaBaşlayınca {
 }
 
 kaçan.canlan { r =>
-    eğer (tuşaBasılıMı(tuşlar.VK_RIGHT)) {
+    eğer (tuşaBasılıMı(tuşlar.sağ)) {
         r.götür(hız * hızOranı, 0)
     }
-    eğer (tuşaBasılıMı(tuşlar.VK_LEFT)) {
+    eğer (tuşaBasılıMı(tuşlar.sol)) {
         r.götür(-hız * hızOranı, 0)
     }
-    eğer (tuşaBasılıMı(tuşlar.VK_UP)) {
+    eğer (tuşaBasılıMı(tuşlar.yukarı)) {
         r.götür(0, hız * hızOranı)
     }
-    eğer (tuşaBasılıMı(tuşlar.VK_DOWN)) {
+    eğer (tuşaBasılıMı(tuşlar.aşağı)) {
         r.götür(0, -hız * hızOranı)
     }
 }
@@ -163,7 +163,7 @@ kaçan.canlan { r =>
 
 tuşaBasınca { k =>
     k eşle {
-        durum tuşlar.VK_D => durdur()
+        durum tuşlar.d => durdur()
         durum _ =>
     }
 }

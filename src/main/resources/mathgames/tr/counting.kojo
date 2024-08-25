@@ -196,7 +196,7 @@ yanıtPenceresi.girdiDinleyiciEkle(yeni ay.olay.TuşUyarlayıcısı {
 
     // escape tuşuna basınca oyuna son verelim:
     baskın tanım keyPressed(olay: TuşaBasmaOlayı) {
-        eğer (olay.tuşKodu == tuşlar.VK_ESCAPE) {
+        eğer (olay.tuşKodu == tuşlar.kaç) { // escape tuşu
             olay.tüket()
             eğer (!oyunBitti) {
                 oyunSüresineBak(doğru)
@@ -206,19 +206,19 @@ yanıtPenceresi.girdiDinleyiciEkle(yeni ay.olay.TuşUyarlayıcısı {
                 tümEkranTuval(); tümEkran = yanlış // tüm ekran modunu kapatalım
             }
         } // d tuşu yazılımcığımızı test etmek için:
-        yoksa eğer (olay.tuşKodu == tuşlar.VK_D) {
+        yoksa eğer (olay.tuşKodu == tuşlar.d) {
             dez sayılar = (enÇokKaçSatır, enÇokKaçSütun, enÇokKaçSütun)
             sayılarAnımsa = sayılar
             yanıtıKur(sayılar)
             yeniArayüz(sayılar)
         } // büyük boşluk tuşuna basarak soruyu değiştirebiliriz:
-        yoksa eğer (olay.tuşKodu == tuşlar.VK_SPACE) {
+        yoksa eğer (olay.tuşKodu == tuşlar.boşluk) {
             değiştirmeSayısı += 1
             dez sayılar = yeniSoru(0, 0)
             sayılarAnımsa = sayılar
             yeniArayüz(sayılar)
         }
-        yoksa eğer (olay.tuşKodu == tuşlar.VK_ENTER) {
+        yoksa eğer (olay.tuşKodu == tuşlar.gir) {
             tümEkran = !tümEkran
             tümEkranTuval() // tüm ekran modunu aç/kapat
         }

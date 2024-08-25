@@ -1546,15 +1546,15 @@ canlandırmaHızınıKur(100)
 den (zıpladı, bilmem) = (yanlış, yanlış)
 tuşaBasınca { t =>
     t eşle {
-        durum tuşlar.VK_LEFT  => açıyaDön(180)  // sola git
-        durum tuşlar.VK_RIGHT => açıyaDön(0)    // sağa git
-        durum tuşlar.VK_UP    => açıyaDön(90)   // yukarı
-        durum tuşlar.VK_DOWN  => açıyaDön(270)  // aşağı
-        durum tuşlar.VK_Z     => zıpla(20); zıpladı = doğru    
-        durum tuşlar.VK_A     => atla(fareKonumu.x,fareKonumu.y); zıpladı = doğru
-        durum tuşlar.VK_N     => noktayaGit(fareKonumu.x,fareKonumu.y); zıpladı = doğru
-        durum tuşlar.VK_SPACE => // büyük boşluk tuşu sadece ilerletsin
-        durum _               => bilmem = doğru // diğer tuşlar
+        durum tuşlar.sol    => açıyaDön(180)  // sola git
+        durum tuşlar.sağ    => açıyaDön(0)    // sağa git
+        durum tuşlar.yukarı => açıyaDön(90)   // yukarı
+        durum tuşlar.aşağı  => açıyaDön(270)  // aşağı
+        durum tuşlar.z      => zıpla(20); zıpladı = doğru    
+        durum tuşlar.a      => atla(fareKonumu.x,fareKonumu.y); zıpladı = doğru
+        durum tuşlar.n      => noktayaGit(fareKonumu.x,fareKonumu.y); zıpladı = doğru
+        durum tuşlar.boşluk => // büyük boşluk tuşu sadece ilerletsin
+        durum _             => bilmem = doğru // diğer tuşlar
     }
     eğer (bilmem) { bilmem = yanlış } yoksa {
         eğer (zıpladı) { zıpladı = yanlış } yoksa { ileri(20)}

@@ -225,16 +225,16 @@ fareyiTanımla(resim)
 tanım tuşlarıTanımla() {
     tuşaBasınca { t =>
         t eşle {
-            durum tuşlar.VK_SPACE => geri()
-            durum tuşlar.VK_LEFT  => geri()
-            durum tuşlar.VK_RIGHT => ileri()
-            durum tuşlar.VK_UP    => yaklaş(0.90) // fareyi merkez alır
-            durum tuşlar.VK_DOWN  => uzaklaş(1.25)
-            durum tuşlar.VK_P     => oynat()
-            durum tuşlar.VK_R     => geriOynat()
-            durum tuşlar.VK_O     => ortala()
-            durum tuşlar.VK_Y     => yaklaş(0.90, yanlış)
-            durum _               =>
+            durum tuşlar.boşluk => geri()
+            durum tuşlar.sol    => geri()
+            durum tuşlar.sağ    => ileri()
+            durum tuşlar.yukarı => yaklaş(0.90) // fareyi merkez alır
+            durum tuşlar.aşağı  => uzaklaş(1.25)
+            durum tuşlar.p      => oynat()
+            durum tuşlar.r      => geriOynat()
+            durum tuşlar.o      => ortala()
+            durum tuşlar.y      => yaklaş(0.90, yanlış)
+            durum _             =>
         }
     }
 }

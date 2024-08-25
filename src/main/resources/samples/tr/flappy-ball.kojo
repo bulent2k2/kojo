@@ -51,11 +51,11 @@ canlandır {
         }
     }
     top.sonrakiniGöster()  // topun kanatlarını çırpıyoruz
-    eğer (tuşaBasılıMı(tuşlar.VK_UP)) {
+    eğer (tuşaBasılıMı(tuşlar.yukarı)) {
         düşüşHızı = 0
         top.götür(0, topunHızı)
     }
-    yoksa eğer (tuşaBasılıMı(tuşlar.VK_DOWN)) {
+    yoksa eğer (tuşaBasılıMı(tuşlar.aşağı)) {
         düşüşHızı = 0
         top.götür(0, -topunHızı)
     }

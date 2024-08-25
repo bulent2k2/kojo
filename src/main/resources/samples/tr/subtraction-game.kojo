@@ -99,7 +99,7 @@ yanıtKutusu.girdiDinleyiciEkle(yeni ay.olay.TuşUyarlayıcısı {
 
     // her tuşa basıldığında bu çalışır
     baskın tanım keyPressed(e: ay.olay.TuşaBasmaOlayı) {
-        eğer (e.tuşKodu == tuşlar.VK_ESCAPE) { // Escape tuşuna basılınca
+        eğer (e.tuşKodu == tuşlar.kaç) { // Escape yani kaç tuşuna basılınca
             e.tüket()
             durdur()
             tümEkran() // zaten tüm ekran olduğu için bu komutla tüm ekrandan çıkar.. aç/kapa düğmesi gibi yani

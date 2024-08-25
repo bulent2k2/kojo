@@ -40,6 +40,7 @@ object TurkishAPI
     with tr.FutureMethodsInTurkish
     with tr.GraphicsUtilsInTurkish
     with tr.GeoMethodsInTurkish
+    with tr.KeyCodesInTurkish
     with tr.LazyListMethodsInTurkish
     with tr.ListMethodsInTurkish
     with tr.MapMethodsInTurkish
@@ -250,7 +251,7 @@ object TurkishAPI
   // TODO: other Color* constructors -- and Help Content
   // ../CoreBuiltins.scala
   lazy val renkler = builtins.cm // ColorMaker
-  lazy val tuşlar = builtins.Kc // Key Codes
+  // lazy val tuşlar = builtins.Kc // Key Codes
 
   def artalanıKur(r: Renk) = builtins.setBackground(r)
   def artalanıKur(b: Boya) = builtins.setBackground(b)

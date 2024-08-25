@@ -69,6 +69,7 @@ dez sayıDurumu = Eşlem(
 canlandır {
     top.götür(topunBuankiHızı)
     eğer (varMı(top.çarpışma(raketler))) {
+        sesMp3üÇal(Ses.vuruş)
         topunBuankiHızı = Yöney2B(-topunBuankiHızı.x, topunBuankiHızı.y)
     }
     yoksa eğer (varMı(top.çarpışma(üstVeAltKenar))) {
@@ -87,8 +88,8 @@ canlandır {
     yoksa {
         topunBuankiHızı = (topunBuankiHızı * topunİvmesi).sınırla(11)
     }
-    raketinDavranışı(solRaket, tuşlar.VK_A, tuşlar.VK_Z)
-    raketinDavranışı(sağRaket, tuşlar.VK_UP, tuşlar.VK_DOWN)
+    raketinDavranışı(solRaket, tuşlar.a, tuşlar.z)
+    raketinDavranışı(sağRaket, tuşlar.yukarı, tuşlar.aşağı)
 }
 
 tanım raketinDavranışı(raket: Resim, yukarıTuşu: Sayı, aşağıTuşu: Sayı) {

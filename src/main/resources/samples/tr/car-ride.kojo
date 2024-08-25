@@ -1,9 +1,10 @@
-// Arabayı sürmek için dört ok tuşunu kullan
-// Mavi arabalara çarpma
-// Her çarpışmayla dermanı azalır, her saniye dermanı artar
-// Yoldan çıkarsan yani sağ ya da sol kenara çarparsan oyun biter
-// Dermanın biterse oyun biter
-// Kazanmak için bir dakika boyunca arabayı sür
+// Arabayı sürmek için dört ok tuşunu kullan:
+//   sağ, sol, yukarı ve aşağı.
+// Mavi arabalara çarpma.
+// Her çarpışmayla dermanı azalır, her saniye dermanı artar.
+// Yoldan çıkarsan yani sağ ya da sol kenara çarparsan oyun biter.
+// Derman biterse oyun biter.
+// Kazanmak için bir dakika boyunca arabayı sür.
 kojoVarsayılanİkinciBakışaçısınıKur()
 silVeSakla()
 çizSahne(siyah)
@@ -63,15 +64,15 @@ canlandır {
     oyuncu.öneAl()
     dez aktifMi = buAn - etkisizlikSüresi > 300
     eğer (aktifMi) {
-        eğer (tuşaBasılıMı(tuşlar.VK_LEFT)) {
+        eğer (tuşaBasılıMı(tuşlar.sol)) {
             sürücüHızı = Yöney2B(-sürücüTepkiHızı, 0)
             oyuncu.götür(sürücüHızı)
         }
-        eğer (tuşaBasılıMı(tuşlar.VK_RIGHT)) {
+        eğer (tuşaBasılıMı(tuşlar.sağ)) {
             sürücüHızı = Yöney2B(sürücüTepkiHızı, 0)
             oyuncu.götür(sürücüHızı)
         }
-        eğer (tuşaBasılıMı(tuşlar.VK_UP)) {
+        eğer (tuşaBasılıMı(tuşlar.yukarı)) {
             sürücüHızı = Yöney2B(0, sürücüTepkiHızı)
             oyuncu.götür(sürücüHızı)
             eğer (!Mp3ÇalıyorMu) {
@@ -81,7 +82,7 @@ canlandır {
         yoksa {
             Mp3üDurdur()
         }
-        eğer (tuşaBasılıMı(tuşlar.VK_DOWN)) {
+        eğer (tuşaBasılıMı(tuşlar.aşağı)) {
             sürücüHızı = Yöney2B(0, -sürücüTepkiHızı)
             oyuncu.götür(sürücüHızı)
             eğer (!frenSesiÇalar.çalıyorMu) {
