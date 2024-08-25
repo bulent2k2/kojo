@@ -1,6 +1,8 @@
 // Başlamak için fareyle topa tıklayıp geri çek, sapan atıyormuş gibi
 // Fareyle raketler çizerek topa yol ver. Bir dakika içinde hedefi vur.
 
+// Bu oyun fikri ve ses mp3'lerini şuradan aldık: https://github.com/shadaj/collidium
+
 kojoVarsayılanİkinciBakışaçısınıKur()
 silVeSakla()
 
@@ -13,10 +15,10 @@ tanım topunGöreceKonumu = topunGöreceKonumuBaşta + rastgele(topunGöreceKonu
 dez topunBoyu = 20
 
 dez topunZarfı = kalemRengi(kırmızı) * götür(topunBoyu, topunBoyu) -> Resim.daire(topunBoyu)
-dez top1 = Resim.imge("/media/collidium/ball1.png", topunZarfı)
-dez top2 = Resim.imge("/media/collidium/ball2.png", topunZarfı)
-dez top3 = Resim.imge("/media/collidium/ball3.png", topunZarfı)
-dez top4 = Resim.imge("/media/collidium/ball4.png", topunZarfı)
+dez top1 = Resim.imge(Çizim.top1, topunZarfı)
+dez top2 = Resim.imge(Çizim.top2, topunZarfı)
+dez top3 = Resim.imge(Çizim.top3, topunZarfı)
+dez top4 = Resim.imge(Çizim.top4, topunZarfı)
 
 dez top = büyüt(0.5) -> Resim.küme(top1, top2, top3, top4)
 top.götür(ta.x + topunGöreceKonumu, ta.y + topunGöreceKonumu)
@@ -24,7 +26,7 @@ top.götür(ta.x + topunGöreceKonumu, ta.y + topunGöreceKonumu)
 dez hedef = götür(-ta.x - topunGöreceKonumu, -ta.y - topunGöreceKonumu) *
     kalemRengi(kırmızı) * boyaRengi(kırmızı) -> Resim.daire(topunBoyu / 4)
 
-dez duvarBoyası = DokumaBoya("/media/collidium/bwall.png", 0, 0)
+dez duvarBoyası = DokumaBoya(Çizim.tuğla, 0, 0)
 dez engeller = (1 |-| engelSayısı).işle { n =>
     götür(ta.x + n * engellerArasıUzaklık, ta.y + ta.boyu / 4) *
         boyaRengi(duvarBoyası) * kalemRengi(renksiz) ->
@@ -34,7 +36,7 @@ dez engeller = (1 |-| engelSayısı).işle { n =>
 çiz(top, hedef)
 çizVeSakla(topunZarfı)
 engeller.herbiriİçin { o => çiz(o) }
-sesMp3üÇal("/media/collidium/hit.mp3")
+sesMp3üÇal(Ses.vuruş)
 
 tanım doğruÇiz(ps: EsnekDizim[Nokta], r: Renk) = Resim {
     dez boy = 4
@@ -90,11 +92,11 @@ top.fareyiBırakınca { (x, y) =>
         top.götür(hız)
         top.sonrakiniGöster()
         eğer (top.çarptıMı(Resim.tuvalinSınırları)) {
-            sesMp3üÇal("/media/collidium/hit.mp3")
+            sesMp3üÇal(Ses.vuruş)
             hız = sahneKenarındanYansıtma(top, hız)
         }
         yoksa eğer (top.çarptıMı(raket)) {
-            sesMp3üÇal("/media/collidium/hit.mp3")
+            sesMp3üÇal(Ses.vuruş)
             hız = engeldenYansıtma(top, hız, raket)
             top.götür(hız)
         }
@@ -103,11 +105,12 @@ top.fareyiBırakınca { (x, y) =>
             hedef.boyamaRenginiKur(yeşil)
             çizMerkezdeYazı("Yaşasın! Kazandın!", yeşil, 20)
             durdur()
-            sesMp3üÇal("/media/collidium/win.mp3")
+
+          sesMp3üÇal(Ses.yaşasın)
         }
         top.çarpışma(engeller) eşle {
             durum Biri(engel) =>
-                sesMp3üÇal("/media/collidium/hit.mp3")
+                sesMp3üÇal(Ses.vuruş)
                 hız = engeldenYansıtma(top, hız, engel)
                 yineleDoğruKaldıkça (top.çarptıMı(engel)) {
                     top.götür(hız)
@@ -146,4 +149,3 @@ Resim.tuvalBölgesi.fareyiBırakınca { (x, y) =>
 }
 hedef.girdiyiAktar(Resim.tuvalBölgesi)
 engeller.herbiriİçin { o => o.girdiyiAktar(Resim.tuvalBölgesi) }
-// Bu oyun fikri ve ses mp3'lerini şuradan aldık: https://github.com/shadaj/collidium

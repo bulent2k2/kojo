@@ -14,8 +14,8 @@ dez yerçekimi = 0.1
 den düşüşHızı = 0.0
 dez topunZarfı = götür(49, 31) -> Resim.daire(30)
 dez top = Resim.küme(
-    Resim.imge("/media/flappy-ball/ballwing1.png", topunZarfı),
-    Resim.imge("/media/flappy-ball/ballwing2.png", topunZarfı)
+    Resim.imge(Çizim.topKanatlı1, topunZarfı),
+    Resim.imge(Çizim.topKanatlı2, topunZarfı)
 )
 çiz(top)
 çizVeSakla(topunZarfı)

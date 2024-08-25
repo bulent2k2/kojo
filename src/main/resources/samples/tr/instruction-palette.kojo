@@ -128,9 +128,9 @@ dez pTemplates = LinkedHashMap(
     "Resim.daire(yç)        " -> "Resim.daire(${c}50)",
     "Resim.elips(yçx, yçy)  " -> "Resim.elips(${c}50, 25)",
     "Resim.yazı(y, boyu)    " -> """Resim.yazı(${c}"Merhaba!", 18)""",
-    "Resim.imge(f)          " -> "Resim.imge(${c}Costume.womanWaving)",
-    "Resim.arayüz(jc1)      " -> """Resim.arayüz(${c}Label("Selam!"))""",
-    "Resim.arayüz(jc2)      " -> """Resim.arayüz(${c}Button("Selam!")(satıryaz("Nasılsın?")))"""
+    "Resim.imge(f)          " -> "Resim.imge(${c}Çizim.elSallayanKadın)",
+    "Resim.arayüz(jc1)      " -> """Resim.arayüz(${c}ay.Tanıt("Selam!"))""",
+    "Resim.arayüz(jc2)      " -> """Resim.arayüz(${c}ay.Düğme("Selam!")(satıryaz("Nasılsın?")))"""
 )
 
 dez ptTemplates = LinkedHashMap(

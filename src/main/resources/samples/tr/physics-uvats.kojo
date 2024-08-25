@@ -12,12 +12,12 @@ yaklaş(0.60, 400, 300)
 dez a = 20.0 // ivme
 dez b = 10.0 // başlangıç hızı. Bunu -100 ya da -200 yapmayı dene!
 
-dez araba = yeniKaplumbağa(0, 0, Costume.car) // todo
+dez araba = yeniKaplumbağa(0, 0, Görünüş.araba)
 
-dez konumEğrisi = yeniKaplumbağa(0, 0, Costume.pencil)
+dez konumEğrisi = yeniKaplumbağa(0, 0, Görünüş.kalem)
 konumEğrisi.kalemRenginiKur(mavi)
 
-dez hızEğrisi = yeniKaplumbağa(0, b, Costume.pencil)
+dez hızEğrisi = yeniKaplumbağa(0, b, Görünüş.kalem)
 hızEğrisi.kalemRenginiKur(yeşil)
 
 dez t0 = buSaniye // göreceli olarak bu anın zamanı

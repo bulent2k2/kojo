@@ -14,8 +14,8 @@ dez ta = tuvalAlanı
 dez arabaBoyu = 100
 dez çizgiBoyu = 80
 
-//  car1.png ve car2.png yani araba resimlerinin boyutlarına epey yakın bir çokkenarlı biçim çizelim
-dez arabayaZarf = götür(48, 14) -> Resim {  //todo: 2 -> 48
+//  araba resimlerinin boyutlarına epey yakın bir çokkenarlı biçim çizelim
+dez arabayaZarf = götür(48, 14) -> Resim {
     yinele (2) {
         ileri(70); sol(45); ileri(20); sol(45)
         ileri(18); sol(45); ileri(20); sol(45)
@@ -36,7 +36,7 @@ dez çarpışmaSesiÇalar = yeniMp3Çalar
 
 tanım arabaYap() {
     dez a = götür(oyuncu.konum.x + rastgeleDoğalKesir * ta.eni / 10, ta.y + ta.boyu) ->
-        araba("/media/car-ride/car2.png")
+        araba(Görünüş.araba2)
     a.çiz
     arabalar += a -> Yöney2B(0, -arabaHızı)
 }
@@ -49,7 +49,7 @@ tanım yolÇizgisiYap() {
     yolÇizgileri += yç
 }
 
-dez oyuncu = araba("/media/car-ride/car1.png")
+dez oyuncu = araba(Görünüş.araba1)
 çiz(oyuncu)
 çizVeSakla(arabayaZarf)
 
@@ -75,7 +75,7 @@ canlandır {
             sürücüHızı = Yöney2B(0, sürücüTepkiHızı)
             oyuncu.götür(sürücüHızı)
             eğer (!Mp3ÇalıyorMu) {
-                sesMp3üÇal("/media/car-ride/car-accel.mp3")
+                sesMp3üÇal(Ses.arabaHızlanıyor)
             }
         }
         yoksa {
@@ -85,7 +85,7 @@ canlandır {
             sürücüHızı = Yöney2B(0, -sürücüTepkiHızı)
             oyuncu.götür(sürücüHızı)
             eğer (!frenSesiÇalar.çalıyorMu) {
-                frenSesiÇalar.sesMp3üÇal("/media/car-ride/car-brake.mp3")
+                frenSesiÇalar.sesMp3üÇal(Ses.arabaFrenYapıyor)
             }
         }
         yoksa {
@@ -97,7 +97,7 @@ canlandır {
     }
 
     eğer (oyuncu.çarptıMı(Resim.tuvalinSolu) || oyuncu.çarptıMı(Resim.tuvalinSağı)) {
-        çarpışmaSesiÇalar.sesMp3üÇal("/media/car-ride/car-crash.mp3")
+        çarpışmaSesiÇalar.sesMp3üÇal(Ses.arabaKazaYaptı)
         oyuncu.saydamlığıKur(0.5)
         çizMerkezdeYazı("Yoldan çıktın. Yine deneyebilirsin.", kırmızı, 30)
         durdur()
@@ -117,7 +117,7 @@ canlandır {
         dez (araba, hız) = arabaVeHız
         //araba.öneAl()   // toyap gerekli mi? Bitiş yazısı bazen altta kalıyor...
         eğer (oyuncu.çarptıMı(araba)) {
-            çarpışmaSesiÇalar.sesMp3üÇal("/media/car-ride/car-crash.mp3")
+            çarpışmaSesiÇalar.sesMp3üÇal(Ses.arabaKazaYaptı)
             sürücüHızı = engeldenYansıtma(oyuncu, sürücüHızı - hız, araba) / 2
             oyuncu.götür(sürücüHızı * 3)
             araba.götür(-sürücüHızı * 3)
@@ -182,7 +182,7 @@ tanım skorVeDermanıYönet(oyunSüresi: Sayı) {
 }
 
 skorVeDermanıYönet(oyunSüresi)
-müzikMp3üÇalDöngülü("/media/car-ride/car-move.mp3")
+müzikMp3üÇalDöngülü(Ses.arabaGidiyor)
 tuvaliEtkinleştir()
 
 // Araba resimleri  google aracılığıyla şunlardan:

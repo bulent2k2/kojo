@@ -238,7 +238,7 @@ dez sayfaTuvalKomutları = Page(
     "Kaplumbağanın görünüşünü değiştiren komutlar:".p,
     table(
       row("birsonrakiGiysi".c, "Kurulu giysilerden bir sonrakini giy. Sonuncuyu giymişse en baştakine döner. Tek giysi varsa hiç birşey yapmaz", kod20.c),
-      row("giysiKur(Costume.car)".c, "Kaplumbağamızı tamamen değiştirmek de mümkün. Costume yani giysi nesnesi altında şunlar da var: bat1, bat2 (iki yarasa), pencil (kurşun kalem), womanWaving (el sallayan bir kadın)"),
+      row("giysiKur(Görünüş.araba)".c, "Kaplumbağamızı tamamen değiştirmek de mümkün."),
       row(giysileriKur_Örnek.c, "Kaplumbağanın bir dizi giysisi olsun ki giysisini kolaylıkla değiştirebilelim.", kod50.c),
       row("giysiyiBüyült(2.0)".c, "Küçültmek için de 0.5 dene."),
       row("görünmez".c, "gizle komutuyla eş: kaplumbağayı gizler"),

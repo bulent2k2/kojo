@@ -12,9 +12,9 @@ ileri; sağ"""
 
 dez kod20 = """sil
 durakla(0.5)
-giysileriKur(Costume.car,
-  Costume.bat1,
-  Costume.bat2)
+giysileriKur(Görünüş.araba,
+  Görünüş.yarasa1,
+  Görünüş.yarasa2)
 durakla(0.5)
 birsonrakiGiysi()
 durakla(0.5)
@@ -96,16 +96,16 @@ dez süre = yuvarla(
 satıryaz(s"Çizim $süre saniye sürdü")
 """
 
-dez giysileriKur_Örnek = """giysileriKur(Costume.bat1,
-  Costume.bat2
+dez giysileriKur_Örnek = """giysileriKur(Görünüş.yarasa1,
+  Görünüş.yarasa2
 )"""
 
 dez kod50 = """silVeSakla
 kalemRenginiKur(renksiz)
 göster
 giysileriKur(
-  Costume.bat1,
-  Costume.bat2)
+  Görünüş.yarasa1,
+  Görünüş.yarasa2)
 yinele(20) {
     durakla(0.1)
     atla(konum.x + 10,
@@ -164,7 +164,7 @@ yaklaş(4.0, 0, 0)"""
 
 dez kod80 = """sil
 dez yk2 = yeniKaplumbağa(0, 100)
-yk2.giysiKur(Costume.car)
+yk2.giysiKur(Görünüş.araba)
 yk2.geri(180)
 // iki kat hızlandıralım:
 yk2.canlandırmaHızınıKur(500)

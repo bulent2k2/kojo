@@ -38,6 +38,7 @@ object TurkishAPI
     with tr.ColorMethodsInTurkish
     with tr.CoreTypeMethodsInTurkish
     with tr.FutureMethodsInTurkish
+    with tr.GraphicsUtilsInTurkish
     with tr.GeoMethodsInTurkish
     with tr.LazyListMethodsInTurkish
     with tr.ListMethodsInTurkish
@@ -49,6 +50,7 @@ object TurkishAPI
     with tr.PartialFunctionMethodsInTurkish
     with tr.QueueMethodsInTurkish
     with tr.RangeMethodsInTurkish
+    with tr.SoundUtilsInTurkish
     with tr.SeqMethodsInTurkish
     with tr.SetMethodsInTurkish
     with tr.StringMethodsInTurkish
@@ -190,6 +192,7 @@ object TurkishAPI
     def konumVeYönüGeriYükle() = englishTurtle.restorePosHe()
     def ışınlarıAç() = englishTurtle.beamsOn()
     def ışınlarıKapat() = englishTurtle.beamsOff()
+    def giysiKur(imge: İmge) = englishTurtle.setCostumeImage(imge)
     def giysiKur(dosyaAdı: Yazı) = englishTurtle.setCostume(dosyaAdı)
     def giysileriKur(dosyaAdı: Yazı*) = englishTurtle.setCostumes(dosyaAdı: _*)
     def birsonrakiGiysi() = englishTurtle.nextCostume()

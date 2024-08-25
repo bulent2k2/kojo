@@ -79,7 +79,7 @@ dez kovalayan3 = boyaRengi(siyah) * götür(2 * enİriX / 3, 0) * büyüt(0.3) -
 dez kovalayan4 = boyaRengi(siyah) * götür(-enİriX / 2, enİriY / 2) * büyüt(0.3) -> tangram
 dez kovalayan5 = boyaRengi(siyah) * götür(2 * enİriX / 3, enİriY / 2) * büyüt(0.3) -> tangram
 
-müzikMp3üÇalDöngülü("/media/music-loops/Cave.mp3")
+müzikMp3üÇalDöngülü(Ses.mağarada)
 gizle()
 çizSahne(Renk(150, 150, 255))
 çiz(kaçan, kovalayan, kovalayan2, kovalayan3, kovalayan4, kovalayan5)
@@ -136,7 +136,7 @@ kovalayan3.canlan(koşuşturma)
 kovalayan4.canlan(koşuşturma)
 kovalayan5.canlan(koşuşturma)
 
-dez kovalayanlar = List(kovalayan, kovalayan2, kovalayan3, kovalayan4, kovalayan5)
+dez kovalayanlar = Dizi(kovalayan, kovalayan2, kovalayan3, kovalayan4, kovalayan5)
 
 oyunSüresiniGeriyeSayarakGöster(oyunSüresi, "Tebrikler!", yeşil, 30, 1, 2)
 dez bitişMesajı = büyüt(3) * götür(-20, 0) -> Resim { yazı("Çarpıştınız :-(\nBir daha dene!") }
@@ -153,7 +153,7 @@ kaçan.canlan { r =>
     // oyunda belli durumlarda değişik ses efekti yapmanın başka bir yolu da böyle
     eğer (kaçan.çarptıMı(Resim.tuvalinSınırları)) {
         eğer (!müzikMp3üÇalıyorMu) {
-            müzikMp3üÇal("/media/music-loops/DrumBeats.mp3")
+            müzikMp3üÇal(Ses.basDavulVuruşları)
         }
     }
     yoksa {
@@ -163,8 +163,7 @@ kaçan.canlan { r =>
 
 tuşaBasınca { k =>
     k eşle {
-        durum tuşlar.VK_ESCAPE =>
-            durdur()
+        durum tuşlar.VK_D => durdur()
         durum _ =>
     }
 }
