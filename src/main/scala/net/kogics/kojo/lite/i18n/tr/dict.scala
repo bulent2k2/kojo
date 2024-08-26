@@ -15,13 +15,13 @@
  *
  */
 /*
-   Koco version tag:
-     KojoRevision = "r8-tr"
-     KojoBuildDate = "24 Ağustos 2024"
-   Ref Kojo version: ../../Versions.scala
-   I do not check in to Version.scala.
-   Makes it hard to sync by fork with Lalit's base.
- */
+Koco version tag for timestamping purposes:
+  val KojoRevision = "r8-tr-2"
+  val KojoBuildDate = "26 Ağustos 2024"
+Ref Kojo version: ../../Versions.scala
+  I do not check in to Version.scala.
+  Makes it hard to sync by fork with Lalit's base.
+*/
 package net.kogics.kojo.lite.i18n.tr
 
 object dict {
