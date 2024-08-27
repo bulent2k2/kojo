@@ -24,6 +24,10 @@ Ref Kojo version: ../../Versions.scala
 */
 package net.kogics.kojo.lite.i18n.tr
 
+// Todo: operations işlemler 
+// unary biril unary_!
+// binary ikil
+// ternary üçül
 object dict {
   val miscCreativeMapping = Map(
     "hesap" -> "ölçüm",
