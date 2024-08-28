@@ -28,6 +28,7 @@ package net.kogics.kojo.lite.i18n.tr
 // unary biril unary_!
 // binary ikil
 // ternary üçül
+// operand işlenen
 object dict {
   val miscCreativeMapping = Map(
     "hesap" -> "ölçüm",
