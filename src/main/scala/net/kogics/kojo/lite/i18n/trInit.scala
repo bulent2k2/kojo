@@ -93,6 +93,7 @@ object TurkishAPI
 
   type UzunlukBirimi = tr.UzunlukBirimi
 
+  type Biçim = tr.Biçim
   type GeoYol = tr.GeoYol
   type GeoNokta = tr.GeoNokta
   type Grafik2B = tr.Grafik2B
@@ -525,6 +526,7 @@ object TurkishAPI
   type Yöney2B = tr.Yöney2B
   type Resim = tr.Resim
   type İmge = tr.İmge
+  type İmgeİşlemi = tr.İmgeİşlemi
   type Bellekteİmge = tr.Bellekteİmge
   type Bellekteİmgeİşlemi = tr.Bellekteİmgeİşlemi
   val Yöney2B = tr.Yöney2B

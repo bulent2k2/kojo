@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021
+ * Copyright (C) 2021-2024
  *   Bulent Basaran <ben@scala.org> https://github.com/bulent2k2
  *   Lalit Pant <pant.lalit@gmail.com>
  *
@@ -26,6 +26,7 @@ import net.kogics.kojo.lite.Builtins
 import net.kogics.kojo.lite.CoreBuiltins
 import net.kogics.kojo.picture
 import net.kogics.kojo.kmath.KEasing
+
 // From:       ~/src/kojo/git/kojo/src/main/scala/net/kogics/kojo/kmath/easing.scala
 // Which uses: ~/src/kojo/git/kojo/src/main/java/net/kogics/kojo/util/Easing.java
 // KEasing used in ../../Builtins.scala
@@ -67,7 +68,7 @@ object res {
     SpotLightc(x, y, yön, yükseklik, uzaklık)
   def ışıklar(ışıklar: com.jhlabs.image.LightFilter.Light*) = Lightsc(ışıklar: _*)
   def birEfekt(isim: Symbol, özellikler: Tuple2[Symbol, Any]*) = SomeEffectc(isim, özellikler: _*)
-  def filtre(filtre: java.awt.image.BufferedImageOp) = ApplyFilterc(filtre)
+  def filtre(filtre: Bellekteİmgeİşlemi) = ApplyFilterc(filtre)
   def gürültü(miktar: Sayı, yoğunluk: Kesir) = Noisec(miktar, yoğunluk)
   def örgü(xBoyu: Kesir, xAra: Kesir, yBoyu: Kesir, yAra: Kesir) = Weavec(xBoyu, xAra, yBoyu, yAra)
   def NoktaIşık(x: Kesir, y: Kesir, yön: Kesir, yükseklik: Kesir, uzaklık: Kesir) =
@@ -203,7 +204,8 @@ object res {
 }
 
 // ../../../core/Picture.scala
-class Resim(val p: richBuiltins.Picture) {
+// ../../../picture/pics.scala
+class Resim(var p: richBuiltins.Picture) {
   def tuval = p.canvas
   def pnode = p.pnode // ??
   def tnode = p.tnode // ??
@@ -223,10 +225,14 @@ class Resim(val p: richBuiltins.Picture) {
   def kaydır(yy: Yöney2B) = p.offset(yy.v.x, yy.v.y)
   def yansıtX() = p.flipX()
   def yansıtY() = p.flipY()
+  def saydamlıkOranınıKur(oran: Kesir) = p.opacityMod(oran)
+  def tonOranınıKur(oran: Kesir) = p.hueMod(oran)
+  def parlaklıkOranınıKur(oran: Kesir) = p.satMod(oran)
+  def aydınlıkOranınıKur(oran: Kesir) = p.britMod(oran)
   def saydamlık(oran: Kesir) = p.opacityMod(oran)
-  def ton(t: Kesir) = p.hueMod(t)
-  def parlaklık(f: Kesir) = p.satMod(f)
-  def aydınlık(f: Kesir) = p.britMod(f)
+  def ton(oran: Kesir) = p.hueMod(oran)
+  def parlaklık(oran: Kesir) = p.satMod(oran)
+  def aydınlık(oran: Kesir) = p.britMod(oran)
   def benzerDönüşümUygula(bd: java.awt.geom.AffineTransform) = p.transformBy(bd)
   def benzerDönüşümKur(bd: java.awt.geom.AffineTransform) = p.setTransform(bd)
   def bilgiVer() = p.dumpInfo()
@@ -311,6 +317,36 @@ class Resim(val p: richBuiltins.Picture) {
   def fareyiBırakınca(iş: (Kesir, Kesir) => Birim) = p.onMouseRelease(iş)
   def fareGirince(iş: (Kesir, Kesir) => Birim) = p.onMouseEnter(iş)
   def fareÇıkınca(iş: (Kesir, Kesir) => Birim) = p.onMouseExit(iş)
+
+  // with* thats* çizmeden önce yapılan değişiklikler:
+  def veDöndür(açı: Kesir): Resim = { p = p.withRotation(açı); this }
+  def veEtrafındaDöndür(açı: Kesir, x: Kesir, y: Kesir): Resim = { p = p.thatsRotatedAround(açı, x, y); this }
+  def veGötür(x: Kesir, y: Kesir): Resim = { p = p.withTranslation(x, y); this }
+  def veBüyüt(oran: Kesir): Resim = { p = p.thatsScaled(oran); this }
+  def veBüyüt(oranX: Kesir, oranY: Kesir): Resim = { p = p.thatsScaled(oranX, oranY); this }
+  def veEtrafındaBüyüt(oran: Kesir, x: Kesir, y: Kesir): Resim = { p = p.thatsScaledAround(oran, x, y); this }
+  def veEtrafındaBüyüt(oranX: Kesir, oranY: Kesir, x: Kesir, y: Kesir): Resim = { p = p.thatsScaledAround(oranX, oranY, x, y); this }
+  def veKırp(kırpmaX: Kesir, kırpmaY: Kesir): Resim = { p = p.thatsSheared(kırpmaX, kırpmaY); this }
+  def veBoya(renk: Boya): Resim = { p = p.thatsFilledWith(renk); this}
+  def veKalemRengiyle(renk: Boya): Resim = { p = p.thatsStrokeColored(renk); this }
+  def veKalemKalınlığıyla(boy: Kesir): Resim = { p = p.thatsStrokeSized(boy); this }
+  def veEfektle(filtre: Bellekteİmgeİşlemi): Resim = { p = p.withEffect(filtre); this }
+  def veEfektle(filtre: İmgeİşlemi): Resim = { p = p.withEffect(filtre); this }
+  def veYansıtX: Resim = {p = p.withFlippedX; this}
+  def veYansıtY: Resim = {p = p.withFlippedY; this}
+  def veSoluklaştır(uzaklık: Sayı): Resim = { p = p.withFading(uzaklık); this }
+  def veBulanıklaştır(yarıçap: Sayı): Resim = { p = p.withBlurring(yarıçap); this }
+  def veEksenlerle: Resim = { p = p.withAxes; this }
+  def veÇerçeveyle: Resim = { p = p.withLocalBounds; this }
+  def veSaydamlıkla(saydamlık: Kesir): Resim = { p = p.withOpacity(saydamlık); this }
+  def veKondur(x: Kesir, y: Kesir): Resim = { p = p.withPosition(x, y); this }
+  def veZDizinle(dizin: Sayı): Resim = { p = p.withZIndex(dizin); this }
+  def veZEndeksle(dizin: Sayı): Resim = { p = p.withZIndex(dizin); this }
+  def veKeserek(biçim: Biçim): Resim = { p = p.withClipping(biçim); this }
+  def veKeserek(biçim: Resim): Resim = { p = p.withClipping(biçim.p); this }
+  def veMaskeyle(maske: Resim): Resim = { p = p.withMask(maske.p); this }
+  def veÇizgiUcuVeBirleşmeTarzıyla(t: (Sayı, Sayı)): Resim = { p = p.withPenCapJoin(t); this }
+  def veKalemsiz(): Resim = { p = p.withNoPen(); this }
   // todo: more? see: https://docs.kogics.net/reference/picture.html
 }
 

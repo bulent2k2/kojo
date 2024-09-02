@@ -84,6 +84,8 @@ package object tr {
 
   type UzunlukBirimi = UnitLen
 
+  // ../../../core/Picture.scala
+  type Biçim = java.awt.Shape
   // ../../../core/vertexShapeSupport.scala
   type GeoYol = java.awt.geom.GeneralPath
   type GeoNokta = VertexShape
@@ -100,6 +102,7 @@ package object tr {
   type İmge = richBuiltins.Image // java.awt.Image
   type Bellekteİmge = BufferedImage
   type Bellekteİmgeİşlemi = java.awt.image.BufferedImageOp
+  type İmgeİşlemi = net.kogics.kojo.picture.ImageOp
 
   type İşlev1[D, R] = Function1[D, R]
   type İşlev2[D1, D2, R] = Function2[D1, D2, R]
