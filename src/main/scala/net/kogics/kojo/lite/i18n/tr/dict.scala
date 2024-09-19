@@ -379,6 +379,8 @@ object dict {
     "YinelenebilirBirKere" -> "IterableOnce",
     "Yapıcıdan" -> "collection.BuildFrom",
     "Gelecek" -> "Future",
+    "JGelecek" -> "java.util.concurrent.Future",
+    "PEtkinlik" -> "edu.umd.cs.piccolo.activities.PActivity",
     "İşletimBağlamı" -> "ExecutionContext",
     "Sayılar" -> "Vector[Int]",
     "Boya" -> "Paint",
@@ -420,7 +422,9 @@ object dict {
     "BKK" -> "URL",
     "ay" -> "UI",
     "tuvalAlanı" -> "canvasBounds",
-    "DRenk" -> "kojo.doodle.Color"
+    "DRenk" -> "kojo.doodle.Color",
+    "BenzerDönüşüm" -> "java.awt.geom.AffineTransform",
+    "PSınırlar" -> "edu.umd.cs.piccolo.util.PBounds"
   )
   val def2en = Map()
   val val2en = Map()
