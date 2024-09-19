@@ -41,7 +41,7 @@ trait MathMethodsInTurkish {
   def logaritması(x: Kesir): Kesir = math.log(x)
   def logTabanlı(x: Kesir, t: Kesir) = math.log(x) / math.log(t)
   private lazy val log2_e = math.log(2)
-  def log2tabanlı(x: Kesir) = math.log(x) / log2_e
+  def log2tabanlı(x: Kesir): Kesir = math.log(x) / log2_e
 
   def radyana(açı: Kesir): Kesir = math.toRadians(açı)
   def dereceye(açı: Kesir): Kesir = math.toDegrees(açı)
@@ -73,10 +73,10 @@ trait MathMethodsInTurkish {
   def enUfağı(x: UfakKesir, y: UfakKesir): UfakKesir = math.min(x, y)
 
   // ../../../Kmath/Kmath.scala
-  def enUfakOrtakKat(s1: Sayı, s2: Sayı) = ArithmeticUtils.lcm(s1, s2)
-  def enİriOrtakPayda(s1: Sayı, s2: Sayı) = ArithmeticUtils.gcd(s1, s2) // or hcf
-  def enUfakOrtakKat(s1: Uzun, s2: Uzun) = ArithmeticUtils.lcm(s1, s2)
-  def enİriOrtakPayda(s1: Uzun, s2: Uzun) = ArithmeticUtils.gcd(s1, s2)
+  def enUfakOrtakKat(s1: Sayı, s2: Sayı): Sayı = ArithmeticUtils.lcm(s1, s2)
+  def enİriOrtakPayda(s1: Sayı, s2: Sayı): Sayı = ArithmeticUtils.gcd(s1, s2) // or hcf
+  def enUfakOrtakKat(s1: Uzun, s2: Uzun): Uzun = ArithmeticUtils.lcm(s1, s2)
+  def enİriOrtakPayda(s1: Uzun, s2: Uzun): Uzun = ArithmeticUtils.gcd(s1, s2)
 
   def uzaklık(x1: Kesir, y1: Kesir, x2: Kesir, y2: Kesir): Kesir =
     math.sqrt(math.pow(y2 - y1, 2) + math.pow(x2 - x1, 2))
@@ -84,9 +84,9 @@ trait MathMethodsInTurkish {
   def açı(x1: Kesir, y1: Kesir, x2: Kesir, y2: Kesir): Kesir = math.atan2(y2 - y1, x2 - x1).toDegrees
   def açı(n1: Nokta, n2: Nokta): Kesir = açı(n1.x, n1.y, n2.x, n2.y)
 
-  def ortalama(sayılar: Dizik[Kesir]) = StatUtils.mean(sayılar)
-  def değişim(sayılar: Dizik[Kesir]) = StatUtils.variance(sayılar)
-  def değişim(sayılar: Dizik[Kesir], ortalama: Kesir) = StatUtils.variance(sayılar, ortalama)
+  def ortalama(sayılar: Dizik[Kesir]): Kesir = StatUtils.mean(sayılar)
+  def değişim(sayılar: Dizik[Kesir]): Kesir = StatUtils.variance(sayılar)
+  def değişim(sayılar: Dizik[Kesir], ortalama: Kesir): Kesir = StatUtils.variance(sayılar, ortalama)
 
   // todo: more to come
 }
