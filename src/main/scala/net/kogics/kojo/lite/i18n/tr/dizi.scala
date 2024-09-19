@@ -22,7 +22,7 @@ package net.kogics.kojo.lite.i18n.tr
 //   Diz Dizi Dizik Dizim Dizin EsnekDizim EsnekYazı Eşlem Eşlek Küme MiskinDizin Yazı Yığın Yöney
 trait SeqMethodsInTurkish {
   object Dizi {
-    def apply[B](elems: B*): Dizi[B] = Seq.from(elems)
+    def apply[B](ögeler: B*): Dizi[B] = Seq.from(ögeler)
     def unapplySeq[B](dizi: Dizi[B]) = Seq.unapplySeq(dizi)
     def doldur[B](n1: Sayı)(f: Sayı => B) = Seq.tabulate(n1)(f)
     def doldur[B](n1: Sayı, n2: Sayı)(f: (Sayı, Sayı) => B) = Seq.tabulate(n1, n2)(f)
@@ -35,7 +35,7 @@ trait SeqMethodsInTurkish {
 
   // collection.Seq[B]
   object Diz {
-    def apply[B](elems: B*): Diz[B] = collection.Seq.from(elems)
+    def apply[B](ögeler: B*): Diz[B] = collection.Seq.from(ögeler)
     def unapplySeq[B](dizi: Diz[B]) = collection.Seq.unapplySeq(dizi)
     def doldur[B](n1: Sayı)(f: Sayı => B) = collection.Seq.tabulate(n1)(f)
   }
@@ -252,6 +252,31 @@ trait SeqMethodsInTurkish {
     def enİrisi[B >: T](implicit sıralama: math.Ordering[B]): T = d.max(sıralama)
     def enİrisi[B](iş: (T) => B)(implicit karşılaştırma: math.Ordering[B]): T = d.maxBy(iş)(karşılaştırma)
 
+    // more to come
+  }
+
+  implicit class IterableMethods[T](d: Yinelenebilir[T]) {
+    type Col = Yinelenebilir[T]
+    type C2[B] = Yinelenebilir[B]
+    type Eşlek[A, D] = Map[A, D]
+
+    def ele(deneme: T => İkil): Col = d.filter(deneme)
+    def eleDeğilse(deneme: T => İkil): Col = d.filterNot(deneme)
+    def işle[A](işlev: T => A): C2[A] = d.map(işlev)
+    def düzİşle[A](işlev: T => C2[A]): C2[A] = d.flatMap(işlev)
+    def herbiriİçin[S](işlev: T => S): Birim = d.foreach(işlev)
+
+    def dizine = d.toList
+    def diziye = d.toSeq
+    def kümeye = d.toSet
+    def yöneye = d.toVector
+    def dizime[S >: T](implicit delil: scala.reflect.ClassTag[S]): Dizim[S] = new Dizim(d.toArray(delil))
+    def eşleğe[A, D](implicit delil: T <:< (A, D)): Eşlek[A, D] = d.toMap
+    def eşleme[A, D](implicit delil: T <:< (A, D)): Eşlem[A, D] = Eşlem.değişmezden(d.toMap)
+    def ikile[S](öbürü: YinelenebilirBirKere[S]) = d.zip(öbürü)
+    def ikileSırayla = d.zipWithIndex
+    def ikileKonumla = d.zipWithIndex
+    def öbekle[A](iş: (T) => A): Eşlek[A, Col] = d.groupBy(iş)
     // more to come
   }
 

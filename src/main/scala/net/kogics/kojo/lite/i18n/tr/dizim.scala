@@ -22,7 +22,7 @@ import collection.mutable.ArrayBuffer
 
 // todo: this has only the bare essentials for Array and ArrayBuffer. Add more to the interface..
 object EsnekDizim {
-  def apply[T](elemanlar: T*) = new EsnekDizim[T](ArrayBuffer.from(elemanlar))
+  def apply[T](ögeler: T*) = new EsnekDizim[T](ArrayBuffer.from(ögeler))
   def boş[T] = new EsnekDizim[T](ArrayBuffer.empty[T])
 }
 class EsnekDizim[T](val a: ArrayBuffer[T]) {
@@ -30,8 +30,8 @@ class EsnekDizim[T](val a: ArrayBuffer[T]) {
   type C2[A] = EsnekDizim[A]
   def apply(yer: Sayı) = a(yer)
   def sayı = a.size
-  def ekle(eleman: T) = { a.append(eleman); this }
-  def +=(eleman: T) = ekle(eleman)
+  def ekle(öge: T) = { a.append(öge); this }
+  def +=(öge: T) = ekle(öge)
   def çıkar(yer: Sayı) = a.remove(yer)
   def sil() = a.clear()
   def dizi = a.toSeq
@@ -78,7 +78,7 @@ class Dizim[T](val a: Array[T]) {
 trait ArrayMethodsInTurkish {
   type Dizik[T] = Array[T]
   object Dizik {
-    def apply[T](elems: T*)(implicit arg: ClassTag[T]) = Array(elems: _*)
+    def apply[T](ögeler: T*)(implicit arg: ClassTag[T]) = Array(ögeler: _*)
     def boş[T](implicit arg: ClassTag[T]) = Array.empty
   }
   // todo: copied from dizi.scala

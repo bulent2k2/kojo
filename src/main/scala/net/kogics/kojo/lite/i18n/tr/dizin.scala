@@ -20,7 +20,7 @@ trait ListMethodsInTurkish {
   val Boş = collection.immutable.Nil
 
   object Dizin {
-    def apply[A](elems: A*): List[A] = List.from(elems)
+    def apply[A](ögeler: A*): List[A] = List.from(ögeler)
     def unapplySeq[A](list: List[A]) = List.unapplySeq(list)
   }
 

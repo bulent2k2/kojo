@@ -22,38 +22,38 @@ trait GraphicsUtilsInTurkish {
 
   // From Lalit: need to make this a class to get it to show up reliably in completions
   object Artalan {
-    val demiryolu = "/media/backgrounds/train-tracks3.gif"
+    val demiryolu: Yazı = "/media/backgrounds/train-tracks3.gif"
   }
 
   val Çizim = Görünüş // alias
 
   object Görünüş {
-    val demiryolu = "/media/backgrounds/train-tracks3.gif"
+    val demiryolu: Yazı = "/media/backgrounds/train-tracks3.gif"
     // ~/kojo-repo/src/main/resources/samples/tr/car-ride.kojo
-    val scala = "/images/scala16x16.png"
-    val kare = "/images/kindvar.png"
-    val baklava = "/images/field.png"
-    val bayrak1 = "/images/generic-flag.png"
-    val daire = "/images/kindmethod.png"
-    val yıldız = "/images/star.png"
-    val yarasa1a = "/media/costumes/bat1-a.png"
-    val yarasa1b = "/media/costumes/bat1-b.png"
-    val kalem = "/media/costumes/pencil.png"
-    val kadınElSallarken = "/media/costumes/womanwaving.png"
-    val araba = "/media/costumes/car.png"
-    val araba1 = "/media/car-ride/car1.png"
-    val araba2 = "/media/car-ride/car2.png"
-    val yarasa1 = "/media/costumes/bat1-a.png"
-    val yarasa2 = "/media/costumes/bat1-b.png"
-    val elSallayanKadın = "/media/costumes/womanwaving.png"
+    val scala: Yazı = "/images/scala16x16.png"
+    val kare: Yazı = "/images/kindvar.png"
+    val baklava: Yazı = "/images/field.png"
+    val bayrak1: Yazı = "/images/generic-flag.png"
+    val daire: Yazı = "/images/kindmethod.png"
+    val yıldız: Yazı = "/images/star.png"
+    val yarasa1a: Yazı = "/media/costumes/bat1-a.png"
+    val yarasa1b: Yazı = "/media/costumes/bat1-b.png"
+    val kalem: Yazı = "/media/costumes/pencil.png"
+    val kadınElSallarken: Yazı = "/media/costumes/womanwaving.png"
+    val araba: Yazı = "/media/costumes/car.png"
+    val araba1: Yazı = "/media/car-ride/car1.png"
+    val araba2: Yazı = "/media/car-ride/car2.png"
+    val yarasa1: Yazı = "/media/costumes/bat1-a.png"
+    val yarasa2: Yazı = "/media/costumes/bat1-b.png"
+    val elSallayanKadın: Yazı = "/media/costumes/womanwaving.png"
 
-    val tuğla = "/media/collidium/bwall.png"
-    val top1 = "/media/collidium/ball1.png"
-    val top2 = "/media/collidium/ball2.png"
-    val top3 = "/media/collidium/ball3.png"
-    val top4 = "/media/collidium/ball4.png"
+    val tuğla: Yazı = "/media/collidium/bwall.png"
+    val top1: Yazı = "/media/collidium/ball1.png"
+    val top2: Yazı = "/media/collidium/ball2.png"
+    val top3: Yazı = "/media/collidium/ball3.png"
+    val top4: Yazı = "/media/collidium/ball4.png"
 
-    val topKanatlı1 = "/media/flappy-ball/ballwing1.png"
-    val topKanatlı2 = "/media/flappy-ball/ballwing2.png"
+    val topKanatlı1: Yazı = "/media/flappy-ball/ballwing1.png"
+    val topKanatlı2: Yazı = "/media/flappy-ball/ballwing2.png"
   }
 }
