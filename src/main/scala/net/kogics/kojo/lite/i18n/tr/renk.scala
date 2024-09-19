@@ -21,11 +21,15 @@ import net.kogics.kojo.doodle.{ Color => DColor }
 trait ColorMethodsInTurkish {
   import java.awt.{ Color => AColor }
   type Renk = AColor
+  type DRenk = DColor
 
   implicit class ColorYöntemleri(r: Renk) {
-    // kojo/src/main/scala/net/kogics/kojo/doodle/Color.scala
+    // ~/kojo-repo/src/main/scala/net/kogics/kojo/doodle/Color.scala
     // ../../../doodle/Color.scala
-    def çevir(açı: Kesir) = net.kogics.kojo.util.Utils.awtColorToDoodleColor(r).spin(açı)
+    def çevir(açı: Kesir): DRenk = net.kogics.kojo.util.Utils.awtColorToDoodleColor(r).spin(açı)
+    def çevirOranla(oran: Kesir): DRenk = net.kogics.kojo.util.Utils.awtColorToDoodleColor(r).spinBy(oran)
+    def dahaAçıkYap(açıklık: Kesir): DRenk = net.kogics.kojo.util.Utils.awtColorToDoodleColor(r).lighten(açıklık)
+    def dahaKoyuYap(koyuluk: Kesir): DRenk = net.kogics.kojo.util.Utils.awtColorToDoodleColor(r).darken(koyuluk)
   }
 
   implicit class ColorYöntemleri2(r: DColor) {
