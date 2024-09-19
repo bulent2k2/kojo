@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2020-21
+ * Copyright (C) 2020-24
  *   Bulent Basaran <ben@scala.org> https://github.com/bulent2k2
  *   Lalit Pant <pant.lalit@gmail.com>
  *   Christoph Knabe  http://public.beuth-hochschule.de/~knabe/
@@ -866,5 +866,11 @@ import net.kogics.kojo.staging
     dez f = Falan(1, 2.3)
     f.toString should be("Filan(1,2.3)")
     f.yazıya should be("Filan(1,2.3)")
+  }
+
+  test("Translation of URL to work") {
+    dez yazı = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Flower_poster_2.jpg/330px-Flower_poster_2.jpg"
+    dez bkk = BKK(yazı)
+    bkk.toExternalForm should be(yazı)
   }
 }

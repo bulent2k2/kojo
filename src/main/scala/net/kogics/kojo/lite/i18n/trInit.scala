@@ -56,6 +56,7 @@ object TurkishAPI
     with tr.SetMethodsInTurkish
     with tr.StringMethodsInTurkish
     with tr.arayuz.SwingWidgetMethodsInTurkish
+    with tr.UrlInTurkish
     with tr.VectorMethodsInTurkish {
 
   var builtins: CoreBuiltins = _ // unstable reference to module
