@@ -131,11 +131,10 @@ class Builtins(
     BreakpointPane.onRunDone()
   }
 
-  def breakpoint(msg: Any): Unit = {
-    val pauseMessage = "Program paused at Breakpoint"
-    val resumeMsg = "Hit Enter to resume"
-    BreakpointPane.show(msg, pauseMessage, resumeMsg, kojoCtx)
-  }
+  def breakpoint(msg: Any,
+    pauseMessage: String = "Program paused at Breakpoint",
+    resumeMsg: String = "Hit Enter to resume, Escape to stop"
+  ): Unit = { BreakpointPane.show(msg, pauseMessage, resumeMsg, kojoCtx) }
 
   def readInt(prompt: String): Int = readln(prompt).toInt
   UserCommand(
@@ -950,13 +949,14 @@ Here's a partial list of the available commands:
   def showFps(color: Color = black, fontSize: Int = 15): Unit = {
     val cb = canvasBounds
     @volatile var frameCnt = 0
-    val fpsLabel = Picture.textu("Fps: ", fontSize, color)
+    val fpsText = Utils.loadString("S_FramesPerSecond") ++ ":"
+    val fpsLabel = Picture.textu(fpsText, fontSize, color)
     fpsLabel.setPosition(cb.x + 10, cb.y + cb.height - 10)
     draw(fpsLabel)
     fpsLabel.forwardInputTo(TSCanvas.stageArea)
 
     TSCanvas.timer(1000) {
-      fpsLabel.update(s"Fps: $frameCnt")
+      fpsLabel.update(s"$fpsText $frameCnt")
       frameCnt = 0
     }
     fpsLabel.react { self =>

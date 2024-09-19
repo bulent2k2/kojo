@@ -726,7 +726,9 @@ object Utils {
   }
 
   def reportException(t: Throwable): Unit = {
-    println(s"Problem - ${t.toString} (see log for details)")
+    val head = Utils.loadString("S_PROBLEM_DUE_TO_EXCEPTION")
+    val tail = Utils.loadString("S_SEE_LOG_FOR_DETAILS")
+    println(s"$head - ${t.toString} ($tail)")
     Log.log(Level.SEVERE, "Problem", t)
   }
 

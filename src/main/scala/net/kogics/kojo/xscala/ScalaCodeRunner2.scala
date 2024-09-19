@@ -249,7 +249,7 @@ class ScalaCodeRunner2(val runContext: RunContext, val defaultMode: CodingMode) 
         interruptTimer.get.stop
         interruptTimer = None
         outputHandler.interpOutputSuppressed = false
-        kprintln("Script Stopped.\n")
+        kprintln(Utils.loadString("S_ScriptStopped") ++ "\n")
       }
       interpreterThread = None
       stoppable = None

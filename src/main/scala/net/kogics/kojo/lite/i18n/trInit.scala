@@ -341,39 +341,43 @@ object TurkishAPI
   def yeniKaplumbağa(x: Kesir, y: Kesir, giysiDosyası: Yazı) = new Kaplumbağa(x, y, giysiDosyası)
 
   def buradaDur = burdaDur _
-  def burdaDur(mesaj: Any) = rb.breakpoint(mesaj)
+  def burdaDur(mesaj: Her): Birim = {
+    val pauseMessage = "Duruş Noktası"
+    val resumeMsg = "Devam etmek için Giriş (Return), çıkmak için Kaçış (Esc) tuşuna bas"
+    rb.breakpoint(mesaj, pauseMessage, resumeMsg)
+  }
 
-  def sayıOku(istem: Yazı = "") = rb.readInt(istem)
-  def kesirOku(istem: Yazı = "") = rb.readDouble(istem)
+  def sayıOku(istem: Yazı = ""): Sayı = rb.readInt(istem)
+  def kesirOku(istem: Yazı = ""): Kesir = rb.readDouble(istem)
 
-  def resimİndir(httpAdresi: Yazı) = rb.preloadImage(httpAdresi)
-  def müzikİndir(httpAdresi: Yazı) = rb.preloadMp3(httpAdresi)
+  def resimİndir(httpAdresi: Yazı): Birim = rb.preloadImage(httpAdresi)
+  def müzikİndir(httpAdresi: Yazı): Birim = rb.preloadMp3(httpAdresi)
 
-  def müzikMp3üÇal(mp3dosyası: Yazı) = rb.playMp3(mp3dosyası)
-  def sesMp3üÇal(mp3dosyası: Yazı) = rb.playMp3Sound(mp3dosyası)
-  def müzikMp3üÇalDöngülü(mp3dosyası: Yazı) = rb.playMp3Loop(mp3dosyası)
+  def müzikMp3üÇal(mp3dosyası: Yazı): Birim = rb.playMp3(mp3dosyası)
+  def sesMp3üÇal(mp3dosyası: Yazı): Birim = rb.playMp3Sound(mp3dosyası)
+  def müzikMp3üÇalDöngülü(mp3dosyası: Yazı): Birim = rb.playMp3Loop(mp3dosyası)
 
-  def Mp3ÇalıyorMu = müzikMp3üÇalıyorMu
-  def Mp3üDurdur() = müzikMp3üKapat()
-  def Mp3DöngüsünüDurdur() = müzikMp3DöngüsünüKapat()
-  def müzikMp3üÇalıyorMu = rb.isMp3Playing
-  def müzikÇalıyorMu = rb.isMusicPlaying
-  def müzikMp3üKapat() = rb.stopMp3()
-  def müzikMp3DöngüsünüKapat() = rb.stopMp3Loop()
-  def müziğiDurdur() = müziğiKapat()
-  def müziğiKapat() = rb.stopMusic()
+  def Mp3ÇalıyorMu: İkil = müzikMp3üÇalıyorMu
+  def Mp3üDurdur(): Birim = müzikMp3üKapat()
+  def Mp3DöngüsünüDurdur(): Birim = müzikMp3DöngüsünüKapat()
+  def müzikMp3üÇalıyorMu: İkil = rb.isMp3Playing
+  def müzikÇalıyorMu: İkil = rb.isMusicPlaying
+  def müzikMp3üKapat(): Birim = rb.stopMp3()
+  def müzikMp3DöngüsünüKapat(): Birim = rb.stopMp3Loop()
+  def müziğiDurdur(): Birim = müziğiKapat()
+  def müziğiKapat(): Birim = rb.stopMusic()
 
-  def kojoVarsayılanBakışaçısınıKur() = rb.switchToDefaultPerspective()
-  def kojoVarsayılanİkinciBakışaçısınıKur() = rb.switchToDefault2Perspective()
-  def kojoYazılımcıkBakışaçısınıKur() = rb.switchToScriptEditingPerspective()
-  def kojoÇalışmaSayfalıBakışaçısınıKur() = rb.switchToWorksheetPerspective()
-  def kojoÖyküBakışaçısınıKur() = rb.switchToStoryViewingPerspective()
-  def kojoGeçmişBakışaçısınıKur() = rb.switchToHistoryBrowsingPerspective()
-  def kojoÇıktılıÖyküBakışaçısınıKur() = rb.switchToOutputStoryViewingPerspective()
+  def kojoVarsayılanBakışaçısınıKur(): Birim = rb.switchToDefaultPerspective()
+  def kojoVarsayılanİkinciBakışaçısınıKur(): Birim = rb.switchToDefault2Perspective()
+  def kojoYazılımcıkBakışaçısınıKur(): Birim = rb.switchToScriptEditingPerspective()
+  def kojoÇalışmaSayfalıBakışaçısınıKur(): Birim = rb.switchToWorksheetPerspective()
+  def kojoÖyküBakışaçısınıKur(): Birim = rb.switchToStoryViewingPerspective()
+  def kojoGeçmişBakışaçısınıKur(): Birim = rb.switchToHistoryBrowsingPerspective()
+  def kojoÇıktılıÖyküBakışaçısınıKur(): Birim = rb.switchToOutputStoryViewingPerspective()
 
-  def tümEkranÇıktı() = rb.toggleFullScreenOutput()
-  def tümEkranTuval() = tümEkran()
-  def tümEkran() = rb.toggleFullScreenCanvas()
+  def tümEkranÇıktı(): Birim = rb.toggleFullScreenOutput()
+  def tümEkranTuval(): Birim = tümEkran()
+  def tümEkran(): Birim = rb.toggleFullScreenCanvas()
   object tuvalAlanı {
     def ta = rb.canvasBounds
     def eni = en
