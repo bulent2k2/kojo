@@ -24,16 +24,19 @@ Ref Kojo version: ../../Versions.scala
 */
 package net.kogics.kojo.lite.i18n.tr
 
-// Todo: operations işlemler 
-// unary biril unary_!
-// binary ikil
-// ternary üçül
-// operand işlenen
 object dict {
+  // Ekşi sözlükten: application programming interface.. yani ne diyor "uygulama programlama arabirimi". demek ki uygulama programlamak icin saglanan arabirimlere grup olarak api deniyormuş
   val miscCreativeMapping = Map(
+    "prompt" -> "istem",
+    "api" -> "upa",
     "hesap" -> "ölçüm",
     "cebir" -> "ölçülüm",
     "polynomial" -> "çok terimli",
+    "iterate" -> "yinele",
+    "iteration" -> "yineleme",
+    "iterator" -> "yineleyici",
+    "iterable" -> "yinelenebilir",
+    "iterableonce" -> "yinelenebilirBirKere",
     "recurse" -> "özyinele",
     "recursive" -> "özyineli",
     "recursion" -> "özyineleme",
@@ -41,15 +44,34 @@ object dict {
     "runtime" -> "çalışmasırası",
     "compile" -> "derleme",
     "compiler" -> "derleyici",
+    "reference" -> "gönderge",
+    "operation" -> "işlem",
+    "unary" -> "biril", // todo: unary_!
+    "binary" -> "ikil",
+    "ternary" -> "üçül",
+    "operand" -> "işlenen",
+    "transition" -> "geçiş",
+    "composable" -> "birleşebilen", // RotC: DönBD: DöndürBirlşblnDönüştrc
+    "transform" -> "dönüştürmek",
+    "transformation" -> "dönüşüm",
+    "transformer" -> "dönüştürücü",
+    "breakpoint" -> "duruşnoktası",
+    "URL" -> "BKK",
+    "uniform" -> "birörnek",
+    "resource" -> "kaynak",
+    "locator" -> "konumlayıcı",
+    "Wrapper" -> "Sarıcı",
+    "UserCode" -> "KullanıcınınYazılımı",
   )
 
   // skala kılavuzunda kullanma sırasıyla (yaklaşık olarak)
   // excludes scala (2 and 3) and java keywords which are in the next map
   val otherCommonWords = Map(
+    "cursor" -> "imleç",
     "programlama" -> "yazılım",
     "kelime" -> "sözcük", // ttodo!
     "method" -> "yöntem", // ttodo! metod yerine yöntem sözcüğünü kullan!
-    "set" -> "kur",
+    "set" -> "kur veya küme",
     "to" -> "|-| anlamı: ilkSayıdanSonSayıyaKadar", // 1 to 4 -> Aralık.kapalı(1, 4)
     "until" -> "|- anlamı: ilkSayıdanSonSayıyaKadarAmaSonSayıHariç", // 1 until 4 -> Aralık(1, 4)
     "by" -> "adım", // 1 to 100 by 8
@@ -109,6 +131,7 @@ object dict {
     "dropRight" -> "düşürSağdan",
     "dropWhile" -> "düşürDoğruKaldıkça",
     "init" -> "önü",
+    "initialize" -> "başlat, ilklendir, en baştan başlat",
     "last" -> "sonu",
     "forall" -> "hepsiİçinDoğruMu", // hepsiDoğruMu
     "slice" -> "dilim",
@@ -271,7 +294,8 @@ object dict {
     "implements" -> "tanımlar",
     "instanceof" -> "bireyi",
     "int" -> "sayı",
-    "interface" -> "arayüz",
+    "interface" -> "arabirim, arayüz",
+    "UI" -> "arayüz",
     "long" -> "uzun",
     "public" -> "açık",
     "native" -> "yerli",
@@ -305,9 +329,96 @@ object dict {
     "tutorial" -> "kılavuz",
     "cheat-sheet" -> "kılavuzcuk",
     "tuple" -> "sıralama",
+    "PSınırlar" -> "PBounds",
+    "BenzerDönüşüm" -> "AffineTransform",
   )
 
-  val type2en = Map()
+  // todo: complete
+  val type2en = Map(
+    "Nesne" -> "Object",
+    "Birim," -> "Unit",
+    "Her," -> "Any",
+    "HerDeğer," -> "AnyVal",
+    "HerGönder," -> "AnyRef",
+    "Hiç" -> "Nothing",
+    "Yok" -> "Null",
+    "İkil" -> "Boolean",
+    "Seçim" -> "Boolean",
+    "Lokma" -> "Byte",
+    "Kısa" -> "Short",
+    "Sayı" -> "Int",
+    "Uzun" -> "Long",
+    "İriSayı" -> "BigInt",
+    "Kesir" -> "Double",
+    "UfakKesir" -> "Float",
+    "İriKesir" -> "BigDecimal",
+    "Harf" -> "Char",
+    "Yazı" -> "String",
+    "EsnekYazı" -> "StringBuilder",
+    "Belki" -> "Option",
+    "Biri" -> "Some",
+    "Hiçbiri" -> "None",
+    "Aralık" -> "Range",
+    "Diz" -> "collection.Seq",
+    "Dizi" -> "Seq",
+    "Dizik" -> "Array",
+    "Dizim" -> "Array",
+    "EsnekDizim" -> "ArrayBuffer",
+    "Dizin" -> "List",
+    "DiziSıralı" -> "IndexedSeq",
+    "Eşlek" -> "collection.immutable.Map",
+    "Eşlem" -> "collection.mutable.Map",
+    "Küme" -> "Set",
+    "MiskinDizin" -> "LazyList",
+    "Kuyruk" -> "Queue",
+    "ÖncelikSırası" -> "PriorityQueue",
+    "Yığın" -> "Stack",
+    "Yöney" -> "Vector",
+    "Yineleyici" -> "Iterator",
+    "Gelecek" -> "Future",
+    "İşletimBağlamı" -> "ExecutionContext",
+    "Sayılar" -> "Vector[Int]",
+    "Boya" -> "Paint",
+    "Renk" -> "Color",
+    "Yazıyüzü" -> "Font",
+    "Hız" -> "Speed",
+    "Nokta" -> "Point",
+    "Dikdörtgen" -> "Rectangle",
+    "Üçgen" -> "Triangle2D",
+    "Yöney2B" -> "Vector2D",
+    "Resim" -> "Picture",
+    "BuAn" -> "Now",
+    "Takvim" -> "Calendar",
+    "Tarih" -> "Date",
+    "SaatDilimi" -> "TimeZone",
+    "Bölümselİşlev" -> "PartialFunction",
+    "İşlev1" -> "Function1",
+    "İşlev2" -> "Function2",
+    "İşlev3" -> "Function3",
+    "Sıralama" -> "Tuple",
+    "KuralDışı" -> "Exception",
+    "ÇalışmaSırasıKuralDışı" -> "RuntimeException",
+    "BaskınYazıyaYöntemiyle" -> "Only in Turkish. With 'override def toString'",
+    "Eşsizlik" -> "Only in Turkish. With unique hashCode",
+    "UzunlukBirimi" -> "UnitLen",
+    "Biçim" -> "Shape",
+    "GeoYol" -> "GeneralPath",
+    "GeoNokta" -> "VertexShape",
+    "Grafik2B" -> "Graphics2D",
+    "İmge" -> "Image",
+    "İmgeİşlemi" -> "ImageOp",
+    "Bellekteİmge" -> "BufferedImage",
+    "Bellekteİmgeİşlemi" -> "BufferedImageOp",
+    "ÇiniDünyası" -> "tiles",
+    "ÇiniXY" -> "TileXY",
+    "BirSayfaKostüm" -> "SpriteSheet",
+    "Mp3Çalar" -> "KMP3",
+    "Canlandırma" -> "Animation",
+    "BKK" -> "URL",
+    "ay" -> "UI",
+    "tuvalAlanı" -> "canvasBounds",
+    "DRenk" -> "kojo.doodle.Color"
+  )
   val def2en = Map()
   val val2en = Map()
   val method2en = Map(
