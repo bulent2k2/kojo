@@ -200,7 +200,7 @@ class EffectableImagePic(pic: Picture)(implicit val canvas: SCanvas)
         }
         catch {
           case NonFatal(e) =>
-            println(s"Problem - ${e.getMessage}")
+            println(s"${Utils.loadString("S_PROBLEM_DUE_TO_EXCEPTION")} - ${e.getMessage}")
             erase()
             img
         }
