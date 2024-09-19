@@ -21,9 +21,6 @@
 package net.kogics.kojo.lite.i18n
 
 import java.awt.Color
-import java.util.concurrent.Future // todo
-
-import edu.umd.cs.piccolo.activities.PActivity // todo
 import net.kogics.kojo.core.Turtle
 import net.kogics.kojo.lite.Builtins
 import net.kogics.kojo.lite.CoreBuiltins
@@ -91,6 +88,9 @@ object TurkishAPI
   type EsnekDizim[T] = tr.EsnekDizim[T]
   val Dizim = tr.Dizim
   val EsnekDizim = tr.EsnekDizim
+  type Yinelenebilir[K] = tr.Yinelenebilir[K]
+  type YinelenebilirBirKere[K] = tr.YinelenebilirBirKere[K]
+  type Yapıcıdan[DiziTürü, GirdiTürü, ÇıktıTürü] = collection.BuildFrom[DiziTürü, GirdiTürü, ÇıktıTürü]
 
   type UzunlukBirimi = tr.UzunlukBirimi
 
@@ -132,77 +132,77 @@ object TurkishAPI
     def sil(): Birim = englishTurtle.clear() // bbx: does this do anything? See sil def below..
     def göster() = görünür()
     def gizle() = görünmez()
-    def görünür() = englishTurtle.visible()
-    def görünmez() = englishTurtle.invisible()
-    def ileri(adım: Kesir) = englishTurtle.forward(adım)
-    def ileri() = englishTurtle.forward(25)
-    def geri(adım: Kesir) = englishTurtle.back(adım)
-    def geri() = englishTurtle.back(25)
-    def sağ(açı: Kesir, yarıçap: Kesir) = englishTurtle.right(açı, yarıçap)
-    def sağ(açı: Kesir) = englishTurtle.right(açı)
-    def sağ() = englishTurtle.right(90)
-    def sol(açı: Kesir, yarıçap: Kesir) = englishTurtle.left(açı, yarıçap)
-    def sol(açı: Kesir) = englishTurtle.left(açı)
-    def sol() = englishTurtle.left(90)
-    def atla(x: Kesir, y: Kesir) = englishTurtle.jumpTo(x, y)
-    def ilerle(x: Kesir, y: Kesir) = englishTurtle.moveTo(x, y)
-    def zıpla(n: Kesir) = {
+    def görünür(): Birim = englishTurtle.visible()
+    def görünmez(): Birim = englishTurtle.invisible()
+    def ileri(adım: Kesir): Birim = englishTurtle.forward(adım)
+    def ileri(): Birim = englishTurtle.forward(25)
+    def geri(adım: Kesir): Birim = englishTurtle.back(adım)
+    def geri(): Birim = englishTurtle.back(25)
+    def sağ(açı: Kesir, yarıçap: Kesir): Birim = englishTurtle.right(açı, yarıçap)
+    def sağ(açı: Kesir): Birim = englishTurtle.right(açı)
+    def sağ(): Birim = englishTurtle.right(90)
+    def sol(açı: Kesir, yarıçap: Kesir): Birim = englishTurtle.left(açı, yarıçap)
+    def sol(açı: Kesir): Birim = englishTurtle.left(açı)
+    def sol(): Birim = englishTurtle.left(90)
+    def atla(x: Kesir, y: Kesir): Birim = englishTurtle.jumpTo(x, y)
+    def ilerle(x: Kesir, y: Kesir): Birim = englishTurtle.moveTo(x, y)
+    def zıpla(n: Kesir): Birim = {
       englishTurtle.saveStyle() // to preserve pen state
       englishTurtle.hop(n) // hop change state to penDown after hop
       englishTurtle.restoreStyle()
     }
     def zıpla(): Birim = zıpla(25)
-    def ev() = englishTurtle.home()
-    def noktayaDön(p: Nokta) = englishTurtle.towards(p)
-    def noktayaDön(x: Kesir, y: Kesir) = englishTurtle.towards(x, y)
-    def noktayaGit(x: Kesir, y: Kesir) = englishTurtle.lineTo(x, y)
-    def noktayaGit(n: Nokta) = englishTurtle.lineTo(n)
-    def açıyaDön(açı: Kesir) = englishTurtle.setHeading(açı)
-    def doğrultu = englishTurtle.heading
-    def doğu() = englishTurtle.setHeading(0)
-    def batı() = englishTurtle.setHeading(180)
-    def kuzey() = englishTurtle.setHeading(90)
-    def güney() = englishTurtle.setHeading(-90)
-    def canlandırmaHızınıKur(n: Uzun) = englishTurtle.setAnimationDelay(n)
+    def ev(): Birim = englishTurtle.home()
+    def noktayaDön(p: Nokta): Birim = englishTurtle.towards(p)
+    def noktayaDön(x: Kesir, y: Kesir): Birim = englishTurtle.towards(x, y)
+    def noktayaGit(x: Kesir, y: Kesir): Birim = englishTurtle.lineTo(x, y)
+    def noktayaGit(n: Nokta): Birim = englishTurtle.lineTo(n)
+    def açıyaDön(açı: Kesir): Birim = englishTurtle.setHeading(açı)
+    def doğrultu: Kesir = englishTurtle.heading
+    def doğu(): Birim = englishTurtle.setHeading(0)
+    def batı(): Birim = englishTurtle.setHeading(180)
+    def kuzey(): Birim = englishTurtle.setHeading(90)
+    def güney(): Birim = englishTurtle.setHeading(-90)
+    def canlandırmaHızınıKur(n: Uzun): Birim = englishTurtle.setAnimationDelay(n)
     def canlandırmaHızı: Uzun = englishTurtle.animationDelay
     // yaz overlaps with (satır)yaz
-    def tuvaleYaz(t: Her) = yazı(t)
-    def yazı(t: Her) = englishTurtle.write(t)
+    def tuvaleYaz(t: Her): Birim = yazı(t)
+    def yazı(t: Her): Birim = englishTurtle.write(t)
     // ~/src/kojo/git/kojo/src/main/scala/net/kogics/kojo/turtle/Turtle.scala
     // ../../turtle/Turtle.scala
-    def yazıBoyunuKur(boy: Sayı) = englishTurtle.setPenFontSize(boy)
-    def yazıYüzünüKur(yy: Yazıyüzü) = englishTurtle.setPenFont(yy)
-    def yay(yarıçap: Kesir, açı: Kesir) = englishTurtle.arc(yarıçap, math.round(açı).toInt)
-    def dön(açı: Kesir, yarıçap: Kesir) = englishTurtle.turn(açı, yarıçap)
-    def dön(açı: Kesir) = englishTurtle.turn(açı)
+    def yazıBoyunuKur(boy: Sayı): Birim = englishTurtle.setPenFontSize(boy)
+    def yazıYüzünüKur(yy: Yazıyüzü): Birim = englishTurtle.setPenFont(yy)
+    def yay(yarıçap: Kesir, açı: Kesir): Birim = englishTurtle.arc(yarıçap, math.round(açı).toInt)
+    def dön(açı: Kesir, yarıçap: Kesir): Birim = englishTurtle.turn(açı, yarıçap)
+    def dön(açı: Kesir): Birim = englishTurtle.turn(açı)
     def üçgen(en: Kesir = 25): Birim = { yinele(3) { ileri(en); sağ(120) } }
-    def daire(yarıçap: Kesir = 25) = englishTurtle.circle(yarıçap)
+    def daire(yarıçap: Kesir = 25): Birim = englishTurtle.circle(yarıçap)
     def kare(en: Kesir = 25): Birim = { yinele(4) { ileri(en); sağ(90) } }
-    def konumuKur(x: Kesir, y: Kesir) = englishTurtle.setPosition(x, y)
+    def konumuKur(x: Kesir, y: Kesir): Birim = englishTurtle.setPosition(x, y)
     // ../../xscala/help.scala
     // ../../core/TurtleMover.scala
-    def konumuDeğiştir(x: Kesir, y: Kesir) = englishTurtle.changePosition(x, y)
+    def konumuDeğiştir(x: Kesir, y: Kesir): Birim = englishTurtle.changePosition(x, y)
     def konum: Nokta = englishTurtle.position
-    def kalemiİndir() = englishTurtle.penDown()
-    def kalemiKaldır() = englishTurtle.penUp()
+    def kalemiİndir(): Birim = englishTurtle.penDown()
+    def kalemiKaldır(): Birim = englishTurtle.penUp()
     def kalemİnikMi: İkil = englishTurtle.style.down
-    def kalemRenginiKur(renk: Renk) = englishTurtle.setPenColor(renk)
-    def boyamaRenginiKur(boya: Boya) = englishTurtle.setFillColor(boya)
-    def kalemKalınlığınıKur(n: Kesir) = englishTurtle.setPenThickness(n)
-    def biçimleriBelleğeYaz() = englishTurtle.saveStyle()
-    def biçimleriGeriYükle() = englishTurtle.restoreStyle()
-    def konumVeYönüBelleğeYaz() = englishTurtle.savePosHe()
-    def konumVeYönüGeriYükle() = englishTurtle.restorePosHe()
-    def ışınlarıAç() = englishTurtle.beamsOn()
-    def ışınlarıKapat() = englishTurtle.beamsOff()
-    def giysiKur(imge: İmge) = englishTurtle.setCostumeImage(imge)
-    def giysiKur(dosyaAdı: Yazı) = englishTurtle.setCostume(dosyaAdı)
-    def giysileriKur(dosyaAdı: Yazı*) = englishTurtle.setCostumes(dosyaAdı: _*)
-    def birsonrakiGiysi() = englishTurtle.nextCostume()
-    def giysiyiBüyült(oran: Kesir) = englishTurtle.scaleCostume(oran)
-    def hızıKur(hız: Hız) = englishTurtle.setSpeed(hız)
+    def kalemRenginiKur(renk: Renk): Birim = englishTurtle.setPenColor(renk)
+    def boyamaRenginiKur(boya: Boya): Birim = englishTurtle.setFillColor(boya)
+    def kalemKalınlığınıKur(n: Kesir): Birim = englishTurtle.setPenThickness(n)
+    def biçimleriBelleğeYaz(): Birim = englishTurtle.saveStyle()
+    def biçimleriGeriYükle(): Birim = englishTurtle.restoreStyle()
+    def konumVeYönüBelleğeYaz(): Birim = englishTurtle.savePosHe()
+    def konumVeYönüGeriYükle(): Birim = englishTurtle.restorePosHe()
+    def ışınlarıAç(): Birim = englishTurtle.beamsOn()
+    def ışınlarıKapat(): Birim = englishTurtle.beamsOff()
+    def giysiKur(imge: İmge): Birim = englishTurtle.setCostumeImage(imge)
+    def giysiKur(dosyaAdı: Yazı): Birim = englishTurtle.setCostume(dosyaAdı)
+    def giysileriKur(dosyaAdı: Yazı*): Birim = englishTurtle.setCostumes(dosyaAdı: _*)
+    def birsonrakiGiysi(): Birim = englishTurtle.nextCostume()
+    def giysiyiBüyült(oran: Kesir): Birim = englishTurtle.scaleCostume(oran)
+    def hızıKur(hız: Hız): Birim = englishTurtle.setSpeed(hız)
     def nokta(çap: Sayı): Birim = englishTurtle.dot(çap)
-    def nokta() = englishTurtle.dot(25)
+    def nokta(): Birim = englishTurtle.dot(25)
   }
 
   class Kaplumbağa(override val englishTurtle: Turtle) extends TurkishTurtle {
@@ -210,16 +210,16 @@ object TurkishAPI
       this(builtins.TSCanvas.newTurtle(startX, startY, costumeFileName))
     def this(startX: Kesir, startY: Kesir) = this(startX, startY, "/images/turtle32.png")
     def this() = this(0, 0)
-    def uzaklık(öbürü: Kaplumbağa) = englishTurtle.distanceTo(öbürü.englishTurtle)
-    def çevir(öbürü: Kaplumbağa) = englishTurtle.towards(öbürü.englishTurtle)
+    def uzaklık(öbürü: Kaplumbağa): Kesir = englishTurtle.distanceTo(öbürü.englishTurtle)
+    def çevir(öbürü: Kaplumbağa): Birim = englishTurtle.towards(öbürü.englishTurtle)
     // get f: Turtle => Unit from g: Kaplumbağa => Birim
     val buİşlev = this // Function1 has its own this
-    def davran(işlev: Kaplumbağa => Birim) = {
+    def davran(işlev: Kaplumbağa => Birim): Birim = {
       val f = new Function1[Turtle, Unit] { def apply(t: Turtle) = işlev(buİşlev) }
       englishTurtle.act(f)
     }
     def canlan = tepkiVer _
-    def tepkiVer(işlev: Kaplumbağa => Birim) = {
+    def tepkiVer(işlev: Kaplumbağa => Birim): Birim = {
       val f = new Function1[Turtle, Unit] { def apply(t: Turtle) = işlev(buİşlev) }
       englishTurtle.react(f)
     }
@@ -233,32 +233,32 @@ object TurkishAPI
   def çizimiSil(): Birim = builtins.TSCanvas.clearStepDrawing()
   def çıktıyıSil(): Birim = builtins.clearOutput()
   def silVeÇizimBiriminiKur(ub: UzunlukBirimi) = builtins.TSCanvas.clearWithUL(ub)
-  lazy val mavi = builtins.blue
-  lazy val kırmızı = builtins.red
-  lazy val sarı = builtins.yellow
-  lazy val yeşil = builtins.green
-  lazy val mor = builtins.purple
-  lazy val pembe = builtins.pink
-  lazy val kahverengi = builtins.brown
-  lazy val siyah = builtins.black
-  lazy val beyaz = builtins.white
-  lazy val renksiz = builtins.noColor
-  lazy val gri = builtins.gray
-  lazy val koyuGri = builtins.darkGray
-  lazy val açıkGri = builtins.lightGray
-  lazy val turuncu = builtins.orange
-  lazy val morumsu = builtins.magenta
-  lazy val camgöbeği = builtins.cyan
+  lazy val mavi: Renk = builtins.blue
+  lazy val kırmızı: Renk = builtins.red
+  lazy val sarı: Renk = builtins.yellow
+  lazy val yeşil: Renk = builtins.green
+  lazy val mor: Renk = builtins.purple
+  lazy val pembe: Renk = builtins.pink
+  lazy val kahverengi: Renk = builtins.brown
+  lazy val siyah: Renk = builtins.black
+  lazy val beyaz: Renk = builtins.white
+  lazy val renksiz: Renk = builtins.noColor
+  lazy val gri: Renk = builtins.gray
+  lazy val koyuGri: Renk = builtins.darkGray
+  lazy val açıkGri: Renk = builtins.lightGray
+  lazy val turuncu: Renk = builtins.orange
+  lazy val morumsu: Renk = builtins.magenta
+  lazy val camgöbeği: Renk = builtins.cyan
 
   // TODO: other Color* constructors -- and Help Content
   // ../CoreBuiltins.scala
-  lazy val renkler = builtins.cm // ColorMaker
+  lazy val renkler = builtins.cm // ColorMaker in ../../staging/color.scala and ../../doodle/Color.scala
   // lazy val tuşlar = builtins.Kc // Key Codes
 
-  def artalanıKur(r: Renk) = builtins.setBackground(r)
-  def artalanıKur(b: Boya) = builtins.setBackground(b)
-  def artalanıKurDik(r1: Renk, r2: Renk) = builtins.TSCanvas.setBackgroundV(r1, r2)
-  def artalanıKurYatay(r1: Renk, r2: Renk) = builtins.TSCanvas.setBackgroundH(r1, r2)
+  def artalanıKur(r: Renk): Birim = builtins.setBackground(r)
+  def artalanıKur(b: Boya): Birim = builtins.setBackground(b)
+  def artalanıKurDik(r1: Renk, r2: Renk): Birim = builtins.TSCanvas.setBackgroundV(r1, r2)
+  def artalanıKurYatay(r1: Renk, r2: Renk): Birim = builtins.TSCanvas.setBackgroundH(r1, r2)
 
   //  object KcSwe { //Key codes for Swedish keys
   //    lazy val VK_Å = 197
@@ -283,10 +283,10 @@ object TurkishAPI
     RepeatCommands.repeatUntil(koşul) { diziKomut }
   }
 
-  def yineleKere[T](dizi: Iterable[T])(diziKomut: T => Birim): Birim = {
+  def yineleKere[T](dizi: Yinelenebilir[T])(diziKomut: T => Birim): Birim = {
     RepeatCommands.repeatFor(dizi) { diziKomut }
   }
-  def yineleİçin[T](dizi: Iterable[T])(diziKomut: T => Birim): Birim = {
+  def yineleİçin[T](dizi: Yinelenebilir[T])(diziKomut: T => Birim): Birim = {
     RepeatCommands.repeatFor(dizi) { diziKomut }
   }
 
@@ -295,10 +295,10 @@ object TurkishAPI
   }
 
   // simple IO
-  def satıroku(istem: Yazı = "") = builtins.readln(istem)
-  def satıryaz(data: Her) = println(data) // Transferred here from sv.tw.kojo.
-  def satıryaz() = println()
-  def yaz(data: Her) = print(data)
+  def satıroku(istem: Yazı = ""): Yazı = builtins.readln(istem)
+  def satıryaz(veri: Her): Birim = println(veri) // Transferred here from sv.tw.kojo.
+  def satıryaz(): Birim = println()
+  def yaz(veri: Her): Birim = print(veri)
 
   // ../CoreBuiltins.scala
   // bir de rasgele: Kesir var matematik trait'inden geliyor
@@ -319,18 +319,19 @@ object TurkishAPI
   def rastgeleDiziden[T](dizi: Dizi[T]) = builtins.randomFrom(dizi)
   def rastgeleDiziden[T](dizi: Dizi[T], ağırlıklar: Dizi[Kesir]) = builtins.randomFrom(dizi, ağırlıklar)
   // def diziKarıştır[T](xs: Dizi[T]): Dizi[T] = util.Random.shuffle(xs)
-  def rastgeleKarıştır[T, C](xs: IterableOnce[T])(implicit bf: collection.BuildFrom[xs.type, T, C]): C =
-    util.Random.shuffle(xs)
+  def rastgeleKarıştır[T, C](xLer: YinelenebilirBirKere[T])
+    (örtük yapıcı: Yapıcıdan[xLer.type, T, C]): C = util.Random.shuffle(xLer)
 
-  def durakla(saniye: Kesir) = builtins.pause(saniye)
+  def durakla(saniye: Kesir): Birim = builtins.pause(saniye)
+  def duraklaMiliSaniye(miliSaniye: Uzun): Birim = builtins.pauseMillis(miliSaniye)
 
   def üçgenDöşeme(noktalar: Dizi[Nokta]): Diz[Üçgen] = builtins.triangulate(noktalar)
 
   // todo: klasör?
-  def evDizini = builtins.homeDir
-  def buDizin = builtins.currentDir
-  def kurulumDizini = builtins.installDir
-  def yazıyüzleri = builtins.availableFontNames
+  def evDizini: Yazı = builtins.homeDir
+  def buDizin: Yazı = builtins.currentDir
+  def kurulumDizini: Yazı = builtins.installDir
+  def yazıyüzleri: Dizin[Yazı] = builtins.availableFontNames
   def yazıyüzü(adı: Yazı, boyu: Sayı): Yazıyüzü = builtins.Font(adı, boyu)
   def yazıyüzü(adı: Yazı, boyu: Sayı, biçem: Sayı): Yazıyüzü = builtins.Font(adı, biçem, boyu)
   def yazıÇerçevesi(yazı: Yazı, yazıBoyu: Sayı, yazıyüzüAdı: Yazı = yok): Dikdörtgen =
@@ -393,58 +394,45 @@ object TurkishAPI
   def yatayMerkezKonumu(uzunluk: Kesir): Kesir = tuvalAlanı.x + (tuvalAlanı.en - uzunluk) / 2
   def dikeyMerkezKonumu(uzunluk: Kesir): Kesir = tuvalAlanı.y + (tuvalAlanı.boy - uzunluk) / 2
 
-  def ekranTazelemeHızınıKur(saniyedeKaçKere: Sayı) = rb.setRefreshRate(saniyedeKaçKere)
-  def ekranTazelemeHızınıGöster(renk: Renk, yazıBoyu: Sayı = 15): Birim = { // rb.showFps(renk, yazıBoyu)
-    val cb = rb.canvasBounds
-    @volatile var frameCnt = 0
-    val fpsLabel = rb.Picture.textu("eth: ", yazıBoyu, renk)
-    fpsLabel.setPosition(cb.x + 10, cb.y + cb.height - 10)
-    rb.draw(fpsLabel)
-    fpsLabel.forwardInputTo(rb.TSCanvas.stageArea)
-
-    rb.TSCanvas.timer(1000) {
-      fpsLabel.update(s"eth: $frameCnt")
-      frameCnt = 0
-    }
-    fpsLabel.react { self =>
-      frameCnt += 1
-    }
-  }
+  def ekranTazelemeHızınıKur(saniyedeKaçKere: Sayı): Birim = rb.setRefreshRate(saniyedeKaçKere)
+  def ekranTazelemeHızınıGöster(renk: Renk, yazıBoyu: Sayı = 15): Birim = rb.showFps(renk, yazıBoyu)
 
   // ../DrawingCanvasAPI.scala
-  def yaklaş(oran: Kesir) = rb.tCanvas.zoom(oran)
-  def yaklaş(oran: Kesir, xMerkez: Kesir, yMerkez: Kesir) = rb.tCanvas.zoom(oran, xMerkez, yMerkez)
-  def yaklaşXY(xOran: Kesir, yOran: Kesir, xMerkez: Kesir, yMerkez: Kesir) =
+  def yaklaş(oran: Kesir): Birim = rb.tCanvas.zoom(oran)
+  def yaklaş(oran: Kesir, xMerkez: Kesir, yMerkez: Kesir): Birim = rb.tCanvas.zoom(oran, xMerkez, yMerkez)
+  def yaklaşXY(xOran: Kesir, yOran: Kesir, xMerkez: Kesir, yMerkez: Kesir): Birim =
     rb.tCanvas.zoomXY(xOran, yOran, xMerkez, yMerkez)
-  def yaklaşmayıSil() = rb.tCanvas.resetPanAndZoom()
-  def yaklaşmayaİzinVerme() = rb.tCanvas.disablePanAndZoom()
-  def tuvaliKaydır(x: Kesir, y: Kesir) = rb.tCanvas.scroll(x, y)
-  def tuvaliDöndür(açı: Kesir) = rb.tCanvas.viewRotate(açı)
+  def yaklaşmayıSil(): Birim = rb.tCanvas.resetPanAndZoom()
+  def yaklaşmayaİzinVerme(): Birim = rb.tCanvas.disablePanAndZoom()
+  def tuvaliKaydır(x: Kesir, y: Kesir): Birim = rb.tCanvas.scroll(x, y)
+  def tuvaliDöndür(açı: Kesir): Birim = rb.tCanvas.viewRotate(açı)
 
-  def tuşaBasılıMı(tuş: Sayı) = rb.isKeyPressed(tuş)
-  def tuşaBasınca(iş: Sayı => Birim) = rb.tCanvas.onKeyPress(iş)
-  def tuşuBırakınca(iş: Sayı => Birim) = rb.tCanvas.onKeyRelease(iş)
-  def fareyeTıklıyınca(iş: (Kesir, Kesir) => Birim) = rb.tCanvas.onMouseClick(iş)
-  def fareyiSürükleyince(iş: (Kesir, Kesir) => Birim) = rb.tCanvas.onMouseDrag(iş)
-  def fareKımıldayınca(iş: (Kesir, Kesir) => Birim) = rb.tCanvas.onMouseMove(iş)
+  def tuşaBasılıMı(tuş: Sayı): İkil = rb.isKeyPressed(tuş)
+  def tuşaBasınca(iş: Sayı => Birim): Birim = rb.tCanvas.onKeyPress(iş)
+  def tuşuBırakınca(iş: Sayı => Birim): Birim = rb.tCanvas.onKeyRelease(iş)
+  def fareyeTıklıyınca(iş: (Kesir, Kesir) => Birim): Birim = rb.tCanvas.onMouseClick(iş)
+  def fareyiSürükleyince(iş: (Kesir, Kesir) => Birim): Birim = rb.tCanvas.onMouseDrag(iş)
+  def fareKımıldayınca(iş: (Kesir, Kesir) => Birim): Birim = rb.tCanvas.onMouseMove(iş)
 
-  def gridiGöster() = rb.tCanvas.gridOn()
-  def gridiGizle() = rb.tCanvas.gridOff()
+  def gridiGöster(): Birim = rb.tCanvas.gridOn()
+  def gridiGizle(): Birim = rb.tCanvas.gridOff()
   def ızgarayıGöster() = gridiGöster()
   def ızgarayıGizle() = gridiGizle()
-  def eksenleriGöster() = rb.tCanvas.axesOn()
-  def eksenleriGizle() = rb.tCanvas.axesOff()
-  def açıÖlçeriGöster(): rb.Picture = açıÖlçeriGöster(-tuvalAlanı.en / 2, -tuvalAlanı.boy / 2)
-  def açıÖlçeriGöster(x: Kesir, y: Kesir): rb.Picture = rb.tCanvas.showProtractor(x, y)
-  def açıÖlçeriGizle() = rb.tCanvas.hideProtractor()
-  def cetveliGöster(): rb.Picture = cetveliGöster(-tuvalAlanı.en / 2, tuvalAlanı.boy / 2)
-  def cetveliGöster(x: Kesir, y: Kesir): rb.Picture = rb.tCanvas.showScale(x, y)
+  def eksenleriGöster(): Birim = rb.tCanvas.axesOn()
+  def eksenleriGizle(): Birim = rb.tCanvas.axesOff()
+  def açıÖlçeriGöster(): Resim = açıÖlçeriGöster(-tuvalAlanı.en / 2, -tuvalAlanı.boy / 2)
+  def açıÖlçeriGöster(x: Kesir, y: Kesir): Resim = new Resim(rb.tCanvas.showProtractor(x, y))
+  def açıÖlçeriGizle(): Birim = rb.tCanvas.hideProtractor()
+  def cetveliGöster(): Resim = cetveliGöster(-tuvalAlanı.en / 2, tuvalAlanı.boy / 2)
+  def cetveliGöster(x: Kesir, y: Kesir): Resim = new Resim(rb.tCanvas.showScale(x, y))
 
-  def çizimiKaydet(dosyaAdı: Yazı) = rb.tCanvas.exportImage(dosyaAdı)
-  def çizimiKaydet(dosyaAdı: Yazı, en: Sayı, boy: Sayı) = rb.tCanvas.exportImage(dosyaAdı, en, boy)
-  def çizimiKaydetBoy(dosyaAdı: Yazı, boy: Sayı) = rb.tCanvas.exportImageH(dosyaAdı, boy)
-  def çizimiKaydetEn(dosyaAdı: Yazı, en: Sayı) = rb.tCanvas.exportImageW(dosyaAdı, en)
-  def çizimiPulBoyundaKaydet(dosyaAdı: Yazı, boy: Sayı) = rb.tCanvas.exportThumbnail(dosyaAdı, boy)
+  def çizimiKaydet(dosyaAdı: Yazı): Birim = rb.tCanvas.exportImage(dosyaAdı)
+  def çizimiKaydet(dosyaAdı: Yazı, en: Sayı, boy: Sayı): Birim = rb.tCanvas.exportImage(dosyaAdı, en, boy)
+  def çizimiKaydetBoy(dosyaAdı: Yazı, boy: Sayı): Birim = rb.tCanvas.exportImageH(dosyaAdı, boy)
+  def çizimiKaydetEn(dosyaAdı: Yazı, en: Sayı): Birim = rb.tCanvas.exportImageW(dosyaAdı, en)
+  def çizimiPulBoyundaKaydet(dosyaAdı: Yazı, boy: Sayı): Birim = rb.tCanvas.exportThumbnail(dosyaAdı, boy)
+
+  type Canlandırma = rb.Animation
 
   // todo: help doc
   def Geçiş(
@@ -454,11 +442,11 @@ object TurkishAPI
       kolaylaştırma: Resim.YumuşakGeçiş,
       resimci: Dizi[Kesir] => Resim,
       bitinceGizle: İkil
-  ) = {
+  ): Canlandırma = {
     val resimci2 = new Function1[Dizi[Kesir], rb.Picture] { def apply(d: Dizi[Kesir]) = resimci(d).p }
     rb.Transition(süreSaniyeOlarak, ilkEvre, sonEvre, kolaylaştırma, resimci2, bitinceGizle)
   }
-  implicit class trForReverse(a: rb.Animation) {
+  implicit class trForReverse(a: Canlandırma) {
     def tersten = a.reversed
     def sonsuzYinelenme = a.repeatedForever
     // todo: more to come
@@ -468,21 +456,21 @@ object TurkishAPI
     val Doğrusal = Resim.yumuşakGeçiş.Linear
     // more to come. See: ~/src/kojo/git/kojo/src/main/scala/net/kogics/kojo/kmath/easing.scala
   }
-  def canlandırmaDizisi(canlandırmalar: rb.Animation*) = rb.animSeq(canlandırmalar)
-  def canlandırmaDizisi(canlandırmalar: collection.Seq[rb.Animation]) =
+  def canlandırmaDizisi(canlandırmalar: Canlandırma*): Canlandırma = rb.animSeq(canlandırmalar)
+  def canlandırmaDizisi(canlandırmalar: Diz[Canlandırma]): Canlandırma =
     rb.animSeq(canlandırmalar.toSeq)
-  def canlandırmaEşzamanlı(canlandırmalar: rb.Animation*) = rb.animPar(canlandırmalar)
-  def canlandırmaEşzamanlı(canlandırmalar: collection.Seq[rb.Animation]) =
+  def canlandırmaEşzamanlı(canlandırmalar: Canlandırma*) = rb.animPar(canlandırmalar)
+  def canlandırmaEşzamanlı(canlandırmalar: Diz[Canlandırma]) =
     rb.animPar(canlandırmalar.toSeq)
-  def oynat(canlandırma: rb.Animation) = rb.run(canlandırma)
-  def artalandaOynat(kod: => Unit) = rb.runInBackground(kod)
-  def fareKonumu = rb.mousePosition
-  def yorumla(komutDizisi: Yazı) = rb.interpret(komutDizisi)
-  def yineleSayaçla(miliSaniye: Uzun)(işlev: => Birim) = rb.tCanvas.timer(miliSaniye)(işlev)
+  def oynat(canlandırma: Canlandırma): Birim = rb.run(canlandırma)
+  def artalandaOynat(kod: => Birim): Birim = rb.runInBackground(kod)
+  def fareKonumu: Nokta = rb.mousePosition
+  def yorumla(komutDizisi: Yazı): Birim = rb.interpret(komutDizisi)
+  def yineleSayaçla(miliSaniye: Uzun)(işlev: => Birim): JGelecek[PEtkinlik] = rb.tCanvas.timer(miliSaniye)(işlev)
   def canlandır(işlev: => Birim) = rb.tCanvas.animate(işlev)
-  def canlandırEvreyle[Evre](ilkEvre: Evre)(işlev: Evre => Evre): Future[PActivity] =
+  def canlandırEvreyle[Evre](ilkEvre: Evre)(işlev: Evre => Evre): JGelecek[PEtkinlik] =
     rb.tCanvas.animateWithState(ilkEvre)(işlev)
-  def canlandırmayıDurdur(etkinlik: Future[PActivity]) = rb.tCanvas.stopAnimationActivity(etkinlik)
+  def canlandırmayıDurdur(etkinlik: JGelecek[PEtkinlik]) = rb.tCanvas.stopAnimationActivity(etkinlik)
   def canlandırYenidenÇizerek[Evre](ilkEvre: Evre, sonrakiEvre: Evre => Evre, işlev: Evre => Resim): Birim = {
     val işlev2 = new Function1[Evre, rb.Picture] { def apply(e: Evre) = işlev(e).p }
     rb.animateWithRedraw(ilkEvre, sonrakiEvre, işlev2)
@@ -597,7 +585,7 @@ object TurkishAPI
     r.SahneIşığı(x, y, yön, yükseklik, uzaklık)
   def çiz(r2: Resim) = r.çiz(r2)
   def çiz(rler: Resim*) = r.çiz(rler: _*)
-  def çiz(rler: collection.Seq[Resim]) = r.çiz(rler)
+  def çiz(rler: Diz[Resim]) = r.çiz(rler)
   def çizVeSakla(resimler: Resim*) = rb.drawAndHide(resimler.map(_.p): _*)
   val (çizMerkezde, çizSahne, çizMerkezdeYazı, merkezeTaşı) =
     (r.çizMerkezde _, r.çizSahne _, r.çizMerkezdeYazı _, r.merkezeTaşı _)
@@ -605,7 +593,7 @@ object TurkishAPI
 
   def imge(boy: Sayı, en: Sayı) = r.imge(boy, en)
   def imge(dosya: Yazı) = r.imge(dosya)
-  def imge(url: java.net.URL) = r.imge(url)
+  def imge(bkk: BKK) = r.imge(bkk)
   val (imgeNoktası, imgeNoktasınıKur) = (r.imgeNoktası _, r.imgeNoktasınıKur _)
 
   import tr.arayuz
