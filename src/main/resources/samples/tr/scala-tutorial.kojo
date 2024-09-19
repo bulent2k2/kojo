@@ -372,9 +372,9 @@ satıryaz(mesaj)
     "Parçacıkları sola kaydırmak ikiyle çarpaya denk! İki kere kaydırsak ne olur?".p,
     "1 << 2".c,
     "Ya 10, 20 ya da 30 kere kaydırsak?".p,
-    "yaz(1 << 10)".c,
-    "yaz(1 << 20)".c,
-    "yaz(1 << 30)".c,
+    "satıryaz(1 << 10)".c,
+    "satıryaz(1 << 20)".c,
+    "satıryaz(1 << 30)".c,
     "Nasıl da hızlı büyüdü, değil mi? 10 kere kaydırmak, 2'yi on kere kendisiyle çarpmak demek, yani iki üssü ona denk. O da 1024 ediyor. Binden birazcık fazla. 2 üssü 20, bir milyonu; 2 üssü 30 da bir milyarı geçti...".p,
     "Sağa kaydır ama eksiyse eksi kalsın:".p,
     "-24 >> 2".c,
@@ -412,7 +412,7 @@ dez satış = eğer (kitapsa) değer * sayı yoksa {
   dez birim = değer / sayı
   birim * 3
 }
-yaz(satış) // doğru mu?""".c,
+satıryaz(satış) // doğru mu?""".c,
     "{ ve } içinde bir dizi deyiş ya da bir dizi komut yazabiliyoruz. satış değeri dizi içindeki en son deyişin değeri olur.".p,
     "Gerçek hayatta da olduğu gibi bazen bir kaç koşul bir araya gelir. Bu durumda iki tane mantıksal işlem kullanırız. Bunlardan birincisi '&&' mantıksal 'Ve' anlamına gelir. İkincisi de '||'  mantıksal 'Veya' anlamına gelir. Bunları sakın parçacıkları işleyen '&' ve '|' işlemleriyle karıştırmayalım. Aslında ilişkili ve benzer kavramlar. Ama dikkat edelim. Çok uzatmadan birkaç örnek görelim, göreceksin çok doğal gelecek. Ne de olsa mantık hepimizde var. ".p,
     """dez kitapsa = 6 >= 3
@@ -421,18 +421,18 @@ dez sayı = 10
 dez satış =
     eğer ( (kitapsa && değer > 5) || ( sayı > 30) ) değer * sayı
     yoksa değer / sayı
-yaz(satış)""".c,
+satıryaz(satış)""".c,
     "yineleDoğruKaldıkça".h2,
     """Bu yapı bilhassa eski yazılım dillerinde çok kullanılır. İngilizce'de pek çok farklı anlama gelen 'while' sözcüğü komut olarak kullanılır. Türkçemize 'o halde' ya da 'o sırada' diye de çevirebiliriz. Genel olarak, "yineleDoğruKaldıkça (koşul) dizi/deyiş" yapısı kullanarak komut dizisini tekrar tekrar çalıştırabiliriz. Koşul sağlandığı sürece yineleme devam eder. Koşul değişince, yani artık doğru olmadığında yineleme son bulur. Bir örnekle anlamak çok daha kolay olacak. Ama ilk önce bir değişkenle başlayalım:""".p,
     """den toplam = 18
 yineleDoğruKaldıkça (toplam < 15) toplam += 5
-yaz(toplam)
+satıryaz(toplam)
 """.c,
     """Kolay değil mi? Sizce kaç kere yinelenecek komut? Sonunda toplam kaç olacak? Bu biraz hileli bir soru oldu. Aslında yinelenecek mi, toplam değişecek mi diye mi sormalıydık? Toplamın ilk değerini ya da koşulu değiştirip tekrar çalıştırabiliriz elbet. Bu 'yineleDoğruKaldıkça' yapısını 'yap' adlı anahtar sözcüğü kullanarak tersine de çevirebiliriz: "yap dizi/deyiş yineleDoğruKaldıkça (koşul)." Bakın burada ilk önce komut dizisi çalıştırılır sonra koşula bakılır. Doğruysa komut dizisi yinelenir:""".p,
     """den toplam = 18
 yap toplam += 5
 yineleDoğruKaldıkça (toplam < 15)
-yaz(toplam)""".c,
+satıryaz(toplam)""".c,
     "Gördük ki bu sefer toplam 23 oldu. Bir önceki örnekteki halbuki 18 olmuştu. Bakın bu yapıyı iki sayının ortak paydalarının en büyüğünü hesaplamak için kullanalım:".p,
     """// en büyük ortak paydayı bulalım
 den x = 36
@@ -496,9 +496,9 @@ pages += Page(
       row("Uzun","(Long) İki sayı yani 64 parçacık. -2^63 ile 2^63-1 arası"),
       row("UfakKesir","(Float) 32 parçacık kullanarak kesirli sayıları ifade eder. İşini ciddiye alır ve IEEE'nin 754 no'lu standardına göre yapar. Bilirsin pi sayısının basamakları bitmek bilmez. UfakKesir olarak ama tam değeri şudur: 3.1415927"),
       row("Kesir","(Double) Ufak kesirden iki kat daha hassas. Bunu da 64 parçacık kullanarak sağlar. Pi sayısını şöyle bilir: 3.141592653589793. Aynı ufak kesir gibi ciddi standarda uyar."),
-      row("Harf","Unicode karakterler dizisi. 16 parçacık kullanır. Elbette eksi artı sıkıntısı yoktur. (unsigned denir ingilizce)"),
-      row("Dizi","Sınırsız bir harf dizisidir. Çok basit olsa da çok faydalıdır."),
-      row("İkil","doğru ve yanlış değerlerini bilir başka da birşey bilmez.")),
+      row("Harf","(Char) Unicode karakter. 16 parçacık (bit) yani 2 lokma kullanır. Eksi artı sıkıntısı yoktur. İngilizce'de 'unsigned' denir."),
+      row("Yazı","(String) Sınırsız bir harf dizisidir. Çok basit olsa da çok faydalıdır."),
+      row("İkil","(Boolean) doğru ve yanlış değerlerini bilir başka da birşey bilmez. Başka bir lakabı da Seçim.")),
     "Sayma Sayıları".h2,
     "Tabloda da gördüğümüz gibi dört temel tür var (bir de iri sayılar var. Çok büyük sayma sayılarıyla oynamak için tasarlanmış sayı türünün adı İriSayı (BigInt). Eğer canın mümkün olan bütün briç ellerini saymak isterse Uzun yetmez İriSayı gerekir. Merak edersen bana haber ver. Konuşuruz.) Bunları tekrar anımsayalım çünkü çok faydalılar: Lokma Kısa Sayı ve Uzun. Yalın sayı değerlerini girmenin tek yolu var sanma. Farklı tabanlar kullanabiliriz. Sadece onluk tabanla sınırlı değil becerimiz. Onaltılık taban da bazen işe yarar. Bunu belirtmenin yolu ilk rakamı 0 yapmak.".p,
     "Bize en doğal gelen onluk tabanın yalın sayıları 1 2 3 ... 8 ya da 9 ile başlar (decimal)".p,

@@ -83,7 +83,7 @@ dez sayfaAra = Page(
     Ama hepsini sırayla okuman gerekmez. İlk iki bölümü okuduktan sonra
     sona yakın olan <em> Çizim ve Oyun </em> bölümüne bak. Onlardan çok şey öğreneceksin.
     </p> <p> Ondan sonra sırayla hepsini oku. Bu sayede sonradan anlayacaksın ki bilgisayar
-    programlamayı öğrenivermişsin. Ondan sonrası sana ve hevesine kalmış.
+    programlamayı epey öğrenivermişsin. Ondan sonrası sana ve hevesine kalmış.
     </p>
     </body>
 )
@@ -92,7 +92,7 @@ dez sayfaİlk = Page(
   name = "Ana sayfa",
   body = <body style={ sayfaBiçimi + ortalamaBiçimi }>
 
-  { için (i <- 1 to 5) ver { <br/> } }
+  { /* için (i <- 1 to 5) ver { <br/> } */ }
 
   <h3>Kojo'ya hoşgeldin!</h3>
 
@@ -149,7 +149,7 @@ dez sayfaKaplumbağanınAnladığıKomutlar = Page(
       row("konumuDeğiştir(40, 30)".c, "Doğrultuyu değiştirmeden 40 sağa, 30 yukarı git", "konumuDeğiştir(-50, -50)".c),
       row("konumuKur(150, 100)".c, "Doğrultuyu değiştirmeden x=150, y=100 konumuna git"),
       row("konumVeYönüBelleğeYaz".c, "Şu anda bulunduğu konumu ve doğrultuyu belleğe yaz"),
-      row("konumVeYönüGeriYükle".c, """Bellekteki konuma git ve yine bellekteki doğrultuya dön. Eğer belleğe konum ve yön yazılı değilse hata verir: "Problem - java.lang.IllegalStateException: No saved Position and Heading to restore." Yani bellekte bilgi yok henüz diyor."""),
+      row("konumVeYönüGeriYükle".c, s"Bellekteki konuma git ve yine bellekteki doğrultuya dön. Eğer belleğe konum ve yön yazılı değilse hata verir: '${Utils.loadString("S_PROBLEM_DUE_TO_EXCEPTION")} - java.lang.IllegalStateException: No saved Position and Heading to restore.' Yani bellekte bilgi yok henüz diyor."),
       row("kuzey".c, "Doğrultunu kuzeye çevir. Benzer komutlar yanda", "batı".c, "doğu".c, "güney".c),
       row("noktayaDön(40, 60)".c, "Doğrultunu koordinatları verilen (x, y) noktasına çevir"),
       row("noktayaGit(0, -100)".c, "Doğrultunu x=100, y=-100 konumuna çevir ve o noktaya kadar ilerle"),
@@ -164,11 +164,11 @@ dez sayfaKaplumbağanınAnladığıKomutlar = Page(
     "Basit çizim komutları:".p,
     table(
       row("daire(20)".c, "Yarıçapı 20 olan bir daire çiz.", "üçgen(100)".c, "kare(100)".c, "nokta(100)".c),
-      row("kare(30)".c, "Kenar uzunluğu 30 olan bir kare çiz", "kare".c),
+      row("kare(30)".c, "Kenar uzunluğu 30 olan bir kare çiz", "kare()".c),
       row("nokta(30)".c, "30 kalınlığında bir kalemle bir nokta çiz", "zıpla; nokta(10)".c, "ileri(100); nokta".c),
       row("üçgen(30)".c, "Kenar uzunluğu 30 olan bir üçgen çiz"),
     ),
-    "Şimdilik son olsun birazcık daha uzun bir örnekle bitirelim bu sayfayı. Sakın irkilme, bu örneğin çoğu sayfanın başındaki ilk örnekle aynı. yinele(3) döngüsünü aynen aldık iki döngü içinde tekrar kullandık:".p,
+    "Şimdilik son bir örnek daha görelim. Biraz daha uzun. Ama sakın irkilme. Bunun çoğu sayfanın başındaki ilk örnekle aynı. yinele(3) döngüsünü aldık  ve iki döngü içinde tekrar kullandık:".p,
 """sil
 canlandırmaHızınıKur(2) // çokHızlı'dan iki kat daha hızlı
 // daha önce kullandığımız hızıKur(hız) komutuna benziyor,

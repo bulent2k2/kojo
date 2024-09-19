@@ -46,21 +46,36 @@ ey.ekle(ad)
 ey.ekle("! Ne var ne yok?")
 satıryaz(ey)"""
 
-  dez kod1020 = """Sayılar(0, 1, 2, 3).
-    işle(s => 10 * s * s).
-    herbiriİçin(yaz)"""
+  dez kod1020 = """Sayılar(0, 1, 2, 3)
+    .işle(s => 10 * s * s)
+    .herbiriİçin(yaz)"""
 
-  dez kod2010 = """dez ay_uzunluk = ay.Yazıgirdisi(60)
+  dez kod1510 = """dez bkk = BKK(
+  "https://upload.wikimedia.org/",
+  "wikipedia/commons/thumb/a/a5/",
+  "Flower_poster_2.jpg/",
+  "330px-Flower_poster_2.jpg")
+Resim.imge(bkk).veBüyüt(0.3).çiz"""
+
+  dez kod2010 = """silVeSakla
+dez ay_uzunluk = ay.Yazıgirdisi(60)
 dez ay_renkler = ay.Salındıraç("mavi", "yeşil", "sarı")
-"""
+Resim.arayüz(ay.Tanıt("Sayı ve Renk Seç:")).veGötür(-100,120).çiz
+Resim.arayüz(ay_uzunluk).veGötür(-100, 100).çiz
+Resim.arayüz(ay_renkler).veGötür(-100, 80).çiz
+Resim.arayüz(ay.Düğme("Sayı ve Renk Seçimlerini Yaz"){
+  satıryaz("=" * 10)
+  satıryaz(s"Sayı: ${ay_uzunluk.değeri}")
+  satıryaz(s"Renk: ${ay_renkler.değeri}")}
+).veGötür(-100, 60).çiz"""
 
   dez kod2020 = """dez solAltKöşe = Nokta(tuvalAlanı.x, tuvalAlanı.y)
 dez sağAltKöşe = Nokta(tuvalAlanı.x + tuvalAlanı.eni, tuvalAlanı.y)
 dez solÜstKöşe = Nokta(tuvalAlanı.x, tuvalAlanı.Y)
 dez sağÜstKöşe = Nokta(tuvalAlanı.x + tuvalAlanı.eni, tuvalAlanı.Y)
 dez hepsi = yeni Dikdörtgen(solAltKöşe, sağÜstKöşe)
-yaz(hepsi)
-"""
+yaz(hepsi)"""
+
   dez sayfa = Page(
     name = "türler",
     body = tPage("Her değerin bir Türü var",
@@ -74,7 +89,7 @@ yaz(hepsi)
         row("Birim".c, "Unit".c, kod20.c, "İşlevsel bir çıktısı olmayan yöntemler ve komutların çıktı türü"),
         row("Her".c, "Any".c, "dez h: Her = 1".c, "Her Scala nesnesinın temel türü. Kendi temeli de Nesne. Yönlü tür çizgesinin başlama noktası"),
         row("HerDeğer".c, "AnyVal".c, "dez h: HerDeğer = 2".c, "Her Scala değerinin temel türü. Kendi temeli de Her."),
-        row("HerGönder".c, "AnyRef".c, "dez h: HerGönder = Diz(1, 2, 3)".c, "İşlevlerin, karmaşık ve çoğul içerigi olan türlerin temeli. Referans. Pointer. Gibi"),
+        row("HerGönder".c, "AnyRef".c, "dez h: HerGönder = Diz(1, 2, 3)".c, "İşlevlerin, karmaşık ve çoğul içeriği olan türlerin temeli. Ref yani İngilizce 'Reference' sözcüğünü gönderge olarak çevirdik. Gösteren de diyebiliriz. İngilizce 'pointer' sözcüğü de benzer bir kavramdır."),
         row("Hiç".c, "Nothing".c, "dez y: Hiç = ???".c, "En özel ve hiç nesnesi olmayan tek tür. Onun için de bu örneği çalıştırınca hata verir. Yönlü tür çizgesinin bitiş noktası yani en özel tür bu nesnesiz tek türdür."),
         row("Yok".c, "Null".c, "dez y: Yok = yok".c, "Java'dan kalma. Hiç kullanma!"),
         row("İkil".c, "Boolean".c, kod25.c, "En sade ve basit türlerden biri. Sadece iki değeri var. Ama çok da faydalı"),
@@ -150,7 +165,7 @@ yaz(hepsi)
         row("Eşsizlik".c, "".c, "".c, "bir tür özelliği"),
         row("".c, "".c, "".c),
         row("UzunlukBirimi".c, "UnitLen".c, "".c, "net.kogics.kojo.core'dan"),
-        row("Biçim".c, "Shape".c, "java.awt'den".c),
+        row("Biçim".c, "Shape".c, "".c, "java.awt'den"),
         row("GeoYol".c, "GeneralPath".c, "".c, "java.awt.geom'dan"),
         row("GeoNokta".c, "VertexShape".c, "".c, "net.kogics.kojo.core'dan"),
         row("Grafik2B".c, "Graphics2D".c, "".c, "scala.swing'den"),
@@ -162,8 +177,10 @@ yaz(hepsi)
         row("ÇiniXY".c, "TileXY".c, "".c, "tiles'dan"),
         row("BirSayfaKostüm".c, "SpriteSheet".c, "".c, "tiles'dan"),
         row("Mp3Çalar".c, "KMp3".c, "".c, "net.kogics.kojo.music'den"),
+        row("Canlandırma".c, "Animation".c, "".c, "net.kogics.kojo.???'den"),
+        row("BKK".c, "URL".c, kod1510.c, "Birörnek Kaynak Konumlayıcısı: java.net.URL'den")
       ),
-      "Tür eşi olmayan nesnelerin işimize yarayan pekçok yöntemi var:".p,
+      "Tür eşi olmayan nesneler de var. Onların yöntemleri çok işimize yarar:".p,
       table(
         row("ay".c, "UI".c, "arayüz'ün kısaltması", kod2010.c),
         row("tuvalAlanı".c, "canvasBounds".c, "tuval alanı hakkında faydalı bilgiler", kod2020.c),
