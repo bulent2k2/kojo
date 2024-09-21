@@ -623,6 +623,10 @@ object TurkishAPI
   def notaÇal(frekans: Sayı, süreMiliSaniye: Sayı, ses: Sayı = 80): Birim = rb.playNote(frekans, süreMiliSaniye, ses)
   def notaÇalgısınıKur(çalgı: Sayı): Birim = rb.setNoteInstrument(çalgı)
   // more to come (:-)
+
+  // to help facilitate testing of turkish keyword hiliting in:
+  // ~/kojo-repo/src/test/scala/net/kogics/kojo/lexer/ScalariformTokenMakerTest.scala
+  var testTrKeywords = false // used in tr/package.scala
 }
 
 object TurkishInit {
