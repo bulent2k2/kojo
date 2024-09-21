@@ -16,8 +16,52 @@
  */
 package net.kogics.kojo.lite.i18n.tr
 
+// todo: templates below don't register, but content further down does.
 object help {
+  // ../../../xscala/CodeTemplates.scala
   val templates = Map(
+    "tanım_işlev_1_girdili" -> """tanım ${işlevinAdı}(${girdi1}: ${Tür1}) = {
+    ${cursor}
+}
+""",
+    "tanım_işlev_2_girdili" -> """tanım ${işlevinAdı}(${girdi1}: ${Tür1}, ${girdi2}: ${Tür2}) = {
+    ${cursor}
+}
+""",
+    "tanım_komut_girdisiz" -> """tanım ${komutunAdı}() {
+    ${cursor}
+}
+""",
+    "tanım_komut_1_girdili" -> """tanım ${komutunAdı}(${girdi1}: ${Tür1}) {
+    ${cursor}
+}
+""",
+    "tanım_komut_2_girdili" -> """tanım ${komutunAdı}(${girdi1}: ${Tür1}, ${girdi2}: ${Tür2}) {
+    ${cursor}
+}
+""",
+    "için_aralık_komut_adımlı" ->  """için (${sayı} <- ${ilkSayı} |-| ${sonSayı} adım ${adım}) {
+    ${cursor}
+}
+""",
+    "için_dizi_komut" ->  """için (${öge} <- ${dizi}) {
+    ${cursor}
+}
+""",
+    "için_dizi_deyiş" ->  """dez sonuç = için {
+    ${öge} <- ${dizi}
+} ver ${deyiş}${cursor}
+""",
+    "için_dizi_deyiş_çoğul" ->  """dez sonuç = için {
+    ${öge} <- ${dizi}
+    ${öge2} <- ${dizi2}
+    eğer (${koşul})
+} ver ${deyiş}${cursor}
+""",
+    "dez" -> "dez ${değişmezinAdı} = ${değer}",
+    "dez_türlü" -> "dez ${değişmezinAdı}: ${TürAdı} = ${değer}",
+    "den" -> "den ${değişkeninAdı} = ${değer}",
+    "den_türlü" -> "den ${değişkeninAdı}: ${TürAdı} = ${değer}",
     "englishTurtle" -> "englishTurtle",
     "yeniKaplumbağa" -> "yeniKaplumbağa(${x},${y},${kılık})",
     "a_kalıp" -> "a_kalıp()",
@@ -87,6 +131,63 @@ object help {
   )
 
   val content = Map(
+    "dez" -> <div>
+      <strong>dez</strong> - Değişmez bir değere ad takar. Bu sayede yazılım daha anlaşılır olur. Ayrıca değişiklik yapmak da kolaylaşır. <br/> <br/>
+      <em>Örnek:</em> <br/> <br/> <pre>
+      sil()
+      dez adım = 50 // Bunu 30 ya da 10 yapıp tekrar çalıştırabilirsin
+      daire(adım)
+      yinele(4) {{
+        ileri(adım)
+        sol()
+        ileri(adım)
+      }}
+      </pre>
+      </div>.toString,
+
+    "den" -> <div>
+      <strong>den</strong> - Bir değişken tanımlar ve ona bir değer takar. Değişkenin değerini daha sonra değiştirebilirsin. <br/> <br/>
+      <em>Örnek:</em> <br/> <br/> <pre>
+      çıktıyıSil
+      den x = 3
+      x = x + 4
+      satıryaz(x)
+      x = x * 6
+      satıryaz(x)
+      </pre>
+      </div>.toString,
+
+    "tanım" -> <div>
+      <strong>tanım</strong> - Yeni bir işlev veya komut tanımlar. <br/> <br/>
+      <em>Örnek:</em> <br/> <br/> <pre>
+      çıktıyıSil
+      // eni ve boyu verilen bir dikdörtenin (ya da karenin) köşegen uzunluğunu nedir?
+      tanım köşegen(en: Kesir, boy: Kesir) = karekökü(karesi(en) + karesi(boy))
+      satıryaz(köşegen(1, 1)) // birim karenin köşegeni 2'nin karekökü!
+      satıryaz(köşegen(3, 4)) // çok meşhur bir dik üçgen
+      satıryaz(köşegen(5, 12)) // bu da başka bir tane
+      sil
+      // bir komutla kaplumbağaya renkli bir açı çizdirelim
+      tanım açı(açı: Kesir = 90, renk: Renk = kırmızı) = {{
+        dez boy = 100
+        kalemRenginiKur(siyah)
+        ileri(boy)
+        geri(boy)
+        sağ(açı)
+        kalemRenginiKur(renk)
+        ileri(boy)
+        geri(boy)
+        sol(açı)
+      }}
+      hızıKur(orta)
+      açı(30) // varsayılan renk kırmızı
+      açı() // varsayılan açı dik açı
+      açı(45, mavi)
+      açı(60, yeşil)
+      gizle
+      </pre>
+      </div>.toString,
+
     "englishTurtle" ->
       <div>
         <strong>englishTurtle</strong><br/><br/>
@@ -109,7 +210,7 @@ repeat(4){{
       <div>
       <strong>yeniKaplumbağa</strong>(x, y, kılık) - Bu komut x,y noktasında yeni bir kaplumbağa oluşturur ve verilmişse ona bır kılık giydirir. Kılık verilmemişse kaplumbağa olarak çizer. Onun için de adı yeniKaplumbağa!
       <pre>
-val araba = yeniKaplumbağa(100, 200, Costume.car)
+val araba = yeniKaplumbağa(100, 200, Görünüş.araba)
 araba.canlandırmaHızınıKur(100)
 araba.kalemRenginiKur(mavi)
 araba.ilerle(0,0)
