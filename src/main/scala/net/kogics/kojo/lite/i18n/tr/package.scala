@@ -179,6 +179,7 @@ package object tr {
     .replace("Unit", "Birim")
     .replace("true", "doğru")
     .replace("false", "yanlış")
+    .replace("mutated ", "değişti ")
 
   // used in ../../ScriptEditor.scala to translate type information (Ctrl-space)
   def updateTypes(str: String): String = if (!isTurkish) str else str
