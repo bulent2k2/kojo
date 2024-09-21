@@ -299,7 +299,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
   override def getCompletionsImpl(comp: JTextComponent) = {
     if (execSupport.startingUp) {
       val proposals = new java.util.ArrayList[Completion]
-      val completion = "Please try again soon..."
+      val completion = Utils.loadString("S_TRY_AGAIN_SOON")
       proposals.add(
         new TemplateCompletion(
           this,
@@ -307,7 +307,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
           completion,
           "${cursor}",
           null,
-          "Kojo is starting up, and the Code Completion Engine is not available yet."
+          Utils.loadString("S_CODE_COMPLETION_ENGINE_NOT_AVAILABLE1")
         )
       )
       proposals
@@ -317,7 +317,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     }
     else {
       val proposals = new java.util.ArrayList[Completion]
-      val completion = "Please try again soon..."
+      val completion = Utils.loadString("S_TRY_AGAIN_SOON")
       proposals.add(
         new TemplateCompletion(
           this,
@@ -325,7 +325,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
           completion,
           "${cursor}",
           null,
-          "The Code Completion Engine is currently blocked (probably because a script is running)."
+          Utils.loadString("S_CODE_COMPLETION_ENGINE_NOT_AVAILABLE2")
         )
       )
       proposals
