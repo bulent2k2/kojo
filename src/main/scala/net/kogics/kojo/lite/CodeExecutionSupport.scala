@@ -509,12 +509,15 @@ class CodeExecutionSupport(
       appendToCodePaneLine(lineNum, result.trim.replaceAll("\r?\n", " | "))
     }
 
+    import net.kogics.kojo.lite.i18n.tr.updateResult
+
     private def appendToCodePaneLine(lineNum: Int, result: String) = Utils.runInSwingThread {
       val insertPos = getVisibleLineEndOffset(lineNum + selectionOffset)
       val dot = codePane.getCaretPosition
       val selStart = codePane.getSelectionStart()
       val selEnd = codePane.getSelectionEnd()
-      codePane.insert(WorksheetMarker + result, insertPos)
+      // updateResults returns the arg as is unless we are in Turkish locale:
+      codePane.insert(WorksheetMarker + updateResult(result), insertPos)
       if (dot == insertPos) {
         if (selStart == selEnd) {
           codePane.setCaretPosition(dot)
