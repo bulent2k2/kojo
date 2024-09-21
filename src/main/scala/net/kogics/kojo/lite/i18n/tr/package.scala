@@ -39,8 +39,10 @@ import net.kogics.kojo.core.UnitLen
 import net.kogics.kojo.core.VertexShape
 import net.kogics.kojo.lite.Builtins
 import net.kogics.kojo.lite.CoreBuiltins
+import net.kogics.kojo.util.Utils
 
 package object tr {
+  lazy val isTurkish = Utils.loadString("S_IncludePragma") == "yükle"
   var builtins: CoreBuiltins = _ // unstable reference to module
   lazy val richBuiltins = builtins.asInstanceOf[Builtins]
 
@@ -81,7 +83,9 @@ package object tr {
   type Dizin[A] = List[A]
   type DiziSıralı[A] = IndexedSeq[A]
   type Yineleyici[Col] = Iterator[Col]
-
+  type Yinelenebilir[Col] = Iterable[Col]
+  type YinelenebilirBirKere[Col] = IterableOnce[Col]
+  type Yapıcıdan[DiziTürü, GirdiTürü, ÇıktıTürü] = collection.BuildFrom[DiziTürü, GirdiTürü, ÇıktıTürü]
   type UzunlukBirimi = UnitLen
 
   // ../../../core/Picture.scala
@@ -92,7 +96,7 @@ package object tr {
   type Grafik2B = scala.swing.Graphics2D
   object Nokta {
     type Kesir = Double
-    def apply(x: Kesir, y: Kesir) = new Point(x, y)
+    def apply(x: Kesir, y: Kesir): Nokta = new Nokta(x, y)
     def unapply(p: Nokta) = Some((p.x, p.y))
   }
 
@@ -121,4 +125,84 @@ package object tr {
     def döngülüÇal(mp3dosyası: Yazı) = p.playMp3Loop(mp3dosyası)
     def döngüyüDurdur() = p.stopMp3Loop()
   }
+
+  // used in ~/kojo-repo/src/main/scala/net/kogics/kojo/xscala/CodeCompletionUtils.scala
+  // ../../../xscala/CodeCompletionUtils.scala
+  val turkishKeywordTemplates = if (!isTurkish) Map() else Map(
+    "için" -> "için (i <- 1 |-| ${n}) {\n    ${cursor}\n}",
+    "yineleDoğruKaldıkça" -> "yineleDoğruKaldıkça (${koşul}) {\n    ${cursor}\n}",
+    "eğer" -> "eğer (${koşul}) {\n    ${cursor}\n}"
+  )
+  private val _trKeywords = List(
+    "baskın", "bazı", "bildir", "birlikte", "bu",
+    "damgalı", "den", "dene","deste", "dez", "doğru", "durum",
+    "eğer", "eşle",    "geriDön", "getir", "gizli",
+    "için", "koru", "miskin", "nesne",    "örtük", "özellik",
+    "son", "sonunda", "soyut", "sınıf",    "tanım", "tür",
+    "üst", "ver", "verilen",
+    "yakala", "yanlış", "yap", "yayar", "yeni", "yineleDoğruKaldıkça", "yok", "yoksa"
+  )
+  val turkishKeywords = if (!isTurkish) List() else _trKeywords
+  val trKeywordSet = turkishKeywords.toSet
+  // used in ../../../lexer/ScalariformTokenMaker.scala
+  def isTurkishKeyword(word: String) = trKeywordSet.contains(word) || (TurkishAPI.testTrKeywords && _trKeywords.toSet.contains(word))
+
+  // used to update result in the OutputPane and worksheet (codePane):
+  //   ../../OutputPane.scala
+  //   ../../CodeExecutionSupport.scala
+  // todo: worksheet: val x = "String"
+  // todo: println("String")
+  def updateResult(str: String): String = if (!isTurkish) str else str
+    .replace("val res", "dez sonuç")
+    .replace("net.kogics.kojo.lite.i18n.tr.", "")
+    .replace("<not computed>", "<hesaplanmadı>")
+    .replace("scala.collection.mutable.", "")
+    .replace("scala.collection.immutable.", "")
+    .replace("TurkishAPI.", "")
+    .replace("val ", "dez ")
+    .replace("var ", "den ")
+    .replace("def ", "tanım ")
+    .replace("class ", "sınıf ")
+    .replace("case ", "durum ")
+    .replace("ArrayBuffer", "EsnekDizim")
+    .replace("Array", "Dizik")
+    .replace("IndexedSeq", "DiziSıralı")
+    .replace("Map", "Eşlek")
+    .replace("Vector", "Yöney")
+    .replace("LazyList", "MiskinDizin")
+    .replace("List", "Dizin")
+    .replace("Char", "Harf")
+    .replace("String", "Yazı")
+    .replace("Int", "Sayı")
+    .replace("Double", "Kesir")
+    .replace("Boolean", "İkil")
+    .replace("Unit", "Birim")
+    .replace("true", "doğru")
+    .replace("false", "yanlış")
+
+  // used in ../../ScriptEditor.scala to translate type information (Ctrl-space)
+  def updateTypes(str: String): String = if (!isTurkish) str else str
+    .replace("net.kogics.kojo.lite.i18n.tr.", "")
+    .replace("net.kogics.kojo.lite.i18n.TurkishAPI.", "")
+    .replace("UserCode.this.TurkishAPI.", "")
+    .replace("UserCode", "KullanıcınınYazılımı")
+    .replace("Wrapper", "Sarıcı")
+    .replace("type", "tür")
+    .replace("this", "bu")
+    .replace("Array", "Dizik")
+    .replace("List", "Dizin")
+    .replace("Seq", "Dizi")
+    .replace("Char", "Harf")
+    .replace("String", "Yazı")
+    .replace("Int", "Sayı")
+    .replace("Double", "Kesir")
+    .replace("Boolean", "İkil")
+    .replace("Unit", "Birim")
+    .replace("Vector", "Yöney")
+    .replace("IndexedSeq", "DiziSıralı")
+    .replace("java.awt.Color", "Renk")
+    .replace("true", "doğru")
+    .replace("false", "yanlış")
+    .replace("implicit ", "örtük ")
+  // todo: more basic types
 }
