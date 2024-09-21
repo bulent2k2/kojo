@@ -326,8 +326,11 @@ class OutputPane(execSupport: CodeExecutionSupport) extends JPanel {
     lastOutput = outText
   }
 
+  // updateResult returns the arg as is unless we are in Turkish locale
+  import net.kogics.kojo.lite.i18n.tr.updateResult
+
   def showOutputHelper(outText: String, color: Color): Unit = {
-    appendOutput(outText, color)
+    appendOutput(updateResult(outText), color)
     execSupport.enableClearButton()
   }
 
