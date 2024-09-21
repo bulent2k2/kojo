@@ -16,10 +16,12 @@
 package net.kogics.kojo
 package xscala
 
+import net.kogics.kojo.lite.i18n.tr.{turkishKeywords, turkishKeywordTemplates}
+
 object CodeCompletionUtils {
   val NotIdChars = """ .(){}!%&+\-<=>?@\\^`|~#:/*""" + "\n\r\t"
 
-  val Keywords = List(
+  val Keywords = turkishKeywords ++ List(
     "abstract",
     "case",
     "catch",
@@ -65,7 +67,7 @@ object CodeCompletionUtils {
     "for" -> "for (i <- 1 to ${n}) {\n    ${cursor}\n}",
     "while" -> "while (${condition}) {\n    ${cursor}\n}",
     "if" -> "if (${condition}) {\n    ${cursor}\n}"
-  )
+  ) ++ turkishKeywordTemplates
 
   // UserCommand adds to this
   val BuiltinsMethodTemplates = collection.mutable.Map(
