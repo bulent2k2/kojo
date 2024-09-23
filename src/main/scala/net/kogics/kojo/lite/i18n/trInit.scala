@@ -624,6 +624,11 @@ object TurkishAPI
   def notaÇalgısınıKur(çalgı: Sayı): Birim = rb.setNoteInstrument(çalgı)
   // more to come (:-)
 
+  // more types for readability, mostly
+  type BelirtimHatası = tr.BelirtimHatası
+  type KuraldışıGirdiHatası = tr.KuraldışıGirdiHatası
+  type EksikTanımHatası = tr.EksikTanımHatası
+
   // to help facilitate testing of turkish keyword hiliting in:
   // ~/kojo-repo/src/test/scala/net/kogics/kojo/lexer/ScalariformTokenMakerTest.scala
   var testTrKeywords = false // used in tr/package.scala

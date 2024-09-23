@@ -57,6 +57,31 @@ satıryaz(ey)"""
   "330px-Flower_poster_2.jpg")
 Resim.imge(bkk).veBüyüt(0.3).çiz"""
 
+  dez kod1710 = """belirt(
+  5 < 7,
+  "ilk girdi ikinciden küçük olmalı")
+// 5 yerine 8 yazıp tekrar çalıştır
+"""
+
+  dez kod1720 = """durum sınıf Kişi(ad: Yazı, yaş: Sayı) {
+  gerekli(yaş > 0 && yaş < 1000,
+    "kişinin yaşı yanlış")
+  satıryaz(s"$ad $yaş yaşında")
+}
+çıktıyıSil
+dez k1 = Kişi("Mustafa Kemal", 143)
+ // bir de 1 yerine -1 girip çalıştır
+dez k2 = Kişi("Garip Durum", 1)"""
+
+  dez kod1730 = """// bazen ne istediğimizi biliriz
+// ama nasıl olacağını bilemeyiz ya,
+// o zaman böyle boş bir tanım
+// yazmak faydalı olabilir
+tanım deney1(girdi: Sayı) = ???
+// bunu doğru yapıp tekrar çalıştır:
+dez hazırsa = yanlış
+eğer(hazırsa) deney1(42)"""
+
   dez kod2010 = """silVeSakla
 dez ay_uzunluk = ay.Yazıgirdisi(60)
 dez ay_renkler = ay.Salındıraç("mavi", "yeşil", "sarı")
@@ -178,7 +203,11 @@ yaz(hepsi)"""
         row("BirSayfaKostüm".c, "SpriteSheet".c, "".c, "tiles'dan"),
         row("Mp3Çalar".c, "KMp3".c, "".c, "net.kogics.kojo.music'den"),
         row("Canlandırma".c, "Animation".c, "".c, "net.kogics.kojo.???'den"),
-        row("BKK".c, "URL".c, kod1510.c, "Birörnek Kaynak Konumlayıcısı: java.net.URL'den")
+        row("BKK".c, "URL".c, kod1510.c, "Birörnek Kaynak Konumlayıcısı: java.net.URL'den"),
+        row("".c, "".c, "".c),
+        row("BelirtimHatası".c, "java.lang.AssertionError".c, kod1710.c, "".c),
+        row("KuraldışıGirdiHatası".c, "java.lang.IllegalArgumentException".c, kod1720.c, "".c),
+        row("EksikTanımHatası".c, "scala.NotImplementedError".c, kod1730.c, "".c)
       ),
       "Tür eşi olmayan nesneler de var. Onların yöntemleri çok işimize yarar:".p,
       table(

@@ -114,6 +114,10 @@ package object tr {
 
   type Yazı = String
 
+  type BelirtimHatası = java.lang.AssertionError
+  type KuraldışıGirdiHatası = java.lang.IllegalArgumentException
+  type EksikTanımHatası = scala.NotImplementedError
+
   class Mp3Çalar(p: net.kogics.kojo.music.KMp3) {
     def çalıyorMu = p.isMp3Playing
     def sesMp3üÇal(mp3dosyası: Yazı) = p.playMp3Sound(mp3dosyası)
@@ -160,7 +164,7 @@ package object tr {
     .replace("scala.collection.immutable.", "")
     .replace("TurkishAPI.", "")
     .replace("val ", "dez ")
-    .replace("var ", "den ")
+//    .replace("var ", "den ")  var is too common in turkish
     .replace("def ", "tanım ")
     .replace("class ", "sınıf ")
     .replace("case ", "durum ")
@@ -180,6 +184,13 @@ package object tr {
     .replace("true", "doğru")
     .replace("false", "yanlış")
     .replace("mutated ", "değişti ")
+    .replace("null", "yok")
+    .replace("java.lang.AssertionError", "BelirtimHatası")
+    .replace("java.lang.IllegalArgumentException", "KuraldışıGirdiHatası")
+    .replace("assertion failed", "belirtilen koşul sağlanmadı")
+    .replace("requirement failed", "gerek koşul sağlanmadı")
+    .replace("scala.NotImplementedError", "EksikTanımHatası")
+    .replace("an implementation is missing", "bir tanım eksik")
 
   // used in ../../ScriptEditor.scala to translate type information (Ctrl-space)
   def updateTypes(str: String): String = if (!isTurkish) str else str

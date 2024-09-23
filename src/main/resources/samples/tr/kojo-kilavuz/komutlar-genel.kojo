@@ -12,12 +12,12 @@ satıryaz("Merhaba " + girdi + s" $gülerYüz!" + " Ne var ne yok?")"""
 
   dez kod20 = """durum sınıf Kişi(ad: Yazı, yaş: Sayı) {
     gerekli(yaş > 0 && yaş < 1000, "kişinin yaşı yanlış girildi")
+    satıryaz(s"$ad $yaş yaşında")
 }
-
+çıktıyıSil
 dez k1 = Kişi("Mustafa Kemal", 143)
-dez k2 = Kişi("Garip Durum", -1) // bir de -1 yerine 1 girip çalıştır
-yaz("Buraya gelecek mi bakalım")
-"""
+ // bir de 1 yerine -1 girip çalıştır
+dez k2 = Kişi("Garip Durum", 1)"""
 
   dez sayfa = Page(
     name = "daha çok komut var",
