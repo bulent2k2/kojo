@@ -229,6 +229,7 @@ object TurkishAPI
   }
   object kaplumbağa extends Kaplumbağa0(builtins.TSCanvas.turtle0)
   def sil(): Birim = builtins.TSCanvas.clear()
+  def silipSakla(): Birim = silVeSakla()
   def silVeSakla(): Birim = { builtins.TSCanvas.clear(); kaplumbağa.görünmez() } // cleari
   def çizimiSil(): Birim = builtins.TSCanvas.clearStepDrawing()
   def çıktıyıSil(): Birim = builtins.clearOutput()
