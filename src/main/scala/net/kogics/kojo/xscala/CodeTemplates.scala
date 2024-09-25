@@ -1,6 +1,11 @@
 package net.kogics.kojo.xscala
 
+import java.util.logging.Level
+import java.util.logging.Logger
+
 object CodeTemplates {
+  lazy val Log = Logger.getLogger("CodeTemplates")
+
   // this template is used twice, so define as val outside the map
   val canvasSketch = """cleari()
 originBottomLeft()
@@ -207,11 +212,17 @@ draw(pic)
     2 shouldBe 2
 }
 """
-  )
+  ) ++ net.kogics.kojo.lite.i18n.tr.templates.codeTemplates // empty map unless in Turkish locale
 
   def apply(name: String) = templates(name)
   def asString(name: String) =
     xml.Utility.escape(templates(name).replace("${cursor}", "|").replace("$", "")).replace("\n", "<br/>")
   def beforeCursor(name: String) = templates(name).split("""\$\{cursor\}""")(0)
-  def afterCursor(name: String) = templates(name).split("""\$\{cursor\}""")(1)
+  def afterCursor(name: String) = {
+    val parts = templates(name).split("""\$\{cursor\}""")
+    if (parts.size > 1) parts(1) else {
+      Log.log(Level.WARNING, s"Problem with template $name", new Exception("No cursor or no char after cursor"))
+      s"BAD_TEMPLATE for $name."
+    }
+  }
 }
