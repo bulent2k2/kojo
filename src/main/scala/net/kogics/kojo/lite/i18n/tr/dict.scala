@@ -44,6 +44,8 @@ object dict {
     "runtime" -> "çalışmasırası",
     "compile" -> "derleme",
     "compiler" -> "derleyici",
+    "point" -> "göster", // işaret et
+    "pointer" -> "gösterge", // işaretçi
     "reference" -> "gönderge",
     "operation" -> "işlem",
     "unary" -> "biril", // todo: unary_!
