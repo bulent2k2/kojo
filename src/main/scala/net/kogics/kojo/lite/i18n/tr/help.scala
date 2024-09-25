@@ -141,16 +141,16 @@ object help {
       sil()
       hızıKur(orta)
 
-    // yeni komudumuzu iki kere çağıralım
-    kare(100)
+      // yeni komudumuzu iki kere çağıralım
+      kare(100)
       kare(200)
 
-    // topla adında bir işlev yazalım (fonksiyon da denir)
-    // İki girdisi bir de çıktısı var
-    tanım topla(s1: Sayı, s2: Sayı) =
-      s1 + s2
+      // topla adında bir işlev yazalım (fonksiyon da denir)
+      // İki girdisi bir de çıktısı var
+      tanım topla(s1: Sayı, s2: Sayı) =
+        s1 + s2
 
-    çıktıyıSil()
+      çıktıyıSil()
       // işlevimizi satıryaz komudu içinden çağıralım
       satıryaz(topla(3, 5))
       // başka bir toplam bulmak istersek yine çağırabiliriz
@@ -164,13 +164,13 @@ object help {
       yazı(çıktı)
       gizle
 
-    /*
-     * iki örnek daha ister misin?
-     *   1) köşegen adında bir işlev
-     *   2) açı adında bir komut
-     * Ama önce yanlış'ı doğru yap!
-     */
-    eğer(yanlış) {{
+      /*
+       * iki örnek daha ister misin?
+       *   1) köşegen adında bir işlev
+       *   2) açı adında bir komut
+       * Ama önce yanlış'ı doğru yap!
+       */
+      eğer(yanlış) {{
       // eni ve boyu verilen bir dikdörtenin (ya da karenin) köşegen uzunluğunu nedir?
       tanım köşegen(en: Kesir, boy: Kesir): Kesir = karekökü(karesi(en) + karesi(boy))
       // Çıktının türünü de açıkca yazdık. Gerek yoktu ama yine de iyi bir alışkanlık bu
@@ -201,7 +201,7 @@ object help {
       açı(60, yeşil, 200)
       açı(45, mavi, 175)
       açı(30) // varsayılan renk kırmızı
-    }}
+      }}
 
     </pre>
       </div>.toString,
@@ -344,50 +344,21 @@ object help {
     "buAn" -> <div><strong>buAn</strong>() - Bu komut evrensel zamana (UTC) göre 1 Ocak 1970 tam geceyarısından bu ana kadar geçen zamanı kesirsiz milisaniye olarak verir.</div>.toString,
     "buSaniye" -> <div><strong>buSaniye</strong>() - Bu komut evrensel zamana (UTC) göre 1 Ocak 1970 tam geceyarısından bu ana kadar geçen zamanı kesirli saniye olarak verir.</div>.toString,
     "hızıKur" -> <div><strong>hızıKur</strong>(hız) - Kaplumbağacığın hızını belirler. yavaş, orta, hızlı ve çokHızlı değerlerinden birini dene.</div>.toString,
-    "def_türkçe" -> <div><strong>def</strong> - Kıvrık parantez içindeki bir dizi komuta ya da deyişe bir ad takar. Bu yöntemle yeni bir işlev ya da komut tanımlamış olursun. <br/>
-      <br/>
-      <em>Örneğin:</em> <br/>
-      <br/>
-      <pre>
-      // Kare adında yeni bir komut
-      // Tek bir girdisi var
-      def kare(kenar: Sayı) {{
-        yinele(4) {{
-          ileri(kenar)
-          sağ()
-        }}
-      }}
-      sil()
-      // iki kere çagıralım yeni komutumuzu:
-      kare(100)
-      kare(200)
-
-    // Topla adında yeni bir işlev tanımlayalım
-    // İki girdisi, bir çıktısı var
-    def topla(a: Sayı, b: Sayı) =
-      a + b
-        çıktıyıSil()
-        // işlevi çağırıp çıktısını yazdıralım
-        satıryaz(topla(3, 5))
-        // bir toplama daha yapalım
-        val toplam = topla(20, 7)
-        satıryaz(toplam)
-        </pre>
-        </div>.toString,
     "eksenler" ->
       <div>
       <strong>eksenler -> resim</strong> - Verilen resmin yerel eksenlerini çizerek yeni bir resim oluşturur.
       <br/>
-      Bu yöntem dönüştürücü bir yöntemdir ve resim oluşturmakta size yardımcı olur.
+      Bu ve benzeri yöntemler bir resimde değişiklik yapmak için kullanılır. Ayrıca benzer yöntemlerle birleştirilebilirler. Onun için türün adını BirleşebilenDönüştürücü koyduk. BD diye de kısalttık.
       <br/><em>Örnek:</em> <br/>
       <pre>
-      def resim = Resim {{
+      tanım resim = Resim {{
         yinele(2) {{
           ileri(50); sağ()
           ileri(100); sağ()
         }}
       }}
       silVeSakla
+      // dört tane BD * ile birleşiyorlar, ve -> ile resmi dönüştürüyorlar
       çiz(
         götür(-100, -50) * döndür(45) *
           boyaRengi(mavi) * eksenler -> resim
