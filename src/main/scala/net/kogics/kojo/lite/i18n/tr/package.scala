@@ -117,6 +117,10 @@ package object tr {
   type BelirtimHatası = java.lang.AssertionError
   type KuraldışıGirdiHatası = java.lang.IllegalArgumentException
   type EksikTanımHatası = scala.NotImplementedError
+  // todo: add
+  // ("java.lang.NullPointerException", "BoşGöstergeHatası")
+  // ("java.lang.ArithmeticException", "MatematikselHata")
+  // also add any new types in ../trInit.scala
 
   class Mp3Çalar(p: net.kogics.kojo.music.KMp3) {
     def çalıyorMu = p.isMp3Playing
@@ -132,11 +136,7 @@ package object tr {
 
   // used in ~/kojo-repo/src/main/scala/net/kogics/kojo/xscala/CodeCompletionUtils.scala
   // ../../../xscala/CodeCompletionUtils.scala
-  val turkishKeywordTemplates = if (!isTurkish) Map() else Map(
-    "için" -> "için (i <- 1 |-| ${n}) {\n    ${cursor}\n}",
-    "yineleDoğruKaldıkça" -> "yineleDoğruKaldıkça (${koşul}) {\n    ${cursor}\n}",
-    "eğer" -> "eğer (${koşul}) {\n    ${cursor}\n}"
-  )
+  val turkishKeywordTemplates = if (!isTurkish) Map() else tr.templates.keywordTemplates
   private val _trKeywords = List(
     "baskın", "bazı", "bildir", "birlikte", "bu",
     "damgalı", "den", "dene","deste", "dez", "doğru", "durum",
@@ -144,7 +144,8 @@ package object tr {
     "için", "koru", "miskin", "nesne",    "örtük", "özellik",
     "son", "sonunda", "soyut", "sınıf",    "tanım", "tür",
     "üst", "ver", "verilen",
-    "yakala", "yanlış", "yap", "yayar", "yeni", "yineleDoğruKaldıkça", "yok", "yoksa"
+    "yakala", "yanlış", "yap", "yayar",
+    "yeni", "yineleDoğruKaldıkça", "yok", "yoksa"
   )
   val turkishKeywords = if (!isTurkish) List() else _trKeywords
   val trKeywordSet = turkishKeywords.toSet
@@ -156,65 +157,7 @@ package object tr {
   //   ../../CodeExecutionSupport.scala
   // todo: worksheet: val x = "String"
   // todo: println("String")
-  def updateResult(str: String): String = if (!isTurkish) str else str
-    .replace("val res", "dez sonuç")
-    .replace("net.kogics.kojo.lite.i18n.tr.", "")
-    .replace("<not computed>", "<hesaplanmadı>")
-    .replace("scala.collection.mutable.", "")
-    .replace("scala.collection.immutable.", "")
-    .replace("TurkishAPI.", "")
-    .replace("val ", "dez ")
-//    .replace("var ", "den ")  var is too common in turkish
-    .replace("def ", "tanım ")
-    .replace("class ", "sınıf ")
-    .replace("case ", "durum ")
-    .replace("ArrayBuffer", "EsnekDizim")
-    .replace("Array", "Dizik")
-    .replace("IndexedSeq", "DiziSıralı")
-    .replace("Map", "Eşlek")
-    .replace("Vector", "Yöney")
-    .replace("LazyList", "MiskinDizin")
-    .replace("List", "Dizin")
-    .replace("Char", "Harf")
-    .replace("String", "Yazı")
-    .replace("Int", "Sayı")
-    .replace("Double", "Kesir")
-    .replace("Boolean", "İkil")
-    .replace("Unit", "Birim")
-    .replace("true", "doğru")
-    .replace("false", "yanlış")
-    .replace("mutated ", "değişti ")
-    .replace("null", "yok")
-    .replace("java.lang.AssertionError", "BelirtimHatası")
-    .replace("java.lang.IllegalArgumentException", "KuraldışıGirdiHatası")
-    .replace("assertion failed", "belirtilen koşul sağlanmadı")
-    .replace("requirement failed", "gerek koşul sağlanmadı")
-    .replace("scala.NotImplementedError", "EksikTanımHatası")
-    .replace("an implementation is missing", "bir tanım eksik")
-
+  def updateResult(str: String): String = if (!isTurkish) str else translate.result(str)
   // used in ../../ScriptEditor.scala to translate type information (Ctrl-space)
-  def updateTypes(str: String): String = if (!isTurkish) str else str
-    .replace("net.kogics.kojo.lite.i18n.tr.", "")
-    .replace("net.kogics.kojo.lite.i18n.TurkishAPI.", "")
-    .replace("UserCode.this.TurkishAPI.", "")
-    .replace("UserCode", "KullanıcınınYazılımı")
-    .replace("Wrapper", "Sarıcı")
-    .replace("type", "tür")
-    .replace("this", "bu")
-    .replace("Array", "Dizik")
-    .replace("List", "Dizin")
-    .replace("Seq", "Dizi")
-    .replace("Char", "Harf")
-    .replace("String", "Yazı")
-    .replace("Int", "Sayı")
-    .replace("Double", "Kesir")
-    .replace("Boolean", "İkil")
-    .replace("Unit", "Birim")
-    .replace("Vector", "Yöney")
-    .replace("IndexedSeq", "DiziSıralı")
-    .replace("java.awt.Color", "Renk")
-    .replace("true", "doğru")
-    .replace("false", "yanlış")
-    .replace("implicit ", "örtük ")
-  // todo: more basic types
+  def updateTypes(str: String): String = if (!isTurkish) str else translate.typeInfo(str)
 }

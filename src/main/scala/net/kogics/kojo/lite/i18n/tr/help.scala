@@ -16,52 +16,10 @@
  */
 package net.kogics.kojo.lite.i18n.tr
 
-// todo: templates below don't register, but content further down does.
 object help {
   // ../../../xscala/CodeTemplates.scala
   val templates = Map(
-    "tanım_işlev_1_girdili" -> """tanım ${işlevinAdı}(${girdi1}: ${Tür1}) = {
-    ${cursor}
-}
-""",
-    "tanım_işlev_2_girdili" -> """tanım ${işlevinAdı}(${girdi1}: ${Tür1}, ${girdi2}: ${Tür2}) = {
-    ${cursor}
-}
-""",
-    "tanım_komut_girdisiz" -> """tanım ${komutunAdı}() {
-    ${cursor}
-}
-""",
-    "tanım_komut_1_girdili" -> """tanım ${komutunAdı}(${girdi1}: ${Tür1}) {
-    ${cursor}
-}
-""",
-    "tanım_komut_2_girdili" -> """tanım ${komutunAdı}(${girdi1}: ${Tür1}, ${girdi2}: ${Tür2}) {
-    ${cursor}
-}
-""",
-    "için_aralık_komut_adımlı" ->  """için (${sayı} <- ${ilkSayı} |-| ${sonSayı} adım ${adım}) {
-    ${cursor}
-}
-""",
-    "için_dizi_komut" ->  """için (${öge} <- ${dizi}) {
-    ${cursor}
-}
-""",
-    "için_dizi_deyiş" ->  """dez sonuç = için {
-    ${öge} <- ${dizi}
-} ver ${deyiş}${cursor}
-""",
-    "için_dizi_deyiş_çoğul" ->  """dez sonuç = için {
-    ${öge} <- ${dizi}
-    ${öge2} <- ${dizi2}
-    eğer (${koşul})
-} ver ${deyiş}${cursor}
-""",
-    "dez" -> "dez ${değişmezinAdı} = ${değer}",
-    "dez_türlü" -> "dez ${değişmezinAdı}: ${TürAdı} = ${değer}",
-    "den" -> "den ${değişkeninAdı} = ${değer}",
-    "den_türlü" -> "den ${değişkeninAdı}: ${TürAdı} = ${değer}",
+    "rastgeleİkil" -> "rastgeleİkil",
     "englishTurtle" -> "englishTurtle",
     "yeniKaplumbağa" -> "yeniKaplumbağa(${x},${y},${kılık})",
     "a_kalıp" -> "a_kalıp()",
@@ -131,11 +89,23 @@ object help {
   )
 
   val content = Map(
+    "a_kalıp" -> <div>
+      <strong>komut</strong>(g1, g2) - Açıklama ... <br/>
+      Daha çok açıklama ... <br/>
+      <br/><em>Örnek:</em> <br/>
+      <pre>
+
+      dez x = komut
+      x.yöntem
+
+      </pre> Bu örnekten sonra açıklama ...
+      </div>.toString,
+
     "dez" -> <div>
-      <strong>dez</strong> - Değişmez bir değere ad takar. Bu sayede yazılım daha anlaşılır olur. Ayrıca değişiklik yapmak da kolaylaşır. <br/> <br/>
+      <strong>dez</strong> - Değişmez bir değere ad takar. Bu sayede yazılım daha anlaşılır olur. Ayrıca sonradan değiştirmek kolaylaşır. <br/> <br/>
       <em>Örnek:</em> <br/> <br/> <pre>
       sil()
-      dez adım = 50 // Bunu 30 ya da 10 yapıp tekrar çalıştırabilirsin
+      dez adım = 20 // Bunu 10 ya da 30 yapıp tekrar çalıştırabilirsin
       daire(adım)
       yinele(4) {{
         ileri(adım)
@@ -159,48 +129,141 @@ object help {
 
     "tanım" -> <div>
       <strong>tanım</strong> - Yeni bir işlev veya komut tanımlar. <br/> <br/>
-      <em>Örnek:</em> <br/> <br/> <pre>
-      çıktıyıSil
+      <em>Örnekler:</em> <br/> <br/> <pre>
+      // kare adında bir komut yazalım
+      // Bir girdisi olsun
+      tanım kare(kenar: Sayı) {{
+        yinele(4) {{
+          ileri(kenar)
+          sağ()
+        }}
+      }}
+      sil()
+      hızıKur(orta)
+
+    // yeni komudumuzu iki kere çağıralım
+    kare(100)
+      kare(200)
+
+    // topla adında bir işlev yazalım (fonksiyon da denir)
+    // İki girdisi bir de çıktısı var
+    tanım topla(s1: Sayı, s2: Sayı) =
+      s1 + s2
+
+    çıktıyıSil()
+      // işlevimizi satıryaz komudu içinden çağıralım
+      satıryaz(topla(3, 5))
+      // başka bir toplam bulmak istersek yine çağırabiliriz
+      satıryaz(topla(20, 7))
+      // yine çağıralım ama bu sefer çıktısına değişmez
+      // bir ad takalım
+      dez çıktı = topla(23, 19)
+      // Kaplumbağaya yazdıralım
+      kalemRenginiKur(mor)
+      zıpla(-50)
+      yazı(çıktı)
+      gizle
+
+    /*
+     * iki örnek daha ister misin?
+     *   1) köşegen adında bir işlev
+     *   2) açı adında bir komut
+     * Ama önce yanlış'ı doğru yap!
+     */
+    eğer(yanlış) {{
       // eni ve boyu verilen bir dikdörtenin (ya da karenin) köşegen uzunluğunu nedir?
-      tanım köşegen(en: Kesir, boy: Kesir) = karekökü(karesi(en) + karesi(boy))
-      satıryaz(köşegen(1, 1)) // birim karenin köşegeni 2'nin karekökü!
+      tanım köşegen(en: Kesir, boy: Kesir): Kesir = karekökü(karesi(en) + karesi(boy))
+      // Çıktının türünü de açıkca yazdık. Gerek yoktu ama yine de iyi bir alışkanlık bu
+      satıryaz(köşegen(1, 1)) // birim karenin köşegeni bize 2'nin karekökünü verir
       satıryaz(köşegen(3, 4)) // çok meşhur bir dik üçgen
-      satıryaz(köşegen(5, 12)) // bu da başka bir tane
-      sil
-      // bir komutla kaplumbağaya renkli bir açı çizdirelim
-      tanım açı(açı: Kesir = 90, renk: Renk = kırmızı) = {{
-        dez boy = 100
-        kalemRenginiKur(siyah)
-        ileri(boy)
-        geri(boy)
-        sağ(açı)
+      satıryaz(köşegen(5, 12)) // bu da kenarları tam sayı olan başka bir dik üçgen
+
+      // kaplumbağaya renkli bir açı çizdirelim
+      tanım açı(açı: Kesir = 90, renk: Renk = kırmızı, boy: Sayı = 150): Birim = {{
         kalemRenginiKur(renk)
         ileri(boy)
         geri(boy)
         sol(açı)
+        kalemRenginiKur(renk)
+        ileri(boy)
+        yazı(açı)
+        geri(boy)
+        sağ(açı)
       }}
+
+      // Ufak birkaç ayarlama
+      zıpla(50)
+      sol; zıpla; sağ
       hızıKur(orta)
+      kalemKalınlığınıKur(1)
+
+      açı() // varsayılan açı 90 derece yani dik açı
+      açı(60, yeşil, 200)
+      açı(45, mavi, 175)
       açı(30) // varsayılan renk kırmızı
-      açı() // varsayılan açı dik açı
-      açı(45, mavi)
-      açı(60, yeşil)
-      gizle
+    }}
+
+    </pre>
+      </div>.toString,
+
+    "eğer" -> <div>
+      <strong>eğer</strong>(koşul) - Programın işleyişinde bir karar aşaması tanımlar.
+      <br/> Arkasından <strong>yoksa</strong> da gelebilir.
+      <br/>
+      <br/><em>Örnek:</em> <br/>
+      <pre>
+      çıktıyıSil
+      dez koşulSağlandıMı = rastgeleİkil
+      eğer (koşulSağlandıMı) satıryaz("Koşul sağlandı")
+      satıryaz("Ctrl-return ile tekrar tekrar çalıştır")
+      </pre> <strong>rastgeleİkil</strong> komudu yazı tura atmaya benzer. Yüzde elli ihtimalle doğru yüzde elli ihtimalle de yanlış çıkar.
+      <strong>yoksa</strong> anahtar sözcüğüne de bakın.
+      </div>.toString,
+
+    "rastgeleİkil" -> <div>
+      <strong>rastgeleİkil</strong> - Girdi almayan bir komut. Çıktısının türü İkil, değeri de ya yanlış ya da doğru olur. İki seçeneğin de olasılığı yüzde ellidir.
+      <br/>
+      <br/><em>Örnek:</em> <br/>
+      <pre>
+      çıktıyıSil
+      dez yirmiTane = (1 |-| 20).işle(s => (s, rastgeleİkil))
+      yirmiTane.herbiriİçin(satıryaz)
+
+    /* Bir örnek daha. doğru tura, yanlış da yazı olsun.
+     * Yüz kere para atsak, kaç tanesi tura gelir acaba? */
+    silipSakla
+    dez say = (1 |-| 100).ele(s => rastgeleİkil == doğru).boyu
+    yazı(say)
+      </pre>
+      </div>.toString,
+
+    "yoksa" -> <div>
+      <strong>yoksa</strong> - Sadece <strong>eğer</strong> anahtar sözcüğünden sonra kullanılır. Koşul sağlanmazsa etkinleşir.
+      <br/>
+      <br/><em>Örnek:</em> <br/>
+      <pre>
+      çıktıyıSil
+      silipSakla
+      dez para = rastgeleİkil
+      dez iddia = eğer (para) "Tura" yoksa "Yazı"
+      yazı(iddia ++ " geldi!")
+      satıryaz("Ctrl-return ile tekrar tekrar çalıştır")
       </pre>
       </div>.toString,
 
     "englishTurtle" ->
       <div>
-        <strong>englishTurtle</strong><br/><br/>
-        Bu komut sadece İngilizce komutları bilen bir kaplumbağacık verir. Bu kaplumbağanın türü
-        <tt>Turtle</tt>'dır. Türkçe komutları anlamaz. Türkçe bilen kaplumbağanın türü ise <tt>Kaplumbağa</tt>'dır.
-        <br/>Bu 'Turtle', ki kaplumbağa demek, İngilizce komutları belirlemek ve kullanmak istenirse faydalı olabilir.
-        <br/><em>Örnek:</em> <br/>
-        <pre>
-val ingilizceAnlayanKaplumbağa = englishTurtle
-repeat(4){{
-  ingilizceAnlayanKaplumbağa.forward(100)
-  ingilizceAnlayanKaplumbağa.right()
-}}
+      <strong>englishTurtle</strong><br/><br/>
+      Bu komut sadece İngilizce komutları bilen bir kaplumbağacık verir. Bu kaplumbağanın türü
+      <tt>Turtle</tt>'dır. Türkçe komutları anlamaz. Türkçe bilen kaplumbağanın türü ise <tt>Kaplumbağa</tt>'dır.
+      <br/>Bu 'Turtle', ki kaplumbağa demek, İngilizce komutları belirlemek ve kullanmak istenirse faydalı olabilir.
+      <br/><em>Örnek:</em> <br/>
+      <pre>
+      val ingilizceAnlayanKaplumbağa = englishTurtle
+      repeat(4){{
+        ingilizceAnlayanKaplumbağa.forward(100)
+        ingilizceAnlayanKaplumbağa.right()
+      }}
       </pre>
       Bu örnek İngilizce komutlarla bir kare çizer.
       <br/><br/>
@@ -210,23 +273,13 @@ repeat(4){{
       <div>
       <strong>yeniKaplumbağa</strong>(x, y, kılık) - Bu komut x,y noktasında yeni bir kaplumbağa oluşturur ve verilmişse ona bır kılık giydirir. Kılık verilmemişse kaplumbağa olarak çizer. Onun için de adı yeniKaplumbağa!
       <pre>
-val araba = yeniKaplumbağa(100, 200, Görünüş.araba)
-araba.canlandırmaHızınıKur(100)
-araba.kalemRenginiKur(mavi)
-araba.ilerle(0,0)
-araba.kuzey()
+      val araba = yeniKaplumbağa(100, 200, Görünüş.araba)
+      araba.canlandırmaHızınıKur(100)
+      araba.kalemRenginiKur(mavi)
+      araba.ilerle(0,0)
+      araba.kuzey()
       </pre>Bu örnek bir araba oluşturur, (100, 200) noktasından (0, 0) noktasına hızlıca giderek mavi bir doğru parçası, yani bir çizgi çizer.
       </div>.toString,
-    "a_kalıp" -> <div>
-      <strong>komut</strong>(g1, g2) - Açıklama ...
-      <br/>
-      Daha çok açıklama ...
-      <br/><em>Örnek:</em> <br/>
-      <pre>
-val x = komut
-x.metod
-      </pre> Bu örnek ... açıklama ...
-    </div>.toString,
     "ileri" -> <div><strong>ileri</strong>(adımSayısı) - Bu komut kaplumbağaya verilen sayı kadar adım atırarak baktığı doğrultuda ilerletir. Adım sayısı verilmemişse 25 adım atar.</div>.toString,
     "geri" -> "geri(${adımSayısı}) - ileri komutunun tersi",
     "sol" -> <div>
@@ -299,28 +352,28 @@ x.metod
       // Kare adında yeni bir komut
       // Tek bir girdisi var
       def kare(kenar: Sayı) {{
-          yinele(4) {{
-              ileri(kenar)
-              sağ()
-          }}
+        yinele(4) {{
+          ileri(kenar)
+          sağ()
+        }}
       }}
       sil()
       // iki kere çagıralım yeni komutumuzu:
       kare(100)
       kare(200)
 
-      // Topla adında yeni bir işlev tanımlayalım
-      // İki girdisi, bir çıktısı var
-      def topla(a: Sayı, b: Sayı) =
-          a + b
-      çıktıyıSil()
-      // işlevi çağırıp çıktısını yazdıralım
-      satıryaz(topla(3, 5))
-      // bir toplama daha yapalım
-      val toplam = topla(20, 7)
-      satıryaz(toplam)
-      </pre>
-            </div>.toString,
+    // Topla adında yeni bir işlev tanımlayalım
+    // İki girdisi, bir çıktısı var
+    def topla(a: Sayı, b: Sayı) =
+      a + b
+        çıktıyıSil()
+        // işlevi çağırıp çıktısını yazdıralım
+        satıryaz(topla(3, 5))
+        // bir toplama daha yapalım
+        val toplam = topla(20, 7)
+        satıryaz(toplam)
+        </pre>
+        </div>.toString,
     "eksenler" ->
       <div>
       <strong>eksenler -> resim</strong> - Verilen resmin yerel eksenlerini çizerek yeni bir resim oluşturur.
@@ -342,7 +395,7 @@ x.metod
       eksenleriGöster()
       </pre>
       Bu örnekte bir dikdörtgen çiziyor, onu (-100, -50) noktasına taşıyor, 45 derece döndürüyor ve içini maviye boyuyoruz. Bir de bu çizimin kendi eksenlerini yani yerel eksenlerini çiziyoruz. En sondaki eksenleriGöster komutuyla da genel ya da mutlak eksenleri gösteriyoruz.
-    </div>.toString,
+      </div>.toString,
     "eksenleriGöster" ->
       <div>
       <strong>eksenleriGöster</strong> - Çizim tuvalinde yatay (X) ve dikey (Y) eksenlerini çizer.
