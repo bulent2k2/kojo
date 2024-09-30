@@ -61,6 +61,7 @@ object help {
     "sil" -> "sil()",
     "çıktıyıSil" -> "çıktıyıSil()",
     "silVeSakla" -> "silVeSakla()",
+    "silipSakla" -> "silipSakla()",
     "çizimiSil" -> "çizimiSil()",
     "artalanıKur" -> "artalanıKur(${renk})",
     "artalanıKurDik" -> "artalanıKurDik(${renk1},${renk2})",
@@ -84,9 +85,19 @@ object help {
     "buAn" -> "buAn()",
     "buSaniye" -> "buSaniye()",
     "hızıKur" -> "hızıKur(${hız})",
-    "def2" -> "def2()",
     "eksenler" -> "eksenler",
+    "götür" -> "götür(${x}, ${y})",
+    "döndür" -> "döndür(${açı})",
+    "döndürMerkezli" -> "döndürMerkezli(${açı}, ${x}, ${y})",
+    "büyüt" -> "büyüt(${oran})",
+    "büyütXY" -> "büyütXY(${xOranı}, ${yOranı})",
+    "boyaRengi" -> "döndür(${boya})",
+    "Nokta" -> "Nokta(${x}, ${y})",
+    // todo more
   )
+
+  // NOTE: We can't use less than operator! < is meaningful to the xml/html stuff! Instead, use &lt;
+  // https://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references
 
   val content = Map(
     "a_kalıp" -> <div>
@@ -128,10 +139,11 @@ object help {
       </div>.toString,
 
     "tanım" -> <div>
-      <strong>tanım</strong> - Yeni bir işlev veya komut tanımlar. <br/> <br/>
-      <em>Örnekler:</em> <br/> <br/> <pre>
-      // kare adında bir komut yazalım
-      // Bir girdisi olsun
+      <strong>tanım</strong> - Yeni bir komut ya da yeni bir işlev tanımlar. <br/> <br/>
+      <em>Örnek 1:</em> <br/> <br/> <pre>
+      // Yeni bir komut yazalım. Adı kare olsun.
+      // Bir tane de girdisi olsun. Girdinin adı da
+      // kenar olsun ve kenarın uzunluğunu versin
       tanım kare(kenar: Sayı) {{
         yinele(4) {{
           ileri(kenar)
@@ -141,10 +153,21 @@ object help {
       sil()
       hızıKur(orta)
 
-      // yeni komudumuzu iki kere çağıralım
+      // komudumuzu iki kere çağıralım
       kare(100)
       kare(200)
-
+      // Komutların bir "yan etkisi" olur, ama çıktısı olmaz.
+      // Bu komutun yan etkisi de tuvalimize bir kare çizmek.
+      // Çıktısı olmadığını şöyle de açık açık yazabilirdik:
+      tanım kare2(kenar: Sayı): Birim = {{
+        yinele(4) {{
+          ileri(kenar)
+          sağ()
+        }}
+      }}
+      // Birim türünün amacı çıktı olmadığını belirtmek.
+      </pre><br/>
+      <em>Örnek 2:</em> <br/> <br/> <pre>
       // topla adında bir işlev yazalım (fonksiyon da denir)
       // İki girdisi bir de çıktısı var
       tanım topla(s1: Sayı, s2: Sayı) =
@@ -164,21 +187,20 @@ object help {
       yazı(çıktı)
       gizle
 
-      /*
-       * iki örnek daha ister misin?
-       *   1) köşegen adında bir işlev
-       *   2) açı adında bir komut
-       * Ama önce yanlış'ı doğru yap!
-       */
-      eğer(yanlış) {{
-      // eni ve boyu verilen bir dikdörtenin (ya da karenin) köşegen uzunluğunu nedir?
+      </pre><br/>
+      <em>Örnek 3:</em> <br/> <br/> <pre>
+      // köşegen adında bir işlev tanımlayalım
+      // eni ve boyu verilen bir dikdörtenin (ya da karenin) köşegen uzunluğunu bulsun
       tanım köşegen(en: Kesir, boy: Kesir): Kesir = karekökü(karesi(en) + karesi(boy))
       // Çıktının türünü de açıkca yazdık. Gerek yoktu ama yine de iyi bir alışkanlık bu
       satıryaz(köşegen(1, 1)) // birim karenin köşegeni bize 2'nin karekökünü verir
       satıryaz(köşegen(3, 4)) // çok meşhur bir dik üçgen
       satıryaz(köşegen(5, 12)) // bu da kenarları tam sayı olan başka bir dik üçgen
 
-      // kaplumbağaya renkli bir açı çizdirelim
+      </pre><br/>
+      <em>Örnek 4:</em> <br/> <br/> <pre>
+      // açı adında bir komut tanımlayalım
+      // kaplumbağaya renkli bir açı çizdirsin
       tanım açı(açı: Kesir = 90, renk: Renk = kırmızı, boy: Sayı = 150): Birim = {{
         kalemRenginiKur(renk)
         ileri(boy)
@@ -201,10 +223,49 @@ object help {
       açı(60, yeşil, 200)
       açı(45, mavi, 175)
       açı(30) // varsayılan renk kırmızı
-      }}
 
-    </pre>
+      </pre>
       </div>.toString,
+
+    "için" -> <div> Çok faydalı bir anahtar sözcük. İki değişik kullanımı vardır: <br/>
+      <br/>
+
+      1- [komutlarla]:<br/>
+    <br/>
+
+      <strong>için</strong> (sayı &lt;- 1 |-| n) {{ komutlar }} - komutları n kere yineler. Bu arada 
+       sayı da 1'den n'ye kadar değişir ve komutlar tarafından kullanılabilir <br/>
+      <br/>
+
+    <pre>
+      silipSakla
+      hızıKur(hızlı)
+      kalemKalınlığınıKur(5)
+      <strong>için</strong> (sayı &lt;- 1 |-| 10) {{
+          dez yarıçap = 19 + sayı * 10
+          kalemRenginiKur(rastgeleRenk)
+          kalemiKaldır
+          ileri(sayı * 2.2); sol; ileri(10); sağ
+          kalemiİndir
+          daire(yarıçap)
+      }}
+    </pre>
+
+      2- [deyişlerle]:<br/>
+    <br/>
+
+      <strong>için</strong> (sayı &lt;- 1 |-| n) ver {{ deyiş }} - Her yinelemede verilen deyişi ve sayının o andaki değerini kullanarak 
+        bir öge oluşturur ve bunların hepsini bir arada çıktı olarak verir. <br/>
+      <br/>
+
+    <pre>
+      çıktıyıSil
+      dez dizi = <strong>için</strong> (sayı &lt;- 0 |- 21) ver (sayı * sayı)
+      satıryaz(dizi)
+      yoksa satıryaz("ilk 20 kare:" ++ dizi.yazıYap("{{", " ", "}}"))      
+    </pre>
+
+    </div>.toString,
 
     "eğer" -> <div>
       <strong>eğer</strong>(koşul) - Programın işleyişinde bir karar aşaması tanımlar.
@@ -215,10 +276,50 @@ object help {
       çıktıyıSil
       dez koşulSağlandıMı = rastgeleİkil
       eğer (koşulSağlandıMı) satıryaz("Koşul sağlandı")
-      satıryaz("Ctrl-return ile tekrar tekrar çalıştır")
+      yoksa satıryaz("Hayır, koşul sağlanmadı")
+      satıryaz("\nKontrolla beraber return tuşuna basarak tekrar tekrar çalıştır")
       </pre> <strong>rastgeleİkil</strong> komudu yazı tura atmaya benzer. Yüzde elli ihtimalle doğru yüzde elli ihtimalle de yanlış çıkar.
       <strong>yoksa</strong> anahtar sözcüğüne de bakın.
+
+    <br/>
+    <br/> <em>Büyük örnek:</em> <br/>    <br/>
+      Bak yazılım nasıl ciddi bir iştir ve dikkatsizliğe gelmez, onu da burada görelim. 
+      Her türlü olasılığı değerlendirmek epey emek işi. Sevmeden olmaz.
+
+    <pre>
+
+      çıktıyıSil
+      dez yazı = satıroku("10 ile 20 arasında bir sayı girer misin?")
+      // hemen alttaki kodu şimdilik atla ve
+      // eğer'le başlayan satırdan itibaren okumaya devam et.
+      // Girdinin yazı olmaması durumu idare etmemiz için gerekli. Ama
+      // henüz bilmediğin birkaç anahtar sözcük ve Belki türünü kullanıyor.
+
+      dez girdi = yazı.sayıyaBelki eşle {{
+        durum Biri(sayı) => sayı
+        durum Hiçbiri    => 0
+      }}
+
+      // Buradan itibaren okumaya devam!
+      eğer (girdi == 0)
+          eğer (yazı.boşMu)
+            satıryaz("Oyun bozancılık yaptın. Hiçbir şey girmedin.")
+          yoksa eğer (yazı == "0") satıryaz("Oyun bozancılık yaptın ve 0 girdin!")
+          yoksa satıryaz("Oyun bozancılık yaptın. Sayı girmedin.")
+      yoksa {{
+          eğer (girdi > 15) satıryaz("15'ten büyük bir sayı seçtin")
+          eğer (girdi &lt; 15) satıryaz("15'ten küçük bir sayı seçtin")
+          eğer (girdi == 15) satıryaz("15'i seçtin. Bak şu tesadüfe!")
+          yoksa eğer (girdi > 20 || girdi &lt; 10)
+            satıryaz("Neden 10 ile 20 arasında bir sayı girmedin?")
+      }} // birden çok komut olunca burada gerekli oldu kıvırcık parantezler.
+
+      satıryaz("\nKontrolla return tuşuna basıp tekrar oynayabilirsin")
+      yazılımcıkDüzenleyicisiniEtkinleştir()
+
+      </pre>
       </div>.toString,
+
 
     "rastgeleİkil" -> <div>
       <strong>rastgeleİkil</strong> - Girdi almayan bir komut. Çıktısının türü İkil, değeri de ya yanlış ya da doğru olur. İki seçeneğin de olasılığı yüzde ellidir.
@@ -250,6 +351,8 @@ object help {
       satıryaz("Ctrl-return ile tekrar tekrar çalıştır")
       </pre>
       </div>.toString,
+
+
 
     "englishTurtle" ->
       <div>
@@ -291,9 +394,17 @@ object help {
     "ilerle" -> <div><strong>ilerle</strong>(x, y) - Bu komut kaplumbağanın yönünü (x, y) noktasına çevirir ve o noktaya kadar götürür. </div>.toString,
     "zıpla" -> <div> <strong>zıpla</strong>(adımSayısı) - Bu komut <em>kalemi kaldırıp</em> kaplumbağayı verilen adım kadar ilerletir, böylece çizgi çizilmemiş olur. Sonra da kalemi indirir ki arkadan gelen komutlar çizmeye devam etsin. <br/> </div>.toString,
     "ev" -> <div><strong>ev</strong>() - Bu komut kaplumbağayı başlangıç noktasına götürür ve yönünü kuzeye çevirir. </div>.toString,
-    "noktayaDön" -> <div><strong>noktayaDön</strong>(x, y) - Bu komut kaplumbağayı (x, y) noktasına çevirir. </div>.toString,
+    "noktayaDön" -> <div>
+      <strong>noktayaDön</strong>(x, y) - Bu komut kaplumbağayı (x, y) noktasına çevirir. <br/>
+      <strong>noktayaDön</strong>(nokta) - Bu komut kaplumbağayı verilen noktaya çevirir. <br/>
+      <br/><em>Örnek:</em> <br/>      <pre>
+      dez n = Nokta(100, 100)
+      noktayaDön(n)
+      </pre>
+      </div>.toString,
     "açıyaDön" -> <div><strong>açıyaDön</strong>(angle) - Bu komut kaplumbağayı verilen açıya çevirir. (0 derece ekranın sağına bakar (<em>doğu</em>), 90 yukarı (<em>kuzey</em>)).</div>.toString,
     "doğrultu" -> <div><strong>doğrultu</strong> - Bu komut kaplumbağanın yönünü bildirir. (0 derece ekranın sağına bakar (<em>doğu</em>), 90 yukarı (<em>kuzey</em>)).</div>.toString,
+    "Nokta" -> <div><strong>Nokta(x, y)</strong>() - Yeni bir nokta tanımlar. </div>.toString,
     "doğu" -> <div><strong>doğu</strong>() - Bu komut kaplumbağayı doğuya çevirir. </div>.toString,
     "batı" -> <div><strong>batı</strong>() - Bu komut kaplumbağayı batıya çevirir. </div>.toString,
     "kuzey" -> <div><strong>kuzey</strong>() - Bu komut kaplumbağayı kuzeye çevirir. </div>.toString,
@@ -321,6 +432,7 @@ object help {
     "sil" -> <div><strong>sil</strong>() - Bu komut kaplumbağanın tuvalini temizler, kaplumbağayı başlangıç konumuna geri getirir ve kuzey doğrultusuna çevirir.</div>.toString,
     "çıktıyıSil" -> <div><strong>çıktıyıSil</strong>() - Bu komut çıktı penceresindeki bütün çıktıları silerek temizler. </div>.toString,
     "silVeSakla" -> <div><strong>silVeSakla</strong>() - Bu komut tuvaldeki çizimleri siler ve kaplumbağayı görünmez kılar. </div>.toString,
+    "silipSakla" -> <div><strong>silipSakla</strong>() - Bu komut tuvaldeki çizimleri siler ve kaplumbağayı görünmez kılar. </div>.toString,
     "çizimiSil" -> <div><strong>çizimiSil</strong>() - Bu komut tuvaldeki çizimleri siler. </div>.toString,
     "artalanıKur" -> <div><strong>artalanıKur</strong>(renk) - Bu komutla tuval verilen renge boyanır. Kojonun tanıdığı sarı, mavi ve siyah gibi renkleri kullanabilirsiniz ya da <tt>Renk</tt>, <tt>ColorHSB</tt> ve <tt>ColorG</tt> komutlarını kullanarak kendi renklerinizi yaratabilirsiniz. </div>.toString,
     "artalanıKurDik" -> <div><strong>artalanıKurDik</strong>(renk1, renk2) - Bu komutla tuval aşağıdan yukarı doğru birinci renkten ikinci renge derece derece değişerek boyanır. </div>.toString,
@@ -375,5 +487,51 @@ object help {
       <div>
       <strong>eksenleriGizle</strong> - Çizim tuvalindeki yatay (X) ve dikey (Y) eksenlerini siler.
       </div>.toString,
+
+    "götür" -> <div>
+
+      <strong>götür</strong>(x, y) <br/>
+      <strong>götür</strong>(nokta) <br/>
+      <strong>götür</strong>(yöney2b) <br/> <br/>
+
+      Bir resmi çizmeden önce verilen koordinatlara götürür. <br/>
+      <br/><em>Örnek:</em> <br/>
+      <pre>
+
+      tanım kare = Resim {{
+          yinele(4) {{
+              ileri(50)
+              sağ()
+          }}
+      }}
+
+      silipSakla()
+      eksenleriGöster
+      dez r1 = götür(50, 100) -> kare
+      r1.çiz
+
+      dez r2 = götür(100, 50) * boyaRengi(mavi) -> kare
+      dez r3 = götür(-50, 50) * boyaRengi(yeşil) -> kare
+      dez r4 = götür(50, -50) * boyaRengi(kırmızı) -> kare
+      çiz(r2, r3, r4)
+
+    </pre> 'boyaRengi' ve 'götür' yöntemlerine birleşebilen bir dönüştürücü (BD) deriz, çünkü * ile birleştirebilir ve resmi dönüştürürler. Bir de 'döndür'e bak. <br/>
+
+      </div>.toString,
+
+    "döndür" -> <div>
+      <strong>döndür</strong>(açı) - Bir resmi çizmeden önce verilen açı kadar saat yönünün tersine döndürür. <br/>
+      360 derece döndürmek tam dönüş olur ve etkisi olmaz. <br/>
+      <br/><em>Örnek:</em> <br/>
+      <pre>
+
+        silipSakla
+        dez d1 = döndür(30) -> Resim.dikdörtgen(100, 20)
+        d1.çiz
+
+      </pre> Bu örnekten sonra açıklama ...
+      </div>.toString,
+
+    // todo: much more
   )
 }

@@ -208,9 +208,9 @@ yaz(hepsi)"""
         row("BelirtimHatası".c, "java.lang.AssertionError".c, kod1710.c, "".c),
         row("KuraldışıGirdiHatası".c, "java.lang.IllegalArgumentException".c, kod1720.c, "".c),
         row("EksikTanımHatası".c, "scala.NotImplementedError".c, kod1730.c, "".c),
-        // todo: add
-        // ("java.lang.NullPointerException", "BoşGöstergeHatası")
-        // ("java.lang.ArithmeticException", "MatematikselHata")
+        row("SınırDışınaTaşmaHatası".c, "java.lang.IndexOutOfBoundsException".c, "".c),
+        row("BoşGöstergeHatası".c, "java.lang.NullPointerException".c, "".c),
+        row("MatematikselHata".c, "java.lang.ArithmeticException".c, "".c),
       ),
       "Tür eşi olmayan nesneler de var. Onların yöntemleri çok işimize yarar:".p,
       table(

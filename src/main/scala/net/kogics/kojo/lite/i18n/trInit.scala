@@ -153,7 +153,7 @@ object TurkishAPI
     }
     def zıpla(): Birim = zıpla(25)
     def ev(): Birim = englishTurtle.home()
-    def noktayaDön(p: Nokta): Birim = englishTurtle.towards(p)
+    def noktayaDön(n: Nokta): Birim = englishTurtle.towards(n)
     def noktayaDön(x: Kesir, y: Kesir): Birim = englishTurtle.towards(x, y)
     def noktayaGit(x: Kesir, y: Kesir): Birim = englishTurtle.lineTo(x, y)
     def noktayaGit(n: Nokta): Birim = englishTurtle.lineTo(n)
@@ -617,7 +617,6 @@ object TurkishAPI
   def DokumaBoya(dosya: Yazı, x: Kesir, y: Kesir) = rb.TexturePaint(dosya, x, y)
 
   def a_kalıp() = println("Kalıbı kullan") // todo: geçici. Bakınız tr/help.scala
-  def def_türkçe() = println("def")
 
   def başlangıçNoktasıÜstSolKöşeOlsun() = rb.originTopLeft()
   def başlangıçNoktasıAltSolKöşeOlsun() = rb.originBottomLeft()
@@ -629,6 +628,9 @@ object TurkishAPI
   type BelirtimHatası = tr.BelirtimHatası
   type KuraldışıGirdiHatası = tr.KuraldışıGirdiHatası
   type EksikTanımHatası = tr.EksikTanımHatası
+  type SınırDışınaTaşmaHatası = tr.SınırDışınaTaşmaHatası
+  type BoşGöstergeHatası = tr.BoşGöstergeHatası
+  type MatematikselHata = tr.MatematikselHata
 
   // to help facilitate testing of turkish keyword hiliting in:
   // ~/kojo-repo/src/test/scala/net/kogics/kojo/lexer/ScalariformTokenMakerTest.scala

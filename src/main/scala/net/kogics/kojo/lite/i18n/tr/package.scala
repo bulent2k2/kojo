@@ -117,10 +117,11 @@ package object tr {
   type BelirtimHatası = java.lang.AssertionError
   type KuraldışıGirdiHatası = java.lang.IllegalArgumentException
   type EksikTanımHatası = scala.NotImplementedError
-  // todo: add
-  // ("java.lang.NullPointerException", "BoşGöstergeHatası")
-  // ("java.lang.ArithmeticException", "MatematikselHata")
-  // also add any new types in ../trInit.scala
+  type SınırDışınaTaşmaHatası = java.lang.IndexOutOfBoundsException
+  type BoşGöstergeHatası = java.lang.NullPointerException
+  type MatematikselHata = java.lang.ArithmeticException
+
+  // Note: also add any new types in ../trInit.scala and also turler.scala in kilavuz
 
   class Mp3Çalar(p: net.kogics.kojo.music.KMp3) {
     def çalıyorMu = p.isMp3Playing

@@ -17,6 +17,7 @@ package net.kogics.kojo
 package xscala
 
 import language.implicitConversions
+import net.kogics.kojo.lite.i18n.tr.{dict, isTurkish}
 
 // Do not format source. It messes up help code formatting.
 
@@ -33,7 +34,7 @@ object Help {
             <li>Abstraction - lets you give your combinations of primitives (and other abstractions) a name - for clarity and ease of use. 
                 These abstractions can take part in further composition.</li>
         </ul>
-        The different Categories in the Instruction Palette relete to these ideas in the following manner:
+        The different Categories in the Instruction Palette relate to these ideas in the following manner:
         <ul>
             <li>Turtle - primitives for working with Turtles</li>
             <li>Picture and Picture Transforms - primitives for working with Pictures</li>
@@ -282,6 +283,24 @@ sq(100)
       </pre> 
     </div>
   )
+
+
+  // todo: localize! This works for Turkish and English only:
+  // todo: if (localNotEnglish) S_KEYWORD_FOR_DEF ...
+  def en2tr(keyword: String): String =
+    // todo: check that it is indeed a scala keyword
+    dict.keywordTranslation.getOrElse(keyword, s"<$keyword has no Turkish translation>")
+  def translate(keyword: String)(elem: String = ""): String =
+    if (isTurkish) s"Türkçesi '${en2tr(keyword)}' olan anahtar sözcük" else elem
+
+  // we have only the following above: def, val, var, for, if
+  // todo: mixes in Scala 3 keywords enum, given, then, (any others?)
+  val missingKeywords = (for(keyword <- List("abstract", "case", "catch", "class", "do", "else", "enum", "export",
+    "extends", "false", "final", "finally", "forSome", "given", "implicit", "import", "lazy", "match", "new",
+    "null", "object", "override", "package", "private", "protected", "return", "sealed", "super", "this", "then", "throw",
+    "trait", "true", "try", "type", "var", "while", "with", "yield"))
+  yield (keyword -> translate(keyword)())).toMap
+
 
   val TwContent = Map[String, String](
     "forward" ->
@@ -932,7 +951,7 @@ The code that you provide to react runs about thirty times per second, in the UI
             min(5, 10) // 5
         </pre>
     </div>,
-    "for" ->
+    "for" -> translate("for")(
       <div>
       Usage #1 [with commands]:<br/>
       <strong>for</strong> (i &lt;- 1 to n) {{ commands }} - Repeats a block of commands (within braces) n number of times,
@@ -955,8 +974,8 @@ The code that you provide to react runs about thirty times per second, in the UI
       <pre>
           for (i &lt;- 1 to 4) yield (2 * i)
       </pre>
-    </div>,
-    "def" ->
+    </div>),
+    "def" -> translate("def")(
       <div>
         <strong>def</strong> - Gives a name to a block of commands (within braces) or an expression. This lets you define a 
         new command or function.<br/>
@@ -988,7 +1007,7 @@ The code that you provide to react runs about thirty times per second, in the UI
             // another call to the sum function
             print(sum(20, 7))
         </pre>
-    </div>,
+    </div>),
     "recursion" ->
       <div>
         Recursion allows you to define a command or function in terms of itself. <br/>
@@ -1013,7 +1032,7 @@ The code that you provide to react runs about thirty times per second, in the UI
             if (n == 0) 1 else n * factorial(n-1)
       </pre>
     </div>,
-    "if" ->
+    "if" -> translate("if")(
       <div>
         <strong>if</strong> or <strong>if-else</strong> - Let's you choose the instruction to execute 
         based on a condition. The instruction can be a command, in which case if-else works as a command.
@@ -1041,8 +1060,8 @@ The code that you provide to react runs about thirty times per second, in the UI
             clearOutput()
             println(big)
         </pre>
-    </div>,
-    "val" ->
+    </div>),
+    "val" -> translate("val")(
       <div>
         <strong>val</strong> - Gives a name to an expression, letting you create a named value. 
         This makes your programs easier to modify and easier to understand.<br/>
@@ -1058,7 +1077,7 @@ The code that you provide to react runs about thirty times per second, in the UI
                 right()
             }}
         </pre>
-    </div>,
+    </div>),
     "pict" -> "pict { t => } is obsolete. Use the PictureT (preferred) or Picture function instead.",
     "Picture" ->
       <div>
@@ -1877,7 +1896,7 @@ repeat(5) {{
       </div>,
     "Kmath.lerp" -> "mathx.lerp(start, stop, amt) - interpolates between start and stop by the given amount.",
     "Kmath.map" -> "mathx.map(value, start1, stop1, start2, stop2) - maps the given value from the range (start1, stop1) to the range(start2, stop2)."
-  )
+  ) ++ missingKeywords
 
   val VnContent = Map[String, String]()
 
@@ -1920,4 +1939,5 @@ repeat(5) {{
       )
     )
   }
+
 }
