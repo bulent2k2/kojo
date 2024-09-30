@@ -42,7 +42,7 @@ import net.kogics.kojo.lite.CoreBuiltins
 import net.kogics.kojo.util.Utils
 
 package object tr {
-  lazy val isTurkish = Utils.loadString("S_IncludePragma") == "yükle"
+  lazy val isTurkish = "tr" == System.getProperty("user.language")
   var builtins: CoreBuiltins = _ // unstable reference to module
   lazy val richBuiltins = builtins.asInstanceOf[Builtins]
 
