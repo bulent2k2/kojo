@@ -125,7 +125,7 @@ dez sayfaKaplumbağanınAnladığıKomutlar = Page(
       row("kalemiİndir".c, "Kalemi indir ve çizim yapmaya devam et. Örnek aşağıda."),
       row("kalemiKaldır".c, "Kalemi kaldır ki bundan sonra hareket ederken çizim yapma.", kod100.c),
       row("sil".c, "Tuvali temizler ve kaplumbağayı başlangıç noktasına döndürür"),
-      row("silVeSakla".c, "Tuvali temizler, kaplumbağayı başlangıç noktasına döndürür ve gizler"),
+      row("silipSakla".c, "Tuvali temizler, kaplumbağayı başlangıç noktasına döndürür ve gizler. Diğer adı 'silVeSakla'", "silVeSakla".c),
     ),
     "Başlangıçta kalem inik. Onun için yürürken çizim yapacak. Üstteki ve alttaki komutarı istediğin sırada çalıştırabilirsin. Tıklaman yeter.".p,
     table(
