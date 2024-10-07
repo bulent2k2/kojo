@@ -241,9 +241,9 @@ class Builtins(
     "Adds an input field with the supplied label and default value to the Story Teller Window."
   )
 
-  implicit val StringRead = util.Read.StringRead
-  implicit val DoubleRead = util.Read.DoubleRead
-  implicit val IntRead = util.Read.IntRead
+  implicit val StringRead: util.Read.StringRead.type = util.Read.StringRead
+  implicit val DoubleRead: util.Read.DoubleRead.type = util.Read.DoubleRead
+  implicit val IntRead: util.Read.IntRead.type = util.Read.IntRead
   import util.Read
 
   def stFieldValue[T](label: String, default: T)(implicit reader: Read[T]): T = {
@@ -528,7 +528,7 @@ Here's a partial list of the available commands:
   def withFillColor(pic: Picture, color: Color) = pic.withFillColor(color)
   def withPenColor(pic: Picture, color: Color) = pic.withPenColor(color)
 
-  implicit val _picCanvas = tCanvas
+  implicit val _picCanvas: net.kogics.kojo.core.SCanvas = tCanvas
   def pict(painter: Painter) = picture.Pic(painter)
   def PictureT(painter: Painter) = picture.Pic(painter)
   def Picture(fn: => Unit) = picture.Pic0 { t =>
@@ -1100,7 +1100,7 @@ Here's a partial list of the available commands:
   def rangeTo(start: Double, end: Double, step: Double) = Range.BigDecimal.inclusive(start, end, step)
   def rangeTill(start: Double, end: Double, step: Double) = Range.BigDecimal(start, end, step)
 
-  implicit def bd2double(bd: BigDecimal) = bd.doubleValue
+  implicit def bd2double(bd: BigDecimal): Double = bd.doubleValue
 
   type CanvasDraw = net.kogics.kojo.lite.CanvasDraw
   import scala.language.reflectiveCalls

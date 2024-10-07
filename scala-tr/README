@@ -1,3 +1,45 @@
+* Upgrade to 2.13.15:
+Got <.gz> from: https://github.com/scala/scala/releases/tag/v2.13.15
+
+Copied the changes to inject Turkish keywords from:
+    https://github.com/bulent2k2/scala-2/commit/a81b2ce4931da9f55f3c7bb49b58778b3fda53ca
+to update three files (change to Main.scala is a single-line for only diagnostic message)
+    Main.scala              987 Scala            ~/src/scala-2.13.15/src/compiler/scala/tools/nsc/Main.scala
+    Scanners.scala        65663 Scala            ~/src/scala-2.13.15/src/compiler/scala/tools/nsc/ast/parser/Scanners.scala
+    StdNames.scala        70184 Scala            ~/src/scala-2.13.15/src/reflect/scala/reflect/internal/StdNames.scala
+
+
+Built the jars and copied over to Kojo with:
+> gunzip 
+> cd ~/src/scala-2.13.15
+> java_std_path
+> sbt dist/mkPack
+> cp build/pack/lib/* ~/kojo-repo/scala-tr/build/pack/lib/
+
+Note: `java_std_path` alias changes PATH to get us jdk1.8.0_271.jdk
+
+** Main.scala one-line change:
+    println("[Kojo] Scala Compiler v2.13.15 with Turkish keywords")
+
+** Scanners.scala changes start at:
+  private val allKeywords = List[(Name, Token)](
+    // Turkish first so that compiler errors report with English keywords
+    nme.trABSTRACTkw  -> ABSTRACT,
+    ...
+
+** StdNames.scala changes start after:
+  abstract class Keywords extends {
+    private[this] val kw = new KeywordSetBuilder
+
+    final val ABSTRACTkw: TermName  = kw("abstract")
+
+    ...
+    final val trABSTRACTkw: TermName  = kw("soyut")
+    final val trCASEkw: TermName      = kw("durum")
+    ...
+
+* Older notes:
+
 This is for scala 2.13.x:
 interregnum after the latest stable release of 2.13.8 and before the
 future release 2.13.9
@@ -47,3 +89,4 @@ No need to repeat what I did for 2.13.6 which is below for the record only:
 (3) Copy lib folder including contents from <path-to-your-clone>/scala-2/build/pack/lib
     to ./build/pack/lib and override the old jars.
     E.g., /Users/ben/src/scala-2/build/pack
+* The End

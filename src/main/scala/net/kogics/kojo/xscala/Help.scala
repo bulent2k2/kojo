@@ -23,7 +23,7 @@ import net.kogics.kojo.lite.i18n.tr.{dict, isTurkish}
 
 object Help {
 
-  implicit def elem2str(e: xml.Elem) = e.toString
+  implicit def elem2str(e: xml.Elem): String = e.toString
   def summaryFooter =
     <div>
         <strong>Some Background</strong><br/>

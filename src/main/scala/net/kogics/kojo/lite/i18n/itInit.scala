@@ -104,11 +104,11 @@ object ItalianCustomStatements {
     }
   }
 
-  implicit def se[T](cond: => Boolean)(thenFn: => T) = {
+  implicit def se[T](cond: => Boolean)(thenFn: => T): IfThenClauseExpression[T] = {
     new IfThenClauseExpression(cond, thenFn)
   }
 
-  implicit def seVero[T](cond: Boolean)(thenFn: => T) = {
+  implicit def seVero[T](cond: Boolean)(thenFn: => T): Any = {
     if (cond) thenFn else ()
   }
 
