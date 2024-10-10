@@ -28,14 +28,14 @@ import net.kogics.kojo.xscala.RepeatCommands
 
 // Keep in alphabetical order
 object TurkishAPI
-    extends tr.ArrayMethodsInTurkish
-    with tr.CalendarAndTimeUtilsInTurkish
-    with tr.CanvasDrawInTurkish
+    extends tr.DizikYöntemleri
+    with tr.TakvimVeZamanYöntemleri
+    with tr.TuvalÇizimYöntemleri
     with tr.CharMethodsInTurkish
-    with tr.ColorMethodsInTurkish
     with tr.CoreTypeMethodsInTurkish
+    with tr.DosyaÇevirisi
     with tr.FutureMethodsInTurkish
-    with tr.GraphicsUtilsInTurkish
+    with tr.ÇizimYöntemleri
     with tr.GeoMethodsInTurkish
     with tr.KeyCodesInTurkish
     with tr.LazyListMethodsInTurkish
@@ -48,15 +48,18 @@ object TurkishAPI
     with tr.PartialFunctionMethodsInTurkish
     with tr.QueueMethodsInTurkish
     with tr.RangeMethodsInTurkish
+    with tr.RenkYöntemleri
     with tr.SoundUtilsInTurkish
     with tr.SeqMethodsInTurkish
     with tr.SetMethodsInTurkish
     with tr.StringMethodsInTurkish
     with tr.arayuz.SwingWidgetMethodsInTurkish
+    with tr.TürÇevirileri
     with tr.UrlInTurkish
     with tr.VectorMethodsInTurkish {
 
   var builtins: CoreBuiltins = _ // unstable reference to module
+  val bi = builtins // todo: is this OK??
   lazy val richBuiltins = builtins.asInstanceOf[Builtins]
   lazy val rb = richBuiltins // todo: refactor code below to use rb
 
@@ -105,11 +108,6 @@ object TurkishAPI
   val Yığın = tr.Yığın
   type Eşlem[A, D] = tr.Eşlem[A, D]
   val Eşlem = tr.Eşlem
-
-  // use tuples, case classes or other structure types when more args seem to be needed
-  type İşlev1[D, R] = tr.İşlev1[D, R]
-  type İşlev2[D1, D2, R] = tr.İşlev2[D1, D2, R]
-  type İşlev3[D1, D2, D3, R] = tr.İşlev3[D1, D2, D3, R]
 
   val (yavaş, orta, hızlı, çokHızlı, noktaSayısı, santim, inç) =
     (tr.yavaş, tr.orta, tr.hızlı, tr.çokHızlı, tr.noktaSayısı, tr.santim, tr.inç)
@@ -234,26 +232,8 @@ object TurkishAPI
   def çizimiSil(): Birim = builtins.TSCanvas.clearStepDrawing()
   def çıktıyıSil(): Birim = builtins.clearOutput()
   def silVeÇizimBiriminiKur(ub: UzunlukBirimi) = builtins.TSCanvas.clearWithUL(ub)
-  lazy val mavi: Renk = builtins.blue
-  lazy val kırmızı: Renk = builtins.red
-  lazy val sarı: Renk = builtins.yellow
-  lazy val yeşil: Renk = builtins.green
-  lazy val mor: Renk = builtins.purple
-  lazy val pembe: Renk = builtins.pink
-  lazy val kahverengi: Renk = builtins.brown
-  lazy val siyah: Renk = builtins.black
-  lazy val beyaz: Renk = builtins.white
-  lazy val renksiz: Renk = builtins.noColor
-  lazy val gri: Renk = builtins.gray
-  lazy val koyuGri: Renk = builtins.darkGray
-  lazy val açıkGri: Renk = builtins.lightGray
-  lazy val turuncu: Renk = builtins.orange
-  lazy val morumsu: Renk = builtins.magenta
-  lazy val camgöbeği: Renk = builtins.cyan
 
-  // TODO: other Color* constructors -- and Help Content
-  // ../CoreBuiltins.scala
-  lazy val renkler = builtins.cm // ColorMaker in ../../staging/color.scala and ../../doodle/Color.scala
+  // lazy val renkler = builtins.cm // ColorMaker in ../../staging/color.scala and ../../doodle/Color.scala
   // lazy val tuşlar = builtins.Kc // Key Codes
 
   def artalanıKur(r: Renk): Birim = builtins.setBackground(r)
@@ -297,8 +277,8 @@ object TurkishAPI
 
   // simple IO
   def satıroku(istem: Yazı = ""): Yazı = builtins.readln(istem)
-  def satıryaz(veri: Her): Birim = println(veri) // Transferred here from sv.tw.kojo.
   def satıryaz(): Birim = println()
+  def satıryaz(veri: Her): Birim = println(veri) // Transferred here from sv.tw.kojo.
   def yaz(veri: Her): Birim = print(veri)
 
   // ../CoreBuiltins.scala
@@ -321,7 +301,7 @@ object TurkishAPI
   def rastgeleDiziden[T](dizi: Dizi[T], ağırlıklar: Dizi[Kesir]) = builtins.randomFrom(dizi, ağırlıklar)
   // def diziKarıştır[T](xs: Dizi[T]): Dizi[T] = util.Random.shuffle(xs)
   def rastgeleKarıştır[T, C](xLer: YinelenebilirBirKere[T])
-    (örtük yapıcı: Yapıcıdan[xLer.type, T, C]): C = util.Random.shuffle(xLer)
+    (implicit yapıcı: Yapıcıdan[xLer.type, T, C]): C = util.Random.shuffle(xLer)
 
   def durakla(saniye: Kesir): Birim = builtins.pause(saniye)
   def duraklaMiliSaniye(miliSaniye: Uzun): Birim = builtins.pauseMillis(miliSaniye)
@@ -520,9 +500,6 @@ object TurkishAPI
   type Yöney2B = tr.Yöney2B
   type Resim = tr.Resim
   type İmge = tr.İmge
-  type İmgeİşlemi = tr.İmgeİşlemi
-  type Bellekteİmge = tr.Bellekteİmge
-  type Bellekteİmgeİşlemi = tr.Bellekteİmgeİşlemi
   val Yöney2B = tr.Yöney2B
   val Resim = tr.Resim
 
@@ -603,6 +580,7 @@ object TurkishAPI
   object Yazıyüzü {
     def apply(adı: Yazı, boyu: Sayı): Yazıyüzü = builtins.Font(adı, boyu)
     def apply(adı: Yazı, boyu: Sayı, biçem: Sayı): Yazıyüzü = builtins.Font(adı, biçem, boyu)
+    val (sade, vurgulu, kalın) = (bi.PlainFont, bi.ItalicFont, bi.BoldFont)
   }
 
   def zamanTut[T](başlık: Yazı = "Zaman ölçümü:")(işlev: => T)(bitiş: Yazı = "sürdü."): T = { // timeit in Builtins.scala
@@ -622,19 +600,17 @@ object TurkishAPI
   def başlangıçNoktasıAltSolKöşeOlsun() = rb.originBottomLeft()
   def notaÇal(frekans: Sayı, süreMiliSaniye: Sayı, ses: Sayı = 80): Birim = rb.playNote(frekans, süreMiliSaniye, ses)
   def notaÇalgısınıKur(çalgı: Sayı): Birim = rb.setNoteInstrument(çalgı)
-  // more to come (:-)
-
-  // more types for readability, mostly
-  type BelirtimHatası = tr.BelirtimHatası
-  type KuraldışıGirdiHatası = tr.KuraldışıGirdiHatası
-  type EksikTanımHatası = tr.EksikTanımHatası
-  type SınırDışınaTaşmaHatası = tr.SınırDışınaTaşmaHatası
-  type BoşGöstergeHatası = tr.BoşGöstergeHatası
-  type MatematikselHata = tr.MatematikselHata
 
   // to help facilitate testing of turkish keyword hiliting in:
   // ~/kojo-repo/src/test/scala/net/kogics/kojo/lexer/ScalariformTokenMakerTest.scala
   var testTrKeywords = false // used in tr/package.scala
+
+  def yazıTamamlamaSeçenekleriniYazdırmayıAçKapa() = tr.dumpCompletions = !tr.dumpCompletions
+
+  def sürüm = rb.version
+
+
+  // more to come (:-)
 }
 
 object TurkishInit {
@@ -649,7 +625,7 @@ object TurkishInit {
           println("Kojo Deneme Tahtasını kapatınca geçmiş silinir.")
         }
 
-        //        b.setEditorTabSize(2)
+        // b.setEditorTabSize(2)
 
         // code completion
         b.addCodeTemplates(

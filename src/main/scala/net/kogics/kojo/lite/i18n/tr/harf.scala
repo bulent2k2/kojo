@@ -17,7 +17,19 @@
 package net.kogics.kojo.lite.i18n.tr
 
 trait CharMethodsInTurkish {
+  private type Dizik[T]=Array[T]
+
   type Harf = Char
+  type JHarf = java.lang.Character
+  type HarfDizisindenDizik=ArrayCharSequence
+  type HarfDizisindenDizi=SeqCharSequence
+  type HarfDiziğiDizisi = collection.mutable.ArraySeq.ofChar
+
+  def HarftenHarfe(h: JHarf): Harf = Character2char(h)
+  def harftenHarfe(h: Harf): JHarf = char2Character(h)
+
+  def HarfDizisindenDizik(harfDiziği: Dizik[Harf]): HarfDizisindenDizik = ArrayCharSequence(harfDiziği)
+  def HarfDizisindenDizi(harfDizisi: SıralıDizi[Harf]): HarfDizisindenDizi = SeqCharSequence(harfDizisi)
 
   object Harf {
     def sayıMı(h: Harf): İkil = Character.isDigit(h)

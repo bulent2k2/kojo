@@ -20,7 +20,7 @@ import java.util.Calendar
 import java.util.Date
 import java.util.TimeZone
 
-trait CalendarAndTimeUtilsInTurkish {
+trait TakvimVeZamanYöntemleri {
   type Takvim = Calendar
   type Tarih = Date
   type SaatDilimi = TimeZone

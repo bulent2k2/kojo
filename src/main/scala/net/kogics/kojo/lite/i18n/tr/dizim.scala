@@ -75,7 +75,7 @@ class Dizim[T](val a: Array[T]) {
   }
 }
 
-trait ArrayMethodsInTurkish {
+trait DizikYöntemleri {
   type Dizik[T] = Array[T]
   object Dizik {
     def apply[T](ögeler: T*)(implicit arg: ClassTag[T]) = Array(ögeler: _*)

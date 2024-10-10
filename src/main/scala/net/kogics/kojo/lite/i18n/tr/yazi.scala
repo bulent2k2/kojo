@@ -118,6 +118,7 @@ trait StringMethodsInTurkish {
     def sonundaMı(öbürü: Yazı): İkil = y.endsWith(öbürü)
 
     def kenarPayınıÇıkar = y.stripMargin
+    def eşlenirMi(düzenliDeyiş: Yazı): İkil = y.matches(düzenliDeyiş)
 
     def dizime[S >: Harf](implicit delil: scala.reflect.ClassTag[S]): Dizim[S] = new Dizim(y.toArray(delil))
     def ikile = y.toBoolean

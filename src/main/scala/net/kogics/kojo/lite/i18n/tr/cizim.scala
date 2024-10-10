@@ -16,7 +16,7 @@
  */
 package net.kogics.kojo.lite.i18n.tr
 
-trait GraphicsUtilsInTurkish {
+trait ÇizimYöntemleri {
   // ~/kojo-repo/src/main/scala/net/kogics/kojo/turtle/TurtleWorldAPI.scala
   // ~/kojo-repo/src/main/resources/media:
 

@@ -35,8 +35,9 @@ object templates {
    */
   val codeTemplates = if (!isTurkish) Map() else Map(
     "eğer_ve_yoksa" -> "eğer (${koşul}) {\n    ${cursor}\n}\nyoksa {\n    \n}",
-    "tanım_işlev_1_girdili" -> "tanım ${işlevinAdı}(${girdi1}: ${Tür1}) = {\n    ${cursor}\n}",
+    "tanım_işlev" -> "tanım ${işlevinAdı}(${girdi1}: ${Tür1}) = {\n    ${cursor}\n}",
     "tanım_işlev_2_girdili" -> "tanım ${işlevinAdı}(${girdi1}: ${Tür1}, ${girdi2}: ${Tür2}) = {\n    ${cursor}\n}",
+    "tanım_işlev_çıktı_türü_ile" -> "tanım ${işlevinAdı}(${girdi1}: ${Tür1}): ${çıktıTürü} = {\n    ${cursor}\n}",
     "tanım_komut_girdisiz" -> "tanım ${komutunAdı}() {\n    ${cursor}\n}",
     "tanım_komut_1_girdili" -> "tanım ${komutunAdı}(${girdi1}: ${Tür1}) {\n ${cursor}\n}",
     "tanım_komut_2_girdili" -> "tanım ${komutunAdı}(${girdi1}: ${Tür1}, ${girdi2}: ${Tür2}) {\n    ${cursor}\n}",

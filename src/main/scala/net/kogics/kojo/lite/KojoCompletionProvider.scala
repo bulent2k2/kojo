@@ -18,6 +18,8 @@ import org.fife.ui.autocomplete.CompletionCellRenderer
 import org.fife.ui.autocomplete.CompletionProviderBase
 import org.fife.ui.autocomplete.TemplateCompletion
 
+import net.kogics.kojo.lite.i18n.tr.{updateTypes, dumpCompletions}
+
 class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends CompletionProviderBase {
   val Log = Logger.getLogger(getClass.getName)
 
@@ -37,11 +39,12 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
   }
 
   def proposal(offset: Int, completion: String, kind: Int, template: String) = {
+    val completion2 = updateTypes(completion)
     new TemplateCompletion(
       this,
-      completion,
-      completion,
-      rtsaTemplate(if (template == null) completion else template),
+      completion2,
+      completion2,
+      rtsaTemplate(if (template == null) completion2 else template),
       null,
       Help(completion)
     ) {
@@ -64,7 +67,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
       case Var           => VARIABLE
     }
 
-    val display = completion.fullCompletion
+    val display = updateTypes(completion.fullCompletion)
 
     val knownOwners = Set(
       "PicShape",
@@ -141,7 +144,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     }
 
     def help =
-      knownHelp.getOrElse(completion.fullCompletion)
+      knownHelp.getOrElse(display) // completion.fullCompletion
 
     new TemplateCompletion(this, display, display, rtsaTemplate(template), null, help) {
       setRelevance(-completion.prio)
@@ -296,6 +299,8 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     }
   }
 
+  import scala.jdk.CollectionConverters._ // bulent debugging. for .asScala below
+
   override def getCompletionsImpl(comp: JTextComponent) = {
     if (execSupport.startingUp) {
       val proposals = new java.util.ArrayList[Completion]
@@ -313,7 +318,12 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
       proposals
     }
     else if (execSupport.isRunningEnabled) {
-      complete(comp)
+      val cs = complete(comp)
+      if (dumpCompletions) {
+        val b: scala.collection.mutable.Buffer[Completion] = cs.asScala  // debugging
+        b.foreach(c => println(c))
+      }
+      cs
     }
     else {
       val proposals = new java.util.ArrayList[Completion]

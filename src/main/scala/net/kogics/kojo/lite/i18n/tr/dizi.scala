@@ -21,6 +21,8 @@ package net.kogics.kojo.lite.i18n.tr
 // And here are (all?) the collection types in Turkish:
 //   Diz Dizi Dizik Dizim Dizin EsnekDizim EsnekYazı Eşlem Eşlek Küme MiskinDizin Yazı Yığın Yöney
 trait SeqMethodsInTurkish {
+  type SıralıDizi[T] = IndexedSeq[T]
+
   object Dizi {
     def apply[B](ögeler: B*): Dizi[B] = Seq.from(ögeler)
     def unapplySeq[B](dizi: Dizi[B]) = Seq.unapplySeq(dizi)
@@ -184,8 +186,8 @@ trait SeqMethodsInTurkish {
     // more to come
   }
 
-  implicit class IndexedSeqYöntemleri[T](d: DiziSıralı[T]) { // used in alfabeta in othello
-    type Col = DiziSıralı[T]
+  implicit class IndexedSeqYöntemleri[T](d: SıralıDizi[T]) { // used in alfabeta in othello
+    type Col = SıralıDizi[T]
     type C2[B] = Dizi[B]
     type Eşlek[A, D] = collection.immutable.Map[A, D]
     // duplicate above in Diz

@@ -17,19 +17,24 @@
 package net.kogics.kojo.lite.i18n.tr
 
 object translate {
+  // todo: how to reuse type info translations in translating results below?
   def typeInfo(str: String) = str
     .replace("net.kogics.kojo.lite.i18n.tr.", "")
     .replace("net.kogics.kojo.lite.i18n.TurkishAPI.", "")
     .replace("UserCode.this.TurkishAPI.", "")
     .replace("UserCode", "KullanıcınınYazılımı")
     .replace("net.kogics.kojo.core.Point", "Nokta")
+    .replace("ArrayCharSequence", "HarfDizisindenDizik")
+    .replace("SeqCharSequence", "HarfDizisindenDizi")
     .replace("Wrapper", "Sarıcı")
     .replace("type", "tür")
     .replace("this", "bu")
+    .replace("Nothing", "Hiç")
     .replace("Null", "Yok")
+    .replace("ArrayBuffer", "EsnekDizim")
     .replace("Array", "Dizik")
     .replace("List", "Dizin")
-    .replace("IndexedSeq", "DiziSıralı")
+    .replace("IndexedSeq", "SıralıDizi")
     .replace("Seq", "Dizi")
     .replace("Char", "Harf")
     .replace("String", "Yazı")
@@ -53,6 +58,8 @@ object translate {
     .replace("scala.collection.immutable.", "")
     .replace("TurkishAPI.", "")
     .replace("net.kogics.kojo.core.Point", "Nokta")
+    .replace("Unable to stop script.", "Programın çalışmasını güzelce durduramadık.")
+    .replace("Doing a forced-stop. It's best to just restart Kojo!", "Zorlayarak durduruyoruz. Kojo'yu kapatıp açmak iyi olur!")
     .replace("val ", "dez ")
 /*  .replace("var ", "den ")  var is too common in turkish */
     .replace("def ", "tanım ")
@@ -60,7 +67,7 @@ object translate {
     .replace("case ", "durum ")
     .replace("ArrayBuffer", "EsnekDizim")
     .replace("Array", "Dizik")
-    .replace("IndexedSeq", "DiziSıralı")
+    .replace("IndexedSeq", "SıralıDizi")
     .replace("Seq", "Dizi")
     .replace("Map", "Eşlek")
     .replace("Vector", "Yöney")
@@ -77,6 +84,7 @@ object translate {
     .replace("false", "yanlış")
     .replace("mutated ", "değişti ")
     .replace("null", "yok")
+    .replace("java.lang.ThreadDeath", "İşParçacığıÖlümü")
     .replace("java.lang.RuntimeException", "ÇalışmaSırasıKuralDışı")
     .replace("java.lang.Exception", "KuralDışı")
     .replace("java.lang.AssertionError", "BelirtimHatası")
@@ -93,4 +101,5 @@ object translate {
     .replace("Unable to format", "Kod düzenlenemedi")
     .replace("max", "enİri")
     .replace("min", "enUfak")
+    .replace("head of empty", "başı istenen boş bir")
 }

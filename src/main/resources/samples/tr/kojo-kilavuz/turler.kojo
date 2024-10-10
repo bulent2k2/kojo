@@ -142,7 +142,7 @@ yaz(hepsi)"""
         row("Dizim".c, "Array".c, "".c, "Bu Dizik'in eskisi"),
         row("EsnekDizim".c, "ArrayBuffer".c, "".c, "collection.mutable'dan"),
         row("Dizin".c, "List".c, "".c),
-        row("DiziSıralı".c, "IndexedSeq".c, "".c),
+        row("SıralıDizi".c, "IndexedSeq".c, "".c),
         row("Eşlek".c, "Map".c, "".c, "collection.immutable.Map"),
         row("Eşlem".c, "Map".c, "".c, "collection.mutable.Map"),
         row("Küme".c, "Set".c, "".c),
@@ -211,6 +211,7 @@ yaz(hepsi)"""
         row("SınırDışınaTaşmaHatası".c, "java.lang.IndexOutOfBoundsException".c, "".c),
         row("BoşGöstergeHatası".c, "java.lang.NullPointerException".c, "".c),
         row("MatematikselHata".c, "java.lang.ArithmeticException".c, "".c),
+        row("İşParçacığıÖlümü".c, "java.lang.ThreadDeath".c, "".c),
       ),
       "Tür eşi olmayan nesneler de var. Onların yöntemleri çok işimize yarar:".p,
       table(

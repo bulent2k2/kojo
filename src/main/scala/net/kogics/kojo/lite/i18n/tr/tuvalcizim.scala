@@ -16,7 +16,7 @@
  */
 package net.kogics.kojo.lite.i18n.tr
 
-trait CanvasDrawInTurkish {
+trait TuvalÇizimYöntemleri {
   type TuvalÇizim = net.kogics.kojo.lite.CanvasDraw
 
   // from ../../CanvasDraw.scala

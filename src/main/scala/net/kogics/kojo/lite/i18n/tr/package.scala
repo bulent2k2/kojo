@@ -17,7 +17,6 @@
 
 package net.kogics.kojo.lite.i18n
 
-import java.awt.image.BufferedImage
 import java.awt.Color
 import java.awt.Paint
 
@@ -81,7 +80,7 @@ package object tr {
   type Diz[B] = collection.Seq[B]
   type Dizi[B] = Seq[B]
   type Dizin[A] = List[A]
-  type DiziSıralı[A] = IndexedSeq[A]
+  type SıralıDizi[A] = IndexedSeq[A]
   type Yineleyici[Col] = Iterator[Col]
   type Yinelenebilir[Col] = Iterable[Col]
   type YinelenebilirBirKere[Col] = IterableOnce[Col]
@@ -104,22 +103,13 @@ package object tr {
   val (noktaSayısı, santim, inç) = (Pixel, Cm, Inch)
 
   type İmge = richBuiltins.Image // java.awt.Image
-  type Bellekteİmge = BufferedImage
+
+  // duplicate in turler.scala
+  type Bellekteİmge = java.awt.image.BufferedImage
   type Bellekteİmgeİşlemi = java.awt.image.BufferedImageOp
   type İmgeİşlemi = net.kogics.kojo.picture.ImageOp
 
-  type İşlev1[D, R] = Function1[D, R]
-  type İşlev2[D1, D2, R] = Function2[D1, D2, R]
-  type İşlev3[D1, D2, D3, R] = Function3[D1, D2, D3, R]
-
-  type Yazı = String
-
-  type BelirtimHatası = java.lang.AssertionError
-  type KuraldışıGirdiHatası = java.lang.IllegalArgumentException
-  type EksikTanımHatası = scala.NotImplementedError
-  type SınırDışınaTaşmaHatası = java.lang.IndexOutOfBoundsException
-  type BoşGöstergeHatası = java.lang.NullPointerException
-  type MatematikselHata = java.lang.ArithmeticException
+  type Yazı = String // duplicate in yazi.scala
 
   // Note: also add any new types in ../trInit.scala and also turler.scala in kilavuz
 
@@ -159,6 +149,10 @@ package object tr {
   // todo: worksheet: val x = "String"
   // todo: println("String")
   def updateResult(str: String): String = if (!isTurkish) str else translate.result(str)
-  // used in ../../ScriptEditor.scala to translate type information (Ctrl-space)
+  // used in ../../ScriptEditor.scala to translate type information (Ctrl-t)
+  // also used in ../../KojoCompletionProvider.scala to translate type info of completions (Ctrl-space)
   def updateTypes(str: String): String = if (!isTurkish) str else translate.typeInfo(str)
+
+  // also used in ../../KojoCompletionProvider.scala
+  var dumpCompletions = false
 }
