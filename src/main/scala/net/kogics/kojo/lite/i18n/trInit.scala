@@ -58,9 +58,8 @@ object TurkishAPI
     with tr.UrlInTurkish
     with tr.VectorMethodsInTurkish {
 
-  var builtins: CoreBuiltins = _ // unstable reference to module
-  val bi = builtins // todo: is this OK??
-  lazy val richBuiltins = builtins.asInstanceOf[Builtins]
+  var bi: CoreBuiltins = _ // unstable reference to module. Used to be builtins
+  lazy val richBuiltins = bi.asInstanceOf[Builtins]
   lazy val rb = richBuiltins // todo: refactor code below to use rb
 
   import net.kogics.kojo.lite.i18n.tr // todo: better here than at the top scope?
@@ -205,7 +204,7 @@ object TurkishAPI
 
   class Kaplumbağa(override val englishTurtle: Turtle) extends TurkishTurtle {
     def this(startX: Kesir, startY: Kesir, costumeFileName: Yazı) =
-      this(builtins.TSCanvas.newTurtle(startX, startY, costumeFileName))
+      this(bi.TSCanvas.newTurtle(startX, startY, costumeFileName))
     def this(startX: Kesir, startY: Kesir) = this(startX, startY, "/images/turtle32.png")
     def this() = this(0, 0)
     def uzaklık(öbürü: Kaplumbağa): Kesir = englishTurtle.distanceTo(öbürü.englishTurtle)
@@ -225,21 +224,21 @@ object TurkishAPI
   class Kaplumbağa0(t0: => Turtle) extends TurkishTurtle { // by-name construction as turtle0 is volatile }
     override def englishTurtle: Turtle = t0
   }
-  object kaplumbağa extends Kaplumbağa0(builtins.TSCanvas.turtle0)
-  def sil(): Birim = builtins.TSCanvas.clear()
+  object kaplumbağa extends Kaplumbağa0(bi.TSCanvas.turtle0)
+  def sil(): Birim = bi.TSCanvas.clear()
   def silipSakla(): Birim = silVeSakla()
-  def silVeSakla(): Birim = { builtins.TSCanvas.clear(); kaplumbağa.görünmez() } // cleari
-  def çizimiSil(): Birim = builtins.TSCanvas.clearStepDrawing()
-  def çıktıyıSil(): Birim = builtins.clearOutput()
-  def silVeÇizimBiriminiKur(ub: UzunlukBirimi) = builtins.TSCanvas.clearWithUL(ub)
+  def silVeSakla(): Birim = { bi.TSCanvas.clear(); kaplumbağa.görünmez() } // cleari
+  def çizimiSil(): Birim = bi.TSCanvas.clearStepDrawing()
+  def çıktıyıSil(): Birim = bi.clearOutput()
+  def silVeÇizimBiriminiKur(ub: UzunlukBirimi) = bi.TSCanvas.clearWithUL(ub)
 
-  // lazy val renkler = builtins.cm // ColorMaker in ../../staging/color.scala and ../../doodle/Color.scala
-  // lazy val tuşlar = builtins.Kc // Key Codes
+  // lazy val renkler = bi.cm // ColorMaker in ../../staging/color.scala and ../../doodle/Color.scala
+  // lazy val tuşlar = bi.Kc // Key Codes
 
-  def artalanıKur(r: Renk): Birim = builtins.setBackground(r)
-  def artalanıKur(b: Boya): Birim = builtins.setBackground(b)
-  def artalanıKurDik(r1: Renk, r2: Renk): Birim = builtins.TSCanvas.setBackgroundV(r1, r2)
-  def artalanıKurYatay(r1: Renk, r2: Renk): Birim = builtins.TSCanvas.setBackgroundH(r1, r2)
+  def artalanıKur(r: Renk): Birim = bi.setBackground(r)
+  def artalanıKur(b: Boya): Birim = bi.setBackground(b)
+  def artalanıKurDik(r1: Renk, r2: Renk): Birim = bi.TSCanvas.setBackgroundV(r1, r2)
+  def artalanıKurYatay(r1: Renk, r2: Renk): Birim = bi.TSCanvas.setBackgroundH(r1, r2)
 
   //  object KcSwe { //Key codes for Swedish keys
   //    lazy val VK_Å = 197
@@ -276,47 +275,47 @@ object TurkishAPI
   }
 
   // simple IO
-  def satıroku(istem: Yazı = ""): Yazı = builtins.readln(istem)
+  def satıroku(istem: Yazı = ""): Yazı = bi.readln(istem)
   def satıryaz(): Birim = println()
   def satıryaz(veri: Her): Birim = println(veri) // Transferred here from sv.tw.kojo.
   def yaz(veri: Her): Birim = print(veri)
 
   // ../CoreBuiltins.scala
   // bir de rasgele: Kesir var matematik trait'inden geliyor
-  def rastgele(üstSınır: Sayı): Sayı = builtins.random(üstSınır)
-  def rastgele(altSınır: Sayı, üstSınır: Sayı): Sayı = builtins.random(altSınır, üstSınır)
-  def rastgeleSayı = builtins.randomInt
-  def rastgeleUzun = builtins.randomLong
-  def rastgeleKesir(üstSınır: Kesir) = builtins.randomDouble(üstSınır)
-  def rastgeleKesir(altSınır: Kesir, üstSınır: Kesir) = builtins.randomDouble(altSınır, üstSınır)
+  def rastgele(üstSınır: Sayı): Sayı = bi.random(üstSınır)
+  def rastgele(altSınır: Sayı, üstSınır: Sayı): Sayı = bi.random(altSınır, üstSınır)
+  def rastgeleSayı = bi.randomInt
+  def rastgeleUzun = bi.randomLong
+  def rastgeleKesir(üstSınır: Kesir) = bi.randomDouble(üstSınır)
+  def rastgeleKesir(altSınır: Kesir, üstSınır: Kesir) = bi.randomDouble(altSınır, üstSınır)
   def rastgeleÇanEğrisinden = rastgeleDoğalKesir
   def rastgeleNormalKesir = rastgeleDoğalKesir
-  def rastgeleDoğalKesir = builtins.randomNormalDouble
-  def rastgeleTohumunuKur(tohum: Uzun = rastgeleUzun) = builtins.initRandomGenerator(tohum)
+  def rastgeleDoğalKesir = bi.randomNormalDouble
+  def rastgeleTohumunuKur(tohum: Uzun = rastgeleUzun) = bi.initRandomGenerator(tohum)
   def rastgeleİkil = rastgeleSeçim
-  def rastgeleSeçim = builtins.randomBoolean
-  def rastgeleRenk: Renk = builtins.randomColor
-  def rastgeleŞeffafRenk: Renk = builtins.randomTransparentColor
-  def rastgeleDiziden[T](dizi: Dizi[T]) = builtins.randomFrom(dizi)
-  def rastgeleDiziden[T](dizi: Dizi[T], ağırlıklar: Dizi[Kesir]) = builtins.randomFrom(dizi, ağırlıklar)
+  def rastgeleSeçim = bi.randomBoolean
+  def rastgeleRenk: Renk = bi.randomColor
+  def rastgeleŞeffafRenk: Renk = bi.randomTransparentColor
+  def rastgeleDiziden[T](dizi: Dizi[T]) = bi.randomFrom(dizi)
+  def rastgeleDiziden[T](dizi: Dizi[T], ağırlıklar: Dizi[Kesir]) = bi.randomFrom(dizi, ağırlıklar)
   // def diziKarıştır[T](xs: Dizi[T]): Dizi[T] = util.Random.shuffle(xs)
   def rastgeleKarıştır[T, C](xLer: YinelenebilirBirKere[T])
     (implicit yapıcı: Yapıcıdan[xLer.type, T, C]): C = util.Random.shuffle(xLer)
 
-  def durakla(saniye: Kesir): Birim = builtins.pause(saniye)
-  def duraklaMiliSaniye(miliSaniye: Uzun): Birim = builtins.pauseMillis(miliSaniye)
+  def durakla(saniye: Kesir): Birim = bi.pause(saniye)
+  def duraklaMiliSaniye(miliSaniye: Uzun): Birim = bi.pauseMillis(miliSaniye)
 
-  def üçgenDöşeme(noktalar: Dizi[Nokta]): Diz[Üçgen] = builtins.triangulate(noktalar)
+  def üçgenDöşeme(noktalar: Dizi[Nokta]): Diz[Üçgen] = bi.triangulate(noktalar)
 
   // todo: klasör?
-  def evDizini: Yazı = builtins.homeDir
-  def buDizin: Yazı = builtins.currentDir
-  def kurulumDizini: Yazı = builtins.installDir
-  def yazıyüzleri: Dizin[Yazı] = builtins.availableFontNames
-  def yazıyüzü(adı: Yazı, boyu: Sayı): Yazıyüzü = builtins.Font(adı, boyu)
-  def yazıyüzü(adı: Yazı, boyu: Sayı, biçem: Sayı): Yazıyüzü = builtins.Font(adı, biçem, boyu)
+  def evDizini: Yazı = bi.homeDir
+  def buDizin: Yazı = bi.currentDir
+  def kurulumDizini: Yazı = bi.installDir
+  def yazıyüzleri: Dizin[Yazı] = bi.availableFontNames
+  def yazıyüzü(adı: Yazı, boyu: Sayı): Yazıyüzü = bi.Font(adı, boyu)
+  def yazıyüzü(adı: Yazı, boyu: Sayı, biçem: Sayı): Yazıyüzü = bi.Font(adı, biçem, boyu)
   def yazıÇerçevesi(yazı: Yazı, yazıBoyu: Sayı, yazıyüzüAdı: Yazı = yok): Dikdörtgen =
-    builtins.textExtent(yazı, yazıBoyu, yazıyüzüAdı)
+    bi.textExtent(yazı, yazıBoyu, yazıyüzüAdı)
 
   val kaplumbağa0 = kaplumbağa
   def yeniKaplumbağa(x: Kesir, y: Kesir) = new Kaplumbağa(x, y)
@@ -578,12 +577,12 @@ object TurkishAPI
   val ay = arayuz
   type Yazıyüzü = ay.Yazıyüzü
   object Yazıyüzü {
-    def apply(adı: Yazı, boyu: Sayı): Yazıyüzü = builtins.Font(adı, boyu)
-    def apply(adı: Yazı, boyu: Sayı, biçem: Sayı): Yazıyüzü = builtins.Font(adı, biçem, boyu)
+    def apply(adı: Yazı, boyu: Sayı): Yazıyüzü = bi.Font(adı, boyu)
+    def apply(adı: Yazı, boyu: Sayı, biçem: Sayı): Yazıyüzü = bi.Font(adı, biçem, boyu)
     val (sade, vurgulu, kalın) = (bi.PlainFont, bi.ItalicFont, bi.BoldFont)
   }
 
-  def zamanTut[T](başlık: Yazı = "Zaman ölçümü:")(işlev: => T)(bitiş: Yazı = "sürdü."): T = { // timeit in Builtins.scala
+  def zamanTut[T](başlık: Yazı = "Zaman ölçümü:")(işlev: => T)(bitiş: Yazı = "sürdü."): T = { // timeit in Bi.scala
     val t0 = buSaniye
     val çıktı = işlev
     val delta = buSaniye - t0
@@ -616,7 +615,7 @@ object TurkishAPI
 object TurkishInit {
   def init(builtins: CoreBuiltins): Unit = {
     // initialize unstable values:
-    TurkishAPI.builtins = builtins
+    TurkishAPI.bi = builtins
     tr.builtins = builtins
     builtins match {
       case b: Builtins =>
