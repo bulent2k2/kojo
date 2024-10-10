@@ -175,7 +175,7 @@ object Help {
     "runInBackground" -> "runInBackground(command) - Runs the given code in the background, concurrently with other code that follows right after this command.",
     "playMp3" -> "playMp3(fileName) - Plays the specified MP3 file.",
     "playMp3Loop" -> "playMp3Loop(fileName) - Plays the specified MP3 file in the background.",
-    "ColorHSB" -> "ColorHSB(h, s, b) - Creates a color with the given Hue (0-360), Saturation (0-100), and Brighness (0-100) values.",
+    "ColorHSB" -> "ColorHSB(h, s, b) - Creates a color with the given Hue (0-360), Saturation (0-100), and Brightness (0-100) values.",
     "Color" -> "Color(r, g, b, opac) - Creates a color with the given red, green, blue, and opacity (optional) values.",
     "ColorG" -> "ColorG(x1, y1, color1, x2, y2, color2, cyclic) - Creates a color gradient for filling shapes. The cyclic value is optional.",
     "Font" -> "Font(name, size) - Creates a font with the given name and size",
