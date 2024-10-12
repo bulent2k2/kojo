@@ -33,13 +33,33 @@ trait TakvimVeZamanYöntemleri {
     def saniye(buan: Takvim): Sayı = buan.get(Calendar.SECOND)
     // more to come
   }
+  val Aylar = List("Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
+    "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık")
+  val Günler = List("Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi")
   case class BuAn() {
     val buan = Takvim.buAn
     val saniye = Takvim.saniye(buan)
     val dakika = Takvim.dakika(buan)
     val saat = Takvim.saat(buan)
-    def yazıya = Takvim.tarih(buan).toString
-    // more to come
+    def İngilizce = Takvim.tarih(buan).toString
+    def hepsi = {
+      import java.time.{ ZonedDateTime, LocalTime, LocalDate } // newer and better API
+      val tnow = LocalTime.now
+      val dnow = LocalDate.now
+      List(
+        List(dnow.getDayOfMonth, Aylar(dnow.getMonth.getValue - 1), Günler(dnow.getDayOfWeek.getValue)),
+        List(tnow.getHour, tnow.getMinute, tnow.getSecond),
+        List(ZonedDateTime.now.getZone),
+        List(dnow.getYear)
+      )
+    }
+    def gün = hepsi(0)
+    def ay = hepsi(0)(1)
+    def zaman = hepsi(1)
+    def saatDilimi = hepsi(2)
+    def yıl = hepsi(3)
+    override def toString = yazıya
+    tanım yazıya: Yazı = s"${gün.mkString(" ")}  ${zaman.mkString(":")} ${saatDilimi.mkString("")}  ${yıl.mkString("")}"
   }
 
   // from ../../CoreBuiltins.scala

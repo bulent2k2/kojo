@@ -1585,7 +1585,7 @@ tanım saat = {
 
 canlandır { // bu döngü her saniyede yaklaşık 40 kere yinelenir
     dez buan = BuAn()
-    saat; çiz(kalemRengi(siyah) * götür(-yç - 5, -yç - 20) -> Resim.yazı(buan.yazıya))
+    saat; çiz(kalemRengi(siyah) * götür(-yç - 100, -yç - 20) -> Resim.yazı(buan))
     dez s = pi2 * buan.saniye / 60 // saniyeKolu
     çiz(kalemRengi(mavi) -> Resim.düz(0.9 * yç * sinüs(s), 0.9 * yç * kosinüs(s)))
     dez m = pi2 * buan.dakika / 60 // dakika kolu
