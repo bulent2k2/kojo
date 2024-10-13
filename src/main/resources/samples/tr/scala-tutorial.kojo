@@ -1477,7 +1477,7 @@ pages += Page(
     "Eğer ilgilenip daha çok örnek görmek istersen, Kojo'nun web sayfasına da bak. Henüz sadece İngilizce. Resim yerine Picture diyecek. Ama ordaki örnekler de sana bir fikir verecektir.".p,
     "Resim adlı birim birçok komut, işlem ve bir de çizim döngüsü sunuyor bize. Bunları kullanarak epey gelişmiş şekiller, resimler ve grafikler çizebiliriz. Çizim döngüsünü kullanarak grafikleri canlandırabilir ve istersek fare ve tuşlarla kontrol ekleyerek oyuna çevirebiliriz.".p,
     "İlk örnekle başlayalım. Önce ekranı temizliyoruz. Sonra bir top çiziyor ve canlandırma döngüsünün içinde topun nasıl hareket edeceğini tanımlıyoruz. Resim birimi, bu döngüyü yaklaşık yirmibeş milisaniyede bir yineleyerek çalıştırıyor. Bilgisayarın hızına göre saniyede yaklaşık olarak 40 kere tekrar tekrar resim çizebiliyor yani. Bu da bizim gözümüzün değişiklikleri görme hızından fazla olduğu için bize canlı ve harektli gibi görünüyor. Bu temel kavramları ve komutları kullanarak pekçok ilginç canlı, hareketli grafik çizebilirsin.".p,
-    """silVeSakla(); ızgarayıGöster(); eksenleriGöster()
+    """silipSakla(); ızgarayıGöster(); eksenleriGöster()
 dez yç = 10 // topumuzun yarıçapı
 dez top = Resim.daire(yç) // resmi
 çiz(top) // bu da tuvale çiziveriyor topu
@@ -1502,7 +1502,7 @@ canlandır { // İçindeki komutlar saniyede yaklaşık 40 kere yinelenir.
     y += dy
 }""".c,
     "İkinci örneğimiz küçük ve basit bir oyun. Duymuş olabilirsin: en eski bilgisayar oyunlarından duvara karşı pinpon (İngilizce adıyla Pong) oyunu. Tek kişilik bir oyun. Yapmamız gereken topa raketle vurup geri yollamak. Raketi fareyle yönetiyoruz. Top kaçarsa bir puan kaybediyorsun. İyi eğlenceler!".p,
-    """silVeSakla()
+    """silipSakla()
 çiz(götür(-200, -100) -> Resim.düz(0, 200)) // Üç duvar çizelim. Bu dik ön duvar
 çiz(götür(-200, -100) -> Resim.düz(400, 0)) // Bu alt duvar
 çiz(götür(-200,  100) -> Resim.düz(400, 0)) // Bu da üst duvar
@@ -1533,8 +1533,7 @@ canlandır {
         skor.güncelle(s"$mesaj\n$ıska kere ıskaladın")
     }
 }
-oyunSüresiniGeriyeSayarakGöster(60, "Süre bitti", yeşil) // oyun 60 saniye sürsün 
-""".c,
+oyunSüresiniGeriyeSayarakGöster(60, "Süre bitti", yeşil) // oyun 60 saniye sürsün""".c,
     "Temel kavramlar ve komutlarla artık tanıştın. Bir kaç tane daha top eklemeye ne dersin? Topların hızını rastgele değiştirerek oyunu daha eğlenceli kılabilirsin istersen. Raketin boyunu kısaltabilir ya da uzatabilirsin. Bir de programımızın bir (belki kimbilir daha çok) hatası var! İngilizce'de bug yani böcek denir. Ama nerden çıktı deme. Programı yazanın hatası de. Sen de yapacaksın bol bol hata. Hiç dert etme. Her hata aslında daha usta olmak için bir fırsat. Fırsatları hiç kaçırma! Hatayı farkettin mi? Bazen top raketin içinden geçiyor sanki elektron tünelleme yapıyormuş gibi (kuvantum mekaniği değil ki bu)! Bazen de ıskalaması gerekirken geri yolluyor.. Bakalım yazılımcığın içinde nerede? Sen bulup düzeltebilecek misin?".p,
     "Klavye ve tuşlarla komut girişi".h3,
     "Pekçok oyun klaveyeden komut bekler. Minecraft oynadın mı hiç? Hem fare hem de klavye komutları oyunu iyice eğlenceli kılar. Bak bu küçük oyun sağ/sol/yukarı ve aşağı ok olan tuşlarla kaplumbağacığa yön veriyor.".p,
@@ -1564,36 +1563,42 @@ tuvaliEtkinleştir()""".c,
     "Hayal gücünü kullan, yazılımcığı değiştir (örneğin 45 derece döndürmek, yay ya da çember çizmek için komutlar ekleyebilirsin), tekrar çalıştır. Yazılımcık düzenleme ekranında 'tuşlar.' yazdıktan sonra (ama tırnak işaretleri olmadan!) kontrol tuşunu basık tutup büyük boşluk tuşuna bas ki başka hangi tuşları kullanabileceğini gör.".p,
 
     "Saat".h3,
-    "Bir saat yapalım mı?".p,
-    "BuAn adlı birimi kullanacağız. O da içinde Java'nın Calendar yani takvim adlı kütüphane birimini kullanıyor.".p,
-    """silVeSakla
-dez yç = 100 // saatin yarıçapı. Büyültmek ister misin?
-dez pi2 = 2.0 * piSayısı // 2*Pi radyan tam 360 derece dönüş demek
-// saati çizelim
-tanım saat = {
-    Resim.sil() // eski saati silelim
-    çiz(kalemRengi(kırmızı) -> Resim.daire(yç))
-    için (i <- 0 |-| 59) { // // dakika ve saat çentikleri
+    "Bir saat yapalım mı? BuAn adlı birimi kullanacağız. O da içinde Java'nın takvim, tarih ve zaman adlı kütüphane birimlerini kullanıyor.".p,
+    """silipSakla
+dez yç = 150 //             saatin yarıçapı
+dez pi2 = 2.0 * piSayısı // 2*pi radyan tam 360 derece dönüş demek
+
+// saatin her unsuru için değişik bir renk kullanalım:
+//   pembe, kırmızı, mavi, yeşil, turuncu ve siyah
+// böylece hem renkli olur hem de programı anlamak kolaylaşır
+tanım renk(r: Renk) = kalemRengi(r)   
+
+tanım saat = { // bu işlev saatin değişmeyen kısımlarını çizer
+    için (i <- 0 |-| 59) { // dakika ve saat çentikleri
         dez ra = pi2 * i / 60
         dez (x, y) = (yç * sinüs(ra), yç * kosinüs(ra))
         dez çentikBoyu = eğer (i % 5 == 0) 0.9 yoksa 0.95
         dez (llx, lly, urx, ury) = (çentikBoyu * x, çentikBoyu * y, x, y)
         dez (en, boy) = (urx - llx, ury - lly)
-        çiz(kalemRengi(kırmızı) * götür(llx, lly) -> Resim.düz(en, boy))
+        çiz(renk(pembe) * götür(llx, lly) -> Resim.düz(en, boy))
     }
+    çiz(renk(kırmızı) -> Resim.daire(yç))
 }
 
-canlandır { // bu döngü her saniyede yaklaşık 40 kere yinelenir
+canlandır { //     bu döngü her saniyede yaklaşık 40 kere yinelenir
+    Resim.sil() // bütün resimleri silelim
+    saat //        tekrar çizelim
     dez buan = BuAn()
-    saat; çiz(kalemRengi(siyah) * götür(-yç - 100, -yç - 20) -> Resim.yazı(buan))
-    dez s = pi2 * buan.saniye / 60 // saniyeKolu
-    çiz(kalemRengi(mavi) -> Resim.düz(0.9 * yç * sinüs(s), 0.9 * yç * kosinüs(s)))
-    dez m = pi2 * buan.dakika / 60 // dakika kolu
-    çiz(kalemRengi(yeşil) -> Resim.düz(0.8 * yç * sinüs(m), 0.8 * yç * kosinüs(m)))
-    dez h = pi2 * buan.saat / 12 + m / 12 // saat kolu
-    çiz(kalemRengi(turuncu) -> Resim.düz(0.6 * yç * sinüs(h), 0.6 * yç * kosinüs(h)))
-}
-""".c,
+    dez s = pi2 * buan.saniye / 60 //         saniye kolu
+    dez m = pi2 * buan.dakika / 60 //         dakika kolu
+    dez h = pi2 * buan.saat / 12 + m / 12 //  saat kolu
+    çiz(
+        renk(mavi) -> Resim.düz(0.9 * yç * sinüs(s), 0.9 * yç * kosinüs(s)),
+        renk(yeşil) -> Resim.düz(0.8 * yç * sinüs(m), 0.8 * yç * kosinüs(m)),
+        renk(turuncu) -> Resim.düz(0.6 * yç * sinüs(h), 0.6 * yç * kosinüs(h)),
+        renk(siyah) * götür(-yç - 50, -yç - 20) -> Resim.yazı(buan)
+    )
+}""".c,
     "Saatin kaç tane çizimden oluştuğunu hesabedebilir misin? Yanıt pekçok ülkedeki emeklilik yaşı! Neyseki bu 65 çizimi yapmak hem de saniyede 40 kere tekrar tekrar bizim bilgisayarımızı hiç yormuyor! Peki belki de yok, yok 63 tane çizgi, bir çember ve bir kaç da yazı diyerek itiraz edeceksin. Çok haklısın. Ve tebrikler!".p,
     "Conway'in Yaşam Oyunu".h3,
     """İngilizce adıyla "The Game of Life" o kadar meşhur ki, bilgisayarcılar arasında basitçe Life yani Yaşam adıyla tanınır! Aslında o bir hücresel otomaton yani basit hücrelerden oluşan ve onların yerel etkileşimleri sayesinde kendi kendine devinen en basit program türlerinden biri. İngiltere doğumlu Amerika'da Princeton üniversitesinde matematik araştırmaları yapan John Horton Conway tarafından 1970 yılında icat edilmiş. Belki de keşfedilmiş demek lazım. Kimbilir. Sen ne dersin?""".p,
@@ -1608,7 +1613,7 @@ canlandır { // bu döngü her saniyede yaklaşık 40 kere yinelenir
     "Bu yaşam ya da hayat oyunu sıfır oyuncuyla oynanıyor! Çok sıkıcı mı dedin? Yok, çok ilginç aslında. Aslında sen çok önemlisin. Çünkü bu oyunun başlaması için en başta canlı hücrelere gerek var. Bunları sen belirleyebilirsin. Ama önce hazır bazı desenlerle başlamak daha kolay olur. 'başlangıç' adlı komudu bul. Onun ikinci girdisi 'desen'. Deseni seçmek için yapman gereken tek şey 'seç' adındaki değeri değiştirmek. Birinciyle başlıyoruz. Ama sıfırdan ona kadar hepsini deneyebilirsin. Sonra hatta kendin de yeni desenler ekleyebilirsin.".p,
 
     "Bu simulasyonun hızını 'oran' değerini değiştirerek ayarlayabilirsin.".p,
-    """çıktıyıSil; silVeSakla(); kalemRenginiKur(mavi)
+    """çıktıyıSil; silipSakla(); kalemRenginiKur(mavi)
 // bu oyunun dünyası yani tahtası büyük bir kare. Kenarı KU uzunluğunda olsun
 // Nasıl satranç tahtası 8x8, bu tahta da 128x128 kare.
 dez KU = 128
@@ -1721,8 +1726,7 @@ tanım dörtlü = Dizin((0, 0), (1, 0), (-1, 0), (0, 2)) // dokuzcanlı'nın alt
 // sepet sepet yumurta
 // sakın beni unutma
 // şimdilik bu kadar
-// yaşamın tadını çıkar
-""".c,
+// yaşamın tadını çıkar""".c,
     
     "Düğüm açma oyunu".h3,
     "Bu oyun bize iki şey gösterecek: 1) Scala'nın bize sunduğu veri yapılarından Yöney ne işlere yarıyor. 2) Fareye tıklayıp bırakmadan sürüklersek neler yapabiliyoruz. Tabii daha da güzeli eğlenceli bir oyun yazabiliyoruz bu sayede.".p,
@@ -1756,7 +1760,7 @@ durum sınıf Nokta(den x: Kesir, den y: Kesir) {
     n.fareyiSürükleyince { (mx, my) => { n.kondur(mx, my); x = mx; y = my; çizelim(çizgiler) } }
 }
 // Bütün noktaları (0,0) yani orijine üştüste koyalım. Merak etme birazdan dağıtacağız
-silVeSakla()
+silipSakla()
 dez noktalar = (0 |- AS).soldanKatla(Yöney[Nokta]())((v, i) => { v :+ Nokta(0, 0) })
 
 // çizgileri tanımlar ve noktalara bağlarız. Bir balık ağı gibi. KS * KS düğümlü
@@ -1793,8 +1797,7 @@ tanım kare(x: Kesir, y: Kesir, en: Kesir) = {
     k
 }
 dez b = kare(-KS * 35, -KS * 35, 20)
-b.fareyeTıklayınca { (x, y) => serpiştir(noktalar) }
-""".c
+b.fareyeTıklayınca { (x, y) => serpiştir(noktalar) }""".c
   )
 )
 
