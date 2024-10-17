@@ -41,7 +41,7 @@ object TurkishAPI
     with tr.LazyListMethodsInTurkish
     with tr.ListMethodsInTurkish
     with tr.MapMethodsInTurkish
-    with tr.MathMethodsInTurkish
+    with tr.MatematikYöntemleri
     with tr.MusicUtilsInTurkish
     with tr.NumMethodsInTurkish
     with tr.OptionMethodsInTurkish
@@ -112,6 +112,9 @@ object TurkishAPI
     (tr.yavaş, tr.orta, tr.hızlı, tr.çokHızlı, tr.noktaSayısı, tr.santim, tr.inç)
 
   val Nokta = tr.Nokta
+
+  // just for doc purposes (in code completion), we provide a container of all math methods
+  object Matematik extends tr.MatematikYöntemleri
 
   type ÇiniDünyası = tr.ÇiniDünyası
   val ÇiniDünyası = tr.ÇiniDünyası

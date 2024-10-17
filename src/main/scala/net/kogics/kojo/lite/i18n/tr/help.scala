@@ -118,6 +118,18 @@ object help {
       </pre> Bu örnekten sonra açıklama ...
       </div>.toString,
 
+    "Matematik" -> <div> Matematiksel işlevlerin hepsini bunun altına koyduk. 
+    <br/><br/> Örnek: <pre>
+
+dez n1 = Nokta(0, 0)
+dez n2 = Nokta(10, 10)
+Matematik.açı(n1, n2)
+ // ön eksiz de kullanabilirsin
+açı(n2, n1)
+
+    </pre> Diğer işlevler şunlar: <br/><br/>dereceye<br/>değişim<br/>doğalLogu<br/>eSayısı<br/>enUfakOrtakKat<br/>enUfağı<br/>enİriOrtakPayda<br/>enİrisi<br/>eüssü<br/>gücü<br/>işareti<br/>karekökü<br/>karesi<br/>kosinüs<br/>kosinüsünAçısı<br/>kuvveti<br/>log2tabanlı<br/>logTabanlı<br/>logaritması<br/>mutlakDeğer<br/>onlukTabandaLogu<br/>ortalama<br/>piSayısı<br/>radyana<br/>rasgele<br/>sayıya<br/>sinüs<br/>sinüsünAçısı<br/>taban<br/>tanjant<br/>tanjantınAçısı<br/>tavan<br/>uzaklık<br/>uzaklık<br/>yakın<br/>yakın<br/>yakını<br/>yuvarla<br/>
+      </div>.toString,
+
     "yazıTamamlamaSeçenekleriniYazdırmayıAçKapa" -> <div>
       Yazı tamamlama seçeneklerini çıktı penceresine yazdırmak için bu komudu kullanabilirsin. Yazdırma açıksa, tekrar çağırırarak yazdırmayı kapatabilirsin. <br/>
       <br/><em>Örnek:</em> <br/>

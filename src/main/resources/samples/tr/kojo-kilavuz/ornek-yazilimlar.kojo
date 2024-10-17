@@ -49,30 +49,44 @@ yineleDizinli(renkDizisi.boyu) { i =>
   eğer(i % 4 == 0)
      konumuKur(100 * i / 4, 0)
 }"""
-dez kod30c = """// Henüz Türkçeleştiremediğimiz
-// pek çok renk daha var.
+dez kod30c = """// Türkçe'ye çevirdiğimiz renklerin
+// hepsini Renkler altında topladık:
+yineleİçin(Dizin(
+    Renkler.açıkAltınbaşakSarısı,
+    Renkler.koyuDenizYeşili,
+    Renkler.gökMavisi,
+    Renkler.haki)
+) { renk =>
+    boyamaRenginiKur(renk)
+    kare(100); ileri(100)
+}
+konumuKur(500, 0)
+// Henüz Türkçeleştiremediğimiz
+// renkler de var.
 // İşte birkaç örnek:
 yineleİçin(Dizin(
-  renkler.aliceBlue,
-  renkler.hotpink,
-  renkler.darkTurquoise,
-  renkler.yellowGreen)
+    renkler.aliceBlue,
+    renkler.hotpink,
+    renkler.darkTurquoise,
+    renkler.yellowGreen)
 ) { renk =>
     boyamaRenginiKur(renk)
     kare(100); ileri(100)
 }
 /* Diğer renkeri görmek istersen
-aşağıda boş bir satıra 'renkler.'
+aşağıda boş bir satıra 'Renkler.'
 yazdıktan sonra Kontrol tuşunu basılı
 tutup büyük boşluk tuşuna basıver.
-Adı d harfiyle başlayan renkleri
-bulmak istersen renkler.d yazıp
+Adı a harfiyle başlayan renkleri
+bulmak istersen Renkler.a yazıp
 Kontrol-Boşluk tuşuna bas */
 // Aşağıdaki iki satırı kullanabilirsin
 // Ama önce baştaki çift taksimi sil!
-//  renkler.d
-//  renkler
-"""
+//   Renkler.
+//   Renkler.a
+// İngilizce renkler de şurada:
+//   renkler.
+//   renkler.a"""
 
 dez kod40 = """sil
 canlandırmaHızınıKur(100)

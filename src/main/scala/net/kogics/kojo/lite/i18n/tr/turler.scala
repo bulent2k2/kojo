@@ -30,6 +30,8 @@ trait TürÇevirileri {
   type HarfDizisi = java.lang.CharSequence
   type Sınıf[T] = java.lang.Class[T]
 
+  type JTemelSayı = java.lang.Number
+
   // todo: def sınıfı[T] = classOf[T]
 
   type KuraldışıSınıfDökümü = ClassCastException

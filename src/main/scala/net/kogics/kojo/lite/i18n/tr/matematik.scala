@@ -24,10 +24,11 @@ import org.apache.commons.math3.stat.StatUtils
 import org.apache.commons.math3.util.ArithmeticUtils
 
 // translating math library
-trait MathMethodsInTurkish {
+trait MatematikYöntemleri {
   def piSayısı: Kesir = math.Pi
   def eSayısı: Kesir = math.E
   val gücü = kuvveti _
+  // todo: java.lang.Number
   def yuvarla(sayı: Number, basamaklar: Sayı = 0): Kesir = {
     val faktor = math.pow(10, basamaklar).toDouble
     math.round(sayı.doubleValue * faktor).toLong / faktor
