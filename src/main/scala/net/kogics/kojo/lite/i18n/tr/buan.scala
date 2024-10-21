@@ -35,7 +35,7 @@ trait TakvimVeZamanYöntemleri {
   }
   val Aylar = List("Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
     "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık")
-  val Günler = List("Pazar", "Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi")
+  val Günler = List("Pazartesi", "Salı", "Çarşamba", "Perşembe", "Cuma", "Cumartesi", "Pazar")
   case class BuAn() {
     val buan = Takvim.buAn
     val saniye = Takvim.saniye(buan)
@@ -47,7 +47,7 @@ trait TakvimVeZamanYöntemleri {
       val tnow = LocalTime.now
       val dnow = LocalDate.now
       List(
-        List(dnow.getDayOfMonth, Aylar(dnow.getMonth.getValue - 1), Günler(dnow.getDayOfWeek.getValue)),
+        List(dnow.getDayOfMonth, Aylar(dnow.getMonth.getValue - 1), Günler(dnow.getDayOfWeek.getValue - 1)),
         List(tnow.getHour, tnow.getMinute, tnow.getSecond),
         List(ZonedDateTime.now.getZone),
         List(dnow.getYear)
