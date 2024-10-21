@@ -50,11 +50,16 @@ object translate {
     .replace("Boolean", "İkil")
     .replace("Byte", "Lokma")
     .replace("Short", "Kısa")
+    .replace("java.math.BigInteger", "JİriSayı")
+    .replace("scala.math.BigInt", "İriSayı")
+    .replace("math.BigInt", "İriSayı")
+    .replace("BigInt", "İriSayı")
     .replace("Int", "Sayı")
     .replace("Long", "Uzun")
-    .replace("BigInt", "İriSayı")
     .replace("Float", "UfakKesir")
     .replace("Double", "Kesir")
+    .replace("scala.math.BigDecimal", "İriKesir")
+    .replace("math.BigDecimal", "İriKesir")
     .replace("BigDecimal", "İriKesir")
     .replace("Integer", "JSayı")
     .replace("Number", "JTemelSayı")
@@ -72,7 +77,15 @@ object translate {
     .replace("net.kogics.kojo.lite.i18n.TurkishAPI", "")
   )
 
-  def result(str: String) = common(str)
+/*
+java.lang.IllegalArgumentException: More than Int.MaxValue elements.
+	at scala.collection.immutable.NumericRange$.check$1(NumericRange.scala:431)
+	at scala.collection.immutable.NumericRange$.count(NumericRange.scala:441)
+ */
+  def beforeCommon(str: String) = str
+    .replace("More than Int.MaxValue elements.", "Sayı.Enİrisi değerinden çok ögesi var.")
+
+  def result(str: String) = common(beforeCommon(str))
     .replace("expected class or object definition", "gereken sınıf ya da nesne tanımı bulunamadı")
     .replace("val res", "dez sonuç")
     .replace("<not computed>", "<hesaplanmadı>")
@@ -108,7 +121,7 @@ object translate {
     .replace("max", "enİri")
     .replace("min", "enUfak")
     .replace("head of empty", "başı istenen boş bir")
-  /* Error[13,13]: object creation impossible.
+  /* Error: object creation impossible.
    Missing implementation for member of trait Seçenek:
    def yazıya: UserCode.this.TurkishAPI.Yazı = ???
    */
@@ -116,4 +129,19 @@ object translate {
     .replace("object creation impossible", "nesne oluşturulamadı")
     .replace("Missing implementation for member of trait",
       "Temel tür olan özellik yöntemlerinden birinin tanımı eksik. Özelliğin adı")
+  //
+    .replace("Warning", "Uyarı")
+  /*
+Hata[7,91]: overloaded method apply with alternatives:
+  (x: java.math.BigSayıeger)scala.math.BigSayı <and>
+  (x: Yazı)scala.math.BigSayı <and>
+  (x: Dizik[Lokma])scala.math.BigSayı <and>
+  (l: Uzun)scala.math.BigSayı <and>
+  (i: Sayı)scala.math.BigSayı
+ cannot be applied to (scala.math.BigSayı)
+def foo(ds: List[BigInt]): S = ds.reverse.zip(kuvvetler(ds.size)).map{ case (d, p) => S(d*p) }.reduce(_ + _)
+                                                                                          ^
+   */
+    .replace("overloaded method apply with alternatives", "birkaç tane işlev uygulama () seçeneği var")
+    .replace("cannot be applied to", "hiçbiri şu türe uygulanamıyor:")
 }

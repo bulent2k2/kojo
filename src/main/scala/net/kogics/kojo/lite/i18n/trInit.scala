@@ -43,12 +43,12 @@ object TurkishAPI
     with tr.MapMethodsInTurkish
     with tr.MatematikYöntemleri
     with tr.MusicUtilsInTurkish
-    with tr.NumMethodsInTurkish
     with tr.OptionMethodsInTurkish
     with tr.PartialFunctionMethodsInTurkish
     with tr.QueueMethodsInTurkish
     with tr.RangeMethodsInTurkish
     with tr.RenkYöntemleri
+    with tr.SayıYöntemleri
     with tr.SoundUtilsInTurkish
     with tr.SeqMethodsInTurkish
     with tr.SetMethodsInTurkish

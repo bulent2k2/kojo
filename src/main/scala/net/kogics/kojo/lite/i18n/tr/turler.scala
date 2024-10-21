@@ -73,6 +73,7 @@ trait TürÇevirileri {
   type JSayı = Integer
   type JUzun = java.lang.Long
   type JKısa = java.lang.Short
+  type JİriSayı = java.math.BigInteger
 
   def İkildenİkile(i: Jİkil): İkil = Boolean2boolean(i)
   def LokmadanLokmaya(l: JLokma): Lokma = Byte2byte(l)
