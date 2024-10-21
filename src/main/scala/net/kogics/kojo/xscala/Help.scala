@@ -291,7 +291,7 @@ sq(100)
     // todo: check that it is indeed a scala keyword
     dict.keywordTranslation.getOrElse(keyword, s"<$keyword has no Turkish translation>")
   def translate(keyword: String)(elem: String = ""): String =
-    if (isTurkish) s"Türkçesi '${en2tr(keyword)}' olan anahtar sözcük" else elem
+    if (isTurkish) s"Türkçesi '${en2tr(keyword)}' olan anahtar sözcük: '$keyword'." else elem
 
   // we have only the following above: def, val, var, for, if
   // todo: mixes in Scala 3 keywords enum, given, then, (any others?)
