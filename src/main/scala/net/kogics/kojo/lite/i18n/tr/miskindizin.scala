@@ -19,7 +19,10 @@ package net.kogics.kojo.lite.i18n.tr
 trait LazyListMethodsInTurkish {
   type MiskinDizin[C] = LazyList[C]
   object MiskinDizin {
-    def sayalım(başlangıç: Sayı, kaçarKaçar: Sayı = 1) = LazyList.from(başlangıç, kaçarKaçar)
+    // Create an infinite LazyList starting at start and incrementing by step step
+    def sayalım(başlangıç: Sayı, kaçarKaçar: Sayı = 1): MiskinDizin[Sayı] = LazyList.from(başlangıç, kaçarKaçar)
+    // An infinite LazyList that repeatedly applies a given function to a start value
+    def yinele[S](başlangıç: => S)(işlev: S => S): MiskinDizin[S] = LazyList.iterate(başlangıç)(işlev)
   }
   // todo: duplicates in dizi.scala
   implicit class LazyListYöntemleri[T](d: MiskinDizin[T]) {
