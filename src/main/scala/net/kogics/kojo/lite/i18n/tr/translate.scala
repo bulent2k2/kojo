@@ -77,11 +77,11 @@ object translate {
     .replace("net.kogics.kojo.lite.i18n.TurkishAPI", "")
   )
 
-/*
-java.lang.IllegalArgumentException: More than Int.MaxValue elements.
-	at scala.collection.immutable.NumericRange$.check$1(NumericRange.scala:431)
-	at scala.collection.immutable.NumericRange$.count(NumericRange.scala:441)
- */
+  /*
+   java.lang.IllegalArgumentException: More than Int.MaxValue elements.
+   at scala.collection.immutable.NumericRange$.check$1(NumericRange.scala:431)
+   at scala.collection.immutable.NumericRange$.count(NumericRange.scala:441)
+   */
   def beforeCommon(str: String) = str
     .replace("More than Int.MaxValue elements.", "Sayı.Enİrisi değerinden çok ögesi var.")
 
@@ -95,7 +95,7 @@ java.lang.IllegalArgumentException: More than Int.MaxValue elements.
     .replace("Unable to stop script.", "Programın çalışmasını güzelce durduramadık.")
     .replace("Doing a forced-stop. It's best to just restart Kojo!", "Zorlayarak durduruyoruz. Kojo'yu kapatıp açmak iyi olur!")
     .replace("val ", "dez ")
-/*  .replace("var ", "den ")  var is too common in turkish */
+  /*  .replace("var ", "den ")  var is a very common word in turkish */
     .replace("def ", "tanım ")
     .replace("class ", "sınıf ")
     .replace("case ", "durum ")
@@ -132,16 +132,44 @@ java.lang.IllegalArgumentException: More than Int.MaxValue elements.
   //
     .replace("Warning", "Uyarı")
   /*
-Hata[7,91]: overloaded method apply with alternatives:
-  (x: java.math.BigSayıeger)scala.math.BigSayı <and>
-  (x: Yazı)scala.math.BigSayı <and>
-  (x: Dizik[Lokma])scala.math.BigSayı <and>
-  (l: Uzun)scala.math.BigSayı <and>
-  (i: Sayı)scala.math.BigSayı
- cannot be applied to (scala.math.BigSayı)
-def foo(ds: List[BigInt]): S = ds.reverse.zip(kuvvetler(ds.size)).map{ case (d, p) => S(d*p) }.reduce(_ + _)
-                                                                                          ^
+   Hata[7,91]: overloaded method apply with alternatives:
+   (x: java.math.BigSayıeger)scala.math.BigSayı <and>
+   (x: Yazı)scala.math.BigSayı <and>
+   (x: Dizik[Lokma])scala.math.BigSayı <and>
+   (l: Uzun)scala.math.BigSayı <and>
+   (i: Sayı)scala.math.BigSayı
+   cannot be applied to (scala.math.BigSayı)
+   def foo(ds: List[BigInt]): S = ds.reverse.zip(kuvvetler(ds.size)).map{ case (d, p) => S(d*p) }.reduce(_ + _)
+   ^
    */
     .replace("overloaded method apply with alternatives", "birkaç tane işlev uygulama () seçeneği var")
     .replace("cannot be applied to", "hiçbiri şu türe uygulanamıyor:")
+  /*
+   Error[x,y]: unclosed string literal
+   Error[Z,W]: Missing closing brace <> assumed here
+   */
+    .replace("unclosed string literal", "çift tırnak işaretinin teki eksik")
+    .replace("Missing closing brace", "kapatan kıvrık parantez")
+    .replace("assumed here", "burada olduğu varsayıldı")
+  // Hata oldu - ÇalışmaSırasıKuralDışı: You can't redraw a picture (kütük dosyasında daha çok bilgi var)
+    .replace("You can't redraw a picture", "Resim bir kere çizildikten sonra yine çizilemez.")
+  // Problem: java.lang.IllegalStateException: Cannot access a Picture's geometry before it is drawn.
+    .replace("Problem: java.lang.IllegalStateException: Cannot access a Picture's geometry before it is drawn.",
+      "Hata: KuralDışıDurumHatası: Resim çizilmeden önce kullanıldı.")
+  /* Hata[28,13]: not enough arguments for method apply: (v1: Resim): İkil in trait Function1.
+   Unspecified value parameter v1.
+   top.çarptıMı()
+   */
+    .replace("not enough arguments for method apply", "yeterince girdi yok")
+    .replace("in trait Function", "beklenen özellik: İşlev")
+  /* Hata[28,21]: too many arguments (found 2, expected 1) for method apply: (v1: Resim): İkil in trait Function1
+   top.çarptıMı(engel, foo)
+   *                   ^
+   Hata[3,12]: too many arguments (found 2, expected 1) for method fonk1: (g1: Sayı): Sayı
+   fonk1(100, 200)
+   *          ^
+   */
+    .replace("too many arguments (found", "çok fazla girdili (bulunan")
+    .replace(", expected) for method", ", beklenen) yöntem")
+    .replace("apply: ", "işlev uygulama( apply() ): ")
 }
