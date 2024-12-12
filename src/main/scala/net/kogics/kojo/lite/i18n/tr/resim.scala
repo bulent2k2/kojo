@@ -253,7 +253,7 @@ class Resim(var p: richBuiltins.Picture) {
   def görünür: İkil = p.isVisible
   def kesişir(başkaResim: Resim): İkil = p.intersects(başkaResim.p)
   def çarptıMı = çarpıştı _
-  def çarpıştı(başkaResim: Resim): İkil = p.intersects(başkaResim.p)
+  def çarpıştı(başkaResim: Resim): İkil = p.intersects(başkaResim.p) // collidesWith
   def çarpışmalar(başkaları: Küme[Resim]): Küme[Resim] =
     başkaları.filter { this çarpıştı _ }
   def çarpışma(başkaları: Dizi[Resim]): Belki[Resim] =

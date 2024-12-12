@@ -156,7 +156,7 @@ trait DizikYöntemleri {
     def say(işlev: T => İkil): Sayı = d.count(işlev)
 
     def dilim(nereden: Sayı, nereye: Sayı) = d.slice(nereden, nereye)
-    def ikile[S](öbürü: scala.collection.IterableOnce[S]) = d.zip(öbürü)
+    def ikile[S](öbürü: YinelenebilirBirKere[S]) = d.zip(öbürü)
     def ikileSırayla = d.zipWithIndex
     def ikileKonumla = d.zipWithIndex
     def öbekle[A](iş: (T) => A): Eşlek[A, Col] = d.groupBy(iş)

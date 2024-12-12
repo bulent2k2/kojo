@@ -27,6 +27,7 @@ package net.kogics.kojo.lite.i18n.tr
 object dict {
   // Ekşi sözlükten: application programming interface.. yani ne diyor "uygulama programlama arabirimi". demek ki uygulama programlamak icin saglanan arabirimlere grup olarak api deniyormuş
   val miscCreativeMapping = Map(
+    "nil" -> "boş",
     "double quotes" -> "çift tırnak işareti",
     "brace" -> "kıvrık parantez",
     "trace" -> "izlem",
@@ -40,7 +41,7 @@ object dict {
     "hesap" -> "ölçüm",
     "cebir" -> "ölçülüm",
     "polynomial" -> "çok terimli",
-    "iterate" -> "yinele",
+    "iterate" -> "yinele",  // todo not repeat -- üzerinden geçmek
     "iteration" -> "yineleme",
     "iterator" -> "yineleyici",
     "iterable" -> "yinelenebilir",

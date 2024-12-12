@@ -83,9 +83,9 @@ trait ListMethodsInTurkish {
     def say(işlev: T => İkil): Sayı = d.count(işlev)
 
     def dilim(nereden: Sayı, nereye: Sayı) = d.slice(nereden, nereye)
-    def ikile[S](öbürü: scala.collection.IterableOnce[S]) = d.zip(öbürü)
-    def ikileSırayla = d.zipWithIndex
-    def ikileKonumla = d.zipWithIndex
+    def ikile[S](öbürü: YinelenebilirBirKere[S]) = d.zip(öbürü) // todo: result type (for all ikile in other files, too)
+    def ikileSırayla = d.zipWithIndex  // todo
+    def ikileKonumla = d.zipWithIndex  // todo
     def öbekle[A](iş: (T) => A): Eşlek[A, Col] = d.groupBy(iş)
     def öbekleEsnek[A](iş: (T) => A): Eşlem[A, Col] = Eşlem.değişmezden(d.groupBy(iş)) // needed?
 

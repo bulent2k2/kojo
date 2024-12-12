@@ -100,7 +100,7 @@ trait SeqMethodsInTurkish {
     def say(işlev: T => İkil): Sayı = d.count(işlev)
 
     def dilim(nereden: Sayı, nereye: Sayı) = d.slice(nereden, nereye)
-    def ikile[S](öbürü: scala.collection.IterableOnce[S]) = d.zip(öbürü)
+    def ikile[S](öbürü: YinelenebilirBirKere[S]) = d.zip(öbürü)
     def ikileSırayla = d.zipWithIndex
     def ikileKonumla = d.zipWithIndex
     def öbekle[A](iş: (T) => A): Eşlek[A, Col] = d.groupBy(iş)
@@ -173,7 +173,7 @@ trait SeqMethodsInTurkish {
     def say(işlev: T => İkil): Sayı = d.count(işlev)
 
     def dilim(nereden: Sayı, nereye: Sayı) = d.slice(nereden, nereye)
-    def ikile[S](öbürü: scala.collection.IterableOnce[S]) = d.zip(öbürü)
+    def ikile[S](öbürü: YinelenebilirBirKere[S]) = d.zip(öbürü)
     def ikileSırayla = d.zipWithIndex
     def ikileKonumla = d.zipWithIndex
     def öbekle[A](iş: (T) => A): Eşlek[A, Col] = d.groupBy(iş)
@@ -244,7 +244,7 @@ trait SeqMethodsInTurkish {
     def say(işlev: T => İkil): Sayı = d.count(işlev)
 
     def dilim(nereden: Sayı, nereye: Sayı) = d.slice(nereden, nereye)
-    def ikile[S](öbürü: scala.collection.IterableOnce[S]) = d.zip(öbürü)
+    def ikile[S](öbürü: YinelenebilirBirKere[S]) = d.zip(öbürü)
     def ikileSırayla = d.zipWithIndex
     def ikileKonumla = d.zipWithIndex
     def öbekle[A](iş: (T) => A): Eşlek[A, Col] = d.groupBy(iş)
@@ -286,6 +286,8 @@ trait SeqMethodsInTurkish {
     type Col = collection.immutable.Iterable[T]
     type C2[B] = collection.immutable.Iterable[B]
     type Eşlek[A, D] = collection.immutable.Map[A, D]
+    type Küme[T] = Set[T]
+    type Yöney[T] = Vector[T]
 
     def ele(deneme: T => İkil): Col = d.filter(deneme)
     def eleDeğilse(deneme: T => İkil): Col = d.filterNot(deneme)
@@ -293,16 +295,16 @@ trait SeqMethodsInTurkish {
     def düzİşle[A](işlev: T => C2[A]): C2[A] = d.flatMap(işlev)
     def herbiriİçin[S](işlev: T => S): Birim = d.foreach(işlev)
 
-    def dizine = d.toList
-    def diziye = d.toSeq
-    def kümeye = d.toSet
-    def yöneye = d.toVector
+    def dizine: Dizin[T] = d.toList
+    def diziye: Dizi[T] = d.toSeq
+    def kümeye: Küme[T] = d.toSet
+    def yöneye: Yöney[T] = d.toVector
     def dizime[S >: T](implicit delil: scala.reflect.ClassTag[S]): Dizim[S] = new Dizim(d.toArray(delil))
     def eşleğe[A, D](implicit delil: T <:< (A, D)): Eşlek[A, D] = d.toMap
     def eşleme[A, D](implicit delil: T <:< (A, D)): Eşlem[A, D] = Eşlem.değişmezden(d.toMap)
-    def ikile[S](öbürü: scala.collection.IterableOnce[S]) = d.zip(öbürü)
-    def ikileSırayla = d.zipWithIndex
-    def ikileKonumla = d.zipWithIndex
+    def ikile[S](öbürü: YinelenebilirBirKere[S]): Yinelenebilir[(T, S)] = d.zip(öbürü)
+    def ikileSırayla:Yinelenebilir[(T, Sayı)] = d.zipWithIndex
+    def ikileKonumla:Yinelenebilir[(T, Sayı)] = d.zipWithIndex
     def öbekle[A](iş: (T) => A): Eşlek[A, Col] = d.groupBy(iş)
     // more to come
   }

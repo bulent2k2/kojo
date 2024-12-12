@@ -41,12 +41,12 @@ case class Aralık(ilki: Sayı, sonuncu: Sayı, adım: Sayı = 1) {
   }
   def map[B](f: Sayı => B) = r.map(f)
   def withFilter(pred: Sayı => İkil) = r.withFilter(pred)
-  def flatMap[B](f: Sayı => IterableOnce[B]) = r.flatMap(f)
+  def flatMap[B](f: Sayı => YinelenebilirBirKere[B]) = r.flatMap(f)
   def foreach(f: (Sayı) => Unit) = r.foreach(f)
 
   def işle[B](f: Sayı => B) = r.map(f)
   def elekle(deneme: Sayı => İkil) = r.withFilter(deneme)
-  def düzİşle[B](f: Sayı => IterableOnce[B]) = r.flatMap(f)
+  def düzİşle[B](f: Sayı => YinelenebilirBirKere[B]) = r.flatMap(f)
   def herbiriİçin(f: (Sayı) => Unit) = r.foreach(f)
   def indirge(iş: (Sayı, Sayı) => Sayı): Sayı = diziye.reduce(iş)
   def soldanKatla[B](z: B)(iş: (B, Sayı) => B): B = diziye.foldLeft(z)(iş)
@@ -76,7 +76,7 @@ trait RangeMethodsInTurkish {
 
     def işle[B](f: Sayı => B) = r.map(f)
     def elekle(deneme: Sayı => İkil) = r.withFilter(deneme)
-    def düzİşle[B](f: Sayı => IterableOnce[B]) = r.flatMap(f)
+    def düzİşle[B](f: Sayı => YinelenebilirBirKere[B]) = r.flatMap(f)
     def herbiriİçin(f: (Sayı) => Unit) = r.foreach(f)
     def indirge(iş: (Sayı, Sayı) => Sayı): Sayı = diziye.reduce(iş)
     def soldanKatla[B](z: B)(iş: (B, Sayı) => B): B = diziye.foldLeft(z)(iş)
