@@ -211,7 +211,11 @@ draw(pic)
     ${cursor}
     2 shouldBe 2
 }
-"""
+""",
+    "include" -> "// #include ${filename}${cursor}\n",
+    "exec" -> "// #exec${cursor}\n",
+    "execTemplate" -> "// #exec template ${filename}${cursor}\n",
+    "execPicGaming" -> "// #exec template /picgaming${cursor}\n",
   ) ++ net.kogics.kojo.lite.i18n.tr.templates.codeTemplates // empty map unless in Turkish locale
 
   def apply(name: String) = templates(name)
