@@ -38,6 +38,7 @@ object TurkishAPI
     with tr.ÇizimYöntemleri
     with tr.GeoMethodsInTurkish
     with tr.KeyCodesInTurkish
+    with tr.Kumanda
     with tr.LazyListMethodsInTurkish
     with tr.ListMethodsInTurkish
     with tr.MapMethodsInTurkish
@@ -123,8 +124,8 @@ object TurkishAPI
   type BirSayfaKostüm = tr.BirSayfaKostüm
   val BirSayfaKostüm = tr.BirSayfaKostüm
 
-  def belirt(belit: İkil, mesaj: => Any): Birim = assert(belit, mesaj)
-  def gerekli(gerekçe: İkil, mesaj: => Any): Birim = require(gerekçe, mesaj)
+  def belirt(belit: İkil, mesaj: => Any = ""): Birim = assert(belit, mesaj)
+  def gerekli(gerekçe: İkil, mesaj: => Any = ""): Birim = require(gerekçe, mesaj)
   def yeniMp3Çalar = new tr.Mp3Çalar(rb.newMp3Player)
 
   trait TurkishTurtle {
@@ -387,6 +388,7 @@ object TurkishAPI
     rb.tCanvas.zoomXY(xOran, yOran, xMerkez, yMerkez)
   def yaklaşmayıSil(): Birim = rb.tCanvas.resetPanAndZoom()
   def yaklaşmayaİzinVerme(): Birim = rb.tCanvas.disablePanAndZoom()
+  def tuvaliSabitle(): Birim = yaklaşmayaİzinVerme()
   def tuvaliKaydır(x: Kesir, y: Kesir): Birim = rb.tCanvas.scroll(x, y)
   def tuvaliDöndür(açı: Kesir): Birim = rb.tCanvas.viewRotate(açı)
 
@@ -468,7 +470,7 @@ object TurkishAPI
   def çıktıArtalanınıKur(renk: Renk) = rb.setOutputBackground(renk)
   def çıktıYazıRenginiKur(renk: Renk) = rb.setOutputTextColor(renk)
   def çıktıYazıYüzüBoyunuKur(boy: Sayı) = rb.setOutputTextFontSize(boy)
-  def tuvalBoyutOranınınKur(oran: Kesir) = rb.setDrawingCanvasAspectRatio(oran)
+  def tuvalBoyutOranınıKur(oran: Kesir) = rb.setDrawingCanvasAspectRatio(oran)
   def tuvalBoyutlarınıKur(en: Sayı, boy: Sayı) = rb.setDrawingCanvasSize(en, boy)
 
   def süreTut(komut: => Birim): Birim = {
@@ -585,7 +587,7 @@ object TurkishAPI
     val (sade, vurgulu, kalın) = (bi.PlainFont, bi.ItalicFont, bi.BoldFont)
   }
 
-  def zamanTut[T](başlık: Yazı = "Zaman ölçümü:")(işlev: => T)(bitiş: Yazı = "sürdü."): T = { // timeit in Bi.scala
+  def zamanTut[T](başlık: Yazı = "Zaman ölçümü:")(işlev: => T)(bitiş: Yazı = "sürdü."): T = { // timeit in ../Builtins.scala
     val t0 = buSaniye
     val çıktı = işlev
     val delta = buSaniye - t0
@@ -611,7 +613,7 @@ object TurkishAPI
 
   def sürüm = rb.version
 
-
+  def kumandaKolu(yarıçap: Kesir): KumandaKolu = rb.joystick(yarıçap)
   // more to come (:-)
 }
 
