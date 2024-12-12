@@ -84,6 +84,7 @@ object translate {
    */
   def beforeCommon(str: String) = str
     .replace("More than Int.MaxValue elements.", "Sayı.Enİrisi değerinden çok ögesi var.")
+    .replace("java.lang.NullPointerException", "BoşGöstergeHatası")
 
   def result(str: String) = common(beforeCommon(str))
     .replace("expected class or object definition", "gereken sınıf ya da nesne tanımı bulunamadı")
@@ -110,7 +111,6 @@ object translate {
     .replace("java.lang.IllegalArgumentException", "KuraldışıGirdiHatası")
     .replace("java.lang.IndexOutOfBoundsException", "SınırDışınaTaşmaHatası")
     .replace("scala.NotImplementedError", "EksikTanımHatası")
-    .replace("java.lang.NullPointerException", "BoşGöstergeHatası")
     .replace("java.lang.ArithmeticException", "MatematikselHata")
     .replace("is out of bounds", "sınırlar dışında")
     .replace("assertion failed", "belirtilen koşul sağlanmadı")
@@ -160,8 +160,16 @@ object translate {
    Unspecified value parameter v1.
    top.çarptıMı()
    */
-    .replace("not enough arguments for method apply", "yeterince girdi yok")
-    .replace("in trait Function", "beklenen özellik: İşlev")
+    .replace("not enough arguments for method apply", "İşlev uygulama yöntemi için yeterince girdi yok")
+    .replace("in trait Function", "şu özellik için: İşlev")
+  /*  Hata[3,6]: not enough arguments for method fonk1: (g1: Sayı): Sayı.
+   *     Unspecified value parameter g1.
+   *     fonk1()
+   *          ^
+   */
+    .replace("not enough arguments for method ", "yeterince girdi yok. Yöntem ")
+    .replace("Unspecified value parameter ", "eksik değer girdisi ")
+
   /* Hata[28,21]: too many arguments (found 2, expected 1) for method apply: (v1: Resim): İkil in trait Function1
    top.çarptıMı(engel, foo)
    *                   ^
@@ -169,7 +177,13 @@ object translate {
    fonk1(100, 200)
    *          ^
    */
-    .replace("too many arguments (found", "çok fazla girdili (bulunan")
-    .replace(", expected) for method", ", beklenen) yöntem")
-    .replace("apply: ", "işlev uygulama( apply() ): ")
+  .replace("too many arguments (found", "fazla girdi verildi (bulunan")
+  //
+  .replace(", expected ", ", beklenen ")
+  .replace(" for method apply: ", " işlev uygulama yöntemi için: ")
+  .replace(" for method ", " şu yöntem için: ")
+
+  // Hata[31,5]: not found: value doğrudanÇağır
+  .replace("not found: value", "değer bulunamadı:")
+
 }
