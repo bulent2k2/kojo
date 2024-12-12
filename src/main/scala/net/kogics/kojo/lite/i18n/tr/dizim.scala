@@ -49,6 +49,7 @@ class EsnekDizim[T](val a: ArrayBuffer[T]) {
 }
 
 object Dizim {
+  def boş[T](implicit arg: ClassTag[T]) = new Dizim(Array.empty)
   def boş[T: ClassTag](b1: Sayı) = new Dizim(Array.ofDim[T](b1))
   def boş[T: ClassTag](b1: Sayı, b2: Sayı) = new Dizim(Array.ofDim[T](b1, b2))
   def boş[T: ClassTag](b1: Sayı, b2: Sayı, b3: Sayı) = new Dizim(Array.ofDim[T](b1, b2, b3))
@@ -80,6 +81,12 @@ trait DizikYöntemleri {
   object Dizik {
     def apply[T](ögeler: T*)(implicit arg: ClassTag[T]) = Array(ögeler: _*)
     def boş[T](implicit arg: ClassTag[T]) = Array.empty
+    def boş[T: ClassTag](b1: Sayı) = Array.ofDim[T](b1)
+    def boş[T: ClassTag](b1: Sayı, b2: Sayı) = Array.ofDim[T](b1, b2)
+    def boş[T: ClassTag](b1: Sayı, b2: Sayı, b3: Sayı) = Array.ofDim[T](b1, b2, b3)
+    def doldur[T: ClassTag](b1: Sayı)(e: => T) = Array.fill[T](b1)(e)
+    def doldur[T: ClassTag](b1: Sayı, b2: Sayı)(e: => T) = Array.fill[T](b1, b2)(e)
+    def doldur[T: ClassTag](b1: Sayı, b2: Sayı, b3: Sayı)(e: => T) = Array.fill[T](b1, b2, b3)(e)
   }
   // todo: copied from dizi.scala
   implicit class ArrayMethods[T](d: Dizik[T]) {
