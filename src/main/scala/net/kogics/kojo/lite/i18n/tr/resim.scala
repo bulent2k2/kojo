@@ -212,10 +212,14 @@ class Resim(var p: richBuiltins.Picture) {
   type BenzerDönüşüm = java.awt.geom.AffineTransform // todo. likewise
   type Küme[T] = Set[T] // duplicate in kume.scala
   type Belki[T] = Option[T] // in belki.scala
+  type PNokta = edu.umd.cs.piccolo.PNode
+  type Tuval = net.kogics.kojo.core.SCanvas
 
-  //def tuval = p.canvas
-  //def pnode = p.pnode // ??
-  //def tnode = p.tnode // ??
+  def tuval: Tuval = p.canvas // net.kogics.kojo.core.SCanvas
+  def pNokta: PNokta = p.pnode
+  def tNokta: PNokta = p.tnode
+  def çizBaştan(): Birim = p.tnode.repaint()
+  def yenidenÇiz(): Birim = p.tnode.repaint()
   def çiz(): Birim = p.draw()
   def çizili: İkil = p.isDrawn
   def sınırlar: PSınırlar = p.bounds

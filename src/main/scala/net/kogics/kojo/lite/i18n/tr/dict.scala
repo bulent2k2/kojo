@@ -378,7 +378,8 @@ object dict {
     "Dizi" -> "Seq",
     "Dizik" -> "Array",
     "Dizim" -> "Array",
-    "EsnekDizim" -> "ArrayBuffer",
+    "EsnekDizim" -> "ArrayBuffer", // older impl
+    "EsnekDizik" -> "ArrayBuffer",
     "Dizin" -> "List",
     "SıralıDizi" -> "IndexedSeq",
     "Eşlek" -> "collection.immutable.Map",
@@ -431,7 +432,7 @@ object dict {
     "Bellekteİmgeİşlemi" -> "BufferedImageOp",
     "ÇiniDünyası" -> "tiles",
     "ÇiniXY" -> "TileXY",
-    "BirSayfaKostüm" -> "SpriteSheet",
+    "BirSayfaKostüm" -> "SpriteSheet", // Giysi, Görünüş, Kostüm
     "Mp3Çalar" -> "KMP3",
     "Canlandırma" -> "Animation",
     "BKK" -> "URL",

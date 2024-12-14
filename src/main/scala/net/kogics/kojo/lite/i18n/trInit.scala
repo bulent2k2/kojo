@@ -26,14 +26,13 @@ import net.kogics.kojo.lite.Builtins
 import net.kogics.kojo.lite.CoreBuiltins
 import net.kogics.kojo.xscala.RepeatCommands
 
-// Keep in alphabetical order
+// Keep in alphabetical order!
 object TurkishAPI
-    extends tr.DizikYöntemleri
-    with tr.TakvimVeZamanYöntemleri
-    with tr.TuvalÇizimYöntemleri
-    with tr.CharMethodsInTurkish
+    extends tr.CharMethodsInTurkish
     with tr.CoreTypeMethodsInTurkish
+    with tr.DizikYöntemleri
     with tr.DosyaÇevirisi
+    with tr.EsnekDizikYöntemleri
     with tr.FutureMethodsInTurkish
     with tr.ÇizimYöntemleri
     with tr.GeoMethodsInTurkish
@@ -55,6 +54,8 @@ object TurkishAPI
     with tr.SetMethodsInTurkish
     with tr.StringMethodsInTurkish
     with tr.arayuz.SwingWidgetMethodsInTurkish
+    with tr.TakvimVeZamanYöntemleri
+    with tr.TuvalÇizimYöntemleri
     with tr.TürÇevirileri
     with tr.UrlInTurkish
     with tr.VectorMethodsInTurkish {
@@ -395,6 +396,7 @@ object TurkishAPI
   def tuşaBasılıMı(tuş: Sayı): İkil = rb.isKeyPressed(tuş)
   def tuşaBasınca(iş: Sayı => Birim): Birim = rb.tCanvas.onKeyPress(iş)
   def tuşuBırakınca(iş: Sayı => Birim): Birim = rb.tCanvas.onKeyRelease(iş)
+  def fareyeTıklayınca(iş: (Kesir, Kesir) => Birim): Birim = rb.tCanvas.onMouseClick(iş)
   def fareyeTıklıyınca(iş: (Kesir, Kesir) => Birim): Birim = rb.tCanvas.onMouseClick(iş)
   def fareyiSürükleyince(iş: (Kesir, Kesir) => Birim): Birim = rb.tCanvas.onMouseDrag(iş)
   def fareKımıldayınca(iş: (Kesir, Kesir) => Birim): Birim = rb.tCanvas.onMouseMove(iş)
