@@ -44,7 +44,8 @@ libraryDependencies ++= Seq(
     "org.objenesis" % "objenesis" % "1.0" % "test",
     "org.hamcrest" % "hamcrest-core" % "1.1" % "test",
     "org.hamcrest" % "hamcrest-library" % "1.1" % "test",
-    ("org.scalacheck"  %% "scalacheck" % "1.14.3" intransitive()) % "test"
+    ("org.scalacheck"  %% "scalacheck" % "1.14.3" intransitive()) % "test",
+    "org.scala-lang.modules" %% "scala-parallel-collections" % "1.1.0"
 )
 
 //Build distribution

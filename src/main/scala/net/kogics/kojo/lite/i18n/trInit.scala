@@ -31,6 +31,7 @@ object TurkishAPI
     extends tr.CharMethodsInTurkish
     with tr.CoreTypeMethodsInTurkish
     with tr.DizikYöntemleri
+    with tr.DizinYöntemleri
     with tr.DosyaÇevirisi
     with tr.EsnekDizikYöntemleri
     with tr.FutureMethodsInTurkish
@@ -39,11 +40,11 @@ object TurkishAPI
     with tr.KeyCodesInTurkish
     with tr.Kumanda
     with tr.LazyListMethodsInTurkish
-    with tr.ListMethodsInTurkish
     with tr.MapMethodsInTurkish
     with tr.MatematikYöntemleri
     with tr.MusicUtilsInTurkish
     with tr.OptionMethodsInTurkish
+    with tr.ParalelDiziYöntemleri
     with tr.PartialFunctionMethodsInTurkish
     with tr.QueueMethodsInTurkish
     with tr.RangeMethodsInTurkish

@@ -16,7 +16,20 @@
  */
 package net.kogics.kojo.lite.i18n.tr
 
-trait ListMethodsInTurkish {
+import scala.collection.parallel.CollectionConverters._
+import scala.collection.parallel
+
+trait ParalelDiziYöntemleri {
+  type ParDizi[T] = parallel.immutable.ParSeq[T]
+  implicit class ParListYöntemler[T](pd: ParDizi[T]) {
+    def ele(deneme: T => İkil): ParDizi[T] = pd.filter(deneme)
+    def işle[A](işlev: T => A): ParDizi[A] = pd.map(işlev)
+    def düzİşle[A](işlev: T => ParDizi[A]): ParDizi[A] = pd.flatMap(işlev)
+    def dizine = pd.toList
+    // todo more to come...
+  }
+}
+trait DizinYöntemleri {
   val Boş = collection.immutable.Nil
 
   object Dizin {
@@ -28,7 +41,9 @@ trait ListMethodsInTurkish {
   // But we get type mismatches between List and Seq on methods that return Seq
   implicit class ListYöntemleri[T](d: Dizin[T]) {
     type Col = Dizin[T]
+    type ParDizi[T] = parallel.immutable.ParSeq[T] // duplicate above
     type Eşlek[A, D] = collection.immutable.Map[A, D]
+    def paralel: ParDizi[T] = d.par
     def başı: T = d.head
     def kuyruğu: Col = d.tail
     def önü: Col = d.init

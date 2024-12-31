@@ -143,17 +143,21 @@ tanım mKümesi(d: Dörtgen): İmge = {
         getir renklendirme.renk
         dez iri: Kesir = (1.0 * yinelemeSınırı) * kenar * kenar
         zamanTut(f"mKümesi (nokta sayısı x yineleme sınırı)$iri%2.2e yineleme:") {
-            için { xi <- 0 |- kenar; yi <- 0 |- kenar } {
-                dez x = d.x1 + xi * oranx
-                dez y = d.y1 + yi * orany
-                dez v = VarsılSayı(kayma + x, y)
-                den z = VarsılSayı(0, 0)
-                den i = 0
-                yineleDoğruKaldıkça (z.uzunluğu < 2 && i < yinelemeSınırı) {
-                    z *= z; z += v; i += 1 // işte bütün küme buradan çıkıyor!
+            // için { xi <- 0 |- kenar; yi <- 0 |- kenar }
+            dez pd = (0 |- kenar).dizine.paralel
+            pd.düzİşle { xi =>
+                pd.işle { yi =>
+                    dez x = d.x1 + xi * oranx
+                    dez y = d.y1 + yi * orany
+                    dez v = VarsılSayı(kayma + x, y)
+                    den z = VarsılSayı(0, 0)
+                    den i = 0
+                    yineleDoğruKaldıkça (z.uzunluğu < 2 && i < yinelemeSınırı) {
+                        z *= z; z += v; i += 1 // işte bütün küme buradan çıkıyor!
+                    }
+                    // küme içindeki noktalar hep siyah. diğerleri renkli olacak
+                    imgeNoktasınıKur(img, xi, yi, eğer (z.uzunluğu < 2) siyah yoksa (renk(i, x, y)))
                 }
-                // küme içindeki noktalar hep siyah. diğerleri renkli olacak
-                imgeNoktasınıKur(img, xi, yi, eğer (z.uzunluğu < 2) siyah yoksa (renk(i, x, y)))
             }
         }()
         bellek eşEkle (d -> img)
