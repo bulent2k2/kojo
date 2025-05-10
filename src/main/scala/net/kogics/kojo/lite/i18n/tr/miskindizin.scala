@@ -19,10 +19,18 @@ package net.kogics.kojo.lite.i18n.tr
 trait LazyListMethodsInTurkish {
   type MiskinDizin[C] = LazyList[C]
   object MiskinDizin {
+    // Concatenates all argument collections into a single lazy list
+    def ekle[A](diziler: Yinelenebilir[A]*): MiskinDizin[A] = LazyList.concat(diziler: _*)
+    // Create an infinite LazyList containing the given element expression (which is computed for each occurrence).
+    def sürekli[A](öge: => A): MiskinDizin[A] = LazyList.continually(öge)
+    def boş[A]: MiskinDizin[A] = LazyList.empty[A]
+    // Produces a lazy list containing the results of some element computation a number of times.
+    def doldur[A](s: Sayı)(öge: => A): MiskinDizin[A] = LazyList.fill(s)(öge)
     // Create an infinite LazyList starting at start and incrementing by step step
     def sayalım(başlangıç: Sayı, kaçarKaçar: Sayı = 1): MiskinDizin[Sayı] = LazyList.from(başlangıç, kaçarKaçar)
     // An infinite LazyList that repeatedly applies a given function to a start value
     def yinele[S](başlangıç: => S)(işlev: S => S): MiskinDizin[S] = LazyList.iterate(başlangıç)(işlev)
+    // todo more in https://www.scala-lang.org/api/3.x/scala/collection/immutable/LazyList$.html
   }
   // todo: duplicates in dizi.scala
   implicit class LazyListYöntemleri[T](d: MiskinDizin[T]) {
