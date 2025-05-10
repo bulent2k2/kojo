@@ -52,7 +52,7 @@ için (
         "sevdim onu"
     )
 ) {
-    dez evrik = zamanTut("Tümcenin evirmecelerinin hepsini bulmak") { tümceEvirmece(tümce.split(" ").dizine).işle(_.işle(_.küçükHarfe)) }()
+    dez evrik = zamanTut("Tümcenin evirmecelerinin hepsini bulmak") { tümceEvirmece(tümce.böl(" ").dizine).işle(_.işle(_.küçükHarfe)) }()
     satıryaz(tümce.yazıYap(
         "Tümce: ", "", s".\n${evrik.boyu} evirmecesi var: ${evrik.işle(_.yazıYap(" ")).yazıYap("", ", ", ".\n")}"
     ))
