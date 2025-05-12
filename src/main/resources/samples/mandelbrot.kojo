@@ -15,7 +15,8 @@ val size = 600
 var oxmin, oxmax, oymin, oymax = 0.0
 var pressxy = (0.0, 0.0)
 var dragxy = (0.0, 0.0)
-var level = 102 // should be divisible by 3
+// Higher levels give a more precise picture, but take longer to draw:
+val level = 10 * 102 // should be divisible by 3
 def color(i: Int) = {
     val band = level / 3
     if (i <= band)
@@ -30,11 +31,21 @@ def color(i: Int) = {
 lazy val colors = Seq.tabulate(level + 1) { n =>
     Color(random(255 - n), random(255 - n), random(255 - n))
 }
-def color2(i: Int) = {
-    colors(i)
+def color2(i: Int) = colors(i)
+
+def init() = mandelWrap(-2, 1, -1.5, 1.5)
+
+def mandelWrap(xmin: Double, xmax: Double, ymin: Double, ymax: Double) = {
+    val dx = f"$xmin%.16e,$xmax%.16e"
+    val dy = f"$ymin%.16e,$ymax%.16e"
+    val msg = "" // f"Computing Mandelbrot dx,dy= $dx,$dy"
+    timeit(msg) {
+        mandelParallel(xmin, xmax, ymin, ymax)
+    }
 }
 
-def mandel(xmin: Double, xmax: Double, ymin: Double, ymax: Double): Image = {
+// slower than the parallel version in general
+def mandelSequential(xmin: Double, xmax: Double, ymin: Double, ymax: Double): Image = {
     oxmin = xmin; oxmax = xmax; oymin = ymin; oymax = ymax
     val img = image(size, size)
     for { xi <- 0 until size; yi <- 0 until size } {
@@ -50,9 +61,36 @@ def mandel(xmin: Double, xmax: Double, ymin: Double, ymax: Double): Image = {
     }
     img
 }
+
+import scala.collection.parallel.CollectionConverters._
+import scala.collection.parallel
+
+def mandelParallel(xmin: Double, xmax: Double, ymin: Double, ymax: Double): Image = {
+    oxmin = xmin; oxmax = xmax; oymin = ymin; oymax = ymax
+    val img = image(size, size)
+    // for { xi <- 0 until size; yi <- 0 until size } {
+    val parList = (0 until size).toList.par
+    parList.flatMap { xi =>
+        parList.map { yi =>
+            val x = xmin + xi * (xmax - xmin) / size
+            val y = ymin + yi * (ymax - ymin) / size
+            var z = Complex(0, 0); val c = Complex(x, y)
+            var i = 0
+            while (z.abs < 2 && i < level) {
+                z *= z; z += c; i += 1
+            }
+          setImagePixel(img, xi, yi,
+            if (z.abs < 2) black
+            else color(i)
+          )
+        }
+    }
+    img
+}
+
 cleari()
 val cDelta = Point(-size / 2, -size / 2)
-var pic = trans(cDelta.x, cDelta.y) -> Picture.image(mandel(-2, 1, -1.5, 1.5))
+var pic = trans(cDelta.x, cDelta.y) -> Picture.image(init())
 draw(pic)
 installMouseHandlers(pic)
 var dragSq: Picture = Picture.rect(0, 0)
@@ -80,7 +118,7 @@ def installMouseHandlers(p: Picture) {
         val dely = (oymax - oymin) / size
         dragSq.erase()
         pic.erase()
-        pic = trans(cDelta.x, cDelta.y) -> Picture.image(mandel(oxmin + delx * bxmin, oxmin + delx * bxmax, oymin + dely * bymin, oymin + dely * bymax))
+        pic = trans(cDelta.x, cDelta.y) -> Picture.image(mandelWrap(oxmin + delx * bxmin, oxmin + delx * bxmax, oymin + dely * bymin, oymin + dely * bymax))
         pic.draw()
         installMouseHandlers(pic)
     }
