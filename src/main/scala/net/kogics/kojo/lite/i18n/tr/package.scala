@@ -143,6 +143,16 @@ package object tr {
   // used in ../../../lexer/ScalariformTokenMaker.scala
   def isTurkishKeyword(word: String) = trKeywordSet.contains(word) || (TurkishAPI.testTrKeywords && _trKeywords.toSet.contains(word))
 
+  // used in .translate.scala and in ../trInit.scala
+  object Yardımcı {
+    val y = net.kogics.kojo.util.Utils
+    val kütüpDizini =  y.libDir
+    val eklentiDizini = y.extensionsDir
+    // Yardımcı.yerelYazı("S_Loading") == "Yükleniyor..."
+    def yerelYazı(ingilizceAdı: Yazı): Yazı = y.loadString(ingilizceAdı)
+    // todo more...
+  }
+
   // used to update result in the OutputPane and worksheet (codePane):
   //   ../../OutputPane.scala
   //   ../../CodeExecutionSupport.scala

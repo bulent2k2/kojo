@@ -66,6 +66,7 @@ object res {
     NoktaIşıkBD(x, y, yön, yükseklik, uzaklık)
   def sahneIşığı(x: Kesir, y: Kesir, yön: Kesir, yükseklik: Kesir, uzaklık: Kesir) =
     SahneIşığıBD(x, y, yön, yükseklik, uzaklık)
+  // bbx todo: translate..
   def ışıklar(ışıklar: com.jhlabs.image.LightFilter.Light*) = Lightsc(ışıklar: _*)
   def birEfekt(isim: Symbol, özellikler: Tuple2[Symbol, Any]*) = SomeEffectc(isim, özellikler: _*)
   def filtre(filtre: Bellekteİmgeİşlemi) = ApplyFilterc(filtre)
@@ -316,6 +317,8 @@ class Resim(var p: richBuiltins.Picture) {
   def yana(başka: Resim) = p.beside(başka.p)
   def üste(başka: Resim) = p.above(başka.p)
   def alta(başka: Resim) = p.below(başka.p)
+  def üzerinde(başka: Resim) = p.over(başka.p)  // == .on
+  def altında(başka: Resim) = başka.p.over(this.p)
   def konumaDoğruGit(x: Kesir, y: Kesir, süre: Uzun)(sonİşlev: => Birim) =
     p.animateToPosition(x, y, süre)(sonİşlev)
   def mesafeGit(mx: Kesir, my: Kesir, süre: Uzun)(sonİşlev: => Birim) =

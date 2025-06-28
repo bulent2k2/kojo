@@ -618,6 +618,9 @@ object TurkishAPI
 
   def kumandaKolu(yarıçap: Kesir): KumandaKolu = rb.joystick(yarıçap)
   // more to come (:-)
+
+  import tr.{Yardımcı => yardımcı}
+  val Yardımcı = yardımcı
 }
 
 object TurkishInit {

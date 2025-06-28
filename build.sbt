@@ -21,7 +21,7 @@ libraryDependencies ++= Seq(
     "org.scala-lang" % "scala-compiler" % scalaVer,
     "org.scala-lang" % "scala-reflect" % scalaVer,
     "com.typesafe.akka" %% "akka-actor" % "2.6.16",
-    "org.scala-lang.modules" %% "scala-swing" % "2.1.1",
+    "org.scala-lang.modules" %% "scala-swing" % "3.0.0",
     "org.scala-lang.modules" %% "scala-xml" % "1.2.0",
     "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
     "org.piccolo2d" % "piccolo2d-core" % "1.3.1",

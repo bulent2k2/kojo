@@ -32,3 +32,6 @@ installer.i4j/md5sums
 installer.i4j/output.txt
 installer.i4j/sha256sums
 installer.i4j/updates.xml
+.nosync
+.weakpkg
+KojoWin.zip
