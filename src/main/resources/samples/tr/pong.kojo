@@ -9,9 +9,10 @@ dez raketinEni = 25
 dez topunYÇ = 15
 dez tuvalinBoyu = tuvalAlanı.boyu
 dez tuvalinEni = tuvalAlanı.eni
-dez raketinHızı = 5
+dez raketinHızı = 400
 dez raketinİvmesi = 1.01
-dez topunİlkYatayHızı = 5 // yatay yöndeki ilk hız
+dez topunİlkYatayHızı = 400 // yatay yöndeki ilk hız
+dez topunİlkDikeyHızı = topunİlkYatayHızı * 0.65
 dez topunİvmesi = 1.001
 
 tanım raket = kalemRengi(koyuGri) * boyaRengi(red) -> Resim.dikdörtgen(raketinEni, raketinBoyu)
@@ -38,6 +39,7 @@ sınıf SkorTutma(skor0: Sayı, solSkor: İkil) {
     tanım arttır() {
         skor += 1
         yazısı.güncelle(skor)
+        // eğer (skor == 15) durdur  // todo: ikisi de 14 olunca tiebreak olsun!
     }
 }
 
@@ -52,7 +54,7 @@ dez top = top0
 
 çiz(solRaket, sağRaket, araBölme, solÇizgi, sağÇizgi, top)
 
-dez topunİlkHızı = Yöney2B(topunİlkYatayHızı, 3)
+dez topunİlkHızı = Yöney2B(topunİlkYatayHızı, topunİlkDikeyHızı)
 den topunBuankiHızı: Yöney2B = topunİlkHızı
 
 dez rakettenHıza = Eşlem(
@@ -67,12 +69,15 @@ dez sayıDurumu = Eşlem(
 çiz(sayıDurumu(sağRaket).yazısı)
 
 canlandır {
-    top.götür(topunBuankiHızı)
-    eğer (varMı(top.çarpışma(raketler))) {
+    dez as = ikiÇizimArasıSüre
+    top.götür(topunBuankiHızı * as)
+
+    eğer (top.çarpışma(raketler).varMı) {
         sesMp3üÇal(Ses.vuruş)
         topunBuankiHızı = Yöney2B(-topunBuankiHızı.x, topunBuankiHızı.y)
     }
-    yoksa eğer (varMı(top.çarpışma(üstVeAltKenar))) {
+    yoksa eğer (top.çarpışma(üstVeAltKenar).varMı) {
+        top.götür(-topunBuankiHızı * as)
         topunBuankiHızı = Yöney2B(topunBuankiHızı.x, -topunBuankiHızı.y)
     }
     yoksa eğer (top.çarptıMı(solÇizgi)) {
@@ -86,13 +91,13 @@ canlandır {
         sayıDurumu(solRaket).arttır()
     }
     yoksa {
-        topunBuankiHızı = (topunBuankiHızı * topunİvmesi).sınırla(11)
+        topunBuankiHızı = (topunBuankiHızı * topunİvmesi).sınırla(800)
     }
-    raketinDavranışı(solRaket, tuşlar.a, tuşlar.z)
-    raketinDavranışı(sağRaket, tuşlar.yukarı, tuşlar.aşağı)
+    raketinDavranışı(solRaket, tuşlar.a, tuşlar.z, as)
+    raketinDavranışı(sağRaket, tuşlar.yukarı, tuşlar.aşağı, as)
 }
 
-tanım raketinDavranışı(raket: Resim, yukarıTuşu: Sayı, aşağıTuşu: Sayı) {
+tanım raketinDavranışı(raket: Resim, yukarıTuşu: Sayı, aşağıTuşu: Sayı, as: Kesir) {
     dez rHızı = rakettenHıza(raket)
     eğer (tuşaBasılıMı(yukarıTuşu) && !raket.çarptıMı(Resim.tuvalinTavanı)) {
         eğer (rHızı.yukarıMıGidiyorduEnSon) {
@@ -101,7 +106,7 @@ tanım raketinDavranışı(raket: Resim, yukarıTuşu: Sayı, aşağıTuşu: Say
         yoksa {
             rHızı.başaDön(!rHızı.yukarıMıGidiyorduEnSon)
         }
-        raket.götür(0, rHızı.hız)
+        raket.götür(0, rHızı.hız * as)
     }
     yoksa eğer (tuşaBasılıMı(aşağıTuşu) && !raket.çarptıMı(Resim.tuvalinTabanı)) {
         eğer (!rHızı.yukarıMıGidiyorduEnSon) {
@@ -110,7 +115,7 @@ tanım raketinDavranışı(raket: Resim, yukarıTuşu: Sayı, aşağıTuşu: Say
         yoksa {
             rHızı.başaDön(!rHızı.yukarıMıGidiyorduEnSon)
         }
-        raket.götür(0, -rHızı.hız)
+        raket.götür(0, -rHızı.hız * as)
     }
     yoksa {
         rHızı.başaDön(rHızı.yukarıMıGidiyorduEnSon)

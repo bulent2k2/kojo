@@ -617,10 +617,14 @@ object TurkishAPI
   def sürüm = rb.version
 
   def kumandaKolu(yarıçap: Kesir): KumandaKolu = rb.joystick(yarıçap)
-  // more to come (:-)
 
   import tr.{Yardımcı => yardımcı}
   val Yardımcı = yardımcı
+
+  // pong.kojo için. canlandır komutu içinde sıfırdan büyük olur:
+  def ikiÇizimArasıSüre: Kesir = bi.TSCanvas.frameDeltaTime
+
+  // todo: more to come (:-)
 }
 
 object TurkishInit {
