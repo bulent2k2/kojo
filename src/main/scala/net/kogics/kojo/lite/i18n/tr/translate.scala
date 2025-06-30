@@ -206,12 +206,24 @@ object translate {
      */
     .replace("too many arguments (found", "fazla girdi verildi (bulunan")
     //
-      .replace(", expected ", ", beklenen ")
-      .replace(" for method apply: ", " işlev uygulama yöntemi için: ")
-      .replace(" for method ", " şu yöntem için: ")
+    .replace(", expected ", ", beklenen ")
+    .replace(" for method apply: ", " işlev uygulama yöntemi için: ")
+    .replace(" for method ", " şu yöntem için: ")
 
     // Hata[31,5]: not found: value doğrudanÇağır
     .replace("not found: value", "değer bulunamadı:")
+    .replace("Infinity", "Sonsuz")
+
+    /*
+     *  Hata[86,26]: tür mismatch;
+     *   found   : Kesir
+     *   required: Sayı, Uzun, Lokma, Kısa, İriSayı
+     *          satıryaz(f"ETH: $as%d Çizim Sayısı: saniyede ${1.0/as}%.1f")
+     *                          ^
+     */
+    .replace("tür mismatch;", "uyumsuz tür;")
+    .replace("found   : ", "ne var   : ")
+    .replace("required: ", "ne olmalı: ")
   }
 
 }

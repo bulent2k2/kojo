@@ -1,9 +1,11 @@
 // Sağdaki oyuncu yukarı ok ve aşağı ok tuşlarıyla oyuyor
 // Soldaki oyuncu da a ve z tuşlarıyla
+// Eğer en başta takılırsa, tekrar çalıştırıverin.
 
 silVeSakla()
 çizSahne(koyuGri)
 
+dez bitişSayısı = 15
 dez raketinBoyu = 100
 dez raketinEni = 25
 dez topunYÇ = 15
@@ -37,15 +39,16 @@ sınıf SkorTutma(skor0: Sayı, solSkor: İkil) {
     dez yazısı = Resim.yazıRenkli(skor, 20, renkler.lightSteelBlue)
     yazısı.götür(eğer (solSkor) -60 yoksa 40, tuvalinBoyu / 2 - 10)
     tanım arttır() {
+        sesSayı
         skor += 1
         yazısı.güncelle(skor)
-        // eğer (skor == 15) durdur  // todo: ikisi de 14 olunca tiebreak olsun!
+        eğer (skor == bitişSayısı) durdur  // todo: ikisi de 14 olunca tiebreak olsun!
     }
 }
 
 dez üstVeAltKenar = Dizi(Resim.tuvalinTavanı, Resim.tuvalinTabanı)
-dez solRaket = götür(-tuvalinEni / 2, 0) -> raket
-dez sağRaket = götür(tuvalinEni / 2 - raketinEni, 0) -> raket
+dez solRaket = götür(-tuvalinEni / 2, -tuvalinBoyu / 3) -> raket
+dez sağRaket = götür(tuvalinEni / 2 - raketinEni, tuvalinBoyu / 4) -> raket
 dez araBölme = götür(0, -tuvalinBoyu / 2) -> dikey
 dez solÇizgi = götür(-tuvalinEni / 2 + raketinEni, -tuvalinBoyu / 2) -> dikey
 dez sağÇizgi = götür(tuvalinEni / 2 - raketinEni, -tuvalinBoyu / 2) -> dikey
@@ -68,12 +71,28 @@ dez sayıDurumu = Eşlem(
 çiz(sayıDurumu(solRaket).yazısı)
 çiz(sayıDurumu(sağRaket).yazısı)
 
+def sesVer = sesMp3üÇal(Ses.vuruş)
+def sesSayı = sesMp3üÇal(Ses.arabaKazaYaptı)
+
+sesSayı
+sesVer // ilk seferde yüklemek çok zaman alıyor,
+// devinim döngüsü içinde sorun yaratıyor. Onun için burada çağıralım.
+
+den ölçüSayısı = 7
+satıryaz("ETH: Ekran Tazeleme Hızı ya da Oranı, iki çizim arasındaki süre, milisaniye olarak")
+satıryaz("   ETH   Çizim sayısı (saniyede)")
+satıryaz("   ===   =======================")
 canlandır {
     dez as = ikiÇizimArasıSüre
+    eğer (ölçüSayısı > 0) {
+        satıryaz(f"${(as * 1000).sayıya}%6d   ${1.0/as}%-6.1f")
+        ölçüSayısı -= 1
+    }
+
     top.götür(topunBuankiHızı * as)
 
     eğer (top.çarpışma(raketler).varMı) {
-        sesMp3üÇal(Ses.vuruş)
+        sesVer
         topunBuankiHızı = Yöney2B(-topunBuankiHızı.x, topunBuankiHızı.y)
     }
     yoksa eğer (top.çarpışma(üstVeAltKenar).varMı) {
