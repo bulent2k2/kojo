@@ -333,6 +333,8 @@ object TurkishAPI
     val resumeMsg = "Devam etmek için Giriş (Return), çıkmak için Kaçış (Esc) tuşuna bas"
     rb.breakpoint(mesaj, pauseMessage, resumeMsg)
   }
+  def buradaDurma = burdaDurma _
+  def burdaDurma(farketmez: Her) = {}
 
   def sayıOku(istem: Yazı = ""): Sayı = rb.readInt(istem)
   def kesirOku(istem: Yazı = ""): Kesir = rb.readDouble(istem)
