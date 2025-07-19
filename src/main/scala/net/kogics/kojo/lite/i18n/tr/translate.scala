@@ -21,6 +21,13 @@ object translate {
     .replace("net.kogics.kojo.lite.i18n.tr.", "")
     .replace("UserCode.this.TurkishAPI.", "")
     .replace("UserCode", "KullanıcınınYazılımı")
+    .replace("net.kogics.kojo.core.Slow", "yavaş")
+    .replace("net.kogics.kojo.core.Medium", "orta")
+    .replace("net.kogics.kojo.core.Fast", "hızlı")
+    .replace("net.kogics.kojo.core.SuperFast", "çokHızlı")
+    .replace("net.kogics.kojo.core.Pixel", "noktaSayısı")
+    .replace("net.kogics.kojo.core.Cm", "santim")
+    .replace("net.kogics.kojo.core.Inch", "inç")
     .replace("net.kogics.kojo.core.Point", "Nokta")
     .replace("net.kogics.kojo.doodle.Color", "Renk")
     .replace("java.awt.Color", "Renk")
@@ -104,11 +111,11 @@ object translate {
     .replace("Scanning extensions...", s"Eklenti taraması yapılıyor (sabit diskte ${Yardımcı.eklentiDizini} dizininde)...")
     .replace("Additional jars available ", "Ek jar dosyaları bulundu") // clears a trailing space
     .replace("(within libk) - ", ". Sayısı: ") // adds a leading dot
-    .replace("(within ", " (dizin: ") // adds a leading space. todo: only if match, concat to the end: " tane."
+    .replace("(within ", " (dizin: ") // adds a leading space. todo: only if match, concat to the end: " tane." How? Use the regexp below
   }
 
   def regexpChanges(str: String) = {
-    // bbx todo
+    // bbx todo regexp match here?
     str
   }
 
@@ -224,6 +231,36 @@ object translate {
     .replace("tür mismatch;", "uyumsuz tür;")
     .replace("found   : ", "ne var   : ")
     .replace("required: ", "ne olmalı: ")
+
+    /*
+     * Hata[-25,1]: kapatan kıvrık parantez `}` burada olduğu varsayıldı
+     * import TSCanvas._; import Tw._/*
+     * ^
+     */ */
+    .replace("import TSCanvas._; import Tw._/*", "En sona yakın bir komut dizini olmalı!")
+
+    /* todo! ~/src/kojo/a__tam_turkce/koch-ucgenden-kare.kojo
+     * Hata[29,7]: missing argument list şu yöntem için: yinele in object TurkishAPI
+     * Unapplied methods are only converted to functions when a function tür is expected.
+     * You can make bu conversion explicit by writing `yinele _` or `yinele(_)(_)` instead of `yinele`.
+     * yinele(3) dönVeÇiz
+     *       ^
+     *
+     * Hata[29,11]: postfix operator dönVeÇiz needs to be enabled
+     * by making the örtük value scala.language.postfixOps visible.
+     * This can be achieved by adding the import clause 'import scala.language.postfixOps'
+     * or by setting the compiler option -language:postfixOps.
+     * See the Scaladoc for value scala.language.postfixOps for a discussion
+     * why the feature needs to be explicitly enabled.
+     * yinele(3) dönVeÇiz
+          ^
+     */
+
+    /* Hata oldu - java.util.MissingFormatWidthException: %0.1f (kütük dosyasında daha çok bilgi var)
+     val k1: Double = 1.0e-4 // kağıdın kalınlığı 0.1mm olsun: 10^-4 metre (1 santimlik tomarda 100 kağıt olsun)
+     println(f"Kalınlığı ${1000*k1}%0.1fmm bir kağıdı kaç kere katlarsak varırız")
+     */
+
   }
 
 }
