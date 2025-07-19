@@ -14,7 +14,10 @@ object LangInit {
     val userLanguage = prefs.get("user.language", System.getProperty("user.language"))
     if (userLanguage != null && userLanguage.trim != "") {
       val oldLocale = java.util.Locale.getDefault
-      java.util.Locale.setDefault(new java.util.Locale(userLanguage, oldLocale.getCountry, oldLocale.getVariant))
+      val newLocale = new java.util.Locale(userLanguage, oldLocale.getCountry, oldLocale.getVariant)
+      java.util.Locale.setDefault(newLocale)
+      // javax.swing.JOptionPane.setDefaultLocale(newLocale)  doesn't compile
+      // javax.swing.JComponent.setDefaultLocale(newLocale)   didn't help Turkish
       System.setProperty("user.language", userLanguage)
     }
     userLanguage
@@ -63,6 +66,9 @@ object LangInit {
         hrInit.init(b)
       case "tr" =>
         TurkishInit.init(b)
+        UIManager.put("OptionPane.yesButtonText", "Evet");
+        UIManager.put("OptionPane.noButtonText", "Hayır");
+        UIManager.put("OptionPane.cancelButtonText", "Vazgeç");
       case "es" =>
         SpanishInit.init(b)
       case _ =>
