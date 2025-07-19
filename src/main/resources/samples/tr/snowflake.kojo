@@ -14,7 +14,7 @@ tanım kochTanesi(kenarUzunluğu: Sayı, kaçKere: Sayı) {
      */
     yinele(3) {
         birKenarÇiz(kenarUzunluğu, kaçKere)
-        // bunun yerine ileri(kenarUzunluğu) desek üçgen olurdu
+        // birKenarÇiz(...) yerine ileri(kenarUzunluğu) desek üçgen olurdu
         // ikinci kenarla arasındaki açı 60 derece olmalı. O zaman:
         sağ(120)
     }
@@ -46,8 +46,8 @@ tanım birKenarÇiz(kenarUzunluğu: Kesir, kaçKere: Sayı) {
 tanım ayarla(sola: Kesir, aşağı: Kesir, duraklamaSüresi: Sayı = 50) = {
     sil
     kalemKalınlığınıKur(1)
-    kalemRenginiKur(darkGray)
-    boyamaRenginiKur(gray)
+    kalemRenginiKur(koyuGri)
+    boyamaRenginiKur(gri)
     canlandırmaHızınıKur(duraklamaSüresi)
     atla(-sola, -aşağı)
 }
@@ -60,4 +60,4 @@ ayarla(150, 50, 100)
 // İlk üçgenin kenar uzunluğu 300 olsun.
 // 5 kere tekrarlayalım üçgen doğurmayı.
 kochTanesi(300, 5) // sadece 1 kere olsaydı bildiğimiz basit üçgen olacaktı!
-// 2 ve 3 kereyi de dene!
+                   // 2 ve 3 kereyi de dene!
