@@ -112,6 +112,27 @@ object translate {
     .replace("Additional jars available ", "Ek jar dosyaları bulundu") // clears a trailing space
     .replace("(within libk) - ", ". Sayısı: ") // adds a leading dot
     .replace("(within ", " (dizin: ") // adds a leading space. todo: only if match, concat to the end: " tane." How? Use the regexp below
+
+    .replace("Unapplied methods are only converted to functions when a function type is expected.",
+      "Yöntem isimleri ancak bir işlev türü bekleniyorsa işleve çevrilir.")
+
+    .replace("You can make this conversion explicit by writing ", "Bu çevrimi yapmak için şöyle yazabilirsin: ")
+
+    .replace(" or ", " ya da ")
+
+    .replace(" instead of ", " şöyle yazmak yerine: ")
+
+    .replace("postfix operator ", "arkadan gelen işlemci: ")
+    .replace("needs to be enabled", "henüz etkinleştirilmemiş.")
+
+    .replace("by making the implicit value scala.language.postfixOps visible.", "Etkinleştirmek için scala.language.postfixOps örtük değerinin görülebilmesi gerek.")
+
+    .replace("This can be achieved by adding the import clause 'import scala.language.postfixOps'", "Şunu eklerseniz olur: 'getir scala.language.postfixOps'")
+
+    .replace("or by setting the compiler option -language:postfixOps.", "Ya da derleyicinin şu seçeneğini kullanın: -language:postfixOps.")
+
+    .replace("See the Scaladoc for value scala.language.postfixOps for a discussion", "Bunu daha iyi anlamak için şu sayfaya bakabilirsiniz:")
+    .replace("why the feature needs to be explicitly enabled.", "https://stackoverflow.com/questions/13011204/scalas-postfix-ops")
   }
 
   def regexpChanges(str: String) = {
@@ -146,6 +167,9 @@ object translate {
     .replace("java.lang.IndexOutOfBoundsException", "SınırDışınaTaşmaHatası")
     .replace("scala.NotImplementedError", "EksikTanımHatası")
     .replace("java.lang.ArithmeticException", "MatematikselHata")
+    .replace("java.util.NoSuchElementException", "OlmayanÖgeHatası")
+    .replace("empty collection", "boş koleksiyon")
+    .replace("java.util.MissingFormatWidthException", "YazıDüzenlemedeUzunlukEksikliğiHatası")
     .replace("is out of bounds", "sınırlar dışında")
     .replace("assertion failed", "belirtilen koşul sağlanmadı")
     .replace("requirement failed", "gerek koşul sağlanmadı")
@@ -155,39 +179,18 @@ object translate {
     .replace("max", "enİri")
     .replace("min", "enUfak")
     .replace("head of empty", "başı istenen boş bir")
-    /* Error: object creation impossible.
-     Missing implementation for member of trait Seçenek:
-     def yazıya: UserCode.this.TurkishAPI.Yazı = ???
-     */
     .replace("Error", "Hata")
     .replace("object creation impossible", "nesne oluşturulamadı")
     .replace("Missing implementation for member of trait",
       "Temel tür olan özellik yöntemlerinden birinin tanımı eksik. Özelliğin adı")
     //
     .replace("Warning", "Uyarı")
-    /*
-     Hata[7,91]: overloaded method apply with alternatives:
-     (x: java.math.BigSayıeger)scala.math.BigSayı <and>
-     (x: Yazı)scala.math.BigSayı <and>
-     (x: Dizik[Lokma])scala.math.BigSayı <and>
-     (l: Uzun)scala.math.BigSayı <and>
-     (i: Sayı)scala.math.BigSayı
-     cannot be applied to (scala.math.BigSayı)
-     def foo(ds: List[BigInt]): S = ds.reverse.zip(kuvvetler(ds.size)).map{ case (d, p) => S(d*p) }.reduce(_ + _)
-     ^
-     */
     .replace("overloaded method apply with alternatives", "birkaç tane işlev uygulama () seçeneği var")
     .replace("cannot be applied to", "hiçbiri şu türe uygulanamıyor:")
-    /*
-     Error[x,y]: unclosed string literal
-     Error[Z,W]: Missing closing brace <> assumed here
-     */
     .replace("unclosed string literal", "çift tırnak işaretinin teki eksik")
     .replace("Missing closing brace", "kapatan kıvrık parantez")
     .replace("assumed here", "burada olduğu varsayıldı")
-    // Hata oldu - ÇalışmaSırasıKuralDışı: You can't redraw a picture (kütük dosyasında daha çok bilgi var)
     .replace("You can't redraw a picture", "Resim bir kere çizildikten sonra yine çizilemez.")
-    // Problem: java.lang.IllegalStateException: Cannot access a Picture's geometry before it is drawn.
     .replace("Problem: java.lang.IllegalStateException: Cannot access a Picture's geometry before it is drawn.",
       "Hata: KuralDışıDurumHatası: Resim çizilmeden önce kullanıldı.")
     /* Hata[28,13]: not enough arguments for method apply: (v1: Resim): İkil in trait Function1.
@@ -239,27 +242,10 @@ object translate {
      */ */
     .replace("import TSCanvas._; import Tw._/*", "En sona yakın bir komut dizini olmalı!")
 
-    /* todo! ~/src/kojo/a__tam_turkce/koch-ucgenden-kare.kojo
-     * Hata[29,7]: missing argument list şu yöntem için: yinele in object TurkishAPI
-     * Unapplied methods are only converted to functions when a function tür is expected.
-     * You can make bu conversion explicit by writing `yinele _` or `yinele(_)(_)` instead of `yinele`.
-     * yinele(3) dönVeÇiz
-     *       ^
-     *
-     * Hata[29,11]: postfix operator dönVeÇiz needs to be enabled
-     * by making the örtük value scala.language.postfixOps visible.
-     * This can be achieved by adding the import clause 'import scala.language.postfixOps'
-     * or by setting the compiler option -language:postfixOps.
-     * See the Scaladoc for value scala.language.postfixOps for a discussion
-     * why the feature needs to be explicitly enabled.
-     * yinele(3) dönVeÇiz
-          ^
-     */
-
-    /* Hata oldu - java.util.MissingFormatWidthException: %0.1f (kütük dosyasında daha çok bilgi var)
-     val k1: Double = 1.0e-4 // kağıdın kalınlığı 0.1mm olsun: 10^-4 metre (1 santimlik tomarda 100 kağıt olsun)
-     println(f"Kalınlığı ${1000*k1}%0.1fmm bir kağıdı kaç kere katlarsak varırız")
-     */
+    // yinele(3) satıryaz
+    .replace("missing argument list", "eksik girdi")
+    .replace("in object TurkishAPI", " (Türkçe komutlardan biri)")
+    .replace("in object", "şu nesne içinde:")
 
   }
 
