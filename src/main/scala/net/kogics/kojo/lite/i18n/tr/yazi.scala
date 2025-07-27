@@ -21,6 +21,8 @@ trait StringMethodsInTurkish {
   type EsnekYazı = collection.mutable.StringBuilder
 
   object Yazı {
+    // https://stackoverflow.com/questions/21086263/how-to-insert-double-quotes-into-string-with-interpolation-in-scala
+    val tırnak = """ " """.trim // spaces just for legibility
     type Harf = Char
     def olarak(n: Nesne) = String.valueOf(n)
     def olarak(n: Kesir) = String.valueOf(n)

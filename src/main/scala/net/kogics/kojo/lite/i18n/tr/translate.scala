@@ -178,6 +178,7 @@ object translate {
     .replace("Unable to format", "Kod düzenlenemedi")
     .replace("max", "enİri")
     .replace("min", "enUfak")
+    .replace("biçienUfak", "biçimin") // todo! biçiminde, biçiminin, ...
     .replace("head of empty", "başı istenen boş bir")
     .replace("Error", "Hata")
     .replace("object creation impossible", "nesne oluşturulamadı")
