@@ -159,6 +159,42 @@ trait NonVectorPicOps { self: Picture with CorePicOps =>
     notSupported("foreachPolyLine", "for non-vector picture")
 }
 
+object KPath {
+  val TEMP_RECTANGLE = new Rectangle2D.Float()
+  val TEMP_ELLIPSE = new Ellipse2D.Float()
+  val TEMP_ARC = new Arc2D.Float()
+  val TEMP_LINE = new Line2D.Float()
+
+  def createRectangle(x: Float, y: Float, width: Float, height: Float): PPath = {
+    TEMP_RECTANGLE.setRect(x, y, width, height)
+    new KPath(TEMP_RECTANGLE)
+  }
+
+  def createEllipse(x: Float, y: Float, width: Float, height: Float): PPath = {
+    TEMP_ELLIPSE.setFrame(x, y, width, height)
+    new KPath(TEMP_ELLIPSE)
+  }
+
+  def createArc(r: Float, angle: Float): PPath = {
+    val d = 2 * r
+    TEMP_ARC.setArc(-r, -r, d, d, 0, -angle, Arc2D.OPEN)
+    new KPath(TEMP_ARC)
+  }
+
+  def createLine(x1: Float, y1: Float, x2: Float, y2: Float): PPath = {
+    TEMP_LINE.setLine(x1, y1, x2, y2)
+    new KPath(TEMP_LINE)
+  }
+}
+
+class KPath(s: Shape) extends PPath(s) {
+  override def paint(paintContext: PPaintContext): Unit = {
+    val g2 = paintContext.getGraphics
+    g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE)
+    super.paint(paintContext)
+  }
+}
+
 class CirclePic(r: Double)(implicit val canvas: SCanvas)
     extends Picture
     with CorePicOps
@@ -176,7 +212,7 @@ class CirclePic(r: Double)(implicit val canvas: SCanvas)
   def makeTnode: edu.umd.cs.piccolo.PNode = Utils.runInSwingThreadAndPause {
     val fr = r.toFloat
     val d = 2 * fr
-    val node = PPath.createEllipse(-fr, -fr, d, d)
+    val node = KPath.createEllipse(-fr, -fr, d, d)
     _setPenColor(node, Color.red)
     _setPenThickness(node, 2 / canvas.camScale)
     node.setPaint(null)
@@ -207,7 +243,7 @@ class EllipsePic(rx: Double, ry: Double)(implicit val canvas: SCanvas)
     val fry = ry.toFloat
     val dx = 2 * frx
     val dy = 2 * fry
-    val node = PPath.createEllipse(-frx, -fry, dx, dy)
+    val node = KPath.createEllipse(-frx, -fry, dx, dy)
     _setPenColor(node, Color.red)
     _setPenThickness(node, 2 / canvas.camScale)
     node.setPaint(null)
@@ -239,9 +275,7 @@ class ArcPic(r: Double, angle: Double)(implicit val canvas: SCanvas)
 
   def makeTnode: edu.umd.cs.piccolo.PNode = Utils.runInSwingThreadAndPause {
     val fr = r.toFloat
-    val d = 2 * fr
-    val node = new PPath
-    node.setPathTo(new java.awt.geom.Arc2D.Float(-fr, -fr, d, d, 0, -angle.toFloat, Arc2D.OPEN))
+    val node = KPath.createArc(fr, angle.toFloat)
     _setPenColor(node, Color.red)
     _setPenThickness(node, 2 / canvas.camScale)
     node.setPaint(null)
@@ -271,7 +305,7 @@ class RectanglePic(w: Double, h: Double)(implicit val canvas: SCanvas)
   }
 
   def makeTnode: edu.umd.cs.piccolo.PNode = Utils.runInSwingThreadAndPause {
-    val node = PPath.createRectangle(0, 0, w.toFloat, h.toFloat)
+    val node = KPath.createRectangle(0, 0, w.toFloat, h.toFloat)
     _setPenColor(node, Color.red)
     _setPenThickness(node, 2 / canvas.camScale)
     node.setPaint(null)
@@ -298,7 +332,7 @@ class LinePic(x: Double, y: Double)(implicit val canvas: SCanvas)
   }
 
   def makeTnode: edu.umd.cs.piccolo.PNode = Utils.runInSwingThreadAndPause {
-    val node = PPath.createLine(0, 0, x.toFloat, y.toFloat)
+    val node = KPath.createLine(0, 0, x.toFloat, y.toFloat)
     _setPenColor(node, Color.red)
     _setPenThickness(node, 2 / canvas.camScale)
     node.setPaint(null)
@@ -308,14 +342,6 @@ class LinePic(x: Double, y: Double)(implicit val canvas: SCanvas)
   }
 
   def copy: net.kogics.kojo.core.Picture = new LinePic(x, y)
-}
-
-class KPath(s: Shape) extends PPath(s) {
-  override def paint(paintContext: PPaintContext): Unit = {
-    val g2 = paintContext.getGraphics
-    g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE)
-    super.paint(paintContext)
-  }
 }
 
 class PathPic(pathMaker: => GeneralPath)(implicit val canvas: SCanvas)
@@ -593,7 +619,7 @@ class TextPic(text: String, size: Int, color: Color)(implicit val canvas: SCanva
     ptext.setText(t)
   }
 
-  def setPenFont(f: Font) = Utils.runInSwingThread {
+  def setPenFont(f: Font) = Utils.runInSwingThreadAndWait {
     ptext.setFont(f)
   }
 
@@ -606,7 +632,32 @@ class TextPic(text: String, size: Int, color: Color)(implicit val canvas: SCanva
     ptext.setText(newData.toString)
   }
 
-  def copy: net.kogics.kojo.core.Picture = new TextPic(text, size, color)
+  def copy: net.kogics.kojo.core.Picture = {
+    val tp = new TextPic(text, size, color)
+    // currently account for only font and blOrigin mutations
+    tp.setPenFont(ptext.getFont)
+    if (blOrigin) {
+      tp.originBottomLeft()
+    }
+    tp
+  }
+
+  @volatile var blOrigin = false
+  def originBottomLeft(): Unit = Utils.runInSwingThreadAndWait {
+    blOrigin = true
+    val b = ptext.getBounds
+    ptext.translate(0, -b.height)
+    if (isDrawn) {
+      tnode.repaint()
+    }
+  }
+
+  def withBottomLeftOrigin: Picture = {
+    val ret = this.copy.asInstanceOf[TextPic]
+    ret.originBottomLeft()
+    ret
+  }
+
   override def toString() = s"TextPic (Id: ${System.identityHashCode(this)})"
 }
 
