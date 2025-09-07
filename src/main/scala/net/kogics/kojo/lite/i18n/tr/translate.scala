@@ -70,12 +70,18 @@ object translate {
     .replace("BigDecimal", "İriKesir")
     .replace("Integer", "JSayı")
     .replace("Number", "JTemelSayı")
+    .replace("HashMap", "KıymaEşlek")
     .replace("Map", "Eşlek")
+    .replace("HashSet", "KıymaKüme")
+    .replace("Set", "Küme")
     .replace("Vector", "Yöney")
     .replace("Point", "Nokta")
     .replace("true", "doğru")
     .replace("false", "yanlış")
     .replace("implicit ", "örtük ")
+    .replace("Iterator", "Yineleyici")
+    .replace("IterableOnce", "YinelenebilirBirKere")
+    .replace("Iterable", "Yinelenebilir")
     /* todo: add more basic types */
   }
 

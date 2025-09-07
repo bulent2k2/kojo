@@ -80,6 +80,12 @@ trait SetMethodsInTurkish {
     def boş: Col = d.empty
     def böl(deneme: T => İkil): (Col, Col) = d.partition(deneme)
 
+    def kesişim(öbürü: Küme[T]): Küme[T] = d.intersect(öbürü)
+    def bileşim(öbürü: Küme[T]): Küme[T] = d.union(öbürü)
+
+    // Partitions elements in fixed size sets.
+    def öbekli(boy: Sayı): Yineleyici[Col] = d.grouped(boy)
+
     // more to come
   }
 }
