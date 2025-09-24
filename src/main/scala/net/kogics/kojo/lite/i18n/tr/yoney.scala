@@ -83,7 +83,7 @@ trait VectorMethodsInTurkish {
     def say(işlev: A => İkil): Sayı = y.count(işlev)
 
     def dilim(nereden: Sayı, nereye: Sayı) = y.slice(nereden, nereye)
-    def ikile[B](öbürü: scala.collection.IterableOnce[B]) = y.zip(öbürü)
+    def ikile[B](öbürü: YinelenebilirBirKere[B]) = y.zip(öbürü)
     def ikileSırayla = y.zipWithIndex
     def ikileKonumla = y.zipWithIndex
     def öbekle[A2](iş: (A) => A2): Eşlek[A2, Yöney[A]] = y.groupBy(iş)

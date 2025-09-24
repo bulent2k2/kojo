@@ -16,11 +16,16 @@
  */
 package net.kogics.kojo.lite.i18n.tr
 
-import scala.concurrent.{ExecutionContext, Future}
+// See: https://stackoverflow.com/questions/17215421/scala-concurrent-future-wrapper-for-java-util-concurrent-future
+import java.util.concurrent.{Future => JFuture}
+import scala.concurrent.{Future, ExecutionContext}
+import edu.umd.cs.piccolo.activities.PActivity
 
 trait FutureMethodsInTurkish {
+  type JGelecek[T] = JFuture[T]
   type Gelecek[T] = Future[T]
   type İşletimBağlamı = ExecutionContext
+  type PEtkinlik = PActivity
 
   object İşletimBağlamı {
     final lazy val küresel = ExecutionContext.global

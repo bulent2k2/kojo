@@ -59,4 +59,13 @@ kırmızıTop.fareyiSürükleyince { (x, y) =>
     açıResmi.ardaAl()
 }
 
-çiz(bilgi, kaplumbağanınKonumu, açıResmi, kırmızıTop, doğrununUcu)
+dez yardımDüğmesi = götür(ta.x + 10, ta.y + 10) -> Resim.diziDüzenli(
+    boyaRengi(renkler.lightBlue) * kalemRengi(koyuGri) -> Resim.dikdörtgen(200, 40),
+    Resim.dikeyBoşluk(5),
+    kalemRengi(siyah) -> Resim.yazı("Yardım için tıkla!", 20)
+)
+yardımDüğmesi.fareyeTıklayınca { (x, y) =>
+    yardımDüğmesi.sil()
+    çiz(bilgi)
+}
+çiz(yardımDüğmesi, kaplumbağanınKonumu, açıResmi, kırmızıTop, doğrununUcu)

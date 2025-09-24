@@ -32,16 +32,16 @@ canlandır {
         çizMerkezdeYazı("Bir daha dene", kırmızı, 30)
         durdur()
     }
-    eğer (tuşaBasılıMı(tuşlar.VK_LEFT)) {
+    eğer (tuşaBasılıMı(tuşlar.sol)) {
         çılgın.götür(-itiş, 0)
     }
-    eğer (tuşaBasılıMı(tuşlar.VK_UP)) {
+    eğer (tuşaBasılıMı(tuşlar.yukarı)) {
         çılgın.götür(0, itiş)
     }
-    eğer (tuşaBasılıMı(tuşlar.VK_RIGHT)) {
+    eğer (tuşaBasılıMı(tuşlar.sağ)) {
         çılgın.götür(itiş, 0)
     }
-    eğer (tuşaBasılıMı(tuşlar.VK_DOWN)) {
+    eğer (tuşaBasılıMı(tuşlar.aşağı)) {
         çılgın.götür(0, -itiş)
     }
 }

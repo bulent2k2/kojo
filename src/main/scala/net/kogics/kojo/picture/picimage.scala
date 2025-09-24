@@ -23,6 +23,7 @@ import java.awt.image.BufferedImage
 import java.awt.image.BufferedImageOp
 
 import scala.collection.mutable.ArrayBuffer
+import scala.util.control.NonFatal
 
 import com.jhlabs.image.GaussianFilter
 import com.jhlabs.image.LightFilter
@@ -187,7 +188,17 @@ class EffectableImagePic(pic: Picture)(implicit val canvas: SCanvas) extends Pic
 
   def pimage(img: BufferedImage) = {
     val inode: PImage = new PImage(img) {
-      lazy val picWithEffects: BufferedImage = effects.foldLeft(img) { (imgt, op) => op.filter(imgt) }
+      lazy val picWithEffects: BufferedImage =
+        try {
+          effects.foldLeft(img) { (imgt, op) => op.filter(imgt) }
+        }
+        catch {
+          case NonFatal(e) =>
+            println(s"${Utils.loadString("S_PROBLEM_DUE_TO_EXCEPTION")} - ${e.getMessage}")
+            erase()
+            img
+        }
+
       override def paint(paintContext: PPaintContext): Unit = {
         val finalImg = picWithEffects
         val g3 = paintContext.getGraphics()
@@ -201,8 +212,8 @@ class EffectableImagePic(pic: Picture)(implicit val canvas: SCanvas) extends Pic
   }
 
   override def realDraw() = {
-    pic.draw()
     Utils.runInSwingThread {
+      pic.draw()
       picLayer.removeChild(pic.tnode)
       tnode.addChild(pimage(pic.toImage))
       tnode.translate(pic.bounds.x, pic.bounds.y)

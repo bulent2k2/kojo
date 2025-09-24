@@ -14,27 +14,36 @@
  */
 package net.kogics.kojo
 
-import java.awt.{Color, Font, Image, Paint}
 import java.awt.event.KeyEvent
 import java.awt.geom.GeneralPath
+import java.awt.image.BufferedImage
 import java.awt.image.BufferedImageOp
+import java.awt.image.DataBufferInt
+import java.awt.Color
+import java.awt.Font
+import java.awt.Image
+import java.awt.Paint
+import java.awt.Shape
 import java.net.URL
 import java.util.Random
 import javax.swing.JComponent
+
 import scala.swing.Graphics2D
+
 import com.jhlabs.image.LightFilter
 import com.jhlabs.image.LightFilter.Light
+import com.jhlabs.image.PointFilter
 import com.vividsolutions.jts.geom.Coordinate
 import com.vividsolutions.jts.geom.GeometryFactory
 import com.vividsolutions.jts.geom.PrecisionModel
+import core.Picture
 import net.kogics.kojo.core.Cm
 import net.kogics.kojo.core.Inch
 import net.kogics.kojo.core.Pixel
 import net.kogics.kojo.core.SCanvas
+import net.kogics.kojo.picture.PicCache.freshPic
 import net.kogics.kojo.util.Utils
 import net.kogics.kojo.util.Vector2D
-import core.Picture
-import net.kogics.kojo.picture.PicCache.freshPic
 
 package object picture {
   type Painter = core.Painter
@@ -56,7 +65,7 @@ package object picture {
   val flipY = FlipYc
   val axesOn = AxesOnc
 
-  private[picture] def picBounds(pic: Picture): Unit = Utils.runInSwingThread {
+  private[picture] def picLocalBounds(pic: Picture): Unit = Utils.runInSwingThread {
     import edu.umd.cs.piccolo.nodes.PPath
     val tnode = pic.tnode
     val b = tnode.getUnionOfChildrenBounds(null)
@@ -68,7 +77,7 @@ package object picture {
   }
 
   def bounds = PostDrawTransformc { pic =>
-    picBounds(pic)
+    picLocalBounds(pic)
   }
   def fill(color: Paint) = Fillc(color)
   def stroke(color: Paint) = Strokec(color)
@@ -143,7 +152,8 @@ package object picture {
     write(s)
   }
 
-  def text(s0: Any, fontSize: Int, color: Color)(implicit canvas: SCanvas): TextPic = new TextPic(s0.toString, fontSize, color)
+  def text(s0: Any, fontSize: Int, color: Color)(implicit canvas: SCanvas): TextPic =
+    new TextPic(s0.toString, fontSize, color)
   def text(s0: Any, font: Font, color: Color)(implicit canvas: SCanvas): TextPic = {
     val ret = text(s0, 15, color)
     ret.setPenFont(font)
@@ -173,11 +183,13 @@ package object picture {
   def fromJava2d(w: Double, h: Double, fn: Graphics2D => Unit)(implicit canvas: SCanvas) =
     new Java2DPic(w, h, fn)
 
-  def fromJava2dDynamic(w: Double, h: Double, scaleOutFactor: Double, fn: Graphics2D => Unit, stopCheck: => Boolean)(implicit canvas: SCanvas) =
+  def fromJava2dDynamic(w: Double, h: Double, scaleOutFactor: Double, fn: Graphics2D => Unit, stopCheck: => Boolean)(
+      implicit canvas: SCanvas
+  ) =
     new Java2DPic(w * scaleOutFactor, h * scaleOutFactor, fn) {
       override def draw(): Unit = {
         super.draw()
-        scale(1 / scaleOutFactor)
+        this.scale(1 / scaleOutFactor)
         canvas.animate {
           update()
           if (stopCheck) {
@@ -407,15 +419,17 @@ package object picture {
     // returns points on the obstacle that contain the given collision coordinate
     def obstacleCollPoints(c: Coordinate): Option[Array[Coordinate]] = {
       obstacle.picGeom.getCoordinates.sliding(2).find { cs =>
-        val xcheck = if (cs(0).x > cs(1).x)
-          cs(0).x >= c.x && c.x >= cs(1).x
-        else
-          cs(0).x <= c.x && c.x <= cs(1).x
+        val xcheck =
+          if (cs(0).x > cs(1).x)
+            cs(0).x >= c.x && c.x >= cs(1).x
+          else
+            cs(0).x <= c.x && c.x <= cs(1).x
 
-        val ycheck = if (cs(0).y > cs(1).y)
-          cs(0).y >= c.y && c.y >= cs(1).y
-        else
-          cs(0).y <= c.y && c.y <= cs(1).y
+        val ycheck =
+          if (cs(0).y > cs(1).y)
+            cs(0).y >= c.y && c.y >= cs(1).y
+          else
+            cs(0).y <= c.y && c.y <= cs(1).y
         xcheck && ycheck
       }
     }
@@ -470,5 +484,69 @@ package object picture {
   protected[picture] def epic(p: Picture) = p match {
     case ep: EffectablePicture => ep
     case _                     => new EffectableImagePic(freshPic(p))(p.canvas)
+  }
+
+  def toShape(p: Picture): Shape = {
+    p.draw()
+    val coords = p.picGeom.getCoordinates
+    p.erase()
+    if (coords.length > 0) {
+      val path = new GeneralPath()
+      val fc = coords.head
+      path.moveTo(fc.x, fc.y)
+      coords.tail.foreach(c => path.lineTo(c.x, c.y))
+      path.closePath()
+      path
+    }
+    else {
+      throw new RuntimeException("Unable to convert picture to shape")
+    }
+  }
+
+  class MaskOp(maskPic: Picture) extends PointFilter {
+//    var maskImg: BufferedImage = _
+    var maskPixels: Array[Int] = _
+    var maskWidth: Int = 0
+    var maskHeight: Int = 0
+
+    def initMaskImg(): Unit = {
+      maskPic.draw()
+      val maskImg = maskPic.toImage
+      maskPic.erase()
+      maskWidth = maskImg.getWidth; maskHeight = maskImg.getHeight
+//      maskPixels = new Array[Int](maskWidth * maskHeight)
+//      maskImg.getRaster.getDataElements(0, 0, maskWidth, maskHeight, maskPixels)
+      maskPixels = maskImg.getRaster.getDataBuffer.asInstanceOf[DataBufferInt].getData
+    }
+
+    def checkSizes(src: BufferedImage): Unit = {
+      require(
+        src.getWidth <= maskWidth && src.getHeight <= maskHeight,
+        "The mask cannot be smaller than the masked pic"
+      )
+    }
+
+    override def filter(src: BufferedImage, dest: BufferedImage): BufferedImage = {
+      initMaskImg()
+      checkSizes(src)
+      super.filter(src, dest)
+    }
+
+    def filterRGB(x: Int, y: Int, pixel: Int): Int = {
+      val alpha = (pixel >> 24) & 0xff
+      val red = (pixel >> 16) & 0xff
+      val green = (pixel >> 8) & 0xff
+      val blue = pixel & 0xff
+
+      val maskPixel = maskPixels(x + y * maskWidth) //  maskImg.getRGB(x, y)
+      val mred = (maskPixel >> 16) & 0xff
+      val mgreen = (maskPixel >> 8) & 0xff
+      val mblue = maskPixel & 0xff
+      val mgray = (mred + mgreen + mblue) / 3
+
+      val outAlpha = math.min(alpha, mgray)
+      val outPixel = outAlpha << 24 | red << 16 | green << 8 | blue
+      outPixel
+    }
   }
 }

@@ -79,7 +79,7 @@ class BreakpointPane(owner: JFrame) extends JDialog(owner) {
   resumeCancelLabel.setAlignmentX(Component.CENTER_ALIGNMENT)
   resumeCancelLabel.setBorder(new EmptyBorder(10, 10, 10, 10))
 
-  val d = new JButton("Resume")
+  val d = new JButton(Utils.loadString("S_BreakpointPane_Resume"))
   d.setAlignmentX(Component.CENTER_ALIGNMENT)
   d.addActionListener { _ =>
     btnPressed = true
@@ -96,7 +96,7 @@ class BreakpointPane(owner: JFrame) extends JDialog(owner) {
     btnPressed = false
     setTitle(pauseMessage)
     bkptMsglabel.setText(msg.toString)
-    resumeCancelLabel.setText(resumeMsg + ", Escape to stop")
+    resumeCancelLabel.setText(resumeMsg)
     pack()
     val sz = getSize
     val padding = 10

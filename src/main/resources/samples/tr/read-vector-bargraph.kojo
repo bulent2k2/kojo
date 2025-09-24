@@ -18,7 +18,7 @@ satıryaz("Tuvalde bu yöneyin elemanlarından oluşan bir çubuk grafiği çizd
 tanım çubuk(n: Sayı) = Resim.dikdörtgen(30, n * 10)
 dez çubuklar = yöney.işle { n => çubuk(n) }
 eksenleriGöster()
-gridiGöster()
+ızgarayıGöster()
 dez çubukGrafiği = Resim.diziYatay(çubuklar).boşluk(5)
 çiz(çubukGrafiği)
 yazılımcıkDüzenleyicisiniEtkinleştir()

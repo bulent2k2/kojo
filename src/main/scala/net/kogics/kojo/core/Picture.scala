@@ -1,19 +1,19 @@
 package net.kogics.kojo
 package core
 
+import java.awt.geom.AffineTransform
+import java.awt.image.BufferedImage
+import java.awt.image.BufferedImageOp
 import java.awt.Paint
 import java.awt.Shape
-import java.awt.geom.AffineTransform
-import java.awt.image.{BufferedImage, BufferedImageOp}
-import com.vividsolutions.jts.geom.Geometry
 
+import com.vividsolutions.jts.geom.Geometry
+import edu.umd.cs.piccolo.util.PBounds
+import edu.umd.cs.piccolo.PNode
 import net.kogics.kojo.kgeom.PolyLine
+import net.kogics.kojo.picture.ImageOp
 import net.kogics.kojo.util.Utils
 import net.kogics.kojo.util.Vector2D
-
-import edu.umd.cs.piccolo.PNode
-import edu.umd.cs.piccolo.util.PBounds
-import net.kogics.kojo.picture.ImageOp
 
 trait Picture extends InputAware {
   def canvas: SCanvas
@@ -28,7 +28,7 @@ trait Picture extends InputAware {
   def scaleAboutPoint(factor: Double, x: Double, y: Double): Unit
   def scaleAboutPoint(factorX: Double, factorY: Double, x: Double, y: Double): Unit
   def scale(xFactor: Double, yFactor: Double): Unit
-  def shear(shearX:Double, shearY:Double):Unit
+  def shear(shearX: Double, shearY: Double): Unit
   def translate(x: Double, y: Double): Unit
   def translate(v: Vector2D): Unit = translate(v.x, v.y): Unit
   def transv(v: Vector2D) = translate(v.x, v.y): Unit
@@ -63,6 +63,7 @@ trait Picture extends InputAware {
   def intersection(other: Picture): Geometry
   def contains(other: Picture): Boolean
   def distanceTo(other: Picture): Double
+  def isCloser(other: Picture, distance: Double): Boolean = distanceTo(other) < distance
   def area: Double
   def perimeter: Double
   def picGeom: Geometry
@@ -150,6 +151,7 @@ trait Picture extends InputAware {
   def above(other: Picture): Picture
   def below(other: Picture): Picture = other.above(this)
   def on(other: Picture): Picture
+  def over(other: Picture): Picture = on(other)
   def under(other: Picture): Picture = other.on(this)
   def animateToPosition(x: Double, y: Double, inMillis: Long)(onEnd: => Unit): Unit = Utils.runInSwingThread {
     import edu.umd.cs.piccolo.activities.PActivity
@@ -179,7 +181,7 @@ trait Picture extends InputAware {
     animateToPosition(pos0.x + dx, pos0.y + dy, inMillis)(onEnd)
   }
 
-  def withRotation(angle: Double): Picture =  thatsRotated(angle)
+  def withRotation(angle: Double): Picture = thatsRotated(angle)
   def withRotationAround(angle: Double, x: Double, y: Double): Picture = thatsRotatedAround(angle, x, y)
   def withTranslation(x: Double, y: Double): Picture = thatsTranslated(x, y)
   def withScaling(factor: Double): Picture = thatsScaled(factor)
@@ -187,7 +189,7 @@ trait Picture extends InputAware {
   def withScalingAround(factor: Double, x: Double, y: Double): Picture = thatsScaledAround(factor, x, y)
   def withScalingAround(factorX: Double, factorY: Double, x: Double, y: Double): Picture =
     thatsScaledAround(factorX, factorY, x, y)
-  def withShear(shearX:Double, shearY:Double): Picture = thatsSheared(shearX, shearY)
+  def withShear(shearX: Double, shearY: Double): Picture = thatsSheared(shearX, shearY)
   def withFillColor(color: Paint): Picture = thatsFilledWith(color)
   def withPenColor(color: Paint): Picture = thatsStrokeColored(color)
   def withPenThickness(t: Double): Picture = thatsStrokeSized(t)
@@ -200,7 +202,7 @@ trait Picture extends InputAware {
   def thatsScaled(factorX: Double, factorY: Double): Picture
   def thatsScaledAround(factor: Double, x: Double, y: Double): Picture
   def thatsScaledAround(factorX: Double, factorY: Double, x: Double, y: Double): Picture
-  def thatsSheared(shearX:Double, shearY:Double):Picture
+  def thatsSheared(shearX: Double, shearY: Double): Picture
   def thatsFilledWith(color: Paint): Picture
   def thatsStrokeColored(color: Paint): Picture
   def thatsStrokeSized(t: Double): Picture
@@ -212,9 +214,13 @@ trait Picture extends InputAware {
   def withFading(distance: Int): Picture
   def withBlurring(radius: Int): Picture
   def withAxes: Picture
-  def withBounds: Picture
+  def withLocalBounds: Picture
   def withOpacity(opacity: Double): Picture
   def withPosition(x: Double, y: Double): Picture
   def withZIndex(idx: Int): Picture
   def withClipping(clipShape: Shape): Picture
+  def withClipping(clipPic: Picture): Picture
+  def withMask(maskPic: Picture): Picture
+  def withPenCapJoin(capJoin: (Int, Int)): Picture
+  def withNoPen(): Picture
 }

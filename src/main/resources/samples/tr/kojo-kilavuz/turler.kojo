@@ -46,9 +46,60 @@ ey.ekle(ad)
 ey.ekle("! Ne var ne yok?")
 satıryaz(ey)"""
 
-  dez kod1020 = """Sayılar(0, 1, 2, 3).
-    işle(s => 10 * s * s).
-    herbiriİçin(yaz)"""
+  dez kod1020 = """Sayılar(0, 1, 2, 3)
+    .işle(s => 10 * s * s)
+    .herbiriİçin(yaz)"""
+
+  dez kod1510 = """dez bkk = BKK(
+  "https://upload.wikimedia.org/",
+  "wikipedia/commons/thumb/a/a5/",
+  "Flower_poster_2.jpg/",
+  "330px-Flower_poster_2.jpg")
+Resim.imge(bkk).veBüyüt(0.3).çiz"""
+
+  dez kod1710 = """belirt(
+  5 < 7,
+  "ilk girdi ikinciden küçük olmalı")
+// 5 yerine 8 yazıp tekrar çalıştır
+"""
+
+  dez kod1720 = """durum sınıf Kişi(ad: Yazı, yaş: Sayı) {
+  gerekli(yaş > 0 && yaş < 1000,
+    "kişinin yaşı yanlış")
+  satıryaz(s"$ad $yaş yaşında")
+}
+çıktıyıSil
+dez k1 = Kişi("Mustafa Kemal", 143)
+ // bir de 1 yerine -1 girip çalıştır
+dez k2 = Kişi("Garip Durum", 1)"""
+
+  dez kod1730 = """// bazen ne istediğimizi biliriz
+// ama nasıl olacağını bilemeyiz ya,
+// o zaman böyle boş bir tanım
+// yazmak faydalı olabilir
+tanım deney1(girdi: Sayı) = ???
+// bunu doğru yapıp tekrar çalıştır:
+dez hazırsa = yanlış
+eğer(hazırsa) deney1(42)"""
+
+  dez kod2010 = """silVeSakla
+dez ay_uzunluk = ay.Yazıgirdisi(60)
+dez ay_renkler = ay.Salındıraç("mavi", "yeşil", "sarı")
+Resim.arayüz(ay.Tanıt("Sayı ve Renk Seç:")).veGötür(-100,120).çiz
+Resim.arayüz(ay_uzunluk).veGötür(-100, 100).çiz
+Resim.arayüz(ay_renkler).veGötür(-100, 80).çiz
+Resim.arayüz(ay.Düğme("Sayı ve Renk Seçimlerini Yaz"){
+  satıryaz("=" * 10)
+  satıryaz(s"Sayı: ${ay_uzunluk.değeri}")
+  satıryaz(s"Renk: ${ay_renkler.değeri}")}
+).veGötür(-100, 60).çiz"""
+
+  dez kod2020 = """dez solAltKöşe = Nokta(tuvalAlanı.x, tuvalAlanı.y)
+dez sağAltKöşe = Nokta(tuvalAlanı.x + tuvalAlanı.eni, tuvalAlanı.y)
+dez solÜstKöşe = Nokta(tuvalAlanı.x, tuvalAlanı.Y)
+dez sağÜstKöşe = Nokta(tuvalAlanı.x + tuvalAlanı.eni, tuvalAlanı.Y)
+dez hepsi = yeni Dikdörtgen(solAltKöşe, sağÜstKöşe)
+yaz(hepsi)"""
 
   dez sayfa = Page(
     name = "türler",
@@ -63,7 +114,7 @@ satıryaz(ey)"""
         row("Birim".c, "Unit".c, kod20.c, "İşlevsel bir çıktısı olmayan yöntemler ve komutların çıktı türü"),
         row("Her".c, "Any".c, "dez h: Her = 1".c, "Her Scala nesnesinın temel türü. Kendi temeli de Nesne. Yönlü tür çizgesinin başlama noktası"),
         row("HerDeğer".c, "AnyVal".c, "dez h: HerDeğer = 2".c, "Her Scala değerinin temel türü. Kendi temeli de Her."),
-        row("HerGönder".c, "AnyRef".c, "dez h: HerGönder = Diz(1, 2, 3)".c, "İşlevlerin, karmaşık ve çoğul içerigi olan türlerin temeli. Referans. Pointer. Gibi"),
+        row("HerGönder".c, "AnyRef".c, "dez h: HerGönder = Diz(1, 2, 3)".c, "İşlevlerin, karmaşık ve çoğul içeriği olan türlerin temeli. Ref yani İngilizce 'Reference' sözcüğünü gönderge olarak çevirdik. Gösteren de diyebiliriz. İngilizce 'pointer' sözcüğü de benzer bir kavramdır."),
         row("Hiç".c, "Nothing".c, "dez y: Hiç = ???".c, "En özel ve hiç nesnesi olmayan tek tür. Onun için de bu örneği çalıştırınca hata verir. Yönlü tür çizgesinin bitiş noktası yani en özel tür bu nesnesiz tek türdür."),
         row("Yok".c, "Null".c, "dez y: Yok = yok".c, "Java'dan kalma. Hiç kullanma!"),
         row("İkil".c, "Boolean".c, kod25.c, "En sade ve basit türlerden biri. Sadece iki değeri var. Ama çok da faydalı"),
@@ -89,9 +140,10 @@ satıryaz(ey)"""
         row("Dizi".c, "Seq".c, "".c),
         row("Dizik".c, "Array".c, "".c),
         row("Dizim".c, "Array".c, "".c, "Bu Dizik'in eskisi"),
-        row("EsnekDizim".c, "ArrayBuffer".c, "".c, "collection.mutable'dan"),
+        row("EsnekDizim".c, "ArrayBuffer".c, "".c, "eskisi. collection.mutable'dan"),
+        row("EsnekDizik".c, "ArrayBuffer".c, "".c, "collection.mutable'dan"),
         row("Dizin".c, "List".c, "".c),
-        row("DiziSıralı".c, "IndexedSeq".c, "".c),
+        row("SıralıDizi".c, "IndexedSeq".c, "".c),
         row("Eşlek".c, "Map".c, "".c, "collection.immutable.Map"),
         row("Eşlem".c, "Map".c, "".c, "collection.mutable.Map"),
         row("Küme".c, "Set".c, "".c),
@@ -106,8 +158,6 @@ satıryaz(ey)"""
         row("".c, "".c, "".c),
         row("Gelecek".c, "Future".c, "".c, "scala.concurrent"),
         row("İşletimBağlamı".c, "ExecutionContext".c, "".c, "scala.concurrent"),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
         // trInit.scala
         row("".c, "".c, "".c),
         row("Sayılar".c, "Vector[Int]".c, kod1020.c),
@@ -122,30 +172,15 @@ satıryaz(ey)"""
         row("Yöney2B".c, "Vector2D".c, "".c, "net.kogics.kojo.util'den"),
         row("Resim".c, "Picture".c, "".c),
         row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
         row("BuAn".c, "Now".c, "BuAn().yazıya".c, "Now adında bir tür yok, ama BuAn adında bir durum sınıfımız yani türümüz var"),
         row("Takvim".c, "Calendar".c, "".c, "java.util"),
         row("Tarih".c, "Date".c, "".c, "java.util"),
         row("SaatDilimi".c, "TimeZone".c, "".c, "java.util"),
         row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
         row("Bölümselİşlev".c, "PartialFunction".c, "".c),
         row("İşlev1".c, "Function1".c, "".c),
         row("İşlev2".c, "Function2".c, "".c),
         row("İşlev3".c, "Function3".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, "".c),
-        row("".c, "".c, kodXX.c),
       ),
       "İlerledikçe faydalı olacak türler".p,
       table(
@@ -156,30 +191,35 @@ satıryaz(ey)"""
         row("Eşsizlik".c, "".c, "".c, "bir tür özelliği"),
         row("".c, "".c, "".c),
         row("UzunlukBirimi".c, "UnitLen".c, "".c, "net.kogics.kojo.core'dan"),
+        row("Biçim".c, "Shape".c, "".c, "java.awt'den"),
         row("GeoYol".c, "GeneralPath".c, "".c, "java.awt.geom'dan"),
         row("GeoNokta".c, "VertexShape".c, "".c, "net.kogics.kojo.core'dan"),
         row("Grafik2B".c, "Graphics2D".c, "".c, "scala.swing'den"),
         row("İmge".c, "Image".c, "".c, "java.awt.Image"),
+        row("İmgeİşlemi".c, "ImageOp".c, "".c, "net.kogics.kojo.picture.ImageOp"),
         row("Bellekteİmge".c, "BufferedImage".c, "".c, "java.awt.image'dan"),
         row("Bellekteİmgeİşlemi".c, "BufferedImageOp".c, "".c, "java.awt.image'dan"),
         row("ÇiniDünyası".c, "tiles".c, "".c, "net.kogics.kojo.tiles"),
         row("ÇiniXY".c, "TileXY".c, "".c, "tiles'dan"),
         row("BirSayfaKostüm".c, "SpriteSheet".c, "".c, "tiles'dan"),
         row("Mp3Çalar".c, "KMp3".c, "".c, "net.kogics.kojo.music'den"),
+        row("Canlandırma".c, "Animation".c, "".c, "net.kogics.kojo.???'den"),
+        row("BKK".c, "URL".c, kod1510.c, "Birörnek Kaynak Konumlayıcısı: java.net.URL'den"),
+        row("".c, "".c, "".c),
+        row("BelirtimHatası".c, "java.lang.AssertionError".c, kod1710.c, "".c),
+        row("KuraldışıGirdiHatası".c, "java.lang.IllegalArgumentException".c, kod1720.c, "".c),
+        row("EksikTanımHatası".c, "scala.NotImplementedError".c, kod1730.c, "".c),
+        row("SınırDışınaTaşmaHatası".c, "java.lang.IndexOutOfBoundsException".c, "".c),
+        row("BoşGöstergeHatası".c, "java.lang.NullPointerException".c, "".c),
+        row("MatematikselHata".c, "java.lang.ArithmeticException".c, "".c),
+        row("İşParçacığıÖlümü".c, "java.lang.ThreadDeath".c, "".c),
       ),
-      "Tür eşi olmayan nesnelerin işimize yarayan pekçok yöntemi var:".p,
+      "Tür eşi olmayan nesneler de var. Onların yöntemleri çok işimize yarar:".p,
       table(
-        row("ay".c, "".c, "arayüz'ün kısaltması"),
-        row("tuvalAlanı".c, "".c, "arayüz'ün kısaltması"),
+        row("ay".c, "UI".c, "arayüz'ün kısaltması", kod2010.c),
+        row("tuvalAlanı".c, "canvasBounds".c, "tuval alanı hakkında faydalı bilgiler", kod2020.c),
       ),
-      "Foo:".p,
-      table(
-        row("e sayısı", "ikinin karekökü", "eksi birinki", "4", "5".c, "komik oldu!"),
-        row("dez e = 2.718".c, "dez b = 1.4142".c, "dez i = karekökü(-1)".c, "(2, 4)".c, "(2, 5)".c, "(2, 6)".c),
-        row("sütun", "sayısı", "farklı", "olsa", "da", "olur", gülerYüz)
-      ),
-      "Bu da bitiriş paragrafından bir öncesi.".p,
-      "Artık bitti bu küçük örnek. Umarız faydalı oldu...".p
+      "Şimdilik bu kadar. Devamı yarın".p,
     )
   )
 

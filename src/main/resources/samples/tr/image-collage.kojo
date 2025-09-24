@@ -1,12 +1,12 @@
 // Kojo ile yüklenen bazı imgelerle bir örnek resim çizelim 
-tanım kadın = Resim.imge(Costume.womanWaving) // kostüm yani bir giyisi resmi
-tanım araba = Resim.imge(Costume.car)
-tanım kalem = Resim.imge(Costume.pencil)
-tanım yarasa1 = Resim.imge(Costume.bat1)
-tanım yarasa2 = Resim.imge(Costume.bat2)
+tanım kadın = Resim.imge(Görünüş.elSallayanKadın)
+tanım araba = Resim.imge(Görünüş.araba)
+tanım kalem = Resim.imge(Görünüş.kalem)
+tanım yarasa1 = Resim.imge(Görünüş.yarasa1)
+tanım yarasa2 = Resim.imge(Görünüş.yarasa2)
 tanım başlık = kalemRengi(mor) -> Resim {
-    // yazı yazarken çiziklerin ucunu biraz kıvırmaya sereğer deniyor İngilizce'de.
-    // Sans serif'de sansereğer diye okunur, kıvrıksız demek (sans da fransızca bizim -siz/-sız çekim eki anlamında).
+    // yazı yazarken çiziklerin ucunu biraz kıvırmaya serif deniyor İngilizce'de.
+    // Sans serif'de sanserif diye okunur, kıvrıksız demek (sans da fransızca bizim -siz/-sız çekim eki anlamında).
     yazıYüzünüKur(Yazıyüzü("Serif", 28)) // denemek istersen: Yazıyüzü("Sans Serif", 28)
     kaplumbağa.yazı("Çılgın yarasalar!")
 }

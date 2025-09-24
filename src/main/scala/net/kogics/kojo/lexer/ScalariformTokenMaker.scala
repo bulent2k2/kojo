@@ -74,6 +74,9 @@ class ScalariformTokenMaker extends AbstractTokenMaker {
     TokenTypes.NULL
   }
 
+  // this predicate is true only when language locale is set to Turkish:
+  import net.kogics.kojo.lite.i18n.tr.isTurkishKeyword
+
   override def getTokenList(segment: Segment, initialTokenType: Int, docOffset: Int): Token = {
     def addRstaToken(t: SfToken): Unit = {
       debug("  %s" format t)
@@ -81,7 +84,9 @@ class ScalariformTokenMaker extends AbstractTokenMaker {
       val segStartOffset = t.offset - (docOffset - segment.offset)
       val segEndOffset = segStartOffset + t.length - 1
       val docStartOffset = t.offset
-      addToken(segment.array, segStartOffset, segEndOffset, convertTokenType(t.tokenType), docStartOffset)
+      val ttEn = convertTokenType(t.tokenType) // token type for English keywords only
+      val tt = if (ttEn == TokenTypes.IDENTIFIER && isTurkishKeyword(t.text)) TokenTypes.RESERVED_WORD else ttEn
+      addToken(segment.array, segStartOffset, segEndOffset, tt, docStartOffset)
     }
 
     debug("\n---\nGetting tokens for Line. Doc Offset: %d, Seg Offset: %d, Length: %d".

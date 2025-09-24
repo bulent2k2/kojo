@@ -1,13 +1,13 @@
 // this is using latest from 2.13.x which is going to result in 2.13.9 soon (after now: 2022.09.05)
 // However, to get the right dependencies, we pretend that we are using 2.13.8.
-lazy val scalaVer = "2.13.8"
+lazy val scalaVer = "2.13.15"
 name := "Kojo"
 version := "2.9"
 scalaVersion := scalaVer
 scalaHome := Some(file("./scala-tr/build/pack"))
 
 run / fork := true
-scalacOptions := Seq("-feature", "-deprecation")
+scalacOptions := Seq("-feature", "-deprecation")  // "-Ylog-classpath"
 run / javaOptions ++= Seq("-Xmx1024m", "-Xss1m", "-XX:+UseConcMarkSweepGC", "-XX:+CMSClassUnloadingEnabled")
 
 Test / fork := true
@@ -21,12 +21,12 @@ libraryDependencies ++= Seq(
     "org.scala-lang" % "scala-compiler" % scalaVer,
     "org.scala-lang" % "scala-reflect" % scalaVer,
     "com.typesafe.akka" %% "akka-actor" % "2.6.16",
-    "org.scala-lang.modules" %% "scala-swing" % "2.1.1",
+    "org.scala-lang.modules" %% "scala-swing" % "3.0.0",
     "org.scala-lang.modules" %% "scala-xml" % "1.2.0",
     "org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2",
     "org.piccolo2d" % "piccolo2d-core" % "1.3.1",
     "org.piccolo2d" % "piccolo2d-extras" % "1.3.1",
-    "com.formdev" % "flatlaf" % "2.2",
+    "com.formdev" % "flatlaf" % "3.4",
     "com.vividsolutions" % "jts" % "1.13" intransitive(),
     "com.h2database" % "h2" % "1.3.168",
     "org.apache.commons" % "commons-math3" % "3.6.1",
@@ -44,7 +44,8 @@ libraryDependencies ++= Seq(
     "org.objenesis" % "objenesis" % "1.0" % "test",
     "org.hamcrest" % "hamcrest-core" % "1.1" % "test",
     "org.hamcrest" % "hamcrest-library" % "1.1" % "test",
-    ("org.scalacheck"  %% "scalacheck" % "1.14.3" intransitive()) % "test"
+    ("org.scalacheck"  %% "scalacheck" % "1.14.3" intransitive()) % "test",
+    "org.scala-lang.modules" %% "scala-parallel-collections" % "1.2.0"
 )
 
 //Build distribution

@@ -422,6 +422,7 @@ trait AppMenu {
     toolsMenu.add(menuItemFor("S_TurtleController", "turtle-controller.kojo"))
     toolsMenu.add(menuItemFor("S_ArduinoProgramming", "arduino-prog.kojo"))
     toolsMenu.add(menuItemFor("S_StartingChallenges", "get-started.kojo", "/challenge/"))
+    toolsMenu.add(menuItemFor("S_SpriteBoundaryPolygon", "sprite-boundary-polygon.kojo"))
     menuBar.add(toolsMenu)
 
     val helpMenu = newJMenu(Utils.loadString("S_Help"))
@@ -454,9 +455,10 @@ trait AppMenu {
               Version: ${Versions.KojoVersion}  <em>${Versions.KojoRevision}</em><br/>
               Build date: ${Versions.KojoBuildDate}<br/>
               <em>Java version: ${Versions.JavaVersion}. Scala version: ${Versions.ScalaVersion}</em> <br/><br/>
-              Copyright &copy; 2009-2022 Lalit Pant (pant.lalit@gmail.com) as per contributions.<br/>
+              Copyright &copy; 2009-2025 Lalit Pant (lalit@kogics.net) as per contributions.<br/>
               Copyright &copy; Project contributors as per contributions.<br/><br/>
-              Please visit <em>http://www.kogics.net/kojo</em> for more information about Kojo.<br/><br/>
+              Published by the Kogics Foundation, Dehradun, India (www.kogics.net).<br/>
+              Please visit <em>www.kogics.net/kojo</em> for more information about Kojo.<br/><br/>
               <strong>Kojo</strong> Contributors:<ul>
                <li>Lalit Pant</li>
                <li>Bj\u00f6rn Regnell</li>
@@ -487,6 +489,8 @@ trait AppMenu {
                <li>Guillermo Ovejero</li>
                <li>Alberto R.R. Manzanares</li>
                <li>Anay Kamat</li>
+               <li>Vasu Sethia</li>
+               <li>Mudit Pant</li>
               </ul>
               <strong>Kojo</strong> is licensed under The GNU General Public License (GPL). The full text of the GPL is available at: http://www.gnu.org/licenses/gpl.html<br/><br/>
               Kojo runs on the Java Platform.<br/><br/>

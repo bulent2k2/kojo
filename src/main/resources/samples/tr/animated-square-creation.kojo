@@ -1,11 +1,12 @@
-silVeSakla()
+silipSakla()
 artalanıKurYatay(Renk.ada(210, 1.00, 0.1), Renk.ada(210, 1.00, 0.15))
 
 dez kareninKenarUzunluğu = 200
 dez köşegen = karekökü(2 * kareninKenarUzunluğu * kareninKenarUzunluğu)
 dez süre = 5 // saniye
 dez canlıKırmızı = Renk.ada(18, 1.00, 0.50)
-dez altın = renkler.gold
+
+dez altın = Renkler.altınbaşak
 dez bg = Renk.doğrusalDeğişim(0, 0, canlıKırmızı, kareninKenarUzunluğu / 2, kareninKenarUzunluğu / 2, altın)
 dez bg2 = Renk.doğrusalDeğişim(0, 0, altın, kareninKenarUzunluğu / 2, kareninKenarUzunluğu / 2, canlıKırmızı)
 

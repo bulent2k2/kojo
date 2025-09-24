@@ -511,12 +511,15 @@ class CodeExecutionSupport(
       appendToCodePaneLine(lineNum, result.trim.replaceAll("\r?\n", " | "))
     }
 
+    import net.kogics.kojo.lite.i18n.tr.updateResult
+
     private def appendToCodePaneLine(lineNum: Int, result: String) = Utils.runInSwingThread {
       val insertPos = getVisibleLineEndOffset(lineNum + selectionOffset)
       val dot = codePane.getCaretPosition
       val selStart = codePane.getSelectionStart()
       val selEnd = codePane.getSelectionEnd()
-      codePane.insert(WorksheetMarker + result, insertPos)
+      // updateResults returns the arg as is unless we are in Turkish locale:
+      codePane.insert(WorksheetMarker + updateResult(result), insertPos)
       if (dot == insertPos) {
         if (selStart == selEnd) {
           codePane.setCaretPosition(dot)
@@ -543,11 +546,11 @@ class CodeExecutionSupport(
   def setActivityListener(): Unit = {
     kojoCtx.setActivityListener(new core.AbstractSpriteListener {
       def interpreterDone = runButton.isEnabled
-      override def hasPendingCommands: Unit = {
+      override def hasPendingCommands(): Unit = {
         pendingCommands = true
         stopButton.setEnabled(true)
       }
-      override def pendingCommandsDone: Unit = {
+      override def pendingCommandsDone(): Unit = {
         pendingCommands = false
         if (interpreterDone && Utils.noMonitoredThreads) stopButton.setEnabled(false)
       }
@@ -676,8 +679,8 @@ class CodeExecutionSupport(
     code.indexOf("stPlayStory") != -1
   }
 
-  lazy val worksheetPragma = Utils.loadBundleString("S_WorksheetPragma")
-  lazy val execPragma = Utils.loadBundleString("S_ExecPragma")
+  lazy val worksheetPragma = "#" + Utils.loadBundleString("S_WorksheetPragma")
+  lazy val execPragma = "#" + Utils.loadBundleString("S_ExecPragma")
 
   def isWorksheet(code: String) = {
     code.indexOf(worksheetPragma) != -1

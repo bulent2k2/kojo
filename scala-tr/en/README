@@ -1,0 +1,7 @@
+../../lib/scalariform.jar has Turkish keywords (dez, den, tanım)
+for code formatting in the Script Editor in Kojo.
+It is from https://github.com/bulent2k2/scalariform.git
+
+This directory is here to keep an original copy with only English
+keywords. At some point in the future, we want to be able to
+switch the languages back and forth in one unified Kojo/Koco.

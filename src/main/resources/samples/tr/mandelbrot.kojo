@@ -133,7 +133,43 @@ nesne Dörtgen {
  bakarak renk veriyoruz...
  */
 
-tanım mKümesi(d: Dörtgen): İmge = {
+tanım mKümesi(d: Dörtgen): İmge =
+    // mKümesiTekİplik(d);
+    mKümesiÇokİplik(d);
+
+tanım mKümesiÇokİplik(d: Dörtgen): İmge = {
+    bilgiVer(sıra, d)
+    sonDörtgen = d
+    eğer (bellek.eşli(d)) bellek(d) yoksa {
+        dez img = imge(kenar, kenar)
+        dez oranx = (d.x2 - d.x1) / kenar
+        dez orany = (d.y2 - d.y1) / kenar
+        getir renklendirme.renk
+        dez iri: Kesir = (1.0 * yinelemeSınırı) * kenar * kenar
+        zamanTut(f"mKümesi (nokta sayısı x yineleme sınırı)$iri%2.2e yineleme:") {
+            // için { xi <- 0 |- kenar; yi <- 0 |- kenar }
+            dez pd = (0 |- kenar).dizine.paralel
+            pd.düzİşle { xi =>
+                pd.işle { yi =>
+                    dez x = d.x1 + xi * oranx
+                    dez y = d.y1 + yi * orany
+                    dez v = VarsılSayı(kayma + x, y)
+                    den z = VarsılSayı(0, 0)
+                    den i = 0
+                    yineleDoğruKaldıkça (z.uzunluğu < 2 && i < yinelemeSınırı) {
+                        z *= z; z += v; i += 1 // işte bütün küme buradan çıkıyor!
+                    }
+                    // küme içindeki noktalar hep siyah. diğerleri renkli olacak
+                    imgeNoktasınıKur(img, xi, yi, eğer (z.uzunluğu < 2) siyah yoksa (renk(i, x, y)))
+                }
+            }
+        }()
+        bellek eşEkle (d -> img)
+        img
+    }
+}
+
+tanım mKümesiTekİplik(d: Dörtgen): İmge = { // sequential v paralel
     bilgiVer(sıra, d)
     sonDörtgen = d
     eğer (bellek.eşli(d)) bellek(d) yoksa {
@@ -217,24 +253,30 @@ den sonDörtgen = Dörtgen(0, 0, 0, 0) // son çizdiğimiz kümenin boyutların�
 // vardı. Onu rahatlatmak için. Pencereyi ve mKümesini aslına döndürürsen görürsün.
 dez kayma = 4
 dez başlangıç = Dörtgen(-2 - kayma, 1 - kayma, -1.5, 1.5)
+tanım başla(n: Nokta): Dörtgen = başlangıç.ortala(n)
+// değişik bir merkezden de başlayabiliriz, ve sonra h tuşuyla hızla yaklaşabiliriz...
+dez başlangıç2 = başla(Nokta(-5.7864, 0))
+dez başlangıç3 = başla(Nokta(-5.79, 0))
+dez başlangıç4 = başla(Nokta(-4.7595625, 0.08515))
 den bellek = Eşlem.boş[Dörtgen, İmge]
-den resim = resimGötür -> Resim.imge(mKümesi(başlangıç))
+den resim = resimGötür -> Resim.imge(mKümesi(başlangıç/*2, 3 ya da 4 de var*/))
 çiz(resim)
 fareyiTanımla(resim)
 
 tanım tuşlarıTanımla() {
     tuşaBasınca { t =>
         t eşle {
-            durum tuşlar.VK_SPACE => geri()
-            durum tuşlar.VK_LEFT  => geri()
-            durum tuşlar.VK_RIGHT => ileri()
-            durum tuşlar.VK_UP    => yaklaş(0.90) // fareyi merkez alır
-            durum tuşlar.VK_DOWN  => uzaklaş(1.25)
-            durum tuşlar.VK_P     => oynat()
-            durum tuşlar.VK_R     => geriOynat()
-            durum tuşlar.VK_O     => ortala()
-            durum tuşlar.VK_Y     => yaklaş(0.90, yanlış)
-            durum _               =>
+            durum tuşlar.boşluk => geri()
+            durum tuşlar.sol    => geri()
+            durum tuşlar.sağ    => ileri()
+            durum tuşlar.yukarı => yaklaş(0.90) // fareyi merkez alır
+            durum tuşlar.aşağı  => uzaklaş(1.25)
+            durum tuşlar.p      => oynat()
+            durum tuşlar.r      => geriOynat()
+            durum tuşlar.o      => ortala()
+            durum tuşlar.y      => yaklaş(0.90, yanlış)
+            durum tuşlar.h      => yaklaş(0.01, yanlış) // hızlı yaklaş
+            durum _             =>
         }
     }
 }

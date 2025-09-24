@@ -85,11 +85,11 @@ birÜçgenÇiz()
       row("geri(50)".c,"50 adım geriye gider"),
       row("ileri(100)".c, "Buna gerek yok, yukarda bahsettik. Ama tekrar tıklayasın diye yineledik. Tekrar edeyim birden çok tıklamakta hiçbir zarar yok!"),
       row("eksenleriGöster()".c, "X ve Y eksenlerini gösterir"),
-      row("gridiGöster()".c, "Tuvalin gridini çizer"),
+      row("ızgarayıGöster()".c, "Tuvalin ızgarasını çizer"),
       row("konumuKur(150, 100)".c, "Çizgi çizmeden koordinatları verilen (x, y) noktasına gider. Ama baktığı doğrultu değişmez"),
       row("noktayaGit(0, -100)".c, "Doğrultusunu koordinatları verilen noktaya çevirir ve o noktaya kadar ilerler"),
       row("eksenleriGizle()".c, "Eksenleri saklar"),
-      row("gridiGizle()".c, "Gridi gizler"),
+      row("ızgarayıGizle()".c, "Izgarayı gizler"),
       row("dön(30)".c, "Saat yönünün tersine doğru 30 derece döner. Eksi girersen saat yönünde döner"),
       row("sağ()".c, "Sağa döner. Yani saat yönünde 90 derece döner"),
       row("sağ(60)".c, "Sağa doğru 60 derece döner"),
@@ -116,7 +116,7 @@ kalemKalınlığınıKur(10)
 üçgen(90)
 kalemKalınlığınıKur(1)
   """.c, "Çizim yaptığı kalem kalınlığını giriyoruz"),
-      row("ışınlarıAç()".c, "Dör yönü belirten farlar yansın"),
+      row("ışınlarıAç()".c, "Dört yönü belirten farlar yansın"),
       row("ışınlarıKapat()".c, "Farları söndürelim"),
       row("""sil()
 görünmez()
@@ -164,9 +164,9 @@ pages += Page(
     "Aşağıdaki her satırda bir anahtar sözcük var. İlk sütun, kılavuzdaki kullanış sırasına göre sıralı. Sonra gelip bulmak kolay olsun diye. İkinci sütunda anahtar sözcüğün İngilizce'si var. Keyword diye de bilinir. Eğer o keyword, İngilizce bir sözcüğün kısaltmasıysa o sözcüğün kendisi de üçüncü sütunda. Son sütunda da ufak bir açıklamayla yetindik. Kılavuzumuzun diğer sayfaları daha geniş açıklamalar verecek.".p,
     table(
       row("tanım".c, "def".c, "define", "İlk bölümde kaplumbağacığa üçgen çizdirmek için kullanmıştık. Bu anahtar sözcük yeni bir işlev tanımlar ve ona bir ad takar. Bu yeni ad da derleyicinin sözlüğüne eklenmiş olur!"),
-      row("dez".c, "val".c, "value", "İlk bölümdeki yeni kaplumbağacığa ad takmamızı sağlayan anahtar sözcük. Bilinen ve değişmez bir değere bir ad takar. Bu yeni ad da yazılımcığın özel sözlüğünee eklenmiş olur."),
+      row("dez".c, "val".c, "value", "İlk bölümdeki yeni kaplumbağacığa ad takmamızı sağlayan anahtar sözcük. Bilinen ve değişmez bir değere bir ad takar. Bu yeni ad da yazılımcığın özel sözlüğüne eklenmiş olur."),
       row("den".c, "var".c, "variable", "Yeni bir değişken tanımlar ve ona bir ad takar. Bu yeni ad da sözlüğe eklenmiş olur."),
-      row("eğer".c, "if".c, "", "Bir çatallanma yani kara verme durumu tanımlar. Duruma göre iki seçenekten birini seçer derleyici."),
+      row("eğer".c, "if".c, "", "Bir çatallanma yani karar verme durumu tanımlar. Duruma göre iki seçenekten birini seçer derleyici."),
       row("yoksa".c, "else".c, "", "eğer sözcüğünden sonra kullanılır."),
       row("için".c, "for".c, "", "İşlevsel bir döngü tanımlar. Çok daha iyi bir yöntemdir!"),
       row("ver".c, "yield".c, "", "İçin komudunun içinde teker teker nesne çıktısı vermek için kullanılır."),
@@ -191,7 +191,7 @@ pages += Page(
       row("yakala".c, "catch".c, "", "Kuraldışı bir durum varsa işe yarar. 'dene' ile birlikte kullanılır."),
       row("son".c, "final".c, "", "Baskın komuduyla yeniden tanımlanmasını istemediğimiz nesneler ve türler için gerekir."),
       row("sonunda".c, "finally".c, "", "dene ve yakala komutlarıyla birlikte işe yarar."),
-      row("forsome".c, "bazı".c, "", "Bu Scala3'te yok. Sadece Scala2'de var. Unut daha iyi!"),
+      row("bazı".c, "forSome".c, "", "Bu Scala3'te yok. Sadece Scala2'de var. Unut daha iyi!"),
       row("örtük".c, "implicit".c, "", "İşte usta yazıcılar için çok faydalı bir komut. Ama Scala3'te daha iyisi var."),
       row("getir".c, "import".c, "", "Başka bir yazılımın bizim yazılımcığımız içinde kullanılmasını sağlar."),
       row("miskin".c, "lazy".c, "", "Miskinlik de çok faydalıdır bazı durumlarda."),
@@ -204,7 +204,7 @@ pages += Page(
       row("damgalı".c, "sealed".c, "", "Bir dosya dışında değişiklik yapılmasını istemediğimiz türler için kullanırız."),
       row("üst".c, "super".c, "", "Bir üst türden bahsetmek gerekirse."),
       row("bu".c, "this".c, "", "Bir sınıfın tanımının içinde kendi nesnelerinden bahsetmek için kullanılabilen adıl. Ya da eski adıyla bu zamiri!"),
-      row("bildir".c, "throw".c, "", "Kuraldışı durumlarda kullanılır. Atmak anlamındaki emrin adı. At diyemedik bazı teknik sorunlardan ötürü. Zaten bildirmek daha kibar oldu."),
+      row("bildir".c, "throw".c, "", "Kuraldışı durumlarda kullanılır. 'Throw' atmak demek. Emir ya da istek kipi 'at' olacaktı. Ama bazı teknik sorunlardan ötürü olmadı. Zaten bildir sözcüğü daha kibar oldu, değil mi?"),
       row("özellik".c, "trait".c, "", "Temel bir tür tanımlamak için çok faydalıdır. Ama onun yerine 'sınıf' da kullanılabilir."),
       row("dene".c, "try".c, "", "Kuraldışı durumları sınır içine alır."),
       row("tür".c, "type".c, "", "Bir türe yeni bir ad takar."),
@@ -214,7 +214,7 @@ pages += Page(
     "Son olarak da alfabetik sırayla hepsini birbirine bağlıyalım, bulmak kolay olsun diye. Önce Türkçe'de sıralı:".p,
     table(
       row("baskın".c, "override".c),
-      row("bazı".c, "forsome".c),
+      row("bazı".c, "forSome".c),
       row("bildir".c, "throw".c),
       row("birlikte".c, "with".c),
       row("bu".c, "this".c),
@@ -267,7 +267,7 @@ pages += Page(
       row("final".c, "son".c),
       row("finally".c, "sonunda".c),
       row("for".c, "için".c),
-      row("forsome".c, "bazı".c),
+      row("forSome".c, "bazı".c),
       row("if".c, "eğer".c),
       row("implicit".c, "örtük".c),
       row("import".c, "getir".c),
@@ -326,7 +326,7 @@ sağ(120)
     "1 + 2".c,
     "3 + 4 * (2 - 3)".c,
     """23 % 5""".c,
-    "Tabanlı aritmetik işlemi yaptık. ani tabana bölünce ne kalıyorsa onu bulduk".p,
+    "Tabanlı aritmetik işlemi yaptık. 5 tabanında. Yani 5'e bölünce ne kalıyorsa onu bulduk".p,
     "6 / 4".c,
     "Bu son işlemde önemli bir nokta var. Tam sayılar bölününce sonuç yine bir tam sayı olur ve kalan dikkate alınmaz. Ufak bir değişiklikle kesirli ve daha doğru bir işlem yapabiliriz:".p,
     "6 / 4.0".c,
@@ -336,7 +336,7 @@ sağ(120)
     """Bir deyişin sonucunu bir değişken (aslında çoğunlukla bir değişmez değer) kullanarak kaydedip daha sonra yine kullanabiliriz. Değişken ve değişmez değer isimleri (ve sonra göreceğimiz başka tür isimler) harf, sayı ve * / + - : = ! < > & ^ | gibi semboller kullanarak yazılır. Örneğin, "FutbolTopu", "BilardoTopuBeyaz1", "yardımHattı", "*+" and "res4" (result yani sonuç)...""".p,
     """Bunun için iki yöntem vardır: "den" ve "dez" anahtar sözcükleri. "dez" sözcüğüyle sabit ve hiç değişmeyecek değerleri ve sonuçları saklayabiliriz. Bunlara değişmez değer, ya da kısaca değişmez diyelim. Ya neden bir de "den" anahtar sözcüğü var? Aşağıda bir örnekle ikisinin farkını hemen anlayacağız. "dez" ile tanımlanan değerlerin sabit olması (ingilizcede 'immutable value') aslında çok önemli bir işlevsel yazılım (functional programming) kavramıdır, ama bunu daha sonra yeri gelince daha iyi anlayacağız. Şimdilik mümkün oldukça 'den' yerine 'dez' komutunu kullanmaya dikkat edelim. Bu sayede yazılımın başka bir yerindeki değişkenleri yanlışlıkla bozamayız.""".p,
     "dez noktaSayısı = 34 + 5".c,
-    """Bir ya da daha fazla sayıda işlemin sonucunu çıktı gözüne 'satıryaz(deyiş1, deyiş2, deyişn)' komutunu kullanarak yazabiliriz. Deyişler arasına virgül koymayı unutmayalım. Gerekmez ama istersek virgülden sonra boşluk bırakarak yazılımın okunuşu biraz daha kolaylaştırabiliriz. Ama çıktı da durum başka. Orada boşluk bırakmak nasıl olur yakında göreceğiz.""".p,
+    """Bir ya da daha fazla sayıda işlemin sonucunu çıktı gözüne 'satıryaz(deyiş1, deyiş2, deyişn)' komutunu kullanarak yazabiliriz. Deyişler arasına virgül koymayı unutmayalım. Gerekmez ama istersek virgülden sonra boşluk bırakarak yazılımın okunuşu biraz daha kolaylaştırabiliriz. Ama Çıktı Gözünde durum başka. Orada boşluk bırakmak nasıl olur yakında göreceğiz.""".p,
     """satıryaz(noktaSayısı, 3 + 2, noktaSayısı / 2, 3.9 / 2.3)
 den boy = noktaSayısı + 4
 satıryaz(boy)""".c,
@@ -357,21 +357,26 @@ dez dereceF = 98.4 // vucüt termometresi bunu göstersin
 satıryaz(dereceF, "derece Fahrenayt",
          (dereceF-32)*5/9, "derece Santigrat") 
 """.c,
-"satıryaz' komutuyla yazı da yazdık yukarıda gördüğün gibi. Böyle çift tırnaklar içine alınan yazıların türüne Yazı (İngilizcesi String) diyoruz. Bu tür, sadece yazı yazmak için değil, yazılarla işlemler yapmak için de kullanılabilir:".p,
+"'satıryaz' komutuyla yazı yazdık, yukarıda gördüğün gibi. Böyle çift tırnaklar içine alınan yazıların türüne Yazı (İngilizcesi String) diyoruz. Bu tür, sadece yazı yazmak için değil, yazılarla işlemler yapmak için de kullanılabilir:".p,
     """dez adım = "Mustafa Kemal"
 dez mesaj = "Merhaba " + adım
 satıryaz(mesaj)
 """.c,
     "Toplama işareti sanki toplama yaparmış gibi yazıları birbirine ekleyiveriyor. Mantıklı değil mi? Yazı türüyle daha neler yazılabilir neler! İki bölüm sonra başka örnekler de göreceğiz.".p,
-    "Duymuşsundur eminim, bilgisayar devreleri aslında 2, 3, 4 gibi sayıları bile bilmez. Onun yerine sadece 0 ve 1 sayılarını tanır. Hatta tanımak dedik de aslında sadece voltaj değerlerini ve elektrik akımlarını tanır onlar. Bu uzun, ilginç ve çok keyifli bir öyküdür. Benim gibi elektrik mühendisi olmak istersen, bana emaille selam ve sorularını yollayabilirsin. Neyse, konumuza dönelim. Daha büyük sayılarla işlemler yapmak için bilgisayar onları bir 0 ve 1 dizisi olarak ele alır ve içindeki sayısız mantık devreleri sayesinde toplama, çıkarma, çarpma, bölme ve hatta türev ve integral alma gibi daha ileri matematik işlemlerini kolayca ve hiç üşenmeden halleder. Bunların detayı bilgisayar uzmanlarının işi. Biz 0 ve 1 dizilerine dönelim, çünkü herşey onlarla başlıyor! İngilizcede 'binary arithmetic' denir. Biz çift tabanlı sayma diyelim. Her sayı, 0 ve 1'lerden oluşan bir dizi olduğu için, direk onun parçacıkları üzerinde de işlemler yapabiliriz. Bu işlemlere 'bitwise' yani parçacık işlemi denir. Bu 0 ve 1 dizilerinin her bir elemanına İngilizcede 'bit' denir. Saçlarımızda yaşayan ve zararsız küçük böcekcikler değil elbet! İngilizcede azıcık, küçücük anlamlarına geliyor. Biz parçacık diyelim istersen. Çok uzattık. Kusura kalma. Şimdi parçacıkları teker teker nasıl işleme sokarız bir kaç örnek görelim:".p,
+    "Duymuşsundur eminim, bilgisayar devreleri aslında 2, 3, 4 gibi sayıları bile bilmez. Onun yerine sadece 0 ve 1 sayılarını tanır. Hatta tanımak dedik de aslında sadece voltaj değerlerini ve elektrik akımlarını tanır onlar. Bu uzun, ilginç ve çok keyifli bir öyküdür. Benim gibi elektrik mühendisi olmak istersen, bana emaille selam ve sorularını yollayabilirsin. Neyse, konumuza dönelim. Daha büyük sayılarla işlemler yapmak için bilgisayar onları bir 0 ve 1 dizisi olarak ele alır ve içindeki sayısız mantık devreleri sayesinde toplama, çıkarma, çarpma, bölme ve hatta türev ve integral alma gibi daha ileri matematik işlemlerini kolayca ve hiç üşenmeden halleder. Bunların detayı bilgisayar uzmanlarının işi. Biz 0 ve 1 dizilerine dönelim, çünkü herşey onlarla başlıyor! İngilizcede 'binary arithmetic' denir. Biz iki tabanlı sayma diyelim. Her sayı, 0 ve 1'lerden oluşan bir dizi olduğu için, direk onun parçacıkları üzerinde de işlemler yapabiliriz. Bu işlemlere 'bitwise' yani parçacıksal işlem denir. Böyle 0 ve 1 dizilerinin her bir elemanına İngilizcede 'bit' denir. Saçlarımızda yaşayan ve zararsız küçük böcekcikler değil elbet! İngilizcede azıcık, küçücük anlamlarına geliyor. Biz parçacık diyelim istersen. Çok uzattık. Kusura kalma. Şimdi parçacıkları teker teker nasıl işleme sokarız bir kaç örnek görelim:".p,
     "3 & 2".c,
     "Bu '&' imiyle mantıksal 've' işlemi yapıyoruz (ingilizcesi 'logic and'). Sadece 1 ve 1 sonuç olarak 1 verir. Girdilerden biri 0 olursa sonucu da 0 olur. '|' da mantıksal veya (or) işlemi. Sadece 0 veya 0 sonuç olarak 0 verir. Biri 1 olursa sonuç da 1 olur:".p,
     "1 | 2".c,
     "Mantıksal dışlayan veya işlemi (xor yani exclusive or) aşağıda. Sadece biri 1 öbürü 0 olunca 1 verir:".p,
     "1 ^ 2".c,
-    "Parçacıkları sola kaydırmak ikiyle çarpaya denk! İki kere kaydırsak ne olur:".p,
+    "Parçacıkları sola kaydırmak ikiyle çarpaya denk! İki kere kaydırsak ne olur?".p,
     "1 << 2".c,
-    "sağa kaydır ama eksiyse eksi kalsın:".p,
+    "Ya 10, 20 ya da 30 kere kaydırsak?".p,
+    "satıryaz(1 << 10)".c,
+    "satıryaz(1 << 20)".c,
+    "satıryaz(1 << 30)".c,
+    "Nasıl da hızlı büyüdü, değil mi? 10 kere kaydırmak, 2'yi on kere kendisiyle çarpmak demek, yani iki üssü ona denk. O da 1024 ediyor. Binden birazcık fazla. 2 üssü 20, bir milyonu; 2 üssü 30 da bir milyarı geçti...".p,
+    "Sağa kaydır ama eksiyse eksi kalsın:".p,
     "-24 >> 2".c,
     "-14 >>> 2".c,
     "Sağa kaydırıyor ama sonuca bakın! Ben anlamadım vallahi. Ya sen? Bakın bu çok ilginç. Parçacıkları sola kaydırmak ikiyle çarpmaya denk! Sağa kaydırmaksa ikiye bölmeye benzemiyor mu? Bu daha önce de dediğim gibi uzmanlık konusu. Üzerinde yazılmış pekçok bilimsel makale ve ders kitapları var. Hatta bazıları çok azımızın anlayabileceği yüksek ihtisas kitapları! Bugünlük bu kadarı fazla bile. Ama sen istersen bu yazılımcığı kurcala. Ama -14 yerine 14'ü dene. Mavi üçgene bas ki sonucu hemen göresin. Bakarsın uzman olmak istersin. Neden olmasın?".p,
@@ -407,7 +412,7 @@ dez satış = eğer (kitapsa) değer * sayı yoksa {
   dez birim = değer / sayı
   birim * 3
 }
-yaz(satış) // doğru mu?""".c,
+satıryaz(satış) // doğru mu?""".c,
     "{ ve } içinde bir dizi deyiş ya da bir dizi komut yazabiliyoruz. satış değeri dizi içindeki en son deyişin değeri olur.".p,
     "Gerçek hayatta da olduğu gibi bazen bir kaç koşul bir araya gelir. Bu durumda iki tane mantıksal işlem kullanırız. Bunlardan birincisi '&&' mantıksal 'Ve' anlamına gelir. İkincisi de '||'  mantıksal 'Veya' anlamına gelir. Bunları sakın parçacıkları işleyen '&' ve '|' işlemleriyle karıştırmayalım. Aslında ilişkili ve benzer kavramlar. Ama dikkat edelim. Çok uzatmadan birkaç örnek görelim, göreceksin çok doğal gelecek. Ne de olsa mantık hepimizde var. ".p,
     """dez kitapsa = 6 >= 3
@@ -416,18 +421,18 @@ dez sayı = 10
 dez satış =
     eğer ( (kitapsa && değer > 5) || ( sayı > 30) ) değer * sayı
     yoksa değer / sayı
-yaz(satış)""".c,
+satıryaz(satış)""".c,
     "yineleDoğruKaldıkça".h2,
     """Bu yapı bilhassa eski yazılım dillerinde çok kullanılır. İngilizce'de pek çok farklı anlama gelen 'while' sözcüğü komut olarak kullanılır. Türkçemize 'o halde' ya da 'o sırada' diye de çevirebiliriz. Genel olarak, "yineleDoğruKaldıkça (koşul) dizi/deyiş" yapısı kullanarak komut dizisini tekrar tekrar çalıştırabiliriz. Koşul sağlandığı sürece yineleme devam eder. Koşul değişince, yani artık doğru olmadığında yineleme son bulur. Bir örnekle anlamak çok daha kolay olacak. Ama ilk önce bir değişkenle başlayalım:""".p,
     """den toplam = 18
 yineleDoğruKaldıkça (toplam < 15) toplam += 5
-yaz(toplam)
+satıryaz(toplam)
 """.c,
     """Kolay değil mi? Sizce kaç kere yinelenecek komut? Sonunda toplam kaç olacak? Bu biraz hileli bir soru oldu. Aslında yinelenecek mi, toplam değişecek mi diye mi sormalıydık? Toplamın ilk değerini ya da koşulu değiştirip tekrar çalıştırabiliriz elbet. Bu 'yineleDoğruKaldıkça' yapısını 'yap' adlı anahtar sözcüğü kullanarak tersine de çevirebiliriz: "yap dizi/deyiş yineleDoğruKaldıkça (koşul)." Bakın burada ilk önce komut dizisi çalıştırılır sonra koşula bakılır. Doğruysa komut dizisi yinelenir:""".p,
     """den toplam = 18
 yap toplam += 5
 yineleDoğruKaldıkça (toplam < 15)
-yaz(toplam)""".c,
+satıryaz(toplam)""".c,
     "Gördük ki bu sefer toplam 23 oldu. Bir önceki örnekteki halbuki 18 olmuştu. Bakın bu yapıyı iki sayının ortak paydalarının en büyüğünü hesaplamak için kullanalım:".p,
     """// en büyük ortak paydayı bulalım
 den x = 36
@@ -466,14 +471,14 @@ yaz(ikililer)""".c,
     """sil
 yaklaşXY(0.9, 0.5, 60, 400)
 tanım eğri(x: Kesir) = 0.01 * x * x - 0.5 * x - 10
-gridiGöster(); eksenleriGöster()
+ızgarayıGöster(); eksenleriGöster()
 dez aralık = 200
 atla(-aralık,eğri(-aralık))
 hızıKur(orta)
 için(x <- -aralık+10 |-| aralık+100; eğer (x % 10 == 0)) noktayaGit(x, eğri(x))""".c,
     "'eğri' adında yeni bir işlev tanımlayıverdik. Bunu daha sonra daha iyi anlayacağız.".p,
     "Şimdilik x ve y eksenlerini ve kare çizgileri silelim. Ve bir sonraki bölümle devam edelim!".p,
-    "eksenleriGizle(); gridiGizle()".c
+    "eksenleriGizle(); ızgarayıGizle()".c
   )
 )
 
@@ -491,9 +496,9 @@ pages += Page(
       row("Uzun","(Long) İki sayı yani 64 parçacık. -2^63 ile 2^63-1 arası"),
       row("UfakKesir","(Float) 32 parçacık kullanarak kesirli sayıları ifade eder. İşini ciddiye alır ve IEEE'nin 754 no'lu standardına göre yapar. Bilirsin pi sayısının basamakları bitmek bilmez. UfakKesir olarak ama tam değeri şudur: 3.1415927"),
       row("Kesir","(Double) Ufak kesirden iki kat daha hassas. Bunu da 64 parçacık kullanarak sağlar. Pi sayısını şöyle bilir: 3.141592653589793. Aynı ufak kesir gibi ciddi standarda uyar."),
-      row("Harf","Unicode karakterler dizisi. 16 parçacık kullanır. Elbette eksi artı sıkıntısı yoktur. (unsigned denir ingilizce)"),
-      row("Dizi","Sınırsız bir harf dizisidir. Çok basit olsa da çok faydalıdır."),
-      row("İkil","doğru ve yanlış değerlerini bilir başka da birşey bilmez.")),
+      row("Harf","(Char) Unicode karakter. 16 parçacık (bit) yani 2 lokma kullanır. Eksi artı sıkıntısı yoktur. İngilizce'de 'unsigned' denir."),
+      row("Yazı","(String) Sınırsız bir harf dizisidir. Çok basit olsa da çok faydalıdır."),
+      row("İkil","(Boolean) doğru ve yanlış değerlerini bilir başka da birşey bilmez. Başka bir lakabı da Seçim.")),
     "Sayma Sayıları".h2,
     "Tabloda da gördüğümüz gibi dört temel tür var (bir de iri sayılar var. Çok büyük sayma sayılarıyla oynamak için tasarlanmış sayı türünün adı İriSayı (BigInt). Eğer canın mümkün olan bütün briç ellerini saymak isterse Uzun yetmez İriSayı gerekir. Merak edersen bana haber ver. Konuşuruz.) Bunları tekrar anımsayalım çünkü çok faydalılar: Lokma Kısa Sayı ve Uzun. Yalın sayı değerlerini girmenin tek yolu var sanma. Farklı tabanlar kullanabiliriz. Sadece onluk tabanla sınırlı değil becerimiz. Onaltılık taban da bazen işe yarar. Bunu belirtmenin yolu ilk rakamı 0 yapmak.".p,
     "Bize en doğal gelen onluk tabanın yalın sayıları 1 2 3 ... 8 ya da 9 ile başlar (decimal)".p,
@@ -1472,7 +1477,7 @@ pages += Page(
     "Eğer ilgilenip daha çok örnek görmek istersen, Kojo'nun web sayfasına da bak. Henüz sadece İngilizce. Resim yerine Picture diyecek. Ama ordaki örnekler de sana bir fikir verecektir.".p,
     "Resim adlı birim birçok komut, işlem ve bir de çizim döngüsü sunuyor bize. Bunları kullanarak epey gelişmiş şekiller, resimler ve grafikler çizebiliriz. Çizim döngüsünü kullanarak grafikleri canlandırabilir ve istersek fare ve tuşlarla kontrol ekleyerek oyuna çevirebiliriz.".p,
     "İlk örnekle başlayalım. Önce ekranı temizliyoruz. Sonra bir top çiziyor ve canlandırma döngüsünün içinde topun nasıl hareket edeceğini tanımlıyoruz. Resim birimi, bu döngüyü yaklaşık yirmibeş milisaniyede bir yineleyerek çalıştırıyor. Bilgisayarın hızına göre saniyede yaklaşık olarak 40 kere tekrar tekrar resim çizebiliyor yani. Bu da bizim gözümüzün değişiklikleri görme hızından fazla olduğu için bize canlı ve harektli gibi görünüyor. Bu temel kavramları ve komutları kullanarak pekçok ilginç canlı, hareketli grafik çizebilirsin.".p,
-    """silVeSakla(); gridiGöster(); eksenleriGöster()
+    """silipSakla(); ızgarayıGöster(); eksenleriGöster()
 dez yç = 10 // topumuzun yarıçapı
 dez top = Resim.daire(yç) // resmi
 çiz(top) // bu da tuvale çiziveriyor topu
@@ -1497,7 +1502,7 @@ canlandır { // İçindeki komutlar saniyede yaklaşık 40 kere yinelenir.
     y += dy
 }""".c,
     "İkinci örneğimiz küçük ve basit bir oyun. Duymuş olabilirsin: en eski bilgisayar oyunlarından duvara karşı pinpon (İngilizce adıyla Pong) oyunu. Tek kişilik bir oyun. Yapmamız gereken topa raketle vurup geri yollamak. Raketi fareyle yönetiyoruz. Top kaçarsa bir puan kaybediyorsun. İyi eğlenceler!".p,
-    """silVeSakla()
+    """silipSakla()
 çiz(götür(-200, -100) -> Resim.düz(0, 200)) // Üç duvar çizelim. Bu dik ön duvar
 çiz(götür(-200, -100) -> Resim.düz(400, 0)) // Bu alt duvar
 çiz(götür(-200,  100) -> Resim.düz(400, 0)) // Bu da üst duvar
@@ -1528,8 +1533,7 @@ canlandır {
         skor.güncelle(s"$mesaj\n$ıska kere ıskaladın")
     }
 }
-oyunSüresiniGeriyeSayarakGöster(60, "Süre bitti", yeşil) // oyun 60 saniye sürsün 
-""".c,
+oyunSüresiniGeriyeSayarakGöster(60, "Süre bitti", yeşil) // oyun 60 saniye sürsün""".c,
     "Temel kavramlar ve komutlarla artık tanıştın. Bir kaç tane daha top eklemeye ne dersin? Topların hızını rastgele değiştirerek oyunu daha eğlenceli kılabilirsin istersen. Raketin boyunu kısaltabilir ya da uzatabilirsin. Bir de programımızın bir (belki kimbilir daha çok) hatası var! İngilizce'de bug yani böcek denir. Ama nerden çıktı deme. Programı yazanın hatası de. Sen de yapacaksın bol bol hata. Hiç dert etme. Her hata aslında daha usta olmak için bir fırsat. Fırsatları hiç kaçırma! Hatayı farkettin mi? Bazen top raketin içinden geçiyor sanki elektron tünelleme yapıyormuş gibi (kuvantum mekaniği değil ki bu)! Bazen de ıskalaması gerekirken geri yolluyor.. Bakalım yazılımcığın içinde nerede? Sen bulup düzeltebilecek misin?".p,
     "Klavye ve tuşlarla komut girişi".h3,
     "Pekçok oyun klaveyeden komut bekler. Minecraft oynadın mı hiç? Hem fare hem de klavye komutları oyunu iyice eğlenceli kılar. Bak bu küçük oyun sağ/sol/yukarı ve aşağı ok olan tuşlarla kaplumbağacığa yön veriyor.".p,
@@ -1541,15 +1545,15 @@ canlandırmaHızınıKur(100)
 den (zıpladı, bilmem) = (yanlış, yanlış)
 tuşaBasınca { t =>
     t eşle {
-        durum tuşlar.VK_LEFT  => açıyaDön(180)  // sola git
-        durum tuşlar.VK_RIGHT => açıyaDön(0)    // sağa git
-        durum tuşlar.VK_UP    => açıyaDön(90)   // yukarı
-        durum tuşlar.VK_DOWN  => açıyaDön(270)  // aşağı
-        durum tuşlar.VK_Z     => zıpla(20); zıpladı = doğru    
-        durum tuşlar.VK_A     => atla(fareKonumu.x,fareKonumu.y); zıpladı = doğru
-        durum tuşlar.VK_N     => noktayaGit(fareKonumu.x,fareKonumu.y); zıpladı = doğru
-        durum tuşlar.VK_SPACE => // büyük boşluk tuşu sadece ilerletsin
-        durum _               => bilmem = doğru // diğer tuşlar
+        durum tuşlar.sol    => açıyaDön(180)  // sola git
+        durum tuşlar.sağ    => açıyaDön(0)    // sağa git
+        durum tuşlar.yukarı => açıyaDön(90)   // yukarı
+        durum tuşlar.aşağı  => açıyaDön(270)  // aşağı
+        durum tuşlar.z      => zıpla(20); zıpladı = doğru    
+        durum tuşlar.a      => atla(fareKonumu.x,fareKonumu.y); zıpladı = doğru
+        durum tuşlar.n      => noktayaGit(fareKonumu.x,fareKonumu.y); zıpladı = doğru
+        durum tuşlar.boşluk => // büyük boşluk tuşu sadece ilerletsin
+        durum _             => bilmem = doğru // diğer tuşlar
     }
     eğer (bilmem) { bilmem = yanlış } yoksa {
         eğer (zıpladı) { zıpladı = yanlış } yoksa { ileri(20)}
@@ -1559,36 +1563,42 @@ tuvaliEtkinleştir()""".c,
     "Hayal gücünü kullan, yazılımcığı değiştir (örneğin 45 derece döndürmek, yay ya da çember çizmek için komutlar ekleyebilirsin), tekrar çalıştır. Yazılımcık düzenleme ekranında 'tuşlar.' yazdıktan sonra (ama tırnak işaretleri olmadan!) kontrol tuşunu basık tutup büyük boşluk tuşuna bas ki başka hangi tuşları kullanabileceğini gör.".p,
 
     "Saat".h3,
-    "Bir saat yapalım mı?".p,
-    "BuAn adlı birimi kullanacağız. O da içinde Java'nın Calendar yani takvim adlı kütüphane birimini kullanıyor.".p,
-    """silVeSakla
-dez yç = 100 // saatin yarıçapı. Büyültmek ister misin?
-dez pi2 = 2.0 * piSayısı // 2*Pi radyan tam 360 derece dönüş demek
-// saati çizelim
-tanım saat = {
-    Resim.sil() // eski saati silelim
-    çiz(kalemRengi(kırmızı) -> Resim.daire(yç))
-    için (i <- 0 |-| 59) { // // dakika ve saat çentikleri
+    "Bir saat yapalım mı? BuAn adlı birimi kullanacağız. O da içinde Java'nın takvim, tarih ve zaman adlı kütüphane birimlerini kullanıyor.".p,
+    """silipSakla
+dez yç = 150 //             saatin yarıçapı
+dez pi2 = 2.0 * piSayısı // 2*pi radyan tam 360 derece dönüş demek
+
+// saatin her unsuru için değişik bir renk kullanalım:
+//   pembe, kırmızı, mavi, yeşil, turuncu ve siyah
+// böylece hem renkli olur hem de programı anlamak kolaylaşır
+tanım renk(r: Renk) = kalemRengi(r)   
+
+tanım saat = { // bu işlev saatin değişmeyen kısımlarını çizer
+    için (i <- 0 |-| 59) { // dakika ve saat çentikleri
         dez ra = pi2 * i / 60
         dez (x, y) = (yç * sinüs(ra), yç * kosinüs(ra))
         dez çentikBoyu = eğer (i % 5 == 0) 0.9 yoksa 0.95
         dez (llx, lly, urx, ury) = (çentikBoyu * x, çentikBoyu * y, x, y)
         dez (en, boy) = (urx - llx, ury - lly)
-        çiz(kalemRengi(kırmızı) * götür(llx, lly) -> Resim.düz(en, boy))
+        çiz(renk(pembe) * götür(llx, lly) -> Resim.düz(en, boy))
     }
+    çiz(renk(kırmızı) -> Resim.daire(yç))
 }
 
-canlandır { // bu döngü her saniyede yaklaşık 40 kere yinelenir
+canlandır { //     bu döngü her saniyede yaklaşık 40 kere yinelenir
+    Resim.sil() // bütün resimleri silelim
+    saat //        tekrar çizelim
     dez buan = BuAn()
-    saat; çiz(kalemRengi(siyah) * götür(-yç - 5, -yç - 20) -> Resim.yazı(buan.yazıya))
-    dez s = pi2 * buan.saniye / 60 // saniyeKolu
-    çiz(kalemRengi(mavi) -> Resim.düz(0.9 * yç * sinüs(s), 0.9 * yç * kosinüs(s)))
-    dez m = pi2 * buan.dakika / 60 // dakika kolu
-    çiz(kalemRengi(yeşil) -> Resim.düz(0.8 * yç * sinüs(m), 0.8 * yç * kosinüs(m)))
-    dez h = pi2 * buan.saat / 12 + m / 12 // saat kolu
-    çiz(kalemRengi(turuncu) -> Resim.düz(0.6 * yç * sinüs(h), 0.6 * yç * kosinüs(h)))
-}
-""".c,
+    dez s = pi2 * buan.saniye / 60 //         saniye kolu
+    dez m = pi2 * buan.dakika / 60 //         dakika kolu
+    dez h = pi2 * buan.saat / 12 + m / 12 //  saat kolu
+    çiz(
+        renk(mavi) -> Resim.düz(0.9 * yç * sinüs(s), 0.9 * yç * kosinüs(s)),
+        renk(yeşil) -> Resim.düz(0.8 * yç * sinüs(m), 0.8 * yç * kosinüs(m)),
+        renk(turuncu) -> Resim.düz(0.6 * yç * sinüs(h), 0.6 * yç * kosinüs(h)),
+        renk(siyah) * götür(-yç - 50, -yç - 20) -> Resim.yazı(buan)
+    )
+}""".c,
     "Saatin kaç tane çizimden oluştuğunu hesabedebilir misin? Yanıt pekçok ülkedeki emeklilik yaşı! Neyseki bu 65 çizimi yapmak hem de saniyede 40 kere tekrar tekrar bizim bilgisayarımızı hiç yormuyor! Peki belki de yok, yok 63 tane çizgi, bir çember ve bir kaç da yazı diyerek itiraz edeceksin. Çok haklısın. Ve tebrikler!".p,
     "Conway'in Yaşam Oyunu".h3,
     """İngilizce adıyla "The Game of Life" o kadar meşhur ki, bilgisayarcılar arasında basitçe Life yani Yaşam adıyla tanınır! Aslında o bir hücresel otomaton yani basit hücrelerden oluşan ve onların yerel etkileşimleri sayesinde kendi kendine devinen en basit program türlerinden biri. İngiltere doğumlu Amerika'da Princeton üniversitesinde matematik araştırmaları yapan John Horton Conway tarafından 1970 yılında icat edilmiş. Belki de keşfedilmiş demek lazım. Kimbilir. Sen ne dersin?""".p,
@@ -1603,7 +1613,7 @@ canlandır { // bu döngü her saniyede yaklaşık 40 kere yinelenir
     "Bu yaşam ya da hayat oyunu sıfır oyuncuyla oynanıyor! Çok sıkıcı mı dedin? Yok, çok ilginç aslında. Aslında sen çok önemlisin. Çünkü bu oyunun başlaması için en başta canlı hücrelere gerek var. Bunları sen belirleyebilirsin. Ama önce hazır bazı desenlerle başlamak daha kolay olur. 'başlangıç' adlı komudu bul. Onun ikinci girdisi 'desen'. Deseni seçmek için yapman gereken tek şey 'seç' adındaki değeri değiştirmek. Birinciyle başlıyoruz. Ama sıfırdan ona kadar hepsini deneyebilirsin. Sonra hatta kendin de yeni desenler ekleyebilirsin.".p,
 
     "Bu simulasyonun hızını 'oran' değerini değiştirerek ayarlayabilirsin.".p,
-    """çıktıyıSil; silVeSakla(); kalemRenginiKur(mavi)
+    """çıktıyıSil; silipSakla(); kalemRenginiKur(mavi)
 // bu oyunun dünyası yani tahtası büyük bir kare. Kenarı KU uzunluğunda olsun
 // Nasıl satranç tahtası 8x8, bu tahta da 128x128 kare.
 dez KU = 128
@@ -1716,8 +1726,7 @@ tanım dörtlü = Dizin((0, 0), (1, 0), (-1, 0), (0, 2)) // dokuzcanlı'nın alt
 // sepet sepet yumurta
 // sakın beni unutma
 // şimdilik bu kadar
-// yaşamın tadını çıkar
-""".c,
+// yaşamın tadını çıkar""".c,
     
     "Düğüm açma oyunu".h3,
     "Bu oyun bize iki şey gösterecek: 1) Scala'nın bize sunduğu veri yapılarından Yöney ne işlere yarıyor. 2) Fareye tıklayıp bırakmadan sürüklersek neler yapabiliyoruz. Tabii daha da güzeli eğlenceli bir oyun yazabiliyoruz bu sayede.".p,
@@ -1751,7 +1760,7 @@ durum sınıf Nokta(den x: Kesir, den y: Kesir) {
     n.fareyiSürükleyince { (mx, my) => { n.kondur(mx, my); x = mx; y = my; çizelim(çizgiler) } }
 }
 // Bütün noktaları (0,0) yani orijine üştüste koyalım. Merak etme birazdan dağıtacağız
-silVeSakla()
+silipSakla()
 dez noktalar = (0 |- AS).soldanKatla(Yöney[Nokta]())((v, i) => { v :+ Nokta(0, 0) })
 
 // çizgileri tanımlar ve noktalara bağlarız. Bir balık ağı gibi. KS * KS düğümlü
@@ -1788,8 +1797,7 @@ tanım kare(x: Kesir, y: Kesir, en: Kesir) = {
     k
 }
 dez b = kare(-KS * 35, -KS * 35, 20)
-b.fareyeTıklayınca { (x, y) => serpiştir(noktalar) }
-""".c
+b.fareyeTıklayınca { (x, y) => serpiştir(noktalar) }""".c
   )
 )
 

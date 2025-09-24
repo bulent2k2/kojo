@@ -18,6 +18,8 @@ package net.kogics.kojo.core
 import java.awt.geom.{Arc2D, GeneralPath}
 
 class Rich2DPath(p: GeneralPath) {
+  def arcTo(endPointX: Double, endPointY: Double, angleOfArc: Double): Unit = arc(endPointX, endPointY, angleOfArc)
+
   def arc(endPointX: Double, endPointY: Double, angleOfArc: Double): Unit = {
     val arcAngle = -(angleOfArc % 360)
     val currentPoint = p.getCurrentPoint

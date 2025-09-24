@@ -10,6 +10,8 @@ val sublistStyle = "margin-left:60px;"
 import language.implicitConversions
 import language.postfixOps
 
+import net.kogics.kojo.util.Utils
+
 showVerboseOutput()
 retainSingleLineCode()
 def pgHeader(hdr: String) =

@@ -16,19 +16,34 @@
  */
 package net.kogics.kojo.lite.i18n.tr
 
-trait ListMethodsInTurkish {
+import scala.collection.parallel.CollectionConverters._
+import scala.collection.parallel
+
+trait ParalelDiziYöntemleri {
+  type ParDizi[T] = parallel.immutable.ParSeq[T]
+  implicit class ParListYöntemler[T](pd: ParDizi[T]) {
+    def ele(deneme: T => İkil): ParDizi[T] = pd.filter(deneme)
+    def işle[A](işlev: T => A): ParDizi[A] = pd.map(işlev)
+    def düzİşle[A](işlev: T => ParDizi[A]): ParDizi[A] = pd.flatMap(işlev)
+    def dizine = pd.toList
+    // todo more to come...
+  }
+}
+trait DizinYöntemleri {
   val Boş = collection.immutable.Nil
 
   object Dizin {
-    def apply[A](elems: A*): List[A] = List.from(elems)
-    def unapplySeq[A](list: List[A])  = List.unapplySeq(list)
+    def apply[A](ögeler: A*): List[A] = List.from(ögeler)
+    def unapplySeq[A](list: List[A]) = List.unapplySeq(list)
   }
 
   // extends AbstractSeq and gets the translations from Seq in dizi.scala.
   // But we get type mismatches between List and Seq on methods that return Seq
   implicit class ListYöntemleri[T](d: Dizin[T]) {
     type Col = Dizin[T]
+    type ParDizi[T] = parallel.immutable.ParSeq[T] // duplicate above
     type Eşlek[A, D] = collection.immutable.Map[A, D]
+    def paralel: ParDizi[T] = d.par
     def başı: T = d.head
     def kuyruğu: Col = d.tail
     def önü: Col = d.init
@@ -83,9 +98,9 @@ trait ListMethodsInTurkish {
     def say(işlev: T => İkil): Sayı = d.count(işlev)
 
     def dilim(nereden: Sayı, nereye: Sayı) = d.slice(nereden, nereye)
-    def ikile[S](öbürü: scala.collection.IterableOnce[S]) = d.zip(öbürü)
-    def ikileSırayla = d.zipWithIndex
-    def ikileKonumla = d.zipWithIndex
+    def ikile[S](öbürü: YinelenebilirBirKere[S]) = d.zip(öbürü) // todo: result type (for all ikile in other files, too)
+    def ikileSırayla = d.zipWithIndex  // todo
+    def ikileKonumla = d.zipWithIndex  // todo
     def öbekle[A](iş: (T) => A): Eşlek[A, Col] = d.groupBy(iş)
     def öbekleEsnek[A](iş: (T) => A): Eşlem[A, Col] = Eşlem.değişmezden(d.groupBy(iş)) // needed?
 

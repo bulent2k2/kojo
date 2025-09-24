@@ -14,11 +14,11 @@ yaklaş(0.6)
 // tümEkran()
 
 artalanıKur(renkler.khaki)
-çiz(duvarlar) // duvarlar environment1.kojo adlı yazılımcık içinde tanımlanıyor
+çiz(duvarlar) // duvarlar cevre.kojo adlı yazılımcık içinde tanımlanıyor
 
-// duvarları biraz oynatmak ya da yeniden çizmek istersen, eksenleri ve gridi aç:
+// duvarları biraz oynatmak ya da yeniden çizmek istersen, şunlar faydalı olur:
 eksenleriGöster()
-gridiGöster()
+ızgarayıGöster()
 
 dez robot = Robot(-400, -240, duvarlar)
 robot.göster()

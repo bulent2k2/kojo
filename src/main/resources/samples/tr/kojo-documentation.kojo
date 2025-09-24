@@ -83,7 +83,7 @@ dez sayfaAra = Page(
     Ama hepsini sırayla okuman gerekmez. İlk iki bölümü okuduktan sonra
     sona yakın olan <em> Çizim ve Oyun </em> bölümüne bak. Onlardan çok şey öğreneceksin.
     </p> <p> Ondan sonra sırayla hepsini oku. Bu sayede sonradan anlayacaksın ki bilgisayar
-    programlamayı öğrenivermişsin. Ondan sonrası sana ve hevesine kalmış.
+    programlamayı epey öğrenivermişsin. Ondan sonrası sana ve hevesine kalmış.
     </p>
     </body>
 )
@@ -92,7 +92,7 @@ dez sayfaİlk = Page(
   name = "Ana sayfa",
   body = <body style={ sayfaBiçimi + ortalamaBiçimi }>
 
-  { için (i <- 1 to 5) ver { <br/> } }
+  { /* için (i <- 1 to 5) ver { <br/> } */ }
 
   <h3>Kojo'ya hoşgeldin!</h3>
 
@@ -125,7 +125,7 @@ dez sayfaKaplumbağanınAnladığıKomutlar = Page(
       row("kalemiİndir".c, "Kalemi indir ve çizim yapmaya devam et. Örnek aşağıda."),
       row("kalemiKaldır".c, "Kalemi kaldır ki bundan sonra hareket ederken çizim yapma.", kod100.c),
       row("sil".c, "Tuvali temizler ve kaplumbağayı başlangıç noktasına döndürür"),
-      row("silVeSakla".c, "Tuvali temizler, kaplumbağayı başlangıç noktasına döndürür ve gizler"),
+      row("silipSakla".c, "Tuvali temizler, kaplumbağayı başlangıç noktasına döndürür ve gizler. Diğer adı 'silVeSakla'", "silVeSakla".c),
     ),
     "Başlangıçta kalem inik. Onun için yürürken çizim yapacak. Üstteki ve alttaki komutarı istediğin sırada çalıştırabilirsin. Tıklaman yeter.".p,
     table(
@@ -133,7 +133,7 @@ dez sayfaKaplumbağanınAnladığıKomutlar = Page(
       row("ev".c, "Eve yani x=0, y=0 noktasına dön ve doğrultuyu kuzeye çevir", "eksenleriGöster".c, "eksenleriGizle".c),
       row("geri(50)".c,"50 adım geriye gider", "geri".c, "ileri(20)".c),
       row("ileri(100)".c, "100 adım ilerler", "ileri".c, "geri(20)".c),
-      row("ilerle(-200, -100)".c, "Tuvalde x=-200, y=-100 noktasına ilerle", "eksenleriGöster".c, "eksenleriGizle".c),
+      row("ilerle(-200, -100)".c, "Tuvalde x=-200, y=-100 noktasına ilerle", "ızgarayıGöster".c, "ızgarayıGizle".c),
       row("sağ(60, 100)".c, "Sağa doğru 60 derecelik bir yay çiz. Yarıçapı 100 uzunluğunda olan bir çemberin yayı olsun"),
       row("sol(120, 50)".c, "Sola doğru 120 derecelik bir yay çiz. Yarıçapı 100 uzunluğunda olan bir çemberin yayı olsun"),
       row("yay(100, -135)".c, "dön komutu gibi ama önce yarıçapı giriyoruz sonra yayın açısını"),
@@ -149,7 +149,7 @@ dez sayfaKaplumbağanınAnladığıKomutlar = Page(
       row("konumuDeğiştir(40, 30)".c, "Doğrultuyu değiştirmeden 40 sağa, 30 yukarı git", "konumuDeğiştir(-50, -50)".c),
       row("konumuKur(150, 100)".c, "Doğrultuyu değiştirmeden x=150, y=100 konumuna git"),
       row("konumVeYönüBelleğeYaz".c, "Şu anda bulunduğu konumu ve doğrultuyu belleğe yaz"),
-      row("konumVeYönüGeriYükle".c, """Bellekteki konuma git ve yine bellekteki doğrultuya dön. Eğer belleğe konum ve yön yazılı değilse hata verir: "Problem - java.lang.IllegalStateException: No saved Position and Heading to restore." Yani bellekte bilgi yok henüz diyor."""),
+      row("konumVeYönüGeriYükle".c, s"Bellekteki konuma git ve yine bellekteki doğrultuya dön. Eğer belleğe konum ve yön yazılı değilse hata verir: '${Utils.loadString("S_PROBLEM_DUE_TO_EXCEPTION")} - java.lang.IllegalStateException: No saved Position and Heading to restore.' Yani bellekte bilgi yok henüz diyor."),
       row("kuzey".c, "Doğrultunu kuzeye çevir. Benzer komutlar yanda", "batı".c, "doğu".c, "güney".c),
       row("noktayaDön(40, 60)".c, "Doğrultunu koordinatları verilen (x, y) noktasına çevir"),
       row("noktayaGit(0, -100)".c, "Doğrultunu x=100, y=-100 konumuna çevir ve o noktaya kadar ilerle"),
@@ -164,11 +164,11 @@ dez sayfaKaplumbağanınAnladığıKomutlar = Page(
     "Basit çizim komutları:".p,
     table(
       row("daire(20)".c, "Yarıçapı 20 olan bir daire çiz.", "üçgen(100)".c, "kare(100)".c, "nokta(100)".c),
-      row("kare(30)".c, "Kenar uzunluğu 30 olan bir kare çiz", "kare".c),
+      row("kare(30)".c, "Kenar uzunluğu 30 olan bir kare çiz", "kare()".c),
       row("nokta(30)".c, "30 kalınlığında bir kalemle bir nokta çiz", "zıpla; nokta(10)".c, "ileri(100); nokta".c),
       row("üçgen(30)".c, "Kenar uzunluğu 30 olan bir üçgen çiz"),
     ),
-    "Şimdilik son olsun birazcık daha uzun bir örnekle bitirelim bu sayfayı. Sakın irkilme, bu örneğin çoğu sayfanın başındaki ilk örnekle aynı. yinele(3) döngüsünü aynen aldık iki döngü içinde tekrar kullandık:".p,
+    "Şimdilik son bir örnek daha görelim. Biraz daha uzun. Ama sakın irkilme. Bunun çoğu sayfanın başındaki ilk örnekle aynı. yinele(3) döngüsünü aldık  ve iki döngü içinde tekrar kullandık:".p,
 """sil
 canlandırmaHızınıKur(2) // çokHızlı'dan iki kat daha hızlı
 // daha önce kullandığımız hızıKur(hız) komutuna benziyor,
@@ -211,8 +211,8 @@ dez sayfaTuvalKomutları = Page(
       row("canlandırmaHızınıKur(10)".c, "100 adımı atması 10 milisaniye alsın. Başlangıçta 1000 milisaniye aldığı için 100 kat hızlanır!"),
       row("eksenleriGizle()".c, "X ve Y eksenlerini saklar"),
       row("eksenleriGöster()".c, "X ve Y eksenlerini gösterir"),
-      row("gridiGizle()".c, "Gridi gizler"),
-      row("gridiGöster()".c, "Gridi çizer"),
+      row("ızgarayıGizle()".c, "Izgarayı gizler. Bir başka adı da grid.", "gridiGizle()".c),
+      row("ızgarayıGöster()".c, "Izgarayı çizer", "gridiGöster()".c),
       row("hızıKur(hızlı)".c, "canlandırmaHızınıKur komudunun basit hali", kod150.c),
       row("ışınlarıAç".c, "Dört yöne ışın tut. Öne doğru olan uzun olsun"),
       row("ışınlarıKapat".c, "Işınları söndür"),
@@ -223,7 +223,7 @@ dez sayfaTuvalKomutları = Page(
       row("yaklaş(2.0, 200, 50)".c, "x=200, y=50 konumunu merkez alarak yaklaş ya da uzaklaş", "yaklaşmayıSil".c, "yaklaş(1.0, 0, 0)".c),
       row("yaklaşmayaİzinVerme()".c, ""),
       row("yaklaşmayıSil()".c, ""),
-      row(yazı_Örnek.c, "tuvaleYaz komutunun kısa adı. Durduğu konumun hemen sağına verilen yazıyı yazar. Girdi yazı değilse yazıya çevrilir önce.", kod60.c, kod60b.c, kod60c.c),
+      row(yazı_Örnek.c, "tuvaleYaz komutunun kısa adı. Durduğu konumun hemen sağına verilen yazıyı yazar. Girdi yazı değilse yazıya çevrilir önce.", kod60.c, kod60b.c, kod60c.c, kod60d.c, "yaklaşmayıSil()".c),
       row("yazıBoyunuKur(24)".c, "Başlangıçta 18 boyunda yazar.", kod70.c),
       row("yazıyüzleri".c, ""),
       row(yazıYüzünüKur_Örnek.c, "Kaplumbağanın yazısının görünüşünü değiştirir"),
@@ -238,7 +238,7 @@ dez sayfaTuvalKomutları = Page(
     "Kaplumbağanın görünüşünü değiştiren komutlar:".p,
     table(
       row("birsonrakiGiysi".c, "Kurulu giysilerden bir sonrakini giy. Sonuncuyu giymişse en baştakine döner. Tek giysi varsa hiç birşey yapmaz", kod20.c),
-      row("giysiKur(Costume.car)".c, "Kaplumbağamızı tamamen değiştirmek de mümkün. Costume yani giysi nesnesi altında şunlar da var: bat1, bat2 (iki yarasa), pencil (kurşun kalem), womanWaving (el sallayan bir kadın)"),
+      row("giysiKur(Görünüş.araba)".c, "Kaplumbağamızı tamamen değiştirmek de mümkün."),
       row(giysileriKur_Örnek.c, "Kaplumbağanın bir dizi giysisi olsun ki giysisini kolaylıkla değiştirebilelim.", kod50.c),
       row("giysiyiBüyült(2.0)".c, "Küçültmek için de 0.5 dene."),
       row("görünmez".c, "gizle komutuyla eş: kaplumbağayı gizler"),

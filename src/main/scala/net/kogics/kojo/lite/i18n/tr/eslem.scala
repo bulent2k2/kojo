@@ -95,7 +95,7 @@ case class Eşlem[A,D](val m: Map[A,D]) {
   def dizime[C >: Pair](implicit delil: scala.reflect.ClassTag[C]): Dizim[C] = new Dizim(m.toArray(delil))
   def say(işlev: (Pair) => İkil): Sayı = m.count(işlev)
 
-  def ikile[C](öbürü: scala.collection.IterableOnce[C]) = m.zip(öbürü)
+  def ikile[C](öbürü: YinelenebilirBirKere[C]) = m.zip(öbürü)
   def ikileSırayla = m.zipWithIndex
 
   //
@@ -179,7 +179,7 @@ trait MapMethodsInTurkish {
     def dizime[C >: Pair](implicit delil: scala.reflect.ClassTag[C]): Dizim[C] = new Dizim(m.toArray(delil))
     def say(işlev: ((A, D)) => İkil): Sayı = m.count(işlev)
 
-    def ikile[C](öbürü: scala.collection.IterableOnce[C]) = m.zip(öbürü)
+    def ikile[C](öbürü: YinelenebilirBirKere[C]) = m.zip(öbürü)
     def ikileSırayla = m.zipWithIndex
 
     //

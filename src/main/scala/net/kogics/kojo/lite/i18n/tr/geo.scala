@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2022
+ * Copyright (C) 2022-2024
  *   Bulent Basaran <ben@scala.org> https://github.com/bulent2k2
  *   Lalit Pant <pant.lalit@gmail.com>
  *
@@ -16,7 +16,13 @@
  */
 package net.kogics.kojo.lite.i18n.tr
 
+import edu.umd.cs.piccolo.util.PBounds
 trait GeoMethodsInTurkish {
+
+  type BenzerDönüşüm = java.awt.geom.AffineTransform // used in resim.scala
+  type PSınırlar = PBounds // used in Resim.sınırlar
+  type Geometri = com.vividsolutions.jts.geom.Geometry
+
   implicit class RectYöntemleri(d: Dikdörtgen) {
     def boyu = d.height
     def eni  = d.width

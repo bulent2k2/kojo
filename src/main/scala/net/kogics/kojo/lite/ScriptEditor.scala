@@ -358,11 +358,13 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
   popup.add(new JPopupMenu.Separator, idx)
   idx += 1
 
+  import net.kogics.kojo.lite.i18n.tr.updateTypes
+
   val typeAtAction = new AbstractAction(Utils.loadString("S_ShowType")) {
     def actionPerformed(ev: ActionEvent): Unit = {
       val codePane = execSupport.codePane
       val offset = codePane.getCaretPosition
-      val typeAt = execSupport.typeAt(offset)
+      val typeAt = updateTypes(execSupport.typeAt(offset)) // updateTypes returns the arg as is unless we are in Turkish locale
       val wordStart = Utilities.getWordStart(codePane, offset)
       val wordEnd = Utilities.getWordEnd(codePane, offset)
       val word0 = codePane.getDocument.getText(wordStart, wordEnd - wordStart)
@@ -374,11 +376,14 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
       wordsWithCumIdx.find { case (w, idx) => idx > delta } match {
         case Some(wordIdx) =>
           val word = wordIdx._1
+          val (t1, t2) = (Utils.loadString("S_TypePrefixAround"),Utils.loadString("S_TypePrefix"))
           word.find(c => !Character.isJavaIdentifierStart(c) && !Character.isJavaIdentifierPart(c)) match {
-            case Some(_) => println(s"[type around] $word : $typeAt")
-            case None    => println(s"[type] $word : $typeAt")
+            case Some(_) => println(s"[$t1] $word : $typeAt")
+            case None    => println(s"[$t2] $word : $typeAt")
           }
-        case None => println(s"[type at cursor] $typeAt")
+        case None =>
+          val t3 = Utils.loadString("S_TypePrefixCursor")
+          println(s"[$t3] $typeAt")
       }
     }
   }

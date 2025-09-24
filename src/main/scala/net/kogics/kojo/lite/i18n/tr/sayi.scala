@@ -17,7 +17,7 @@
 package net.kogics.kojo.lite.i18n.tr
 
 // also see: aralik.scala
-trait NumMethodsInTurkish {
+trait SayıYöntemleri {
   // We have Byte/Short/Int/Long which all default to Int and BigInt
   // val n = 1
   // Sayma sayıları
@@ -42,7 +42,7 @@ trait NumMethodsInTurkish {
     def unapplySeq(ss: Sayılar) = Vector.unapplySeq(ss)
   }
 
-  implicit class ByteMethods(a: Lokma) {
+  implicit class LokmaYöntemleri(a: Lokma) {
     type S = Byte
     def yazıya = a.toString
     def kesire = a.toDouble
@@ -51,16 +51,17 @@ trait NumMethodsInTurkish {
     def enUfağı(b: S) = a min b
   }
 
-  implicit class BigIntMethods(a: İriSayı) {
+  implicit class İriSayıYöntemleri(a: İriSayı) {
     type S = İriSayı
     def yazıya = a.toString
     def kesire = a.toDouble
     def mutlakDeğer = a.abs
-    def enİrisi(b: S) = a max b
-    def enUfağı(b: S) = a min b
+    def enİrisi(b: S) = a.max(b)
+    def enUfağı(b: S) = a.min(b)
+    def lokmaya: Lokma = a.toByte
   }
 
-  implicit class BigDecimalMethods(a: İriKesir) {
+  implicit class İriKesirYöntemleri(a: İriKesir) {
     type S = İriKesir
     def yazıya = a.toString
     def kesire = a.toDouble
@@ -80,8 +81,31 @@ trait NumMethodsInTurkish {
     def yazıya = a.toString
     def kesire = a.toDouble
     def mutlakDeğer = a.abs
-    def enİrisi(b: Sayı) = a max b
-    def enUfağı(b: Sayı) = a min b
+    def enİrisi(b: Sayı) = a.max(b)
+    def enUfağı(b: Sayı) = a.min(b)
+    def lokmaya: Lokma = a.toByte
+  }
+
+  implicit class KısaSayıYöntemleri(a: Kısa) {
+    def |-(b: Sayı): Range = a until b
+    def |-|(b: Sayı): Range = a to b
+    def harfe = a.toChar
+    def yazıya = a.toString
+    def kesire = a.toDouble
+    def mutlakDeğer = a.abs
+    def enİrisi(b: Kısa) = a.max(b)
+    def enUfağı(b: Kısa) = a.min(b)
+    def lokmaya: Lokma = a.toByte
+  }
+
+  implicit class UzunSayıYöntemleri(a: Uzun) {
+    def harfe = a.toChar
+    def yazıya = a.toString
+    def kesire = a.toDouble
+    def mutlakDeğer = a.abs
+    def enİrisi(b: Uzun) = a.max(b)
+    def enUfağı(b: Uzun) = a.min(b)
+    def lokmaya: Lokma = a.toByte
   }
 
   implicit class KesirYöntemleri(a: Kesir) {

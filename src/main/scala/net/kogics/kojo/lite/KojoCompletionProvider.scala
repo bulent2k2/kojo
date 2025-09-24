@@ -13,6 +13,8 @@ import org.fife.ui.autocomplete.{Completion, CompletionCellRenderer, CompletionP
 
 import scala.collection.mutable
 
+import net.kogics.kojo.lite.i18n.tr.{updateTypes, dumpCompletions}
+
 class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends CompletionProviderBase {
   val Log = Logger.getLogger(getClass.getName)
 
@@ -32,8 +34,15 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
   }
 
   def proposal(offset: Int, completion: String, kind: Int, template: String) = {
-    new TemplateCompletion(this, completion, completion, rtsaTemplate(if (template == null) completion else template),
-      null, Help(completion)) {
+    val completion2 = updateTypes(completion)
+    new TemplateCompletion(
+      this,
+      completion2,
+      completion2,
+      rtsaTemplate(if (template == null) completion2 else template),
+      null,
+      Help(completion)
+    ) {
       setRelevance(kind)
       override def getIcon = kindIcon(kind)
     }
@@ -53,7 +62,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
       case Var           => VARIABLE
     }
 
-    val display = completion.fullCompletion
+    val display = updateTypes(completion.fullCompletion)
 
     val knownOwners = Set(
       "PicShape",
@@ -128,7 +137,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     }
 
     def help =
-      knownHelp.getOrElse(completion.fullCompletion)
+      knownHelp.getOrElse(display) // completion.fullCompletion
 
     new TemplateCompletion(this, display, display, rtsaTemplate(template), null, help) {
       setRelevance(-completion.prio)
@@ -279,22 +288,45 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     }
   }
 
+  import scala.jdk.CollectionConverters._ // bulent debugging. for .asScala below
+
   override def getCompletionsImpl(comp: JTextComponent) = {
     if (execSupport.startingUp) {
       val proposals = new java.util.ArrayList[Completion]
-      val completion = "Please try again soon..."
-      proposals.add(new TemplateCompletion(this, completion, completion, "${cursor}", null,
-        "Kojo is starting up, and the Code Completion Engine is not available yet."))
+      val completion = Utils.loadString("S_TRY_AGAIN_SOON")
+      proposals.add(
+        new TemplateCompletion(
+          this,
+          completion,
+          completion,
+          "${cursor}",
+          null,
+          Utils.loadString("S_CODE_COMPLETION_ENGINE_NOT_AVAILABLE1")
+        )
+      )
       proposals
     }
     else if (execSupport.isRunningEnabled) {
-      complete(comp)
+      val cs = complete(comp)
+      if (dumpCompletions) {
+        val b: scala.collection.mutable.Buffer[Completion] = cs.asScala  // debugging
+        b.foreach(c => println(c))
+      }
+      cs
     }
     else {
       val proposals = new java.util.ArrayList[Completion]
-      val completion = "Please try again soon..."
-      proposals.add(new TemplateCompletion(this, completion, completion, "${cursor}", null,
-        "The Code Completion Engine is currently blocked (probably because a script is running)."))
+      val completion = Utils.loadString("S_TRY_AGAIN_SOON")
+      proposals.add(
+        new TemplateCompletion(
+          this,
+          completion,
+          completion,
+          "${cursor}",
+          null,
+          Utils.loadString("S_CODE_COMPLETION_ENGINE_NOT_AVAILABLE2")
+        )
+      )
       proposals
     }
   }

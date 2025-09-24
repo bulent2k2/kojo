@@ -15,47 +15,31 @@
 
 package net.kogics.kojo.picture
 
-import java.awt.BasicStroke
-import java.awt.Color
-import java.awt.Component
-import java.awt.Font
-import java.awt.GraphicsEnvironment
-import java.awt.Image
-import java.awt.RenderingHints
-import java.awt.Shape
-import java.awt.Transparency
-import java.awt.geom.Arc2D
-import java.awt.geom.GeneralPath
-import java.awt.geom.PathIterator
-import java.awt.geom.Point2D
-import java.awt.geom.Rectangle2D
+import java.awt._
+import java.awt.geom._
 import java.net.URL
-
+import javax.swing.event.PopupMenuEvent
+import javax.swing.event.PopupMenuListener
 import javax.swing.JComboBox
 import javax.swing.JComponent
 import javax.swing.JPanel
-import javax.swing.event.PopupMenuEvent
-import javax.swing.event.PopupMenuListener
 
 import scala.collection.mutable.ArrayBuffer
-import scala.swing.Graphics2D
 
 import com.vividsolutions.jts.geom.Coordinate
 import com.vividsolutions.jts.geom.Geometry
-
+import edu.umd.cs.piccolo.nodes.PImage
+import edu.umd.cs.piccolo.nodes.PPath
+import edu.umd.cs.piccolo.util.PPaintContext
+import edu.umd.cs.piccolo.PNode
+import edu.umd.cs.piccolox.nodes.PClip
+import edu.umd.cs.piccolox.pswing.PSwing
 import net.kogics.kojo.core.Picture
 import net.kogics.kojo.core.SCanvas
+import net.kogics.kojo.picture.PicCache.freshPic
 import net.kogics.kojo.staging.CapJoinConstants._
 import net.kogics.kojo.util.Constants
 import net.kogics.kojo.util.Utils
-
-import edu.umd.cs.piccolo.PNode
-import edu.umd.cs.piccolo.nodes.PImage
-import edu.umd.cs.piccolo.nodes.PPath
-import edu.umd.cs.piccolo.nodes.PText
-import edu.umd.cs.piccolo.util.PPaintContext
-import edu.umd.cs.piccolox.nodes.PClip
-import edu.umd.cs.piccolox.pswing.PSwing
 
 trait PicShapeOps { self: Picture with CorePicOps =>
   def realDraw() = Utils.runInSwingThread {
@@ -136,9 +120,11 @@ trait PicShapeOps { self: Picture with CorePicOps =>
     (Cap, Join)
   }
 
-  def morph(fn: Seq[net.kogics.kojo.kgeom.PolyLine] => Seq[net.kogics.kojo.kgeom.PolyLine]) = notSupported("morph", "for non-turtle picture")
+  def morph(fn: Seq[net.kogics.kojo.kgeom.PolyLine] => Seq[net.kogics.kojo.kgeom.PolyLine]) =
+    notSupported("morph", "for non-turtle picture")
   def dumpInfo(): Unit = {}
-  def foreachPolyLine(fn: net.kogics.kojo.kgeom.PolyLine => Unit) = notSupported("foreachPolyLine", "for non-turtle picture")
+  def foreachPolyLine(fn: net.kogics.kojo.kgeom.PolyLine => Unit) =
+    notSupported("foreachPolyLine", "for non-turtle picture")
 }
 
 trait NonVectorPicOps { self: Picture with CorePicOps =>
@@ -166,13 +152,56 @@ trait NonVectorPicOps { self: Picture with CorePicOps =>
 
   def initGeom(): Geometry = notSupported("initGeometry", "for non-vector picture")
 
-  def morph(fn: Seq[net.kogics.kojo.kgeom.PolyLine] => Seq[net.kogics.kojo.kgeom.PolyLine]) = notSupported("morph", "for non-vector picture")
+  def morph(fn: Seq[net.kogics.kojo.kgeom.PolyLine] => Seq[net.kogics.kojo.kgeom.PolyLine]) =
+    notSupported("morph", "for non-vector picture")
   def dumpInfo(): Unit = {}
-  def foreachPolyLine(fn: net.kogics.kojo.kgeom.PolyLine => Unit) = notSupported("foreachPolyLine", "for non-vector picture")
+  def foreachPolyLine(fn: net.kogics.kojo.kgeom.PolyLine => Unit) =
+    notSupported("foreachPolyLine", "for non-vector picture")
 }
 
-class CirclePic(r: Double)(implicit val canvas: SCanvas) extends Picture with CorePicOps with CorePicOps2
-  with TNodeCacher with RedrawStopper with PicShapeOps {
+object KPath {
+  val TEMP_RECTANGLE = new Rectangle2D.Float()
+  val TEMP_ELLIPSE = new Ellipse2D.Float()
+  val TEMP_ARC = new Arc2D.Float()
+  val TEMP_LINE = new Line2D.Float()
+
+  def createRectangle(x: Float, y: Float, width: Float, height: Float): PPath = {
+    TEMP_RECTANGLE.setRect(x, y, width, height)
+    new KPath(TEMP_RECTANGLE)
+  }
+
+  def createEllipse(x: Float, y: Float, width: Float, height: Float): PPath = {
+    TEMP_ELLIPSE.setFrame(x, y, width, height)
+    new KPath(TEMP_ELLIPSE)
+  }
+
+  def createArc(r: Float, angle: Float): PPath = {
+    val d = 2 * r
+    TEMP_ARC.setArc(-r, -r, d, d, 0, -angle, Arc2D.OPEN)
+    new KPath(TEMP_ARC)
+  }
+
+  def createLine(x1: Float, y1: Float, x2: Float, y2: Float): PPath = {
+    TEMP_LINE.setLine(x1, y1, x2, y2)
+    new KPath(TEMP_LINE)
+  }
+}
+
+class KPath(s: Shape) extends PPath(s) {
+  override def paint(paintContext: PPaintContext): Unit = {
+    val g2 = paintContext.getGraphics
+    g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE)
+    super.paint(paintContext)
+  }
+}
+
+class CirclePic(r: Double)(implicit val canvas: SCanvas)
+    extends Picture
+    with CorePicOps
+    with CorePicOps2
+    with TNodeCacher
+    with RedrawStopper
+    with PicShapeOps {
   def initGeom(): com.vividsolutions.jts.geom.Geometry = {
     def x(t: Double) = r * math.cos(t.toRadians)
     def y(t: Double) = r * math.sin(t.toRadians)
@@ -183,7 +212,7 @@ class CirclePic(r: Double)(implicit val canvas: SCanvas) extends Picture with Co
   def makeTnode: edu.umd.cs.piccolo.PNode = Utils.runInSwingThreadAndPause {
     val fr = r.toFloat
     val d = 2 * fr
-    val node = PPath.createEllipse(-fr, -fr, d, d)
+    val node = KPath.createEllipse(-fr, -fr, d, d)
     _setPenColor(node, Color.red)
     _setPenThickness(node, 2 / canvas.camScale)
     node.setPaint(null)
@@ -195,8 +224,13 @@ class CirclePic(r: Double)(implicit val canvas: SCanvas) extends Picture with Co
   def copy: net.kogics.kojo.core.Picture = new CirclePic(r)
 }
 
-class EllipsePic(rx: Double, ry: Double)(implicit val canvas: SCanvas) extends Picture with CorePicOps with CorePicOps2
-  with TNodeCacher with RedrawStopper with PicShapeOps {
+class EllipsePic(rx: Double, ry: Double)(implicit val canvas: SCanvas)
+    extends Picture
+    with CorePicOps
+    with CorePicOps2
+    with TNodeCacher
+    with RedrawStopper
+    with PicShapeOps {
   def initGeom(): com.vividsolutions.jts.geom.Geometry = {
     def x(t: Double) = rx * math.cos(t.toRadians)
     def y(t: Double) = ry * math.sin(t.toRadians)
@@ -209,7 +243,7 @@ class EllipsePic(rx: Double, ry: Double)(implicit val canvas: SCanvas) extends P
     val fry = ry.toFloat
     val dx = 2 * frx
     val dy = 2 * fry
-    val node = PPath.createEllipse(-frx, -fry, dx, dy)
+    val node = KPath.createEllipse(-frx, -fry, dx, dy)
     _setPenColor(node, Color.red)
     _setPenThickness(node, 2 / canvas.camScale)
     node.setPaint(null)
@@ -221,8 +255,13 @@ class EllipsePic(rx: Double, ry: Double)(implicit val canvas: SCanvas) extends P
   def copy: net.kogics.kojo.core.Picture = new EllipsePic(rx, ry)
 }
 
-class ArcPic(r: Double, angle: Double)(implicit val canvas: SCanvas) extends Picture with CorePicOps with CorePicOps2
-  with TNodeCacher with RedrawStopper with PicShapeOps {
+class ArcPic(r: Double, angle: Double)(implicit val canvas: SCanvas)
+    extends Picture
+    with CorePicOps
+    with CorePicOps2
+    with TNodeCacher
+    with RedrawStopper
+    with PicShapeOps {
   def initGeom(): com.vividsolutions.jts.geom.Geometry = {
     def x(t: Double) = r * math.cos(t.toRadians)
     def y(t: Double) = r * math.sin(t.toRadians)
@@ -236,9 +275,7 @@ class ArcPic(r: Double, angle: Double)(implicit val canvas: SCanvas) extends Pic
 
   def makeTnode: edu.umd.cs.piccolo.PNode = Utils.runInSwingThreadAndPause {
     val fr = r.toFloat
-    val d = 2 * fr
-    val node = new PPath
-    node.setPathTo(new java.awt.geom.Arc2D.Float(-fr, -fr, d, d, 0, -angle.toFloat, Arc2D.OPEN))
+    val node = KPath.createArc(fr, angle.toFloat)
     _setPenColor(node, Color.red)
     _setPenThickness(node, 2 / canvas.camScale)
     node.setPaint(null)
@@ -250,8 +287,13 @@ class ArcPic(r: Double, angle: Double)(implicit val canvas: SCanvas) extends Pic
   def copy: net.kogics.kojo.core.Picture = new ArcPic(r, angle)
 }
 
-class RectanglePic(w: Double, h: Double)(implicit val canvas: SCanvas) extends Picture with CorePicOps with CorePicOps2
-  with TNodeCacher with RedrawStopper with PicShapeOps {
+class RectanglePic(w: Double, h: Double)(implicit val canvas: SCanvas)
+    extends Picture
+    with CorePicOps
+    with CorePicOps2
+    with TNodeCacher
+    with RedrawStopper
+    with PicShapeOps {
   def initGeom(): com.vividsolutions.jts.geom.Geometry = {
     val cab = new ArrayBuffer[Coordinate]
     cab += newCoordinate(0, 0)
@@ -263,7 +305,7 @@ class RectanglePic(w: Double, h: Double)(implicit val canvas: SCanvas) extends P
   }
 
   def makeTnode: edu.umd.cs.piccolo.PNode = Utils.runInSwingThreadAndPause {
-    val node = PPath.createRectangle(0, 0, w.toFloat, h.toFloat)
+    val node = KPath.createRectangle(0, 0, w.toFloat, h.toFloat)
     _setPenColor(node, Color.red)
     _setPenThickness(node, 2 / canvas.camScale)
     node.setPaint(null)
@@ -275,8 +317,13 @@ class RectanglePic(w: Double, h: Double)(implicit val canvas: SCanvas) extends P
   def copy: net.kogics.kojo.core.Picture = new RectanglePic(w, h)
 }
 
-class LinePic(x: Double, y: Double)(implicit val canvas: SCanvas) extends Picture with CorePicOps with CorePicOps2
-  with TNodeCacher with RedrawStopper with PicShapeOps {
+class LinePic(x: Double, y: Double)(implicit val canvas: SCanvas)
+    extends Picture
+    with CorePicOps
+    with CorePicOps2
+    with TNodeCacher
+    with RedrawStopper
+    with PicShapeOps {
   def initGeom(): com.vividsolutions.jts.geom.Geometry = {
     val cab = new ArrayBuffer[Coordinate]
     cab += newCoordinate(0, 0)
@@ -285,7 +332,7 @@ class LinePic(x: Double, y: Double)(implicit val canvas: SCanvas) extends Pictur
   }
 
   def makeTnode: edu.umd.cs.piccolo.PNode = Utils.runInSwingThreadAndPause {
-    val node = PPath.createLine(0, 0, x.toFloat, y.toFloat)
+    val node = KPath.createLine(0, 0, x.toFloat, y.toFloat)
     _setPenColor(node, Color.red)
     _setPenThickness(node, 2 / canvas.camScale)
     node.setPaint(null)
@@ -297,8 +344,13 @@ class LinePic(x: Double, y: Double)(implicit val canvas: SCanvas) extends Pictur
   def copy: net.kogics.kojo.core.Picture = new LinePic(x, y)
 }
 
-class PathPic(pathMaker: => GeneralPath)(implicit val canvas: SCanvas) extends Picture with CorePicOps with CorePicOps2
-  with TNodeCacher with RedrawStopper with PicShapeOps {
+class PathPic(pathMaker: => GeneralPath)(implicit val canvas: SCanvas)
+    extends Picture
+    with CorePicOps
+    with CorePicOps2
+    with TNodeCacher
+    with RedrawStopper
+    with PicShapeOps {
   lazy val path = pathMaker
   def initGeom(): com.vividsolutions.jts.geom.Geometry = {
     val cab = new ArrayBuffer[Coordinate]
@@ -327,7 +379,7 @@ class PathPic(pathMaker: => GeneralPath)(implicit val canvas: SCanvas) extends P
   }
 
   def makeTnode: edu.umd.cs.piccolo.PNode = Utils.runInSwingThreadAndPause {
-    val node = new PPath(path)
+    val node = new KPath(path)
     _setPenColor(node, Color.red)
     _setPenThickness(node, 2 / canvas.camScale)
     node.setPaint(null)
@@ -340,8 +392,13 @@ class PathPic(pathMaker: => GeneralPath)(implicit val canvas: SCanvas) extends P
 }
 
 // a picture that lets you use the full Java2D API for drawing via a Graphics2D
-class Java2DPic(w: Double, h: Double, fn: Graphics2D => Unit)(implicit val canvas: SCanvas) extends Picture with CorePicOps with CorePicOps2
-  with TNodeCacher with RedrawStopper with NonVectorPicOps {
+class Java2DPic(w: Double, h: Double, fn: Graphics2D => Unit)(implicit val canvas: SCanvas)
+    extends Picture
+    with CorePicOps
+    with CorePicOps2
+    with TNodeCacher
+    with RedrawStopper
+    with NonVectorPicOps {
   override def initGeom(): com.vividsolutions.jts.geom.Geometry = {
     val cab = new ArrayBuffer[Coordinate]
     cab += newCoordinate(0, 0)
@@ -353,11 +410,12 @@ class Java2DPic(w: Double, h: Double, fn: Graphics2D => Unit)(implicit val canva
   }
 
   lazy val (imageWithDrawing, imageG2D) = {
-    val graphicsConfiguration = GraphicsEnvironment.getLocalGraphicsEnvironment.getDefaultScreenDevice.getDefaultConfiguration
+    val graphicsConfiguration =
+      GraphicsEnvironment.getLocalGraphicsEnvironment.getDefaultScreenDevice.getDefaultConfiguration
     val buffImg = graphicsConfiguration.createCompatibleImage(w.toInt, h.toInt, Transparency.TRANSLUCENT)
     val gbi = buffImg.createGraphics
     new PPaintContext(gbi).setRenderQuality(PPaintContext.HIGH_QUALITY_RENDERING)
-    // gbi.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE)
+    gbi.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE)
     fn(gbi)
     (buffImg, gbi)
   }
@@ -392,8 +450,13 @@ class Java2DPic(w: Double, h: Double, fn: Graphics2D => Unit)(implicit val canva
   def copy: net.kogics.kojo.core.Picture = new Java2DPic(w, h, fn)
 }
 
-class ImagePic(img: Image, envelope: Option[Picture])(implicit val canvas: SCanvas) extends Picture with CorePicOps with CorePicOps2
-  with TNodeCacher with RedrawStopper with NonVectorPicOps {
+class ImagePic(img: Image, envelope: Option[Picture])(implicit val canvas: SCanvas)
+    extends Picture
+    with CorePicOps
+    with CorePicOps2
+    with TNodeCacher
+    with RedrawStopper
+    with NonVectorPicOps {
 
   def makeTnode: edu.umd.cs.piccolo.PNode = Utils.runInSwingThreadAndPause {
     val inode = new PImage(img) {
@@ -448,17 +511,22 @@ class ImagePic(img: Image, envelope: Option[Picture])(implicit val canvas: SCanv
 }
 
 class FileImagePic(file: String, envelope: Option[Picture])(implicit canvas: SCanvas)
-  extends ImagePic(Utils.loadImage(file), envelope) {
+    extends ImagePic(Utils.loadImage(file), envelope) {
   override def copy: net.kogics.kojo.core.Picture = new FileImagePic(file, envelope)
 }
 
 class UrlImagePic(url: URL, envelope: Option[Picture])(implicit canvas: SCanvas)
-  extends ImagePic(Utils.loadUrlImageC(url), envelope) {
+    extends ImagePic(Utils.loadUrlImageC(url), envelope) {
   override def copy: net.kogics.kojo.core.Picture = new UrlImagePic(url, envelope)
 }
 
-class SwingPic(swingComponent: JComponent)(implicit val canvas: SCanvas) extends Picture with CorePicOps with CorePicOps2
-  with TNodeCacher with RedrawStopper with NonVectorPicOps {
+class SwingPic(swingComponent: JComponent)(implicit val canvas: SCanvas)
+    extends Picture
+    with CorePicOps
+    with CorePicOps2
+    with TNodeCacher
+    with RedrawStopper
+    with NonVectorPicOps {
 
   def pswingHook(ps: PSwing): Unit = {}
 
@@ -480,7 +548,7 @@ class SwingPic(swingComponent: JComponent)(implicit val canvas: SCanvas) extends
     def handleComponent(comp: Component): Unit = {
       comp match {
         case combo: JComboBox[_] => handleCombo(combo.asInstanceOf[JComboBox[AnyRef]])
-        case jp: JPanel          => jp.getComponents foreach { handleComponent }
+        case jp: JPanel          => jp.getComponents.foreach { handleComponent }
         case _                   =>
       }
     }
@@ -520,8 +588,13 @@ class SwingPic(swingComponent: JComponent)(implicit val canvas: SCanvas) extends
   override def toString() = s"SwingPic (Id: ${System.identityHashCode(this)})"
 }
 
-class TextPic(text: String, size: Int, color: Color)(implicit val canvas: SCanvas) extends Picture with CorePicOps with CorePicOps2
-  with TNodeCacher with RedrawStopper with PicShapeOps {
+class TextPic(text: String, size: Int, color: Color)(implicit val canvas: SCanvas)
+    extends Picture
+    with CorePicOps
+    with CorePicOps2
+    with TNodeCacher
+    with RedrawStopper
+    with PicShapeOps {
 
   def initGeom(): Geometry = notSupported("initGeometry", "for text picture")
   val ptext = Utils.textNode(text, 0, 0, canvas.camScale, size)
@@ -546,7 +619,7 @@ class TextPic(text: String, size: Int, color: Color)(implicit val canvas: SCanva
     ptext.setText(t)
   }
 
-  def setPenFont(f: Font) = Utils.runInSwingThread {
+  def setPenFont(f: Font) = Utils.runInSwingThreadAndWait {
     ptext.setFont(f)
   }
 
@@ -559,20 +632,61 @@ class TextPic(text: String, size: Int, color: Color)(implicit val canvas: SCanva
     ptext.setText(newData.toString)
   }
 
-  def copy: net.kogics.kojo.core.Picture = new TextPic(text, size, color)
+  def copy: net.kogics.kojo.core.Picture = {
+    val tp = new TextPic(text, size, color)
+    // currently account for only font and blOrigin mutations
+    tp.setPenFont(ptext.getFont)
+    if (blOrigin) {
+      tp.originBottomLeft()
+    }
+    tp
+  }
+
+  @volatile var blOrigin = false
+  def originBottomLeft(): Unit = Utils.runInSwingThreadAndWait {
+    blOrigin = true
+    val b = ptext.getBounds
+    ptext.translate(0, -b.height)
+    if (isDrawn) {
+      tnode.repaint()
+    }
+  }
+
+  def withBottomLeftOrigin: Picture = {
+    val ret = this.copy.asInstanceOf[TextPic]
+    ret.originBottomLeft()
+    ret
+  }
+
   override def toString() = s"TextPic (Id: ${System.identityHashCode(this)})"
 }
 
-class ClipPic(pic: Picture, clipShape: Shape)(implicit val canvas: SCanvas) extends Picture with CorePicOps with CorePicOps2
-  with TNodeCacher with RedrawStopper with PicShapeOps {
+class KClip extends PClip {
+  override def paintAfterChildren(paintContext: PPaintContext): Unit = {
+    val g2 = paintContext.getGraphics
+    g2.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE)
+    super.paintAfterChildren(paintContext)
+  }
+}
+
+class ClipPic(pic0: Picture, clipShape: Shape)(implicit val canvas: SCanvas)
+    extends Picture
+    with CorePicOps
+    with CorePicOps2
+    with TNodeCacher
+    with RedrawStopper
+    with PicShapeOps {
+
+  val pic = freshPic(pic0)
+
   def initGeom(): com.vividsolutions.jts.geom.Geometry = {
     throw new RuntimeException("Clip pic does not yet support geometry")
   }
 
   def makeTnode: edu.umd.cs.piccolo.PNode = Utils.runInSwingThreadAndPause {
-    val node = new PClip()
+    val node = new KClip()
     node.append(clipShape, false)
-    _setPenColor(node, Color.black)
+    _setPenColor(node, null)
     _setPenThickness(node, 0)
     node.setPaint(null)
     node.addChild(pic.tnode)
@@ -589,3 +703,5 @@ class ClipPic(pic: Picture, clipShape: Shape)(implicit val canvas: SCanvas) exte
   def copy: net.kogics.kojo.core.Picture = new ClipPic(pic.copy, clipShape)
 }
 
+class ClipPicWithPic(pic: Picture, clipPic: Picture)(implicit canvas2: SCanvas)
+    extends ClipPic(pic, toShape(freshPic(clipPic)))

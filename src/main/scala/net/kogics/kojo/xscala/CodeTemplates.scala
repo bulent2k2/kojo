@@ -1,6 +1,11 @@
 package net.kogics.kojo.xscala
 
+import java.util.logging.Level
+import java.util.logging.Logger
+
 object CodeTemplates {
+  lazy val Log = Logger.getLogger("CodeTemplates")
+
   // this template is used twice, so define as val outside the map
   val canvasSketch = """cleari()
 originBottomLeft()
@@ -95,13 +100,43 @@ draw(pic)
     <li></li>
 </ul>
 """,
-    "def (function)" -> """def ${funcName}(${in1}: ${Type1}, ${in2}: ${Type2}) = {
+    "def_function_1" -> """def ${funcName}(${in1}: ${Type1}) = {
     ${cursor}
 }
 """,
-    "def (command)" -> """def ${cmdName}(${in1}: ${Type1}, ${in2}: ${Type2}) {
+    "def_function_2" -> """def ${funcName}(${in1}: ${Type1}, ${in2}: ${Type2}) = {
     ${cursor}
 }
+""",
+    "def_command_0" -> """def ${cmdName}() {
+    ${cursor}
+}
+""",
+    "def_command_1" -> """def ${cmdName}(${in1}: ${Type1}) {
+    ${cursor}
+}
+""",
+    "def_command_2" -> """def ${cmdName}(${in1}: ${Type1}, ${in2}: ${Type2}) {
+    ${cursor}
+}
+""",
+    "for_range_command" ->  """for (${idx} <- ${start} to ${end}) {
+    ${cursor}
+}
+""",
+    "for_seq_command" ->  """for (${e} <- ${seq}) {
+    ${cursor}
+}
+""",
+    "for_seq_expr" ->  """val result = for {
+    ${e} <- ${seq}
+} yield ${expr}${cursor}
+""",
+    "for_seq_expr_multi" ->  """val result = for {
+    ${e} <- ${seq}
+    ${e2} <- ${seq2}
+    if (${condition})
+} yield ${expr}${cursor}
 """,
     "canvasSketch" -> canvasSketch,
     "sketchpic" -> canvasSketch,
@@ -176,12 +211,22 @@ draw(pic)
     ${cursor}
     2 shouldBe 2
 }
-"""
-  )
+""",
+    "include" -> "// #include ${filename}${cursor}\n",
+    "exec" -> "// #exec${cursor}\n",
+    "execTemplate" -> "// #exec template ${filename}${cursor}\n",
+    "execPicGaming" -> "// #exec template /picgaming${cursor}\n",
+  ) ++ net.kogics.kojo.lite.i18n.tr.templates.codeTemplates // empty map unless in Turkish locale
 
   def apply(name: String) = templates(name)
   def asString(name: String) = 
     xml.Utility.escape(templates(name).replace("${cursor}", "|").replace("$", "")).replace("\n", "<br/>")
   def beforeCursor(name: String) = templates(name).split("""\$\{cursor\}""")(0)
-  def afterCursor(name: String) = templates(name).split("""\$\{cursor\}""")(1)
+  def afterCursor(name: String) = {
+    val parts = templates(name).split("""\$\{cursor\}""")
+    if (parts.size > 1) parts(1) else {
+      Log.log(Level.WARNING, s"Problem with template $name", new Exception("No cursor or no char after cursor"))
+      s"BAD_TEMPLATE for $name."
+    }
+  }
 }

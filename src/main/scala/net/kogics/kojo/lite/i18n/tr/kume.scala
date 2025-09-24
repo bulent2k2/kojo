@@ -66,7 +66,7 @@ trait SetMethodsInTurkish {
     def say(işlev: T => İkil): Sayı = d.count(işlev)
 
     def dilim(nereden: Sayı, nereye: Sayı) = d.slice(nereden, nereye)
-    def ikile[S](öbürü: scala.collection.IterableOnce[S]) = d.zip(öbürü)
+    def ikile[S](öbürü: YinelenebilirBirKere[S]) = d.zip(öbürü)
     def ikileSırayla = d.zipWithIndex
     def ikileKonumla = d.zipWithIndex
     def öbekle[A](iş: (T) => A): Eşlek[A, Col] = d.groupBy(iş)
@@ -79,6 +79,12 @@ trait SetMethodsInTurkish {
     def altKümeleri(ögeSayısı: Sayı): Yineleyici[Col] = d.subsets(ögeSayısı)
     def boş: Col = d.empty
     def böl(deneme: T => İkil): (Col, Col) = d.partition(deneme)
+
+    def kesişim(öbürü: Küme[T]): Küme[T] = d.intersect(öbürü)
+    def bileşim(öbürü: Küme[T]): Küme[T] = d.union(öbürü)
+
+    // Partitions elements in fixed size sets.
+    def öbekli(boy: Sayı): Yineleyici[Col] = d.grouped(boy)
 
     // more to come
   }

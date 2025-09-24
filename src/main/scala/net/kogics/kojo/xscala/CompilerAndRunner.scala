@@ -79,7 +79,7 @@ class CompilerAndRunner(
   def prefix = "%s%s\n".format(prefix0, initCode.getOrElse(""))
 
   var includedLines: Int = 0
-  def prefixLines = prefix.linesIterator.size + includedLines
+  def prefixIncludedLines = prefix.linesIterator.size + includedLines
 
   val codeTemplate = """%s
 %s
@@ -157,13 +157,13 @@ class CompilerAndRunner(
   }
 
   val runReporter = new KojoReporter {
-    def lineMod = prefixLines + 1 // we added an extra line after the prefix in the code template.
-    def offsetMod = offsetDelta + 1 // we added an extra newline char after the prefix
+    def lineMod = prefixIncludedLines + 1
+    def offsetMod = offsetDelta + 1
   }
 
   val execReporter = new KojoReporter {
-    def lineMod = 0
-    def offsetMod = 0
+    def lineMod = includedLines
+    def offsetMod = offsetDelta
   }
 
   val compiler = classLoader.asContext {
@@ -189,7 +189,7 @@ class CompilerAndRunner(
         compiler.reporter = runReporter
         prevMode = Run
       }
-      if (prevMode == Run && currMode == Exec) {
+      else if (prevMode == Run && currMode == Exec) {
         debugPrintln("Changing to compiler exec settings/reporter")
         compiler.currentSettings = execSettings
         compiler.reporter = execReporter
@@ -232,10 +232,11 @@ class CompilerAndRunner(
 
   def codeForExecing(code0: String): Option[String] = {
     try {
-      val (code, inclLines, includedChars) = Utils.preProcessInclude(code0)
-      includedLines = inclLines
-      offsetDelta = includedChars
-      Some(code)
+      val (code1, inclLines1, includedChars1) = Utils.preProcessInclude(code0)
+      val (code2, inclLines2, includedChars2) = Utils.preProcessExec(code1)
+      includedLines = inclLines1 + inclLines2
+      offsetDelta = includedChars1 + includedChars2
+      Some(code2)
     }
     catch {
       case t: Throwable =>
@@ -326,12 +327,17 @@ class CompilerAndRunner(
   def deleteOldExecClassfiles(): Unit = {
     // this is on the context classloader for the compiler. Need to re-look at that
     virtualDirectory.clear()
-
-    execClassDir.listFiles().foreach { f =>
-      val deleted = f.delete()
-      if (!deleted) {
-        println(s"Unable to delete old classfile - ${f.getName}")
+    val oldFiles = execClassDir.listFiles()
+    if (oldFiles != null) {
+      oldFiles.foreach { f =>
+        val deleted = f.delete()
+        if (!deleted) {
+          println(s"Unable to delete earlier classfile - ${f.getName}")
+        }
       }
+    }
+    else {
+      println(s"Unable to delete earlier class files in - ${execClassDir.getName}")
     }
   }
 

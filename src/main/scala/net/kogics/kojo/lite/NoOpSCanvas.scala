@@ -82,6 +82,7 @@ class NoOpSCanvas extends SCanvas {
   private[kojo] def restoreDefTurtle(): Unit = {}
   def resetPanAndZoom(): Unit = {}
   def disablePanAndZoom(): Unit = {}
+  def frameDeltaTime: Double = -1
 }
 
 

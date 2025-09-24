@@ -7,7 +7,7 @@
 
 silVeSakla()
 
-// uzayın rengi.. ADA (HSL): arı-renk/ton (hue), (doygunluk/parlaklık) saturation, (aydınlık) lightness
+// uzayın rengi.. ADA (HSL): arı-renk/ton (hue), doygunluk/parlaklık (saturation), aydınlık (lightness)
 çizSahne(Renk.ada(240, 0.20, 0.16))
 
 dez ta = tuvalAlanı
@@ -42,7 +42,7 @@ sınıf İnişModülü {
 
     tanım adım() {
         // yukarı tuşuna basılı mı?
-        eğer (tuşaBasılıMı(tuşlar.VK_UP)) {
+        eğer (tuşaBasılıMı(tuşlar.yukarı)) {
             itişVar()
         } yoksa {
             itişYok()

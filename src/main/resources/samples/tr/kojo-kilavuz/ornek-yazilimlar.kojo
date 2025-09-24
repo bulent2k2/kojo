@@ -12,9 +12,9 @@ ileri; sağ"""
 
 dez kod20 = """sil
 durakla(0.5)
-giysileriKur(Costume.car,
-  Costume.bat1,
-  Costume.bat2)
+giysileriKur(Görünüş.araba,
+  Görünüş.yarasa1,
+  Görünüş.yarasa2)
 durakla(0.5)
 birsonrakiGiysi()
 durakla(0.5)
@@ -49,30 +49,44 @@ yineleDizinli(renkDizisi.boyu) { i =>
   eğer(i % 4 == 0)
      konumuKur(100 * i / 4, 0)
 }"""
-dez kod30c = """// Henüz Türkçeleştiremediğimiz
-// pek çok renk daha var.
+dez kod30c = """// Türkçe'ye çevirdiğimiz renklerin
+// hepsini Renkler altında topladık:
+yineleİçin(Dizin(
+    Renkler.açıkAltınbaşakSarısı,
+    Renkler.koyuDenizYeşili,
+    Renkler.gökMavisi,
+    Renkler.haki)
+) { renk =>
+    boyamaRenginiKur(renk)
+    kare(100); ileri(100)
+}
+konumuKur(500, 0)
+// Henüz Türkçeleştiremediğimiz
+// renkler de var.
 // İşte birkaç örnek:
 yineleİçin(Dizin(
-  renkler.aliceBlue,
-  renkler.hotpink,
-  renkler.darkTurquoise,
-  renkler.yellowGreen)
+    renkler.aliceBlue,
+    renkler.hotpink,
+    renkler.darkTurquoise,
+    renkler.yellowGreen)
 ) { renk =>
     boyamaRenginiKur(renk)
     kare(100); ileri(100)
 }
 /* Diğer renkeri görmek istersen
-aşağıda boş bir satıra 'renkler.'
+aşağıda boş bir satıra 'Renkler.'
 yazdıktan sonra Kontrol tuşunu basılı
 tutup büyük boşluk tuşuna basıver.
-Adı d harfiyle başlayan renkleri
-bulmak istersen renkler.d yazıp
+Adı a harfiyle başlayan renkleri
+bulmak istersen Renkler.a yazıp
 Kontrol-Boşluk tuşuna bas */
 // Aşağıdaki iki satırı kullanabilirsin
 // Ama önce baştaki çift taksimi sil!
-//  renkler.d
-//  renkler
-"""
+//   Renkler.
+//   Renkler.a
+// İngilizce renkler de şurada:
+//   renkler.
+//   renkler.a"""
 
 dez kod40 = """sil
 canlandırmaHızınıKur(100)
@@ -96,16 +110,16 @@ dez süre = yuvarla(
 satıryaz(s"Çizim $süre saniye sürdü")
 """
 
-dez giysileriKur_Örnek = """giysileriKur(Costume.bat1,
-  Costume.bat2
+dez giysileriKur_Örnek = """giysileriKur(Görünüş.yarasa1,
+  Görünüş.yarasa2
 )"""
 
 dez kod50 = """silVeSakla
 kalemRenginiKur(renksiz)
 göster
 giysileriKur(
-  Costume.bat1,
-  Costume.bat2)
+  Görünüş.yarasa1,
+  Görünüş.yarasa2)
 yinele(20) {
     durakla(0.1)
     atla(konum.x + 10,
@@ -135,19 +149,25 @@ satıryaz("Kaplumbağa bütün yazıyüzlerini" ++
     " yazabilmek için\nkuzeye" ++
     s" doğru epey yol aldı: y=${konum.y}")"""
 
-dez kod60b = """// buna birkaç kere tıklayarak
-// tuvalde yukarı gidebilirsin:
-tuvaliKaydır(0, 400)
-// 311'inci yazıyüzünü bulmak
-// için 19 kere tıkladım:
-satıryaz(yazıyüzleri(311))"""
+dez kod60b = """// buna her tıklayışında
+// tuval bir sayfa yukarı kayar
+tuvaliKaydır(0, tuvalAlanı.boyu)
+"""
 
 dez kod60c = """//bu da aşağı dönmek için:
-tuvaliKaydır(0, -400)"""
+tuvaliKaydır(0, -tuvalAlanı.boyu)"""
+
+dez kod60d = """dez yy = yazıyüzleri(127)
+satıryaz(s"Sistemde ${yazıyüzleri.boyu} tane yazı yüzü var. Birinin adı: $yy.")
+satıryaz("Onunla tuvale birşeyler yazalım:")
+silVeSakla
+kalemRenginiKur(mor)
+yazıYüzünüKur(yazıyüzü(yy,18))
+yazı("Yazma denemesi yapalım...")"""
 
 dez kod70 = """silVeSakla
 eksenleriGöster
-gridiGöster
+ızgarayıGöster
 zıpla(4)
 yazı("1234")
 sol; zıpla(50); sağ
@@ -158,7 +178,7 @@ yaklaş(4.0, 0, 0)"""
 
 dez kod80 = """sil
 dez yk2 = yeniKaplumbağa(0, 100)
-yk2.giysiKur(Costume.car)
+yk2.giysiKur(Görünüş.araba)
 yk2.geri(180)
 // iki kat hızlandıralım:
 yk2.canlandırmaHızınıKur(500)
@@ -188,9 +208,9 @@ ileri
 """
 
 dez kod120 = """yinele(3) {
-    gizle
+    gizle()
     ileri(100)
-    göster
+    göster()
     dön(120)
     ileri(100)
 }"""

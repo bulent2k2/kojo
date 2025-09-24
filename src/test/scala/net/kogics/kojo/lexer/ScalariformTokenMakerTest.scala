@@ -44,6 +44,34 @@ class ScalariformTokenMakerTest extends FunSuite with Matchers {
     lexer.tokensForLine(segment, 0) should be(expectedTokens)
   }
 
+  /* todo: Bulent to fix this. It fails.
+  test("test single line val in Turkish") {
+    import net.kogics.kojo.lite.i18n.TurkishAPI._
+    val test1 = net.kogics.kojo.lite.i18n.tr.isTurkishKeyword("dez")
+    testTrKeywords = true
+    val test2 = net.kogics.kojo.lite.i18n.tr.isTurkishKeyword("dez")
+    println(s"isTurkishKeyword(dez): test1: $test1 test2: $test2")
+    val code = "dez x = 10"
+    lexer.lexDoc(code)
+
+    val codeChars = new Array[Char](code.length)
+    code.getChars(0, code.length - 1, codeChars, 0)
+    val segment = new Segment(codeChars, 0, code.length)
+
+    val expectedTokens = List(
+      Token(VAL, "dez", 0, "dez"),
+      Token(WS, " ", 3, " "),
+      Token(VARID, "x", 4, "x"),
+      Token(WS, " ", 5, " "),
+      Token(EQUALS, "=", 6, "="),
+      Token(WS, " ", 7, " "),
+      Token(INTEGER_LITERAL, "10", 8, "10")
+    )
+
+    lexer.tokensForLine(segment, 0) should be(expectedTokens)
+  }
+   */
+
   test("test two line vals - line 2") {
     val line1 = "val x = 10"
     val line2 = "val y = 20"

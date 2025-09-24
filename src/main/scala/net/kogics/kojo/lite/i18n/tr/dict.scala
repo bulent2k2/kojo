@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 June
+ * Copyright (C) 2024
  *   Bulent Basaran <ben@scala.org> https://github.com/bulent2k2
  *   Lalit Pant <pant.lalit@gmail.com>
  *
@@ -14,13 +14,42 @@
  * rights and limitations under the License.
  *
  */
+/*
+Koco version tag for timestamping purposes:
+  val KojoRevision = "r2-tr-1"
+  val KojoBuildDate = "28 Haziran 2025"
+Ref Kojo version: ../../Versions.scala
+  I do not check in to Version.scala.
+  Makes it hard to sync by fork with Lalit's base.
+*/
 package net.kogics.kojo.lite.i18n.tr
 
 object dict {
+  // Ekşi sözlükten: application programming interface.. yani ne diyor "uygulama programlama arabirimi". demek ki uygulama programlamak icin saglanan arabirimlere grup olarak api deniyormuş
   val miscCreativeMapping = Map(
+    "group" -> "öbek", // groupBy öbekle, grouped öbekli
+    "hash" -> "kıyma", // hashCode kıymaKodu HashMap KıymaEşlek HashSet KıymaKüme
+    "refresh" -> "ekran tazeleme", // refresh rate, E.T. hızı. ETH
+    "frame" -> "çizim",
+    "nil" -> "boş",
+    "double quotes" -> "çift tırnak işareti",
+    "brace" -> "kıvrık parantez",
+    "trace" -> "izlem",
+    "buffered" -> "bellekte bellekli", //  Bellekteİmge BellekliYineleyici
+    "bootstrap" -> "önyükleme",
+    "regular expression" -> "düzenli deyiş", // regex
+    "companion" -> "eşlik", // HerDeğerinEşliği AnyValCompanion
+    "companion object" -> "eş nesne",
+    "prompt" -> "istem",
+    "api" -> "upa",
     "hesap" -> "ölçüm",
     "cebir" -> "ölçülüm",
     "polynomial" -> "çok terimli",
+    "iterate" -> "yinele",  // todo not repeat -- üzerinden geçmek
+    "iteration" -> "yineleme",
+    "iterator" -> "yineleyici",
+    "iterable" -> "yinelenebilir",
+    "iterableonce" -> "yinelenebilirBirKere",
     "recurse" -> "özyinele",
     "recursive" -> "özyineli",
     "recursion" -> "özyineleme",
@@ -28,15 +57,40 @@ object dict {
     "runtime" -> "çalışmasırası",
     "compile" -> "derleme",
     "compiler" -> "derleyici",
+    "point" -> "göster", // işaret et
+    "pointer" -> "gösterge", // işaretçi
+    "reference" -> "gönderge",
+    "operation" -> "işlem",
+    "unary" -> "biril", // todo: unary_!
+    "binary" -> "ikil",
+    "ternary" -> "üçül",
+    "operand" -> "işlenen",
+    "transition" -> "geçiş",
+    "composable" -> "birleşebilen", // RotC: DönBD: DöndürBirlşblnDönüştrc
+    "transform" -> "dönüştürmek",
+    "transformation" -> "dönüşüm",
+    "transformer" -> "dönüştürücü",
+    "breakpoint" -> "duruşnoktası",
+    "URL" -> "BKK",
+    "uniform" -> "birörnek",
+    "resource" -> "kaynak",
+    "locator" -> "konumlayıcı",
+    "wrap" -> "sar sargı",
+    "Wrapper" -> "Sarıcı",
+    "UserCode" -> "KullanıcınınYazılımı",
+    "thread" -> "iş parçacığı", // thread dispatching: iş parçacığı işlemci zamanlaması!
+    "script" -> "betik", // veya yazılımcık
+    "generic" -> "genel",
   )
 
   // skala kılavuzunda kullanma sırasıyla (yaklaşık olarak)
   // excludes scala (2 and 3) and java keywords which are in the next map
   val otherCommonWords = Map(
+    "cursor" -> "imleç",
     "programlama" -> "yazılım",
     "kelime" -> "sözcük", // ttodo!
     "method" -> "yöntem", // ttodo! metod yerine yöntem sözcüğünü kullan!
-    "set" -> "kur",
+    "set" -> "kur veya küme",
     "to" -> "|-| anlamı: ilkSayıdanSonSayıyaKadar", // 1 to 4 -> Aralık.kapalı(1, 4)
     "until" -> "|- anlamı: ilkSayıdanSonSayıyaKadarAmaSonSayıHariç", // 1 until 4 -> Aralık(1, 4)
     "by" -> "adım", // 1 to 100 by 8
@@ -96,6 +150,7 @@ object dict {
     "dropRight" -> "düşürSağdan",
     "dropWhile" -> "düşürDoğruKaldıkça",
     "init" -> "önü",
+    "initialize" -> "başlat, ilklendir, en baştan başlat",
     "last" -> "sonu",
     "forall" -> "hepsiİçinDoğruMu", // hepsiDoğruMu
     "slice" -> "dilim",
@@ -258,7 +313,8 @@ object dict {
     "implements" -> "tanımlar",
     "instanceof" -> "bireyi",
     "int" -> "sayı",
-    "interface" -> "arayüz",
+    "interface" -> "arabirim, arayüz",
+    "UI" -> "arayüz",
     "long" -> "uzun",
     "public" -> "açık",
     "native" -> "yerli",
@@ -291,12 +347,108 @@ object dict {
     "scala" -> "#tr skala",
     "tutorial" -> "kılavuz",
     "cheat-sheet" -> "kılavuzcuk",
+    "tuple" -> "sıralama",
+    "PSınırlar" -> "PBounds",
+    "BenzerDönüşüm" -> "AffineTransform",
   )
 
-  val type2en = Map()
-  val def2en = Map ()
-  val val2en = Map ()
-  val method2en = Map (
+  // todo: complete
+  val type2en = Map(
+    "Nesne" -> "Object",
+    "Birim," -> "Unit",
+    "Her," -> "Any",
+    "HerDeğer," -> "AnyVal",
+    "HerGönder," -> "AnyRef",
+    "Hiç" -> "Nothing",
+    "Yok" -> "Null",
+    "İkil" -> "Boolean",
+    "Seçim" -> "Boolean",
+    "Lokma" -> "Byte",
+    "Kısa" -> "Short",
+    "Sayı" -> "Int",
+    "Uzun" -> "Long",
+    "İriSayı" -> "BigInt",
+    "Kesir" -> "Double",
+    "UfakKesir" -> "Float",
+    "İriKesir" -> "BigDecimal",
+    "Harf" -> "Char",
+    "Yazı" -> "String",
+    "EsnekYazı" -> "StringBuilder",
+    "Belki" -> "Option",
+    "Biri" -> "Some",
+    "Hiçbiri" -> "None",
+    "Aralık" -> "Range",
+    "Diz" -> "collection.Seq",
+    "Dizi" -> "Seq",
+    "Dizik" -> "Array",
+    "Dizim" -> "Array",
+    "EsnekDizim" -> "ArrayBuffer", // older impl
+    "EsnekDizik" -> "ArrayBuffer",
+    "Dizin" -> "List",
+    "SıralıDizi" -> "IndexedSeq",
+    "Eşlek" -> "collection.immutable.Map",
+    "Eşlem" -> "collection.mutable.Map",
+    "Küme" -> "Set",
+    "MiskinDizin" -> "LazyList",
+    "Kuyruk" -> "Queue",
+    "ÖncelikSırası" -> "PriorityQueue",
+    "Yığın" -> "Stack",
+    "Yöney" -> "Vector",
+    "Yineleyici" -> "Iterator",
+    "Yinelenebilir" -> "Iterable",
+    "YinelenebilirBirKere" -> "IterableOnce",
+    "Yapıcıdan" -> "collection.BuildFrom",
+    "Gelecek" -> "Future",
+    "JGelecek" -> "java.util.concurrent.Future",
+    "PEtkinlik" -> "edu.umd.cs.piccolo.activities.PActivity",
+    "İşletimBağlamı" -> "ExecutionContext",
+    "Sayılar" -> "Vector[Int]",
+    "Boya" -> "Paint",
+    "Renk" -> "Color",
+    "Yazıyüzü" -> "Font",
+    "Hız" -> "Speed",
+    "Nokta" -> "Point",
+    "Dikdörtgen" -> "Rectangle",
+    "Üçgen" -> "Triangle2D",
+    "Yöney2B" -> "Vector2D",
+    "Resim" -> "Picture",
+    "BuAn" -> "Now",
+    "Takvim" -> "Calendar",
+    "Tarih" -> "Date",
+    "SaatDilimi" -> "TimeZone",
+    "Bölümselİşlev" -> "PartialFunction",
+    "İşlev1" -> "Function1",
+    "İşlev2" -> "Function2",
+    "İşlev3" -> "Function3",
+    "Sıralama" -> "Tuple",
+    "KuralDışı" -> "Exception",
+    "ÇalışmaSırasıKuralDışı" -> "RuntimeException",
+    "BaskınYazıyaYöntemiyle" -> "Only in Turkish. With 'override def toString'",
+    "Eşsizlik" -> "Only in Turkish. With unique hashCode",
+    "UzunlukBirimi" -> "UnitLen",
+    "Biçim" -> "Shape",
+    "GeoYol" -> "GeneralPath",
+    "GeoNokta" -> "VertexShape",
+    "Grafik2B" -> "Graphics2D",
+    "İmge" -> "Image",
+    "İmgeİşlemi" -> "ImageOp",
+    "Bellekteİmge" -> "BufferedImage",
+    "Bellekteİmgeİşlemi" -> "BufferedImageOp",
+    "ÇiniDünyası" -> "tiles",
+    "ÇiniXY" -> "TileXY",
+    "BirSayfaKostüm" -> "SpriteSheet", // Giysi, Görünüş, Kostüm
+    "Mp3Çalar" -> "KMP3",
+    "Canlandırma" -> "Animation",
+    "BKK" -> "URL",
+    "ay" -> "UI",
+    "tuvalAlanı" -> "canvasBounds",
+    "DRenk" -> "kojo.doodle.Color",
+    "BenzerDönüşüm" -> "java.awt.geom.AffineTransform",
+    "PSınırlar" -> "edu.umd.cs.piccolo.util.PBounds"
+  )
+  val def2en = Map()
+  val val2en = Map()
+  val method2en = Map(
     "Yöney.boş" -> "Vector.empty",
     "Küme.boş" -> "Set.empty",
     "Dizi.doldur" -> "Seq.tabulate",

@@ -12,7 +12,7 @@
 // buradaDur sözcüğünü çift tıklayarak seçip ondan sonra Kontrol-f yaparsan
 // bulmak daha da kolaylaşır. Deneyiver şimdi. Aşağıda yeni bir göz açıldı mı?
 // Benim bilgisayarımda Komut-. yaptığımda "Bul ve Yer değiştir" gözü kapanıyor.
-// Senin bilgisayarında komut tuşu den mı? Yoksa Alt ya da Windows tuşlarını dene.
+// Senin bilgisayarında komut tuşu var mı? Yoksa Alt ya da Windows tuşlarını dene.
 sil()
 
 dez yavaşlatma = 4 // 0 bir anda çizer. 100 epey yavaşlatır

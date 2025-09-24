@@ -131,11 +131,10 @@ class Builtins(
     BreakpointPane.onRunDone()
   }
 
-  def breakpoint(msg: Any): Unit = {
-    val pauseMessage = "Program paused at Breakpoint"
-    val resumeMsg = "Hit Enter to resume"
-    BreakpointPane.show(msg, pauseMessage, resumeMsg, kojoCtx)
-  }
+  def breakpoint(msg: Any,
+    pauseMessage: String = "Program paused at Breakpoint",
+    resumeMsg: String = "Hit Enter to resume, Escape to stop"
+  ): Unit = { BreakpointPane.show(msg, pauseMessage, resumeMsg, kojoCtx) }
 
   def readInt(prompt: String): Int = readln(prompt).toInt
   UserCommand(
@@ -242,9 +241,9 @@ class Builtins(
     "Adds an input field with the supplied label and default value to the Story Teller Window."
   )
 
-  implicit val StringRead = util.Read.StringRead
-  implicit val DoubleRead = util.Read.DoubleRead
-  implicit val IntRead = util.Read.IntRead
+  implicit val StringRead: util.Read.StringRead.type = util.Read.StringRead
+  implicit val DoubleRead: util.Read.DoubleRead.type = util.Read.DoubleRead
+  implicit val IntRead: util.Read.IntRead.type = util.Read.IntRead
   import util.Read
 
   def stFieldValue[T](label: String, default: T)(implicit reader: Read[T]): T = {
@@ -529,7 +528,7 @@ Here's a partial list of the available commands:
   def withFillColor(pic: Picture, color: Color) = pic.withFillColor(color)
   def withPenColor(pic: Picture, color: Color) = pic.withPenColor(color)
 
-  implicit val _picCanvas = tCanvas
+  implicit val _picCanvas: net.kogics.kojo.core.SCanvas = tCanvas
   def pict(painter: Painter) = picture.Pic(painter)
   def PictureT(painter: Painter) = picture.Pic(painter)
   def Picture(fn: => Unit) = picture.Pic0 { t =>
@@ -731,8 +730,9 @@ Here's a partial list of the available commands:
   val PicShape = Picture
   implicit def p2rp(path: GeneralPath): Rich2DPath = new Rich2DPath(path)
   object Picture {
-    def text(content: Any, fontSize: Int = 15) = picture.text(content, fontSize, red)
+    def text(content: Any, fontSize: Int = 15, color: Color = red) = picture.text(content, fontSize, color)
     def text(content: Any, font: Font) = picture.text(content, font, red)
+    def text(content: Any, font: Font, color: Color) = picture.text(content, font, color)
     def textu(content: Any, fontSize: Int = 15, color: Color = red) = picture.text(content, fontSize, color)
     def textu(content: Any, font: Font, color: Color) = picture.text(content, font, color)
     def rect(h: Double, w: Double) = picture.rect2(w, h)
@@ -740,7 +740,7 @@ Here's a partial list of the available commands:
     // def rectangle(x: Double, y: Double, w: Double, h: Double) = picture.offset(x, y) -> picture.rect2(w, h)
     def vline(length: Double) = picture.vline(length)
     def hline(length: Double) = picture.hline(length)
-    def line(width: Double, height: Double) = picture.line(width, height)
+    def line(x: Double, y: Double) = picture.line(x, y)
     // def line(x1: Double, y1: Double, x2: Double, y2: Double) = picture.offset(x1, y1) -> picture.line(x2 - x1, y2 - y1)
     def fromPath(fn: GeneralPath => Unit) = picture.fromPath {
       val path = new GeneralPath(); fn(path)
@@ -777,6 +777,19 @@ Here's a partial list of the available commands:
     // def ellipse(x: Double, y: Double, rx: Double, ry: Double) = picture.offset(x, y) -> picture.ellipse(rx, ry)
     def arc(radius: Double, angle: Double) = picture.arc(radius, angle)
     def point = picture.trans(0, -0.01 / 2) -> line(0, 0.01)
+    private def picFromVertexArray(envelope: collection.Seq[Double]): Picture = {
+      val e2 = envelope.grouped(2)
+      val start = e2.next()
+      val boundary = Picture.fromPath { p =>
+        p.moveTo(start(0), start(1))
+        while (e2.hasNext) {
+          val pt = e2.next()
+          p.lineTo(pt(0), pt(1))
+        }
+      }
+      drawAndHide(boundary)
+      boundary
+    }
     def image(fileName: String): Picture = {
       if (fileName.startsWith("http")) {
         image(url(fileName))
@@ -793,10 +806,20 @@ Here's a partial list of the available commands:
         picture.image(fileName, Some(envelope))
       }
     }
+    def image(fileName: String, envelope: collection.Seq[Double]): Picture = {
+      if (fileName.startsWith("http")) {
+        image(url(fileName), envelope)
+      }
+      else {
+        picture.image(fileName, Some(picFromVertexArray(envelope)))
+      }
+    }
     def image(url: URL) = picture.image(url, None)
     def image(url: URL, envelope: Picture) = picture.image(url, Some(envelope))
+    def image(url: URL, envelope: collection.Seq[Double]) = picture.image(url, Some(picFromVertexArray(envelope)))
     def image(image: Image) = picture.image(image, None)
     def image(image: Image, envelope: Picture) = picture.image(image, Some(envelope))
+    def image(image: Image, envelope: collection.Seq[Double]) = picture.image(image, Some(picFromVertexArray(envelope)))
     def widget(component: JComponent) = picture.widget(component)
     def button(label: String)(fn: => Unit) = widget(Button(label)(fn))
     def effectablePic(pic: Picture) = picture.effectablePic(pic)
@@ -950,13 +973,14 @@ Here's a partial list of the available commands:
   def showFps(color: Color = black, fontSize: Int = 15): Unit = {
     val cb = canvasBounds
     @volatile var frameCnt = 0
-    val fpsLabel = Picture.textu("Fps: ", fontSize, color)
+    val fpsText = Utils.loadString("S_FramesPerSecond") ++ ":"
+    val fpsLabel = Picture.textu(fpsText, fontSize, color)
     fpsLabel.setPosition(cb.x + 10, cb.y + cb.height - 10)
     draw(fpsLabel)
     fpsLabel.forwardInputTo(TSCanvas.stageArea)
 
     TSCanvas.timer(1000) {
-      fpsLabel.update(s"Fps: $frameCnt")
+      fpsLabel.update(s"$fpsText $frameCnt")
       frameCnt = 0
     }
     fpsLabel.react { self =>
@@ -1100,7 +1124,7 @@ Here's a partial list of the available commands:
   def rangeTo(start: Double, end: Double, step: Double) = Range.BigDecimal.inclusive(start, end, step)
   def rangeTill(start: Double, end: Double, step: Double) = Range.BigDecimal(start, end, step)
 
-  implicit def bd2double(bd: BigDecimal) = bd.doubleValue
+  implicit def bd2double(bd: BigDecimal): Double = bd.doubleValue
 
   type CanvasDraw = net.kogics.kojo.lite.CanvasDraw
   import scala.language.reflectiveCalls
@@ -1179,6 +1203,7 @@ Here's a partial list of the available commands:
   def getEditorText: String = kojoCtx.getEditorText
   def clearOutputError(): Unit = kojoCtx.clearOutputError()
   def insertOutputError(text: String): Unit = kojoCtx.insertOutputError(text)
+  def resolvedPath(fname: String): String = net.kogics.kojo.util.Utils.absolutePath(fname)
 
   def animateWithRedraw[S](initState: S, nextState: S => S, stateView: S => Picture): Unit = {
     import edu.umd.cs.piccolo.activities.PActivity
@@ -1189,8 +1214,8 @@ Here's a partial list of the available commands:
       case (state, pic) =>
         val newState = nextState(state)
         val pic2 = stateView(state)
-        pic.erase()
         pic2.draw()
+        pic.erase()
         if (newState == state) {
           tCanvas.stopAnimationActivity(anim)
         }
@@ -1225,8 +1250,14 @@ Here's a partial list of the available commands:
   lazy val CollisionDetector = new fpgaming.CollisionDetector()
   @volatile private var currGame: Option[fpgaming.Game[_, _]] = None
 
-  def runGame[S, M](init: S, update: (S, M) => S, view: S => Picture, subscriptions: S => Seq[Sub[M]]): Unit = {
-    currGame = Some(new fpgaming.Game(init, update, view, subscriptions))
+  def runGame[S, M](
+      init: S,
+      update: (S, M) => S,
+      view: S => Picture,
+      subscriptions: S => Seq[Sub[M]],
+      refreshRate: Long = 20
+  ): Unit = {
+    currGame = Some(new fpgaming.Game(init, update, view, subscriptions, refreshRate))
   }
 
   def runCommandQuery[M](cmdQ: CmdQ[M]): Unit = currGame.get.asInstanceOf[fpgaming.Game[_, M]].runCommandQuery(cmdQ)
