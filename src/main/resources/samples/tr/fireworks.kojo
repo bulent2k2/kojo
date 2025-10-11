@@ -127,5 +127,5 @@ canlandır {
 // Esin kaynağı:
 //   https://github.com/CodingTrain/Coding-Challenges/tree/main/027_FireWorks/Processing/CC_027_FireWorks_2D
 
-// Ayrıntılı detay için:
+// Ayrıntılı bilgiler:
 //   https://github.com/litan/kojo-examples/tree/main/fireworks

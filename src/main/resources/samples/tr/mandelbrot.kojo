@@ -36,8 +36,8 @@
 
 /* çizim çok yavaşsa, örneğin beş on saniyeden çok sürüyorsa
  * buradaki değişmez değerleri küçültmeyi dene */
-dez kenar = 400 // kümemizin resmi k x k büyüklüğünde bir kare
-dez yinelemeSınırı = 2000 // bu da resmin çözünürlüğünü artırıyor
+dez kenar = 500 // kümemizin resmi k x k büyüklüğünde bir kare
+dez yinelemeSınırı = 3000 // bu da resmin çözünürlüğünü artırıyor
 //tümEkran()
 
 /*
