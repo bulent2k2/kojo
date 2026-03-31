@@ -112,14 +112,14 @@ trait StubMain {
     }
 
     def noScaling =
-      "-Dsun.java2d.uiScale.enabled=false"
+      "-Dsun.java2d.uiScale=1.0"
 
     val javaVersionSpecificArgs = {
       if (Utils.isJava8) {
         s"$maybeMarlin $cmsGC".trim
       }
       else {
-        s"$reflectiveAccess $noScaling"
+        s"$reflectiveAccess"
       }
     }
 
@@ -153,10 +153,26 @@ trait StubMain {
       }
     }
 
+    val jvmDevOpts = Utils.appProperty("jvm.dev.opts") match {
+      case Some(opts) => opts.concat(" ")
+      case None =>
+        var ret = ""
+        if (Utils.isWin) {
+          import com.formdev.flatlaf.util.UIScale
+          val gc = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment.getDefaultScreenDevice.getDefaultConfiguration
+          val systemScaleFactor = UIScale.getSystemScaleFactor(gc)
+          if (systemScaleFactor > 1.0 && systemScaleFactor < 1.7) {
+            ret = s"-Dsun.java2d.uiScale=1 -Dflatlaf.uiScale=$systemScaleFactor "
+          }
+        }
+        ret
+    }
+
     val cmdArgs = s"-client -Xms128m -Xmx$maxMem " +
       "-Xss1m " +
       s"$javaVersionSpecificArgs " +
       extraArgs +
+      jvmDevOpts +
       s"net.kogics.kojo.lite.Main ${kojoArgs.mkString(" ")}"
 
     val command =

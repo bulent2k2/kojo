@@ -1,11 +1,7 @@
 package net.kogics.kojo.lite
 
-import java.awt.BorderLayout
-import java.awt.Dimension
-import java.awt.Event
-import java.awt.Font
-import java.awt.Point
-import java.awt.Toolkit
+import com.formdev.flatlaf.util.UIScale
+
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
 import java.awt.event.FocusAdapter
@@ -16,7 +12,19 @@ import java.awt.event.KeyEvent
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
 import java.awt.event.MouseWheelEvent
-
+import java.awt.BorderLayout
+import java.awt.Dimension
+import java.awt.Event
+import java.awt.Font
+import java.awt.Point
+import java.awt.Toolkit
+import javax.swing.event.CaretEvent
+import javax.swing.event.CaretListener
+import javax.swing.event.DocumentEvent
+import javax.swing.event.DocumentListener
+import javax.swing.event.PopupMenuEvent
+import javax.swing.event.PopupMenuListener
+import javax.swing.text.Utilities
 import javax.swing.AbstractAction
 import javax.swing.Action
 import javax.swing.JButton
@@ -29,13 +37,6 @@ import javax.swing.JPanel
 import javax.swing.JPopupMenu
 import javax.swing.JToolBar
 import javax.swing.KeyStroke
-import javax.swing.event.CaretEvent
-import javax.swing.event.CaretListener
-import javax.swing.event.DocumentEvent
-import javax.swing.event.DocumentListener
-import javax.swing.event.PopupMenuEvent
-import javax.swing.event.PopupMenuListener
-import javax.swing.text.Utilities
 
 import org.fife.rsta.ui.CollapsibleSectionPanel
 import org.fife.rsta.ui.search.ReplaceToolBar
@@ -95,6 +96,11 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
   codePanes.foreach(_.setCodeFoldingEnabled(true))
 
   codePanes.foreach(Theme.currentTheme.loadEditorTheme.apply(_))
+  codePanes.foreach { cp =>
+    val oldf = cp.getFont
+    val f = oldf.deriveFont(getFont.getSize.toFloat)
+    cp.setFont(f)
+  }
 
   val inputMap = codePane.getInputMap
   val inputMap2 = codePane2.getInputMap
@@ -113,7 +119,7 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
     }
   }
   Utils.safeProcessSilent {
-    for (i <- 1 to 3 + kojoCtx.screenDpiFontDelta) { increaseFontSizeAction.actionPerformed(null) }
+    for (i <- 1 to 2) { increaseFontSizeAction.actionPerformed(null) }
   }
 
   RSyntaxTextArea.setTemplatesEnabled(true)
@@ -663,7 +669,7 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
       button.setActionCommand(actionCommand)
       button.setToolTipText(toolTipText)
       button.addActionListener(actionListener)
-      button.setIcon(Utils.loadIcon(imageFile))
+      Utils.setupScaledButtonIcon(button, imageFile)
       // button.setMnemonic(KeyEvent.VK_ENTER)
       button.setBorderPainted(false)
       button
@@ -678,7 +684,9 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
       case n if n < 6 => 24
       case _          => 36
     }
-    toolbar.setPreferredSize(new Dimension(0, imageFolder + imageFolder / 6))
+    val scale = UIScale.getUserScaleFactor
+    val tsz = ((imageFolder + imageFolder / 6) * scale).toInt
+    toolbar.setPreferredSize(new Dimension(0, tsz))
 
     import Theme.currentTheme.checkPng
     import Theme.currentTheme.clearOwPng

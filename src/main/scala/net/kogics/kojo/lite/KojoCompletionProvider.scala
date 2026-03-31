@@ -28,9 +28,31 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
   setListCellRenderer(new CompletionCellRenderer) // needed for icons to show up
   setAutoActivationRules(false, null)
 
-  def rtsaTemplate(t: String) = {
-    val res = if (t.contains("${")) t else "%s${cursor}" format (t)
-    res
+  def rstaTemplate(t: String): String = {
+    if (t == null) return null
+
+    val sb = new StringBuilder(t.length)
+    var sawInterpolation = false
+
+    var i = 0
+    while (i < t.length) {
+      val ch = t.charAt(i)
+      if (ch == '$') {
+        val nextIsBrace = (i + 1 < t.length) && t.charAt(i + 1) == '{'
+        if (nextIsBrace) {
+          sawInterpolation = true
+          sb.append('$')      // keep '$' as-is for "${...}"
+        } else {
+          sb.append("$$")     // escape plain '$'
+        }
+      } else {
+        sb.append(ch)
+      }
+      i += 1
+    }
+
+    val escaped = sb.toString
+    if (sawInterpolation) escaped else escaped + "${cursor}"
   }
 
   def proposal(offset: Int, completion: String, kind: Int, template: String) = {
@@ -39,7 +61,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
       this,
       completion2,
       completion2,
-      rtsaTemplate(if (template == null) completion2 else template),
+      rstaTemplate(if (template == null) completion else template),
       null,
       Help(completion)
     ) {
@@ -139,7 +161,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     def help =
       knownHelp.getOrElse(display) // completion.fullCompletion
 
-    new TemplateCompletion(this, display, display, rtsaTemplate(template), null, help) {
+    new TemplateCompletion(this, display, display, rstaTemplate(template), null, help) {
       setRelevance(-completion.prio)
       override def getIcon = kindIcon(kind)
     }

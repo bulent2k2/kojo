@@ -15,15 +15,15 @@
 package net.kogics.kojo
 package util
 
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
+import java.awt.event.KeyEvent
+import java.awt.image.BufferedImage
 import java.awt.Color
 import java.awt.EventQueue
 import java.awt.Font
 import java.awt.Image
 import java.awt.Toolkit
-import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
-import java.awt.event.KeyEvent
-import java.awt.image.BufferedImage
 import java.io.BufferedInputStream
 import java.io.BufferedReader
 import java.io.File
@@ -36,37 +36,38 @@ import java.io.PrintWriter
 import java.io.StringWriter
 import java.net.InetAddress
 import java.net.URL
+import java.util.concurrent.locks.Lock
+import java.util.concurrent.locks.ReentrantLock
+import java.util.concurrent.ConcurrentHashMap
+import java.util.concurrent.CountDownLatch
+import java.util.concurrent.TimeUnit
+import java.util.logging.Level
+import java.util.logging.Logger
 import java.util.LinkedList
 import java.util.Locale
 import java.util.Properties
 import java.util.ResourceBundle
-import java.util.concurrent.ConcurrentHashMap
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.locks.Lock
-import java.util.concurrent.locks.ReentrantLock
-import java.util.logging.Level
-import java.util.logging.Logger
-
 import javax.imageio.ImageIO
+import javax.swing.text.JTextComponent
 import javax.swing.ImageIcon
+import javax.swing.JButton
 import javax.swing.JComponent
 import javax.swing.JDialog
 import javax.swing.KeyStroke
 import javax.swing.Timer
-import javax.swing.text.JTextComponent
+import javax.swing.UIManager
 
 import scala.collection.mutable
 import scala.collection.mutable.HashMap
 
+import akka.actor.ActorSystem
+import com.formdev.flatlaf.util.ScaledImageIcon
+import edu.umd.cs.piccolo.event.PInputEvent
 import net.kogics.kojo.core.CodingMode
-import net.kogics.kojo.core.VanillaMode
 import net.kogics.kojo.core.KojoCtx
 import net.kogics.kojo.core.TwMode
+import net.kogics.kojo.core.VanillaMode
 import net.kogics.kojo.util.RichFile.enrichFile
-
-import akka.actor.ActorSystem
-import edu.umd.cs.piccolo.event.PInputEvent
 
 object Utils {
   lazy val Log = Logger.getLogger("Utils")
@@ -128,6 +129,28 @@ object Utils {
 
   def loadIconC(fname: String): ImageIcon = {
     iconCache.getOrElseUpdate(fname, loadIcon(fname))
+  }
+
+  def setupScaledButtonIcon(button: JButton, imagePath: String): Unit = {
+    // 1. Base icon (your old non-scaled one)
+    val baseIcon = loadIcon(imagePath)
+
+    // 2. Scaled icon for normal state
+    val scaledIcon = new ScaledImageIcon(baseIcon)
+    button.setIcon(scaledIcon)
+
+    // 3. Ask LAF to create a disabled version *from the base ImageIcon*
+    val disabled = UIManager.getLookAndFeel.getDisabledIcon(button, baseIcon)
+
+    // 4. If we got one, wrap it too
+    if (disabled != null) {
+      val disabledScaled =
+        disabled match {
+          case img: ImageIcon => new ScaledImageIcon(img)
+          case other          => other // fallback – in case LAF returns a non-ImageIcon
+        }
+      button.setDisabledIcon(disabledScaled)
+    }
   }
 
   def loadResource(res: String): String = {

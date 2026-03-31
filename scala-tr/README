@@ -1,3 +1,8 @@
+* Merging Lalit's changes for 2.13.18 to installer/jarlist.txt:
+  Add in ../dist
+    ln -s scala-reflect.jar scala-reflect-2.13.18.jar
+    ln -s scala-library.jar scala-library-2.13.18.jar
+    ln -s scala-compiler.jar scala-compiler-2.13.18.jar
 * Upgrade to 2.13.15:
 Got <.gz> from: https://github.com/scala/scala/releases/tag/v2.13.15
 
