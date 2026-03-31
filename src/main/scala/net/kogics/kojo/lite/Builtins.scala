@@ -32,6 +32,7 @@ import scala.language.implicitConversions
 import com.jhlabs.image.AbstractBufferedImageOp
 import com.jhlabs.image.LightFilter.Light
 import net.kogics.kojo.core.Rich2DPath
+import net.kogics.kojo.core.SCanvas
 import net.kogics.kojo.core.VertexShape
 import net.kogics.kojo.core.Voice
 import net.kogics.kojo.kmath.KEasing
@@ -241,10 +242,10 @@ class Builtins(
     "Adds an input field with the supplied label and default value to the Story Teller Window."
   )
 
-  implicit val StringRead: util.Read.StringRead.type = util.Read.StringRead
-  implicit val DoubleRead: util.Read.DoubleRead.type = util.Read.DoubleRead
-  implicit val IntRead: util.Read.IntRead.type = util.Read.IntRead
   import util.Read
+  implicit val StringRead: Read.StringRead.type = Read.StringRead
+  implicit val DoubleRead: Read.DoubleRead.type = Read.DoubleRead
+  implicit val IntRead: Read.IntRead.type = Read.IntRead
 
   def stFieldValue[T](label: String, default: T)(implicit reader: Read[T]): T = {
     storyTeller.fieldValue(label, default)
@@ -528,7 +529,7 @@ Here's a partial list of the available commands:
   def withFillColor(pic: Picture, color: Color) = pic.withFillColor(color)
   def withPenColor(pic: Picture, color: Color) = pic.withPenColor(color)
 
-  implicit val _picCanvas: net.kogics.kojo.core.SCanvas = tCanvas
+  implicit val _picCanvas: SCanvas = tCanvas
   def pict(painter: Painter) = picture.Pic(painter)
   def PictureT(painter: Painter) = picture.Pic(painter)
   def Picture(fn: => Unit) = picture.Pic0 { t =>
@@ -1207,6 +1208,7 @@ Here's a partial list of the available commands:
 
   def animateWithRedraw[S](initState: S, nextState: S => S, stateView: S => Picture): Unit = {
     import edu.umd.cs.piccolo.activities.PActivity
+
     import java.util.concurrent.Future
     val initPic = stateView(initState)
     initPic.draw()
