@@ -48,16 +48,16 @@ package object tr {
   // some type aliases in Turkish -- Ctrl-t to return type info will also be in turkish
   type Nesne = Object
   type Birim = Unit
-  type Her = Any
-  type HerDeğer = AnyVal
-  type HerGönder = AnyRef // Gönderge, gönderme todo...
-  type Yok = Null
-  type Hiç = Nothing
+  type Her   = Any
+  type HerDeğer  = AnyVal
+  type HerGönder = AnyRef  // Gönderge, gönderme todo...
+  type Yok   = Null
+  type Hiç   = Nothing
 
   type Boya = Paint
   type Renk = Color
 
-  type Hız = Speed
+  type Hız  = Speed
   type Nokta = Point
   type Dikdörtgen = Rectangle
   type Üçgen = Triangle2D
@@ -68,10 +68,10 @@ package object tr {
   // no type for Bit. But if there were, how about Parçacık?
 
   // duplicated from sayi.scala as they are used in other traits
-  type Lokma = Byte
-  type Kısa = Short
-  type Sayı = Int
-  type Uzun = Long
+  type Lokma   = Byte
+  type Kısa    = Short
+  type Sayı    = Int
+  type Uzun    = Long
   type İriSayı = BigInt
   type UfakKesir = Float
   type Kesir = Double
@@ -118,9 +118,9 @@ package object tr {
     def sesMp3üÇal(mp3dosyası: Yazı) = p.playMp3Sound(mp3dosyası)
     def çal(mp3dosyası: Yazı) = p.playMp3(mp3dosyası)
     def durdur() = p.stopMp3()
-
+    
     def önyükle(mp3dosyası: Yazı) = p.preloadMp3(mp3dosyası)
-
+    
     def döngülüÇal(mp3dosyası: Yazı) = p.playMp3Loop(mp3dosyası)
     def döngüyüDurdur() = p.stopMp3Loop()
   }

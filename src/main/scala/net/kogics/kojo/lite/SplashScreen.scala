@@ -7,7 +7,6 @@ import java.awt.Font
 import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.JWindow
-
 import net.kogics.kojo.util.Utils
 
 class SplashScreen extends JWindow {

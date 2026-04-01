@@ -25,15 +25,14 @@ import scala.collection.mutable.ListBuffer
 import net.kogics.kojo.core.HistoryItem
 import net.kogics.kojo.core.HistorySaver
 
-// code to simplify jdbc queries from:
+// code to simplify jdbc queries from: 
 // http://zcox.wordpress.com/2009/08/17/simple-jdbc-queries-in-scala/
 object Control {
   import language.reflectiveCalls
   def using[Closeable <: { def close(): Unit }, B](closeable: Closeable)(getB: Closeable => B): B =
     try {
       getB(closeable)
-    }
-    finally {
+    } finally {
       closeable.close()
     }
 
@@ -47,7 +46,7 @@ object Control {
 
   /** Executes the SQL and processes the result set using the specified function. */
   def query[B](connection: Connection, sql: String)(process: ResultSet => B): B =
-    //    using (connection) { connection =>
+    //    using (connection) { connection => 
     using(connection.createStatement) { statement =>
       using(statement.executeQuery(sql)) { results =>
         process(results)
@@ -71,8 +70,7 @@ class DBHistorySaver extends HistorySaver {
   conn.setAutoCommit(true)
   createTableIfNeeded()
 
-  val saveStatement =
-    conn.prepareStatement("INSERT INTO HISTORY(SCRIPT, FILE, STARRED, TAGS, AT) VALUES(?, ?, ?, ?, ?)")
+  val saveStatement = conn.prepareStatement("INSERT INTO HISTORY(SCRIPT, FILE, STARRED, TAGS, AT) VALUES(?, ?, ?, ?, ?)")
   val idCall = conn.prepareCall("{? = CALL IDENTITY()}")
   idCall.registerOutParameter(1, Types.BIGINT);
   val updateStars = conn.prepareStatement("UPDATE HISTORY SET STARRED = ? WHERE ID = ?")
@@ -104,30 +102,13 @@ class DBHistorySaver extends HistorySaver {
 
   def readAll = {
     queryEach(conn, "SELECT * FROM HISTORY ORDER BY AT DESC LIMIT 1000") { rs =>
-      HistoryItem(
-        rs.getString("SCRIPT"),
-        rs.getString("FILE"),
-        rs.getLong("ID"),
-        rs.getBoolean("STARRED"),
-        rs.getString("TAGS"),
-        rs.getTimestamp("AT")
-      )
+      HistoryItem(rs.getString("SCRIPT"), rs.getString("FILE"), rs.getLong("ID"), rs.getBoolean("STARRED"), rs.getString("TAGS"), rs.getTimestamp("AT"))
     }
   }
 
   def readSome(filter: String) = {
-    queryEach(
-      conn,
-      s"SELECT * FROM HISTORY WHERE SCRIPT LIKE '%$filter%' OR FILE LIKE '%$filter%' OR TAGS LIKE '%$filter%' ORDER BY AT DESC LIMIT 1000"
-    ) { rs =>
-      HistoryItem(
-        rs.getString("SCRIPT"),
-        rs.getString("FILE"),
-        rs.getLong("ID"),
-        rs.getBoolean("STARRED"),
-        rs.getString("TAGS"),
-        rs.getTimestamp("AT")
-      )
+    queryEach(conn, s"SELECT * FROM HISTORY WHERE SCRIPT LIKE '%$filter%' OR FILE LIKE '%$filter%' OR TAGS LIKE '%$filter%' ORDER BY AT DESC LIMIT 1000") { rs =>
+      HistoryItem(rs.getString("SCRIPT"), rs.getString("FILE"), rs.getLong("ID"), rs.getBoolean("STARRED"), rs.getString("TAGS"), rs.getTimestamp("AT"))
     }
   }
 
@@ -145,17 +126,18 @@ class DBHistorySaver extends HistorySaver {
     h.id = idCall.getLong(1)
     h
   }
-
+  
   def updateStar(hi: HistoryItem): Unit = {
     updateStars.setBoolean(1, hi.starred)
     updateStars.setLong(2, hi.id)
     updateStars.executeUpdate()
   }
-
+  
   def updateTags(hi: HistoryItem): Unit = {
     updateTags.setString(1, hi.tags)
     updateTags.setLong(2, hi.id)
     updateTags.executeUpdate()
   }
-
+  
 }
+

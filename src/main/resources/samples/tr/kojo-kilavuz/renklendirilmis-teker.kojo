@@ -1,7 +1,7 @@
 // üçgenden tekerlek olur mu?
 sil
 canlandırmaHızınıKur(2) // çokHızlı'dan iki kat daha hızlı
-// daha önce kullandığımız hızıKur(hız) komutuna benziyor, 
+// daha önce kullandığımız hızıKur(hız) komutuna benziyor,
 // ama daha hassas ayar yapmamıza yarıyor. Girdisi adım atma süresini belirliyor
 // onun için de bu iki komut ters çalışıyor:
 // hız tarifi ve karşılık gelen adım atma süreleri yaklaşık olarak şöyle:

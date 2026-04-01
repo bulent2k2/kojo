@@ -50,15 +50,18 @@ import java.util.ResourceBundle
 import javax.imageio.ImageIO
 import javax.swing.text.JTextComponent
 import javax.swing.ImageIcon
+import javax.swing.JButton
 import javax.swing.JComponent
 import javax.swing.JDialog
 import javax.swing.KeyStroke
 import javax.swing.Timer
+import javax.swing.UIManager
 
 import scala.collection.mutable
 import scala.collection.mutable.HashMap
 
 import akka.actor.ActorSystem
+import com.formdev.flatlaf.util.ScaledImageIcon
 import edu.umd.cs.piccolo.event.PInputEvent
 import net.kogics.kojo.core.CodingMode
 import net.kogics.kojo.core.KojoCtx
@@ -128,21 +131,41 @@ object Utils {
     iconCache.getOrElseUpdate(fname, loadIcon(fname))
   }
 
+  def setupScaledButtonIcon(button: JButton, imagePath: String): Unit = {
+    // 1. Base icon (your old non-scaled one)
+    val baseIcon = loadIcon(imagePath)
+
+    // 2. Scaled icon for normal state
+    val scaledIcon = new ScaledImageIcon(baseIcon)
+    button.setIcon(scaledIcon)
+
+    // 3. Ask LAF to create a disabled version *from the base ImageIcon*
+    val disabled = UIManager.getLookAndFeel.getDisabledIcon(button, baseIcon)
+
+    // 4. If we got one, wrap it too
+    if (disabled != null) {
+      val disabledScaled =
+        disabled match {
+          case img: ImageIcon => new ScaledImageIcon(img)
+          case other          => other // fallback – in case LAF returns a non-ImageIcon
+        }
+      button.setDisabledIcon(disabledScaled)
+    }
+  }
+
   def loadResource(res: String): String = {
     readStream(getClass.getResourceAsStream(res))
   }
 
-  /** Returns the content of the given file in the local variant selected by Locale.getDefault(). At first tries to find
-    * a resource of the given file name in the subdirectory LL of the given root directory, if the current default
-    * Locale has language LL selected. If this resource is not found, then tries to find the given file directly in the
-    * named root directory.
-    * @param root
-    *   directory path inside the classpath. Should begin and end in '/', as "/samples".
-    * @param file
-    *   file name with extension in the given root directory, as "tree0.kojo".
-    * @throws IllegalArgumentException
-    *   the named file is found neither in the local variant for the default Locale, nor in the base variant.
-    */
+  /**
+   * Returns the content of the given file in the local variant selected by Locale.getDefault().
+   * At first tries to find a resource of the given file name in the subdirectory LL of the given root directory,
+   * if the current default Locale has language LL selected.
+   * If this resource is not found, then tries to find the given file directly in the named root directory.
+   * @param root   directory path inside the classpath. Should begin and end in '/', as "/samples".
+   * @param file   file name with extension in the given root directory, as "tree0.kojo".
+   * @throws IllegalArgumentException  the named file is found neither in the local variant for the default Locale, nor in the base variant.
+   */
   def loadLocalizedResource(root: String, file: String): String = {
     val locale = Locale.getDefault
     val langCode = locale.getLanguage
@@ -218,16 +241,9 @@ object Utils {
   def inSwingThread = EventQueue.isDispatchThread
 
   def runAsync(fn: => Unit): Unit = {
-    import scala.util.control.NonFatal
     new Thread(new Runnable {
       def run: Unit = {
-        try {
-          fn
-        }
-        catch {
-          case NonFatal(e) =>
-            Log.log(Level.WARNING, "Problem on async runner thread", e)
-        }
+        fn
       }
     }).start
   }
@@ -386,8 +402,7 @@ object Utils {
     }
   }
 
-  def runInSwingThreadAndPause[T](fn: => T): T =
-    runInSwingThreadAndWait(GuiTimeout, "Potential Deadlock. Bailing out!")(fn)
+  def runInSwingThreadAndPause[T](fn: => T): T = runInSwingThreadAndWait(GuiTimeout, "Potential Deadlock. Bailing out!")(fn)
 
   def runInSwingThreadAndWait[T](timeout: Long, msg: String)(fn: => T): T = {
     if (inSwingThread) {
@@ -419,46 +434,37 @@ object Utils {
   }
 
   def schedule(secs: Double)(f: => Unit): Timer = {
-    lazy val t: Timer = new Timer(
-      (secs * 1000).toInt,
-      new ActionListener {
-        def actionPerformed(e: ActionEvent): Unit = {
-          t.stop
-          f
-        }
+    lazy val t: Timer = new Timer((secs * 1000).toInt, new ActionListener {
+      def actionPerformed(e: ActionEvent): Unit = {
+        t.stop
+        f
       }
-    )
+    })
     t.start
     t
   }
 
   def scheduleRec(secs: Double)(f: => Unit): Timer = {
-    val t: Timer = new Timer(
-      (secs * 1000).toInt,
-      new ActionListener {
-        def actionPerformed(e: ActionEvent): Unit = {
-          f
-        }
+    val t: Timer = new Timer((secs * 1000).toInt, new ActionListener {
+      def actionPerformed(e: ActionEvent): Unit = {
+        f
       }
-    )
+    })
     t.start
     t
   }
 
   def scheduleRecN(n: Int, secs: Double)(f: => Unit): Timer = {
     @volatile var count = 0
-    lazy val t: Timer = new Timer(
-      (secs * 1000).toInt,
-      new ActionListener {
-        def actionPerformed(e: ActionEvent): Unit = {
-          count += 1
-          if (count == n) {
-            t.stop()
-          }
-          f
+    lazy val t: Timer = new Timer((secs * 1000).toInt, new ActionListener {
+      def actionPerformed(e: ActionEvent): Unit = {
+        count += 1
+        if (count == n) {
+          t.stop()
         }
+        f
       }
-    )
+    })
     t.start
     t
   }
@@ -552,20 +558,19 @@ object Utils {
     if (keyWithStrings) s"[$key]" else ""
   }
 
-  /** Returns the localized String for the given key.
-    * @throws NullPointerException
-    *   if <code>key</code> is <code>null</code>
-    * @throws MissingResourceException
-    *   if no object for the given key can be found
-    */
+  /**
+   * Returns the localized String for the given key.
+   * @throws NullPointerException if <code>key</code> is <code>null</code>
+   * @throws MissingResourceException if no object for the given key can be found
+   */
   def loadString(key: String) = {
-    messages.getString(key).concat(stringSuffix(key))
+    messages.getString(key) concat stringSuffix(key)
   }
   def loadString(klass: Class[_], key: String) = {
-    messages.getString(key).concat(stringSuffix(key))
+    messages.getString(key) concat stringSuffix(key)
   }
   def loadString(klass: Class[_], key: String, args: AnyRef*) = {
-    messages.getString(key).format(args: _*).concat(stringSuffix(key))
+    (messages.getString(key) format (args: _*)) concat stringSuffix(key)
   }
 
   // Loads the actual string in the bundle without the debug key suffix
@@ -576,14 +581,11 @@ object Utils {
   def filesInDir(dir: String, ext: String): List[String] = {
     val osDir = new File(dir)
     if (osDir.exists && osDir.isDirectory) {
-      osDir
-        .list(new FilenameFilter {
-          override def accept(dir: File, name: String) = {
-            name.endsWith("." + ext)
-          }
-        })
-        .toList
-        .sorted
+      osDir.list(new FilenameFilter {
+        override def accept(dir: File, name: String) = {
+          name.endsWith("." + ext)
+        }
+      }).toList.sorted
     }
     else {
       Nil
@@ -593,13 +595,11 @@ object Utils {
   def numFilesInDir(dir: String, ext: String): Int = {
     val osDir = new File(dir)
     if (osDir.exists && osDir.isDirectory) {
-      osDir
-        .list(new FilenameFilter {
-          override def accept(dir: File, name: String) = {
-            name.endsWith("." + ext)
-          }
-        })
-        .length
+      osDir.list(new FilenameFilter {
+        override def accept(dir: File, name: String) = {
+          name.endsWith("." + ext)
+        }
+      }).length
     }
     else {
       0
@@ -609,15 +609,11 @@ object Utils {
   def dirsInDir(dir: String): List[String] = {
     val osDir = new File(dir)
     if (osDir.exists && osDir.isDirectory) {
-      osDir
-        .list(new FilenameFilter {
-          override def accept(dir: File, name: String) = {
-            dir.isDirectory
-          }
-        })
-        .sorted
-        .map { subDir => dir + File.separatorChar + subDir }
-        .toList
+      osDir.list(new FilenameFilter {
+        override def accept(dir: File, name: String) = {
+          dir.isDirectory
+        }
+      }).sorted.map { subDir => dir + File.separatorChar + subDir }.toList
     }
     else {
       Nil
@@ -634,7 +630,7 @@ object Utils {
 
   lazy val extensionsDir = userDir + File.separatorChar + ".kojo/extension"
 
-  /** Locates where the log directory should be, creates it if necessary, and returns its File object. */
+  /**Locates where the log directory should be, creates it if necessary, and returns its File object.*/
   def locateLogDir(): File = {
     val logDir = new File(s"$userDir/.kojo/lite/log/")
     if (!logDir.exists()) {
@@ -661,19 +657,16 @@ object Utils {
   def initkCode(mode: CodingMode): Option[String] =
     initCodeCache.getOrElseUpdate(
       mode,
-      (codeFromScripts(modeFilter(initScripts, mode), initScriptDir) |+| langInit(mode)).map(stripCR)
+      (codeFromScripts(modeFilter(initScripts, mode), initScriptDir) |+| langInit(mode)) map stripCR
     )
 
   def codeFromScripts(scripts: List[String], scriptDir: String): Option[String] = scripts match {
     case Nil => None
-    case files =>
-      Some(
-        files
-          .map { file =>
-            "// File: %s\n%s\n".format(file, readStream(new FileInputStream(scriptDir + File.separatorChar + file)))
-          }
-          .mkString("\n")
-      )
+    case files => Some(
+      files.map { file =>
+        "// File: %s\n%s\n".format(file, readStream(new FileInputStream(scriptDir + File.separatorChar + file)))
+      }.mkString("\n")
+    )
   }
 
   def initCode(mode: CodingMode): Option[String] = {
@@ -695,14 +688,7 @@ object Utils {
     tnode
   }
 
-  def textNode(
-      text: String,
-      x: Double,
-      y: Double,
-      camScale: Double,
-      fontSize: Int,
-      fontName0: Option[String] = None
-  ): PText = {
+  def textNode(text: String, x: Double, y: Double, camScale: Double, fontSize: Int, fontName0: Option[String] = None): PText = {
     val tnode = textNode(text, x, y, camScale)
     val fontName = fontName0 match {
       case Some(name) => name
@@ -804,7 +790,7 @@ object Utils {
   def stripDots(s: String): String = s.filterNot { _ == '.' }
 
   lazy val (needsSanitizing, decimalSep) = {
-    val tester = "%.1f".format(0.0)
+    val tester = "%.1f" format (0.0)
     (tester != "0.0", tester(1).toString)
   }
 
@@ -862,7 +848,7 @@ object Utils {
             included.add(fileName)
             val fileContent = readFileContent(fileName, fileNameDotKojo)
             val codeToInclude = s"// #begin-include: $fileName\n$fileContent\n// #end-include: $fileName\n"
-            val (result, _, _) = _preProcessInclude(codeToInclude) // non-tail-recursive call
+            val (result, _, _) = _preProcessInclude(codeToInclude) //non-tail-recursive call
             result
           }
         }
@@ -1033,17 +1019,15 @@ object Utils {
 
   def closeOnEsc(dlg: JDialog): Unit = {
     dlg.getRootPane.registerKeyboardAction(
-      _ => dlg.setVisible(false),
-      KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+      _ => dlg.setVisible(false), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
       JComponent.WHEN_IN_FOCUSED_WINDOW
     )
   }
 
   lazy val javaMajorVersion = {
     val version = System.getProperty("java.specification.version").split('.')
-    val major =
-      if (version(0) == "1") version(1) // 1.8 is 8
-      else version(0) // later versions are 9, 10, etc
+    val major = if (version(0) == "1") version(1) // 1.8 is 8
+    else version(0) // later versions are 9, 10, etc
     major.toInt
   }
 

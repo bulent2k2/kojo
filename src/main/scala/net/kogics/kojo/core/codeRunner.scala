@@ -31,12 +31,7 @@ trait CodeRunner {
   def compileExecCode(code: String): Unit
   def varCompletions(prefix: Option[String]): (List[String], Int)
   def keywordCompletions(prefix: Option[String]): (List[String], Int)
-  def memberCompletions(
-      code: String,
-      caretOffset: Int,
-      objid: String,
-      prefix: Option[String]
-  ): (List[CompletionInfo], Int)
+  def memberCompletions(code: String, caretOffset: Int, objid: String, prefix: Option[String]): (List[CompletionInfo], Int)
   def typeAt(code: String, caretOffset: Int): String
   def activateTw(): Unit
   def activateVn(): Unit
@@ -49,6 +44,7 @@ object Interpreter {
   type Settings = scala.tools.nsc.Settings
   val IR = Results
 }
+
 
 trait Interpreter {
   import Interpreter._

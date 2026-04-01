@@ -219,7 +219,7 @@ draw(pic)
   ) ++ net.kogics.kojo.lite.i18n.tr.templates.codeTemplates // empty map unless in Turkish locale
 
   def apply(name: String) = templates(name)
-  def asString(name: String) =
+  def asString(name: String) = 
     xml.Utility.escape(templates(name).replace("${cursor}", "|").replace("$", "")).replace("\n", "<br/>")
   def beforeCursor(name: String) = templates(name).split("""\$\{cursor\}""")(0)
   def afterCursor(name: String) = {

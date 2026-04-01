@@ -380,7 +380,7 @@ object Resim {
   def yatay(boy: Kesir) = new Resim(richBuiltins.Picture.hline(boy))
   def dikey(boy: Kesir) = new Resim(richBuiltins.Picture.vline(boy))
   def dikdörtgen(en: Kesir, boy: Kesir) = new Resim(richBuiltins.Picture.rect(boy, en)) // they are swapped!
-  // ../../../Picture/package.scala
+                                                                                        // ../../../Picture/package.scala
   def satır(r: => Resim, kaçTane: Sayı) = new Resim(picture.row(r.p, kaçTane))
   def sütun(r: => Resim, kaçTane: Sayı) = new Resim(picture.col(r.p, kaçTane))
   def yazı(içerik: Her, yazıBoyu: Sayı = 15) = new Resim(richBuiltins.Picture.text(içerik, yazıBoyu))

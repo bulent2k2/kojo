@@ -16,15 +16,19 @@
 package net.kogics.kojo
 package staging
 
-import net.kogics.kojo.kmath.{ Kmath => Math }
-import net.kogics.kojo.staging.Impl.API
+import kmath.{Kmath => Math}
+
+import javax.swing._
+
+import core._
+import Impl.API
 
 object ColorMaker {
-  def apply(mode: GRAY) = new GrayColorMaker(mode)
+  def apply(mode: GRAY)  = new GrayColorMaker(mode)
   def apply(mode: GRAYA) = new GrayAlphaColorMaker(mode)
-  def apply(mode: RGB) = new RgbColorMaker(mode)
-  def apply(mode: RGBA) = new RgbAlphaColorMaker(mode)
-  def apply(mode: HSB) = new HsbColorMaker(mode)
+  def apply(mode: RGB)   = new RgbColorMaker(mode)
+  def apply(mode: RGBA)  = new RgbAlphaColorMaker(mode)
+  def apply(mode: HSB)   = new HsbColorMaker(mode)
 
   def color(s: String) = s match {
     case ColorName(cc) => cc
@@ -100,7 +104,7 @@ class HsbColorMaker(mode: HSB) extends ColorMaker {
   }
 }
 
-class RichColor(val c: java.awt.Color) {
+class RichColor (val c: java.awt.Color) {
   type Color = java.awt.Color
   def alpha = c.getAlpha
   def red = c.getRed

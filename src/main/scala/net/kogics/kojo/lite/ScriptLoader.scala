@@ -5,7 +5,7 @@ import net.kogics.kojo.util.Utils
 trait ScriptLoader { self: Main.type =>
   def _loadUrl(url: String)(postfn: => Unit = {}): Unit = {
     Theme.currentTheme.loadDefaultPerspective(kojoCtx)
-    codePane.setText("// Loading code from URL: %s ...\n".format(url))
+    codePane.setText("// Loading code from URL: %s ...\n" format (url))
     Utils.runAsyncMonitored {
       try {
         val code = Utils.readUrl(url)
@@ -16,7 +16,7 @@ trait ScriptLoader { self: Main.type =>
         }
       }
       catch {
-        case t: Throwable => codePane.append("// Problem loading code: %s".format(t.getMessage))
+        case t: Throwable => codePane.append("// Problem loading code: %s" format (t.getMessage))
       }
     }
   }
@@ -24,14 +24,8 @@ trait ScriptLoader { self: Main.type =>
   def loadUrl(url: String) = _loadUrl(url) {}
 
   def loadAndRunUrl(url: String, onStartup: Boolean = false) = _loadUrl(url) {
-    if (
-      !url.startsWith("http://www.kogics.net/public/kojolite/samples/") && codePane.getText.toLowerCase.contains("file")
-    ) {
-      codePane.insert(
-        "// Loaded code from URL: %s\n// ** Not running it automatically ** because it references files.\n// Look carefully at the code before running it.\n\n"
-          .format(url),
-        0
-      )
+    if (!url.startsWith("http://www.kogics.net/public/kojolite/samples/") && codePane.getText.toLowerCase.contains("file")) {
+      codePane.insert("// Loaded code from URL: %s\n// ** Not running it automatically ** because it references files.\n// Look carefully at the code before running it.\n\n" format (url), 0)
       codePane.setCaretPosition(0)
     }
     else {
@@ -42,7 +36,7 @@ trait ScriptLoader { self: Main.type =>
     }
   }
 
-  @deprecated("Replaced by loadAndRunLocalizedResource(root,file)", since = "2016-04-03")
+  @deprecated("Replaced by loadAndRunLocalizedResource(root,file)", since="2016-04-03")
   def loadAndRunResource(res: String) = {
     try {
       codePane.setText("")
@@ -52,12 +46,12 @@ trait ScriptLoader { self: Main.type =>
       execSupport.compileRunCode()
     }
     catch {
-      case t: Throwable => codePane.append("// Problem loading/running code: %s".format(t.getMessage))
+      case t: Throwable => codePane.append("// Problem loading/running code: %s" format (t.getMessage))
     }
     scriptEditorHolder.activate()
   }
-
-  // @since 2016-04-03
+  
+  //@since 2016-04-03
   def loadAndRunLocalizedResource(root: String, file: String) = {
     try {
       codePane.setText("")
@@ -68,7 +62,7 @@ trait ScriptLoader { self: Main.type =>
     }
     catch {
       case ex: IllegalArgumentException => codePane.append(s"// Problem loading code from ${ex.getMessage}")
-      case t: Throwable                 => codePane.append("// Problem loading/running code: %s".format(t.getMessage))
+      case t: Throwable => codePane.append("// Problem loading/running code: %s" format (t.getMessage))
     }
     scriptEditorHolder.activate()
   }
@@ -80,7 +74,7 @@ trait ScriptLoader { self: Main.type =>
       execSupport.compileRunCode(code)
     }
     catch {
-      case t: Throwable => println("// Problem loading/running code: %s".format(t.getMessage))
+      case t: Throwable => println("// Problem loading/running code: %s" format (t.getMessage))
     }
     scriptEditorHolder.activate()
   }
@@ -94,7 +88,7 @@ trait ScriptLoader { self: Main.type =>
       execSupport.compileRunCode()
     }
     catch {
-      case t: Throwable => codePane.append("// Problem loading/running code: %s".format(t.getMessage))
+      case t: Throwable => codePane.append("// Problem loading/running code: %s" format (t.getMessage))
     }
     scriptEditorHolder.activate()
   }

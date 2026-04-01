@@ -16,9 +16,7 @@
  */
 package net.kogics.kojo.lite.i18n.tr
 
-import java.util.Calendar
-import java.util.Date
-import java.util.TimeZone
+import java.util.{Calendar, Date, TimeZone}
 
 trait TakvimVeZamanYöntemleri {
   type Takvim = Calendar
@@ -31,7 +29,7 @@ trait TakvimVeZamanYöntemleri {
     def saat(buan: Takvim): Sayı = buan.get(Calendar.HOUR_OF_DAY)
     def dakika(buan: Takvim): Sayı = buan.get(Calendar.MINUTE)
     def saniye(buan: Takvim): Sayı = buan.get(Calendar.SECOND)
-    // more to come
+    //more to come
   }
   val Aylar = List("Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",
     "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık")
@@ -68,7 +66,7 @@ trait TakvimVeZamanYöntemleri {
 
   // from ../svInit.scala
   def buAn2: Uzun = System.nanoTime
-  def buSaniye2: İriKesir = BigDecimal(System.nanoTime) / BigDecimal("1000000000") // seconds
+  def buSaniye2: İriKesir = BigDecimal(System.nanoTime) / BigDecimal("1000000000") //seconds
   @annotation.nowarn
   def sayıyaKadarSay(n: İriSayı, sessiz: İkil = yanlış): Kesir = {
     def buSaniye1 = BigDecimal(buSaniye)
@@ -78,7 +76,7 @@ trait TakvimVeZamanYöntemleri {
     }
     val startTid = buSaniye2 // or buSaniye1
     while (c < n) {
-      c = c + 1 // this is one of the simplest operations :-)
+      c = c + 1  // this is one of the simplest operations :-)
     }
     val stoppTid = buSaniye2 // buSaniye1
     val tid = stoppTid - startTid

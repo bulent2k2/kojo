@@ -16,7 +16,7 @@
  */
 package net.kogics.kojo.lite.i18n.tr
 
-import net.kogics.kojo.doodle.{ Color => DColor }
+import net.kogics.kojo.doodle.{Color => DColor}
 
 trait RenkYöntemleri {
   import java.awt.{ Color => AColor }

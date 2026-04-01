@@ -16,18 +16,15 @@
 package net.kogics.kojo
 package figure
 
-import java.awt.{ List => _, Point => _, _ }
-import java.util.concurrent.Future
-import java.util.logging.Level
-import java.util.logging.Logger
-
-import core._
 import edu.umd.cs.piccolo._
+import edu.umd.cs.piccolo.nodes._
 import edu.umd.cs.piccolo.activities.PActivity
 import edu.umd.cs.piccolo.activities.PActivity.PActivityDelegate
-import edu.umd.cs.piccolo.nodes._
-import net.kogics.kojo.util.FutureResult
+import java.awt.{Point => _, List => _, _}
 import net.kogics.kojo.util.Utils
+import core._
+import java.util.concurrent.Future
+import net.kogics.kojo.util.FutureResult
 
 object Figure {
   def apply(canvas: SCanvas, initX: Double = 0d, initY: Double = 0): Figure = {
@@ -42,7 +39,6 @@ class Figure private (canvas: SCanvas, initX: Double, initY: Double) {
   private val bgLayer = new PLayer
   private val fgLayer = new PLayer
   private var currLayer = bgLayer
-  val Log = Logger.getLogger("FigureAnimator")
 
   // if fgLayer is bigger than bgLayer, (re)painting does not happen very cleanly
   // needs a better fix than the one below
@@ -200,10 +196,9 @@ class Figure private (canvas: SCanvas, initX: Double, initY: Double) {
           }
           catch {
             case t: Throwable =>
-              terminate(PActivity.TERMINATE_AND_FINISH)
-              figAnimations = figAnimations.filter { _ != this }
               println("Problem: " + t.toString())
-              Log.log(Level.WARNING, "GUI Thread Problem", t)
+              terminate(PActivity.TERMINATE_AND_FINISH)
+              figAnimations = figAnimations filter { _ != this }
           }
           finally {
             //            repaint()
@@ -265,3 +260,4 @@ class Figure private (canvas: SCanvas, initX: Double, initY: Double) {
     stopFn = Some(() => fn)
   }
 }
+

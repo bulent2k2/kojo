@@ -16,14 +16,11 @@
 package net.kogics.kojo
 package livecoding
 
-import java.awt.event.ActionEvent
-import java.awt.event.ActionListener
+import util.Utils
 import java.awt.Color
 import java.awt.Point
-import java.awt.Window
-import java.util.regex.Matcher
-import javax.swing.text.JTextComponent
-import javax.swing.text.Utilities
+import java.awt.event.ActionEvent
+import java.awt.event.ActionListener
 import javax.swing.AbstractAction
 import javax.swing.BorderFactory
 import javax.swing.JButton
@@ -38,8 +35,10 @@ import javax.swing.KeyStroke
 import javax.swing.Popup
 import javax.swing.PopupFactory
 import javax.swing.SwingUtilities
-
-import util.Utils
+import javax.swing.text.JTextComponent
+import javax.swing.text.Utilities
+import java.awt.Window
+import java.util.regex.Matcher
 
 abstract class NumberManipulator(ctx: ManipulationContext) extends InteractiveManipulator {
   var target = ""
@@ -102,14 +101,12 @@ abstract class NumberManipulator(ctx: ManipulationContext) extends InteractiveMa
     }
   }
 
-  def showPopup(
-      offset: Int,
-      leftLabel: JLabel,
-      slider0: JSlider,
-      rightLabel: JLabel,
-      zoomListener: JToggleButton => Unit,
-      stepListener: Option[(JTextField, JToggleButton) => Unit]
-  ): Unit = {
+  def showPopup(offset: Int,
+    leftLabel: JLabel,
+    slider0: JSlider,
+    rightLabel: JLabel,
+    zoomListener: JToggleButton => Unit,
+    stepListener: Option[(JTextField, JToggleButton) => Unit]): Unit = {
     slider = slider0
     val factory = PopupFactory.getSharedInstance();
     val rect = ctx.codePane.modelToView(offset)

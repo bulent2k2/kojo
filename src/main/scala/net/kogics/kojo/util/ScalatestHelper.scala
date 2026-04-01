@@ -22,3 +22,4 @@ object ScalatestHelper {
     suite.execute()
   }
 }
+

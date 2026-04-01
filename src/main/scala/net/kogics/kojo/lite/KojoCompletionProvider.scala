@@ -2,21 +2,16 @@ package net.kogics.kojo
 package lite
 
 import java.awt.Point
-import java.util.logging.Logger
 import java.util.List
+import java.util.logging.Logger
+
 import javax.swing.text.JTextComponent
-
-import scala.collection.mutable
-
 import net.kogics.kojo.core.CompletionInfo
 import net.kogics.kojo.util.Utils
-import net.kogics.kojo.xscala.CodeCompletionUtils
-import net.kogics.kojo.xscala.CodeTemplates
-import net.kogics.kojo.xscala.Help
-import org.fife.ui.autocomplete.Completion
-import org.fife.ui.autocomplete.CompletionCellRenderer
-import org.fife.ui.autocomplete.CompletionProviderBase
-import org.fife.ui.autocomplete.TemplateCompletion
+import net.kogics.kojo.xscala.{CodeCompletionUtils, CodeTemplates, Help}
+import org.fife.ui.autocomplete.{Completion, CompletionCellRenderer, CompletionProviderBase, TemplateCompletion}
+
+import scala.collection.mutable
 
 import net.kogics.kojo.lite.i18n.tr.{updateTypes, dumpCompletions}
 
@@ -33,9 +28,31 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
   setListCellRenderer(new CompletionCellRenderer) // needed for icons to show up
   setAutoActivationRules(false, null)
 
-  def rtsaTemplate(t: String) = {
-    val res = if (t.contains("${")) t else "%s${cursor}".format(t)
-    res
+  def rstaTemplate(t: String): String = {
+    if (t == null) return null
+
+    val sb = new StringBuilder(t.length)
+    var sawInterpolation = false
+
+    var i = 0
+    while (i < t.length) {
+      val ch = t.charAt(i)
+      if (ch == '$') {
+        val nextIsBrace = (i + 1 < t.length) && t.charAt(i + 1) == '{'
+        if (nextIsBrace) {
+          sawInterpolation = true
+          sb.append('$')      // keep '$' as-is for "${...}"
+        } else {
+          sb.append("$$")     // escape plain '$'
+        }
+      } else {
+        sb.append(ch)
+      }
+      i += 1
+    }
+
+    val escaped = sb.toString
+    if (sawInterpolation) escaped else escaped + "${cursor}"
   }
 
   def proposal(offset: Int, completion: String, kind: Int, template: String) = {
@@ -44,7 +61,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
       this,
       completion2,
       completion2,
-      rtsaTemplate(if (template == null) completion2 else template),
+      rstaTemplate(if (template == null) completion else template),
       null,
       Help(completion)
     ) {
@@ -105,8 +122,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
       if (knownCompletion) {
         var template = methodTemplate(qualifiedName)
         if (template == "") None
-        else if (template != null) Some(template)
-        else {
+        else if (template != null) Some(template) else {
           if (specialOwner) {
             template = methodTemplate(completion.name)
             if (template != null) Some(template) else None
@@ -127,8 +143,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     def knownHelp: Option[String] = {
       if (knownCompletion) {
         var help = Help(qualifiedName)
-        if (help != null) Some(help)
-        else {
+        if (help != null) Some(help) else {
           if (specialOwner) {
             help = Help(completion.name)
             if (help != null) Some(help) else None
@@ -146,7 +161,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     def help =
       knownHelp.getOrElse(display) // completion.fullCompletion
 
-    new TemplateCompletion(this, display, display, rtsaTemplate(template), null, help) {
+    new TemplateCompletion(this, display, display, rstaTemplate(template), null, help) {
       setRelevance(-completion.prio)
       override def getIcon = kindIcon(kind)
     }
@@ -168,11 +183,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     CodeCompletionUtils.methodTemplate(completion)
   }
 
-  def addTemplateProposals(
-      proposals: collection.mutable.ArrayBuffer[Completion],
-      prefix: String,
-      caretOffset: Int
-  ): Unit = {
+  def addTemplateProposals(proposals: collection.mutable.ArrayBuffer[Completion], prefix: String, caretOffset: Int): Unit = {
     CodeTemplates.templates.filter { kv => kv._1.startsWith(prefix) }.foreach { kv =>
       val name = kv._1; val value = kv._2
       proposals.append(
@@ -196,7 +207,9 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
         val (varCompletions, voffset) = execSupport.varCompletions(prefix)
         varCompletions.foreach { completion =>
           if (!completion.contains("$")) {
-            proposals.append(proposal(caretOffset - voffset, completion, VARIABLE, methodTemplate(completion)))
+            proposals.append(proposal(caretOffset - voffset, completion,
+              VARIABLE,
+              methodTemplate(completion)))
           }
         }
 
@@ -207,16 +220,15 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
           }
           catch {
             case t: Throwable =>
-              /*Log.warning*/
-              println(s"Completion Problem for: ${completion.name} -- ${t.getMessage()}")
+              /*Log.warning*/ println(s"Completion Problem for: ${completion.name} -- ${t.getMessage()}")
           }
         }
 
         val (keywordCompletions, koffset) = execSupport.keywordCompletions(prefix)
         keywordCompletions.foreach { completion =>
-          proposals.append(
-            proposal(caretOffset - koffset, completion, KEYWORD, CodeCompletionUtils.keywordTemplate(completion))
-          )
+          proposals.append(proposal(caretOffset - koffset, completion,
+            KEYWORD,
+            CodeCompletionUtils.keywordTemplate(completion)))
         }
 
         addTemplateProposals(proposals, prefix.getOrElse(""), caretOffset)
@@ -230,8 +242,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     }
     catch {
       case t: Throwable =>
-        /*Log.warning*/
-        println("Completion Problem 2: " + t.getMessage())
+        /*Log.warning*/ println("Completion Problem 2: " + t.getMessage())
     }
     execSupport.kojoCtx.hideAppWaitCursor()
     val proposals2 = new java.util.ArrayList[Completion]
@@ -269,7 +280,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
           // there is a previous proposal
           // does it have help?
           if (hasHelp(c)) {
-            // don't add current proposal
+            // don't add current proposal  
           }
           else {
             // no help

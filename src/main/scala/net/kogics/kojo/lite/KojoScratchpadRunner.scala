@@ -1,9 +1,7 @@
 package net.kogics.kojo.lite
 
 import java.io.File
-
-import scala.sys.process.Process
-import scala.sys.process.ProcessLogger
+import scala.sys.process.{Process, ProcessLogger}
 
 object KojoScratchpadRunner {
   def newScratchPad(): Unit = {
@@ -25,9 +23,11 @@ object KojoScratchpadRunner {
       )
 
     val processLogger = new ProcessLogger {
-      override def out(s: => String): Unit = {}
+      override def out(s: => String): Unit = {
+      }
 
-      override def err(s: => String): Unit = {}
+      override def err(s: => String): Unit = {
+      }
 
       override def buffer[T](f: => T): T = ???
     }

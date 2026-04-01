@@ -1,15 +1,14 @@
 package net.kogics.kojo.appexport
 
 import java.io._
-import java.net.HttpURLConnection
-import java.net.URL
+import java.net.{HttpURLConnection, URL}
 import java.nio.charset.StandardCharsets
 import java.util.zip.GZIPInputStream
 
-import scala.util.parsing.json._
-import scala.util.Using
-
 import net.kogics.kojo.util.Unzipper
+
+import scala.util.Using
+import scala.util.parsing.json._
 
 object WebAppExporter {
   def run(script: String): Unit = {
@@ -71,8 +70,7 @@ $script
       }
       println("Script compilation done.")
 
-      @annotation.nowarn
-      def parseJson(json: String) = JSON.parseFull(json)
+      @annotation.nowarn def parseJson(json: String) = JSON.parseFull(json)
 
       println("Parsing response...")
       val parsed = parseJson(content.toString)
@@ -86,7 +84,7 @@ $script
             val exportDir = s"$home/kojo-export"
             val displayExportDir = new File(exportDir).getCanonicalPath
             println(s"Downloading and extracting Web-App template to $displayExportDir...")
-            val templateUrl = new URL("https://docs.kogics.net/assets/files/webapp.zip")
+            val templateUrl = new URL("https://github.com/litan/kojo/blob/master/src/main/resources/export/webapp.zip?raw=true")
             Unzipper.unzipUrl(templateUrl, exportDir)
             println("Template downloading and extracting done.")
 
