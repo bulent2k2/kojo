@@ -26,7 +26,9 @@ import org.scalatest.Matchers
 @RunWith(classOf[JUnitRunner])
 class ScalaToolchainTest extends FunSuite with Matchers {
 
-  // lib/{scala-en,scala-tr} dirs with toolchain jars, plus a regular jar in lib
+  // lib/{scala-en,scala-tr} dirs with toolchain jars, plus a regular jar in lib.
+  // deleteOnExit deletes in reverse registration order, so register each parent
+  // before its children and the whole tree is cleaned up at JVM exit.
   def makeLibDir(): File = {
     val lib = Files.createTempDirectory("kojo-toolchain-test").toFile
     lib.deleteOnExit()
@@ -34,9 +36,16 @@ class ScalaToolchainTest extends FunSuite with Matchers {
     Seq(ScalaToolchain.englishDirName, ScalaToolchain.turkishDirName).foreach { variant =>
       val dir = new File(lib, variant)
       dir.mkdirs()
-      toolchainJars.foreach(new File(dir, _).createNewFile())
+      dir.deleteOnExit()
+      toolchainJars.foreach { name =>
+        val jar = new File(dir, name)
+        jar.createNewFile()
+        jar.deleteOnExit()
+      }
     }
-    new File(lib, "kojo.jar").createNewFile()
+    val kojoJar = new File(lib, "kojo.jar")
+    kojoJar.createNewFile()
+    kojoJar.deleteOnExit()
     lib
   }
 
@@ -77,5 +86,18 @@ class ScalaToolchainTest extends FunSuite with Matchers {
     val lib = makeLibDir()
     val selected = ScalaToolchain.select(launcherCp(lib), ScalaToolchain.turkishDirName)
     selected.indexWhere(_.endsWith("scala-library.jar")) should be < selected.indexOf(new File(lib, "kojo.jar").getPath)
+  }
+
+  test("kojo.toolchain overrides the language-based choice") {
+    val old = System.getProperty("kojo.toolchain")
+    try {
+      System.setProperty("kojo.toolchain", "tr")
+      ScalaToolchain.variantDirName should be(ScalaToolchain.turkishDirName)
+      System.setProperty("kojo.toolchain", "en")
+      ScalaToolchain.variantDirName should be(ScalaToolchain.englishDirName)
+    }
+    finally {
+      if (old == null) System.clearProperty("kojo.toolchain") else System.setProperty("kojo.toolchain", old)
+    }
   }
 }

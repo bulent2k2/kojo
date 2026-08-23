@@ -47,7 +47,7 @@
   <launchers>
     <launcher name="kojo" id="239" menuName="Kojo Learning Environment">
       <executable name="kojo" iconSet="true" executableDir="bin" executableMode="gui" changeWorkingDirectory="false" workingDirectory=".${launcher:sys.launcherDirectory}" />
-      <java mainClass="net.kogics.kojo.lite.DesktopMain">
+      <java mainClass="net.kogics.kojo.lite.DesktopMain" vmParameters="-Dkojo.toolchain=tr">
         <classPath>
           <scanDirectory location="lib" failOnError="false" />
           <scanDirectory location="lib/scala-en" failOnError="false" />

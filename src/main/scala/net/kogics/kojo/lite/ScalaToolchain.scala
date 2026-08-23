@@ -27,8 +27,10 @@ import net.kogics.kojo.util.Utils
  *
  * A packaged Kojo ships two toolchain directories next to the regular jars:
  *   - lib/scala-en: stock scala-library, scala-reflect, scala-compiler and
- *     scalariform jars (English and all non-Turkish languages)
- *   - lib/scala-tr: the same four jars patched with Turkish keywords
+ *     scalariform jars (English and all other non-Turkish languages), at the
+ *     same Scala version the patched jars were built from (staged by
+ *     stage-scala-toolchains.sh)
+ *   - lib/scala-tr: the Turkish-keyword-patched build of the same four jars
  *     (dez=val, den=var, tanim=def, ...)
  *
  * The launcher JVM always boots on lib/scala-en (see installer/bin/kojo and
@@ -36,7 +38,10 @@ import net.kogics.kojo.util.Utils
  * entries on the classpath for the ones matching the persisted user language
  * (the same "Kojolite-Prefs"/"user.language" preference that KojoCtx writes;
  * a language change already requires a Kojo restart, which relaunches this
- * launcher). -Dkojo.toolchain=en|tr overrides the language-based choice.
+ * launcher). -Dkojo.toolchain=en|tr overrides the language-based choice, and
+ * a kojo.toolchain entry in the per-install kojo.properties does the same
+ * (the Koco install4j package sets -Dkojo.toolchain=tr, so it compiles
+ * Turkish keywords out of the box even before a language preference exists).
  *
  * If no toolchain directory is on the launcher classpath - e.g. a dev run
  * via sbt, where scalaHome pins the toolchain, or an old-style package -
@@ -58,10 +63,19 @@ object ScalaToolchain {
     }
   }
 
-  def variantDirName: String = System.getProperty("kojo.toolchain") match {
-    case "en" => englishDirName
-    case "tr" => turkishDirName
-    case _    => if (userLanguage == "tr") turkishDirName else englishDirName
+  private def parseOverride(value: String, source: String): Option[String] = value match {
+    case "en" => Some(englishDirName)
+    case "tr" => Some(turkishDirName)
+    case other =>
+      println(s"[WARNING] Ignoring unknown kojo.toolchain '$other' (from $source); expected 'en' or 'tr'.")
+      None
+  }
+
+  def variantDirName: String = {
+    val fromSysProp = Option(System.getProperty("kojo.toolchain")).flatMap(parseOverride(_, "system property"))
+    def fromAppProp = Utils.appProperty("kojo.toolchain").flatMap(parseOverride(_, "kojo.properties"))
+    def fromLanguage = if (userLanguage == "tr") turkishDirName else englishDirName
+    fromSysProp.orElse(fromAppProp).getOrElse(fromLanguage)
   }
 
   def select(cp: List[String]): List[String] = select(cp, variantDirName)
@@ -81,7 +95,13 @@ object ScalaToolchain {
           cp
         }
         else {
-          println(s"[INFO] Scala toolchain (user language '$userLanguage'): $variantDir")
+          val overrideProp = System.getProperty("kojo.toolchain", "<unset>")
+          println(s"[INFO] Scala toolchain: $variantDir (user language '$userLanguage', kojo.toolchain=$overrideProp)")
+          val expected = Set("scala-library.jar", "scala-reflect.jar", "scala-compiler.jar", "scalariform.jar")
+          val missing = expected -- jars.map(new File(_).getName).toSet
+          if (missing.nonEmpty) {
+            println(s"[WARNING] Incomplete Scala toolchain in $variantDir; missing: ${missing.mkString(", ")}")
+          }
           jars ::: cp.filterNot(e => variantParent(e).isDefined)
         }
     }
