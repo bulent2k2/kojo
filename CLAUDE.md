@@ -28,7 +28,7 @@ Caveats:
 - **Tests need a display.** `TestEnv` constructs real Swing/Piccolo objects; there is no headless mode. On a bare container use `xvfb-run ./sbt.sh test`.
 - `src/itest/` is not wired into `build.sbt`; `sbt test` never runs it.
 - **No CI exists** — nothing validates builds automatically; always run `./sbt.sh test` yourself.
-- Release packaging: `makezip.sh` (Linux/generic zip; swaps stock Scala jars in `dist/` for the Turkish-keyword ones), `make-windows-zip.sh`, `stage-i4j-installer` + `installer.i4j/` (install4j projects: `kojo.install4j` English, `koco.install4j` Turkish). `installer/jarlist.txt` must be updated when a dependency version changes. These scripts contain hard-coded developer paths and need a `scala` CLI on PATH — not portable as-is.
+- Release packaging: `makezip.sh` (Linux/generic zip), `make-windows-zip.sh`, `stage-i4j-installer` + `installer.i4j/` (install4j projects: `kojo.install4j` English, `koco.install4j` Turkish). All of them call `stage-scala-toolchains.sh`, which stages both Scala toolchains under `lib/scala-en` (stock jars, downloaded from Maven Central and cached in the gitignored `scala-en-jars/`) and `lib/scala-tr` (the Turkish-keyword jars). `installer/jarlist.txt` must be updated when a dependency version changes (it deliberately excludes the four toolchain jars — those are staged by `stage-scala-toolchains.sh`). These scripts contain hard-coded developer paths and need a `scala` CLI on PATH — not portable as-is.
 
 ## The patched Scala compiler (`scala-tr/`)
 
@@ -37,6 +37,10 @@ Caveats:
 - **Never delete or clean `scala-tr/build/pack/lib`** — the build cannot resolve a Scala instance without it.
 - Bumping `scalaVer` in `build.sbt` without rebuilding the patched jars causes a version mismatch.
 - `lib/scalariform.jar` is likewise a patched scalariform that knows the Turkish keywords (used by the in-app editor); `scala-tr/en/scalariform.jar` is the pristine English reference copy.
+
+### Runtime toolchain toggle
+
+A packaged Kojo ships **both** toolchains — `lib/scala-en` (stock scala-library/reflect/compiler + pristine scalariform) and `lib/scala-tr` (the four Turkish-keyword-patched jars). The launcher JVM always boots on `lib/scala-en` (see `installer/bin/kojo`, `kojo.cmd`, `winlauncher-for-zip.xml`, and the install4j `scanDirectory` entries); before spawning the real Kojo JVM, `lite/ScalaToolchain.scala` reads the persisted `user.language` preference (`Kojolite-Prefs`, same node `KojoCtx` writes) and swaps the matching toolchain onto the child classpath — Turkish gets the patched compiler, every other language the stock one. `-Dkojo.toolchain=en|tr` on the launcher overrides the language-based choice for testing. If no `scala-en`/`scala-tr` directory is on the launcher classpath (dev runs via sbt, where `scalaHome` pins the toolchain), the classpath is left untouched. Unit-tested in `lite/ScalaToolchainTest.scala`. Note: with `scalaHome` set, sbt substitutes the pack jars — the stock Maven scala jars never reach `dist/`, which is why `stage-scala-toolchains.sh` downloads them.
 
 ## Architecture
 

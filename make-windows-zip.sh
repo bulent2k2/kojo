@@ -12,6 +12,10 @@ cd installer
 scala cp-staging-jars.scala
 cd ..
 
+# Stage both Scala toolchains (stock + Turkish keywords); the launcher
+# picks one at startup based on the user language.
+./stage-scala-toolchains.sh installerbuild/lib
+
 cp -va installer/* installerbuild/
 cd installerbuild
 rm *.*
