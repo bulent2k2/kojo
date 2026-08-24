@@ -1,8 +1,49 @@
-* Merging Lalit's changes for 2.13.18 to installer/jarlist.txt:
-  Add in ../dist
-    ln -s scala-reflect.jar scala-reflect-2.13.18.jar
-    ln -s scala-library.jar scala-library-2.13.18.jar
-    ln -s scala-compiler.jar scala-compiler-2.13.18.jar
+* Upgrade to 2.13.18:
+Got <.gz> from: https://github.com/scala/scala/releases/tag/v2.13.18
+Built in ~/src/scala-2.13.18 -- see README.bbx there for the full diff.
+
+The Turkish-keyword patch is committed next to this file as
+scala-tr/turkish-keywords.patch (generated against the pristine v2.13.18
+sources, so `git apply` puts it on a clean checkout of that tag). It touches
+the same three files as in 2.13.15:
+    Main.scala      ~/src/scala-2.13.18/src/compiler/scala/tools/nsc/Main.scala
+    Scanners.scala  ~/src/scala-2.13.18/src/compiler/scala/tools/nsc/ast/parser/Scanners.scala
+    StdNames.scala  ~/src/scala-2.13.18/src/reflect/scala/reflect/internal/StdNames.scala
+(Main.scala is only the diagnostic println and is not really needed; the
+keywords come from the other two.)
+
+Built the jars and copied over to Kojo with:
+> gunzip
+> cd ~/src/scala-2.13.18
+> java_std_path
+> sbt dist/mkPack           # ~3 minutes
+> rsync -a --delete build/pack/lib/ <kojo-clone>/scala-tr/build/pack/lib/
+  (rsync, not cp: cp never removes files, which is how the stale jna.jar
+   below survived the upgrade and had to be deleted by hand.)
+
+Note: the 2.13.18 pack no longer ships jna.jar (2.13.15 did), so the stale
+2.13.15 copy was deleted here -- nothing in Kojo refers to it, and
+scala-tr/build/pack/lib is now an exact mirror of the upstream pack.
+
+Known wart in this pack: the jars carry a stale build id --
+version.number=2.13.18-20230909-175640-c8d4123, with the same suffix the
+2.13.15 jars had. It is only a label (the code really is 2.13.18), but
+Versions.ScalaVersion reads it, so Help > About and the startup log show
+"2.13.18-20230909-175640-c8d4123" for Turkish users while English users on
+lib/scala-en see plain "2.13.18". The cause is building from the release .gz
+instead of a git checkout, so scala's build cannot derive a build id. Next
+upgrade: clone scala/scala, `git checkout v2.13.18`, `git apply` the patch
+above, and the version string comes out clean.
+
+build.sbt was already at scalaVer = "2.13.18", so copying these jars is what
+removes the mismatch between the patched toolchain and build.sbt.
+
+Nothing to do in installer/jarlist.txt (it deliberately excludes the four
+toolchain jars) and nothing to do for the English toolchain either:
+stage-scala-toolchains.sh reads version.number out of the patched
+scala-library.jar, so it now fetches stock 2.13.18 from Maven Central and
+caches it in scala-en-jars/2.13.18/.
+
 * Upgrade to 2.13.15:
 Got <.gz> from: https://github.com/scala/scala/releases/tag/v2.13.15
 

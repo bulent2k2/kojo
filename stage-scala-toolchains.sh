@@ -24,6 +24,15 @@ if [ -z "$scalaVer" ]; then
   echo "Could not read the Scala version from scala-tr/build/pack/lib/scala-library.jar" >&2
   exit 1
 fi
+# The patched jars and build.sbt's scalaVer are bumped by hand, in separate
+# steps, so they drift apart silently (2.13.15 jars vs a 2.13.18 scalaVer went
+# unnoticed for a while). Warn here, the way the zip scripts warn about a stale
+# kojo.exe -- packaging is the moment it matters.
+buildVer=$(sed -n 's/^lazy val scalaVer *= *"\([0-9][0-9.]*\)".*/\1/p' build.sbt || true)
+if [ -n "$buildVer" ] && [ "$buildVer" != "$scalaVer" ]; then
+  echo "[WARNING] build.sbt has scalaVer=$buildVer but the patched toolchain in scala-tr/build/pack/lib is $scalaVer. Rebuild the patched jars (see scala-tr/README) or fix scalaVer." >&2
+fi
+
 cache=scala-en-jars/$scalaVer
 
 mkdir -p "$cache"
