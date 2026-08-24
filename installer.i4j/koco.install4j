@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <install4j version="10.0.6" transformSequenceNumber="10">
-  <directoryPresets config="/Users/ben/src/kojo/git/kojo/installer/icons" />
-  <application name="Koco Öğrenim Ortamı" applicationId="0071-0523-9450-8404" mediaDir="/Users/ben/src/kojo/git/kojo/installer.i4j" mediaFilePattern="${compiler:sys.shortName}_${compiler:sys.platform}_${compiler:sys.version}${compiler:sys.withJre}" shortName="Koco" publisher="Kogics Foundation" publisherWeb="www.kogics.net/kojo" version="2.9.34-r3-tr1-20260331" macVolumeId="41bac862080108f9" javaMinVersion="1.8" javaMaxVersion="21" jdkMode="jdk" jdkName="JDK 1.8">
+  <directoryPresets config="/Users/ben/src/kojo/clone/installer/icons" />
+  <application name="Koco Öğrenim Ortamı" applicationId="0071-0523-9450-8404" mediaDir="/Users/ben/src/kojo/clone/installer.i4j" mediaFilePattern="${compiler:sys.shortName}_${compiler:sys.platform}_${compiler:sys.version}${compiler:sys.withJre}" shortName="Koco" publisher="Kogics Foundation" publisherWeb="www.kogics.net/kojo" version="2.9.35-r9-tr1-20260823" macVolumeId="41bac862080108f9" javaMinVersion="1.8" javaMaxVersion="21" jdkMode="jdk" jdkName="JDK 1.8">
     <languages>
       <principalLanguage id="tr" />
     </languages>
@@ -41,7 +41,7 @@
       <mountPoint id="58" />
     </mountPoints>
     <entries>
-      <dirEntry mountPoint="58" file="/Users/ben/src/kojo/git/kojo/installerbuild" subDirectory="installerbuild" />
+      <dirEntry mountPoint="58" file="/Users/ben/src/kojo/clone/installerbuild" subDirectory="installerbuild" />
     </entries>
   </files>
   <launchers>
@@ -55,11 +55,11 @@
       </java>
       <vmOptionsFile mode="none" />
       <iconImageFiles>
-        <file path="/Users/ben/src/kojo/git/kojo/installer/icons/kojo16.png" />
-        <file path="/Users/ben/src/kojo/git/kojo/installer/icons/kojo32.png" />
-        <file path="/Users/ben/src/kojo/git/kojo/installer/icons/kojo48.png" />
-        <file path="/Users/ben/src/kojo/git/kojo/installer/icons/kojo64.png" />
-        <file path="/Users/ben/src/kojo/git/kojo/installer/icons/kojo128.png" />
+        <file path="/Users/ben/src/kojo/clone/installer/icons/kojo16.png" />
+        <file path="/Users/ben/src/kojo/clone/installer/icons/kojo32.png" />
+        <file path="/Users/ben/src/kojo/clone/installer/icons/kojo48.png" />
+        <file path="/Users/ben/src/kojo/clone/installer/icons/kojo64.png" />
+        <file path="/Users/ben/src/kojo/clone/installer/icons/kojo128.png" />
       </iconImageFiles>
     </launcher>
   </launchers>
@@ -70,27 +70,27 @@
           <property name="customIconImageFiles">
             <add>
               <object class="com.install4j.api.beans.ExternalFile">
-                <string>/Users/ben/src/kojo/git/kojo/installer/icons/kojo16.png</string>
+                <string>/Users/ben/src/kojo/clone/installer/icons/kojo16.png</string>
               </object>
             </add>
             <add>
               <object class="com.install4j.api.beans.ExternalFile">
-                <string>/Users/ben/src/kojo/git/kojo/installer/icons/kojo32.png</string>
+                <string>/Users/ben/src/kojo/clone/installer/icons/kojo32.png</string>
               </object>
             </add>
             <add>
               <object class="com.install4j.api.beans.ExternalFile">
-                <string>/Users/ben/src/kojo/git/kojo/installer/icons/kojo48.png</string>
+                <string>/Users/ben/src/kojo/clone/installer/icons/kojo48.png</string>
               </object>
             </add>
             <add>
               <object class="com.install4j.api.beans.ExternalFile">
-                <string>/Users/ben/src/kojo/git/kojo/installer/icons/kojo64.png</string>
+                <string>/Users/ben/src/kojo/clone/installer/icons/kojo64.png</string>
               </object>
             </add>
             <add>
               <object class="com.install4j.api.beans.ExternalFile">
-                <string>/Users/ben/src/kojo/git/kojo/installer/icons/kojo128.png</string>
+                <string>/Users/ben/src/kojo/clone/installer/icons/kojo128.png</string>
               </object>
             </add>
           </property>
@@ -167,7 +167,7 @@ return console.askOkCancel(message, true);
                       <entry>
                         <string>en</string>
                         <object class="com.install4j.api.beans.ExternalFile">
-                          <string>/Users/ben/src/kojo/git/kojo/installerbuild/licenses/Kojoi-license.txt</string>
+                          <string>/Users/ben/src/kojo/clone/installerbuild/licenses/Kojoi-license.txt</string>
                         </object>
                       </entry>
                     </property>
