@@ -47,6 +47,7 @@ import net.kogics.kojo.core.MemberKind.PackageObject
 import net.kogics.kojo.core.MemberKind.Trait
 import net.kogics.kojo.core.MemberKind.Type
 import net.kogics.kojo.core.MemberKind.Val
+import net.kogics.kojo.core.MemberKind.Var
 import net.kogics.kojo.core.RunContext
 import net.kogics.kojo.util.Utils
 
@@ -403,16 +404,23 @@ class CompilerAndRunner(
   }
 
   class KGlobal(s: Settings, r: Reporter) extends interactive.Global(s, r) {
-    def mkCompletionProposal(sym: Symbol, tpe: Type, inherited: Boolean, viaView: Symbol): CompletionInfo = {
+    def mkCompletionProposal(
+        sym: Symbol,
+        tpe: Type,
+        inherited: Boolean,
+        viaView: Symbol,
+        completionPrefix: String
+    ): CompletionInfo = {
       // code borrowed from Scala Eclipse Plugin, after my own hacks in this area failed with 2.10.1
       val kind =
-        if (sym.isSourceMethod && !sym.hasFlag(Flags.ACCESSOR | Flags.PARAMACCESSOR)) Def
+        if (sym.isMethod && !sym.hasFlag(Flags.ACCESSOR | Flags.PARAMACCESSOR)) Def
         else if (sym.hasPackageFlag) Package
-        else if (sym.isClass) Class
         else if (sym.isTrait) Trait
+        else if (sym.isClass) Class
         else if (sym.isPackageObject) PackageObject
         else if (sym.isModule) Object
         else if (sym.isType) Type
+        else if (sym.isVar) Var
         else Val
       val name = sym.decodedName
 
@@ -436,12 +444,12 @@ class CompilerAndRunner(
 
       val container = sym.owner.enclClass.fullName
 
-      // rudimentary relevance, place own members before inherited ones, and before view-provided ones
-      var relevance = 100
-      if (!sym.isLocalToBlock) relevance += 10 // non-local symbols are less relevant than local ones
-      if (inherited) relevance += 10
-      if (viaView != NoSymbol) relevance += 20
-      if (sym.hasPackageFlag) relevance += 30
+      // Rudimentary relevance: prefer own members over inherited and view-provided members.
+      var relevancePenalty = 100
+      if (!sym.isLocalToBlock) relevancePenalty += 10 // non-local symbols are less relevant than local ones
+      if (inherited) relevancePenalty += 10
+      if (viaView != NoSymbol) relevancePenalty += 20
+      if (sym.hasPackageFlag) relevancePenalty += 30
       // theoretically we'd need an 'ask' around this code, but given that
       // Any and AnyRef are definitely loaded, we call directly to definitions.
       if (
@@ -449,11 +457,9 @@ class CompilerAndRunner(
         || sym.owner == definitions.AnyRefClass
         || sym.owner == definitions.ObjectClass
       ) {
-        relevance += 40
+        relevancePenalty += 40
       }
-      val pfx = prefix
-      val casePenalty = if (name.take(pfx.length) != pfx.mkString) 50 else 0
-      relevance += casePenalty
+      if (!name.startsWith(completionPrefix)) relevancePenalty += 50
 
       val namesAndTypes = for {
         section <- sym.paramss
@@ -469,7 +475,7 @@ class CompilerAndRunner(
         name,
         signature,
         container,
-        relevance,
+        -relevancePenalty,
         sym.isJavaDefined,
         scalaParamNames,
         paramTypes,
@@ -480,7 +486,9 @@ class CompilerAndRunner(
   }
 
   val pcompiler = classLoader.asContext {
-    new KGlobal(makeSettings(), preporter)
+    val settings = makeSettings()
+    settings.processArgumentString("-Ypresentation-any-thread")
+    new KGlobal(settings, preporter)
   }
 
   def typeAt(code0: String, offset: Int): String = {
@@ -525,69 +533,74 @@ class CompilerAndRunner(
 
   import core.CompletionInfo
 
-  def completions(code: String, offset: Int, selection: Boolean): List[CompletionInfo] = {
-    val augmentedCode =
-      "%s ;} // %s".format(code.substring(0, offset), code.substring(offset))
+  def completions(code: String, offset: Int, completionPrefix: String = ""): List[CompletionInfo] = {
+    val codeBeforeCaret = code.substring(0, offset)
+    val cursorMarker = "_CURSOR_"
 
-    val queryOffset = if (selection) offset - 1 else offset
+    def withCursor(codeBefore: String, codeAfter: String) =
+      s"$codeBefore$completionPrefix$cursorMarker $codeAfter"
 
-    completionQuery(augmentedCode, queryOffset, selection) match {
-      case Nil    => if (selection) completionQuery(code, queryOffset, selection) else Nil
-      case _ @ret => ret
+    def closeOpenBraces(code: String) = {
+      val openBraces = code.count(_ == '{')
+      val closeBraces = code.count(_ == '}')
+      "\n" + ("}" * math.max(0, openBraces - closeBraces))
     }
+
+    // A synthetic identifier keeps the tree at the caret parseable. The
+    // presentation compiler uses the marker position to recover the entered
+    // prefix and the receiver type.
+    val sourceWithCursor = withCursor(codeBeforeCaret, code.substring(offset))
+    val recovery = withCursor(codeBeforeCaret, closeOpenBraces(codeBeforeCaret))
+    val queryOffset = offset + completionPrefix.length
+
+    val queryCodes =
+      List(sourceWithCursor, recovery).distinct
+
+    queryCodes
+      .iterator
+      .map { queryCode => completionQuery(queryCode, queryOffset, completionPrefix) }
+      .find(_.nonEmpty)
+      .getOrElse(Nil)
   }
 
-  private def completionQuery(code0: String, offset: Int, selection: Boolean): List[CompletionInfo] = {
+  private def completionQuery(code0: String, offset: Int, completionPrefix: String): List[CompletionInfo] = {
     import interactive._
+
+    def nameMatches(completion: CompletionInfo) =
+      completion.name.toLowerCase.startsWith(completionPrefix.toLowerCase)
 
     codeForRunning(code0)
       .map { code =>
         classLoader.asContext {
-          val source = new BatchSourceFile("scripteditor", code)
-          val pos = new OffsetPosition(source, offset + offsetDelta + 1)
+          val run = new pcompiler.TyperRun
+          val unit = pcompiler.newCompilationUnit(code, "scripteditor")
+          val richUnit = new pcompiler.RichCompilationUnit(unit.source)
+          pcompiler.unitOfFile(richUnit.source.file) = richUnit
+          val pos = richUnit.position(offset + offsetDelta + 1)
+          val ignoreCasePrefixMatcher = (entered: pcompiler.Name) => (candidate: pcompiler.Name) =>
+            candidate.toString.toLowerCase.startsWith(entered.toString.toLowerCase)
+          val completions = pcompiler.completionsAt(pos).matchingResults(ignoreCasePrefixMatcher)
 
-          val r1 = new Response[Unit]
-          pcompiler.askReload(List(source), r1)
-
-          val resp = new Response[List[pcompiler.Member]]
-          if (selection) {
-            pcompiler.askTypeCompletion(pos, resp)
-          }
-          else {
-            pcompiler.askScopeCompletion(pos, resp)
-          }
-
-          val completionTimeout = 3000
-          resp.get(completionTimeout) match {
-            case Some(Left(completions)) =>
-              val response: pcompiler.Response[List[CompletionInfo]] = pcompiler.askForResponse { () =>
-                val elb = new ListBuffer[CompletionInfo]
-                completions.foreach { completion =>
-                  try {
-                    completion match {
-                      case pcompiler.TypeMember(sym, tpe, true, inherited, viaView, _)
-                          if !sym.isConstructor /*&& nameMatches(sym)*/ =>
-                        elb += pcompiler.mkCompletionProposal(sym, tpe, inherited, viaView)
-                      case pcompiler.ScopeMember(sym, tpe, true, _, _) if !sym.isConstructor /*&& nameMatches(sym)*/ =>
-                        elb += pcompiler.mkCompletionProposal(sym, tpe, false, pcompiler.NoSymbol)
-                      case _ =>
-                    }
-                  }
-                  catch {
-                    case t: Throwable =>
-                      println("Completion Problem 0: " + t.getMessage())
-                    // ignore, and move on to the next one
-                  }
-                }
-                elb.toList
+          val elb = new ListBuffer[CompletionInfo]
+          completions.foreach { completion =>
+            try {
+              completion match {
+                case pcompiler.TypeMember(sym, tpe, true, inherited, viaView, _)
+                    if !sym.isConstructor =>
+                  elb += pcompiler.mkCompletionProposal(sym, tpe, inherited, viaView, completionPrefix)
+                case pcompiler.ScopeMember(sym, tpe, true, _, _)
+                    if !sym.isConstructor =>
+                  elb += pcompiler.mkCompletionProposal(sym, tpe, false, pcompiler.NoSymbol, completionPrefix)
+                case _ =>
               }
-              response.get match {
-                case Left(l)  => l
-                case Right(_) => Nil
-              }
-            case Some(Right(_)) => Nil
-            case None           => Nil
+            }
+            catch {
+              case t: Throwable =>
+                println("Completion Problem 0: " + t.getMessage())
+              // ignore, and move on to the next one
+            }
           }
+          elb.toList.filter(nameMatches)
         }
       }
       .getOrElse(Nil)

@@ -16,6 +16,7 @@ import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.Event
 import java.awt.Font
+import java.awt.GraphicsEnvironment
 import java.awt.Point
 import java.awt.Toolkit
 import javax.swing.event.CaretEvent
@@ -24,6 +25,7 @@ import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
 import javax.swing.event.PopupMenuEvent
 import javax.swing.event.PopupMenuListener
+import javax.swing.text.DefaultEditorKit
 import javax.swing.text.Utilities
 import javax.swing.AbstractAction
 import javax.swing.Action
@@ -38,26 +40,6 @@ import javax.swing.JPopupMenu
 import javax.swing.JToolBar
 import javax.swing.KeyStroke
 
-import org.fife.rsta.ui.CollapsibleSectionPanel
-import org.fife.rsta.ui.search.ReplaceToolBar
-import org.fife.rsta.ui.search.SearchEvent
-import org.fife.rsta.ui.search.SearchListener
-import org.fife.ui.autocomplete.AutoCompletion
-import org.fife.ui.rsyntaxtextarea.AbstractTokenMakerFactory
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextAreaEditorKit
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextAreaEditorKit.DecreaseFontSizeAction
-import org.fife.ui.rsyntaxtextarea.RSyntaxTextAreaEditorKit.IncreaseFontSizeAction
-import org.fife.ui.rsyntaxtextarea.SyntaxConstants
-import org.fife.ui.rsyntaxtextarea.TokenMakerFactory
-import org.fife.ui.rsyntaxtextarea.folding.CurlyFoldParser
-import org.fife.ui.rsyntaxtextarea.folding.FoldParserManager
-import org.fife.ui.rsyntaxtextarea.templates.StaticCodeTemplate
-import org.fife.ui.rtextarea.IconGroup
-import org.fife.ui.rtextarea.RTextArea
-import org.fife.ui.rtextarea.RTextScrollPane
-import org.fife.ui.rtextarea.SearchEngine
-
 import net.kogics.kojo.action.ChooseColor
 import net.kogics.kojo.codingmode.SwitchMode
 import net.kogics.kojo.core.TwMode
@@ -65,9 +47,27 @@ import net.kogics.kojo.core.VanillaMode
 import net.kogics.kojo.livecoding.IpmProvider
 import net.kogics.kojo.util.Utils
 import net.kogics.kojo.xscala.CodeTemplates
-
-import scalariform.formatter.ScalaFormatter
+import org.fife.rsta.ui.search.ReplaceToolBar
+import org.fife.rsta.ui.search.SearchEvent
+import org.fife.rsta.ui.search.SearchListener
+import org.fife.rsta.ui.CollapsibleSectionPanel
+import org.fife.ui.autocomplete.AutoCompletion
+import org.fife.ui.rsyntaxtextarea.folding.CurlyFoldParser
+import org.fife.ui.rsyntaxtextarea.folding.FoldParserManager
+import org.fife.ui.rsyntaxtextarea.templates.StaticCodeTemplate
+import org.fife.ui.rsyntaxtextarea.AbstractTokenMakerFactory
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextAreaEditorKit
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextAreaEditorKit.DecreaseFontSizeAction
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextAreaEditorKit.IncreaseFontSizeAction
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants
+import org.fife.ui.rsyntaxtextarea.TokenMakerFactory
+import org.fife.ui.rtextarea.IconGroup
+import org.fife.ui.rtextarea.RTextArea
+import org.fife.ui.rtextarea.RTextScrollPane
+import org.fife.ui.rtextarea.SearchEngine
 import scalariform.formatter.preferences._
+import scalariform.formatter.ScalaFormatter
 
 class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends JPanel with EditorFileSupport {
 
@@ -75,9 +75,24 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
   val codePane = new RSyntaxTextArea(5, 80)
   val codePane2 = new RSyntaxTextArea(5, 80)
   val codePanes = List(codePane, codePane2)
+  private val preferredEditorFontFamily = GraphicsEnvironment
+    .getLocalGraphicsEnvironment
+    .getAvailableFontFamilyNames
+    .find(_.equalsIgnoreCase("Consolas"))
   val statusStrip = new StatusStrip()
-  val (toolbar, runButton, runWorksheetButton, traceButton, compileButton, stopButton, hNextButton, hPrevButton,
-    clearSButton, clearButton, cexButton) = makeToolbar()
+  val (
+    toolbar,
+    runButton,
+    runWorksheetButton,
+    traceButton,
+    compileButton,
+    stopButton,
+    hNextButton,
+    hPrevButton,
+    clearSButton,
+    clearButton,
+    cexButton
+  ) = makeToolbar()
 
   val SYNTAX_STYLE_SCALA2 = "text/scala2"
   val tFactory = TokenMakerFactory.getDefaultInstance.asInstanceOf[AbstractTokenMakerFactory]
@@ -98,7 +113,11 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
   codePanes.foreach(Theme.currentTheme.loadEditorTheme.apply(_))
   codePanes.foreach { cp =>
     val oldf = cp.getFont
-    val f = oldf.deriveFont(getFont.getSize.toFloat)
+    val baseFont = preferredEditorFontFamily match {
+      case Some(family) => new Font(family, oldf.getStyle, oldf.getSize)
+      case None         => oldf
+    }
+    val f = baseFont.deriveFont(getFont.getSize.toFloat)
     cp.setFont(f)
   }
 
@@ -229,10 +248,12 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
       val caretLine = codePane.getCaretLineNumber
       val posInLine = codePane.getCaretOffsetFromLineStart
       try {
-        codePane.setText(ScalaFormatter.format(
-          codePane.getText,
-          formatPrefs
-        ))
+        codePane.setText(
+          ScalaFormatter.format(
+            codePane.getText,
+            formatPrefs
+          )
+        )
         try {
           val lineStart = codePane.getLineStartOffset(caretLine)
           val lineEnd = codePane.getLineEndOffset(caretLine)
@@ -263,92 +284,78 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
   popup.add(formatItem, idx)
   idx += 1
 
-  val findReplaceAction = new AbstractAction(Utils.loadString("S_FindReplace"), Utils.loadIcon("/images/extra/find.gif")) {
+  val findReplaceAction =
+    new AbstractAction(Utils.loadString("S_FindReplace"), Utils.loadIcon("/images/extra/find.gif")) {
 
-    //    lazy val dialog: ReplaceDialog = new ReplaceDialog(frame, listener) {
-    //      setTitle(Utils.loadString("S_FindReplace"))
-    //      override def setVisible(visible: Boolean) {
-    //        val searchContext = getSearchContext
-    //        if (!visible) {
-    //          // dialog closing; get rid of marks, if any
-    //          val oldMarkAll = searchContext.getMarkAll
-    //          searchContext.setMarkAll(false)
-    //          val oldDot = codePane.getCaret.getDot
-    //          SearchEngine.find(codePane, searchContext)
-    //          codePane.getCaret.setDot(oldDot)
-    //          searchContext.setMarkAll(oldMarkAll)
-    //        }
-    //        super.setVisible(visible)
-    //      }
-    //    }
+      //    lazy val dialog: ReplaceDialog = new ReplaceDialog(frame, listener) {
+      //      setTitle(Utils.loadString("S_FindReplace"))
+      //      override def setVisible(visible: Boolean) {
+      //        val searchContext = getSearchContext
+      //        if (!visible) {
+      //          // dialog closing; get rid of marks, if any
+      //          val oldMarkAll = searchContext.getMarkAll
+      //          searchContext.setMarkAll(false)
+      //          val oldDot = codePane.getCaret.getDot
+      //          SearchEngine.find(codePane, searchContext)
+      //          codePane.getCaret.setDot(oldDot)
+      //          searchContext.setMarkAll(oldMarkAll)
+      //        }
+      //        super.setVisible(visible)
+      //      }
+      //    }
 
-    lazy val listener = new SearchListener {
-      def getSelectedText = codePane.getSelectedText
+      lazy val listener = new SearchListener {
+        def getSelectedText = codePane.getSelectedText
 
-      def searchEvent(ev: SearchEvent): Unit = {
-        val searchContext = toolbar.getSearchContext
-        def find(): Unit = {
-          var found = SearchEngine.find(codePane, searchContext)
-          if (found.getCount == 0) {
-            val oldDot = codePane.getCaret.getDot
-            codePane.getCaret.setDot(0)
-            found = SearchEngine.find(codePane, searchContext)
-            if (found.getCount == 0) {
-              codePane.getCaret.setDot(oldDot)
-            }
+        def searchEvent(ev: SearchEvent): Unit = {
+          val searchContext = ev.getSearchContext
+
+          ev.getType match {
+            case SearchEvent.Type.MARK_ALL =>
+              SearchEngine.markAll(codePane, searchContext)
+            case SearchEvent.Type.FIND =>
+              SearchEngine.find(codePane, searchContext)
+            case SearchEvent.Type.REPLACE =>
+              SearchEngine.replace(codePane, searchContext)
+            case SearchEvent.Type.REPLACE_ALL =>
+              SearchEngine.replaceAll(codePane, searchContext);
+            case _ =>
           }
         }
+      }
 
-        ev.getType match {
-          case SearchEvent.Type.MARK_ALL =>
-            SearchEngine.markAll(codePane, searchContext)
-          case SearchEvent.Type.FIND =>
-            find()
-          case SearchEvent.Type.REPLACE =>
-            val result = SearchEngine.replace(codePane, searchContext)
-            val nextFindRange = result.getMatchRange
-            if (nextFindRange.getEndOffset == nextFindRange.getStartOffset) {
-              // nothing found; try from beginning of document
-              find()
-            }
-          case SearchEvent.Type.REPLACE_ALL =>
-            SearchEngine.replaceAll(codePane, searchContext);
-          case _ =>
+      lazy val toolbar: ReplaceToolBar = new ReplaceToolBar(listener) {
+        override def addNotify() = {
+          val searchContext = getSearchContext
+          searchContext.setMarkAll(false)
+          searchContext.setSearchWrap(true)
+          val sel = codePane.getSelectedText
+          if (sel != null) {
+            searchContext.setSearchFor(sel)
+            searchContext.setReplaceWith("")
+          }
+          super.addNotify()
+        }
+
+        override def removeNotify(): Unit = {
+          val searchContext = getSearchContext
+          // toolbar closing; get rid of marks, if any
+          searchContext.setMarkAll(false)
+          SearchEngine.markAll(codePane, searchContext)
+          super.removeNotify()
         }
       }
-    }
 
-    lazy val toolbar: ReplaceToolBar = new ReplaceToolBar(listener) {
-      override def addNotify() = {
-        val searchContext = getSearchContext
-        searchContext.setMarkAll(false)
-        val sel = codePane.getSelectedText
-        if (sel != null) {
-          searchContext.setSearchFor(sel)
-          searchContext.setReplaceWith("")
+      var toolbarAdded = false
+      def actionPerformed(ev: ActionEvent): Unit = {
+        //      dialog.setVisible(true)
+        if (!toolbarAdded) {
+          csp.addBottomComponent(toolbar)
+          toolbarAdded = true
         }
-        super.addNotify()
-      }
-
-      override def removeNotify(): Unit = {
-        val searchContext = getSearchContext
-        // toolbar closing; get rid of marks, if any
-        searchContext.setMarkAll(false)
-        SearchEngine.markAll(codePane, searchContext)
-        super.removeNotify()
+        csp.showBottomComponent(toolbar)
       }
     }
-
-    var toolbarAdded = false
-    def actionPerformed(ev: ActionEvent): Unit = {
-      //      dialog.setVisible(true)
-      if (!toolbarAdded) {
-        csp.addBottomComponent(toolbar)
-        toolbarAdded = true
-      }
-      csp.showBottomComponent(toolbar)
-    }
-  }
   val findReplaceItem = new JMenuItem(findReplaceAction)
   val cf = KeyStroke.getKeyStroke("control F")
   inputMap.put(cf, "find-replace")
@@ -364,13 +371,13 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
   popup.add(new JPopupMenu.Separator, idx)
   idx += 1
 
-  import net.kogics.kojo.lite.i18n.tr.updateTypes
-
   val typeAtAction = new AbstractAction(Utils.loadString("S_ShowType")) {
     def actionPerformed(ev: ActionEvent): Unit = {
       val codePane = execSupport.codePane
       val offset = codePane.getCaretPosition
-      val typeAt = updateTypes(execSupport.typeAt(offset)) // updateTypes returns the arg as is unless we are in Turkish locale
+      import net.kogics.kojo.lite.i18n.tr.updateTypes
+      // updateTypes returns the arg as is unless we are in Turkish locale
+      val typeAt = updateTypes(execSupport.typeAt(offset))
       val wordStart = Utilities.getWordStart(codePane, offset)
       val wordEnd = Utilities.getWordEnd(codePane, offset)
       val word0 = codePane.getDocument.getText(wordStart, wordEnd - wordStart)
@@ -382,7 +389,7 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
       wordsWithCumIdx.find { case (w, idx) => idx > delta } match {
         case Some(wordIdx) =>
           val word = wordIdx._1
-          val (t1, t2) = (Utils.loadString("S_TypePrefixAround"),Utils.loadString("S_TypePrefix"))
+          val (t1, t2) = (Utils.loadString("S_TypePrefixAround"), Utils.loadString("S_TypePrefix"))
           word.find(c => !Character.isJavaIdentifierStart(c) && !Character.isJavaIdentifierPart(c)) match {
             case Some(_) => println(s"[$t1] $word : $typeAt")
             case None    => println(s"[$t2] $word : $typeAt")
@@ -438,7 +445,8 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
   increaseFontItem.setText(Utils.loadString("S_IncreaseFontSize"))
   val controlNumPlus = KeyStroke.getKeyStroke(KeyEvent.VK_ADD, InputEvent.CTRL_MASK)
   val controlPlus = KeyStroke.getKeyStroke(KeyEvent.VK_PLUS, InputEvent.CTRL_MASK)
-  val controlShiftPlus = KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK)
+  val controlShiftPlus =
+    KeyStroke.getKeyStroke(KeyEvent.VK_EQUALS, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK)
   inputMap.put(controlNumPlus, "increase-font-size")
   inputMap.put(controlPlus, "increase-font-size")
   inputMap.put(controlShiftPlus, "increase-font-size")
@@ -458,7 +466,8 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
   decreaseFontItem.setText(Utils.loadString("S_DecreaseFontSize"))
   val controlNumMinus = KeyStroke.getKeyStroke(KeyEvent.VK_SUBTRACT, InputEvent.CTRL_MASK)
   val controlMinus = KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, InputEvent.CTRL_MASK)
-  val controlShiftMinus = KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK)
+  val controlShiftMinus =
+    KeyStroke.getKeyStroke(KeyEvent.VK_MINUS, InputEvent.CTRL_DOWN_MASK | InputEvent.SHIFT_DOWN_MASK)
   inputMap.put(controlNumMinus, "decrease-font-size")
   inputMap.put(controlMinus, "decrease-font-size")
   inputMap.put(controlShiftMinus, "decrease-font-size")
@@ -557,6 +566,36 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
   idx += 1
 
   popup.add(syntaxColoringMenu, idx)
+  idx += 1
+
+  val resetEnterBindingAction = new AbstractAction(Utils.loadString("S_ResetEnterKey")) {
+    def actionPerformed(ev: ActionEvent): Unit = {
+      val ks = KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0)
+      val actionKey = DefaultEditorKit.insertBreakAction
+
+      println("\nENTER reset diagnostics:")
+
+      codePanes.zipWithIndex.foreach { case (pane, i) =>
+        val currKey = pane.getInputMap.get(ks)
+        val currAction = pane.getActionMap.get(currKey)
+        println(s"Pre ENTER reset: pane=${i + 1}, current binding=$currKey, action=$currAction")
+        println("---")
+      }
+
+      println("Resetting ENTER binding and action...")
+
+      codePanes.foreach { pane =>
+        pane.getInputMap.put(ks, actionKey)
+        pane.getActionMap.put(
+          actionKey,
+          new RSyntaxTextAreaEditorKit.InsertBreakAction()
+        )
+      }
+
+      println("ENTER key reset. Please try Enter again")
+    }
+  }
+  popup.add(new JMenuItem(resetEnterBindingAction), idx)
   idx += 1
 
   popup.add(modeMenu, idx)
@@ -663,8 +702,7 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
       }
     }
 
-    def makeNavigationButton(imageFile: String, actionCommand: String,
-                             toolTipText: String): JButton = {
+    def makeNavigationButton(imageFile: String, actionCommand: String, toolTipText: String): JButton = {
       val button = new JButton()
       button.setActionCommand(actionCommand)
       button.setToolTipText(toolTipText)
@@ -697,15 +735,24 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
     import Theme.currentTheme.stopPng
 
     val runButton = makeNavigationButton(s"/images/$imageFolder/$runPng", RunScript, Utils.loadString("S_RunScript"))
-    val runWorksheetButton = makeNavigationButton(s"/images/$imageFolder/$runwPng", RunWorksheet, Utils.loadString("S_RunWorksheet"))
-    val traceButton = makeNavigationButton(s"/images/$imageFolder/$runtPng", TraceScript, Utils.loadString("S_TraceScript"))
-    val compileButton = makeNavigationButton(s"/images/$imageFolder/$checkPng", CompileScript, Utils.loadString("S_CheckScript"))
-    val stopButton = makeNavigationButton(s"/images/$imageFolder/$stopPng", StopScript, Utils.loadString("S_StopScript"))
-    val hNextButton = makeNavigationButton(s"/images/$imageFolder/history-next.png", HistoryNext, Utils.loadString("S_HistNext"))
-    val hPrevButton = makeNavigationButton(s"/images/$imageFolder/history-prev.png", HistoryPrev, Utils.loadString("S_HistPrev"))
-    val clearSButton = makeNavigationButton(s"/images/$imageFolder/$clearSePng", ClearEditor, Utils.loadString("S_ClearEditorT"))
-    val clearButton = makeNavigationButton(s"/images/$imageFolder/$clearOwPng", ClearOutput, Utils.loadString("S_ClearOutput"))
-    val cexButton = makeNavigationButton(s"/images/$imageFolder/upload.png", UploadCommand, Utils.loadString("S_Upload"))
+    val runWorksheetButton =
+      makeNavigationButton(s"/images/$imageFolder/$runwPng", RunWorksheet, Utils.loadString("S_RunWorksheet"))
+    val traceButton =
+      makeNavigationButton(s"/images/$imageFolder/$runtPng", TraceScript, Utils.loadString("S_TraceScript"))
+    val compileButton =
+      makeNavigationButton(s"/images/$imageFolder/$checkPng", CompileScript, Utils.loadString("S_CheckScript"))
+    val stopButton =
+      makeNavigationButton(s"/images/$imageFolder/$stopPng", StopScript, Utils.loadString("S_StopScript"))
+    val hNextButton =
+      makeNavigationButton(s"/images/$imageFolder/history-next.png", HistoryNext, Utils.loadString("S_HistNext"))
+    val hPrevButton =
+      makeNavigationButton(s"/images/$imageFolder/history-prev.png", HistoryPrev, Utils.loadString("S_HistPrev"))
+    val clearSButton =
+      makeNavigationButton(s"/images/$imageFolder/$clearSePng", ClearEditor, Utils.loadString("S_ClearEditorT"))
+    val clearButton =
+      makeNavigationButton(s"/images/$imageFolder/$clearOwPng", ClearOutput, Utils.loadString("S_ClearOutput"))
+    val cexButton =
+      makeNavigationButton(s"/images/$imageFolder/upload.png", UploadCommand, Utils.loadString("S_Upload"))
 
     toolbar.add(runButton)
     toolbar.add(runWorksheetButton)
@@ -731,7 +778,19 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
     clearButton.setEnabled(false)
     toolbar.add(clearButton)
 
-    (toolbar, runButton, runWorksheetButton, traceButton, compileButton, stopButton, hNextButton, hPrevButton, clearSButton, clearButton, cexButton)
+    (
+      toolbar,
+      runButton,
+      runWorksheetButton,
+      traceButton,
+      compileButton,
+      stopButton,
+      hNextButton,
+      hPrevButton,
+      clearSButton,
+      clearButton,
+      cexButton
+    )
   }
 
   def addCodePaneListeners(): Unit = {
@@ -816,7 +875,7 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
           action.actionPerformed(null)
         }
         else {
-          sp.getMouseWheelListeners foreach { _.mouseWheelMoved(e) }
+          sp.getMouseWheelListeners.foreach { _.mouseWheelMoved(e) }
         }
       }
     }

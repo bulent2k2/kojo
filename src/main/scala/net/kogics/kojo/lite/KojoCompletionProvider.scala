@@ -2,28 +2,40 @@ package net.kogics.kojo
 package lite
 
 import java.awt.Point
-import java.util.List
 import java.util.logging.Logger
-
+import java.util.List
 import javax.swing.text.JTextComponent
-import net.kogics.kojo.core.CompletionInfo
-import net.kogics.kojo.util.Utils
-import net.kogics.kojo.xscala.{CodeCompletionUtils, CodeTemplates, Help}
-import org.fife.ui.autocomplete.{Completion, CompletionCellRenderer, CompletionProviderBase, TemplateCompletion}
 
 import scala.collection.mutable
 
-import net.kogics.kojo.lite.i18n.tr.{updateTypes, dumpCompletions}
+import net.kogics.kojo.core.CompletionInfo
+import net.kogics.kojo.util.Utils
+import net.kogics.kojo.xscala.CodeCompletionUtils
+import net.kogics.kojo.xscala.CodeTemplates
+import net.kogics.kojo.xscala.Help
+import org.fife.ui.autocomplete.Completion
+import org.fife.ui.autocomplete.CompletionCellRenderer
+import org.fife.ui.autocomplete.CompletionProviderBase
+import org.fife.ui.autocomplete.TemplateCompletion
+
+import net.kogics.kojo.lite.i18n.tr.dumpCompletions
+import net.kogics.kojo.lite.i18n.tr.updateTypes
 
 class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends CompletionProviderBase {
   val Log = Logger.getLogger(getClass.getName)
 
   val METHOD = 10
-  val VARIABLE = 9
+  val INTERPRETER_NAME = 9
   val CLASS = 8
   val PACKAGE = 7
   val KEYWORD = 6
   val TEMPLATE = 5
+  val VALUE = 4
+  val VARIABLE = 3
+  val TRAIT = 11
+  val TYPE = 12
+  val OBJECT = 13
+  val PACKAGE_OBJECT = 14
 
   setListCellRenderer(new CompletionCellRenderer) // needed for icons to show up
   setAutoActivationRules(false, null)
@@ -41,11 +53,13 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
         val nextIsBrace = (i + 1 < t.length) && t.charAt(i + 1) == '{'
         if (nextIsBrace) {
           sawInterpolation = true
-          sb.append('$')      // keep '$' as-is for "${...}"
-        } else {
-          sb.append("$$")     // escape plain '$'
+          sb.append('$') // keep '$' as-is for "${...}"
         }
-      } else {
+        else {
+          sb.append("$$") // escape plain '$'
+        }
+      }
+      else {
         sb.append(ch)
       }
       i += 1
@@ -56,6 +70,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
   }
 
   def proposal(offset: Int, completion: String, kind: Int, template: String) = {
+    // updateTypes returns the arg as is unless we are in Turkish locale
     val completion2 = updateTypes(completion)
     new TemplateCompletion(
       this,
@@ -74,13 +89,13 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     import core.MemberKind._
     def kind = completion.kind match {
       case Class         => CLASS
-      case Trait         => CLASS
-      case Type          => CLASS
-      case Object        => PACKAGE
+      case Trait         => TRAIT
+      case Type          => TYPE
+      case Object        => OBJECT
       case Package       => PACKAGE
-      case PackageObject => PACKAGE
+      case PackageObject => PACKAGE_OBJECT
       case Def           => METHOD
-      case Val           => VARIABLE
+      case Val           => VALUE
       case Var           => VARIABLE
     }
 
@@ -122,7 +137,8 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
       if (knownCompletion) {
         var template = methodTemplate(qualifiedName)
         if (template == "") None
-        else if (template != null) Some(template) else {
+        else if (template != null) Some(template)
+        else {
           if (specialOwner) {
             template = methodTemplate(completion.name)
             if (template != null) Some(template) else None
@@ -143,7 +159,8 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     def knownHelp: Option[String] = {
       if (knownCompletion) {
         var help = Help(qualifiedName)
-        if (help != null) Some(help) else {
+        if (help != null) Some(help)
+        else {
           if (specialOwner) {
             help = Help(completion.name)
             if (help != null) Some(help) else None
@@ -162,19 +179,25 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
       knownHelp.getOrElse(display) // completion.fullCompletion
 
     new TemplateCompletion(this, display, display, rstaTemplate(template), null, help) {
-      setRelevance(-completion.prio)
+      setRelevance(completion.relevance)
       override def getIcon = kindIcon(kind)
     }
   }
 
   def kindIcon(kind: Int) = {
     val fname = kind match {
-      case VARIABLE => "/images/kindvar.png"
-      case CLASS    => "/images/kindclass.png"
-      case PACKAGE  => "/images/kindpackage.gif"
-      case METHOD   => "/images/kindmethod.png"
-      case KEYWORD  => "/images/scala16x16.png"
-      case TEMPLATE => "/images/kindtemplate.png"
+      case INTERPRETER_NAME => "/images/kindname.png"
+      case VALUE            => "/images/kindval.png"
+      case VARIABLE         => "/images/kindvar.png"
+      case CLASS            => "/images/kindclass.png"
+      case TRAIT            => "/images/kindtrait.png"
+      case TYPE             => "/images/kindtype.png"
+      case OBJECT           => "/images/kindobject.png"
+      case PACKAGE          => "/images/kindpackage.gif"
+      case PACKAGE_OBJECT   => "/images/kindpackageobject.png"
+      case METHOD           => "/images/kindmethod.png"
+      case KEYWORD          => "/images/scala16x16.png"
+      case TEMPLATE         => "/images/kindtemplate.png"
     }
     Utils.loadIconC(fname)
   }
@@ -183,7 +206,11 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     CodeCompletionUtils.methodTemplate(completion)
   }
 
-  def addTemplateProposals(proposals: collection.mutable.ArrayBuffer[Completion], prefix: String, caretOffset: Int): Unit = {
+  def addTemplateProposals(
+      proposals: collection.mutable.ArrayBuffer[Completion],
+      prefix: String,
+      caretOffset: Int
+  ): Unit = {
     CodeTemplates.templates.filter { kv => kv._1.startsWith(prefix) }.foreach { kv =>
       val name = kv._1; val value = kv._2
       proposals.append(
@@ -195,7 +222,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     }
   }
 
-  var (objid: Option[String], prefix: Option[String]) = (None, None)
+  var (receiverId: Option[String], completionPrefix: Option[String]) = (None, None)
 
   def complete(comp: JTextComponent): List[Completion] = {
     val proposals = collection.mutable.ArrayBuffer.empty[Completion]
@@ -203,50 +230,65 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     execSupport.kojoCtx.showAppWaitCursor()
 
     try {
-      if (objid.isEmpty) {
-        val (varCompletions, voffset) = execSupport.varCompletions(prefix)
-        varCompletions.foreach { completion =>
+      if (receiverId.isEmpty) {
+        val (interpreterCompletions, interpreterPrefixLength) =
+          execSupport.interpreterNameCompletions(completionPrefix)
+        interpreterCompletions.foreach { completion =>
           if (!completion.contains("$")) {
-            proposals.append(proposal(caretOffset - voffset, completion,
-              VARIABLE,
-              methodTemplate(completion)))
+            proposals.append(
+              proposal(
+                caretOffset - interpreterPrefixLength,
+                completion,
+                INTERPRETER_NAME,
+                methodTemplate(completion)
+              )
+            )
           }
         }
 
-        val (memberCompletions, coffset) = execSupport.memberCompletions(caretOffset, null, prefix)
-        memberCompletions.foreach { completion =>
+        val (compilerCompletions, compilerPrefixLength) =
+          execSupport.compilerCompletions(caretOffset, null, completionPrefix)
+        compilerCompletions.foreach { completion =>
           try {
-            proposals.append(proposal2(caretOffset - coffset, completion))
+            proposals.append(proposal2(caretOffset - compilerPrefixLength, completion))
           }
           catch {
             case t: Throwable =>
-              /*Log.warning*/ println(s"Completion Problem for: ${completion.name} -- ${t.getMessage()}")
+              /*Log.warning*/
+              println(s"Completion Problem for: ${completion.name} -- ${t.getMessage()}")
           }
         }
 
-        val (keywordCompletions, koffset) = execSupport.keywordCompletions(prefix)
+        val (keywordCompletions, keywordPrefixLength) = execSupport.keywordCompletions(completionPrefix)
         keywordCompletions.foreach { completion =>
-          proposals.append(proposal(caretOffset - koffset, completion,
-            KEYWORD,
-            CodeCompletionUtils.keywordTemplate(completion)))
+          proposals.append(
+            proposal(
+              caretOffset - keywordPrefixLength,
+              completion,
+              KEYWORD,
+              CodeCompletionUtils.keywordTemplate(completion)
+            )
+          )
         }
 
-        addTemplateProposals(proposals, prefix.getOrElse(""), caretOffset)
+        addTemplateProposals(proposals, completionPrefix.getOrElse(""), caretOffset)
       }
       else {
-        val (memberCompletions, coffset) = execSupport.memberCompletions(caretOffset, objid.get, prefix)
-        memberCompletions.foreach { completion =>
-          proposals.append(proposal2(caretOffset - coffset, completion))
+        val (compilerCompletions, compilerPrefixLength) =
+          execSupport.compilerCompletions(caretOffset, receiverId.get, completionPrefix)
+        compilerCompletions.foreach { completion =>
+          proposals.append(proposal2(caretOffset - compilerPrefixLength, completion))
         }
       }
     }
     catch {
       case t: Throwable =>
-        /*Log.warning*/ println("Completion Problem 2: " + t.getMessage())
+        /*Log.warning*/
+        println("Completion Problem 2: " + t.getMessage())
     }
     execSupport.kojoCtx.hideAppWaitCursor()
     val proposals2 = new java.util.ArrayList[Completion]
-    val filterMap = mutable.HashMap.empty[String, TemplateCompletion]
+    val filterMap = mutable.HashMap.empty[(String, Int), TemplateCompletion]
 
     def bareName(c: TemplateCompletion) = {
       val name = c.getInputText
@@ -273,14 +315,14 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
       //      println("---")
       //      println(pp.getInputText)
       //      println(pp.getSummary)
-      val bName = bareName(pp)
+      val filterKey = (bareName(pp), pp.getParamCount)
 
-      filterMap.get(bName) match {
+      filterMap.get(filterKey) match {
         case Some(c) =>
           // there is a previous proposal
           // does it have help?
           if (hasHelp(c)) {
-            // don't add current proposal  
+            // don't add current proposal
           }
           else {
             // no help
@@ -288,11 +330,11 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
               proposals2.remove(c)
             }
             proposals2.add(p)
-            filterMap(bName) = pp
+            filterMap(filterKey) = pp
           }
         case None =>
           proposals2.add(p)
-          filterMap(bName) = pp
+          filterMap(filterKey) = pp
       }
     }
     proposals2
@@ -304,13 +346,13 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     }
     else {
       val caretOffset = comp.getCaretPosition
-      val (oid, pfx) = execSupport.objidAndPrefix(caretOffset)
-      objid = oid; prefix = pfx
-      prefix.getOrElse("")
+      val (parsedReceiverId, parsedCompletionPrefix) = execSupport.receiverIdAndPrefix(caretOffset)
+      receiverId = parsedReceiverId; completionPrefix = parsedCompletionPrefix
+      completionPrefix.getOrElse("")
     }
   }
 
-  import scala.jdk.CollectionConverters._ // bulent debugging. for .asScala below
+  import scala.jdk.CollectionConverters._ // for .asScala below
 
   override def getCompletionsImpl(comp: JTextComponent) = {
     if (execSupport.startingUp) {
@@ -331,7 +373,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     else if (execSupport.isRunningEnabled) {
       val cs = complete(comp)
       if (dumpCompletions) {
-        val b: scala.collection.mutable.Buffer[Completion] = cs.asScala  // debugging
+        val b: scala.collection.mutable.Buffer[Completion] = cs.asScala // debugging
         b.foreach(c => println(c))
       }
       cs
