@@ -16,14 +16,17 @@
 package net.kogics.kojo
 package xscala
 
-import org.junit.After
-import org.junit.Before
-import org.junit.Test
-import org.junit.Assert._
-
 import scala.tools.nsc.Settings
 
+import net.kogics.kojo.core.CompletionInfo
+import net.kogics.kojo.core.MemberKind
+import org.junit.After
+import org.junit.Assert._
+import org.junit.Before
+import org.junit.Test
+
 abstract class CompilerAndRunnerTestBase {
+  private val CompletionMarker = "@@"
 
   def settings = {
     val settings0 = new Settings()
@@ -42,19 +45,46 @@ abstract class CompilerAndRunnerTestBase {
       errOffset = offset
     }
 
-    def warning(msg: String, line: Int, column: Int): Unit = {
-    }
+    def warning(msg: String, line: Int, column: Int): Unit = {}
 
-    def info(msg: String, line: Int, column: Int): Unit = {
-    }
+    def info(msg: String, line: Int, column: Int): Unit = {}
 
-    def message(msg: String): Unit = {
-    }
+    def message(msg: String): Unit = {}
   }
 
   val runner = makeRunner()
 
   def makeRunner(): CompilerAndRunner
+
+  def completionsAt(codeWithMarker: String, completionPrefix: String = ""): List[CompletionInfo] = {
+    val markerOffset = codeWithMarker.indexOf(CompletionMarker)
+    assertTrue("missing completion marker", markerOffset >= 0)
+    assertEquals("multiple completion markers", markerOffset, codeWithMarker.lastIndexOf(CompletionMarker))
+
+    val codeWithPrefix = codeWithMarker.patch(markerOffset, "", CompletionMarker.length)
+    val offset = markerOffset - completionPrefix.length
+    assertTrue("completion prefix extends before start of source", offset >= 0)
+    if (completionPrefix.nonEmpty) {
+      assertEquals(
+        "prefix must appear immediately before marker",
+        completionPrefix,
+        codeWithPrefix.substring(offset, markerOffset)
+      )
+    }
+
+    val code =
+      if (completionPrefix.nonEmpty) codeWithPrefix.substring(0, offset).concat(codeWithPrefix.substring(markerOffset))
+      else codeWithPrefix
+
+    runner.completions(code, offset, completionPrefix)
+  }
+
+  def completionNamed(completions: List[CompletionInfo], name: String): CompletionInfo = {
+    completions.find(_.name == name).getOrElse {
+      fail(s"Missing completion: $name\nGot: ${completions.map(_.name).sorted.mkString(", ")}")
+      null.asInstanceOf[CompletionInfo]
+    }
+  }
 
   @Before
   def reset(): Unit = {
@@ -333,5 +363,197 @@ animate {
     runner.compileForRunning(code)
     assertEquals(0, errLine)
     assertEquals(0, errColumn)
+  }
+
+  @Test
+  def testJavaMethodCompletionKind(): Unit = {
+    val code = """val s = "hello"
+s."""
+
+    val cs = runner.completions(code, code.length, completionPrefix = "sub")
+    val substring = cs.find(_.name == "substring")
+
+    assertTrue(substring.isDefined)
+    assertEquals(MemberKind.Def, substring.get.kind)
+  }
+
+  @Test
+  def testVarCompletionKind(): Unit = {
+    val code = "var count = 1\n"
+
+    val cs = runner.completions(code, code.length, completionPrefix = "co")
+    val count = cs.find(_.name == "count")
+
+    assertTrue(count.isDefined)
+    assertEquals(MemberKind.Var, count.get.kind)
+  }
+
+  @Test
+  def testMemberCompletionsForUserClassMethods(): Unit = {
+    val code = """
+class CompletionTestX {
+    def m1 = 20
+    def m2(n: Int) = n * 20
+    val v1 = 10.0
+    var v2 = 11.0
+
+    class XC
+    object XO
+    trait XT
+
+    def m3(narg: Int)(d: Double) = {
+        def nested(n2: Int) = 5
+        n
+    }
+
+    def m4[T](t: T)(d: Double) = 5
+}
+
+val completionTestX = new CompletionTestX
+completionTestX.m@@
+"""
+
+    val cs = completionsAt(code, completionPrefix = "m")
+
+    assertEquals(MemberKind.Def, completionNamed(cs, "m1").kind)
+    assertEquals(MemberKind.Def, completionNamed(cs, "m2").kind)
+    assertEquals(MemberKind.Def, completionNamed(cs, "m3").kind)
+    assertEquals(MemberKind.Def, completionNamed(cs, "m4").kind)
+  }
+
+  @Test
+  def testMemberCompletionsForUserClassValuesAndTypes(): Unit = {
+    val code = """
+class CompletionTestY {
+    def m1 = 20
+    val v1 = 10.0
+    var v2 = 11.0
+
+    class XC
+    object XO
+    trait XT
+}
+
+val completionTestY = new CompletionTestY
+completionTestY.@@
+"""
+
+    val cs = completionsAt(code)
+
+    assertEquals(MemberKind.Val, completionNamed(cs, "v1").kind)
+    assertEquals(MemberKind.Var, completionNamed(cs, "v2").kind)
+    assertEquals(MemberKind.Class, completionNamed(cs, "XC").kind)
+    assertEquals(MemberKind.Object, completionNamed(cs, "XO").kind)
+    assertEquals(MemberKind.Trait, completionNamed(cs, "XT").kind)
+  }
+
+  @Test
+  def testScopeCompletionsForTopLevelFunction(): Unit = {
+    val code = """
+class CompletionTestZ {
+    def m1 = 20
+}
+
+def completionSquare(size: Int) {}
+
+val completionTestZ = new CompletionTestZ
+completionSq@@
+"""
+
+    val cs = completionsAt(code, completionPrefix = "completionSq")
+
+    assertEquals(MemberKind.Def, completionNamed(cs, "completionSquare").kind)
+  }
+
+  @Test
+  def testScopeCompletionsInsideMethodIncludeParamsAndNestedDefs(): Unit = {
+    val code = """
+class CompletionTestNested {
+    def m3(narg: Int)(d: Double) = {
+        def nested(n2: Int) = 5
+        n@@
+    }
+}
+"""
+
+    val cs = completionsAt(code, completionPrefix = "n")
+
+    assertEquals(MemberKind.Val, completionNamed(cs, "narg").kind)
+    assertEquals(MemberKind.Def, completionNamed(cs, "nested").kind)
+  }
+
+  @Test
+  def testExactCasePrefixMatchHasHigherRelevance(): Unit = {
+    val code = """
+val rightCase = 1
+val RightCase = 2
+ri@@
+"""
+
+    val cs = completionsAt(code, completionPrefix = "ri")
+    val exactCase = completionNamed(cs, "rightCase")
+    val differentCase = completionNamed(cs, "RightCase")
+
+    assertEquals(50, exactCase.relevance - differentCase.relevance)
+  }
+
+  @Test
+  def testPictureBuilderCompletions(): Unit = {
+    val code = """
+cleari()
+
+def completionPic = {
+    Picture.rectangle(100, 50)
+        .with@@
+        .withFillColor(green)
+}.withPenThickness(4)
+
+drawCentered(completionPic)
+"""
+
+    val cs = completionsAt(code, completionPrefix = "with")
+
+    assertEquals(MemberKind.Def, completionNamed(cs, "withPenColor").kind)
+    assertEquals(MemberKind.Def, completionNamed(cs, "withFillColor").kind)
+  }
+
+  @Test
+  def testPictureCompletionAfterBlockExpression(): Unit = {
+    val code = """
+cleari()
+
+def completionPic = {
+    Picture.rectangle(100, 50)
+        .withPenColor(blue)
+        .withFillColor(green)
+}.with@@
+
+drawCentered(completionPic)
+"""
+
+    val cs = completionsAt(code, completionPrefix = "with")
+
+    assertEquals(MemberKind.Def, completionNamed(cs, "withPenThickness").kind)
+  }
+
+  @Test
+  def testPictureCompletionAfterDrawingBlockWithLocalValues(): Unit = {
+    val code = """
+def cross = Picture {
+    val margin = 2
+    val len = 50
+    setPenThickness(4)
+    setPenColor(ColorMaker.hsl(200, 1.00, 0.50))
+    setPosition(margin, margin)
+    lineTo(len - margin, len - margin)
+    setPosition(len - margin, margin)
+    lineTo(margin, len - margin)
+}.withP@@
+"""
+
+    val cs = completionsAt(code, completionPrefix = "withP")
+
+    assertEquals(MemberKind.Def, completionNamed(cs, "withPenThickness").kind)
+    assertEquals(MemberKind.Def, completionNamed(cs, "withPenColor").kind)
   }
 }

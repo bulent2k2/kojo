@@ -19,7 +19,7 @@ package xscala
 import net.kogics.kojo.lite.i18n.tr.{turkishKeywords, turkishKeywordTemplates}
 
 object CodeCompletionUtils {
-  val NotIdChars = """ .(){}!%&+\-<=>?@\\^`|~#:/*""" + "\n\r\t"
+  val NotIdChars = """ .()[]{}!,;%&+\-<=>?@\\^`|~#:/*""" + "\n\r\t"
 
   val Keywords = turkishKeywords ++ List(
     "abstract",
