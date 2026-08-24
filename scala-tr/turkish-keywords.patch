@@ -1,0 +1,126 @@
+Turkish keywords for the Scala compiler (Kojo/Koco).
+
+Generated against the pristine scala/scala v2.13.18 sources, so it applies to a
+clean checkout of that tag:
+
+    git clone https://github.com/scala/scala ~/src/scala-2.13.18
+    cd ~/src/scala-2.13.18 && git checkout v2.13.18
+    git apply <kojo-clone>/scala-tr/turkish-keywords.patch
+    java_std_path            # jdk1.8.0_271 -- see scala-tr/README
+    sbt dist/mkPack
+
+The change to Main.scala is only a diagnostic println and is not required; the
+keywords themselves come from Scanners.scala (the Turkish entries go FIRST in
+allKeywords, so compiler errors still report the English keyword) and
+StdNames.scala (the keyword strings).
+
+--- a/src/compiler/scala/tools/nsc/Main.scala
++++ b/src/compiler/scala/tools/nsc/Main.scala
+@@ -26,6 +26,7 @@
+   override def newCompiler(): Global = Global(settings)
+ 
+   override def doCompile(compiler: Global): Unit = {
++    println("[Kojo] Scala Compiler v2.13.18 with Turkish keywords")
+     if (settings.resident.value) resident(compiler)
+     else super.doCompile(compiler)
+   }
+--- a/src/compiler/scala/tools/nsc/ast/parser/Scanners.scala
++++ b/src/compiler/scala/tools/nsc/ast/parser/Scanners.scala
+@@ -1475,6 +1475,47 @@
+   // ------------- keyword configuration -----------------------------------
+ 
+   private val allKeywords = List[(Name, Token)](
++    // Turkish first so that compiler errors report with English keywords
++    nme.trABSTRACTkw  -> ABSTRACT,
++    nme.trCASEkw      -> CASE,
++    nme.trCATCHkw     -> CATCH,
++    nme.trCLASSkw     -> CLASS,
++    nme.trDEFkw       -> DEF,
++    nme.trDOkw        -> DO,
++    nme.trELSEkw      -> ELSE,
++    nme.trEXTENDSkw   -> EXTENDS,
++    nme.trFALSEkw     -> FALSE,
++    nme.trFINALkw     -> FINAL,
++    nme.trFINALLYkw   -> FINALLY,
++    nme.trFORkw       -> FOR,
++    nme.trFORSOMEkw   -> FORSOME,
++    nme.trIFkw        -> IF,
++    nme.trIMPLICITkw  -> IMPLICIT,
++    nme.trIMPORTkw    -> IMPORT,
++    nme.trLAZYkw      -> LAZY,
++    nme.trMATCHkw     -> MATCH,
++    nme.trNEWkw       -> NEW,
++    nme.trNULLkw      -> NULL,
++    nme.trOBJECTkw    -> OBJECT,
++    nme.trOVERRIDEkw  -> OVERRIDE,
++    nme.trPACKAGEkw   -> PACKAGE,
++    nme.trPRIVATEkw   -> PRIVATE,
++    nme.trPROTECTEDkw -> PROTECTED,
++    nme.trRETURNkw    -> RETURN,
++    nme.trSEALEDkw    -> SEALED,
++    nme.trSUPERkw     -> SUPER,
++    nme.trTHISkw      -> THIS,
++    nme.trTHROWkw     -> THROW,
++    nme.trTRAITkw     -> TRAIT,
++    nme.trTRUEkw      -> TRUE,
++    nme.trTRYkw       -> TRY,
++    nme.trTYPEkw      -> TYPE,
++    nme.trVALkw       -> VAL,
++    nme.trVARkw       -> VAR,
++    nme.trWHILEkw     -> WHILE,
++    nme.trWITHkw      -> WITH,
++    nme.trYIELDkw     -> YIELD,
++
+     nme.ABSTRACTkw  -> ABSTRACT,
+     nme.CASEkw      -> CASE,
+     nme.CATCHkw     -> CATCH,
+--- a/src/reflect/scala/reflect/internal/StdNames.scala
++++ b/src/reflect/scala/reflect/internal/StdNames.scala
+@@ -231,6 +231,47 @@
+     final val HASHkw: TermName      = kw("#")
+     final val ATkw: TermName        = kw("@")
+ 
++    final val trABSTRACTkw: TermName  = kw("soyut")
++    final val trCASEkw: TermName      = kw("durum")
++    final val trCATCHkw: TermName     = kw("yakala")
++    final val trCLASSkw: TermName     = kw("sınıf")
++    final val trDEFkw: TermName       = kw("tanım")
++    final val trDOkw: TermName        = kw("yap")
++    final val trELSEkw: TermName      = kw("yoksa")
++    final val trEXTENDSkw: TermName   = kw("yayar")
++    final val trFALSEkw: TermName     = kw("yanlış")
++    final val trFINALkw: TermName     = kw("son")
++    final val trFINALLYkw: TermName   = kw("sonunda")
++    final val trFORkw: TermName       = kw("için")
++    final val trFORSOMEkw: TermName   = kw("bazı")
++    final val trIFkw: TermName        = kw("eğer")
++    final val trIMPLICITkw: TermName  = kw("örtük")
++    final val trIMPORTkw: TermName    = kw("getir")
++    final val trLAZYkw: TermName      = kw("miskin")
++    final val trMATCHkw: TermName     = kw("eşle")
++    final val trNEWkw: TermName       = kw("yeni")
++    final val trNULLkw: TermName      = kw("yok")
++    final val trOBJECTkw: TermName    = kw("nesne")
++    final val trOVERRIDEkw: TermName  = kw("baskın")
++    final val trPACKAGEkw: TermName   = kw("deste")
++    final val trPRIVATEkw: TermName   = kw("gizli")
++    final val trPROTECTEDkw: TermName = kw("koru")
++    final val trRETURNkw: TermName    = kw("geriDön")
++    final val trSEALEDkw: TermName    = kw("damgalı")
++    final val trSUPERkw: TermName     = kw("üst")
++    final val trTHISkw: TermName      = kw("bu")
++    // "at" (Turkish for throw) is used in compiler-bridge for sbt as a variable name! Can we fix it there?
++    final val trTHROWkw: TermName     = kw("bildir")
++    final val trTRAITkw: TermName     = kw("özellik")
++    final val trTRUEkw: TermName      = kw("doğru")
++    final val trTRYkw: TermName       = kw("dene")
++    final val trTYPEkw: TermName      = kw("tür")
++    final val trVALkw: TermName       = kw("dez")
++    final val trVARkw: TermName       = kw("den")
++    final val trWHILEkw: TermName     = kw("yineleDoğruKaldıkça")
++    final val trWITHkw: TermName      = kw("birlikte")
++    final val trYIELDkw: TermName     = kw("ver")
++
+     final val keywords = kw.result
+   } with CommonNames {
+     final val javaKeywords = new JavaKeywords()
