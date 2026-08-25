@@ -53,6 +53,33 @@ object ScalaToolchain {
   private val variantDirNames = Set(englishDirName, turkishDirName)
   val prefsNodeName = "Kojolite-Prefs" // keep in sync with KojoCtx.prefs
 
+  private val toolchainJarPrefixes = Seq("scala-library", "scala-reflect", "scala-compiler", "scalariform")
+
+  // scala-library.jar, scala-library-2.13.3.jar, ... - but not scala-swing_2.13-*.jar etc.
+  // A toolchain jar anywhere outside the selected variant dir can only shadow the real
+  // toolchain (a scala-library-2.13.3.jar in ~/.kojo/lite/libk once paired an old library
+  // with the new reflect and broke the compiler with a NoSuchMethodError).
+  def isToolchainJarName(name: String): Boolean =
+    name.endsWith(".jar") && toolchainJarPrefixes.exists { p =>
+      name == s"$p.jar" || name.startsWith(s"$p-")
+    }
+
+  /**
+   * Drops Scala toolchain jars from a list of classpath entries, warning
+   * about each one dropped. Used for user jar dirs (~/.kojo/lite/libk,
+   * ~/.kojo/extension) - which are prepended to the classpath, so a
+   * toolchain jar there can only shadow the real toolchain - and for flat
+   * leftovers elsewhere on the classpath once a variant is selected.
+   */
+  def withoutStrayToolchainJars(source: String, entries: List[String]): List[String] =
+    entries.filterNot { e =>
+      val isStray = isToolchainJarName(new File(e).getName)
+      if (isStray) {
+        println(s"[WARNING] Ignoring stray Scala toolchain jar in $source: $e (it would shadow Kojo's Scala toolchain; safe to delete)")
+      }
+      isStray
+    }
+
   def userLanguage: String = {
     val default = System.getProperty("user.language", "en")
     try {
@@ -78,6 +105,53 @@ object ScalaToolchain {
     fromSysProp.orElse(fromAppProp).getOrElse(fromLanguage)
   }
 
+  /**
+   * Run inside the real Kojo JVM: detect a mixed Scala toolchain - a
+   * scala-library, scala-reflect and scala-compiler of different versions
+   * resolving from different jars on the classpath. That configuration
+   * fails much later, deep inside the compiler, with an inscrutable
+   * NoSuchMethodError; this check names the offending jars up front.
+   */
+  def versionMismatch: Option[String] =
+    try {
+      // Works purely off the version-properties resources each toolchain jar
+      // carries, so it loads no compiler classes (cheap on the startup path)
+      // and reports the jar that actually wins the classpath race for each.
+      // Fail-safe by construction: on any trouble it stays quiet.
+      val cl = getClass.getClassLoader
+      def entry(name: String, propsFile: String): (String, String, String) = {
+        val url = Option(cl.getResource(propsFile))
+        val versionStr = url.map { u =>
+          val is = u.openStream()
+          try {
+            val p = new java.util.Properties()
+            p.load(is)
+            p.getProperty("version.number", "<unknown>")
+          }
+          finally is.close()
+        }.getOrElse("<unknown>")
+        (name, versionStr, url.map(_.toString).getOrElse("<unknown>"))
+      }
+      val versions = Seq(
+        entry("scala-library", "library.properties"),
+        entry("scala-reflect", "reflect.properties"),
+        entry("scala-compiler", "compiler.properties")
+      )
+      val known = versions.map(_._2).filterNot(v => v == "<unknown>" || v.isEmpty)
+      if (known.distinct.size <= 1) None
+      else
+        Some(
+          "Mixed Scala toolchain on the classpath - Kojo will likely fail to compile scripts:\n" +
+            // note: can't name this binding `ver` - that's a Turkish keyword to the patched compiler building Kojo
+            versions.map { case (name, versionStr, loc) => s"  $name $versionStr from $loc" }.mkString("\n") +
+            "\nRemove the stray jar(s) - check ~/.kojo/lite/libk, ~/.kojo/extension, the KOJO_CLASSPATH " +
+            "environment variable, and old scala jars in the install's lib directory."
+        )
+    }
+    catch {
+      case _: Throwable => None // never let the diagnostic itself break startup
+    }
+
   def select(cp: List[String]): List[String] = select(cp, variantDirName)
 
   def select(cp: List[String], variant: String): List[String] = {
@@ -102,7 +176,10 @@ object ScalaToolchain {
           if (missing.nonEmpty) {
             println(s"[WARNING] Incomplete Scala toolchain in $variantDir; missing: ${missing.mkString(", ")}")
           }
-          jars ::: cp.filterNot(e => variantParent(e).isDefined)
+          // drop stray toolchain jars outside the variant dirs (e.g. flat leftovers from
+          // an old install layout) - they could only shadow or duplicate the selected jars
+          val rest = withoutStrayToolchainJars("the launcher classpath", cp.filterNot(e => variantParent(e).isDefined))
+          jars ::: rest
         }
     }
   }

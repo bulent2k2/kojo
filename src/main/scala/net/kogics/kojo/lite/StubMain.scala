@@ -192,18 +192,28 @@ trait StubMain {
     //      ourCp.append(File.pathSeparatorChar)
     //    }
 
-    // allow another way to customize classpath
+    // allow another way to customize classpath. KOJO_CLASSPATH is a deliberate
+    // override, so a Scala toolchain jar in it is honored - with a warning,
+    // because it shadows Kojo's own toolchain (the in-app mismatch check will
+    // name it if the versions end up mixed).
     val kojoCp = System.getenv("KOJO_CLASSPATH")
     if (kojoCp != null) {
-      ourCp.append(kojoCp)
-      ourCp.append(File.pathSeparatorChar)
+      kojoCp.split(File.pathSeparatorChar).filterNot(_.isEmpty).foreach { e =>
+        if (ScalaToolchain.isToolchainJarName(new File(e).getName)) {
+          log(s"[WARNING] KOJO_CLASSPATH contains the Scala toolchain jar $e - it overrides Kojo's own Scala toolchain; edit KOJO_CLASSPATH if that is not intended")
+        }
+        ourCp.append(e)
+        ourCp.append(File.pathSeparatorChar)
+      }
     }
 
+    // user jar dirs are prepended, so a scala-library/reflect/compiler/scalariform
+    // dropped in one of them (a scala-library-2.13.3.jar in libk, once) can only
+    // shadow the real toolchain and break the compiler with a version mix
     def addJars(dir: String): Unit = {
-      Utils.filesInDir(dir, "jar").foreach { x =>
-        ourCp.append(dir)
-        ourCp.append(File.separatorChar)
-        ourCp.append(x)
+      val jars = Utils.filesInDir(dir, "jar").map(x => s"$dir${File.separatorChar}$x")
+      ScalaToolchain.withoutStrayToolchainJars(dir, jars).foreach { jar =>
+        ourCp.append(jar)
         ourCp.append(File.pathSeparatorChar)
       }
     }

@@ -64,7 +64,7 @@ object Main extends AppMenu with ScriptLoader { main =>
     val sysProps = System.getProperties.asScala.toBuffer
 
     System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tc, %3$s] %4$s: %5$s%6$s%n")
-    // app name needs to be set right in the beginning (this applies to Mac; is ignored elsewhere) 
+    // app name needs to be set right in the beginning (this applies to Mac; is ignored elsewhere)
     System.setProperty("apple.awt.application.name", "Kojo")
     kojoCtx = new KojoCtx(
       args.length == 1 && args(0) == "subKojo"
@@ -84,6 +84,11 @@ object Main extends AppMenu with ScriptLoader { main =>
 
     setupLogging()
     val Log = Logger.getLogger("Main")
+    // after setupLogging so the message lands in ~/.kojo/lite/log/kojo0.log,
+    // where a user reporting a broken Kojo will actually find it; it is also
+    // surfaced in the output pane below, once that exists
+    val toolchainMismatch = ScalaToolchain.versionMismatch
+    toolchainMismatch.foreach(Log.warning(_))
     if (!kojoCtx.subKojo) {
       runMultiInstancehandler()
     }
@@ -118,6 +123,7 @@ object Main extends AppMenu with ScriptLoader { main =>
       )
 
       kojoCtx.execSupport = execSupport
+      toolchainMismatch.foreach(execSupport.showError)
       kojoCtx.storyTeller = storyTeller
       val statusBar = new StatusBar
       kojoCtx.statusBar = statusBar
