@@ -78,6 +78,34 @@ object ScalaToolchain {
     fromSysProp.orElse(fromAppProp).getOrElse(fromLanguage)
   }
 
+
+  /**
+   * The Scala release Kojo is running on, e.g. "2.13.18" - taken from the
+   * compiler on the launcher classpath. compiler.properties is not shaded by
+   * anything else in lib/, unlike library.properties (scalariform bundles a
+   * copy of that one).
+   */
+  def scalaRelease: Option[String] =
+    try """(\d+\.\d+\.\d+)""".r.findFirstIn(scala.tools.nsc.Properties.versionNumberString)
+    catch { case _: Throwable => None }
+
+  /**
+   * Where the jars of `variant` live. Normally the directory shipped inside the
+   * package; when the Turkish toolchain was not packaged (the on-demand case),
+   * the copy under ~/.kojo/lite/scala-tr, fetching it if this is the first time.
+   */
+  private def resolveVariantDir(packaged: File, variant: String): File = {
+    def packagedHasJars = Utils.filesInDir(packaged.getPath, "jar").nonEmpty
+    if (variant != turkishDirName || packagedHasJars) packaged
+    else
+      scalaRelease
+        .flatMap(v => ScalaToolchainFetcher.ensureAvailable(v))
+        .getOrElse {
+          println("[WARNING] The Turkish Scala toolchain is not available; falling back to the stock one.")
+          packaged
+        }
+  }
+
   def select(cp: List[String]): List[String] = select(cp, variantDirName)
 
   def select(cp: List[String], variant: String): List[String] = {
@@ -88,7 +116,7 @@ object ScalaToolchain {
     toolchainRoots match {
       case Nil => cp
       case root :: _ =>
-        val variantDir = new File(root, variant)
+        val variantDir = resolveVariantDir(new File(root, variant), variant)
         val jars = Utils.filesInDir(variantDir.getPath, "jar").sorted.map(new File(variantDir, _).getPath)
         if (jars.isEmpty) {
           println(s"[WARNING] No Scala toolchain jars found in $variantDir; classpath left unchanged.")
