@@ -320,7 +320,7 @@ object TurkishAPI
   def yazıyüzleri: Dizin[Yazı] = bi.availableFontNames
   def yazıyüzü(adı: Yazı, boyu: Sayı): Yazıyüzü = bi.Font(adı, boyu)
   def yazıyüzü(adı: Yazı, boyu: Sayı, biçem: Sayı): Yazıyüzü = bi.Font(adı, biçem, boyu)
-  def yazıÇerçevesi(yazı: Yazı, yazıBoyu: Sayı, yazıyüzüAdı: Yazı = yok): Dikdörtgen =
+  def yazıÇerçevesi(yazı: Yazı, yazıBoyu: Sayı, yazıyüzüAdı: Yazı = null): Dikdörtgen =
     bi.textExtent(yazı, yazıBoyu, yazıyüzüAdı)
 
   val kaplumbağa0 = kaplumbağa

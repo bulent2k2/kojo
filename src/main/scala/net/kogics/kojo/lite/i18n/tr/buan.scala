@@ -57,7 +57,7 @@ trait TakvimVeZamanYöntemleri {
     def saatDilimi = hepsi(2)
     def yıl = hepsi(3)
     override def toString = yazıya
-    tanım yazıya: Yazı = s"${gün.mkString(" ")}  ${zaman.mkString(":")} ${saatDilimi.mkString("")}  ${yıl.mkString("")}"
+    def yazıya: Yazı = s"${gün.mkString(" ")}  ${zaman.mkString(":")} ${saatDilimi.mkString("")}  ${yıl.mkString("")}"
   }
 
   // from ../../CoreBuiltins.scala
@@ -68,7 +68,7 @@ trait TakvimVeZamanYöntemleri {
   def buAn2: Uzun = System.nanoTime
   def buSaniye2: İriKesir = BigDecimal(System.nanoTime) / BigDecimal("1000000000") //seconds
   @annotation.nowarn
-  def sayıyaKadarSay(n: İriSayı, sessiz: İkil = yanlış): Kesir = {
+  def sayıyaKadarSay(n: İriSayı, sessiz: İkil = false): Kesir = {
     def buSaniye1 = BigDecimal(buSaniye)
     var c: BigInt = 1
     if (!sessiz) {

@@ -47,7 +47,7 @@ case class Yöney2B(x: Kesir, y: Kesir) {
   override def toString = "Yöney2B(%.2f, %.2f)".format(x, y)
   override def equals(y2: Any) = y2 match {
     case y3: Yöney2B => v.equals(y3.v)
-    case _ => yanlış
+    case _ => false
   }
 }
 object Yöney2B {

@@ -110,13 +110,13 @@ trait RenkYöntemleri {
   // shorter aliases like RenkKYM, RenkDD and RenkADA for ease of use
   // This one is also to show up in completion pop-up help (Renk type overrides Renk function!)
   def RenkKYM(kırmızı: Sayı, yeşil: Sayı, mavi: Sayı, saydam: Sayı = 255): Renk = Renk(kırmızı, yeşil, mavi, saydam)
-  def RenkDD(x1: Sayı, y1: Sayı, renk1: Renk, x2: Sayı, y2: Sayı, renk2: Renk, dönüşlü: İkil = yanlış): DeğişimliBoya =
+  def RenkDD(x1: Sayı, y1: Sayı, renk1: Renk, x2: Sayı, y2: Sayı, renk2: Renk, dönüşlü: İkil = false): DeğişimliBoya =
     Renk.doğrusalDeğişim(x1, y1, renk1, x2, y2, renk2, dönüşlü)
   def RenkADA(arıRenk: Sayı, doygunluk: Sayı, aydınlık: Sayı) =
     Renk.ada(arıRenk / 360.0, doygunluk/100.0, aydınlık/100.0)
 
 
-  def RenkDoğrusalDeğişim(x1: Sayı, y1: Sayı, renk1: Renk, x2: Sayı, y2: Sayı, renk2: Renk, dönüşlü: İkil = yanlış): DeğişimliBoya =
+  def RenkDoğrusalDeğişim(x1: Sayı, y1: Sayı, renk1: Renk, x2: Sayı, y2: Sayı, renk2: Renk, dönüşlü: İkil = false): DeğişimliBoya =
     Renk.doğrusalDeğişim(x1, y1, renk1, x2, y2, renk2, dönüşlü)
   /* Ref from CoreBuiltins:
    def ColorHSB(h: Double, s: Double, b: Double) =
@@ -130,7 +130,7 @@ trait RenkYöntemleri {
       for ((s, t) <- List(kırmızı -> "kırmızı", yeşil -> "yeşil", mavi -> "mavi", saydam -> "saydam")) require(s >= 0 && s <= 255, s"$t değeri 0'dan 255'e kadar olmalı. Ne daha büyük, ne daha küçük.")
       new AColor(kırmızı, yeşil, mavi, saydam)
     }
-    def apply(rgbHex: Sayı): Renk = new AColor(rgbHex, yanlış)
+    def apply(rgbHex: Sayı): Renk = new AColor(rgbHex, false)
     def apply(rgbHex: Sayı, alfaDahilMi: İkil): Renk = new AColor(rgbHex, alfaDahilMi)
 
     def kym(kırmızı: Sayı, yeşil: Sayı, mavi: Sayı): DRenk = {
@@ -149,7 +149,7 @@ trait RenkYöntemleri {
       x2: Kesir,
       y2: Kesir,
       renk2: Renk,
-      dalgalıDevam: İkil = yanlış
+      dalgalıDevam: İkil = false
     ) = {
       DColor.linearGradient(x1, y1, renk1, x2, y2, renk2, dalgalıDevam)
     }
@@ -161,7 +161,7 @@ trait RenkYöntemleri {
       y2: Kesir,
       dağılım: Dizi[Kesir],
       renkler: Dizi[Renk],
-      dalgalıDevam: İkil = yanlış
+      dalgalıDevam: İkil = false
     ) = {
       DColor.linearMultipleGradient(x1, y1, x2, y2, dağılım, renkler, dalgalıDevam)
     }
@@ -183,7 +183,7 @@ trait RenkYöntemleri {
       yarıçap: Kesir,
       dağılım: Dizi[Kesir],
       renkler: Dizi[Renk],
-      dalgalıDevam: İkil = yanlış
+      dalgalıDevam: İkil = false
     ) = {
       DColor.radialMultipleGradient(merkezX, merkezY, yarıçap, dağılım, renkler, dalgalıDevam)
     }

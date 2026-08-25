@@ -102,11 +102,11 @@ import net.kogics.kojo.staging
   }
 
   test("İkil (Boolean in Turkish) should work") {
-    val test0: İkil = yanlış
-    val test1: İkil = doğru
+    val test0: İkil = false
+    val test1: İkil = true
 
-    test0 || false should be(yanlış)
-    test1 && true  should be(doğru)
+    test0 || false should be(false)
+    test1 && true  should be(true)
   }
 
   test("Translation of Option should work") {
@@ -164,14 +164,14 @@ import net.kogics.kojo.staging
 
   test("Translation of require should work") {
     val pass = try {
-      gerekli(true && doğru, "Bu doğru")
+      gerekli(true && true, "Bu doğru")
       true
     } catch {
       case _: Throwable => false
     }
     pass should be(true)
     val pass2 = try {
-      gerekli(false || yanlış, "Bu da yanlış")
+      gerekli(false || false, "Bu da yanlış")
       false
     } catch {
       case _: Throwable => true
@@ -242,12 +242,12 @@ import net.kogics.kojo.staging
 
   test("Translations of mutable.Map should work") {
     val e1 = Eşlem.boş[Yazı, Sayı]
-    e1 eşli ("anahtar") should be(yanlış)
+    e1 eşli ("anahtar") should be(false)
     e1 eşEkle ("anahtar" -> 99)
-    e1 eşli ("anahtar") should be(doğru)
+    e1 eşli ("anahtar") should be(true)
     e1("anahtar") should be(99)
     e1 eşEkle ("b" -> 88)
-    e1 eşli ("b") should be(doğru)
+    e1 eşli ("b") should be(true)
     e1("b") should be(88)
     val l = e1.m.toSeq
     l.size should be(2)
@@ -266,9 +266,9 @@ import net.kogics.kojo.staging
     e3 += (10 -> 100)
     e3(10) should be(100)
     e3.sayı should be(5)
-    e3.eşli(2) should be(doğru)
+    e3.eşli(2) should be(true)
     e3 -= 2
-    e3.eşli(2) should be(yanlış)
+    e3.eşli(2) should be(false)
     e3.sayı should be(4)
 
     var toplam1 = 0
@@ -400,15 +400,15 @@ import net.kogics.kojo.staging
       private val bakışlar = Yığın.boş[Dörtgen]
     }
     val p1 = new Pencere
-    p1.boşMu() should be(doğru)
+    p1.boşMu() should be(true)
     val d1 = Dörtgen(1, 2, 3, 4)
     val d2 = Dörtgen(0, 1, 2, 3)
     p1.koy(d1)
-    p1.boşMu() should be(yanlış)
+    p1.boşMu() should be(false)
     p1.koy(d2)
     p1.al() should be (d2)
     p1.al() should be (d1)
-    p1.boşMu() should be(doğru)
+    p1.boşMu() should be(true)
   }
 
   test("Translations of String methods to work") {
@@ -428,8 +428,8 @@ import net.kogics.kojo.staging
     y2.boyu should be(14)
     y2.başı should be('M')
     y2.kuyruğu should be("erhaba Dünya!")
-    y2.doluMu should be(doğru)
-    y2.boşMu should be(yanlış)
+    y2.doluMu should be(true)
+    y2.boşMu should be(false)
     y2.ele(_ == 'a') should be("aaa")
     y2.eleDeğilse(_ == 'a') should be("Merhb Düny!")
     y2.işle(x => x.büyükHarfe) should be("MERHABA DÜNYA!")
@@ -445,7 +445,7 @@ import net.kogics.kojo.staging
 
     Yazı.olarak(3) should be("3")
     Yazı.olarak(3.14) should be("3.14")
-    Yazı.olarak(yanlış) should be("yanlış")
+    Yazı.olarak(false) should be("yanlış")
     val a = Array('a', 'b', 'c', 'd', 'e')
     Yazı.olarak(a) should be("abcde")
     Yazı.olarak(a, 1, 3) should be("bcd")
@@ -458,8 +458,8 @@ import net.kogics.kojo.staging
     d1.başı should be(1)
     d1.kuyruğu should be(Dizin(3, 2))
     d1.boyu should be(3)
-    d1.boşMu should be(yanlış)
-    d1.doluMu should be(doğru)
+    d1.boşMu should be(false)
+    d1.doluMu should be(true)
     d1.ele(_ % 2 == 0) should be(Dizin(2))
     d1.eleDeğilse(_ % 2 == 0) should be(Dizin(1, 3))
     d1.işle(_ * 10) should be(Dizin(10, 30, 20))
@@ -486,8 +486,8 @@ import net.kogics.kojo.staging
     d1.başı should be(1)
     d1.kuyruğu should be(Diz(3, 2))
     d1.boyu should be(3)
-    d1.boşMu should be(yanlış)
-    d1.doluMu should be(doğru)
+    d1.boşMu should be(false)
+    d1.doluMu should be(true)
     d1.ele(_ % 2 == 0) should be(Diz(2))
     d1.eleDeğilse(_ % 2 == 0) should be(Diz(1, 3))
     d1.işle(_ * 10) should be(Diz(10, 30, 20))
@@ -515,8 +515,8 @@ import net.kogics.kojo.staging
     d1.başı should be(1)
     d1.kuyruğu should be(Dizi(3, 2))
     d1.boyu should be(3)
-    d1.boşMu should be(yanlış)
-    d1.doluMu should be(doğru)
+    d1.boşMu should be(false)
+    d1.doluMu should be(true)
     d1.ele(_ % 2 == 0) should be(Dizi(2))
     d1.eleDeğilse(_ % 2 == 0) should be(Dizi(1, 3))
     d1.işle(_ * 10) should be(Dizi(10, 30, 20))
@@ -554,8 +554,8 @@ import net.kogics.kojo.staging
     d1.başı should be(1)
     d1.kuyruğu should be(Dizik(3, 2))
     d1.boyu should be(3)
-    d1.boşMu should be(yanlış)
-    d1.doluMu should be(doğru)
+    d1.boşMu should be(false)
+    d1.doluMu should be(true)
     d1.ele(_ % 2 == 0) should be(Dizik(2))
     d1.eleDeğilse(_ % 2 == 0) should be(Dizik(1, 3))
     d1.işle(_ * 10) should be(Dizik(10, 30, 20))
@@ -585,15 +585,15 @@ import net.kogics.kojo.staging
     h1.sayıya should be(97)
     h1.kesire should be(97.0)
     h1.yazıya should be("a")
-    h1.sayıMı should be(yanlış)
-    '3'.sayıMı should be(doğru)
-    h1.boşlukMu should be(yanlış)
-    ' '.boşlukMu should be(doğru)
-    '\t'.boşlukMu should be(doğru)
-    h1.küçükHarfMi should be(doğru)
-    h2.küçükHarfMi should be(yanlış)
-    h1.büyükHarfMi should be(yanlış)
-    h2.büyükHarfMi should be(doğru)
+    h1.sayıMı should be(false)
+    '3'.sayıMı should be(true)
+    h1.boşlukMu should be(false)
+    ' '.boşlukMu should be(true)
+    '\t'.boşlukMu should be(true)
+    h1.küçükHarfMi should be(true)
+    h2.küçükHarfMi should be(false)
+    h1.büyükHarfMi should be(false)
+    h2.büyükHarfMi should be(true)
   }
 
   test("Translations of to, until and by to work") {
@@ -689,8 +689,8 @@ import net.kogics.kojo.staging
     buSaniye2 > 1.0 should be(true) // Returns the current value of the running Java Virtual Machine's high-resolution time source, in nanoseconds.
     buAn > 1_659_458_389_799L should be(true)
     buAn2 > İriSayı("1659457918531") should be(true)
-    sayıyaKadarSay(5000, doğru) < 0.01 should be(true) // in my runs, we get: 0.003 (3 millisec)
-    sayıyaKadarSay(1000000, doğru) < 0.1 should be(true) // we get: 0.022 (22 msec)
+    sayıyaKadarSay(5000, true) < 0.01 should be(true) // in my runs, we get: 0.003 (3 millisec)
+    sayıyaKadarSay(1000000, true) < 0.1 should be(true) // we get: 0.022 (22 msec)
   }
 
   test("Companion objects for translations to work") {
@@ -717,7 +717,7 @@ import net.kogics.kojo.staging
     s2.boyu should be(5)
     s2.ekle(10); s2.başı should be(10); s2.boyu should be(6)
     s2.ekle(20, -10, 30); s2.başı should be(30); s2.boyu should be(9)
-    s2.sil(); s2.boşMu should be(doğru)
+    s2.sil(); s2.boşMu should be(true)
 
     val k = Kuyruk(1, 5, 3, 4, 7)
     val k2 = k.ikizle()
@@ -726,7 +726,7 @@ import net.kogics.kojo.staging
     k.baştanAlHepsini(x => x > 4) should be(Dizi(5, 7))
     k.baştanAl should be(3)
     k.boyu should be(1)
-    k.sil(); k.boşMu should be(doğru)
+    k.sil(); k.boşMu should be(true)
     k.ekle(11); k.başı should be(11); k.boyu should be(1)
     k.ekleHepsini(Dizi(10, 20, 30)); k.başı should be(11); k.boyu should be(4)
   }
@@ -791,7 +791,7 @@ import net.kogics.kojo.staging
 
   test("Translations of Picture should work") {
     val r = götür(30, 40) * kalemRengi(mavi) -> Resim.dikdörtgen(100, 200)
-    r.çizili should be(yanlış)
+    r.çizili should be(false)
     r.alan should be(20000.0)
     r.konum.x should be(30)
     r.konum.y should be(40)
@@ -799,23 +799,8 @@ import net.kogics.kojo.staging
 
    */
 
-  test("Translations of keywords should work") {
-    dez x = 1
-    x should be(1)
-    den y = 2
-    y *= 2
-    y should be(4)
-    dez deneme: İkil = eğer (y < x) { yanlış } yoksa { doğru }
-    deneme should be(doğru)
-    tanım t1(söz: Yazı): Sayı = söz eşle {
-      durum "merhaba" => 1
-      durum "dünya" => 2
-      durum _ => 3
-    }
-    t1("merhaba") should be(1)
-    t1("dünya") should be(2)
-    t1("foo bar") should be(3)
-  }
+  // NOTE: the test that exercised the Turkish keywords themselves (val/den/eğer/yoksa/tanım/eşle)
+  // lives in the Koco fork, since it only compiles with the Turkish-keyword-patched compiler.
 
   test("Translation of hashCode overriding to work. V1 in English") {
     case class Foo(a: Int)
@@ -836,21 +821,6 @@ import net.kogics.kojo.staging
     p != q should be(true)
   }
 
-  test("Translation of hashCode overriding to work. V2 in Turkish") {
-    durum sınıf Foo(a: Sayı)
-    dez x = Foo(1); dez y = Foo(1)
-    (x == y && !(x != y)) should be(true)
-
-    den sayaç = 1
-    durum sınıf Bar(a: Sayı) yayar Eşsizlik {
-      dez no = sayaç; sayaç += 1
-      tanım kıymaKodu = no.kıymaKodu
-      satıryaz(kıymaKodu)
-    }
-    dez p = Bar(1); dez q = Bar(1)
-    (p != q && !(p == q)) should be(true)
-  }
-
   test("Translation of toString overriding to work. V1 in English") {
     case class Foo(a: Int, b: Double) extends BaskınYazıyaYöntemiyle {
       override def yazıya = s"Bar($a,$b)"
@@ -859,18 +829,9 @@ import net.kogics.kojo.staging
     f.toString should be("Bar(1,2.3)")
   }
 
-  test("Translation of toString overriding to work. V2 in Turkish") {
-    durum sınıf Falan(a: Sayı, b: Kesir) yayar BaskınYazıyaYöntemiyle {
-      baskın tanım yazıya = s"Filan($a,$b)"
-    }
-    dez f = Falan(1, 2.3)
-    f.toString should be("Filan(1,2.3)")
-    f.yazıya should be("Filan(1,2.3)")
-  }
-
   test("Translation of URL to work") {
-    dez yazı = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Flower_poster_2.jpg/330px-Flower_poster_2.jpg"
-    dez bkk = BKK(yazı)
+    val yazı = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Flower_poster_2.jpg/330px-Flower_poster_2.jpg"
+    val bkk = BKK(yazı)
     bkk.toExternalForm should be(yazı)
   }
 }

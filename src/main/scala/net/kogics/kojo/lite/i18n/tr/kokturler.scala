@@ -18,15 +18,15 @@ package net.kogics.kojo.lite.i18n.tr
 
 // her nesne, herneyse! java Object?
 trait CoreTypeMethodsInTurkish {
-  özellik BaskınYazıyaYöntemiyle {
-    tanım yazıya: Yazı
-    baskın tanım toString = yazıya
+  trait BaskınYazıyaYöntemiyle {
+    def yazıya: Yazı
+    override def toString = yazıya
   }
 
-  özellik Eşsizlik {
-    tanım kıymaKodu: Sayı
-    baskın tanım hashCode = kıymaKodu
-    baskın tanım equals(h2: Her) = h2.kıymaKodu == kıymaKodu
+  trait Eşsizlik {
+    def kıymaKodu: Sayı
+    override def hashCode = kıymaKodu
+    override def equals(h2: Her) = h2.kıymaKodu == kıymaKodu
     // iki nesnenin "kıyma kodu" farklıysa, nesneler de farklıdır.
     // Değilse, o zaman daha yavaş olan equals yöntemi kullanılır.
     // kıymaKodu/hashCode yöntemini yeniden tanımlamak gerekebiliyor.

@@ -33,8 +33,8 @@ trait OptionMethodsInTurkish {
   // örnek: if (varMı(resim.çarpışma(Resim.tuvalınSınırları))) {...} else {...}
   // .isDefined yerine
   def varMı[T](o: Belki[T]): İkil = o match {
-    case None    => yanlış
-    case Some(x) => doğru
+    case None    => false
+    case Some(x) => true
   }
   def yokMu[T](o: Belki[T]): İkil = !varMı(o)
 

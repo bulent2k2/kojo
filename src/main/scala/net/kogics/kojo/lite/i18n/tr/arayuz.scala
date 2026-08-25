@@ -36,8 +36,8 @@ object arayuz {
   /* ../../../widget/swingwrappers.scala
    Also has traits: PreferredMax Focusable
    */
-  case class BölmeÇizgisi(renk: Renk = yok, saydamMı: İkil = yanlış) extends s.JSeparator {
-    if (renk != yok) {
+  case class BölmeÇizgisi(renk: Renk = null, saydamMı: İkil = false) extends s.JSeparator {
+    if (renk != null) {
       setBackground(renk)
     }
     setOpaque(saydamMı)
