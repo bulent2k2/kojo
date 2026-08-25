@@ -119,6 +119,19 @@ class ScalaToolchainTest extends FunSuite with Matchers {
     ScalaToolchain.select(cp, ScalaToolchain.turkishDirName) should be(cp)
   }
 
+  test("stray toolchain jars are dropped from user jar dirs (libk/extension)") {
+    val libk = s"/u/.kojo/lite/libk"
+    val entries = List(
+      s"$libk/scala-library-2.13.3.jar",
+      s"$libk/mylib.jar",
+      s"$libk/scalariform.jar",
+      s"$libk/scala-xml_2.13-1.2.0.jar"
+    )
+    ScalaToolchain.withoutStrayToolchainJars(libk, entries) should be(
+      List(s"$libk/mylib.jar", s"$libk/scala-xml_2.13-1.2.0.jar")
+    )
+  }
+
   test("versionMismatch is quiet on a consistent toolchain") {
     // the test JVM runs on a single toolchain, so this must not fire
     ScalaToolchain.versionMismatch should be(None)

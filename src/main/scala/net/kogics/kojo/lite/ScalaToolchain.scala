@@ -64,6 +64,22 @@ object ScalaToolchain {
       name == s"$p.jar" || name.startsWith(s"$p-")
     }
 
+  /**
+   * Drops Scala toolchain jars from a list of classpath entries, warning
+   * about each one dropped. Used for user jar dirs (~/.kojo/lite/libk,
+   * ~/.kojo/extension) - which are prepended to the classpath, so a
+   * toolchain jar there can only shadow the real toolchain - and for flat
+   * leftovers elsewhere on the classpath once a variant is selected.
+   */
+  def withoutStrayToolchainJars(source: String, entries: List[String]): List[String] =
+    entries.filterNot { e =>
+      val isStray = isToolchainJarName(new File(e).getName)
+      if (isStray) {
+        println(s"[WARNING] Ignoring stray Scala toolchain jar in $source: $e (it would shadow Kojo's Scala toolchain; safe to delete)")
+      }
+      isStray
+    }
+
   def userLanguage: String = {
     val default = System.getProperty("user.language", "en")
     try {
@@ -96,38 +112,45 @@ object ScalaToolchain {
    * fails much later, deep inside the compiler, with an inscrutable
    * NoSuchMethodError; this check names the offending jars up front.
    */
-  def versionMismatch: Option[String] = {
-    def location(c: Class[_]): String =
-      try Option(c.getProtectionDomain.getCodeSource).map(_.getLocation.toString).getOrElse("<unknown>")
-      catch { case _: Exception => "<unknown>" }
-    def reflectVersion: String =
-      try {
-        val is = classOf[scala.reflect.internal.SymbolTable].getClassLoader.getResourceAsStream("reflect.properties")
-        if (is == null) "<unknown>"
-        else
-          try { val p = new java.util.Properties(); p.load(is); p.getProperty("version.number", "<unknown>") }
+  def versionMismatch: Option[String] =
+    try {
+      // Works purely off the version-properties resources each toolchain jar
+      // carries, so it loads no compiler classes (cheap on the startup path)
+      // and reports the jar that actually wins the classpath race for each.
+      // Fail-safe by construction: on any trouble it stays quiet.
+      val cl = getClass.getClassLoader
+      def entry(name: String, propsFile: String): (String, String, String) = {
+        val url = Option(cl.getResource(propsFile))
+        val versionStr = url.map { u =>
+          val is = u.openStream()
+          try {
+            val p = new java.util.Properties()
+            p.load(is)
+            p.getProperty("version.number", "<unknown>")
+          }
           finally is.close()
+        }.getOrElse("<unknown>")
+        (name, versionStr, url.map(_.toString).getOrElse("<unknown>"))
       }
-      catch { case _: Exception => "<unknown>" }
-
-    val libraryVersion = scala.util.Properties.versionNumberString
-    val compilerVersion = scala.tools.nsc.Properties.versionNumberString
-    val versions = Seq(
-      ("scala-library", libraryVersion, location(classOf[scala.Option[_]])),
-      ("scala-reflect", reflectVersion, location(classOf[scala.reflect.internal.SymbolTable])),
-      ("scala-compiler", compilerVersion, location(classOf[scala.tools.nsc.Global]))
-    )
-    val known = versions.filterNot(_._2 == "<unknown>")
-    if (known.map(_._2).distinct.size <= 1) None
-    else
-      Some(
-        "Mixed Scala toolchain on the classpath - Kojo will likely fail to compile scripts:\n" +
-          // note: can't name this binding `ver` - that's a Turkish keyword to the patched compiler building Kojo
-          versions.map { case (name, versionStr, loc) => s"  $name $versionStr from $loc" }.mkString("\n") +
-          "\nRemove the stray jar(s) - check ~/.kojo/lite/libk, ~/.kojo/extension, the KOJO_CLASSPATH " +
-          "environment variable, and old scala jars in the install's lib directory."
+      val versions = Seq(
+        entry("scala-library", "library.properties"),
+        entry("scala-reflect", "reflect.properties"),
+        entry("scala-compiler", "compiler.properties")
       )
-  }
+      val known = versions.map(_._2).filterNot(v => v == "<unknown>" || v.isEmpty)
+      if (known.distinct.size <= 1) None
+      else
+        Some(
+          "Mixed Scala toolchain on the classpath - Kojo will likely fail to compile scripts:\n" +
+            // note: can't name this binding `ver` - that's a Turkish keyword to the patched compiler building Kojo
+            versions.map { case (name, versionStr, loc) => s"  $name $versionStr from $loc" }.mkString("\n") +
+            "\nRemove the stray jar(s) - check ~/.kojo/lite/libk, ~/.kojo/extension, the KOJO_CLASSPATH " +
+            "environment variable, and old scala jars in the install's lib directory."
+        )
+    }
+    catch {
+      case _: Throwable => None // never let the diagnostic itself break startup
+    }
 
   def select(cp: List[String]): List[String] = select(cp, variantDirName)
 
@@ -155,11 +178,7 @@ object ScalaToolchain {
           }
           // drop stray toolchain jars outside the variant dirs (e.g. flat leftovers from
           // an old install layout) - they could only shadow or duplicate the selected jars
-          val (strays, rest) = cp.filterNot(e => variantParent(e).isDefined)
-            .partition(e => isToolchainJarName(new File(e).getName))
-          strays.foreach { s =>
-            println(s"[WARNING] Ignoring stray Scala toolchain jar on the classpath: $s (safe to delete)")
-          }
+          val rest = withoutStrayToolchainJars("the launcher classpath", cp.filterNot(e => variantParent(e).isDefined))
           jars ::: rest
         }
     }
