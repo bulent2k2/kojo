@@ -89,12 +89,29 @@ class ScalaToolchainFetcherTest extends FunSuite with Matchers {
     val dir = ScalaToolchainFetcher.cacheDir(v)
     deleteRecursively(dir)
     withRemote(url) {
-      val got = ScalaToolchainFetcher.ensureAvailable(v, _ => ())
+      val got = ScalaToolchainFetcher.ensureAvailable(v, silent)
       got.isDefined should be(true)
       ScalaToolchainFetcher.isComplete(got.get) should be(true)
       // nothing half-written left behind
       got.get.listFiles.count(_.getName.endsWith(".part")) should be(0)
     }
+    deleteRecursively(remote)
+    deleteRecursively(dir)
+  }
+
+  test("the download reports each jar and its bytes") {
+    val v = freshVersion("progress")
+    val (remote, url) = publish(s"$v-20260823-123456-abcdef0")
+    val dir = ScalaToolchainFetcher.cacheDir(v)
+    deleteRecursively(dir)
+    val recorder = new Recorder
+    withRemote(url) {
+      ScalaToolchainFetcher.ensureAvailable(v, recorder).isDefined should be(true)
+    }
+    recorder.jars.map(_._1) should be(ScalaToolchainFetcher.jarNames)
+    recorder.jars.foreach { case (_, total) => total should be > 0L }
+    recorder.received should be(ScalaToolchainFetcher.jarNames.map(n => new File(dir, n).length).sum)
+    recorder.finishedCalls should be(1)
     deleteRecursively(remote)
     deleteRecursively(dir)
   }
@@ -106,7 +123,7 @@ class ScalaToolchainFetcherTest extends FunSuite with Matchers {
     dir.mkdirs()
     ScalaToolchainFetcher.jarNames.foreach(n => makeJar(dir, n, None))
     withRemote("file:///nonexistent-so-a-fetch-would-fail/") {
-      ScalaToolchainFetcher.ensureAvailable(v, _ => ()) should be(Some(dir))
+      ScalaToolchainFetcher.ensureAvailable(v, silent) should be(Some(dir))
     }
     deleteRecursively(dir)
   }
@@ -119,7 +136,7 @@ class ScalaToolchainFetcherTest extends FunSuite with Matchers {
     val dir = ScalaToolchainFetcher.cacheDir(v)
     deleteRecursively(dir)
     withRemote(url) {
-      ScalaToolchainFetcher.ensureAvailable(v, _ => ()) should be(None)
+      ScalaToolchainFetcher.ensureAvailable(v, silent) should be(None)
     }
     ScalaToolchainFetcher.isComplete(dir) should be(false)
     // and no half-written file is left lying around
@@ -134,7 +151,7 @@ class ScalaToolchainFetcherTest extends FunSuite with Matchers {
     val dir = ScalaToolchainFetcher.cacheDir(v)
     deleteRecursively(dir)
     withRemote(url) {
-      ScalaToolchainFetcher.ensureAvailable(v, _ => ()) should be(None)
+      ScalaToolchainFetcher.ensureAvailable(v, silent) should be(None)
     }
     ScalaToolchainFetcher.isComplete(dir) should be(false)
     deleteRecursively(remote)
@@ -145,14 +162,29 @@ class ScalaToolchainFetcherTest extends FunSuite with Matchers {
     val v = freshVersion("offline")
     val dir = ScalaToolchainFetcher.cacheDir(v)
     deleteRecursively(dir)
-    val said = collection.mutable.ListBuffer.empty[String]
+    val recorder = new Recorder
     withRemote("file:///definitely/not/here/") {
-      ScalaToolchainFetcher.ensureAvailable(v, said += _) should be(None)
+      ScalaToolchainFetcher.ensureAvailable(v, recorder) should be(None)
     }
-    said.exists(_.contains("[WARNING]")) should be(true)
+    recorder.messages.exists(_.contains("[WARNING]")) should be(true)
+    recorder.finishedCalls should be(1)
     ScalaToolchainFetcher.isComplete(dir) should be(false)
     deleteRecursively(dir)
   }
+
+  /** Records what the fetcher reports, so progress is covered too. */
+  class Recorder extends FetchProgress {
+    val messages = collection.mutable.ListBuffer.empty[String]
+    val jars = collection.mutable.ListBuffer.empty[(String, Long)]
+    var received = 0L
+    var finishedCalls = 0
+    def message(msg: String): Unit = messages += msg
+    def startJar(name: String, totalBytes: Long): Unit = jars += (name -> totalBytes)
+    def bytes(n: Long): Unit = received += n
+    def finished(): Unit = finishedCalls += 1
+  }
+
+  val silent = new Recorder
 
   def deleteRecursively(f: File): Unit = {
     if (f.isDirectory) Option(f.listFiles).foreach(_.foreach(deleteRecursively))

@@ -68,26 +68,29 @@ object ScalaToolchainFetcher {
    * it first if it is not cached yet. None if it could not be made available -
    * the caller then stays on the stock toolchain.
    */
-  def ensureAvailable(version: String, progress: String => Unit = println): Option[File] = {
+  def ensureAvailable(version: String, progress: FetchProgress = ConsoleProgress): Option[File] = {
     val dir = cacheDir(version)
     if (isComplete(dir)) Some(dir)
     else
       try fetchInto(dir, version, progress)
       catch {
         case e: Throwable =>
-          progress(s"[WARNING] Could not fetch the Turkish Scala toolchain: ${e.getMessage}")
+          progress.message(s"[WARNING] Could not fetch the Turkish Scala toolchain: ${e.getMessage}")
           None
       }
-      finally discardPartials(dir)
+      finally {
+        discardPartials(dir)
+        progress.finished()
+      }
   }
 
   /** Removes anything a failed fetch left half-written. */
   private def discardPartials(dir: File): Unit =
     Option(dir.listFiles).foreach(_.filter(_.getName.endsWith(".part")).foreach(_.delete()))
 
-  private def fetchInto(dir: File, version: String, progress: String => Unit): Option[File] = {
+  private def fetchInto(dir: File, version: String, progress: FetchProgress): Option[File] = {
     val base = baseUrlFor(version)
-    progress(s"[INFO] Fetching the Turkish Scala toolchain $version from $base")
+    progress.message(s"[INFO] Fetching the Turkish Scala toolchain $version from $base")
     dir.mkdirs()
     val expected = checksums(s"$base/$checksumFileName")
     val staged = jarNames.map { name =>
@@ -96,8 +99,7 @@ object ScalaToolchainFetcher {
         throw new RuntimeException(s"$checksumFileName has no entry for $name")
       )
       val tmp = new File(dir, s"$name.part")
-      progress(s"[INFO] ... $name")
-      val actual = download(new URL(s"$base/$name"), tmp)
+      val actual = download(new URL(s"$base/$name"), tmp, name, progress)
       if (!actual.equalsIgnoreCase(want)) {
         tmp.delete()
         throw new RuntimeException(s"checksum mismatch for $name (got $actual, expected $want)")
@@ -109,7 +111,7 @@ object ScalaToolchainFetcher {
     // only publish the jars into their final names once all of them are good,
     // so an interrupted fetch can never leave a half-usable toolchain behind
     staged.foreach { case (tmp, target) => if (!tmp.renameTo(target)) throw new RuntimeException(s"cannot install $target") }
-    progress(s"[INFO] Turkish Scala toolchain ready in $dir")
+    progress.message(s"[INFO] Turkish Scala toolchain ready in $dir")
     Some(dir)
   }
 
@@ -132,9 +134,11 @@ object ScalaToolchainFetcher {
   }
 
   /** Downloads `url` into `target`, returning the SHA-256 of what arrived. */
-  private def download(url: URL, target: File): String = {
+  private def download(url: URL, target: File, name: String, progress: FetchProgress): String = {
     val digest = MessageDigest.getInstance("SHA-256")
-    val in: InputStream = url.openStream()
+    val conn = url.openConnection()
+    progress.startJar(name, conn.getContentLengthLong)
+    val in: InputStream = conn.getInputStream
     try {
       val out = new FileOutputStream(target)
       try {
@@ -143,6 +147,7 @@ object ScalaToolchainFetcher {
         while (n > 0) {
           digest.update(buf, 0, n)
           out.write(buf, 0, n)
+          progress.bytes(n.toLong)
           n = in.read(buf)
         }
       }

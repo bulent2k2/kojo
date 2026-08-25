@@ -99,7 +99,7 @@ object ScalaToolchain {
     if (variant != turkishDirName || packagedHasJars) packaged
     else
       scalaRelease
-        .flatMap(v => ScalaToolchainFetcher.ensureAvailable(v))
+        .flatMap(v => ScalaToolchainFetcher.ensureAvailable(v, FetchProgress.forLauncher()))
         .getOrElse {
           println("[WARNING] The Turkish Scala toolchain is not available; falling back to the stock one.")
           packaged
