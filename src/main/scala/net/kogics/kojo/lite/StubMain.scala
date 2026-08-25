@@ -192,19 +192,34 @@ trait StubMain {
     //      ourCp.append(File.pathSeparatorChar)
     //    }
 
+    // user-supplied jars are prepended, so a scala-library/reflect/compiler/scalariform
+    // among them would shadow the real toolchain and break the compiler with a version
+    // mix - skip such jars with a warning
+    def stray(source: String, entry: String): Boolean = {
+      val isStray = ScalaToolchain.isToolchainJarName(new File(entry).getName)
+      if (isStray) {
+        log(s"[WARNING] Ignoring stray Scala toolchain jar in $source: $entry (it would shadow Kojo's Scala toolchain; safe to delete)")
+      }
+      isStray
+    }
+
     // allow another way to customize classpath
     val kojoCp = System.getenv("KOJO_CLASSPATH")
     if (kojoCp != null) {
-      ourCp.append(kojoCp)
-      ourCp.append(File.pathSeparatorChar)
+      kojoCp.split(File.pathSeparatorChar).filterNot(e => e.isEmpty || stray("KOJO_CLASSPATH", e)).foreach { e =>
+        ourCp.append(e)
+        ourCp.append(File.pathSeparatorChar)
+      }
     }
 
     def addJars(dir: String): Unit = {
       Utils.filesInDir(dir, "jar").foreach { x =>
-        ourCp.append(dir)
-        ourCp.append(File.separatorChar)
-        ourCp.append(x)
-        ourCp.append(File.pathSeparatorChar)
+        if (!stray(dir, x)) {
+          ourCp.append(dir)
+          ourCp.append(File.separatorChar)
+          ourCp.append(x)
+          ourCp.append(File.pathSeparatorChar)
+        }
       }
     }
 

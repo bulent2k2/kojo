@@ -64,8 +64,9 @@ object Main extends AppMenu with ScriptLoader { main =>
     val sysProps = System.getProperties.asScala.toBuffer
 
     System.setProperty("java.util.logging.SimpleFormatter.format", "[%1$tc, %3$s] %4$s: %5$s%6$s%n")
-    // app name needs to be set right in the beginning (this applies to Mac; is ignored elsewhere) 
+    // app name needs to be set right in the beginning (this applies to Mac; is ignored elsewhere)
     System.setProperty("apple.awt.application.name", "Kojo")
+    ScalaToolchain.versionMismatch.foreach(msg => println(s"[WARNING] $msg"))
     kojoCtx = new KojoCtx(
       args.length == 1 && args(0) == "subKojo"
     ) // context needs to be created right up front to set user language

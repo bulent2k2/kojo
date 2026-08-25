@@ -88,6 +88,42 @@ class ScalaToolchainTest extends FunSuite with Matchers {
     selected.indexWhere(_.endsWith("scala-library.jar")) should be < selected.indexOf(new File(lib, "kojo.jar").getPath)
   }
 
+  test("toolchain jar names are recognized, versioned or not") {
+    import ScalaToolchain.isToolchainJarName
+    isToolchainJarName("scala-library.jar") should be(true)
+    isToolchainJarName("scala-library-2.13.3.jar") should be(true)
+    isToolchainJarName("scala-reflect-2.13.18.jar") should be(true)
+    isToolchainJarName("scala-compiler.jar") should be(true)
+    isToolchainJarName("scalariform.jar") should be(true)
+    isToolchainJarName("scala-swing_2.13-2.1.1.jar") should be(false)
+    isToolchainJarName("scala-xml_2.13-1.2.0.jar") should be(false)
+    isToolchainJarName("scala-parser-combinators_2.13-1.1.2.jar") should be(false)
+    isToolchainJarName("kojo.jar") should be(false)
+    isToolchainJarName("scala-library") should be(false)
+  }
+
+  test("stray toolchain jars are dropped when a variant is selected") {
+    val lib = makeLibDir()
+    val strayJar = new File(lib, "scala-library-2.13.3.jar")
+    strayJar.createNewFile()
+    strayJar.deleteOnExit()
+    val selected = ScalaToolchain.select(strayJar.getPath :: launcherCp(lib), ScalaToolchain.englishDirName)
+    selected should not contain strayJar.getPath
+    val enDir = new File(lib, ScalaToolchain.englishDirName).getPath
+    selected.filter(_.endsWith(s"scala-library.jar")) should be(List(s"$enDir${File.separator}scala-library.jar"))
+  }
+
+  test("stray toolchain jars are left alone when no variant dir is on the classpath (dev mode)") {
+    // in dev runs the scalaHome pack jars ARE the toolchain - they must not be filtered
+    val cp = List("/sbt/scala-tr/build/pack/lib/scala-library.jar", "/some/place/kojo.jar")
+    ScalaToolchain.select(cp, ScalaToolchain.turkishDirName) should be(cp)
+  }
+
+  test("versionMismatch is quiet on a consistent toolchain") {
+    // the test JVM runs on a single toolchain, so this must not fire
+    ScalaToolchain.versionMismatch should be(None)
+  }
+
   test("kojo.toolchain overrides the language-based choice") {
     val old = System.getProperty("kojo.toolchain")
     try {

@@ -53,6 +53,17 @@ object ScalaToolchain {
   private val variantDirNames = Set(englishDirName, turkishDirName)
   val prefsNodeName = "Kojolite-Prefs" // keep in sync with KojoCtx.prefs
 
+  private val toolchainJarPrefixes = Seq("scala-library", "scala-reflect", "scala-compiler", "scalariform")
+
+  // scala-library.jar, scala-library-2.13.3.jar, ... - but not scala-swing_2.13-*.jar etc.
+  // A toolchain jar anywhere outside the selected variant dir can only shadow the real
+  // toolchain (a scala-library-2.13.3.jar in ~/.kojo/lite/libk once paired an old library
+  // with the new reflect and broke the compiler with a NoSuchMethodError).
+  def isToolchainJarName(name: String): Boolean =
+    name.endsWith(".jar") && toolchainJarPrefixes.exists { p =>
+      name == s"$p.jar" || name.startsWith(s"$p-")
+    }
+
   def userLanguage: String = {
     val default = System.getProperty("user.language", "en")
     try {
@@ -76,6 +87,46 @@ object ScalaToolchain {
     def fromAppProp = Utils.appProperty("kojo.toolchain").flatMap(parseOverride(_, "kojo.properties"))
     def fromLanguage = if (userLanguage == "tr") turkishDirName else englishDirName
     fromSysProp.orElse(fromAppProp).getOrElse(fromLanguage)
+  }
+
+  /**
+   * Run inside the real Kojo JVM: detect a mixed Scala toolchain - a
+   * scala-library, scala-reflect and scala-compiler of different versions
+   * resolving from different jars on the classpath. That configuration
+   * fails much later, deep inside the compiler, with an inscrutable
+   * NoSuchMethodError; this check names the offending jars up front.
+   */
+  def versionMismatch: Option[String] = {
+    def location(c: Class[_]): String =
+      try Option(c.getProtectionDomain.getCodeSource).map(_.getLocation.toString).getOrElse("<unknown>")
+      catch { case _: Exception => "<unknown>" }
+    def reflectVersion: String =
+      try {
+        val is = classOf[scala.reflect.internal.SymbolTable].getClassLoader.getResourceAsStream("reflect.properties")
+        if (is == null) "<unknown>"
+        else
+          try { val p = new java.util.Properties(); p.load(is); p.getProperty("version.number", "<unknown>") }
+          finally is.close()
+      }
+      catch { case _: Exception => "<unknown>" }
+
+    val libraryVersion = scala.util.Properties.versionNumberString
+    val compilerVersion = scala.tools.nsc.Properties.versionNumberString
+    val versions = Seq(
+      ("scala-library", libraryVersion, location(classOf[scala.Option[_]])),
+      ("scala-reflect", reflectVersion, location(classOf[scala.reflect.internal.SymbolTable])),
+      ("scala-compiler", compilerVersion, location(classOf[scala.tools.nsc.Global]))
+    )
+    val known = versions.filterNot(_._2 == "<unknown>")
+    if (known.map(_._2).distinct.size <= 1) None
+    else
+      Some(
+        "Mixed Scala toolchain on the classpath - Kojo will likely fail to compile scripts:\n" +
+          // note: can't name this binding `ver` - that's a Turkish keyword to the patched compiler building Kojo
+          versions.map { case (name, versionStr, loc) => s"  $name $versionStr from $loc" }.mkString("\n") +
+          "\nRemove the stray jar(s) - check ~/.kojo/lite/libk, ~/.kojo/extension, the KOJO_CLASSPATH " +
+          "environment variable, and old scala jars in the install's lib directory."
+      )
   }
 
   def select(cp: List[String]): List[String] = select(cp, variantDirName)
@@ -102,7 +153,14 @@ object ScalaToolchain {
           if (missing.nonEmpty) {
             println(s"[WARNING] Incomplete Scala toolchain in $variantDir; missing: ${missing.mkString(", ")}")
           }
-          jars ::: cp.filterNot(e => variantParent(e).isDefined)
+          // drop stray toolchain jars outside the variant dirs (e.g. flat leftovers from
+          // an old install layout) - they could only shadow or duplicate the selected jars
+          val (strays, rest) = cp.filterNot(e => variantParent(e).isDefined)
+            .partition(e => isToolchainJarName(new File(e).getName))
+          strays.foreach { s =>
+            println(s"[WARNING] Ignoring stray Scala toolchain jar on the classpath: $s (safe to delete)")
+          }
+          jars ::: rest
         }
     }
   }
