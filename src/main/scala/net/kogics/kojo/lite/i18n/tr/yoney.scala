@@ -24,7 +24,7 @@ trait VectorMethodsInTurkish {
     def apply[T](elemanlar: T*) = Vector.from(elemanlar)
     def unapplySeq[T](yler: Vector[T]) = Vector.unapplySeq(yler)
     def boş[T] = Vector.empty[T]
-    def doldur[T: ClassTag](b1: Sayı)(e: => T) = Vector.fill[T](b1)(e)
+    def doldur[T:ClassTag](b1: Sayı)(e: => T) = Vector.fill[T](b1)(e)
   }
 
   implicit class YöneyYöntemleri[A](y: Yöney[A]) {
@@ -47,13 +47,13 @@ trait VectorMethodsInTurkish {
     def soldanKatla[B](z: B)(işlev: (B, A) => B): B = y.foldLeft(z)(işlev)
     def sağdanKatla[B](z: B)(işlev: (A, B) => B): B = y.foldRight(z)(işlev)
     // https://github.com/scala/scala/blob/v2.12.7/src/library/scala/collection/TraversableOnce.scala#L1
-    def topla[B >: A](implicit num: scala.math.Numeric[B]) = y.sum(num) // foldLeft(num.zero)(num.plus)
+    def topla[B >: A](implicit num: scala.math.Numeric[B]) = y.sum(num)    // foldLeft(num.zero)(num.plus)
     def çarp[B >: A](implicit num: scala.math.Numeric[B]) = y.product(num) // foldLeft(num.one)(num.times)
     def yinelemesiz = y.distinct
     def yinelemesizİşlevle[B](işlev: A => B): Yöney[A] = y.distinctBy(işlev)
     def yazıYap: Yazı = y.mkString
     def yazıYap(ara: Yazı): Yazı = y.mkString(ara)
-    def yazıYap(baş: Yazı, ara: Yazı, son: Yazı): Yazı = y.mkString(baş, ara, son)
+    def yazıYap(başı: Yazı, ara: Yazı, sonu: Yazı): Yazı = y.mkString(başı, ara, sonu)
     def tersi = y.reverse
     def değiştir[B >: A](yeri: Sayı, değeri: B): Yöney[B] = y.updated(yeri, değeri)
     def herbiriİçin[S](işlev: A => S): Birim = y.foreach(işlev)
@@ -83,7 +83,7 @@ trait VectorMethodsInTurkish {
     def say(işlev: A => İkil): Sayı = y.count(işlev)
 
     def dilim(nereden: Sayı, nereye: Sayı) = y.slice(nereden, nereye)
-    def ikile[B](öbürü: scala.collection.IterableOnce[B]) = y.zip(öbürü)
+    def ikile[B](öbürü: YinelenebilirBirKere[B]) = y.zip(öbürü)
     def ikileSırayla = y.zipWithIndex
     def ikileKonumla = y.zipWithIndex
     def öbekle[A2](iş: (A) => A2): Eşlek[A2, Yöney[A]] = y.groupBy(iş)

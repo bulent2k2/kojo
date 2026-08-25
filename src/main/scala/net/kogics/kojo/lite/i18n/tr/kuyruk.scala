@@ -16,9 +16,7 @@
  */
 package net.kogics.kojo.lite.i18n.tr
 
-import collection.mutable.PriorityQueue
-import collection.mutable.Queue
-import collection.mutable.Stack
+import collection.mutable.{Stack, Queue, PriorityQueue}
 
 object Yığın {
   def boş[T] = new Yığın[T]()
@@ -45,7 +43,7 @@ case class Yığın[T]() {
   def tepe = s.head
   def dizi = s.toSeq
   def diziye = s.toSeq
-  def koyHepsini(dizi: scala.collection.IterableOnce[T]) =
+  def koyHepsini(dizi: YinelenebilirBirKere[T]) =
     s.pushAll(dizi)
 }
 
@@ -83,11 +81,11 @@ trait QueueMethodsInTurkish {
     def soldanKatla[T2](z: T2)(işlev: (T2, T) => T2): T2 = d.foldLeft(z)(işlev)
     def sağdanKatla[T2](z: T2)(işlev: (T, T2) => T2): T2 = d.foldRight(z)(işlev)
     // https://github.com/scala/scala/blob/v2.12.7/src/library/scala/collection/TraversableOnce.scala#L1
-    def topla[T2 >: T](implicit num: scala.math.Numeric[T2]) = d.sum(num) // foldLeft(num.zero)(num.plus)
+    def topla[T2 >: T](implicit num: scala.math.Numeric[T2]) = d.sum(num)    // foldLeft(num.zero)(num.plus)
     def çarp[T2 >: T](implicit num: scala.math.Numeric[T2]) = d.product(num) // foldLeft(num.one)(num.times)
     def yazıYap: Yazı = d.mkString
     def yazıYap(ara: Yazı): Yazı = d.mkString(ara)
-    def yazıYap(baş: Yazı, ara: Yazı, son: Yazı): Yazı = d.mkString(baş, ara, son)
+    def yazıYap(başı: Yazı, ara: Yazı, sonu: Yazı): Yazı = d.mkString(başı, ara, sonu)
     def tersi = d.reverse
     def herbiriİçin[S](işlev: T => S): Birim = d.foreach(işlev)
     def varMı(deneme: T => İkil): İkil = d.exists(deneme)
@@ -110,7 +108,7 @@ trait QueueMethodsInTurkish {
     def say(işlev: T => İkil): Sayı = d.count(işlev)
 
     def dilim(nereden: Sayı, nereye: Sayı) = d.slice(nereden, nereye)
-    def ikile[S](öbürü: scala.collection.IterableOnce[S]) = d.zip(öbürü)
+    def ikile[S](öbürü: YinelenebilirBirKere[S]) = d.zip(öbürü)
     def ikileSırayla = d.zipWithIndex
     def ikileKonumla = d.zipWithIndex
     def öbekle[A](iş: (T) => A): Eşlek[A, Col] = d.groupBy(iş)
@@ -156,11 +154,11 @@ trait QueueMethodsInTurkish {
     def soldanKatla[T2](z: T2)(işlev: (T2, T) => T2): T2 = d.foldLeft(z)(işlev)
     def sağdanKatla[T2](z: T2)(işlev: (T, T2) => T2): T2 = d.foldRight(z)(işlev)
     // https://github.com/scala/scala/blob/v2.12.7/src/library/scala/collection/TraversableOnce.scala#L1
-    def topla[T2 >: T](implicit num: scala.math.Numeric[T2]) = d.sum(num) // foldLeft(num.zero)(num.plus)
+    def topla[T2 >: T](implicit num: scala.math.Numeric[T2]) = d.sum(num)    // foldLeft(num.zero)(num.plus)
     def çarp[T2 >: T](implicit num: scala.math.Numeric[T2]) = d.product(num) // foldLeft(num.one)(num.times)
     def yazıYap: Yazı = d.mkString
     def yazıYap(ara: Yazı): Yazı = d.mkString(ara)
-    def yazıYap(baş: Yazı, ara: Yazı, son: Yazı): Yazı = d.mkString(baş, ara, son)
+    def yazıYap(başı: Yazı, ara: Yazı, sonu: Yazı): Yazı = d.mkString(başı, ara, sonu)
     def tersi = d.reverse
     def herbiriİçin[S](işlev: T => S): Birim = d.foreach(işlev)
     def varMı(deneme: T => İkil): İkil = d.exists(deneme)
@@ -183,7 +181,7 @@ trait QueueMethodsInTurkish {
     def say(işlev: T => İkil): Sayı = d.count(işlev)
 
     def dilim(nereden: Sayı, nereye: Sayı) = d.slice(nereden, nereye)
-    def ikile[S](öbürü: scala.collection.IterableOnce[S]) = d.zip(öbürü)
+    def ikile[S](öbürü: YinelenebilirBirKere[S]) = d.zip(öbürü)
     def ikileSırayla = d.zipWithIndex
     def ikileKonumla = d.zipWithIndex
     def öbekle[A](iş: (T) => A): Eşlek[A, Col] = d.groupBy(iş)
