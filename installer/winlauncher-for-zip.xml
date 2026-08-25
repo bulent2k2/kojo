@@ -17,6 +17,7 @@
   <classPath>
     <mainClass>net.kogics.kojo.lite.DesktopMain</mainClass>
     <cp>../lib/*.jar</cp>
+    <cp>../lib/scala-en/*.jar</cp>
   </classPath>
   <jre>
     <path>../jre</path>

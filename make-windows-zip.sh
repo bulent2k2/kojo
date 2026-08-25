@@ -12,6 +12,17 @@ cd installer
 scala cp-staging-jars.scala
 cd ..
 
+# Stage the stock Scala toolchain into lib/scala-en; the launcher boots on it.
+# The Turkish-keyword toolchain is not packaged - it is fetched on demand.
+./stage-scala-toolchains.sh installerbuild/lib
+
+# The committed launch4j exe has its classpath baked in; warn if it predates
+# the lib/scala-en entry, since such a build ships a launcher that cannot find Scala.
+if ! grep -q "scala-en" installer/bin/kojo.exe 2>/dev/null; then
+  echo "[WARNING] installer/bin/kojo.exe has no lib/scala-en classpath entry -" >&2
+  echo "[WARNING] regenerate it from installer/winlauncher-for-zip.xml with launch4j." >&2
+fi
+
 cp -va installer/* installerbuild/
 cd installerbuild
 rm *.*
