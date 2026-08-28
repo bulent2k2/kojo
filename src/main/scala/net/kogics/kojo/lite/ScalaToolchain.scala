@@ -48,9 +48,15 @@ import net.kogics.kojo.util.Utils
  * the classpath is left untouched.
  */
 object ScalaToolchain {
+  // Languages that ship a keyword-patched Scala toolchain (scala-<code>).
+  // Keep in sync with i18n.KeywordLangs.packs; kept standalone (not read from
+  // there) so the launcher JVM need not load the i18n packages just to choose.
+  val keywordLanguages: Set[String] = Set("tr")
+
   val englishDirName = "scala-en"
-  val turkishDirName = "scala-tr"
-  private val variantDirNames = Set(englishDirName, turkishDirName)
+  def variantDir(lang: String): String = s"scala-$lang"
+  val turkishDirName = variantDir("tr") // = "scala-tr"; kept for tests/back-compat
+  private val variantDirNames: Set[String] = keywordLanguages.map(variantDir) + englishDirName
   val prefsNodeName = "Kojolite-Prefs" // keep in sync with KojoCtx.prefs
 
   def userLanguage: String = {
@@ -64,17 +70,18 @@ object ScalaToolchain {
   }
 
   private def parseOverride(value: String, source: String): Option[String] = value match {
-    case "en" => Some(englishDirName)
-    case "tr" => Some(turkishDirName)
+    case "en"                              => Some(englishDirName)
+    case lang if keywordLanguages(lang)    => Some(variantDir(lang))
     case other =>
-      println(s"[WARNING] Ignoring unknown kojo.toolchain '$other' (from $source); expected 'en' or 'tr'.")
+      val expected = ("en" +: keywordLanguages.toList.sorted).map("'" + _ + "'").mkString(", ")
+      println(s"[WARNING] Ignoring unknown kojo.toolchain '$other' (from $source); expected $expected.")
       None
   }
 
   def variantDirName: String = {
     val fromSysProp = Option(System.getProperty("kojo.toolchain")).flatMap(parseOverride(_, "system property"))
     def fromAppProp = Utils.appProperty("kojo.toolchain").flatMap(parseOverride(_, "kojo.properties"))
-    def fromLanguage = if (userLanguage == "tr") turkishDirName else englishDirName
+    def fromLanguage = if (keywordLanguages(userLanguage)) variantDir(userLanguage) else englishDirName
     fromSysProp.orElse(fromAppProp).getOrElse(fromLanguage)
   }
 

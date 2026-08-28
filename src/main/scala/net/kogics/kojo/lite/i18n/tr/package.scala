@@ -139,6 +139,10 @@ package object tr {
     "yeni", "yineleDoğruKaldıkça", "yok", "yoksa"
   )
   val turkishKeywords = if (!isTurkish) List() else _trKeywords
+  // raw, locale-independent data registered into i18n/KeywordLangs.scala
+  val keywordList: List[String] = _trKeywords
+  val keywordTemplateMap: Map[String, String] = templates.keywordTemplates
+  val codeTemplateMap: Map[String, String] = templates.codeTemplatesRaw
   val trKeywordSet = turkishKeywords.toSet
   // used in ../../../lexer/ScalariformTokenMaker.scala
   def isTurkishKeyword(word: String) = trKeywordSet.contains(word) || (TurkishAPI.testTrKeywords && _trKeywords.toSet.contains(word))
