@@ -1,0 +1,54 @@
+Swedish-keyword Scala toolchain for Kojo — a STUB
+=================================================
+
+This directory is a starting point for a Swedish edition of Kojo at the deepest
+level of localization (Level 4 in ../localization.md): programming in Swedish
+*keywords*, e.g. `värde x = 5` instead of `val x = 5`.
+
+It mirrors the Turkish work in ../scala-tr/. Nothing here is built or wired in
+yet — it is meant to save the Swedish contributors the reverse-engineering, not
+to be a finished feature.
+
+What is here
+------------
+* swedish-keywords.patch — the compiler patch (see below). VERIFIED to apply
+  cleanly to a pristine scala/scala v2.13.18 checkout.
+* KEYWORDS.md — the draft English→Swedish keyword table, with the words that
+  need the most care called out. READ THIS FIRST.
+
+*** The Swedish words are AI-suggested drafts. A native Swedish speaker must
+    review them before anything is built. *** Neither the author of this stub
+    nor the Kojo maintainers speak Swedish; the value here is the mechanism,
+    not the word choices.
+
+Building the patched compiler
+-----------------------------
+Exactly as for Turkish (see ../scala-tr/README):
+
+    git clone https://github.com/scala/scala ~/src/scala-2.13.18
+    cd ~/src/scala-2.13.18 && git checkout v2.13.18
+    git apply <kojo-clone>/scala-sv/swedish-keywords.patch
+    # Java 8 or 11 on PATH (the Scala 2.13 build wants it)
+    sbt 'set Global/baseVersionSuffix := ""' dist/mkPack   # ~3 minutes
+
+The `baseVersionSuffix := ""` is the fix that gives the jars a clean
+`version.number=2.13.18` (see ../scala-tr/README for why it matters).
+
+`build/pack/lib/{scala-library,scala-reflect,scala-compiler}.jar` are then the
+Swedish toolchain. Publish them the way the Turkish jars are published — a
+GitHub release of a scala fork, consumed on demand by Kojo — see
+../scala-tr/README and the ScalaToolchainFetcher in the Kojo source.
+
+The patch touches the same three files as the Turkish one, and only adds:
+    Main.scala      one diagnostic println (optional)
+    Scanners.scala  the Swedish keyword entries, FIRST in allKeywords so that
+                    compiler errors still report the English keyword
+    StdNames.scala  the Swedish keyword strings
+
+What is NOT here yet (the rest of Level 4)
+------------------------------------------
+The compiler is only the first of four pieces. See ../localization.md, Level 4,
+for the full list: the runtime toolchain toggle, a patched scalariform for
+code formatting, and the syntax-highlighting hook. Those are Kojo-side changes
+and are best done as a generalization of the currently Turkish-specific code
+rather than a second copy of it.
