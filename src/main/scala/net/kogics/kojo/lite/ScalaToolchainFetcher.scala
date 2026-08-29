@@ -27,15 +27,16 @@ import scala.io.Source
 import net.kogics.kojo.util.Utils
 
 /**
- * Fetches the Turkish-keyword Scala toolchain on demand, so that a Kojo
- * package does not have to carry ~20 MB of patched compiler that only
- * Turkish users ever load.
+ * Fetches a keyword-patched Scala toolchain on demand, so that a Kojo package
+ * does not have to carry ~20 MB of patched compiler that only the speakers of
+ * one language ever load. Language-agnostic: `lang` is the toolchain code
+ * (`tr`, `sv`, ...); the assets live in a `v<version>-<lang>` release.
  *
- * The jars land in ~/.kojo/lite/scala-tr/<version>/ - user-writable, so no
+ * The jars land in ~/.kojo/lite/scala-<lang>/<version>/ - user-writable, so no
  * admin rights are needed and the download survives a reinstall. Nothing is
- * fetched unless the Turkish toolchain is actually selected (by user
- * language or by -Dkojo.toolchain=tr), and a failure is never fatal: Kojo
- * falls back to the stock toolchain and says why.
+ * fetched unless a keyword toolchain is actually selected (by user language
+ * or by -Dkojo.toolchain=<lang>), and a failure is never fatal: Kojo falls
+ * back to the stock toolchain and says why.
  *
  * Every downloaded jar must clear three checks before it is used:
  *   - its SHA-256 matches the published SHA256SUMS
@@ -64,29 +65,29 @@ object ScalaToolchainFetcher {
   // identical content.
   private val stagingTag = java.lang.Long.toHexString(System.nanoTime())
 
-  def baseUrlFor(version: String): String =
-    System.getProperty("kojo.toolchain.url", s"$defaultBaseUrl/v$version-tr").stripSuffix("/")
+  def baseUrlFor(version: String, lang: String): String =
+    System.getProperty("kojo.toolchain.url", s"$defaultBaseUrl/v$version-$lang").stripSuffix("/")
 
-  def cacheDir(version: String): File =
-    new File(s"${Utils.userDir}${File.separator}.kojo${File.separator}lite${File.separator}scala-tr", version)
+  def cacheDir(version: String, lang: String): File =
+    new File(s"${Utils.userDir}${File.separator}.kojo${File.separator}lite${File.separator}scala-$lang", version)
 
   /** True when every jar of the toolchain is present in `dir`. */
   def isComplete(dir: File): Boolean =
     dir.isDirectory && jarNames.forall(n => new File(dir, n).isFile)
 
   /**
-   * Returns a directory holding the Turkish toolchain for `version`, fetching
-   * it first if it is not cached yet. None if it could not be made available -
-   * the caller then stays on the stock toolchain.
+   * Returns a directory holding the `lang` keyword toolchain for `version`,
+   * fetching it first if it is not cached yet. None if it could not be made
+   * available - the caller then stays on the stock toolchain.
    */
-  def ensureAvailable(version: String, progress: FetchProgress = ConsoleProgress): Option[File] = {
-    val dir = cacheDir(version)
+  def ensureAvailable(version: String, lang: String, progress: FetchProgress = ConsoleProgress): Option[File] = {
+    val dir = cacheDir(version, lang)
     if (isComplete(dir)) Some(dir)
     else
-      try fetchInto(dir, version, progress)
+      try fetchInto(dir, version, lang, progress)
       catch {
         case e: Throwable =>
-          progress.message(s"[WARNING] Could not fetch the Turkish Scala toolchain: ${e.getMessage}")
+          progress.message(s"[WARNING] Could not fetch the '$lang' Scala toolchain: ${e.getMessage}")
           None
       }
       finally {
@@ -99,9 +100,9 @@ object ScalaToolchainFetcher {
   private def discardPartials(dir: File): Unit =
     Option(dir.listFiles).foreach(_.filter(_.getName.endsWith(".part")).foreach(_.delete()))
 
-  private def fetchInto(dir: File, version: String, progress: FetchProgress): Option[File] = {
-    val base = baseUrlFor(version)
-    progress.message(s"[INFO] Fetching the Turkish Scala toolchain $version from $base")
+  private def fetchInto(dir: File, version: String, lang: String, progress: FetchProgress): Option[File] = {
+    val base = baseUrlFor(version, lang)
+    progress.message(s"[INFO] Fetching the '$lang' Scala toolchain $version from $base")
     dir.mkdirs()
     val expected = checksums(s"$base/$checksumFileName")
     val staged = jarNames.map { name =>
@@ -122,7 +123,7 @@ object ScalaToolchainFetcher {
     // only publish the jars into their final names once all of them are good,
     // so an interrupted fetch can never leave a half-usable toolchain behind
     staged.foreach { case (tmp, target) => if (!tmp.renameTo(target)) throw new RuntimeException(s"cannot install $target") }
-    progress.message(s"[INFO] Turkish Scala toolchain ready in $dir")
+    progress.message(s"[INFO] '$lang' Scala toolchain ready in $dir")
     Some(dir)
   }
 
