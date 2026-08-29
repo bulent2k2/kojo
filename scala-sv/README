@@ -13,6 +13,9 @@ What is here
 ------------
 * swedish-keywords.patch — the compiler patch (see below). VERIFIED to apply
   cleanly to a pristine scala/scala v2.13.18 checkout.
+* scalariform-swedish.patch — the code-formatter/highlighter patch (see below).
+  VERIFIED to apply cleanly to bulent2k2/scalariform. Uses the same Swedish
+  words as the compiler patch.
 * KEYWORDS.md — the draft English→Swedish keyword table, with the words that
   need the most care called out. READ THIS FIRST.
 
@@ -39,16 +42,44 @@ Swedish toolchain. Publish them the way the Turkish jars are published — a
 GitHub release of a scala fork, consumed on demand by Kojo — see
 ../scala-tr/README and the ScalaToolchainFetcher in the Kojo source.
 
+Building the Swedish scalariform
+--------------------------------
+Kojo's editor formats and highlights code with scalariform, which keeps its own
+keyword table, so a fourth jar in the release must know the Swedish keywords:
+
+    git clone https://github.com/bulent2k2/scalariform ~/src/scalariform-sv
+    cd ~/src/scalariform-sv
+    git apply <kojo-clone>/scala-sv/scalariform-swedish.patch
+    sbt scalariform/package        # -> scalariform/target/scala-2.13/scalariform_2.13-*.jar
+
+Rename that jar to `scalariform.jar` in the release. (bulent2k2/scalariform
+already carries the Turkish keywords, so the resulting jar recognizes English,
+Turkish and Swedish; a Swedish user only ever sees Swedish highlighted.)
+
+The on-demand fetcher requires all four jars — scala-library, scala-reflect,
+scala-compiler and scalariform — plus a SHA256SUMS, in the release, or it
+refuses the whole toolchain and falls back to stock.
+
 The patch touches the same three files as the Turkish one, and only adds:
     Main.scala      one diagnostic println (optional)
     Scanners.scala  the Swedish keyword entries, FIRST in allKeywords so that
                     compiler errors still report the English keyword
     StdNames.scala  the Swedish keyword strings
 
-What is NOT here yet (the rest of Level 4)
-------------------------------------------
-The compiler is only the first of four pieces. See ../localization.md, Level 4,
-for the full list: the runtime toolchain toggle, a patched scalariform for
-code formatting, and the syntax-highlighting hook. Those are Kojo-side changes
-and are best done as a generalization of the currently Turkish-specific code
-rather than a second copy of it.
+Status of the four Level-4 pieces (see ../localization.md)
+----------------------------------------------------------
+  1. Patched compiler ............ swedish-keywords.patch (here) — build & publish
+  2. Runtime toolchain toggle .... DONE, language-agnostic. `sv` is registered
+                                   in ScalaToolchain.keywordLanguages and the
+                                   fetcher pulls v<ver>-sv on demand. Nothing
+                                   Swedish-specific to write.
+  3. Code formatting (scalariform) scalariform-swedish.patch (here) — build the
+                                   4th release jar as above.
+  4. Syntax highlighting ......... DONE via i18n.KeywordLangs, which is now
+                                   registered for `sv` (i18n/sv/package.scala).
+
+What still needs a native Swedish speaker
+-----------------------------------------
+* Review/replace the AI-drafted words in KEYWORDS.md (edit both patches).
+* A Swedish Level-1/2 API and samples, and keyword-completion templates
+  (i18n/sv/package.scala currently leaves the template maps empty).

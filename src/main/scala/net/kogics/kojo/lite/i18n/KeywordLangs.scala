@@ -43,7 +43,8 @@ object KeywordLangs {
 
   // The registry. Adding a language means adding one line here.
   private val packs: Map[String, Pack] = Seq(
-    Pack("tr", tr.keywordList, tr.keywordTemplateMap, tr.codeTemplateMap)
+    Pack("tr", tr.keywordList, tr.keywordTemplateMap, tr.codeTemplateMap),
+    Pack("sv", sv.keywordList, sv.keywordTemplateMap, sv.codeTemplateMap)
   ).map(p => p.code -> p).toMap
 
   /** Tests can force a language regardless of the JVM's `user.language`. */
