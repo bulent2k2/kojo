@@ -5,7 +5,7 @@ import java.io.File
 object NewKojoInstance extends StubMain {
   lazy val classpath = {
     val cp = System.getProperty("java.class.path").split(File.pathSeparatorChar).toList
-    createCp(cp)
+    createCp(ScalaToolchain.select(cp))
   }
 
   def firstInstance = true
