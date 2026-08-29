@@ -51,7 +51,7 @@ object ScalaToolchain {
   // Languages that ship a keyword-patched Scala toolchain (scala-<code>).
   // Keep in sync with i18n.KeywordLangs.packs; kept standalone (not read from
   // there) so the launcher JVM need not load the i18n packages just to choose.
-  val keywordLanguages: Set[String] = Set("tr")
+  val keywordLanguages: Set[String] = Set("tr", "sv")
 
   val englishDirName = "scala-en"
   def variantDir(lang: String): String = s"scala-$lang"
@@ -98,17 +98,19 @@ object ScalaToolchain {
 
   /**
    * Where the jars of `variant` live. Normally the directory shipped inside the
-   * package; when the Turkish toolchain was not packaged (the on-demand case),
-   * the copy under ~/.kojo/lite/scala-tr, fetching it if this is the first time.
+   * package; when a keyword toolchain was not packaged (the on-demand case),
+   * the copy under ~/.kojo/lite/scala-<lang>, fetching it if this is the first
+   * time. English (and any non-keyword variant) is only ever used as packaged.
    */
   private def resolveVariantDir(packaged: File, variant: String): File = {
     def packagedHasJars = Utils.filesInDir(packaged.getPath, "jar").nonEmpty
-    if (variant != turkishDirName || packagedHasJars) packaged
+    val lang = variant.stripPrefix("scala-")
+    if (!keywordLanguages(lang) || packagedHasJars) packaged
     else
       scalaRelease
-        .flatMap(v => ScalaToolchainFetcher.ensureAvailable(v, FetchProgress.forLauncher()))
+        .flatMap(v => ScalaToolchainFetcher.ensureAvailable(v, lang, FetchProgress.forLauncher()))
         .getOrElse {
-          println("[WARNING] The Turkish Scala toolchain is not available; falling back to the stock one.")
+          println(s"[WARNING] The '$lang' Scala toolchain is not available; falling back to the stock one.")
           packaged
         }
   }
