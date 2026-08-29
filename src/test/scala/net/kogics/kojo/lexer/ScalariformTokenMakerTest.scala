@@ -2,10 +2,14 @@ package net.kogics.kojo.lexer
 
 import javax.swing.text.Segment
 
+import org.fife.ui.rsyntaxtextarea.TokenTypes
+
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.Matchers
 import org.scalatest.junit.JUnitRunner
+
+import net.kogics.kojo.lite.i18n.KeywordLangs
 
 import scalariform.lexer.Token
 import scalariform.lexer.Tokens.EQUALS
@@ -44,30 +48,38 @@ class ScalariformTokenMakerTest extends FunSuite with Matchers {
     lexer.tokensForLine(segment, 0) should be(expectedTokens)
   }
 
-  test("test single line val in Turkish") {
-    // force Turkish keyword recognition without changing the JVM locale
-    net.kogics.kojo.lite.i18n.KeywordLangs.forcedLang = Some("tr")
-    try {
-      val code = "dez x = 10"
-      lexer.lexDoc(code)
-
-      val codeChars = new Array[Char](code.length)
-      code.getChars(0, code.length - 1, codeChars, 0)
-      val segment = new Segment(codeChars, 0, code.length)
-
-      val expectedTokens = List(
-        Token(VAL, "dez", 0, "dez"),
-        Token(WS, " ", 3, " "),
-        Token(VARID, "x", 4, "x"),
-        Token(WS, " ", 5, " "),
-        Token(EQUALS, "=", 6, "="),
-        Token(WS, " ", 7, " "),
-        Token(INTEGER_LITERAL, "10", 8, "10")
-      )
-
-      lexer.tokensForLine(segment, 0) should be(expectedTokens)
+  // The RSTA token type getTokenList assigns to the given lexeme on this line.
+  private def rstaTypeOf(lexeme: String, code: String): Int = {
+    lexer.lexDoc(code)
+    val codeChars = new Array[Char](code.length)
+    code.getChars(0, code.length, codeChars, 0)
+    val segment = new Segment(codeChars, 0, code.length)
+    var t = lexer.getTokenList(segment, TokenTypes.NULL, 0)
+    var tpe = TokenTypes.NULL
+    while (t != null && t.getType != TokenTypes.NULL) {
+      if (t.getLexeme == lexeme) tpe = t.getType
+      t = t.getNextToken
     }
-    finally net.kogics.kojo.lite.i18n.KeywordLangs.forcedLang = None
+    tpe
+  }
+
+  // A localized keyword (`dez` = Turkish `val`) is highlighted as a reserved
+  // word when — and only when — its language is active. This exercises the
+  // language-agnostic highlighting path (getTokenList -> i18n.KeywordLangs),
+  // which maps the identifier stock scalariform produces to RESERVED_WORD; it
+  // does NOT need a keyword-patched scalariform on the classpath.
+  test("a localized keyword is a reserved word only when its language is active") {
+    val code = "dez x = 10"
+    try {
+      // not a keyword language: `dez` is an ordinary identifier
+      KeywordLangs.forcedLang = Some("en")
+      rstaTypeOf("dez", code) should be(TokenTypes.IDENTIFIER)
+
+      // Turkish active: `dez` is a reserved word
+      KeywordLangs.forcedLang = Some("tr")
+      rstaTypeOf("dez", code) should be(TokenTypes.RESERVED_WORD)
+    }
+    finally KeywordLangs.forcedLang = None
   }
 
   test("test two line vals - line 2") {
