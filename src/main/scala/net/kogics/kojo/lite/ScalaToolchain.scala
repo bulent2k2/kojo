@@ -108,7 +108,7 @@ object ScalaToolchain {
     if (!keywordLanguages(lang) || packagedHasJars) packaged
     else
       scalaRelease
-        .flatMap(v => ScalaToolchainFetcher.ensureAvailable(v, lang, FetchProgress.forLauncher()))
+        .flatMap(v => ScalaToolchainFetcher.ensureAvailable(v, lang, FetchProgress.forLauncher(lang)))
         .getOrElse {
           println(s"[WARNING] The '$lang' Scala toolchain is not available; falling back to the stock one.")
           packaged
