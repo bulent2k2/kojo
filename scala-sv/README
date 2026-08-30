@@ -50,11 +50,16 @@ keyword table, so a fourth jar in the release must know the Swedish keywords:
     git clone https://github.com/bulent2k2/scalariform ~/src/scalariform-sv
     cd ~/src/scalariform-sv
     git apply <kojo-clone>/scala-sv/scalariform-swedish.patch
-    sbt scalariform/package        # -> scalariform/target/scala-2.13/scalariform_2.13-*.jar
+    sbt packageBin                 # see the fork's Makefile / README_bulent2k2
+    # -> scalariform/target/scala-2.13/scalariform_2.13-0.2.10.jar
 
-Rename that jar to `scalariform.jar` in the release. (bulent2k2/scalariform
-already carries the Turkish keywords, so the resulting jar recognizes English,
-Turkish and Swedish; a Swedish user only ever sees Swedish highlighted.)
+Rename that jar to `scalariform.jar` in the release. Use `packageBin` (the slim
+~1.2 MB library jar), NOT `assembly` (a fat CLI jar with a bundled scala-library).
+Sanity-check: `unzip -l scalariform.jar | grep -c scala/collection/` should be 0.
+(bulent2k2/scalariform already carries the Turkish keywords, so the resulting jar
+recognizes English, Turkish and Swedish; a Swedish user only ever sees Swedish
+highlighted, and scalariform-swedish.patch reproduces just the Swedish delta on
+top of that fork, not on pristine upstream scalariform.)
 
 The on-demand fetcher requires all four jars — scala-library, scala-reflect,
 scala-compiler and scalariform — plus a SHA256SUMS, in the release, or it
