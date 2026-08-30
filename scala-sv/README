@@ -56,10 +56,16 @@ keyword table, so a fourth jar in the release must know the Swedish keywords:
 Rename that jar to `scalariform.jar` in the release. Use `packageBin` (the slim
 ~1.2 MB library jar), NOT `assembly` (a fat CLI jar with a bundled scala-library).
 Sanity-check: `unzip -l scalariform.jar | grep -c scala/collection/` should be 0.
-(bulent2k2/scalariform already carries the Turkish keywords, so the resulting jar
-recognizes English, Turkish and Swedish; a Swedish user only ever sees Swedish
-highlighted, and scalariform-swedish.patch reproduces just the Swedish delta on
-top of that fork, not on pristine upstream scalariform.)
+
+The resulting jar must know **English + Swedish only**. scalariform-swedish.patch
+*replaces* the Turkish keyword block that bulent2k2/scalariform carries with the
+Swedish one — it does not add Swedish alongside Turkish. This is essential:
+scalariform's own lexer classifies keywords and Kojo's highlighter trusts that
+verdict, so a scalariform that also knew Turkish would highlight `dez`/`den` even
+in Swedish mode. Keep each language's scalariform to English + that one language
+(the Turkish release ships a Turkish-only scalariform for the same reason).
+Confirm: `unzip -p scalariform.jar 'scalariform/lexer/Keywords$.class' | strings |
+grep -E '^(dez|nesne)$'` should print nothing.
 
 The on-demand fetcher requires all four jars — scala-library, scala-reflect,
 scala-compiler and scalariform — plus a SHA256SUMS, in the release, or it
