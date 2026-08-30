@@ -51,14 +51,15 @@ object ConsoleProgress extends FetchProgress {
  * A small progress window for the launcher JVM, which has no Kojo UI yet -
  * StubMain already puts up a JOptionPane there for the Java version check.
  *
- * The text is Turkish because this download only ever happens for a user who
- * has chosen Turkish; the log line alongside it stays in English.
+ * The label is shown in the language whose toolchain is being fetched (that is
+ * the language the user has chosen), falling back to English; the log line
+ * alongside it stays in English.
  *
  * Every UI touch is posted to the EDT (never invokeAndWait, so a slow or
  * missing display can't wedge the download), and bar updates are throttled,
  * so a 20 MB fetch doesn't flood the event queue with repaints.
  */
-class SwingFetchProgress extends FetchProgress {
+class SwingFetchProgress(lang: String) extends FetchProgress {
   @volatile private var cancelledFlag = false
   override def cancelled: Boolean = cancelledFlag
 
@@ -73,9 +74,17 @@ class SwingFetchProgress extends FetchProgress {
     def run(): Unit = body
   })
 
+  // Localized "downloading the Scala toolchain" line; English for any language
+  // that hasn't provided its own. New keyword languages add a case here.
+  private def downloading: String = lang match {
+    case "tr" => "Türkçe Scala derleyicisi indiriliyor"
+    case "sv" => "Laddar ner Scala-verktygen för svenska"
+    case _    => "Downloading the Scala toolchain"
+  }
+
   private def ensureDialog(): Unit = onEdt {
     if (dialog == null) {
-      label = new JLabel("Türkçe Scala derleyicisi indiriliyor...")
+      label = new JLabel(s"$downloading...")
       bar = new JProgressBar(0, 100)
       bar.setIndeterminate(true)
       bar.setPreferredSize(new Dimension(320, 18))
@@ -109,7 +118,7 @@ class SwingFetchProgress extends FetchProgress {
     lastPainted = 0L
     ensureDialog()
     onEdt {
-      if (label != null) label.setText(s"Türkçe Scala derleyicisi indiriliyor: $name")
+      if (label != null) label.setText(s"$downloading: $name")
       if (bar != null) {
         bar.setIndeterminate(totalBytes <= 0)
         if (totalBytes > 0) bar.setValue(0)
@@ -141,9 +150,9 @@ class SwingFetchProgress extends FetchProgress {
 object FetchProgress {
 
   /** A window when there is a display to put it on, plain logging otherwise. */
-  def forLauncher(): FetchProgress =
+  def forLauncher(lang: String): FetchProgress =
     if (GraphicsEnvironment.isHeadless) ConsoleProgress
     else
-      try new SwingFetchProgress
+      try new SwingFetchProgress(lang)
       catch { case _: Throwable => ConsoleProgress }
 }
