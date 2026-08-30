@@ -18,6 +18,9 @@ What is here
   words as the compiler patch.
 * KEYWORDS.md — the draft English→Swedish keyword table, with the words that
   need the most care called out. READ THIS FIRST.
+* BUILD-AND-TEST.md — a step-by-step guide for a Swedish contributor: run
+  Swedish Kojo, change the words, and try your own jars locally without
+  publishing anything. START HERE if you want to build it.
 
 *** The Swedish words are AI-suggested drafts. A native Swedish speaker must
     review them before anything is built. *** Neither the author of this stub
