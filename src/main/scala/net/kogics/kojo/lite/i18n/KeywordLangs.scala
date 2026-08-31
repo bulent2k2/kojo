@@ -47,9 +47,18 @@ object KeywordLangs {
     Pack("sv", sv.keywordList, sv.keywordTemplateMap, sv.codeTemplateMap)
   ).map(p => p.code -> p).toMap
 
+  /**
+   * The registered language codes. Must equal ScalaToolchain.keywordLanguages -
+   * that list is kept standalone so the launcher JVM need not load these
+   * packages, and KeywordLangsTest asserts the two stay in sync.
+   */
+  val codes: Set[String] = packs.keySet
+
   /** Tests can force a language regardless of the JVM's `user.language`. */
   @volatile var forcedLang: Option[String] = None
 
+  // Called per token on the highlighting path; the system-property read is a
+  // synchronized lookup, accepted because token counts per repaint are small.
   private def activeCode: Option[String] =
     forcedLang.orElse(Option(System.getProperty("user.language"))).filter(packs.contains)
 
@@ -59,8 +68,10 @@ object KeywordLangs {
   def keywords: List[String] = active.map(_.keywords).getOrElse(Nil)
 
   // isKeyword is on the highlighter's hot path (called per token), so cache the
-  // set and rebuild only when the active language actually changes.
-  private var cache: Option[(Option[String], Set[String])] = None
+  // set and rebuild only when the active language actually changes. Volatile,
+  // read without further synchronization: the race is benign - a stale read
+  // costs at most one redundant rebuild of an immutable set.
+  @volatile private var cache: Option[(Option[String], Set[String])] = None
   private def keywordSet: Set[String] = {
     val code = activeCode
     cache match {

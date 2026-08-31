@@ -59,4 +59,10 @@ class KeywordLangsTest extends FunSuite with Matchers with BeforeAndAfter {
     KeywordLangs.forcedLang = Some("tr")
     KeywordLangs.isKeyword("dez") should be(true)
   }
+
+  test("the registry and the launcher's language list stay in sync") {
+    // ScalaToolchain.keywordLanguages is a standalone copy (the launcher must
+    // not load the i18n packages); this pins the two lists together.
+    net.kogics.kojo.lite.ScalaToolchain.keywordLanguages should be(KeywordLangs.codes)
+  }
 }
