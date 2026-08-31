@@ -34,6 +34,9 @@ trait FetchProgress {
   def startJar(name: String, totalBytes: Long): Unit
   def bytes(n: Long): Unit
   def finished(): Unit
+
+  /** Polled by the download loop; true once the user has asked to stop. */
+  def cancelled: Boolean = false
 }
 
 /** The default: just log. Used by the tests and by headless runs. */
@@ -56,6 +59,9 @@ object ConsoleProgress extends FetchProgress {
  * so a 20 MB fetch doesn't flood the event queue with repaints.
  */
 class SwingFetchProgress extends FetchProgress {
+  @volatile private var cancelledFlag = false
+  override def cancelled: Boolean = cancelledFlag
+
   private var dialog: JDialog = _
   private var bar: JProgressBar = _
   private var label: JLabel = _
@@ -80,7 +86,13 @@ class SwingFetchProgress extends FetchProgress {
       content.add(javax.swing.Box.createVerticalStrut(10))
       content.add(bar)
       dialog = new JDialog(null: java.awt.Frame, "Kojo", false)
-      dialog.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE)
+      // closing the window cancels the download; Kojo then starts on stock Scala
+      dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE)
+      dialog.addWindowListener(new java.awt.event.WindowAdapter {
+        override def windowClosing(e: java.awt.event.WindowEvent): Unit = {
+          cancelledFlag = true
+        }
+      })
       dialog.getContentPane.add(content, BorderLayout.CENTER)
       dialog.pack()
       dialog.setLocationRelativeTo(null)

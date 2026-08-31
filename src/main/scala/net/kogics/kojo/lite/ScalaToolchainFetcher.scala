@@ -53,6 +53,17 @@ object ScalaToolchainFetcher {
 
   private val defaultBaseUrl = "https://github.com/bulent2k2/scala-2/releases/download"
 
+  // A dead or stalled connection must not hang the launcher: connect fast,
+  // and give a stalled read a minute before giving up and falling back.
+  private val ConnectTimeoutMs = 15 * 1000
+  private val ReadTimeoutMs = 60 * 1000
+
+  // Staged (.part) files carry a per-JVM tag, so two Kojo instances fetching
+  // concurrently cannot clobber each other's half-written files; the rename
+  // into the final name at the end is per-file last-writer-wins of verified,
+  // identical content.
+  private val stagingTag = java.lang.Long.toHexString(System.nanoTime())
+
   def baseUrlFor(version: String): String =
     System.getProperty("kojo.toolchain.url", s"$defaultBaseUrl/v$version-tr").stripSuffix("/")
 
@@ -98,7 +109,7 @@ object ScalaToolchainFetcher {
         name,
         throw new RuntimeException(s"$checksumFileName has no entry for $name")
       )
-      val tmp = new File(dir, s"$name.part")
+      val tmp = new File(dir, s"$name.$stagingTag.part")
       val actual = download(new URL(s"$base/$name"), tmp, name, progress)
       if (!actual.equalsIgnoreCase(want)) {
         tmp.delete()
@@ -116,7 +127,10 @@ object ScalaToolchainFetcher {
   }
 
   private def checksums(url: String): Map[String, String] = {
-    val src = Source.fromURL(new URL(url), "UTF-8")
+    val conn = new URL(url).openConnection()
+    conn.setConnectTimeout(ConnectTimeoutMs)
+    conn.setReadTimeout(ReadTimeoutMs)
+    val src = Source.fromInputStream(conn.getInputStream, "UTF-8")
     try
       src
         .getLines()
@@ -137,6 +151,8 @@ object ScalaToolchainFetcher {
   private def download(url: URL, target: File, name: String, progress: FetchProgress): String = {
     val digest = MessageDigest.getInstance("SHA-256")
     val conn = url.openConnection()
+    conn.setConnectTimeout(ConnectTimeoutMs)
+    conn.setReadTimeout(ReadTimeoutMs)
     progress.startJar(name, conn.getContentLengthLong)
     val in: InputStream = conn.getInputStream
     try {
@@ -145,6 +161,7 @@ object ScalaToolchainFetcher {
         val buf = new Array[Byte](64 * 1024)
         var n = in.read(buf)
         while (n > 0) {
+          if (progress.cancelled) throw new RuntimeException("download cancelled")
           digest.update(buf, 0, n)
           out.write(buf, 0, n)
           progress.bytes(n.toLong)
@@ -173,8 +190,10 @@ object ScalaToolchainFetcher {
       try props.load(is)
       finally is.close()
       val got = props.getProperty("version.number", "<unknown>")
-      // the pack build stamps a suffix (2.13.18-20260823-...), so compare the release part
-      if (!got.startsWith(wanted)) {
+      // the pack build stamps a suffix (2.13.18-20260823-...), so accept the
+      // exact release or the release followed by a suffix - but not a longer
+      // release that merely begins with the same digits
+      if (!(got == wanted || got.startsWith(wanted + "-") || got.startsWith(wanted + "+"))) {
         throw new RuntimeException(s"toolchain is Scala $got, but Kojo needs $wanted")
       }
     }
