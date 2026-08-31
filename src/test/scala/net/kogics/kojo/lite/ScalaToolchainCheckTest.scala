@@ -32,6 +32,8 @@ class ScalaToolchainCheckTest extends FunSuite with Matchers {
     isToolchainJarName("scala-reflect-2.13.18.jar") should be(true)
     isToolchainJarName("scala-compiler.jar") should be(true)
     isToolchainJarName("scalariform.jar") should be(true)
+    isToolchainJarName("scalariform_2.13-0.2.10.jar") should be(true)
+    isToolchainJarName("scala-library_2.13-x.jar") should be(true)
   }
 
   test("jars that merely start with the same letters are left alone") {

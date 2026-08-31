@@ -36,13 +36,13 @@ object ScalaToolchainCheck {
   private val toolchainJarPrefixes = Seq("scala-library", "scala-reflect", "scala-compiler", "scalariform")
 
   /**
-   * True for scala-library.jar, scala-library-2.13.3.jar and friends - but not
-   * for scala-swing_2.13-*.jar, scalatest_2.13-*.jar and other jars that merely
-   * start with the same letters.
+   * True for scala-library.jar, scala-library-2.13.3.jar, and Maven-style names
+   * like scalariform_2.13-0.2.10.jar - but not for scala-swing_2.13-*.jar,
+   * scalatest_2.13-*.jar and other jars that merely start with the same letters.
    */
   def isToolchainJarName(name: String): Boolean =
     name.endsWith(".jar") && toolchainJarPrefixes.exists { p =>
-      name == s"$p.jar" || name.startsWith(s"$p-")
+      name == s"$p.jar" || name.startsWith(s"$p-") || name.startsWith(s"${p}_")
     }
 
   /** Splits classpath entries into (toolchain jars, everything else). */
@@ -74,7 +74,10 @@ object ScalaToolchainCheck {
 
   /**
    * Detects a mixed Scala toolchain - a scala-library, scala-reflect and
-   * scala-compiler of different versions resolving from different jars.
+   * scala-compiler of different versions resolving from different jars. A
+   * version match is necessary but not sufficient: two builds can report the
+   * same version yet differ in generated code, and that mix stays invisible
+   * here - the name-based guards above are the defense for that case.
    * Reports the jar each part came from, without loading the compiler's
    * heavyweight classes just to ask.
    */
