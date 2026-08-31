@@ -285,21 +285,28 @@ sq(100)
   )
 
 
-  // todo: localize! This works for Turkish and English only:
-  // todo: if (localNotEnglish) S_KEYWORD_FOR_DEF ...
-  def en2tr(keyword: String): String =
-    // todo: check that it is indeed a scala keyword
-    dict.keywordTranslation.getOrElse(keyword, s"<$keyword has no Turkish translation>")
+  // Localized keyword help. Only Turkish provides this today; in every other
+  // locale `translate` returns its default and the maps below stay empty, so
+  // Help behaves exactly as before this file knew about Turkish.
+  private def en2tr(keyword: String): String =
+    dict.keywordTranslation.getOrElse(keyword, keyword)
   def translate(keyword: String)(elem: String = ""): String =
     if (isTurkish) s"Türkçesi '${en2tr(keyword)}' olan anahtar sözcük: '$keyword'." else elem
 
-  // we have only the following above: def, val, var, for, if
-  // todo: mixes in Scala 3 keywords enum, given, then, (any others?)
-  val missingKeywords = (for (keyword <- List("abstract", "case", "catch", "class", "do", "else", "enum", "export",
-    "extends", "false", "final", "finally", "forSome", "given", "implicit", "import", "lazy", "match", "new",
-    "null", "object", "override", "package", "private", "protected", "return", "sealed", "super", "this", "then", "throw",
-    "trait", "true", "try", "type", "var", "while", "with", "yield"))
-  yield (keyword -> translate(keyword)())).toMap
+  // The Scala 2 keywords that have no dedicated help entry above (only def,
+  // val, var, for and if have one). In Turkish they at least get their
+  // translation; in every other locale this map is empty, so Help.apply keeps
+  // returning null ("no help") for them, as it always has.
+  val missingKeywords: Map[String, String] =
+    if (!isTurkish) Map.empty
+    else
+      (for (
+        keyword <- List("abstract", "case", "catch", "class", "do", "else",
+          "extends", "false", "final", "finally", "forSome", "implicit", "import", "lazy", "match", "new",
+          "null", "object", "override", "package", "private", "protected", "return", "sealed", "super", "this", "throw",
+          "trait", "true", "try", "type", "var", "while", "with", "yield")
+        if dict.keywordTranslation.contains(keyword)
+      ) yield keyword -> translate(keyword)()).toMap
 
   val TwContent = Map[String, String](
     "forward" ->
