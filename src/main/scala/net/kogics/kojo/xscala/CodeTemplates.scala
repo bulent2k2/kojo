@@ -211,7 +211,7 @@ draw(pic)
     "exec" -> "// #exec${cursor}\n",
     "execTemplate" -> "// #exec template ${filename}${cursor}\n",
     "execPicGaming" -> "// #exec template /picgaming${cursor}\n",
-  ) ++ net.kogics.kojo.lite.i18n.tr.templates.codeTemplates // empty map unless in Turkish locale
+  ) ++ net.kogics.kojo.lite.i18n.KeywordLangs.codeTemplates // empty unless the current language localizes keywords
 
   def apply(name: String) = templates(name)
   def asString(name: String) =

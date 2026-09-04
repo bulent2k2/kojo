@@ -34,6 +34,8 @@ import org.scalatest.Matchers
 @RunWith(classOf[JUnitRunner])
 class ScalaToolchainFetcherTest extends FunSuite with Matchers {
   val version = "2.13.18"
+  // a non-Turkish code, so these also prove the fetch path is language-agnostic
+  val lang = "sv"
 
   def sha256(f: File): String = {
     val digest = MessageDigest.getInstance("SHA-256")
@@ -86,10 +88,10 @@ class ScalaToolchainFetcherTest extends FunSuite with Matchers {
   test("a published toolchain is fetched, verified and installed") {
     val v = freshVersion("ok")
     val (remote, url) = publish(s"$v-20260823-123456-abcdef0")
-    val dir = ScalaToolchainFetcher.cacheDir(v)
+    val dir = ScalaToolchainFetcher.cacheDir(v, lang)
     deleteRecursively(dir)
     withRemote(url) {
-      val got = ScalaToolchainFetcher.ensureAvailable(v, silent)
+      val got = ScalaToolchainFetcher.ensureAvailable(v, lang, silent)
       got.isDefined should be(true)
       ScalaToolchainFetcher.isComplete(got.get) should be(true)
       // nothing half-written left behind
@@ -102,11 +104,11 @@ class ScalaToolchainFetcherTest extends FunSuite with Matchers {
   test("the download reports each jar and its bytes") {
     val v = freshVersion("progress")
     val (remote, url) = publish(s"$v-20260823-123456-abcdef0")
-    val dir = ScalaToolchainFetcher.cacheDir(v)
+    val dir = ScalaToolchainFetcher.cacheDir(v, lang)
     deleteRecursively(dir)
     val recorder = new Recorder
     withRemote(url) {
-      ScalaToolchainFetcher.ensureAvailable(v, recorder).isDefined should be(true)
+      ScalaToolchainFetcher.ensureAvailable(v, lang, recorder).isDefined should be(true)
     }
     recorder.jars.map(_._1) should be(ScalaToolchainFetcher.jarNames)
     recorder.jars.foreach { case (_, total) => total should be > 0L }
@@ -118,12 +120,12 @@ class ScalaToolchainFetcherTest extends FunSuite with Matchers {
 
   test("an already cached toolchain is used without fetching") {
     val v = freshVersion("cached")
-    val dir = ScalaToolchainFetcher.cacheDir(v)
+    val dir = ScalaToolchainFetcher.cacheDir(v, lang)
     deleteRecursively(dir)
     dir.mkdirs()
     ScalaToolchainFetcher.jarNames.foreach(n => makeJar(dir, n, None))
     withRemote("file:///nonexistent-so-a-fetch-would-fail/") {
-      ScalaToolchainFetcher.ensureAvailable(v, silent) should be(Some(dir))
+      ScalaToolchainFetcher.ensureAvailable(v, lang, silent) should be(Some(dir))
     }
     deleteRecursively(dir)
   }
@@ -133,10 +135,10 @@ class ScalaToolchainFetcherTest extends FunSuite with Matchers {
     // corrupt one jar after the checksums were published
     Files.write(new File(remote, "scala-reflect.jar").toPath, "not the jar you signed".getBytes("UTF-8"))
     val v = freshVersion("tampered")
-    val dir = ScalaToolchainFetcher.cacheDir(v)
+    val dir = ScalaToolchainFetcher.cacheDir(v, lang)
     deleteRecursively(dir)
     withRemote(url) {
-      ScalaToolchainFetcher.ensureAvailable(v, silent) should be(None)
+      ScalaToolchainFetcher.ensureAvailable(v, lang, silent) should be(None)
     }
     ScalaToolchainFetcher.isComplete(dir) should be(false)
     // and no half-written file is left lying around
@@ -148,10 +150,10 @@ class ScalaToolchainFetcherTest extends FunSuite with Matchers {
   test("a toolchain built for another Scala release is rejected") {
     val (remote, url) = publish("2.13.15-20230909-175640-c8d4123")
     val v = freshVersion("wrongversion")
-    val dir = ScalaToolchainFetcher.cacheDir(v)
+    val dir = ScalaToolchainFetcher.cacheDir(v, lang)
     deleteRecursively(dir)
     withRemote(url) {
-      ScalaToolchainFetcher.ensureAvailable(v, silent) should be(None)
+      ScalaToolchainFetcher.ensureAvailable(v, lang, silent) should be(None)
     }
     ScalaToolchainFetcher.isComplete(dir) should be(false)
     deleteRecursively(remote)
@@ -160,11 +162,11 @@ class ScalaToolchainFetcherTest extends FunSuite with Matchers {
 
   test("an unreachable download leaves no cache and reports the reason") {
     val v = freshVersion("offline")
-    val dir = ScalaToolchainFetcher.cacheDir(v)
+    val dir = ScalaToolchainFetcher.cacheDir(v, lang)
     deleteRecursively(dir)
     val recorder = new Recorder
     withRemote("file:///definitely/not/here/") {
-      ScalaToolchainFetcher.ensureAvailable(v, recorder) should be(None)
+      ScalaToolchainFetcher.ensureAvailable(v, lang, recorder) should be(None)
     }
     recorder.messages.exists(_.contains("[WARNING]")) should be(true)
     recorder.finishedCalls should be(1)

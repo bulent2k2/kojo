@@ -48,9 +48,15 @@ import net.kogics.kojo.util.Utils
  * the classpath is left untouched.
  */
 object ScalaToolchain {
+  // Languages that ship a keyword-patched Scala toolchain (scala-<code>).
+  // Keep in sync with i18n.KeywordLangs.packs; kept standalone (not read from
+  // there) so the launcher JVM need not load the i18n packages just to choose.
+  val keywordLanguages: Set[String] = Set("tr", "sv")
+
   val englishDirName = "scala-en"
-  val turkishDirName = "scala-tr"
-  private val variantDirNames = Set(englishDirName, turkishDirName)
+  def variantDir(lang: String): String = s"scala-$lang"
+  val turkishDirName = variantDir("tr") // = "scala-tr"; kept for tests/back-compat
+  private val variantDirNames: Set[String] = keywordLanguages.map(variantDir) + englishDirName
   val prefsNodeName = "Kojolite-Prefs" // keep in sync with KojoCtx.prefs
 
   def userLanguage: String = {
@@ -64,17 +70,18 @@ object ScalaToolchain {
   }
 
   private def parseOverride(value: String, source: String): Option[String] = value match {
-    case "en" => Some(englishDirName)
-    case "tr" => Some(turkishDirName)
+    case "en"                              => Some(englishDirName)
+    case lang if keywordLanguages(lang)    => Some(variantDir(lang))
     case other =>
-      println(s"[WARNING] Ignoring unknown kojo.toolchain '$other' (from $source); expected 'en' or 'tr'.")
+      val expected = ("en" +: keywordLanguages.toList.sorted).map("'" + _ + "'").mkString(", ")
+      println(s"[WARNING] Ignoring unknown kojo.toolchain '$other' (from $source); expected $expected.")
       None
   }
 
   def variantDirName: String = {
     val fromSysProp = Option(System.getProperty("kojo.toolchain")).flatMap(parseOverride(_, "system property"))
     def fromAppProp = Utils.appProperty("kojo.toolchain").flatMap(parseOverride(_, "kojo.properties"))
-    def fromLanguage = if (userLanguage == "tr") turkishDirName else englishDirName
+    def fromLanguage = if (keywordLanguages(userLanguage)) variantDir(userLanguage) else englishDirName
     fromSysProp.orElse(fromAppProp).getOrElse(fromLanguage)
   }
 
@@ -91,17 +98,19 @@ object ScalaToolchain {
 
   /**
    * Where the jars of `variant` live. Normally the directory shipped inside the
-   * package; when the Turkish toolchain was not packaged (the on-demand case),
-   * the copy under ~/.kojo/lite/scala-tr, fetching it if this is the first time.
+   * package; when a keyword toolchain was not packaged (the on-demand case),
+   * the copy under ~/.kojo/lite/scala-<lang>, fetching it if this is the first
+   * time. English (and any non-keyword variant) is only ever used as packaged.
    */
   private def resolveVariantDir(packaged: File, variant: String): File = {
     def packagedHasJars = Utils.filesInDir(packaged.getPath, "jar").nonEmpty
-    if (variant != turkishDirName || packagedHasJars) packaged
+    val lang = variant.stripPrefix("scala-")
+    if (!keywordLanguages(lang) || packagedHasJars) packaged
     else
       scalaRelease
-        .flatMap(v => ScalaToolchainFetcher.ensureAvailable(v, FetchProgress.forLauncher()))
+        .flatMap(v => ScalaToolchainFetcher.ensureAvailable(v, lang, FetchProgress.forLauncher(lang)))
         .getOrElse {
-          println("[WARNING] The Turkish Scala toolchain is not available; falling back to the stock one.")
+          println(s"[WARNING] The '$lang' Scala toolchain is not available; falling back to the stock one.")
           packaged
         }
   }

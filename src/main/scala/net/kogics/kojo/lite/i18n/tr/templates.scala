@@ -33,7 +33,7 @@ object templates {
    *  1) need to have one (and exactly one?) ${cursor} in each template below
    *  2) need to have at least one char after ${cursor}
    */
-  val codeTemplates = if (!isTurkish) Map() else Map(
+  val codeTemplatesRaw = Map(
     "eğer_ve_yoksa" -> "eğer (${koşul}) {\n    ${cursor}\n}\nyoksa {\n    \n}",
     "tanım_işlev" -> "tanım ${işlevinAdı}(${girdi1}: ${Tür1}) = {\n    ${cursor}\n}",
     "tanım_işlev_2_girdili" -> "tanım ${işlevinAdı}(${girdi1}: ${Tür1}, ${girdi2}: ${Tür2}) = {\n    ${cursor}\n}",
@@ -50,4 +50,7 @@ object templates {
     "dez_türlü" -> "dez ${değişmezinAdı}: ${TürAdı} = ${değer}${cursor}\n",
     "den_türlü" -> "den ${değişkeninAdı}: ${TürAdı} = ${değer}${cursor}\n",
   )
+
+  // gated alias kept for any direct callers; KeywordLangs uses codeTemplatesRaw
+  val codeTemplates: Map[String, String] = if (!isTurkish) Map() else codeTemplatesRaw
 }
