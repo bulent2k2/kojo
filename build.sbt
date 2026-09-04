@@ -41,7 +41,10 @@ libraryDependencies ++= Seq(
     "org.objenesis" % "objenesis" % "1.0" % "test",
     "org.hamcrest" % "hamcrest-core" % "1.1" % "test",
     "org.hamcrest" % "hamcrest-library" % "1.1" % "test",
-    ("org.scalacheck"  %% "scalacheck" % "1.14.3" intransitive()) % "test"
+    ("org.scalacheck"  %% "scalacheck" % "1.14.3" intransitive()) % "test",
+    // the Turkish API exposes parallel sequences (ParDizi, in i18n/tr/dizin.scala),
+    // and user scripts gain .par with it
+    "org.scala-lang.modules" %% "scala-parallel-collections" % "1.2.0"
 )
 
 //Build distribution

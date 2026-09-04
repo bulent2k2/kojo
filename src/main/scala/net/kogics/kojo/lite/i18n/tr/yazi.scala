@@ -18,9 +18,11 @@ package net.kogics.kojo.lite.i18n.tr
 
 trait StringMethodsInTurkish {
   type Yazı = String
-  type EsnekYazı = collection.mutable.StringBuilder
+  type EsnekYazı=collection.mutable.StringBuilder
 
   object Yazı {
+    // https://stackoverflow.com/questions/21086263/how-to-insert-double-quotes-into-string-with-interpolation-in-scala
+    val tırnak = """ " """.trim // spaces just for legibility
     type Harf = Char
     def olarak(n: Nesne) = String.valueOf(n)
     def olarak(n: Kesir) = String.valueOf(n)
@@ -57,13 +59,13 @@ trait StringMethodsInTurkish {
     def soldanKatla[T2](z: T2)(işlev: (T2, Harf) => T2): T2 = y.foldLeft(z)(işlev)
     def sağdanKatla[T2](z: T2)(işlev: (Harf, T2) => T2): T2 = y.foldRight(z)(işlev)
     // https://github.com/scala/scala/blob/v2.12.7/src/library/scala/collection/TraversableOnce.scala#L1
-    def topla[T2 >: Harf](implicit num: scala.math.Numeric[T2]) = y.sum(num) // foldLeft(num.zero)(num.plus)
+    def topla[T2 >: Harf](implicit num: scala.math.Numeric[T2]) = y.sum(num)    // foldLeft(num.zero)(num.plus)
     def çarp[T2 >: Harf](implicit num: scala.math.Numeric[T2]) = y.product(num) // foldLeft(num.one)(num.times)
     def yinelemesiz = y.distinct
     def yinelemesizİşlevle[T2](işlev: Harf => T2): Yazı = y.distinctBy(işlev)
     def yazıYap: Yazı = y.mkString
     def yazıYap(ara: Yazı): Yazı = y.mkString(ara)
-    def yazıYap(baş: Yazı, ara: Yazı, son: Yazı): Yazı = y.mkString(baş, ara, son)
+    def yazıYap(başı: Yazı, ara: Yazı, sonu: Yazı): Yazı = y.mkString(başı, ara, sonu)
     def tersi = y.reverse
     def değiştir(yeri: Sayı, değeri: Harf): Yazı = y.updated(yeri, değeri)
     // todo: doesn't compile
@@ -118,6 +120,7 @@ trait StringMethodsInTurkish {
     def sonundaMı(öbürü: Yazı): İkil = y.endsWith(öbürü)
 
     def kenarPayınıÇıkar = y.stripMargin
+    def eşlenirMi(düzenliDeyiş: Yazı): İkil = y.matches(düzenliDeyiş)
 
     def dizime[S >: Harf](implicit delil: scala.reflect.ClassTag[S]): Dizim[S] = new Dizim(y.toArray(delil))
     def ikile = y.toBoolean

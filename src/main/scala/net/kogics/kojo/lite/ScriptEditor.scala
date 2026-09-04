@@ -375,7 +375,9 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
     def actionPerformed(ev: ActionEvent): Unit = {
       val codePane = execSupport.codePane
       val offset = codePane.getCaretPosition
-      val typeAt = execSupport.typeAt(offset)
+      import net.kogics.kojo.lite.i18n.tr.updateTypes
+      // updateTypes returns the arg as is unless we are in Turkish locale
+      val typeAt = updateTypes(execSupport.typeAt(offset))
       val wordStart = Utilities.getWordStart(codePane, offset)
       val wordEnd = Utilities.getWordEnd(codePane, offset)
       val word0 = codePane.getDocument.getText(wordStart, wordEnd - wordStart)

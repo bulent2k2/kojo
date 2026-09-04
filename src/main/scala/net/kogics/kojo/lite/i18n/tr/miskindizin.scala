@@ -19,7 +19,18 @@ package net.kogics.kojo.lite.i18n.tr
 trait LazyListMethodsInTurkish {
   type MiskinDizin[C] = LazyList[C]
   object MiskinDizin {
-    def sayalım(başlangıç: Sayı, kaçarKaçar: Sayı = 1) = LazyList.from(başlangıç, kaçarKaçar)
+    // Concatenates all argument collections into a single lazy list
+    def ekle[A](diziler: Yinelenebilir[A]*): MiskinDizin[A] = LazyList.concat(diziler: _*)
+    // Create an infinite LazyList containing the given element expression (which is computed for each occurrence).
+    def sürekli[A](öge: => A): MiskinDizin[A] = LazyList.continually(öge)
+    def boş[A]: MiskinDizin[A] = LazyList.empty[A]
+    // Produces a lazy list containing the results of some element computation a number of times.
+    def doldur[A](s: Sayı)(öge: => A): MiskinDizin[A] = LazyList.fill(s)(öge)
+    // Create an infinite LazyList starting at start and incrementing by step step
+    def sayalım(başlangıç: Sayı, kaçarKaçar: Sayı = 1): MiskinDizin[Sayı] = LazyList.from(başlangıç, kaçarKaçar)
+    // An infinite LazyList that repeatedly applies a given function to a start value
+    def yinele[S](başlangıç: => S)(işlev: S => S): MiskinDizin[S] = LazyList.iterate(başlangıç)(işlev)
+    // todo more in https://www.scala-lang.org/api/3.x/scala/collection/immutable/LazyList$.html
   }
   // todo: duplicates in dizi.scala
   implicit class LazyListYöntemleri[T](d: MiskinDizin[T]) {
@@ -41,13 +52,13 @@ trait LazyListMethodsInTurkish {
     def soldanKatla[T2](z: T2)(işlev: (T2, T) => T2): T2 = d.foldLeft(z)(işlev)
     def sağdanKatla[T2](z: T2)(işlev: (T, T2) => T2): T2 = d.foldRight(z)(işlev)
     // https://github.com/scala/scala/blob/v2.12.7/src/library/scala/collection/TraversableOnce.scala#L1
-    def topla[T2 >: T](implicit num: scala.math.Numeric[T2]) = d.sum(num) // foldLeft(num.zero)(num.plus)
+    def topla[T2 >: T](implicit num: scala.math.Numeric[T2]) = d.sum(num)    // foldLeft(num.zero)(num.plus)
     def çarp[T2 >: T](implicit num: scala.math.Numeric[T2]) = d.product(num) // foldLeft(num.one)(num.times)
     def yinelemesiz = d.distinct
     def yinelemesizİşlevle[T2](işlev: T => T2): Col = d.distinctBy(işlev)
     def yazıYap: Yazı = d.mkString
     def yazıYap(ara: Yazı): Yazı = d.mkString(ara)
-    def yazıYap(baş: Yazı, ara: Yazı, son: Yazı): Yazı = d.mkString(baş, ara, son)
+    def yazıYap(başı: Yazı, ara: Yazı, sonu: Yazı): Yazı = d.mkString(başı, ara, sonu)
     def tersi = d.reverse
     def değiştir[S >: T](yeri: Sayı, değeri: S): MiskinDizin[S] = d.updated(yeri, değeri)
     def herbiriİçin[S](işlev: T => S): Birim = d.foreach(işlev)
@@ -76,7 +87,7 @@ trait LazyListMethodsInTurkish {
     def say(işlev: T => İkil): Sayı = d.count(işlev)
 
     def dilim(nereden: Sayı, nereye: Sayı) = d.slice(nereden, nereye)
-    def ikile[S](öbürü: scala.collection.IterableOnce[S]) = d.zip(öbürü)
+    def ikile[S](öbürü: YinelenebilirBirKere[S]) = d.zip(öbürü)
     def ikileSırayla = d.zipWithIndex
     def ikileKonumla = d.zipWithIndex
     def öbekle[A](iş: (T) => A): Eşlek[A, Col] = d.groupBy(iş)

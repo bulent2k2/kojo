@@ -33,14 +33,14 @@ trait OptionMethodsInTurkish {
   // örnek: if (varMı(resim.çarpışma(Resim.tuvalınSınırları))) {...} else {...}
   // .isDefined yerine
   def varMı[T](o: Belki[T]): İkil = o match {
-    case None    => yanlış
-    case Some(x) => doğru
+    case None    => false
+    case Some(x) => true
   }
   def yokMu[T](o: Belki[T]): İkil = !varMı(o)
 
-  implicit class BelkiYöntemleri[T](b: Belki[T]) {
+  implicit class BelkiYöntemleri[T](protected val b: Belki[T]) { // so we could use b.WithFilter as return type below
     def al = b.get
-    def alYoksa[T](t: T) = b.getOrElse(t)
+    def alYoksa[T2 >: T](t: => T2): T2 = b.getOrElse(t)
 
     def varMı: İkil = b.nonEmpty
     def yokMu: İkil = b.isEmpty
@@ -51,9 +51,11 @@ trait OptionMethodsInTurkish {
     def düzİşle[A](işlev: T => Option[A]): Belki[A] = b.flatMap(işlev)
     def ele(deneme: T => İkil): Belki[T] = b.filter(deneme)
     def eleDeğilse(deneme: T => İkil): Belki[T] = b.filterNot(deneme)
+    def elekle(deneme: T => İkil): b.WithFilter = b.withFilter(deneme)
 
     def dizine: Dizin[T] = b.toList
 
     // todo: more to come
   }
 }
+

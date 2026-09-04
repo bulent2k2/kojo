@@ -17,6 +17,7 @@ package net.kogics.kojo
 package xscala
 
 import language.implicitConversions
+import net.kogics.kojo.lite.i18n.tr.{dict, isTurkish}
 
 // Do not format source. It messes up help code formatting.
 
@@ -282,6 +283,30 @@ sq(100)
       </pre> 
     </div>
   )
+
+
+  // Localized keyword help. Only Turkish provides this today; in every other
+  // locale `translate` returns its default and the maps below stay empty, so
+  // Help behaves exactly as before this file knew about Turkish.
+  private def en2tr(keyword: String): String =
+    dict.keywordTranslation.getOrElse(keyword, keyword)
+  def translate(keyword: String)(elem: String = ""): String =
+    if (isTurkish) s"Türkçesi '${en2tr(keyword)}' olan anahtar sözcük: '$keyword'." else elem
+
+  // The Scala 2 keywords that have no dedicated help entry above (only def,
+  // val, var, for and if have one). In Turkish they at least get their
+  // translation; in every other locale this map is empty, so Help.apply keeps
+  // returning null ("no help") for them, as it always has.
+  val missingKeywords: Map[String, String] =
+    if (!isTurkish) Map.empty
+    else
+      (for (
+        keyword <- List("abstract", "case", "catch", "class", "do", "else",
+          "extends", "false", "final", "finally", "forSome", "implicit", "import", "lazy", "match", "new",
+          "null", "object", "override", "package", "private", "protected", "return", "sealed", "super", "this", "throw",
+          "trait", "true", "try", "type", "var", "while", "with", "yield")
+        if dict.keywordTranslation.contains(keyword)
+      ) yield keyword -> translate(keyword)()).toMap
 
   val TwContent = Map[String, String](
     "forward" ->
@@ -932,7 +957,7 @@ The code that you provide to react runs about thirty times per second, in the UI
             min(5, 10) // 5
         </pre>
     </div>,
-    "for" ->
+    "for" -> translate("for")(
       <div>
       Usage #1 [with commands]:<br/>
       <strong>for</strong> (i &lt;- 1 to n) {{ commands }} - Repeats a block of commands (within braces) n number of times,
@@ -955,8 +980,8 @@ The code that you provide to react runs about thirty times per second, in the UI
       <pre>
           for (i &lt;- 1 to 4) yield (2 * i)
       </pre>
-    </div>,
-    "def" ->
+    </div>),
+    "def" -> translate("def")(
       <div>
         <strong>def</strong> - Gives a name to a block of commands (within braces) or an expression. This lets you define a 
         new command or function.<br/>
@@ -988,7 +1013,7 @@ The code that you provide to react runs about thirty times per second, in the UI
             // another call to the sum function
             print(sum(20, 7))
         </pre>
-    </div>,
+    </div>),
     "recursion" ->
       <div>
         Recursion allows you to define a command or function in terms of itself. <br/>
@@ -1013,7 +1038,7 @@ The code that you provide to react runs about thirty times per second, in the UI
             if (n == 0) 1 else n * factorial(n-1)
       </pre>
     </div>,
-    "if" ->
+    "if" -> translate("if")(
       <div>
         <strong>if</strong> or <strong>if-else</strong> - Let's you choose the instruction to execute 
         based on a condition. The instruction can be a command, in which case if-else works as a command.
@@ -1041,8 +1066,8 @@ The code that you provide to react runs about thirty times per second, in the UI
             clearOutput()
             println(big)
         </pre>
-    </div>,
-    "val" ->
+    </div>),
+    "val" -> translate("val")(
       <div>
         <strong>val</strong> - Gives a name to an expression, letting you create a named value. 
         This makes your programs easier to modify and easier to understand.<br/>
@@ -1058,7 +1083,7 @@ The code that you provide to react runs about thirty times per second, in the UI
                 right()
             }}
         </pre>
-    </div>,
+    </div>),
     "pict" -> "pict { t => } is obsolete. Use the PictureT (preferred) or Picture function instead.",
     "Picture" ->
       <div>
@@ -1877,7 +1902,7 @@ repeat(5) {{
       </div>,
     "Kmath.lerp" -> "mathx.lerp(start, stop, amt) - interpolates between start and stop by the given amount.",
     "Kmath.map" -> "mathx.map(value, start1, stop1, start2, stop2) - maps the given value from the range (start1, stop1) to the range(start2, stop2)."
-  )
+  ) ++ missingKeywords
 
   val VnContent = Map[String, String]()
 

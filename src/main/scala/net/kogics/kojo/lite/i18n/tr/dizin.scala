@@ -16,11 +16,24 @@
  */
 package net.kogics.kojo.lite.i18n.tr
 
-trait ListMethodsInTurkish {
+import scala.collection.parallel.CollectionConverters._
+import scala.collection.parallel
+
+trait ParalelDiziYöntemleri {
+  type ParDizi[T] = parallel.immutable.ParSeq[T]
+  implicit class ParListYöntemler[T](pd: ParDizi[T]) {
+    def ele(deneme: T => İkil): ParDizi[T] = pd.filter(deneme)
+    def işle[A](işlev: T => A): ParDizi[A] = pd.map(işlev)
+    def düzİşle[A](işlev: T => ParDizi[A]): ParDizi[A] = pd.flatMap(işlev)
+    def dizine = pd.toList
+    // todo more to come...
+  }
+}
+trait DizinYöntemleri {
   val Boş = collection.immutable.Nil
 
   object Dizin {
-    def apply[A](elems: A*): List[A] = List.from(elems)
+    def apply[A](ögeler: A*): List[A] = List.from(ögeler)
     def unapplySeq[A](list: List[A]) = List.unapplySeq(list)
   }
 
@@ -28,7 +41,9 @@ trait ListMethodsInTurkish {
   // But we get type mismatches between List and Seq on methods that return Seq
   implicit class ListYöntemleri[T](d: Dizin[T]) {
     type Col = Dizin[T]
+    type ParDizi[T] = parallel.immutable.ParSeq[T] // duplicate above
     type Eşlek[A, D] = collection.immutable.Map[A, D]
+    def paralel: ParDizi[T] = d.par
     def başı: T = d.head
     def kuyruğu: Col = d.tail
     def önü: Col = d.init
@@ -47,13 +62,13 @@ trait ListMethodsInTurkish {
     def soldanKatla[T2](z: T2)(işlev: (T2, T) => T2): T2 = d.foldLeft(z)(işlev)
     def sağdanKatla[T2](z: T2)(işlev: (T, T2) => T2): T2 = d.foldRight(z)(işlev)
     // https://github.com/scala/scala/blob/v2.12.7/src/library/scala/collection/TraversableOnce.scala#L1
-    def topla[T2 >: T](implicit num: scala.math.Numeric[T2]) = d.sum(num) // foldLeft(num.zero)(num.plus)
+    def topla[T2 >: T](implicit num: scala.math.Numeric[T2]) = d.sum(num)    // foldLeft(num.zero)(num.plus)
     def çarp[T2 >: T](implicit num: scala.math.Numeric[T2]) = d.product(num) // foldLeft(num.one)(num.times)
     def yinelemesiz = d.distinct
     def yinelemesizİşlevle[T2](işlev: T => T2): Col = d.distinctBy(işlev)
     def yazıYap: Yazı = d.mkString
     def yazıYap(ara: Yazı): Yazı = d.mkString(ara)
-    def yazıYap(baş: Yazı, ara: Yazı, son: Yazı): Yazı = d.mkString(baş, ara, son)
+    def yazıYap(başı: Yazı, ara: Yazı, sonu: Yazı): Yazı = d.mkString(başı, ara, sonu)
     def tersi = d.reverse
     def değiştir[S >: T](yeri: Sayı, değeri: S): Dizin[S] = d.updated(yeri, değeri)
     def herbiriİçin[S](işlev: T => S): Birim = d.foreach(işlev)
@@ -83,9 +98,9 @@ trait ListMethodsInTurkish {
     def say(işlev: T => İkil): Sayı = d.count(işlev)
 
     def dilim(nereden: Sayı, nereye: Sayı) = d.slice(nereden, nereye)
-    def ikile[S](öbürü: scala.collection.IterableOnce[S]) = d.zip(öbürü)
-    def ikileSırayla = d.zipWithIndex
-    def ikileKonumla = d.zipWithIndex
+    def ikile[S](öbürü: YinelenebilirBirKere[S]) = d.zip(öbürü) // todo: result type (for all ikile in other files, too)
+    def ikileSırayla = d.zipWithIndex  // todo
+    def ikileKonumla = d.zipWithIndex  // todo
     def öbekle[A](iş: (T) => A): Eşlek[A, Col] = d.groupBy(iş)
     def öbekleEsnek[A](iş: (T) => A): Eşlem[A, Col] = Eşlem.değişmezden(d.groupBy(iş)) // needed?
 

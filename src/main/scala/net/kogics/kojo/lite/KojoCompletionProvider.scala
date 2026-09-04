@@ -10,6 +10,7 @@ import scala.collection.mutable
 
 import net.kogics.kojo.core.CompletionInfo
 import net.kogics.kojo.util.Utils
+import net.kogics.kojo.lite.i18n.tr.updateTypes
 import net.kogics.kojo.xscala.CodeCompletionUtils
 import net.kogics.kojo.xscala.CodeTemplates
 import net.kogics.kojo.xscala.Help
@@ -67,10 +68,12 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
   }
 
   def proposal(offset: Int, completion: String, kind: Int, template: String) = {
+    // updateTypes returns the arg as is unless we are in Turkish locale
+    val completion2 = updateTypes(completion)
     new TemplateCompletion(
       this,
-      completion,
-      completion,
+      completion2,
+      completion2,
       rstaTemplate(if (template == null) completion else template),
       null,
       Help(completion)
@@ -94,7 +97,7 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
       case Var           => VARIABLE
     }
 
-    val display = completion.fullCompletion
+    val display = updateTypes(completion.fullCompletion)
 
     val knownOwners = Set(
       "PicShape",
