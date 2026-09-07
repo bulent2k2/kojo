@@ -63,7 +63,9 @@ case class Eşlem[A,D](val m: Map[A,D]) {
   def indirgeSağdan[B >: Pair](işlem: (Pair, B) => B): B = m.reduceRight(işlem)
   def indirgeSoldanBelki[B >: Pair](işlem: (B, Pair) => B): Belki[B] = m.reduceLeftOption(işlem)
   def indirgeSağdanBelki[B >: Pair](işlem: (Pair, B) => B): Belki[B] = m.reduceRightOption(işlem)
-  def kalta[B >: Pair](z: B)(işlev: (B, B) => B): B = m.fold(z)(işlev)
+  def katla[B >: Pair](z: B)(işlev: (B, B) => B): B = m.fold(z)(işlev)
+  @deprecated("yazım hatasıydı: katla kullanın", "Eylül 2026")
+  def kalta[B >: Pair](z: B)(işlev: (B, B) => B): B = katla(z)(işlev)
   def soldanKatla[B](z: B)(işlev: (B, Pair) => B): B = m.foldLeft(z)(işlev)
   def sağdanKatla[B](z: B)(işlev: (Pair, B) => B): B = m.foldRight(z)(işlev)
 
@@ -148,7 +150,9 @@ trait MapMethodsInTurkish {
     def indirgeSağdan[B >: Pair](işlem: (Pair, B) => B): B = m.reduceRight(işlem)
     def indirgeSoldanBelki[B >: Pair](işlem: (B, Pair) => B): Belki[B] = m.reduceLeftOption(işlem)
     def indirgeSağdanBelki[B >: Pair](işlem: (Pair, B) => B): Belki[B] = m.reduceRightOption(işlem)
-    def kalta[B >: Pair](z: B)(işlev: (B, B) => B): B = m.fold(z)(işlev)
+    def katla[B >: Pair](z: B)(işlev: (B, B) => B): B = m.fold(z)(işlev)
+    @deprecated("yazım hatasıydı: katla kullanın", "Eylül 2026")
+    def kalta[B >: Pair](z: B)(işlev: (B, B) => B): B = katla(z)(işlev)
     def soldanKatla[B](z: B)(işlev: (B, Pair) => B): B = m.foldLeft(z)(işlev)
     def sağdanKatla[B](z: B)(işlev: (Pair, B) => B): B = m.foldRight(z)(işlev)
 

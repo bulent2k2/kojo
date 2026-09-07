@@ -707,6 +707,74 @@ import net.kogics.kojo.staging
     m al 100 alSağdan 2 should be(Dizi(199, 201))
   }
 
+  test("MiskinDizin: tamamlanan yöntemler") {
+    val m = MiskinDizin(3, 1, 2)
+    m.önü.dizine should be(Dizin(3, 1)); m.sonu should be(2)
+    m.başıBelki should be(Biri(3)); MiskinDizin.boş[Sayı].sonuBelki should be(Hiçbiri)
+    m.bul(_ > 1) should be(Biri(3)); m.bulSondan(_ > 1) should be(Biri(2))
+    m.nerede(_ == 1) should be(1); m.nerede(_ > 1, 1) should be(2); m.neredeSondan(_ > 1) should be(2)
+    m.başındaMı(Dizi(3, 1)) should be(doğru); m.sonundaMı(Dizi(2)) should be(doğru)
+    m.karşılıklıMı(Dizi(6, 2, 4))(_ * 2 == _) should be(doğru)
+    m.sıralar.toList should be(Dizin(0, 1, 2))
+    m.hepsiİçinDoğruMu(_ > 0) should be(doğru)
+    // bölme ve öbekleme
+    m.böl(_ > 1)._1.dizine should be(Dizin(3, 2))
+    val (solda, sağda) = m.bölİşle(x => if (x > 1) Left(x) else Right(x.yazıya))
+    solda.dizine should be(Dizin(3, 2)); sağda.dizine should be(Dizin("1"))
+    m.bölDoğruKaldıkça(_ > 2)._1.dizine should be(Dizin(3))
+    m.bölYerinden(1)._2.dizine should be(Dizin(1, 2))
+    m.öbekli(2).toList.map(_.dizine) should be(Dizin(Dizin(3, 1), Dizin(2)))
+    m.kayarÖbekli(2).toList.map(_.dizine) should be(Dizin(Dizin(3, 1), Dizin(1, 2)))
+    m.kayarÖbekli(2, 2).toList.map(_.dizine) should be(Dizin(Dizin(3, 1), Dizin(2)))
+    m.öbekleİşle(_ % 2)(_ * 10) should be(Eşlek(1 -> MiskinDizin(30, 10), 0 -> MiskinDizin(20)))
+    m.öbekleİşleİndirge(_ % 2)(x => x)(_ + _) should be(Eşlek(1 -> 4, 0 -> 2))
+    m.kombinasyonlar(2).toList.map(_.dizine) should be(Dizin(Dizin(3, 1), Dizin(3, 2), Dizin(1, 2)))
+    m.permütasyonlar.size should be(6); m.kuyruklar.size should be(4); m.önler.size should be(4)
+    // katlama ve tarama
+    m.katla(0)(_ + _) should be(6)
+    m.indirgeSoldan(_ - _) should be(0); m.indirgeSağdan(_ - _) should be(4)
+    m.indirgeBelki(_ + _) should be(Biri(6)); MiskinDizin.boş[Sayı].indirgeBelki(_ + _) should be(Hiçbiri)
+    m.indirgeSoldanBelki(_ + _) should be(Biri(6)); m.indirgeSağdanBelki(_ + _) should be(Biri(6))
+    m.tara(0)(_ + _).dizine should be(Dizin(0, 3, 4, 6))
+    m.taraSoldan("")(_ + _).dizine should be(Dizin("", "3", "31", "312"))
+    m.taraSağdan(0)(_ + _).dizine should be(Dizin(6, 3, 2, 0))
+    m.enUfağıBelki should be(Biri(1)); m.enİrisiBelki should be(Biri(3))
+    MiskinDizin.boş[Sayı].enİrisiBelki should be(Hiçbiri)
+    m.enUfağıBelki(x => -x) should be(Biri(3)); m.enİrisiBelki(x => -x) should be(Biri(1))
+    // ekleme -- önüneEkle ve sonunaEkleHepsini TEMBEL: hesaplanmayan parça patlamaz
+    m.sonunaEkle(9).dizine should be(Dizin(3, 1, 2, 9))
+    m.önüneEkle(0).başı should be(0)
+    var sayaç = 0
+    val e = m.önüneEkle { sayaç += 1; 0 }
+    sayaç should be(0) // öge ancak ilk erişimde hesaplanır
+    e.başı should be(0); sayaç should be(1)
+    m.önüneEkleHepsini(Dizi(7, 8)).dizine should be(Dizin(7, 8, 3, 1, 2))
+    m.sonunaEkleHepsini(Dizi(7, 8)).dizine should be(Dizin(3, 1, 2, 7, 8))
+    MiskinDizin.sayalım(1).sonunaEkleHepsini(throw new Exception("hesaplanmamalı")).al(3).dizine should be(Dizin(1, 2, 3))
+    m.hepsiniHesapla.dizine should be(Dizin(3, 1, 2))
+    m.uzat(5, 0).dizine should be(Dizin(3, 1, 2, 0, 0))
+    m.yama(1, Dizi(8, 9), 1).dizine should be(Dizin(3, 8, 9, 2))
+    m.fark(Dizi(1)).dizine should be(Dizin(3, 2)); m.kesişim(Dizi(2, 3)).dizine should be(Dizin(3, 2))
+    m.bileşim(Dizi(4)).dizine should be(Dizin(3, 1, 2, 4))
+    // seçme, düzleştirme, ikili işlemler
+    m.seçİşle { case x if x > 1 => x * 10 }.dizine should be(Dizin(30, 20))
+    m.seçİşleİlk { case x if x < 3 => x } should be(Biri(1))
+    MiskinDizin(Dizi(1, 2), Dizi(3)).düzleştir.dizine should be(Dizin(1, 2, 3))
+    MiskinDizin(Dizi(1, 2), Dizi(3, 4)).devrik.işle(_.dizine).dizine should be(Dizin(Dizin(1, 3), Dizin(2, 4)))
+    val (sayılar, harfler) = MiskinDizin((1, "a"), (2, "b")).ikiliyiAç
+    sayılar.dizine should be(Dizin(1, 2)); harfler.dizine should be(Dizin("a", "b"))
+    m.ikileHepsini(Dizi("x"), -1, "-").dizine should be(Dizin((3, "x"), (1, "-"), (2, "-")))
+    m.tersİşle(_ * 2).dizine should be(Dizin(4, 2, 6))
+    // eşlik nesnesi
+    MiskinDizin.sıraylaDoldur(3)(_ * 2).dizine should be(Dizin(0, 2, 4))
+    MiskinDizin.aralık(1, 4).dizine should be(Dizin(1, 2, 3)); MiskinDizin.aralık(1, 10, 4).dizine should be(Dizin(1, 5, 9))
+    MiskinDizin.türet(1)(n => if (n > 8) Hiçbiri else Biri((n, n * 2))).dizine should be(Dizin(1, 2, 4, 8))
+    MiskinDizin.diziden(Dizin(1, 2)).dizine should be(Dizin(1, 2))
+    MiskinDizin.ekle(Dizi(1), Dizin(2)).dizine should be(Dizin(1, 2))
+    // Eşlem.katla (eski adı kalta yazım hatasıydı)
+    Eşlem("a" -> 1, "b" -> 2).katla(("", 0))((x, y) => ("", x._2 + y._2))._2 should be(3)
+  }
+
   test("Queue and PriorityQueue translations to work") {
     val s = ÖncelikSırası(3, 5, 1, 2, 9)
     val s2 = s.ikizle()
