@@ -197,7 +197,9 @@ object dict {
     "execution" -> "işletim",
     "application" -> "uygulanış",
     "" -> "",
-    // MiskinDizin (LazyList) yöntemleri -- bkz. miskindizin.scala
+    // Dizi ailesi + MiskinDizin ortak çekirdeği -- bkz. dizi/dizin/dizik/yoney/miskindizin.scala
+    "indexOfSlice" -> "dilimSırası",
+    "lastIndexOfSlice" -> "dilimSırasıSondan",
     "find" -> "bul",
     "findLast" -> "bulSondan",
     "headOption" -> "başıBelki",
