@@ -206,8 +206,12 @@ trait StringMethodsInTurkish {
     // bul, böl, öbekli, enİrisi... hepsi çalışır) hem de bir yazı TAMPONU.
     // Aşağıdakiler tampon tarafı; tamponun kendisini değiştirirler.
     def ekleHepsini(harfler: YinelenebilirBirKere[Harf]): EsnekYazı = ey.appendAll(harfler)
-    def araEkle(yeri: Sayı, x: Yazı): EsnekYazı = ey.insert(yeri, x)
-    def araEkleHepsini(yeri: Sayı, harfler: YinelenebilirBirKere[Harf]): EsnekYazı = ey.insertAll(yeri, harfler)
+    def ekleAraya(yeri: Sayı, x: Yazı): EsnekYazı = ey.insert(yeri, x)
+    def ekleArayaHepsini(yeri: Sayı, harfler: YinelenebilirBirKere[Harf]): EsnekYazı = ey.insertAll(yeri, harfler)
+    @deprecated("eylemle başlayan ada geçildi: ekleAraya kullanın", "Eylül 2026")
+    def araEkle(yeri: Sayı, x: Yazı): EsnekYazı = ekleAraya(yeri, x)
+    @deprecated("eylemle başlayan ada geçildi: ekleArayaHepsini kullanın", "Eylül 2026")
+    def araEkleHepsini(yeri: Sayı, harfler: YinelenebilirBirKere[Harf]): EsnekYazı = ekleArayaHepsini(yeri, harfler)
     def aralığıSil(nereden: Sayı, nereye: Sayı): EsnekYazı = ey.delete(nereden, nereye)
     def harfiSil(yeri: Sayı): EsnekYazı = ey.deleteCharAt(yeri)
     def değiştirAralığını(nereden: Sayı, nereye: Sayı, yenisi: Yazı): EsnekYazı =

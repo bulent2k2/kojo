@@ -214,8 +214,8 @@ object dict {
     "patchInPlace" -> "yamaYerinde",
     "padToInPlace" -> "uzatYerinde",
     "addAll" -> "ekleHepsini", // eski ad: hepsiniEkle (eskitildi)
-    "prepend" -> "başaEkle",
-    "prependAll" -> "başaEkleHepsini",
+    "prepend" -> "ekleBaşa", // eski ad: başaEkle (eskitildi)
+    "prependAll" -> "ekleBaşaHepsini", // eski ad: başaEkleHepsini (eskitildi)
     "insert" -> "ekleAraya", // eski ad: araEkle (eskitildi)
     "insertAll" -> "ekleArayaHepsini",
     "removeAll" -> "alHepsini",

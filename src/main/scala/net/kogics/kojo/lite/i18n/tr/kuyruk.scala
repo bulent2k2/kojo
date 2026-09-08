@@ -219,7 +219,9 @@ trait QueueMethodsInTurkish {
 
     // --- YERİNDE değiştirenler -------------------------------------------
     def işleYerinde(işlev: T => T): Col = { d.mapInPlace(işlev); d }
-    def hepsiniEkle(ögeler: YinelenebilirBirKere[T]): Col = { d.addAll(ögeler); d }
+    def ekleHepsini(ögeler: YinelenebilirBirKere[T]): Col = { d.addAll(ögeler); d }
+    @deprecated("eylemle başlayan ada geçildi: ekleHepsini kullanın", "Eylül 2026")
+    def hepsiniEkle(ögeler: YinelenebilirBirKere[T]): Col = ekleHepsini(ögeler)
     def kuyruğa: Kuyruk[T] = d.toQueue
 }
 

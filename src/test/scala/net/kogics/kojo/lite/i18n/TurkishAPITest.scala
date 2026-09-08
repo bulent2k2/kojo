@@ -1066,14 +1066,18 @@ import net.kogics.kojo.staging
     e.eleYerinde(_ > 1) should be(EsnekDizik(3, 2)); e should be(EsnekDizik(3, 2))
     e.işleYerinde(_ * 10) should be(EsnekDizik(30, 20)); e should be(EsnekDizik(30, 20))
     e.sıralıYerinde should be(EsnekDizik(20, 30)); e should be(EsnekDizik(20, 30))
-    e.başaEkle(5); e should be(EsnekDizik(5, 20, 30))
-    e.araEkle(1, 7); e should be(EsnekDizik(5, 7, 20, 30))
-    e.hepsiniEkle(Dizi(40, 50)); e should be(EsnekDizik(5, 7, 20, 30, 40, 50))
+    e.ekleBaşa(5); e should be(EsnekDizik(5, 20, 30))
+    e.ekleAraya(1, 7); e should be(EsnekDizik(5, 7, 20, 30))
+    e.ekleHepsini(Dizi(40, 50)); e should be(EsnekDizik(5, 7, 20, 30, 40, 50))
     e.çıkar(0, 2); e should be(EsnekDizik(20, 30, 40, 50))
     e.baştanKırp(1); e should be(EsnekDizik(30, 40, 50))
     e.sondanKırp(1); e should be(EsnekDizik(30, 40))
     e.alYerinde(1) should be(EsnekDizik(30))
     val kopya = e.kopyası; kopya.boşalt(); kopya.boşMu should be(doğru); e.boşMu should be(yanlış)
+    // eskitilmiş adlar hâlâ aynı işi görüyor (eski betikler kırılmasın)
+    val eskiAd = EsnekDizik(20, 30)
+    eskiAd.başaEkle(5); eskiAd.araEkle(1, 7); eskiAd.hepsiniEkle(Dizi(40))
+    eskiAd should be(EsnekDizik(5, 7, 20, 30, 40))
 
     val ku = Kuyruk(1, 2)
     ku.kuyruğaEkle(3) should be(Kuyruk(1, 2, 3))
@@ -1122,7 +1126,7 @@ import net.kogics.kojo.staging
     ö.seçİşle { durum x eğer x > 1 => x * 10 }.sıralı should be(Dizi(20, 30))
     ö.kuyruğa.boyu should be(3)
     ö.işleYerinde(_ * 10); ö.başı should be(30)
-    ö.hepsiniEkle(Dizi(100)); ö.başı should be(100)
+    ö.ekleHepsini(Dizi(100)); ö.başı should be(100)
   }
 
   test("Aralık tür takma adı ve EsnekYazı tamponu") {
@@ -1149,7 +1153,7 @@ import net.kogics.kojo.staging
     // tampon tarafı
     ey.harf(0) should be('m')
     ey.parçası(0, 3) should be("mer")
-    ey.araEkle(0, "Ey "); ey.yazıya should be("Ey merhaba")
+    ey.ekleAraya(0, "Ey "); ey.yazıya should be("Ey merhaba")
     ey.aralığıSil(0, 3); ey.yazıya should be("merhaba")
     ey.harfiSil(0); ey.yazıya should be("erhaba")
     ey.harfiKur(0, 'M'); ey.yazıya should be("Mrhaba")   // 'e' yerine 'M'
