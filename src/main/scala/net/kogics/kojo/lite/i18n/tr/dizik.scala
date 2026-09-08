@@ -335,6 +335,39 @@ trait EsnekDizikYöntemleri {
     def tersİşle[B](işlev: T => B): EsnekDizik[B] = d.reverse.map(işlev)
 
     // todo: more to come
-  }
+  
+    // --- YERİNDE değiştirenler -------------------------------------------
+    // Bu yöntemler diziğin KENDİSİNİ değiştirir (yeni bir dizik vermez).
+    // Değişmez karşılıkları yukarıda: ele/işle/sıralı/al/düşür/yama/uzat...
+    def eleYerinde(deneme: T => İkil): Col = { d.filterInPlace(deneme); d }
+    def düzİşleYerinde(işlev: T => YinelenebilirBirKere[T]): Col = { d.flatMapInPlace(işlev); d }
+    def sıralıYerinde(implicit sıralama: Ordering[T]): Col = { d.sortInPlace()(sıralama); d }
+    def sıralaYerinde[B](iş: T => B)(implicit sıralama: Ordering[B]): Col = { d.sortInPlaceBy(iş)(sıralama); d }
+    def sırayaSokYerinde(önce: (T, T) => İkil): Col = { d.sortInPlaceWith(önce); d }
+    def alYerinde(n: Sayı): Col = { d.takeInPlace(n); d }
+    def alSağdanYerinde(n: Sayı): Col = { d.takeRightInPlace(n); d }
+    def alDoğruKaldıkçaYerinde(deneme: T => İkil): Col = { d.takeWhileInPlace(deneme); d }
+    def düşürYerinde(n: Sayı): Col = { d.dropInPlace(n); d }
+    def düşürSağdanYerinde(n: Sayı): Col = { d.dropRightInPlace(n); d }
+    def düşürDoğruKaldıkçaYerinde(deneme: T => İkil): Col = { d.dropWhileInPlace(deneme); d }
+    def dilimYerinde(nereden: Sayı, nereye: Sayı): Col = { d.sliceInPlace(nereden, nereye); d }
+    def yamaYerinde(nereden: Sayı, yenisi: YinelenebilirBirKere[T], kaçTane: Sayı): Col =
+      { d.patchInPlace(nereden, yenisi.iterator.to(Seq), kaçTane); d }
+    def uzatYerinde(boy: Sayı, öge: T): Col = { d.padToInPlace(boy, öge); d }
+
+    // --- ekleme / çıkarma (hepsi yerinde) --------------------------------
+    def hepsiniEkle(ögeler: YinelenebilirBirKere[T]): Col = { d.addAll(ögeler); d }
+    def başaEkle(öge: T): Col = { d.prepend(öge); d }
+    def başaEkleHepsini(ögeler: YinelenebilirBirKere[T]): Col = { d.prependAll(ögeler); d }
+    def araEkle(yeri: Sayı, öge: T): Birim = d.insert(yeri, öge)
+    def araEkleHepsini(yeri: Sayı, ögeler: YinelenebilirBirKere[T]): Birim = d.insertAll(yeri, ögeler)
+    def çıkar(yeri: Sayı, kaçTane: Sayı): Birim = d.remove(yeri, kaçTane)
+    def çıkarÖgeyi(öge: T): Col = { d.subtractOne(öge); d }
+    def çıkarHepsini(ögeler: YinelenebilirBirKere[T]): Col = { d.subtractAll(ögeler); d }
+    def baştanKırp(kaçTane: Sayı): Birim = d.trimStart(kaçTane)
+    def sondanKırp(kaçTane: Sayı): Birim = d.trimEnd(kaçTane)
+    def boşalt(): Birim = d.clear()
+    def kopyası: EsnekDizik[T] = d.clone()
+}
 
 }

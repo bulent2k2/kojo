@@ -54,6 +54,7 @@ trait QueueMethodsInTurkish {
   }
 
   implicit class mutPriQueMethods[T](d: PriorityQueue[T]) {
+    type Belki[B] = Option[B]
     type Col = ÖncelikSırası[T]
     type C2[B] = ÖncelikSırası[B]
     type Eşlek[A, D] = collection.immutable.Map[A, D]
@@ -120,7 +121,54 @@ trait QueueMethodsInTurkish {
 
     // more to come
 
-  }
+  
+    // --- ortak çekirdek ---------------------------------------------------
+    // NOT: Koleksiyon ÜRETEN yöntemler Dizi veriyor, ÖncelikSırası değil.
+    // Sebep: yeni bir öncelik sırası kurmak örtük bir Ordering ister ve
+    // imzaları gereksiz karmaşıklaştırırdı. Sıralı bir sonuç gerekiyorsa
+    // ÖncelikSırası(...) ile açıkça yeniden kurulur.
+    def başıBelki: Belki[T] = d.headOption
+    def sonuBelki: Belki[T] = d.lastOption
+    def bul(deneme: T => İkil): Belki[T] = d.find(deneme)
+    def böl(deneme: T => İkil): (Dizi[T], Dizi[T]) = {
+      val (e, h) = d.iterator.toSeq.partition(deneme); (e, h)
+    }
+    def bölDoğruKaldıkça(deneme: T => İkil): (Dizi[T], Dizi[T]) = d.iterator.toSeq.span(deneme)
+    def bölYerinden(yeri: Sayı): (Dizi[T], Dizi[T]) = d.iterator.toSeq.splitAt(yeri)
+    def öbekli(boy: Sayı): Yineleyici[Dizi[T]] = d.iterator.toSeq.grouped(boy)
+    def kayarÖbekli(boy: Sayı): Yineleyici[Dizi[T]] = d.iterator.toSeq.sliding(boy)
+    def öbekleİşle[K, B](anahtar: T => K)(değer: T => B): Eşlek[K, Dizi[B]] =
+      d.iterator.toSeq.groupMap(anahtar)(değer)
+    def öbekleİşleİndirge[K, B](anahtar: T => K)(değer: T => B)(indirge: (B, B) => B): Eşlek[K, B] =
+      d.iterator.toSeq.groupMapReduce(anahtar)(değer)(indirge)
+    def kuyruklar: Yineleyici[Dizi[T]] = d.iterator.toSeq.tails
+    def önler: Yineleyici[Dizi[T]] = d.iterator.toSeq.inits
+    def katla[S >: T](z: S)(işlev: (S, S) => S): S = d.fold(z)(işlev)
+    def indirgeSoldan[S >: T](işlem: (S, T) => S): S = d.reduceLeft(işlem)
+    def indirgeSağdan[S >: T](işlem: (T, S) => S): S = d.reduceRight(işlem)
+    def indirgeBelki[S >: T](işlem: (S, S) => S): Belki[S] = d.reduceOption(işlem)
+    def indirgeSoldanBelki[S >: T](işlem: (S, T) => S): Belki[S] = d.reduceLeftOption(işlem)
+    def indirgeSağdanBelki[S >: T](işlem: (T, S) => S): Belki[S] = d.reduceRightOption(işlem)
+    def tara[S >: T](z: S)(işlev: (S, S) => S): Dizi[S] = d.iterator.toSeq.scan(z)(işlev)
+    def taraSoldan[B](z: B)(işlev: (B, T) => B): Dizi[B] = d.iterator.toSeq.scanLeft(z)(işlev)
+    def taraSağdan[B](z: B)(işlev: (T, B) => B): Dizi[B] = d.iterator.toSeq.scanRight(z)(işlev)
+    def enUfağıBelki[S >: T](implicit sıralama: math.Ordering[S]): Belki[T] = d.minOption(sıralama)
+    def enUfağıBelki[B](iş: T => B)(implicit karşılaştırma: math.Ordering[B]): Belki[T] = d.minByOption(iş)(karşılaştırma)
+    def enİrisiBelki[S >: T](implicit sıralama: math.Ordering[S]): Belki[T] = d.maxOption(sıralama)
+    def enİrisiBelki[B](iş: T => B)(implicit karşılaştırma: math.Ordering[B]): Belki[T] = d.maxByOption(iş)(karşılaştırma)
+    def seçİşle[B](işlev: PartialFunction[T, B]): Dizi[B] = d.iterator.toSeq.collect(işlev)
+    def seçİşleİlk[B](işlev: PartialFunction[T, B]): Belki[B] = d.collectFirst(işlev)
+    def düzleştir[B](implicit delil: T => YinelenebilirBirKere[B]): Dizi[B] = d.iterator.toSeq.flatten(delil)
+    def devrik[B](implicit delil: T => Yinelenebilir[B]): Dizi[Dizi[B]] = d.iterator.toSeq.transpose(delil)
+    def ikiliyiAç[A1, A2](implicit delil: T => (A1, A2)): (Dizi[A1], Dizi[A2]) = d.iterator.toSeq.unzip(delil)
+    def ikileHepsini[B, S >: T](öbürü: Yinelenebilir[B], buDolgu: S, oDolgu: B): Dizi[(S, B)] =
+      d.iterator.toSeq.zipAll(öbürü, buDolgu, oDolgu)
+
+    // --- YERİNDE değiştirenler -------------------------------------------
+    def işleYerinde(işlev: T => T): Col = { d.mapInPlace(işlev); d }
+    def hepsiniEkle(ögeler: YinelenebilirBirKere[T]): Col = { d.addAll(ögeler); d }
+    def kuyruğa: Kuyruk[T] = d.toQueue
+}
 
   type Kuyruk[T] = Queue[T]
   object Kuyruk {
@@ -262,5 +310,36 @@ trait QueueMethodsInTurkish {
     def ikileHepsini[B, S >: T](öbürü: Yinelenebilir[B], buDolgu: S, oDolgu: B): Kuyruk[(S, B)] =
       d.zipAll(öbürü, buDolgu, oDolgu)
     def tersİşle[B](işlev: T => B): Kuyruk[B] = d.reverse.map(işlev)
+
+    // --- YERİNDE değiştirenler -------------------------------------------
+    // Kuyruğun KENDİSİNİ değiştirirler. Kuyruk mantığı: kuyruğaEkle sona
+    // koyar, baştanÇıkar baştan alır (ilk giren ilk çıkar).
+    def kuyruğaEkle(öge: T): Col = { d.enqueue(öge); d }
+    def kuyruğaEkleHepsini(ögeler: YinelenebilirBirKere[T]): Col = { d.enqueueAll(ögeler); d }
+    def baştanÇıkar(): T = d.dequeue()
+    def baştanÇıkarBelki: Belki[T] = d.removeHeadOption()
+    def baştanÇıkarDoğruKaldıkça(deneme: T => İkil): Diz[T] = d.removeHeadWhile(deneme)
+    def baştanÇıkarKoşulla(deneme: T => İkil): Belki[T] = d.dequeueFirst(deneme)
+    def baştanÇıkarHepsiniKoşulla(deneme: T => İkil): Diz[T] = d.dequeueWhile(deneme)
+    def sondanÇıkar(): T = d.removeLast()
+    def sondanÇıkarBelki: Belki[T] = d.removeLastOption()
+    def ilki: T = d.front
+    def eleYerinde(deneme: T => İkil): Col = { d.filterInPlace(deneme); d }
+    def işleYerinde(işlev: T => T): Col = { d.mapInPlace(işlev); d }
+    def sıralıYerinde(implicit sıralama: Ordering[T]): Col = { d.sortInPlace()(sıralama); d }
+    def sıralaYerinde[B](iş: T => B)(implicit sıralama: Ordering[B]): Col = { d.sortInPlaceBy(iş)(sıralama); d }
+    def hepsiniEkle(ögeler: YinelenebilirBirKere[T]): Col = { d.addAll(ögeler); d }
+    def araEkle(yeri: Sayı, öge: T): Birim = d.insert(yeri, öge)
+    def çıkar(yeri: Sayı): T = d.remove(yeri)
+    def çıkarHepsini(ögeler: YinelenebilirBirKere[T]): Col = { d.subtractAll(ögeler); d }
+    def boşalt(): Birim = d.clear()
+    def sıralı(implicit sıralama: Ordering[T]): Diz[T] = d.sorted(sıralama)
+    def sırala[B](iş: T => B)(implicit sıralama: Ordering[B]): Diz[T] = d.sortBy(iş)(sıralama)
+    def sırayaSok(önce: (T, T) => İkil): Diz[T] = d.sortWith(önce)
+    def içeriyorMu[S >: T](öge: S): İkil = d.contains(öge)
+    def sırası[S >: T](öge: S): Sayı = d.indexOf(öge)
+    def sırasıSondan[S >: T](öge: S): Sayı = d.lastIndexOf(öge)
+    def yinelemesiz: Diz[T] = d.distinct
+    def yinelemesizİşlevle[B](işlev: T => B): Diz[T] = d.distinctBy(işlev)
 }
 }

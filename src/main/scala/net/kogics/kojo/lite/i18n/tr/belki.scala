@@ -21,6 +21,11 @@ trait OptionMethodsInTurkish {
   type Belki[T] = Option[T]
   type Biri[T] = Some[T]
   val Hiçbiri = None
+  object Belki {
+    // Option.when / Option.unless: koşula göre dolu ya da boş Belki
+    def iseVer[T](koşul: İkil)(değer: => T): Belki[T] = Option.when(koşul)(değer)
+    def değilseVer[T](koşul: İkil)(değer: => T): Belki[T] = Option.unless(koşul)(değer)
+  }
   object Biri {
     def apply[T](elem: T): Belki[T] = Some(elem)
     def unapply[T](b: Belki[T]) = b match {
@@ -70,6 +75,13 @@ trait OptionMethodsInTurkish {
     def ikile[S](öbürü: Belki[S]): Belki[(T, S)] = b.zip(öbürü)
     def ikiliyiAç[A1, A2](implicit delil: T <:< (A1, A2)): (Belki[A1], Belki[A2]) = b.unzip(delil)
     def diziye: Dizi[T] = b.toList
+
+    // --- Belki'ye özgü ---------------------------------------------------
+    // NOT: `yoksa` yamalı derleyicide ANAHTAR KELİME (else); ad boşsaÖbürü.
+    def boşsaÖbürü[S >: T](öbürü: => Belki[S]): Belki[S] = b.orElse(öbürü)
+    // Belki -> Ya (Either): doluysa değer o yana, boşsa verilen değer öbür yana
+    def sola[S](sağdaki: => S): Either[T, S] = b.toLeft(sağdaki)
+    def sağa[S](soldaki: => S): Either[S, T] = b.toRight(soldaki)
 }
 }
 

@@ -132,5 +132,12 @@ trait SetMethodsInTurkish {
     def ikiliyiAç[A1, A2](implicit delil: T => (A1, A2)): (Küme[A1], Küme[A2]) = d.unzip(delil)
     def ikileHepsini[B, S >: T](öbürü: Yinelenebilir[B], buDolgu: S, oDolgu: B): Küme[(S, B)] =
       d.zipAll(öbürü, buDolgu, oDolgu)
+
+    // --- Küme'ye özgü ----------------------------------------------------
+    // Küme DEĞİŞMEZ: bunlar yeni bir küme verir, olanı değiştirmez.
+    def ekli(öge: T): Col = d.incl(öge)
+    def çıkarılmış(öge: T): Col = d.excl(öge)
+    def hepsiÇıkarılmış(ögeler: YinelenebilirBirKere[T]): Col = d.removedAll(ögeler)
+    def altKümesiMi(öbürü: Küme[T]): İkil = d.subsetOf(öbürü)
 }
 }

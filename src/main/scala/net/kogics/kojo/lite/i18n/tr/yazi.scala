@@ -175,6 +175,20 @@ trait StringMethodsInTurkish {
     def önüneEkle(harf: Harf): Yazı = y.prepended(harf)
     def sonunaEkleHepsini(öbürü: Yazı): Yazı = y.appendedAll(öbürü)
     def önüneEkleHepsini(öbürü: Yazı): Yazı = y.prependedAll(öbürü)
+
+    // --- Yazı'ya özgü ----------------------------------------------------
+    // NOT: `böl` = split olduğu için partition'ın adı ikiyeAyır.
+    def ikiyeAyır(deneme: Harf => İkil): (Yazı, Yazı) = y.partition(deneme)
+    def ikiyeAyırİşle[A1, A2](işlev: Harf => Either[A1, A2]): (Dizi[A1], Dizi[A2]) =
+      // Yazı'ya özgü aşırı yükleme genel olanı gölgeliyor: harf dizisi üstünden
+      (y: Dizi[Harf]).partitionMap(işlev)
+    def seçİşle[B](işlev: PartialFunction[Harf, B]): Dizi[B] = y.collect(işlev)
+    def satırlar: Yineleyici[Yazı] = y.linesIterator
+    def başındanAt(önek: Yazı): Yazı = y.stripPrefix(önek)
+    def sonundanAt(sonek: Yazı): Yazı = y.stripSuffix(sonek)
+    def satırSonunuAt: Yazı = y.stripLineEnd
+    def uzuna: Uzun = y.toLong
+    def uzunaBelki: Belki[Uzun] = y.toLongOption
 }
 
   implicit class EsnekYazıYöntemleri(ey: EsnekYazı) {
