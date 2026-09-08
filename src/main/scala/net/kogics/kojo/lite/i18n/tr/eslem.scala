@@ -104,7 +104,9 @@ case class Eşlem[A,D](val m: Map[A,D]) {
   def varsayılanDeğerle(d: D) = m.withDefaultValue(d: D)
 
   def enUfağı[B >: Pair](implicit sıralama: math.Ordering[B]): Pair = m.min(sıralama)
-  def enUfağı[B >: Pair](iş: (Pair) => B)(implicit karşılaştırma: math.Ordering[B]): Pair = m.minBy(iş)(karşılaştırma)
+  // `B >: Pair` idi: `enUfağı(_._2)` çağrısında B = Any çıkıp Ordering bulunamıyordu.
+  // enİrisi'nin işlevli biçimi zaten `[B]`; ikisi artık tutarlı.
+  def enUfağı[B](iş: (Pair) => B)(implicit karşılaştırma: math.Ordering[B]): Pair = m.minBy(iş)(karşılaştırma)
   def enİrisi[B >: Pair](implicit sıralama: math.Ordering[B]): Pair = m.max(sıralama)
   def enİrisi[B](iş: (Pair) => B)(implicit karşılaştırma: math.Ordering[B]): Pair = m.maxBy(iş)(karşılaştırma)
 
@@ -259,7 +261,9 @@ trait MapMethodsInTurkish {
     def değiştirilmiş[D1 >: D](a: A, d: D1): Eşlek[A, D1] = m.updated(a, d)
 
     def enUfağı[B >: Pair](implicit sıralama: math.Ordering[B]): Pair = m.min(sıralama)
-    def enUfağı[B >: Pair](iş: (Pair) => B)(implicit karşılaştırma: math.Ordering[B]): Pair = m.minBy(iş)(karşılaştırma)
+    // `B >: Pair` idi: `enUfağı(_._2)` çağrısında B = Any çıkıp Ordering bulunamıyordu.
+    // enİrisi'nin işlevli biçimi zaten `[B]`; ikisi artık tutarlı.
+    def enUfağı[B](iş: (Pair) => B)(implicit karşılaştırma: math.Ordering[B]): Pair = m.minBy(iş)(karşılaştırma)
     def enİrisi[B >: Pair](implicit sıralama: math.Ordering[B]): Pair = m.max(sıralama)
     def enİrisi[B](iş: (Pair) => B)(implicit karşılaştırma: math.Ordering[B]): Pair = m.maxBy(iş)(karşılaştırma)
     // todo: more to come
@@ -320,5 +324,6 @@ trait MapMethodsInTurkish {
     def varsayılanı(anahtar: A): D = m.default(anahtar)
     def varsayılanlı(işlev: A => D): Eşlek[A, D] = m.withDefault(işlev)
     def eşleğe: collection.immutable.Map[A, D] = m.toMap
+    def karşılıklıMı[S](öbürü: collection.Seq[S])(deneme: (Pair, S) => İkil): İkil = m.corresponds(öbürü)(deneme)
 }
 }

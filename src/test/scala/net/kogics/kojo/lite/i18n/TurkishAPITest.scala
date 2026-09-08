@@ -710,6 +710,17 @@ import net.kogics.kojo.staging
     sayıyaKadarSay(1000000, doğru) < 0.1 should be(true) // we get: 0.022 (22 msec)
   }
 
+  test("Eşlek/Eşlem: enUfağı/enİrisi işlevli biçim ve karşılıklıMı") {
+    // `enUfağı[B >: Pair]` idi; B = Any çıkıp Ordering bulunamıyordu (enİrisi çalışıyordu)
+    val e = Eşlek("a" -> 10, "b" -> 3, "c" -> 7)
+    e.enUfağı(_._2)._2 should be(3)
+    e.enİrisi(_._2)._2 should be(10)
+    e.karşılıklıMı(Dizi(1, 1, 1))((ikili, s) => ikili._2 > s) should be(true)
+    val m = Eşlem("a" -> 10, "b" -> 3)
+    m.enUfağı(_._2)._2 should be(3)
+    m.enİrisi(_._2)._2 should be(10)
+  }
+
   test("Companion objects for translations to work") {
     val e = Eşlek("a" -> 10, "b" -> 3); e.sayı should be(2)
     var d = Diz(1, 2, 4); d.boyu should be(3)
