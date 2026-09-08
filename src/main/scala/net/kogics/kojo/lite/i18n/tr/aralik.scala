@@ -28,12 +28,34 @@ package net.kogics.kojo.lite.i18n.tr
 // olarak aşağıdaki örtük sınıfa taşındı. Örtük gösterim (REPL çıktısı) için
 // translate.scala'da Range -> Aralık çevirisi var.
 object Aralık {
-  def apply(ilki: Sayı, sonuncu: Sayı, adım: Sayı = 1): Range = Range(ilki, sonuncu, adım)
-  def kapalı(ilki: Sayı, sonuncu: Sayı, adım: Sayı = 1): Range = Range.inclusive(ilki, sonuncu, adım)
+  // Dönüş türleri takma adla yazılıyor: `type Aralık = Range` olduğu için
+  // davranış aynı, ama kod tamamlamada ve tür ipucunda öğrenci `Range` değil
+  // `Aralık` görüyor. (translate.scala'daki metin çevirisi tür imzalarını
+  // yakalayamıyor: orada ad satırın SONUNDA geliyor.)
+  def apply(ilki: Sayı, sonuncu: Sayı, adım: Sayı = 1): Aralık = Range(ilki, sonuncu, adım)
+  def kapalı(ilki: Sayı, sonuncu: Sayı, adım: Sayı = 1): Aralık = Range.inclusive(ilki, sonuncu, adım)
   // copied from class Builtins ../../Builtins.scala
   def kesirden(ilki: Kesir, sonuncu: Kesir, adım: Kesir) = Range.BigDecimal(ilki, sonuncu, adım)
   def kesirdenAçık(ilki: Kesir, sonuncu: Kesir, adım: Kesir) = Range.BigDecimal(ilki, sonuncu, adım)
   def kesirdenKapalı(ilki: Kesir, sonuncu: Kesir, adım: Kesir) = Range.BigDecimal.inclusive(ilki, sonuncu, adım)
+
+  /**
+   * Öğrenci dostu gösterim: `Aralık(1, 4, 7)`, uzun aralıklarda kısaltılmış.
+   *
+   * `Aralık` bir tür takma adı olduğu için `toString` ezilemiyor; bu yüzden
+   * gösterim İKİ yerden geliyor ve ikisi de buraya bakıyor: `yazıya`/`yazı()`
+   * yöntemi (aşağıda) ve çıktı panelinin metin çevirisi
+   * (translate.scala'daki `regexpChanges`). Tek gövde, tek biçim.
+   */
+  def gösterim(r: Range): Yazı = {
+    val gövde =
+      if (r.size <= 10) r.mkString("(", ", ", ")")
+      else {
+        val (b, s2) = (r.take(5), r.drop(r.size - 5))
+        b.mkString("(", ", ", " ...") + s2.mkString(" ", ", ", ")")
+      }
+    s"Aralık$gövde"
+  }
 }
 
 // also see: trait IntMethodsInTurkish in sayi.scala
@@ -51,16 +73,8 @@ trait RangeMethodsInTurkish {
     // Öğrenci dostu gösterim: uzun aralıkları kısaltır. toString ezilemez
     // (Aralık artık bir tür takma adı), ama bu yöntem eski çıktıyı verir.
     def yazı(): Yazı = yazıya
-    def yazıya: Yazı = {
-      val gövde =
-        if (r.size <= 10) r.mkString("(", ", ", ")")
-        else {
-          val (b, s2) = (r.take(5), r.drop(r.size - 5))
-          b.mkString("(", ", ", " ...") + s2.mkString(" ", ", ", ")")
-        }
-      s"Aralık$gövde"
-    }
-    def adım(c: Sayı): Range = r by c
+    def yazıya: Yazı = Aralık.gösterim(r)
+    def adım(c: Sayı): Aralık = r by c
     def diziye = r.toSeq
     def dizine = r.toList
     def boyu = r.length
