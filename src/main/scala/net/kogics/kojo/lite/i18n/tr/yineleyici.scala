@@ -136,4 +136,14 @@ trait YineleyiciYöntemleri {
     def yazıYap(ara: Yazı): Yazı = y.mkString(ara)
     def yazıYap(başı: Yazı, ara: Yazı, sonu: Yazı): Yazı = y.mkString(başı, ara, sonu)
   }
+
+  /**
+   * bellekli'nin verdiği yineleyici. Yukarıdaki bütün yöntemler buna da
+   * uygulanıyor (BufferedIterator bir Yineleyici'dir); tek eksik, TÜKETMEDEN
+   * öne bakmayı sağlayan head idi.
+   */
+  implicit class BellekliYineleyiciYöntem[T](b: collection.BufferedIterator[T]) {
+    // başı okumak yineleyiciyi İLERLETMEZ -- sıradaki'den farkı bu
+    def başı: T = b.head
+  }
 }
