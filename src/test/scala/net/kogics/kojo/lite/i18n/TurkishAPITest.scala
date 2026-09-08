@@ -237,7 +237,21 @@ import net.kogics.kojo.staging
     y2.tane should be(3)
     val y3 = Yığın.doldur(y2)
     y3.tane should be(3)
-    // todo more!
+
+    // Yığın artık `type Yığın[T] = Stack[T]` (Aralık ile aynı karar).
+    // Eski adların hepsi duruyor:
+    y2.tepe should be(3); y2.tepesi should be(3)
+    y2.çek() should be(3); y2.tane should be(2)
+    y2.it(9); y2.tepe should be(9)
+    y2.koyHepsini(Dizi(7, 8)); y2.tepe should be(8); y2.tane should be(5)
+    y2.dizi.başı should be(8)
+    // ...ve Stack bir Diz olduğu için ortak çekirdek DE geliyor (eskiden yoktu)
+    y2.bul(_ > 8) should be(Biri(9))
+    y2.böl(_ > 7)._1 should be(Dizi(8, 9))
+    y2.tara(0)(_ + _).sonu should be(8 + 9 + 7 + 2 + 1)
+    y2.enİrisiBelki should be(Biri(9))
+    y2.boyu should be(5); y2.boşMu should be(yanlış); y2.dizine.boyu should be(5)
+    y2.sil(); y2.boşMu should be(doğru)
   }
 
   test("Translations of mutable.Map should work") {

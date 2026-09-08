@@ -18,33 +18,41 @@ package net.kogics.kojo.lite.i18n.tr
 
 import collection.mutable.{Stack, Queue, PriorityQueue}
 
+// Yığın ARTIK BİR TÜR TAKMA ADI (Aralık ile aynı karar, Eylül 2026).
+// Eskiden Stack'i saran bir case class'tı; o yüzden Stack'in bir collection.Seq
+// olmasından gelen ~100 yöntemi (bul, böl, tara, enİrisi...) HİÇ görmüyordu.
+// Artık görüyor: Diz sarmalayıcısı Yığın'a da uygulanıyor.
+// Eski adların hepsi aşağıdaki örtük sınıfta korundu.
 object Yığın {
-  def boş[T] = new Yığın[T]()
-  def apply[T](elemanlar: T*) = {
-    val y = new Yığın[T]()
-    for (e <- elemanlar) y.s.push(e)
-    y
-  }
-  def doldur[T](y2: Yığın[T]) = {
-    val y = new Yığın[T]()
-    y.koyHepsini(y2.dizi)
-    y
-  }
+  def boş[T]: Yığın[T] = Stack.empty[T]
+  // DİKKAT: Stack(1, 2, 3) Scala'da TEPEYE 1'i koyar. Buradaki eski davranış
+  // ise "sırayla it" idi: 1, sonra 2, sonra 3 -> tepede 3. Tür takma adına
+  // geçerken o davranış KORUNDU, yoksa mevcut betiklerin anlamı sessizce
+  // değişirdi. (ikojo'daki Yığın.apply bugün Stack(...) kullanıyor, yani
+  // tepede 1 var -- iki depo bu noktada AYRIŞIYOR, karara bağlanmalı.)
+  def apply[T](elemanlar: T*): Yığın[T] = { val y = Stack.empty[T]; y.pushAll(elemanlar); y }
+  // Başka bir yığının kopyası, AYNI sırada (tepe yine tepede).
+  // Eski gerçekleme y2.dizi'yi (tepeden başlayarak) yeniden itiyordu, yani
+  // kopyayı TERSİNE çeviriyordu; eski test yalnız boyuta baktığı için
+  // görülmemişti. Bu bir hata düzeltmesi.
+  def doldur[T](y2: Yığın[T]): Yığın[T] = Stack.from(y2)
 }
-case class Yığın[T]() {
-  val s = Stack.empty[T]
-  def this(y: Yığın[T]) = {
-    this()
-    this.koyHepsini(y.s.toList.tail)
+
+trait StackMethodsInTurkish {
+  implicit class YığınYöntemleri[T](y: Yığın[T]) {
+    // it/koy ve çek/al ikili adlar: kitapçıkta ikisi de geçiyor
+    def it(öge: T): Yığın[T] = y.push(öge)
+    def koy(öge: T): Yığın[T] = y.push(öge)
+    def koyHepsini(dizi: YinelenebilirBirKere[T]): Yığın[T] = y.pushAll(dizi)
+    def itHepsini(dizi: YinelenebilirBirKere[T]): Yığın[T] = y.pushAll(dizi)
+    def çek(): T = y.pop()
+    def al(): T = y.pop()
+    def tepesi: T = y.top
+    def tepe: T = y.top
+    def tane: Sayı = y.size
+    def dizi: Dizi[T] = y.toSeq
+    def sil(): Birim = y.clear()
   }
-  def koy(e: T) = s.push(e)
-  def al() = s.pop()
-  def tane = s.size
-  def tepe = s.head
-  def dizi = s.toSeq
-  def diziye = s.toSeq
-  def koyHepsini(dizi: YinelenebilirBirKere[T]) =
-    s.pushAll(dizi)
 }
 
 trait QueueMethodsInTurkish {

@@ -83,6 +83,9 @@ package object tr {
   // Aralık artık bir tür takma adı (bkz. aralik.scala); eskiden Range'i saran
   // bir case class'tı ve `1 |-| 10` ile `Aralık(1, 11)` farklı yöntemler görüyordu.
   type Aralık = Range
+  // Yığın da bir tür takma adı (bkz. kuyruk.scala); eskiden Stack'i saran bir
+  // case class'tı ve Diz sarmalayıcısının yöntemlerini hiç görmüyordu.
+  type Yığın[T] = collection.mutable.Stack[T]
   type SıralıDizi[A] = IndexedSeq[A]
   type Yineleyici[Col] = Iterator[Col]
   type Yinelenebilir[Col] = Iterable[Col]
