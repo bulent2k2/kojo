@@ -169,6 +169,24 @@ package object tr {
   // also used in ../../KojoCompletionProvider.scala to translate type info of completions (Ctrl-space)
   def updateTypes(str: String): String = if (!isTurkish) str else translate.typeInfo(str)
 
+  // ../../KojoCompletionProvider.scala kullanıyor.
+  //
+  // Tamamlama açılır listesinde yardım metni yalnız "bilinen sahip"lerin
+  // üyeleri için gösteriliyor. Türkçe koleksiyon yöntemlerinin sahibi ise
+  // örtük sarmalayıcı sınıflar -- ölçtük:
+  //   Dizi(1,2,3).katla   -> net.kogics.kojo.lite.i18n.tr.SeqMethodsInTurkish.SeqYöntemleri
+  //   Yığın(1,2).çekHepsini -> net.kogics.kojo.lite.i18n.tr.StackMethodsInTurkish.YığınYöntemleri
+  //   Eşlem("a" -> 1).eşEkle -> net.kogics.kojo.lite.i18n.tr.Eşlem
+  // Hiçbiri knownOwners listesinde değil, o yüzden help.scala'ya yazılan
+  // metinler görünmüyordu. Sınıf sınıf saymak yerine desteye bakıyoruz:
+  // tr destesinden gelen her üye Türkçe yardımı hak ediyor.
+  // Yerel bağımsız kısım -- testten böyle çağrılıyor (isTurkish bir lazy val ve
+  // sistem özelliğine bakıyor; testte onu kurcalamak kırılgan olurdu).
+  def trDestesiMi(sahip: Yazı): İkil =
+    sahip != null && sahip.startsWith("net.kogics.kojo.lite.i18n.tr.")
+
+  def türkçeSahipMi(sahip: Yazı): İkil = isTurkish && trDestesiMi(sahip)
+
   // also used in ../../KojoCompletionProvider.scala
   var dumpCompletions = false
 }

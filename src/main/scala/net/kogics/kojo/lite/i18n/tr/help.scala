@@ -105,7 +105,10 @@ object help {
 
   // NOTE: We can't use less than operator! < is meaningful to the xml/html stuff! Instead, use &lt;
   // https://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references
-  val content = Map(
+  // lazy: koleksiyonYardımı aşağıdaki koleksiyonYöntemleri tablosunu okuyor,
+  // o da bu satırdan SONRA tanımlı. Eager olsaydı tablo daha null olurdu
+  // (Scala'nın val ilklendirme sırası tuzağı).
+  lazy val content = Map(
     "a_kalıp" -> <div>
       <strong>komut</strong>(g1, g2) - Açıklama ... <br/>
       Daha çok açıklama ... <br/>
@@ -652,5 +655,108 @@ açı(n2, n1)
     "sürüm" -> "sürüm - Çıktıya kullanılan Scala sürümünü yazar.",
 
     // todo: much more
+  ) ++ koleksiyonYardımı
+
+  // Koleksiyon yöntemlerinin yardım metinleri: (ad, imza, açıklama, örnek, örneğin sonucu).
+  //
+  // Anahtar SADE ad -- "katla" girdisi Dizi'de de Dizin'de de Küme'de de aynı
+  // metni gösteriyor, çünkü yardım araması sarmalayıcının adına değil yöntemin
+  // adına bakıyor (bkz. KojoCompletionProvider.knownCompletion / specialOwner).
+  //
+  // Örneklerin HEPSİ KoleksiyonYardımıTest tarafından çalıştırılıp buradaki
+  // sonuçla karşılaştırılıyor. Yani belge kodla birlikte doğru kalıyor:
+  // bir yöntemin davranışı değişirse test kırılır.
+  val koleksiyonYöntemleri: List[(String, String, String, String, String)] = List(
+    ("""başı""", """başı""", """Topluluğun ilk ögesi. Boşsa hata verir; güvenlisi başıBelki.""", """Dizin(3, 1, 2).başı""", """3"""),
+    ("""sonu""", """sonu""", """Topluluğun son ögesi.""", """Dizin(3, 1, 2).sonu""", """2"""),
+    ("""kuyruğu""", """kuyruğu""", """İlk öge dışında kalan her şey.""", """Dizin(3, 1, 2).kuyruğu""", """Dizin(1, 2)"""),
+    ("""önü""", """önü""", """Son öge dışında kalan her şey.""", """Dizin(3, 1, 2).önü""", """Dizin(3, 1)"""),
+    ("""boyu""", """boyu""", """Kaç öge var.""", """Dizin(3, 1, 2).boyu""", """3"""),
+    ("""boşMu""", """boşMu""", """Hiç öge yoksa doğru.""", """Dizin[Sayı]().boşMu""", """doğru"""),
+    ("""doluMu""", """doluMu""", """En az bir öge varsa doğru.""", """Dizin(1).doluMu""", """doğru"""),
+    ("""başıBelki""", """başıBelki""", """İlk öge, ama Belki içinde: boşsa Hiçbiri verir, hata vermez.""", """Dizin[Sayı]().başıBelki""", """None"""),
+    ("""sonuBelki""", """sonuBelki""", """Son öge, Belki içinde.""", """Dizin(3, 1, 2).sonuBelki""", """Some(2)"""),
+    ("""sıralar""", """sıralar""", """Ögelerin sıra numaraları: 0, 1, 2, ...""", """Dizin(3, 1, 2).sıralar.dizine""", """Dizin(0, 1, 2)"""),
+    ("""ele""", """ele(deneme)""", """Denemeden doğru dönen ögeleri tutar, ötekileri atar.""", """Dizin(1, 2, 3, 4).ele(_ % 2 == 0)""", """Dizin(2, 4)"""),
+    ("""eleDeğilse""", """eleDeğilse(deneme)""", """ele'nin tersi: denemeye UYMAYANLARI tutar.""", """Dizin(1, 2, 3, 4).eleDeğilse(_ % 2 == 0)""", """Dizin(1, 3)"""),
+    ("""işle""", """işle(işlev)""", """Her ögeyi işlevden geçirip yeni bir topluluk yapar.""", """Dizin(1, 2, 3).işle(_ * 10)""", """Dizin(10, 20, 30)"""),
+    ("""düzİşle""", """düzİşle(işlev)""", """Her öge için bir topluluk üretir, sonra hepsini tek düzeye serer.""", """Dizin(1, 2).düzİşle(x => Dizin(x, x))""", """Dizin(1, 1, 2, 2)"""),
+    ("""herbiriİçin""", """herbiriİçin(komut)""", """Her öge için bir komut çalıştırır. Değer döndürmez.""", """{ den t = 0; Dizin(1, 2, 3).herbiriİçin(x => t += x); t }""", """6"""),
+    ("""seçİşle""", """seçİşle(kısmiİşlev)""", """Hem eler hem işler: yalnız işlevin tanımlı olduğu ögeleri alır.""", """Dizin(1, 2, 3, 4).seçİşle { durum x eğer x % 2 == 0 => x * 10 }""", """Dizin(20, 40)"""),
+    ("""seçİşleİlk""", """seçİşleİlk(kısmiİşlev)""", """seçİşle gibi, ama yalnız ilk uyanı verir, Belki içinde.""", """Dizin(1, 2, 3).seçİşleİlk { durum x eğer x > 1 => x * 10 }""", """Some(20)"""),
+    ("""bul""", """bul(deneme)""", """Denemeye uyan İLK ögeyi Belki içinde verir.""", """Dizin(1, 2, 3).bul(_ > 1)""", """Some(2)"""),
+    ("""bulSondan""", """bulSondan(deneme)""", """Denemeye uyan SON ögeyi verir.""", """Dizin(1, 2, 3).bulSondan(_ < 3)""", """Some(2)"""),
+    ("""varMı""", """varMı(deneme)""", """En az bir öge denemeye uyuyor mu.""", """Dizin(1, 2, 3).varMı(_ > 2)""", """doğru"""),
+    ("""hepsiDoğruMu""", """hepsiDoğruMu(deneme)""", """Ögelerin HEPSİ denemeye uyuyor mu.""", """Dizin(1, 2, 3).hepsiDoğruMu(_ > 0)""", """doğru"""),
+    ("""say""", """say(deneme)""", """Denemeye uyan kaç öge var.""", """Dizin(1, 2, 3, 4).say(_ % 2 == 0)""", """2"""),
+    ("""içeriyorMu""", """içeriyorMu(öge)""", """Bu öge içinde var mı.""", """Dizin(1, 2, 3).içeriyorMu(2)""", """doğru"""),
+    ("""sırası""", """sırası(öge)""", """Ögenin kaçıncı sırada olduğu. Yoksa -1.""", """Dizin(3, 1, 2).sırası(1)""", """1"""),
+    ("""nerede""", """nerede(deneme)""", """Denemeye uyan ilk ögenin sırası. Yoksa -1.""", """Dizin(3, 1, 2).nerede(_ < 2)""", """1"""),
+    ("""başındaMı""", """başındaMı(dizi)""", """Topluluk bu dizi ile başlıyor mu.""", """Dizin(1, 2, 3).başındaMı(Dizin(1, 2))""", """doğru"""),
+    ("""sonundaMı""", """sonundaMı(dizi)""", """Topluluk bu dizi ile bitiyor mu.""", """Dizin(1, 2, 3).sonundaMı(Dizin(2, 3))""", """doğru"""),
+    ("""karşılıklıMı""", """karşılıklıMı(öbürü)(deneme)""", """İki topluluğu öge öge karşılaştırır.""", """Dizin(1, 2).karşılıklıMı(Dizin(2, 4))((a, b) => b == a * 2)""", """doğru"""),
+    ("""sıralı""", """sıralı""", """Ögeleri küçükten büyüğe dizer.""", """Dizin(3, 1, 2).sıralı""", """Dizin(1, 2, 3)"""),
+    ("""sırala""", """sırala(iş)""", """İşlevin verdiği değere göre sıralar.""", """Dizin("aaa", "a", "aa").sırala(_.boyu)""", """Dizin(a, aa, aaa)"""),
+    ("""sırayaSok""", """sırayaSok(önce)""", """Hangi öge önce gelsin, sen söyle.""", """Dizin(1, 3, 2).sırayaSok(_ > _)""", """Dizin(3, 2, 1)"""),
+    ("""tersi""", """tersi""", """Ögeleri ters sıraya çevirir.""", """Dizin(1, 2, 3).tersi""", """Dizin(3, 2, 1)"""),
+    ("""yinelemesiz""", """yinelemesiz""", """Yinelenen ögelerin yalnız ilkini tutar.""", """Dizin(1, 2, 1, 3).yinelemesiz""", """Dizin(1, 2, 3)"""),
+    ("""indirge""", """indirge(işlem)""", """Ögeleri ikişer ikişer birleştirip tek değere indirir. Boşsa hata verir.""", """Dizin(1, 2, 3).indirge(_ + _)""", """6"""),
+    ("""katla""", """katla(başlangıç)(işlem)""", """indirge gibi, ama bir başlangıç değeri verirsin; boş toplulukta da çalışır.""", """Dizin(1, 2, 3).katla(10)(_ + _)""", """16"""),
+    ("""soldanKatla""", """soldanKatla(başlangıç)(işlem)""", """Soldan sağa katlar. Sonuç ögelerden başka türde olabilir.""", """Dizin(1, 2, 3).soldanKatla("")((y, s) => y + s)""", """123"""),
+    ("""sağdanKatla""", """sağdanKatla(başlangıç)(işlem)""", """Sağdan sola katlar.""", """Dizin(1, 2, 3).sağdanKatla("")((s, y) => y + s)""", """321"""),
+    ("""tara""", """tara(başlangıç)(işlem)""", """Katlar ama ARA sonuçların hepsini verir.""", """Dizin(1, 2, 3).tara(0)(_ + _)""", """Dizin(0, 1, 3, 6)"""),
+    ("""taraSoldan""", """taraSoldan(başlangıç)(işlem)""", """tara'nın başka türde sonuç verebilen biçimi.""", """Dizin(1, 2, 3).taraSoldan("")((y, s) => y + s)""", """Dizin(, 1, 12, 123)"""),
+    ("""topla""", """topla""", """Sayıların toplamı.""", """Dizin(1, 2, 3).topla""", """6"""),
+    ("""çarp""", """çarp""", """Sayıların çarpımı.""", """Dizin(2, 3, 4).çarp""", """24"""),
+    ("""enUfağı""", """enUfağı""", """En küçük öge. Boşsa hata verir.""", """Dizin(3, 1, 2).enUfağı""", """1"""),
+    ("""enİrisi""", """enİrisi""", """En büyük öge.""", """Dizin(3, 1, 2).enİrisi""", """3"""),
+    ("""enUfağıBelki""", """enUfağıBelki""", """En küçük öge, Belki içinde: boş toplulukta hata vermez.""", """Dizin[Sayı]().enUfağıBelki""", """None"""),
+    ("""enİrisiBelki""", """enİrisiBelki""", """En büyük öge, Belki içinde.""", """Dizin(3, 1, 2).enİrisiBelki""", """Some(3)"""),
+    ("""al""", """al(kaçTane)""", """Baştan bu kadar öge alır.""", """Dizin(1, 2, 3, 4).al(2)""", """Dizin(1, 2)"""),
+    ("""alSağdan""", """alSağdan(kaçTane)""", """Sondan bu kadar öge alır.""", """Dizin(1, 2, 3, 4).alSağdan(2)""", """Dizin(3, 4)"""),
+    ("""alDoğruKaldıkça""", """alDoğruKaldıkça(deneme)""", """Baştan başlar, deneme bozulunca durur.""", """Dizin(1, 2, 3, 1).alDoğruKaldıkça(_ < 3)""", """Dizin(1, 2)"""),
+    ("""düşür""", """düşür(kaçTane)""", """Baştan bu kadar ögeyi atar.""", """Dizin(1, 2, 3, 4).düşür(2)""", """Dizin(3, 4)"""),
+    ("""düşürSağdan""", """düşürSağdan(kaçTane)""", """Sondan bu kadar ögeyi atar.""", """Dizin(1, 2, 3, 4).düşürSağdan(2)""", """Dizin(1, 2)"""),
+    ("""düşürDoğruKaldıkça""", """düşürDoğruKaldıkça(deneme)""", """Baştan başlar, denemeye uyanları atar, ilk uymayanda durur.""", """Dizin(1, 2, 3, 1).düşürDoğruKaldıkça(_ < 3)""", """Dizin(3, 1)"""),
+    ("""dilim""", """dilim(nereden, nereye)""", """Verilen iki sıra arasındaki parçayı alır. nereye dahil DEĞİL.""", """Dizin(1, 2, 3, 4).dilim(1, 3)""", """Dizin(2, 3)"""),
+    ("""böl""", """böl(deneme)""", """İkiye ayırır: uyanlar ve uymayanlar.""", """Dizin(1, 2, 3, 4).böl(_ % 2 == 0)""", """(Dizin(2, 4),Dizin(1, 3))"""),
+    ("""bölDoğruKaldıkça""", """bölDoğruKaldıkça(deneme)""", """alDoğruKaldıkça ile düşürDoğruKaldıkça'yı birlikte verir.""", """Dizin(1, 2, 3, 1).bölDoğruKaldıkça(_ < 3)""", """(Dizin(1, 2),Dizin(3, 1))"""),
+    ("""bölYerinden""", """bölYerinden(yeri)""", """Verilen sıradan ikiye böler.""", """Dizin(1, 2, 3, 4).bölYerinden(2)""", """(Dizin(1, 2),Dizin(3, 4))"""),
+    ("""öbekle""", """öbekle(anahtar)""", """Ögeleri anahtara göre öbeklere ayırır; sonuç bir eşlek.""", """Dizin(1, 2, 3, 4).öbekle(_ % 2)(0)""", """Dizin(2, 4)"""),
+    ("""öbekli""", """öbekli(boy)""", """Bu boyda ardışık öbeklere böler.""", """Dizin(1, 2, 3, 4).öbekli(2).toList""", """Dizin(Dizin(1, 2), Dizin(3, 4))"""),
+    ("""kayarÖbekli""", """kayarÖbekli(boy)""", """Bu boyda KAYAN bir pencere gezdirir.""", """Dizin(1, 2, 3).kayarÖbekli(2).toList""", """Dizin(Dizin(1, 2), Dizin(2, 3))"""),
+    ("""kombinasyonlar""", """kombinasyonlar(kaçTane)""", """Bu kadar ögeli tüm alt seçimler (sıra önemsiz).""", """Dizin(1, 2, 3).kombinasyonlar(2).toList""", """Dizin(Dizin(1, 2), Dizin(1, 3), Dizin(2, 3))"""),
+    ("""permütasyonlar""", """permütasyonlar""", """Ögelerin tüm sıralanışları.""", """Dizin(1, 2).permütasyonlar.toList""", """Dizin(Dizin(1, 2), Dizin(2, 1))"""),
+    ("""ikile""", """ikile(öbürü)""", """İki topluluğu karşılıklı eşleştirir; kısa olan bitince durur.""", """Dizin(1, 2).ikile(Dizin("a", "b"))""", """Dizin((1,a), (2,b))"""),
+    ("""ikileSırayla""", """ikileSırayla""", """Her ögeyi sıra numarasıyla eşler.""", """Dizin("a", "b").ikileSırayla""", """Dizin((a,0), (b,1))"""),
+    ("""ikiliyiAç""", """ikiliyiAç""", """İkililer topluluğunu iki ayrı topluluğa açar. ikile'nin tersi.""", """Dizin((1, "a"), (2, "b")).ikiliyiAç""", """(Dizin(1, 2),Dizin(a, b))"""),
+    ("""düzleştir""", """düzleştir""", """İç içe toplulukları tek düzeye serer.""", """Dizin(Dizin(1, 2), Dizin(3)).düzleştir""", """Dizin(1, 2, 3)"""),
+    ("""devrik""", """devrik""", """Satırlarla sütunları yer değiştirir.""", """Dizin(Dizin(1, 2), Dizin(3, 4)).devrik""", """Dizin(Dizin(1, 3), Dizin(2, 4))"""),
+    ("""sonunaEkle""", """sonunaEkle(öge)""", """Sonuna bir öge eklenmiş YENİ topluluk verir.""", """Dizin(1, 2).sonunaEkle(3)""", """Dizin(1, 2, 3)"""),
+    ("""önüneEkle""", """önüneEkle(öge)""", """Başına bir öge eklenmiş YENİ topluluk verir.""", """Dizin(2, 3).önüneEkle(1)""", """Dizin(1, 2, 3)"""),
+    ("""bileşim""", """bileşim(öbürü)""", """İki topluluğu uç uca ekler.""", """Dizin(1, 2).bileşim(Dizin(3))""", """Dizin(1, 2, 3)"""),
+    ("""fark""", """fark(öbürü)""", """Ötekinde olan ögeleri çıkarır.""", """Dizin(1, 2, 3).fark(Dizin(2))""", """Dizin(1, 3)"""),
+    ("""kesişim""", """kesişim(öbürü)""", """İkisinde de olan ögeler.""", """Dizin(1, 2, 3).kesişim(Dizin(2, 3, 4))""", """Dizin(2, 3)"""),
+    ("""uzat""", """uzat(boy, öge)""", """Bu boya erişene dek sonuna ögeyi ekler.""", """Dizin(1, 2).uzat(4, 0)""", """Dizin(1, 2, 0, 0)"""),
+    ("""yama""", """yama(nereden, yenisi, kaçTane)""", """Bir parçayı söküp yerine başkasını koyar.""", """Dizin(1, 2, 3).yama(1, Dizin(8, 9), 1)""", """Dizin(1, 8, 9, 3)"""),
+    ("""yazıYap""", """yazıYap(ara)""", """Ögeleri araya bu yazıyı koyarak tek yazı yapar.""", """Dizin(1, 2, 3).yazıYap("-")""", """1-2-3"""),
+    ("""dizine""", """dizine""", """Dizin'e (List) çevirir.""", """Dizin(1, 2, 3).dizine""", """Dizin(1, 2, 3)"""),
+    ("""diziye""", """diziye""", """Dizi'ye (Seq) çevirir.""", """Küme(1).diziye""", """Dizin(1)"""),
+    ("""kümeye""", """kümeye""", """Küme'ye çevirir; yinelenenler tekleşir.""", """Dizin(1, 2, 1).kümeye""", """Küme(1, 2)"""),
+    ("""yöneye""", """yöneye""", """Yöney'e (Vector) çevirir.""", """Dizin(1, 2).yöneye""", """Yöney(1, 2)"""),
+    ("""dizime""", """dizime""", """Dizim'e (Array) çevirir. DİKKAT: dizime'nin hemen ardına (0) yazamazsın -- Scala onu örtük ClassTag listesi sanıyor; araya bir ad ya da diziye koy.""", """Dizin(7, 8, 9).dizime.diziye.başı""", """7"""),
   )
+
+  private def koleksiyonYardımı: Map[String, String] = koleksiyonYöntemleri.map {
+    case (ad, imza, açıklama, örnek, sonuç) =>
+      ad -> <div>
+        <strong>{ imza }</strong> — { açıklama }<br/>
+        <br/><em>Örnek:</em>
+        <pre>
+{ örnek }
+// { sonuç }
+        </pre>
+        Dizi, Dizin, Yöney, Küme, Kuyruk gibi topluluklarda aynı biçimde çalışır.
+      </div>.toString
+  }.toMap
 }
