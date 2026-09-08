@@ -213,11 +213,20 @@ object dict {
     "sliceInPlace" -> "dilimYerinde",
     "patchInPlace" -> "yamaYerinde",
     "padToInPlace" -> "uzatYerinde",
-    "addAll" -> "hepsiniEkle",
+    "addAll" -> "ekleHepsini", // eski ad: hepsiniEkle (eskitildi)
     "prepend" -> "başaEkle",
     "prependAll" -> "başaEkleHepsini",
-    "insert" -> "araEkle",
-    "insertAll" -> "araEkleHepsini",
+    "insert" -> "ekleAraya", // eski ad: araEkle (eskitildi)
+    "insertAll" -> "ekleArayaHepsini",
+    "removeAll" -> "alHepsini",
+    "removeAllReverse" -> "alHepsiniTersten",
+    "removeFirst" -> "çıkarİlkUyanı",
+    "removeLast" -> "çıkarSondan", // takma adı: sondanÇıkar
+    "removeLastOption" -> "çıkarSondanBelki", // takma adı: sondanÇıkarBelki
+    "removeLastWhile" -> "çıkarSondanDoğruKaldıkça",
+    "popAll" -> "çekHepsini",
+    "popWhile" -> "çekDoğruKaldıkça",
+    "toArray" -> "dizime",
     "subtractOne" -> "çıkarÖgeyi",
     "subtractAll" -> "çıkarHepsini",
     "trimStart" -> "baştanKırp",

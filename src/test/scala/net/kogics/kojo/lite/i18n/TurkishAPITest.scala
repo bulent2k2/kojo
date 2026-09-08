@@ -710,6 +710,54 @@ import net.kogics.kojo.staging
     sayıyaKadarSay(1000000, doğru) < 0.1 should be(true) // we get: 0.022 (22 msec)
   }
 
+  test("Yığın ve Kuyruk: toplu çekme, yerinde değiştirme, konumla erişim") {
+    // Yığın'da 0. sıra TEPEdir
+    Yığın(1, 2, 3)(0) should be(3)
+    Yığın(1, 2, 3).çekHepsini should be(Dizi(3, 2, 1))       // tepeden dibe
+    Yığın(1, 2, 3).alHepsini should be(Dizi(3, 2, 1))        // çekHepsini ile aynı
+    Yığın(1, 2, 3).alHepsiniTersten should be(Dizi(1, 2, 3)) // dipten tepeye
+    Yığın(1, 2, 3).çekDoğruKaldıkça(_ > 1) should be(Dizi(3, 2))
+    Yığın(1, 2, 3).çekBelki should be(Biri(3))
+    Yığın.boş[Sayı].çekBelki should be(Hiçbiri)
+    // Yığında "son" = DİP
+    val d = Yığın(1, 2, 3)
+    d.çıkarSondan() should be(1)
+    d.dizi should be(Dizi(3, 2))
+    Yığın(1, 2, 3).sondanÇıkarBelki should be(Biri(1)) // takma ad, aynı iş
+
+    Yığın(1, 2, 3, 4).eleYerinde(_ % 2 == 0).dizi should be(Dizi(4, 2))
+    Yığın(1, 2, 3).işleYerinde(_ * 10).dizi should be(Dizi(30, 20, 10))
+    Yığın(3, 1, 2).sıralıYerinde.dizi should be(Dizi(1, 2, 3))
+    Yığın(3, 1, 2).sıralaYerinde(-_).dizi should be(Dizi(3, 2, 1))
+    Yığın(3, 1, 2).sırayaSokYerinde(_ > _).dizi should be(Dizi(3, 2, 1))
+    Yığın(1, 2, 3, 4).alYerinde(2).dizi should be(Dizi(4, 3))
+    Yığın(1, 2, 3, 4).düşürYerinde(2).dizi should be(Dizi(2, 1))
+    Yığın(1, 2).uzatYerinde(4, 0).dizi should be(Dizi(2, 1, 0, 0))
+
+    val k = Yığın(1, 2, 3)
+    k.güncelle(0, 9); k.tepe should be(9)
+    k.ekleAraya(1, 7); k.dizi should be(Dizi(9, 7, 2, 1))
+    k.ekleArayaHepsini(0, Dizi(8, 8)); k.dizi should be(Dizi(8, 8, 9, 7, 2, 1))
+    k.çıkar(0) should be(8)
+    Yığın(1, 2, 3).çıkarİlkUyanı(_ < 3) should be(Biri(2))
+
+    // Kuyruk tarafı
+    Kuyruk(1, 2, 3, 4).alYerinde(2).dizine should be(Dizin(1, 2))
+    Kuyruk(1, 2, 3, 4).düşürYerinde(2).dizine should be(Dizin(3, 4))
+    Kuyruk(1, 2, 3, 4).alDoğruKaldıkçaYerinde(_ < 3).dizine should be(Dizin(1, 2))
+    Kuyruk(1, 2, 3, 4).düşürDoğruKaldıkçaYerinde(_ < 3).dizine should be(Dizin(3, 4))
+    Kuyruk(1, 2, 3).yamaYerinde(1, Dizi(8, 9), 1).dizine should be(Dizin(1, 8, 9, 3))
+    Kuyruk(1, 2).düzİşleYerinde(x => Dizi(x, x)).dizine should be(Dizin(1, 1, 2, 2))
+    Kuyruk(1, 2, 3).alHepsini should be(Dizi(1, 2, 3))
+    Kuyruk(1, 2, 3).alHepsiniTersten should be(Dizi(3, 2, 1))
+    Kuyruk(1, 2, 3).çıkarSondan() should be(3)
+    // çıkarma sırasında verir: önce son öge, sonra ondan önceki
+    Kuyruk(1, 2, 3).çıkarSondanDoğruKaldıkça(_ > 1) should be(Dizi(3, 2))
+    val q = Kuyruk(1, 2, 3)
+    q.ekleAraya(1, 7); q.dizine should be(Dizin(1, 7, 2, 3))
+    q.ekleHepsini(Dizi(5)); q.sonu should be(5)
+  }
+
   test("Eşlek/Eşlem: enUfağı/enİrisi işlevli biçim ve karşılıklıMı") {
     // `enUfağı[B >: Pair]` idi; B = Any çıkıp Ordering bulunamıyordu (enİrisi çalışıyordu)
     val e = Eşlek("a" -> 10, "b" -> 3, "c" -> 7)
