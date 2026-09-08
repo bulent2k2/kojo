@@ -243,6 +243,13 @@ object dict {
     "removeLastOption" -> "sondanÇıkarBelki",
     "front" -> "ilki",
     "toQueue" -> "kuyruğa",
+    // Yineleyici (bkz. i18n/tr/yineleyici.scala)
+    "hasNext" -> "dahaVarMı",
+    "next" -> "sıradaki",
+    "nextOption" -> "sıradakiBelki",
+    "buffered" -> "bellekli",
+    "duplicate" -> "ikizYap",
+    "sameElements" -> "gösterdikleriAynıMı",
     "dequeueAll" -> "baştanAlHepsini",
     "clone" -> "ikizle",
     "lift" -> "kaldır",

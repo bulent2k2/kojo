@@ -641,7 +641,9 @@ import net.kogics.kojo.staging
     val o = new Object
     o.yazıya.boyu > 0 should be(true)
     val d = Dizi(1, 2)
-    d.yazıya should be("ArraySeq(1, 2)")
+    // Eskiden ArraySeq(1, 2) idi: Dizi.apply, Seq.from(varargs) ile varargs'ı
+    // olduğu gibi döndürüyordu. Artık Scala'nın Seq(1,2)'si gibi List veriyor.
+    d.yazıya should be("List(1, 2)")
     val d2 = Dizin(1, 2)
     d2.yazıya should be("List(1, 2)")
     val x = 5
@@ -756,6 +758,61 @@ import net.kogics.kojo.staging
     val q = Kuyruk(1, 2, 3)
     q.ekleAraya(1, 7); q.dizine should be(Dizin(1, 7, 2, 3))
     q.ekleHepsini(Dizi(5)); q.sonu should be(5)
+  }
+
+  test("Yineleyici: Iterator'ın Türkçesi") {
+    // öbekli/kayarÖbekli/kombinasyonlar hep Yineleyici veriyordu; Türkçesi
+    // olmadığı için öğrenci tam orada toList yazmak zorunda kalıyordu.
+    Dizi(1, 2, 3, 4).öbekli(2).dizine should be(Dizin(Dizi(1, 2), Dizi(3, 4)))
+    Dizi(1, 2, 3).kayarÖbekli(2).dizine should be(Dizin(Dizi(1, 2), Dizi(2, 3)))
+    Dizi(1, 2, 3).kombinasyonlar(2).dizine.boyu should be(3)
+
+    // çekirdek: elle gezmek
+    val y = Dizi(1, 2, 3).yineleyici
+    y.dahaVarMı should be(doğru)
+    y.sıradaki should be(1)
+    y.dizine should be(Dizin(2, 3)) // tükettiğimiz öge geri gelmiyor
+    y.dahaVarMı should be(yanlış)
+
+    // dönüştürme ve indirgeme
+    Dizi(1, 2, 3).yineleyici.işle(_ * 2).dizine should be(Dizin(2, 4, 6))
+    Dizi(1, 2, 3).yineleyici.ele(_ > 1).diziye should be(Dizi(2, 3))
+    Dizi(1, 2, 3).yineleyici.topla should be(6)
+    Dizi(1, 2, 3).yineleyici.enİrisi should be(3)
+    Dizi(1, 2, 3).yineleyici.katla(10)(_ + _) should be(16)
+    Dizi(1, 2, 3).yineleyici.bul(_ > 1) should be(Biri(2))
+    Dizi(1, 2, 3).yineleyici.say(_ > 1) should be(2)
+    Dizi(1, 2).yineleyici.yazıYap("-") should be("1-2")
+    Dizi(1, 2).yineleyici.kümeye should be(Küme(1, 2))
+    Dizi(1, 2).yineleyici.yöneye should be(Yöney(1, 2))
+    Dizi(1, 2).yineleyici.ikileSırayla.dizine should be(Dizin((1, 0), (2, 1)))
+
+    // ikizYap: aynı ögeleri gezen iki yineleyici
+    val (a, b) = Dizi(1, 2, 3).yineleyici.ikizYap
+    a.dizine should be(Dizin(1, 2, 3))
+    b.dizine should be(Dizin(1, 2, 3))
+
+    // bellekli: tüketmeden önden bakmak
+    val bi = Dizi(1, 2, 3).yineleyici.bellekli
+    bi.head should be(1)
+    bi.dizine should be(Dizin(1, 2, 3)) // başı okumak ilerletmedi
+
+    Dizi(1, 2).yineleyici.gösterdikleriAynıMı(Dizi(1, 2)) should be(doğru)
+    Dizi(1, 2).yineleyici.gösterdikleriAynıMı(Dizi(2, 1)) should be(yanlış)
+  }
+
+  test("Dizi/Diz: Scala'nın Seq'i gibi davranıyor, boş kurucusu var") {
+    // Dizi.apply Seq.from(varargs) kullanıyordu; varargs zaten ArraySeq olduğu
+    // için onu olduğu gibi döndürüyor, çıktıda DizikDizisi(...) görünüyordu.
+    Dizi(1, 2, 3).toString should be("List(1, 2, 3)")
+    Diz(1, 2, 3).toString should be("List(1, 2, 3)")
+    Seq(1, 2, 3).toString should be(Dizi(1, 2, 3).toString) // Scala ile aynı
+    Dizi(1, 2, 3) should be(Dizin(1, 2, 3))                 // eşitlik değişmedi
+    // boş kurucusu: Küme.boş ve Yöney.boş vardı, dizilerde yoktu
+    Dizi.boş[Sayı].boyu should be(0)
+    Diz.boş[Sayı].boyu should be(0)
+    Dizin.boş[Sayı].boyu should be(0)
+    (Dizi.boş[Sayı] :+ 1) should be(Dizi(1))
   }
 
   test("Eşlek/Eşlem: enUfağı/enİrisi işlevli biçim ve karşılıklıMı") {
