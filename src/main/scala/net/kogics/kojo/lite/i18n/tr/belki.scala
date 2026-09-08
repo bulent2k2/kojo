@@ -56,6 +56,20 @@ trait OptionMethodsInTurkish {
     def dizine: Dizin[T] = b.toList
 
     // todo: more to come
-  }
+  
+    // --- ortak çekirdek --------------------------------------------------
+    def seçİşle[B](işlev: PartialFunction[T, B]): Belki[B] = b.collect(işlev)
+    def içeriyorMu[S >: T](öge: S): İkil = b.contains(öge)
+    def varMı(deneme: T => İkil): İkil = b.exists(deneme)
+    def hepsiDoğruMu(deneme: T => İkil): İkil = b.forall(deneme)
+    def hepsiİçinDoğruMu(deneme: T => İkil): İkil = b.forall(deneme)
+    def herbiriİçin[S](işlev: T => S): Birim = b.foreach(işlev)
+    // katla: doluysa işlevi uygula, boşsa varsayılanı ver
+    def katla[B](boşsa: => B)(işlev: T => B): B = b.fold(boşsa)(işlev)
+    def düzleştir[S](implicit delil: T <:< Belki[S]): Belki[S] = b.flatten(delil)
+    def ikile[S](öbürü: Belki[S]): Belki[(T, S)] = b.zip(öbürü)
+    def ikiliyiAç[A1, A2](implicit delil: T <:< (A1, A2)): (Belki[A1], Belki[A2]) = b.unzip(delil)
+    def diziye: Dizi[T] = b.toList
+}
 }
 

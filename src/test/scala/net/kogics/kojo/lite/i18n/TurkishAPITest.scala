@@ -908,6 +908,60 @@ import net.kogics.kojo.staging
     m.boyu should be(3) // hiçbiri m'i DEĞİŞTİRMEDİ
   }
 
+  test("Kuyruk, Yazı ve Belki: ortak çekirdek") {
+    val k = Kuyruk(3, 1, 2)
+    k.başıBelki should be(Biri(3)); k.bul(_ > 1) should be(Biri(3)); k.bulSondan(_ > 1) should be(Biri(2))
+    k.nerede(_ == 1) should be(1); k.neredeSondan(_ > 1) should be(2)
+    k.sıralar.toList should be(Dizin(0, 1, 2))
+    k.böl(_ > 1)._1 should be(Kuyruk(3, 2))
+    k.bölDoğruKaldıkça(_ > 2)._1 should be(Kuyruk(3)); k.bölYerinden(1)._2 should be(Kuyruk(1, 2))
+    k.öbekli(2).toList.boyu should be(2); k.kayarÖbekli(2).toList.boyu should be(2)
+    k.öbekleİşleİndirge(_ % 2)(x => x)(_ + _) should be(Eşlek(1 -> 4, 0 -> 2))
+    k.katla(0)(_ + _) should be(6); k.indirgeBelki(_ + _) should be(Biri(6))
+    k.tara(0)(_ + _) should be(Kuyruk(0, 3, 4, 6))
+    k.enUfağıBelki should be(Biri(1)); k.enİrisiBelki should be(Biri(3))
+    k.sonunaEkle(9) should be(Kuyruk(3, 1, 2, 9)); k.önüneEkle(9) should be(Kuyruk(9, 3, 1, 2))
+    k.uzat(5, 0) should be(Kuyruk(3, 1, 2, 0, 0)); k.yama(1, Dizi(8), 1) should be(Kuyruk(3, 8, 2))
+    k.fark(Dizi(1)) should be(Kuyruk(3, 2)); k.kesişim(Dizi(2, 3)) should be(Kuyruk(3, 2))
+    k.seçİşle { case x if x > 1 => x * 10 } should be(Kuyruk(30, 20))
+    k.tersİşle(_ * 2) should be(Kuyruk(4, 2, 6))
+    k.boyu should be(3) // hiçbiri kuyruğu DEĞİŞTİRMEDİ
+
+    val y = "merhaba"
+    y.başıBelki should be(Biri('m')); "".sonuBelki should be(Hiçbiri)
+    y.bul(_ == 'h') should be(Biri('h')); y.nerede(_ == 'h') should be(3)
+    y.neredeSondan(_ == 'a') should be(6); y.sıralar.boyu should be(7)
+    y.bölDoğruKaldıkça(_ != 'h') should be(("mer", "haba"))
+    y.bölYerinden(3) should be(("mer", "haba"))
+    y.öbekli(3).toList should be(Dizin("mer", "hab", "a"))
+    y.kayarÖbekli(3).toList.başı should be("mer")
+    y.kuyruklar.toList.boyu should be(8); y.önler.toList.boyu should be(8)
+    "abc".kombinasyonlar(2).toList should be(Dizin("ab", "ac", "bc"))
+    "abc".permütasyonlar.toList.boyu should be(6)
+    y.dilim(0, 3) should be("mer")
+    "ab".uzat(4, '-') should be("ab--")
+    "merhaba".yama(0, "M", 1) should be("Merhaba")
+    "merhaba".fark("aeh") should be("mrba")
+    "merhaba".kesişim("ae") should be("ea")
+    "merhab".sonunaEkle('a') should be("merhaba")
+    "erhaba".önüneEkle('m') should be("merhaba")
+    "mer".sonunaEkleHepsini("haba") should be("merhaba")
+    "haba".önüneEkleHepsini("mer") should be("merhaba")
+
+    val b: Belki[Sayı] = Biri(5)
+    b.seçİşle { case x if x > 1 => x * 10 } should be(Biri(50))
+    b.seçİşle { case x if x > 9 => x } should be(Hiçbiri)
+    b.içeriyorMu(5) should be(doğru); b.içeriyorMu(6) should be(yanlış)
+    b.varMı(_ > 1) should be(doğru); b.hepsiDoğruMu(_ > 9) should be(yanlış)
+    Hiçbiri.hepsiDoğruMu((_: Sayı) > 9) should be(doğru) // boş her koşulu sağlar
+    var toplam = 0; b.herbiriİçin(toplam += _); toplam should be(5)
+    b.katla(0)(_ * 2) should be(10); (Hiçbiri: Belki[Sayı]).katla(-1)(_ * 2) should be(-1)
+    Biri(Biri(7)).düzleştir should be(Biri(7))
+    b.ikile(Biri("a")) should be(Biri((5, "a"))); b.ikile(Hiçbiri) should be(Hiçbiri)
+    Biri((1, "a")).ikiliyiAç should be((Biri(1), Biri("a")))
+    b.diziye should be(Dizi(5))
+  }
+
   test("MiskinDizin: tamamlanan yöntemler") {
     val m = MiskinDizin(3, 1, 2)
     m.önü.dizine should be(Dizin(3, 1)); m.sonu should be(2)
