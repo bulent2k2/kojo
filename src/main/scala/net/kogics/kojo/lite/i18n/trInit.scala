@@ -47,6 +47,7 @@ object TurkishAPI
     with tr.ParalelDiziYöntemleri
     with tr.PartialFunctionMethodsInTurkish
     with tr.QueueMethodsInTurkish
+    with tr.StackMethodsInTurkish
     with tr.RangeMethodsInTurkish
     with tr.RenkYöntemleri
     with tr.SayıYöntemleri
