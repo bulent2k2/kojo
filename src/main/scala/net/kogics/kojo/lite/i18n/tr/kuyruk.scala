@@ -25,11 +25,10 @@ import collection.mutable.{Stack, Queue, PriorityQueue}
 // Eski adların hepsi aşağıdaki örtük sınıfta korundu.
 object Yığın {
   def boş[T]: Yığın[T] = Stack.empty[T]
-  // DİKKAT: Stack(1, 2, 3) Scala'da TEPEYE 1'i koyar. Buradaki eski davranış
-  // ise "sırayla it" idi: 1, sonra 2, sonra 3 -> tepede 3. Tür takma adına
-  // geçerken o davranış KORUNDU, yoksa mevcut betiklerin anlamı sessizce
-  // değişirdi. (ikojo'daki Yığın.apply bugün Stack(...) kullanıyor, yani
-  // tepede 1 var -- iki depo bu noktada AYRIŞIYOR, karara bağlanmalı.)
+  // Yığın(1, 2, 3) = "1'i it, 2'yi it, 3'ü it", yani TEPEDE 3 olur.
+  // Scala'nın kendi Stack(1, 2, 3)'ü tepeye 1'i koyar (gösterimi tepeden
+  // başlıyor); buradaki davranış baştan beri itme sırasıydı ve tür takma adına
+  // geçerken korundu. ikojo da bu davranışa hizalandı.
   def apply[T](elemanlar: T*): Yığın[T] = { val y = Stack.empty[T]; y.pushAll(elemanlar); y }
   // Başka bir yığının kopyası, AYNI sırada (tepe yine tepede).
   // Eski gerçekleme y2.dizi'yi (tepeden başlayarak) yeniden itiyordu, yani

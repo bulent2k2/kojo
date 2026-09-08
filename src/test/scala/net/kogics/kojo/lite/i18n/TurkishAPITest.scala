@@ -240,7 +240,10 @@ import net.kogics.kojo.staging
 
     // Yığın artık `type Yığın[T] = Stack[T]` (Aralık ile aynı karar).
     // Eski adların hepsi duruyor:
+    // Yığın(1, 2, 3) = "1'i it, 2'yi it, 3'ü it" -> tepede 3. Scala'nın kendi
+    // Stack(1, 2, 3)'ü tepeye 1'i koyardı; ikojo da bu davranışa hizalandı.
     y2.tepe should be(3); y2.tepesi should be(3)
+    y2.dizine should be(Dizin(3, 2, 1))
     y2.çek() should be(3); y2.tane should be(2)
     y2.it(9); y2.tepe should be(9)
     y2.koyHepsini(Dizi(7, 8)); y2.tepe should be(8); y2.tane should be(5)
