@@ -760,6 +760,39 @@ import net.kogics.kojo.staging
     q.ekleHepsini(Dizi(5)); q.sonu should be(5)
   }
 
+  test("İkisindenBiri: Either'ın Türkçesi") {
+    // bölİşle bunu istiyordu; Türkçesi olmadığı için belgelenemiyordu
+    Dizin(1, 2, 3, 4).bölİşle(x => eğer (x % 2 == 0) Sağ(x * 10) yoksa Sol(x)) should be(
+      (Dizin(1, 3), Dizin(20, 40))
+    )
+    val sol: İkisindenBiri[Yazı, Sayı] = Sol("hata")
+    val sağ: İkisindenBiri[Yazı, Sayı] = Sağ(5)
+    sol.solMu should be(doğru); sol.sağMı should be(yanlış)
+    sağ.sağMı should be(doğru)
+    // sağ taraf işin yolunda gittiği taraf: işle/alYoksa hep sağa bakar
+    sağ.işle(_ * 2) should be(Sağ(10))
+    sol.işle(_ * 2) should be(Sol("hata")) // sol tarafa dokunmaz
+    sağ.alYoksa(0) should be(5)
+    sol.alYoksa(0) should be(0)
+    sağ.belkiye should be(Biri(5))
+    sol.belkiye should be(Hiçbiri)
+    sağ.varMı(_ > 1) should be(doğru)
+    sağ.içeriyorMu(5) should be(doğru)
+    sağ.takasla should be(Sol(5))
+    sağ.diziye should be(Dizi(5))
+    // katla: hangi taraftaysa ona uygun işlev (Either'ın tek fold'u budur)
+    sol.katla(h => s"yanlış gitti: $h", d => s"değer: $d") should be("yanlış gitti: hata")
+    sağ.katla(h => s"yanlış gitti: $h", d => s"değer: $d") should be("değer: 5")
+    // birleştir: iki taraf aynı türdeyse hangisiyse o
+    val ikisiDeYazı: İkisindenBiri[Yazı, Yazı] = Sol("soldaki")
+    ikisiDeYazı.birleştir should be("soldaki")
+    İkisindenBiri.koşulla(3 > 2, "oldu", "olmadı") should be(Sağ("oldu"))
+    İkisindenBiri.koşulla(2 > 3, "oldu", "olmadı") should be(Sol("olmadı"))
+    // çıktı penceresinde Türkçe görünüyor mu
+    tr.translate.result("Left(1)") should be("Sol(1)")
+    tr.translate.result("Right(1)") should be("Sağ(1)")
+  }
+
   test("Yineleyici: Iterator'ın Türkçesi") {
     // öbekli/kayarÖbekli/kombinasyonlar hep Yineleyici veriyordu; Türkçesi
     // olmadığı için öğrenci tam orada toList yazmak zorunda kalıyordu.

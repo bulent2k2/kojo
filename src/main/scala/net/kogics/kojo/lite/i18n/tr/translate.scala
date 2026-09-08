@@ -21,6 +21,10 @@ object translate {
     // Aralık bir tür takma adı olduğu için toString ezilemiyor; Range'in
     // 2.13 gösterimi "Range 1 to 5 by 2" biçiminde. NumericRange önce
     // çevriliyor, yoksa "NumericAralık" gibi bir şey çıkardı.
+    // Sol(1) / Sağ(1) diye görünsün. Parantezle eşliyoruz: yalnız "Left"/"Right"
+    // deseydik LeftProjection, originTopLeft gibi yerleri de bozardı.
+    .replace("Left(", "Sol(")
+    .replace("Right(", "Sağ(")
     .replace("NumericRange ", "SayısalAralık ")
     .replace("Range ", "Aralık ")
     .replace("net.kogics.kojo.lite.i18n.tr.", "")

@@ -243,6 +243,13 @@ object dict {
     "removeLastOption" -> "sondanÇıkarBelki",
     "front" -> "ilki",
     "toQueue" -> "kuyruğa",
+    // İkisindenBiri (bkz. i18n/tr/ikisindenbiri.scala)
+    "isLeft" -> "solMu",
+    "isRight" -> "sağMı",
+    "swap" -> "takasla",
+    "merge" -> "birleştir",
+    "toOption" -> "belkiye",
+    "cond" -> "koşulla",
     // Yineleyici (bkz. i18n/tr/yineleyici.scala)
     "hasNext" -> "dahaVarMı",
     "next" -> "sıradaki",
@@ -517,6 +524,9 @@ object dict {
     "Yazı" -> "String",
     "EsnekYazı" -> "StringBuilder",
     "Belki" -> "Option",
+    "İkisindenBiri" -> "Either. Ya soldaki değer ya sağdaki; sağ taraf işin yolunda gittiği taraftır",
+    "Sol" -> "Left",
+    "Sağ" -> "Right",
     "Biri" -> "Some",
     "Hiçbiri" -> "None",
     "Aralık" -> "Range",

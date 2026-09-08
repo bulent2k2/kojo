@@ -701,7 +701,7 @@ açı(n2, n1)
     ("""tersi""", """tersi""", """Ögeleri ters sıraya çevirir.""", """Dizin(1, 2, 3).tersi""", """Dizin(3, 2, 1)"""),
     ("""yinelemesiz""", """yinelemesiz""", """Yinelenen ögelerin yalnız ilkini tutar.""", """Dizin(1, 2, 1, 3).yinelemesiz""", """Dizin(1, 2, 3)"""),
     ("""indirge""", """indirge(işlem)""", """Ögeleri ikişer ikişer birleştirip tek değere indirir. Boşsa hata verir.""", """Dizin(1, 2, 3).indirge(_ + _)""", """6"""),
-    ("""katla""", """katla(başlangıç)(işlem)""", """indirge gibi, ama bir başlangıç değeri verirsin; boş toplulukta da çalışır.""", """Dizin(1, 2, 3).katla(10)(_ + _)""", """16"""),
+    ("""katla""", """katla(başlangıç)(işlem)""", """Topluluklarda: indirge gibi, ama bir başlangıç değeri verirsin; boş toplulukta da çalışır. İkisindenBiri'nde katla(solİşlev, sağİşlev) demek: hangi taraftaysa ona uygun işlevi çalıştırır.""", """Dizin(1, 2, 3).katla(10)(_ + _)""", """16"""),
     ("""soldanKatla""", """soldanKatla(başlangıç)(işlem)""", """Soldan sağa katlar. Sonuç ögelerden başka türde olabilir.""", """Dizin(1, 2, 3).soldanKatla("")((y, s) => y + s)""", """123"""),
     ("""sağdanKatla""", """sağdanKatla(başlangıç)(işlem)""", """Sağdan sola katlar.""", """Dizin(1, 2, 3).sağdanKatla("")((s, y) => y + s)""", """321"""),
     ("""tara""", """tara(başlangıç)(işlem)""", """Katlar ama ARA sonuçların hepsini verir.""", """Dizin(1, 2, 3).tara(0)(_ + _)""", """Dizin(0, 1, 3, 6)"""),
@@ -818,8 +818,8 @@ açı(n2, n1)
     ("""kuyruğa""", """kuyruğa""", """Öncelik sırasını Kuyruk'a çevirir.""", """ÖncelikSırası(3, 9).kuyruğa.boyu""", """2"""),
     ("""yokMu""", """yokMu""", """İçinde bir şey yok mu (Hiçbiri mi).""", """Hiçbiri.yokMu""", """doğru"""),
     ("""boşsaÖbürü""", """boşsaÖbürü(öbürü)""", """Doluysa kendini, boşsa ötekini verir. (İngilizcesi orElse; yoksa bir anahtar sözcük olduğu için bu ad.)""", """Hiçbiri.boşsaÖbürü(Biri(5))""", """Some(5)"""),
-    ("""sola""", """sola(sağdaki)""", """Belki'yi Sol/Sağ ikilisine çevirir: doluysa Sol.""", """Biri(1).sola("yok")""", """Left(1)"""),
-    ("""sağa""", """sağa(soldaki)""", """Belki'yi Sol/Sağ ikilisine çevirir: doluysa Sağ.""", """Biri(1).sağa("yok")""", """Right(1)"""),
+    ("""sola""", """sola(sağdaki)""", """Belki'yi Sol/Sağ ikilisine çevirir: doluysa Sol.""", """Biri(1).sola("yok")""", """Sol(1)"""),
+    ("""sağa""", """sağa(soldaki)""", """Belki'yi Sol/Sağ ikilisine çevirir: doluysa Sağ.""", """Biri(1).sağa("yok")""", """Sağ(1)"""),
     ("""büyükHarfe""", """büyükHarfe""", """Bütün harfleri büyütür. Türkçe i/İ kuralına dikkat!""", """"kojo".büyükHarfe""", """KOJO"""),
     ("""küçükHarfe""", """küçükHarfe""", """Bütün harfleri küçültür.""", """"KOCO".küçükHarfe""", """koco"""),
     ("""kısalt""", """kısalt""", """Baştaki ve sondaki boşlukları atar.""", """"  merhaba  ".kısalt""", """merhaba"""),
@@ -852,6 +852,14 @@ açı(n2, n1)
     ("""bellekli""", """bellekli""", """Tüketmeden önden bakabilmek için: başı okumak ilerletmez.""", """{ dez b = Dizin(1, 2).yineleyici.bellekli; (b.başı, b.dizine) }""", """(1,Dizin(1, 2))"""),
     ("""gösterdikleriAynıMı""", """gösterdikleriAynıMı(öbürü)""", """İki yineleyici aynı ögeleri aynı sırada mı veriyor.""", """Dizin(1, 2).yineleyici.gösterdikleriAynıMı(Dizin(1, 2))""", """doğru"""),
     ("""yineleyici""", """yineleyici""", """Topluluğu bir kez gezdiren Yineleyici verir.""", """Küme(1).yineleyici.dizine""", """Dizin(1)"""),
+    // --- 3. parti: İkisindenBiri (Either) ---
+    ("""bölİşle""", """bölİşle(işlev)""", """Her ögeyi Sol/Sağ diye etiketler, sonra ikiye ayırır. ele ile işle'yi tek geçişte yapar.""", """Dizin(1, 2, 3, 4).bölİşle(x => eğer (x % 2 == 0) Sağ(x * 10) yoksa Sol(x))""", """(Dizin(1, 3),Dizin(20, 40))"""),
+    ("""solMu""", """solMu""", """İkisindenBiri sol tarafta mı.""", """Sol("hata").solMu""", """doğru"""),
+    ("""sağMı""", """sağMı""", """İkisindenBiri sağ tarafta mı. Gelenek: sağ, işin yolunda gittiği taraftır.""", """Sağ(5).sağMı""", """doğru"""),
+    ("""takasla""", """takasla""", """Sol ile sağı yer değiştirir.""", """Sağ(5).takasla""", """Sol(5)"""),
+    ("""birleştir""", """birleştir""", """İki taraf aynı türdeyse, hangisiyse o değeri verir. (Dizik'te birleştir = uç uca ekle.)""", """Sol("hata").birleştir""", """hata"""),
+    ("""belkiye""", """belkiye""", """Sağdaysa Biri, soldaysa Hiçbiri verir.""", """Sol("hata").belkiye""", """None"""),
+    ("""koşulla""", """İkisindenBiri.koşulla(koşul, sağdaki, soldaki)""", """Koşul doğruysa Sağ, değilse Sol kurar.""", """İkisindenBiri.koşulla(3 > 2, "oldu", "olmadı")""", """Sağ(oldu)"""),
   )
 
   private def koleksiyonYardımı: Map[String, String] = koleksiyonYöntemleri.map {
