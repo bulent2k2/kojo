@@ -167,7 +167,7 @@ trait DizinYöntemleri {
       d.patch(nereden, yenisi, kaçTane)
     def fark[S >: T](öbürü: Diz[S]): Col = d.diff(öbürü)
     def kesişim[S >: T](öbürü: Diz[S]): Col = d.intersect(öbürü)
-    def bileşim[S >: T](öbürü: Diz[S]): Dizin[S] = d.union(öbürü)
+    def bileşim[S >: T](öbürü: Diz[S]): Dizin[S] = d.concat(öbürü)
 
     // --- seçme, düzleştirme, ikili işlemler ----------------------------
     def seçİşle[B](işlev: PartialFunction[T, B]): Dizin[B] = d.collect(işlev)

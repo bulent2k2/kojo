@@ -167,7 +167,7 @@ trait SeqMethodsInTurkish {
       d.patch(nereden, yenisi, kaçTane)
     def fark[S >: T](öbürü: Diz[S]): Col = d.diff(öbürü)
     def kesişim[S >: T](öbürü: Diz[S]): Col = d.intersect(öbürü)
-    def bileşim[S >: T](öbürü: Diz[S]): C2[S] = d.union(öbürü)
+    def bileşim[S >: T](öbürü: Diz[S]): C2[S] = d.concat(öbürü)
 
     // --- seçme, düzleştirme, ikili işlemler ----------------------------
     def seçİşle[B](işlev: PartialFunction[T, B]): C2[B] = d.collect(işlev)
@@ -311,7 +311,7 @@ trait SeqMethodsInTurkish {
       d.patch(nereden, yenisi, kaçTane)
     def fark[S >: T](öbürü: Diz[S]): Col = d.diff(öbürü)
     def kesişim[S >: T](öbürü: Diz[S]): Col = d.intersect(öbürü)
-    def bileşim[S >: T](öbürü: Diz[S]): C2[S] = d.union(öbürü)
+    def bileşim[S >: T](öbürü: Diz[S]): C2[S] = d.concat(öbürü)
 
     // --- seçme, düzleştirme, ikili işlemler ----------------------------
     def seçİşle[B](işlev: PartialFunction[T, B]): C2[B] = d.collect(işlev)
@@ -453,7 +453,7 @@ trait SeqMethodsInTurkish {
       d.patch(nereden, yenisi, kaçTane)
     def fark[S >: T](öbürü: Diz[S]): Col = d.diff(öbürü)
     def kesişim[S >: T](öbürü: Diz[S]): Col = d.intersect(öbürü)
-    def bileşim[S >: T](öbürü: Diz[S]): C2[S] = d.union(öbürü)
+    def bileşim[S >: T](öbürü: Diz[S]): C2[S] = d.concat(öbürü)
 
     // --- seçme, düzleştirme, ikili işlemler ----------------------------
     def seçİşle[B](işlev: PartialFunction[T, B]): C2[B] = d.collect(işlev)

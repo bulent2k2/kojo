@@ -838,6 +838,76 @@ import net.kogics.kojo.staging
     e should be(EsnekDizik(3, 1, 2)) // hiçbiri e'yi DEĞİŞTİRMEDİ
   }
 
+  test("Küme: ortak çekirdek") {
+    val k = Küme(3, 1, 2)
+    k.önü.boyu should be(2); k.sonu should be(2)
+    k.başıBelki should be(Biri(3)); Küme[Sayı]().sonuBelki should be(Hiçbiri)
+    k.bul(_ > 2) should be(Biri(3)); k.bul(_ > 9) should be(Hiçbiri)
+    k.bölİşle(x => if (x > 1) Left(x) else Right(x.yazıya)) should be((Küme(3, 2), Küme("1")))
+    k.bölDoğruKaldıkça(_ > 2)._1 should be(Küme(3))
+    k.bölYerinden(1) should be((Küme(3), Küme(1, 2)))
+    k.kayarÖbekli(2).toList should be(Dizin(Küme(3, 1), Küme(1, 2)))
+    k.öbekleİşle(_ % 2)(_ * 10) should be(Eşlek(1 -> Küme(30, 10), 0 -> Küme(20)))
+    k.öbekleİşleİndirge(_ % 2)(x => x)(_ + _) should be(Eşlek(1 -> 4, 0 -> 2))
+    k.kuyruklar.toList.boyu should be(4); k.önler.toList.boyu should be(4)
+    k.katla(0)(_ + _) should be(6)
+    k.indirgeSoldan(_ + _) should be(6); k.indirgeSağdan(_ + _) should be(6)
+    k.indirgeBelki(_ + _) should be(Biri(6)); Küme[Sayı]().indirgeBelki(_ + _) should be(Hiçbiri)
+    k.indirgeSoldanBelki(_ + _) should be(Biri(6)); k.indirgeSağdanBelki(_ + _) should be(Biri(6))
+    k.tara(0)(_ + _) should be(Küme(0, 3, 4, 6))
+    k.taraSoldan(0)(_ + _) should be(Küme(0, 3, 4, 6))
+    k.taraSağdan(0)(_ + _) should be(Küme(6, 3, 2, 0))
+    k.enUfağıBelki should be(Biri(1)); k.enİrisiBelki should be(Biri(3))
+    Küme[Sayı]().enİrisiBelki should be(Hiçbiri)
+    k.enUfağıBelki(x => -x) should be(Biri(3)); k.enİrisiBelki(x => -x) should be(Biri(1))
+    k.fark(Küme(1)) should be(Küme(3, 2))
+    k.seçİşle { case x if x > 1 => x * 10 } should be(Küme(30, 20))
+    k.seçİşleİlk { case x if x < 3 => x } should be(Biri(1))
+    Küme(Dizi(1, 2), Dizi(3)).düzleştir should be(Küme(1, 2, 3))
+    Küme((1, "a"), (2, "b")).ikiliyiAç should be((Küme(1, 2), Küme("a", "b")))
+    k.ikileHepsini(Dizi("x"), -1, "-").boyu should be(3)
+  }
+
+  test("Eşlek ve Eşlem: ortak çekirdek") {
+    // Eşlek: değişmez eşlem; ögesi bir İKİLİ (anahtar -> değer)
+    val e = Eşlek("a" -> 1, "b" -> 2, "c" -> 3)
+    e.başıBelki should be(Biri(("a", 1)))
+    Eşlek[Yazı, Sayı]().sonuBelki should be(Hiçbiri)
+    e.bul(_._2 > 2) should be(Biri(("c", 3)))
+    e.böl(_._2 > 1) should be((Eşlek("b" -> 2, "c" -> 3), Eşlek("a" -> 1)))
+    e.bölDoğruKaldıkça(_._2 < 3)._1 should be(Eşlek("a" -> 1, "b" -> 2))
+    e.bölYerinden(1)._2 should be(Eşlek("b" -> 2, "c" -> 3))
+    e.öbekli(2).toList.boyu should be(2)
+    e.kayarÖbekli(2).toList.boyu should be(2)
+    e.öbekleİşleİndirge(_._2 % 2)(_._2)(_ + _) should be(Eşlek(1 -> 4, 0 -> 2))
+    e.kuyruklar.toList.boyu should be(4); e.önler.toList.boyu should be(4)
+    e.indirgeBelki((x, y) => (x._1 + y._1, x._2 + y._2)) should be(Biri(("abc", 6)))
+    e.taraSoldan(0)((s, ikili) => s + ikili._2).dizine should be(Dizin(0, 1, 3, 6))
+    e.enUfağıBelki(_._2) should be(Biri(("a", 1)))
+    e.enİrisiBelki(_._2) should be(Biri(("c", 3)))
+    e.seçİşle { case (a, d) if d > 1 => a }.kümeye should be(Küme("b", "c"))
+    e.seçİşleİlk { case (a, d) if d > 2 => a } should be(Biri("c"))
+    e.dilim(0, 2).boyu should be(2)
+    val (anahtarlar, değerler) = e.ikiliyiAç
+    anahtarlar.kümeye should be(Küme("a", "b", "c")); değerler.kümeye should be(Küme(1, 2, 3))
+    e.ikileHepsini(Dizi("x"), ("-", 0), "-").size should be(3)
+
+    // Eşlem: değişir eşlem, aynı yöntemler
+    val m = Eşlem("a" -> 1, "b" -> 2, "c" -> 3)
+    m.başıBelki should be(Biri(("a", 1)))
+    m.bul(_._2 > 2) should be(Biri(("c", 3)))
+    m.böl(_._2 > 1)._1.size should be(2)
+    m.bölYerinden(1)._2.size should be(2)
+    m.öbekli(2).toList.boyu should be(2)
+    m.öbekleİşleİndirge(_._2 % 2)(_._2)(_ + _) should be(Eşlek(1 -> 4, 0 -> 2))
+    m.indirgeBelki((x, y) => (x._1 + y._1, x._2 + y._2)) should be(Biri(("abc", 6)))
+    m.taraSoldan(0)((s, ikili) => s + ikili._2).dizine should be(Dizin(0, 1, 3, 6))
+    m.enİrisiBelki(_._2) should be(Biri(("c", 3)))
+    m.seçİşle { case (a, d) if d > 1 => a }.kümeye should be(Küme("b", "c"))
+    m.dilim(0, 2).size should be(2)
+    m.boyu should be(3) // hiçbiri m'i DEĞİŞTİRMEDİ
+  }
+
   test("MiskinDizin: tamamlanan yöntemler") {
     val m = MiskinDizin(3, 1, 2)
     m.önü.dizine should be(Dizin(3, 1)); m.sonu should be(2)

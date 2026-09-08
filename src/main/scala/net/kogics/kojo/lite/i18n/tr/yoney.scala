@@ -151,7 +151,7 @@ trait VectorMethodsInTurkish {
       y.patch(nereden, yenisi, kaçTane)
     def fark[S >: A](öbürü: Diz[S]): Yöney[A] = y.diff(öbürü)
     def kesişim[S >: A](öbürü: Diz[S]): Yöney[A] = y.intersect(öbürü)
-    def bileşim[S >: A](öbürü: Diz[S]): Yöney[S] = y.union(öbürü)
+    def bileşim[S >: A](öbürü: Diz[S]): Yöney[S] = y.concat(öbürü)
 
     // --- seçme, düzleştirme, ikili işlemler ----------------------------
     def seçİşle[B](işlev: PartialFunction[A, B]): Yöney[B] = y.collect(işlev)

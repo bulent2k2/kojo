@@ -107,6 +107,49 @@ case class Eşlem[A,D](val m: Map[A,D]) {
   def enUfağı[B >: Pair](iş: (Pair) => B)(implicit karşılaştırma: math.Ordering[B]): Pair = m.minBy(iş)(karşılaştırma)
   def enİrisi[B >: Pair](implicit sıralama: math.Ordering[B]): Pair = m.max(sıralama)
   def enİrisi[B](iş: (Pair) => B)(implicit karşılaştırma: math.Ordering[B]): Pair = m.maxBy(iş)(karşılaştırma)
+
+  // --- uçlar, arama --------------------------------------------------
+  // Eşlek/Eşlem bir İKİLİLER (anahtar -> değer) topluluğu; aşağıdaki
+  // yöntemlerin "ögesi" bir ikili, yani Pair = (A, D).
+  def başıBelki: Belki[Pair] = m.headOption
+  def sonuBelki: Belki[Pair] = m.lastOption
+  def bul(deneme: Pair => İkil): Belki[Pair] = m.find(deneme)
+
+  // --- bölme, öbekleme -----------------------------------------------
+  def böl(deneme: Pair => İkil) = m.partition(deneme)
+  def bölİşle[A1, A2](işlev: Pair => Either[A1, A2]) = m.partitionMap(işlev)
+  def bölDoğruKaldıkça(deneme: Pair => İkil) = m.span(deneme)
+  def bölYerinden(yeri: Sayı) = m.splitAt(yeri)
+  def öbekli(boy: Sayı) = m.grouped(boy)
+  def kayarÖbekli(boy: Sayı) = m.sliding(boy)
+  def kayarÖbekli(boy: Sayı, adım: Sayı) = m.sliding(boy, adım)
+  def öbekleİşle[K, B](anahtar: Pair => K)(değer: Pair => B) = m.groupMap(anahtar)(değer)
+  def öbekleİşleİndirge[K, B](anahtar: Pair => K)(değer: Pair => B)(indirge: (B, B) => B) =
+    m.groupMapReduce(anahtar)(değer)(indirge)
+  def kuyruklar = m.tails
+  def önler = m.inits
+
+  // --- indirgeme, tarama ----------------------------------------------
+  def indirgeBelki[B >: Pair](işlem: (B, B) => B): Belki[B] = m.reduceOption(işlem)
+  def tara[B >: Pair](z: B)(işlev: (B, B) => B) = m.scan(z)(işlev)
+  def taraSoldan[B](z: B)(işlev: (B, Pair) => B) = m.scanLeft(z)(işlev)
+  def taraSağdan[B](z: B)(işlev: (Pair, B) => B) = m.scanRight(z)(işlev)
+  def enUfağıBelki[B >: Pair](implicit sıralama: math.Ordering[B]): Belki[Pair] = m.minOption(sıralama)
+  def enUfağıBelki[B](iş: Pair => B)(implicit karşılaştırma: math.Ordering[B]): Belki[Pair] =
+    m.minByOption(iş)(karşılaştırma)
+  def enİrisiBelki[B >: Pair](implicit sıralama: math.Ordering[B]): Belki[Pair] = m.maxOption(sıralama)
+  def enİrisiBelki[B](iş: Pair => B)(implicit karşılaştırma: math.Ordering[B]): Belki[Pair] =
+    m.maxByOption(iş)(karşılaştırma)
+
+  // --- seçme, dilimleme, ikili işlemler -------------------------------
+  def seçİşle[B](işlev: PartialFunction[Pair, B]) = m.collect(işlev)
+  def seçİşleİlk[B](işlev: PartialFunction[Pair, B]): Belki[B] = m.collectFirst(işlev)
+  def dilim(nereden: Sayı, nereye: Sayı) = m.slice(nereden, nereye)
+  def düzleştir[B](implicit delil: Pair => YinelenebilirBirKere[B]) = m.flatten(delil)
+  def devrik[B](implicit delil: Pair => Yinelenebilir[B]) = m.transpose(delil)
+  def ikiliyiAç[A1, A2](implicit delil: Pair => (A1, A2)) = m.unzip(delil)
+  def ikileHepsini[B, S >: Pair](öbürü: Yinelenebilir[B], buDolgu: S, oDolgu: B) =
+    m.zipAll(öbürü, buDolgu, oDolgu)
 }
 
 trait MapMethodsInTurkish {
@@ -197,5 +240,48 @@ trait MapMethodsInTurkish {
     def enİrisi[B >: Pair](implicit sıralama: math.Ordering[B]): Pair = m.max(sıralama)
     def enİrisi[B](iş: (Pair) => B)(implicit karşılaştırma: math.Ordering[B]): Pair = m.maxBy(iş)(karşılaştırma)
     // todo: more to come
-  }
+  
+    // --- uçlar, arama --------------------------------------------------
+    // Eşlek/Eşlem bir İKİLİLER (anahtar -> değer) topluluğu; aşağıdaki
+    // yöntemlerin "ögesi" bir ikili, yani Pair = (A, D).
+    def başıBelki: Belki[Pair] = m.headOption
+    def sonuBelki: Belki[Pair] = m.lastOption
+    def bul(deneme: Pair => İkil): Belki[Pair] = m.find(deneme)
+
+    // --- bölme, öbekleme -----------------------------------------------
+    def böl(deneme: Pair => İkil) = m.partition(deneme)
+    def bölİşle[A1, A2](işlev: Pair => Either[A1, A2]) = m.partitionMap(işlev)
+    def bölDoğruKaldıkça(deneme: Pair => İkil) = m.span(deneme)
+    def bölYerinden(yeri: Sayı) = m.splitAt(yeri)
+    def öbekli(boy: Sayı) = m.grouped(boy)
+    def kayarÖbekli(boy: Sayı) = m.sliding(boy)
+    def kayarÖbekli(boy: Sayı, adım: Sayı) = m.sliding(boy, adım)
+    def öbekleİşle[K, B](anahtar: Pair => K)(değer: Pair => B) = m.groupMap(anahtar)(değer)
+    def öbekleİşleİndirge[K, B](anahtar: Pair => K)(değer: Pair => B)(indirge: (B, B) => B): Eşlek[K, B] =
+      m.groupMapReduce(anahtar)(değer)(indirge)
+    def kuyruklar = m.tails
+    def önler = m.inits
+
+    // --- indirgeme, tarama ----------------------------------------------
+    def indirgeBelki[B >: Pair](işlem: (B, B) => B): Belki[B] = m.reduceOption(işlem)
+    def tara[B >: Pair](z: B)(işlev: (B, B) => B) = m.scan(z)(işlev)
+    def taraSoldan[B](z: B)(işlev: (B, Pair) => B) = m.scanLeft(z)(işlev)
+    def taraSağdan[B](z: B)(işlev: (Pair, B) => B) = m.scanRight(z)(işlev)
+    def enUfağıBelki[B >: Pair](implicit sıralama: math.Ordering[B]): Belki[Pair] = m.minOption(sıralama)
+    def enUfağıBelki[B](iş: Pair => B)(implicit karşılaştırma: math.Ordering[B]): Belki[Pair] =
+      m.minByOption(iş)(karşılaştırma)
+    def enİrisiBelki[B >: Pair](implicit sıralama: math.Ordering[B]): Belki[Pair] = m.maxOption(sıralama)
+    def enİrisiBelki[B](iş: Pair => B)(implicit karşılaştırma: math.Ordering[B]): Belki[Pair] =
+      m.maxByOption(iş)(karşılaştırma)
+
+    // --- seçme, dilimleme, ikili işlemler -------------------------------
+    def seçİşle[B](işlev: PartialFunction[Pair, B]) = m.collect(işlev)
+    def seçİşleİlk[B](işlev: PartialFunction[Pair, B]): Belki[B] = m.collectFirst(işlev)
+    def dilim(nereden: Sayı, nereye: Sayı) = m.slice(nereden, nereye)
+    def düzleştir[B](implicit delil: Pair => YinelenebilirBirKere[B]) = m.flatten(delil)
+    def devrik[B](implicit delil: Pair => Yinelenebilir[B]) = m.transpose(delil)
+    def ikiliyiAç[A1, A2](implicit delil: Pair => (A1, A2)) = m.unzip(delil)
+    def ikileHepsini[B, S >: Pair](öbürü: Yinelenebilir[B], buDolgu: S, oDolgu: B) =
+      m.zipAll(öbürü, buDolgu, oDolgu)
+}
 }
