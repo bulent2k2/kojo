@@ -18,6 +18,11 @@ package net.kogics.kojo.lite.i18n.tr
 
 object translate {
   private def common(str: String) = { str
+    // Aralık bir tür takma adı olduğu için toString ezilemiyor; Range'in
+    // 2.13 gösterimi "Range 1 to 5 by 2" biçiminde. NumericRange önce
+    // çevriliyor, yoksa "NumericAralık" gibi bir şey çıkardı.
+    .replace("NumericRange ", "SayısalAralık ")
+    .replace("Range ", "Aralık ")
     .replace("net.kogics.kojo.lite.i18n.tr.", "")
     .replace("UserCode.this.TurkishAPI.", "")
     .replace("UserCode", "KullanıcınınYazılımı")

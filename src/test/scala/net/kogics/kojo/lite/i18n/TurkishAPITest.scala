@@ -190,7 +190,7 @@ import net.kogics.kojo.staging
   }
 
   test("Translation of Range should work") {
-    val a = new Aralık(1, 10, 3)
+    val a = Aralık(1, 10, 3)
     a.ilki shouldBe 1
     a.sonuncu shouldBe 10
     a.adım shouldBe 3
@@ -199,7 +199,7 @@ import net.kogics.kojo.staging
     a.map(_ * 2) shouldBe Vector(2, 8, 14)
     a.flatMap(s => List(s, s*s)) shouldBe Vector(1, 1, 4, 16, 7, 49)
 
-    val a2 = new Aralık(1, 200, 7)
+    val a2 = Aralık(1, 200, 7)
     a2.dizine.size shouldBe 29
     a2.başı shouldBe 1
     a2.sonu shouldBe 197
@@ -1047,6 +1047,44 @@ import net.kogics.kojo.staging
     ö.kuyruğa.boyu should be(3)
     ö.işleYerinde(_ * 10); ö.başı should be(30)
     ö.hepsiniEkle(Dizi(100)); ö.başı should be(100)
+  }
+
+  test("Aralık tür takma adı ve EsnekYazı tamponu") {
+    // Aralık artık Range: `Aralık(1, 11)` ile `1 |-| 10` AYNI şey ve aynı
+    // yöntemleri görüyor (eskiden case class ~20, Range ~110 yöntem veriyordu).
+    val a: Aralık = Aralık(1, 10, 3)
+    a.ilki should be(1); a.sonuncu should be(10); a.adım should be(3)
+    a.adımı should be(3); a.uzunluğu should be(3)
+    a.başı should be(1); a.sonu should be(7)
+    a.dizine should be(Dizin(1, 4, 7))
+    a.yazı() should be("Aralık(1, 4, 7)")     // özel gösterim yöntem olarak korundu
+    Aralık(1, 200, 7).yazıya should be("Aralık(1, 8, 15, 22, 29 ... 169, 176, 183, 190, 197)")
+    (1 |-| 10) should be(Aralık.kapalı(1, 10))
+    // Range olduğu için ortak çekirdek doğrudan çalışıyor
+    a.bul(_ > 3) should be(Biri(4))
+    a.böl(_ > 3) should be((Dizi(4, 7), Dizi(1)))
+    a.tara(0)(_ + _) should be(Dizi(0, 1, 5, 12))
+    a.enİrisiBelki should be(Biri(7))
+    a.herÖgeİçin(_ => ())
+
+    val ey = new EsnekYazı("merhaba")
+    // dizi tarafı zaten çalışıyor (Diz sarmalayıcısı EsnekYazı'ya da uyuyor)
+    ey.bul(_ == 'h') should be(Biri('h')); ey.boyu should be(7)
+    // tampon tarafı
+    ey.harf(0) should be('m')
+    ey.parçası(0, 3) should be("mer")
+    ey.araEkle(0, "Ey "); ey.yazıya should be("Ey merhaba")
+    ey.aralığıSil(0, 3); ey.yazıya should be("merhaba")
+    ey.harfiSil(0); ey.yazıya should be("erhaba")
+    ey.harfiKur(0, 'M'); ey.yazıya should be("Mrhaba")   // 'e' yerine 'M'
+    ey.değiştirAralığını(0, 1, "me"); ey.yazıya should be("merhaba")
+    ey.ekleHepsini(Dizi('!', '!')); ey.yazıya should be("merhaba!!")
+    ey.boyuKur(7); ey.yazıya should be("merhaba")
+    ey.tersiYerinde.yazıya should be("abahrem")
+    ey.kapasitesi should be >= 7
+    new EsnekYazı("42").uzuna should be(42L)
+    new EsnekYazı("3.5").kesire should be(3.5)
+    ey.sil(); ey.boşMu should be(doğru)
   }
 
   test("MiskinDizin: tamamlanan yöntemler") {

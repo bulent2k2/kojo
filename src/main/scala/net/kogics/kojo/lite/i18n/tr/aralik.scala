@@ -17,47 +17,19 @@
 package net.kogics.kojo.lite.i18n.tr
 
 // translating Range
-case class Aralık(ilki: Sayı, sonuncu: Sayı, adım: Sayı = 1) {
-  type Dizi[B] = Seq[B]
-  val r = Range(ilki, sonuncu, adım)
-  val başı = r.head
-  val sonu = r.last
-  val uzunluğu = r.size
-  def boyu = r.size
-  def içindeMi(s: Sayı) = r.contains(s)
-  def dizine: Dizin[Sayı] = r.toList
-  def diziye: Dizi[Sayı] = r.toSeq
-  def yazı() = toString()
-  def yazıya() = toString()
-  def herÖgeİçin(komutlar: (Sayı) => Birim) = r.foreach(komutlar)
-  override def toString() = {
-    val yazı = if (r.size <= 10) r.mkString("(", ", ", ")")
-    else {
-      val (başı, sonu) = (r.take(5), r.drop(r.size - 5))
-      başı.mkString("(", ", ", " ...") + sonu.mkString(" ", ", ", ")")
-    }
-    s"Aralık$yazı"
-  }
-  def map[B](f: Sayı => B) = r.map(f)
-  def withFilter(pred: Sayı => İkil) = r.withFilter(pred)
-  def flatMap[B](f: Sayı => YinelenebilirBirKere[B]) = r.flatMap(f)
-  def foreach(f: (Sayı) => Unit) = r.foreach(f)
-
-  def işle[B](f: Sayı => B) = r.map(f)
-  def elekle(deneme: Sayı => İkil) = r.withFilter(deneme)
-  def düzİşle[B](f: Sayı => YinelenebilirBirKere[B]) = r.flatMap(f)
-  def herbiriİçin(f: (Sayı) => Unit) = r.foreach(f)
-  def indirge(iş: (Sayı, Sayı) => Sayı): Sayı = diziye.reduce(iş)
-  def soldanKatla[B](z: B)(iş: (B, Sayı) => B): B = diziye.foldLeft(z)(iş)
-  def sağdanKatla[B](z: B)(iş: (Sayı, B) => B): B = diziye.foldRight(z)(iş)
-}
-
+//
+// Aralık ARTIK BİR TÜR TAKMA ADI (Küme = Set, Dizin = List kalıbı).
+// Eskiden Range'i saran bir case class'tı; o zaman `Aralık(1, 10)` yazan
+// öğrenci ~20 yöntem görüyordu, `1 |-| 10` yazan ise Range olduğu için
+// SıralıDizi sarmalayıcısının ~110 yöntemini. İki yüz birleşti: ikisi de
+// artık aynı şey ve aynı yöntemleri görüyor.
+//
+// Case class'ın özel gösterimi (`Aralık(1, 4, 7)`) kaybolmadı: yazı()/yazıya()
+// olarak aşağıdaki örtük sınıfa taşındı. Örtük gösterim (REPL çıktısı) için
+// translate.scala'da Range -> Aralık çevirisi var.
 object Aralık {
-  def apply(ilki: Sayı, sonuncu: Sayı, adım: Sayı = 1) = new Aralık(ilki, sonuncu, adım)
-  def kapalı(ilki: Sayı, sonuncu: Sayı, adım: Sayı = 1) = new Aralık(
-    ilki,
-    if (adım > 0) sonuncu+1 else sonuncu-1,
-    adım)
+  def apply(ilki: Sayı, sonuncu: Sayı, adım: Sayı = 1): Range = Range(ilki, sonuncu, adım)
+  def kapalı(ilki: Sayı, sonuncu: Sayı, adım: Sayı = 1): Range = Range.inclusive(ilki, sonuncu, adım)
   // copied from class Builtins ../../Builtins.scala
   def kesirden(ilki: Kesir, sonuncu: Kesir, adım: Kesir) = Range.BigDecimal(ilki, sonuncu, adım)
   def kesirdenAçık(ilki: Kesir, sonuncu: Kesir, adım: Kesir) = Range.BigDecimal(ilki, sonuncu, adım)
@@ -67,6 +39,27 @@ object Aralık {
 // also see: trait IntMethodsInTurkish in sayi.scala
 trait RangeMethodsInTurkish {
   implicit class RangeYöntemleri(r: Range) {
+    // Aralık case class'ından taşınanlar (eski adlar korunuyor)
+    def ilki: Sayı = r.start
+    def sonuncu: Sayı = r.end
+    def adımı: Sayı = r.step
+    def adım: Sayı = r.step
+    def uzunluğu: Sayı = r.size
+    def başı: Sayı = r.head
+    def sonu: Sayı = r.last
+    def herÖgeİçin(komutlar: Sayı => Birim): Birim = r.foreach(komutlar)
+    // Öğrenci dostu gösterim: uzun aralıkları kısaltır. toString ezilemez
+    // (Aralık artık bir tür takma adı), ama bu yöntem eski çıktıyı verir.
+    def yazı(): Yazı = yazıya
+    def yazıya: Yazı = {
+      val gövde =
+        if (r.size <= 10) r.mkString("(", ", ", ")")
+        else {
+          val (b, s2) = (r.take(5), r.drop(r.size - 5))
+          b.mkString("(", ", ", " ...") + s2.mkString(" ", ", ", ")")
+        }
+      s"Aralık$gövde"
+    }
     def adım(c: Sayı): Range = r by c
     def diziye = r.toSeq
     def dizine = r.toList

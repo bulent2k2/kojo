@@ -80,6 +80,9 @@ package object tr {
   type Diz[B] = collection.Seq[B]
   type Dizi[B] = Seq[B]
   type Dizin[A] = List[A]
+  // Aralık artık bir tür takma adı (bkz. aralik.scala); eskiden Range'i saran
+  // bir case class'tı ve `1 |-| 10` ile `Aralık(1, 11)` farklı yöntemler görüyordu.
+  type Aralık = Range
   type SıralıDizi[A] = IndexedSeq[A]
   type Yineleyici[Col] = Iterator[Col]
   type Yinelenebilir[Col] = Iterable[Col]

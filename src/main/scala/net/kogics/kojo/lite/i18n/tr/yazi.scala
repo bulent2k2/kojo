@@ -192,6 +192,7 @@ trait StringMethodsInTurkish {
 }
 
   implicit class EsnekYazıYöntemleri(ey: EsnekYazı) {
+    type Harf = Char
     def boşMu = ey.size == 0
     def doluMu = ey.size != 0
     def boyu = ey.size
@@ -199,6 +200,28 @@ trait StringMethodsInTurkish {
     def ekle[T](x: T) = ey.append(x)
     def yazıya = ey.toString
     def sayıya = ey.toString.toInt
-  }
+  
+    // --- tampon tarafı (yerinde değiştirenler) ---------------------------
+    // EsnekYazı hem bir harf DİZİSİ (Diz sarmalayıcısı buraya da uygulanıyor:
+    // bul, böl, öbekli, enİrisi... hepsi çalışır) hem de bir yazı TAMPONU.
+    // Aşağıdakiler tampon tarafı; tamponun kendisini değiştirirler.
+    def ekleHepsini(harfler: YinelenebilirBirKere[Harf]): EsnekYazı = ey.appendAll(harfler)
+    def araEkle(yeri: Sayı, x: Yazı): EsnekYazı = ey.insert(yeri, x)
+    def araEkleHepsini(yeri: Sayı, harfler: YinelenebilirBirKere[Harf]): EsnekYazı = ey.insertAll(yeri, harfler)
+    def aralığıSil(nereden: Sayı, nereye: Sayı): EsnekYazı = ey.delete(nereden, nereye)
+    def harfiSil(yeri: Sayı): EsnekYazı = ey.deleteCharAt(yeri)
+    def değiştirAralığını(nereden: Sayı, nereye: Sayı, yenisi: Yazı): EsnekYazı =
+      ey.replace(nereden, nereye, yenisi)
+    def harfiKur(yeri: Sayı, harf: Harf): Birim = ey.setCharAt(yeri, harf)
+    def boyuKur(boy: Sayı): Birim = ey.setLength(boy)
+    def tersiYerinde: EsnekYazı = ey.reverseInPlace()
+    def yerAyır(boy: Sayı): Birim = ey.ensureCapacity(boy)
+    def kapasitesi: Sayı = ey.capacity
+    def harf(yeri: Sayı): Harf = ey.charAt(yeri)
+    def parçası(nereden: Sayı): Yazı = ey.substring(nereden)
+    def parçası(nereden: Sayı, nereye: Sayı): Yazı = ey.substring(nereden, nereye)
+    def kesire: Kesir = ey.toString.toDouble
+    def uzuna: Uzun = ey.toString.toLong
+}
 
 }
