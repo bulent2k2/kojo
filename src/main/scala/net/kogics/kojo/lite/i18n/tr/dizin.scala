@@ -34,6 +34,7 @@ trait DizinYöntemleri {
 
   object Dizin {
     def apply[A](ögeler: A*): List[A] = List.from(ögeler)
+    def boş[A]: List[A] = Nil
     def unapplySeq[A](list: List[A]) = List.unapplySeq(list)
   }
 

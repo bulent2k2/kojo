@@ -214,8 +214,8 @@ object dict {
     "patchInPlace" -> "yamaYerinde",
     "padToInPlace" -> "uzatYerinde",
     "addAll" -> "ekleHepsini", // eski ad: hepsiniEkle (eskitildi)
-    "prepend" -> "başaEkle",
-    "prependAll" -> "başaEkleHepsini",
+    "prepend" -> "ekleBaşa", // eski ad: başaEkle (eskitildi)
+    "prependAll" -> "ekleBaşaHepsini", // eski ad: başaEkleHepsini (eskitildi)
     "insert" -> "ekleAraya", // eski ad: araEkle (eskitildi)
     "insertAll" -> "ekleArayaHepsini",
     "removeAll" -> "alHepsini",
@@ -243,6 +243,20 @@ object dict {
     "removeLastOption" -> "sondanÇıkarBelki",
     "front" -> "ilki",
     "toQueue" -> "kuyruğa",
+    // İkisindenBiri (bkz. i18n/tr/ikisindenbiri.scala)
+    "isLeft" -> "solMu",
+    "isRight" -> "sağMı",
+    "swap" -> "takasla",
+    "merge" -> "birleştir",
+    "toOption" -> "belkiye",
+    "cond" -> "koşulla",
+    // Yineleyici (bkz. i18n/tr/yineleyici.scala)
+    "hasNext" -> "dahaVarMı",
+    "next" -> "sıradaki",
+    "nextOption" -> "sıradakiBelki",
+    "buffered" -> "bellekli",
+    "duplicate" -> "ikizYap",
+    "sameElements" -> "gösterdikleriAynıMı",
     "dequeueAll" -> "baştanAlHepsini",
     // Yığın (Stack) -- it/koy ve çek/al ikili adlarında sözlüğe İLK ad giriyor
     "push" -> "it",
@@ -518,6 +532,9 @@ object dict {
     "Yazı" -> "String",
     "EsnekYazı" -> "StringBuilder",
     "Belki" -> "Option",
+    "İkisindenBiri" -> "Either. Ya soldaki değer ya sağdaki; sağ taraf işin yolunda gittiği taraftır",
+    "Sol" -> "Left",
+    "Sağ" -> "Right",
     "Biri" -> "Some",
     "Hiçbiri" -> "None",
     "Aralık" -> "Range",

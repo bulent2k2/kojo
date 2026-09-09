@@ -24,7 +24,11 @@ trait SeqMethodsInTurkish {
   type SıralıDizi[T] = IndexedSeq[T]
 
   object Dizi {
-    def apply[B](ögeler: B*): Dizi[B] = Seq.from(ögeler)
+    // Seq.from(ögeler) idi: varargs zaten bir ArraySeq olduğu için onu OLDUĞU GİBİ
+    // döndürüyordu, yani Dizi(1,2,3) çıktıda DizikDizisi(1, 2, 3) görünüyordu.
+    // Scala'nın kendi Seq(1,2,3)'ü List veriyor; artık biz de öyle. Eşitlik değişmedi.
+    def apply[B](ögeler: B*): Dizi[B] = Seq(ögeler: _*)
+    def boş[B]: Dizi[B] = Seq.empty[B]
     def unapplySeq[B](dizi: Dizi[B]) = Seq.unapplySeq(dizi)
     def doldur[B](n1: Sayı)(f: Sayı => B) = Seq.tabulate(n1)(f)
     def doldur[B](n1: Sayı, n2: Sayı)(f: (Sayı, Sayı) => B) = Seq.tabulate(n1, n2)(f)
@@ -36,7 +40,9 @@ trait SeqMethodsInTurkish {
 
   // collection.Seq[B]
   object Diz {
-    def apply[B](ögeler: B*): Diz[B] = collection.Seq.from(ögeler)
+    // collection.Seq.from(ögeler) idi -- Dizi ile aynı ArraySeq sorunu.
+    def apply[B](ögeler: B*): Diz[B] = collection.Seq(ögeler: _*)
+    def boş[B]: Diz[B] = collection.Seq.empty[B]
     def unapplySeq[B](dizi: Diz[B]) = collection.Seq.unapplySeq(dizi)
     def doldur[B](n1: Sayı)(f: Sayı => B) = collection.Seq.tabulate(n1)(f)
   }
@@ -90,6 +96,9 @@ trait SeqMethodsInTurkish {
     def sırasıSondan[S >: T](öge: S): Sayı = d.lastIndexOf(öge)
     def sırasıSondan[S >: T](öge: S, sonNokta: Sayı): Sayı = d.lastIndexOf(öge, sonNokta)
 
+    // Yineleyici'ye giriş: sözlükte iterator -> yineleyici yazıyordu ama
+    // hiçbir yerde açılmamıştı (bkz. yineleyici.scala)
+    def yineleyici: Yineleyici[T] = d.iterator
     def dizine = d.toList
     def diziye = d.toSeq
     def kümeye = d.toSet
@@ -521,13 +530,9 @@ trait SeqMethodsInTurkish {
     // more to come
   }
 
-  // Needed for tangle++ (tangle-trk.kojo in kojo-denemeler) due to call to Set.subsets
-  implicit class IteratorMethods[T](d: Yineleyici[T]) { // T is a Collection
-    type Col = Yineleyici[T]
-    type C2[A] = Yineleyici[A]
-
-    def işle[B](işlev: T => B): C2[B] = d.map(işlev)
-    def herbiriİçin[B](işlev: T => B): Birim = d.foreach(işlev)
-  }
+  // IteratorMethods buradaydı (yalnız işle ve herbiriİçin; tangle-trk.kojo için
+  // eklenmişti). yineleyici.scala'daki YineleyiciYöntem onun üst kümesi; ikisi
+  // birden dursaydı Yineleyici üzerinde işle/herbiriİçin çağrısı ÇİFT ÖRTÜK
+  // olurdu (ambiguous implicit). Bu yüzden burada tutulmuyor.
 
 }

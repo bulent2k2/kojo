@@ -641,7 +641,9 @@ import net.kogics.kojo.staging
     val o = new Object
     o.yazıya.boyu > 0 should be(true)
     val d = Dizi(1, 2)
-    d.yazıya should be("ArraySeq(1, 2)")
+    // Eskiden ArraySeq(1, 2) idi: Dizi.apply, Seq.from(varargs) ile varargs'ı
+    // olduğu gibi döndürüyordu. Artık Scala'nın Seq(1,2)'si gibi List veriyor.
+    d.yazıya should be("List(1, 2)")
     val d2 = Dizin(1, 2)
     d2.yazıya should be("List(1, 2)")
     val x = 5
@@ -756,6 +758,124 @@ import net.kogics.kojo.staging
     val q = Kuyruk(1, 2, 3)
     q.ekleAraya(1, 7); q.dizine should be(Dizin(1, 7, 2, 3))
     q.ekleHepsini(Dizi(5)); q.sonu should be(5)
+  }
+
+  test("Çıktı çevirisi: Belki ve İkisindenBiri Türkçe görünüyor, yanlış eşleşme yok") {
+    dez çevir = tr.translate.result _
+    // DEĞİŞMESİ gerekenler
+    çevir("Some(5)") should be("Biri(5)")
+    çevir("None") should be("Hiçbiri")
+    çevir("Left(1)") should be("Sol(1)")
+    çevir("Right(1)") should be("Sağ(1)")
+    çevir("= None") should be("= Hiçbiri")
+    // öğrencinin en sık gördüğü hatalardan biri
+    çevir("java.util.NoSuchElementException: None.get") should include("Hiçbiri.get")
+    çevir("Some(None)") should be("Biri(Hiçbiri)")
+
+    // DEĞİŞMEMESİ gerekenler -- sözcük sınırı ve ayraç bu yüzden var
+    çevir("Nonetheless") should be("Nonetheless")
+    çevir("NoneOfThese") should be("NoneOfThese")
+    çevir("someEffect") should be("someEffect")   // birEfekt'in İngilizcesi
+    çevir("Somewhere") should be("Somewhere")
+    // Açılış ayracı SAĞ sınırı veriyor ama SOL sınırı vermiyor: bunlar düz
+    // replace olduğu sürece originTopLeft(3) -> originTopSol(3) oluyordu.
+    çevir("originTopLeft(3)") should be("originTopLeft(3)")
+    çevir("alignRight(2)") should be("alignRight(2)")
+    çevir("handSome(5)") should be("handSome(5)")
+    çevir("MyOption[Int]") should startWith("MyOption[")
+    // ama sözcük başındaysa yine çevriliyor
+    çevir("(Left(1), Some(2))") should be("(Sol(1), Biri(2))")
+
+    // tür bilgisinde de Belki görünsün
+    tr.translate.typeInfo("Option[Int]") should include("Belki[")
+  }
+
+  test("İkisindenBiri: Either'ın Türkçesi") {
+    // bölİşle bunu istiyordu; Türkçesi olmadığı için belgelenemiyordu
+    Dizin(1, 2, 3, 4).bölİşle(x => eğer (x % 2 == 0) Sağ(x * 10) yoksa Sol(x)) should be(
+      (Dizin(1, 3), Dizin(20, 40))
+    )
+    val sol: İkisindenBiri[Yazı, Sayı] = Sol("hata")
+    val sağ: İkisindenBiri[Yazı, Sayı] = Sağ(5)
+    sol.solMu should be(doğru); sol.sağMı should be(yanlış)
+    sağ.sağMı should be(doğru)
+    // sağ taraf işin yolunda gittiği taraf: işle/alYoksa hep sağa bakar
+    sağ.işle(_ * 2) should be(Sağ(10))
+    sol.işle(_ * 2) should be(Sol("hata")) // sol tarafa dokunmaz
+    sağ.alYoksa(0) should be(5)
+    sol.alYoksa(0) should be(0)
+    sağ.belkiye should be(Biri(5))
+    sol.belkiye should be(Hiçbiri)
+    sağ.varMı(_ > 1) should be(doğru)
+    sağ.içeriyorMu(5) should be(doğru)
+    sağ.takasla should be(Sol(5))
+    sağ.diziye should be(Dizi(5))
+    // katla: hangi taraftaysa ona uygun işlev (Either'ın tek fold'u budur)
+    sol.katla(h => s"yanlış gitti: $h", d => s"değer: $d") should be("yanlış gitti: hata")
+    sağ.katla(h => s"yanlış gitti: $h", d => s"değer: $d") should be("değer: 5")
+    // birleştir: iki taraf aynı türdeyse hangisiyse o
+    val ikisiDeYazı: İkisindenBiri[Yazı, Yazı] = Sol("soldaki")
+    ikisiDeYazı.birleştir should be("soldaki")
+    İkisindenBiri.koşulla(3 > 2, "oldu", "olmadı") should be(Sağ("oldu"))
+    İkisindenBiri.koşulla(2 > 3, "oldu", "olmadı") should be(Sol("olmadı"))
+    // çıktı penceresinde Türkçe görünüyor mu
+    tr.translate.result("Left(1)") should be("Sol(1)")
+    tr.translate.result("Right(1)") should be("Sağ(1)")
+  }
+
+  test("Yineleyici: Iterator'ın Türkçesi") {
+    // öbekli/kayarÖbekli/kombinasyonlar hep Yineleyici veriyordu; Türkçesi
+    // olmadığı için öğrenci tam orada toList yazmak zorunda kalıyordu.
+    Dizi(1, 2, 3, 4).öbekli(2).dizine should be(Dizin(Dizi(1, 2), Dizi(3, 4)))
+    Dizi(1, 2, 3).kayarÖbekli(2).dizine should be(Dizin(Dizi(1, 2), Dizi(2, 3)))
+    Dizi(1, 2, 3).kombinasyonlar(2).dizine.boyu should be(3)
+
+    // çekirdek: elle gezmek
+    val y = Dizi(1, 2, 3).yineleyici
+    y.dahaVarMı should be(doğru)
+    y.sıradaki should be(1)
+    y.dizine should be(Dizin(2, 3)) // tükettiğimiz öge geri gelmiyor
+    y.dahaVarMı should be(yanlış)
+
+    // dönüştürme ve indirgeme
+    Dizi(1, 2, 3).yineleyici.işle(_ * 2).dizine should be(Dizin(2, 4, 6))
+    Dizi(1, 2, 3).yineleyici.ele(_ > 1).diziye should be(Dizi(2, 3))
+    Dizi(1, 2, 3).yineleyici.topla should be(6)
+    Dizi(1, 2, 3).yineleyici.enİrisi should be(3)
+    Dizi(1, 2, 3).yineleyici.katla(10)(_ + _) should be(16)
+    Dizi(1, 2, 3).yineleyici.bul(_ > 1) should be(Biri(2))
+    Dizi(1, 2, 3).yineleyici.say(_ > 1) should be(2)
+    Dizi(1, 2).yineleyici.yazıYap("-") should be("1-2")
+    Dizi(1, 2).yineleyici.kümeye should be(Küme(1, 2))
+    Dizi(1, 2).yineleyici.yöneye should be(Yöney(1, 2))
+    Dizi(1, 2).yineleyici.ikileSırayla.dizine should be(Dizin((1, 0), (2, 1)))
+
+    // ikizYap: aynı ögeleri gezen iki yineleyici
+    val (a, b) = Dizi(1, 2, 3).yineleyici.ikizYap
+    a.dizine should be(Dizin(1, 2, 3))
+    b.dizine should be(Dizin(1, 2, 3))
+
+    // bellekli: tüketmeden önden bakmak
+    val bi = Dizi(1, 2, 3).yineleyici.bellekli
+    bi.head should be(1)
+    bi.dizine should be(Dizin(1, 2, 3)) // başı okumak ilerletmedi
+
+    Dizi(1, 2).yineleyici.gösterdikleriAynıMı(Dizi(1, 2)) should be(doğru)
+    Dizi(1, 2).yineleyici.gösterdikleriAynıMı(Dizi(2, 1)) should be(yanlış)
+  }
+
+  test("Dizi/Diz: Scala'nın Seq'i gibi davranıyor, boş kurucusu var") {
+    // Dizi.apply Seq.from(varargs) kullanıyordu; varargs zaten ArraySeq olduğu
+    // için onu olduğu gibi döndürüyor, çıktıda DizikDizisi(...) görünüyordu.
+    Dizi(1, 2, 3).toString should be("List(1, 2, 3)")
+    Diz(1, 2, 3).toString should be("List(1, 2, 3)")
+    Seq(1, 2, 3).toString should be(Dizi(1, 2, 3).toString) // Scala ile aynı
+    Dizi(1, 2, 3) should be(Dizin(1, 2, 3))                 // eşitlik değişmedi
+    // boş kurucusu: Küme.boş ve Yöney.boş vardı, dizilerde yoktu
+    Dizi.boş[Sayı].boyu should be(0)
+    Diz.boş[Sayı].boyu should be(0)
+    Dizin.boş[Sayı].boyu should be(0)
+    (Dizi.boş[Sayı] :+ 1) should be(Dizi(1))
   }
 
   test("Eşlek/Eşlem: enUfağı/enİrisi işlevli biçim ve karşılıklıMı") {
@@ -1066,14 +1186,18 @@ import net.kogics.kojo.staging
     e.eleYerinde(_ > 1) should be(EsnekDizik(3, 2)); e should be(EsnekDizik(3, 2))
     e.işleYerinde(_ * 10) should be(EsnekDizik(30, 20)); e should be(EsnekDizik(30, 20))
     e.sıralıYerinde should be(EsnekDizik(20, 30)); e should be(EsnekDizik(20, 30))
-    e.başaEkle(5); e should be(EsnekDizik(5, 20, 30))
-    e.araEkle(1, 7); e should be(EsnekDizik(5, 7, 20, 30))
-    e.hepsiniEkle(Dizi(40, 50)); e should be(EsnekDizik(5, 7, 20, 30, 40, 50))
+    e.ekleBaşa(5); e should be(EsnekDizik(5, 20, 30))
+    e.ekleAraya(1, 7); e should be(EsnekDizik(5, 7, 20, 30))
+    e.ekleHepsini(Dizi(40, 50)); e should be(EsnekDizik(5, 7, 20, 30, 40, 50))
     e.çıkar(0, 2); e should be(EsnekDizik(20, 30, 40, 50))
     e.baştanKırp(1); e should be(EsnekDizik(30, 40, 50))
     e.sondanKırp(1); e should be(EsnekDizik(30, 40))
     e.alYerinde(1) should be(EsnekDizik(30))
     val kopya = e.kopyası; kopya.boşalt(); kopya.boşMu should be(doğru); e.boşMu should be(yanlış)
+    // eskitilmiş adlar hâlâ aynı işi görüyor (eski betikler kırılmasın)
+    val eskiAd = EsnekDizik(20, 30)
+    eskiAd.başaEkle(5); eskiAd.araEkle(1, 7); eskiAd.hepsiniEkle(Dizi(40))
+    eskiAd should be(EsnekDizik(5, 7, 20, 30, 40))
 
     val ku = Kuyruk(1, 2)
     ku.kuyruğaEkle(3) should be(Kuyruk(1, 2, 3))
@@ -1122,7 +1246,7 @@ import net.kogics.kojo.staging
     ö.seçİşle { durum x eğer x > 1 => x * 10 }.sıralı should be(Dizi(20, 30))
     ö.kuyruğa.boyu should be(3)
     ö.işleYerinde(_ * 10); ö.başı should be(30)
-    ö.hepsiniEkle(Dizi(100)); ö.başı should be(100)
+    ö.ekleHepsini(Dizi(100)); ö.başı should be(100)
   }
 
   test("Aralık gösterimi: çıktı paneli metni de yazıya ile aynı biçimde") {
@@ -1186,7 +1310,7 @@ import net.kogics.kojo.staging
     // tampon tarafı
     ey.harf(0) should be('m')
     ey.parçası(0, 3) should be("mer")
-    ey.araEkle(0, "Ey "); ey.yazıya should be("Ey merhaba")
+    ey.ekleAraya(0, "Ey "); ey.yazıya should be("Ey merhaba")
     ey.aralığıSil(0, 3); ey.yazıya should be("merhaba")
     ey.harfiSil(0); ey.yazıya should be("erhaba")
     ey.harfiKur(0, 'M'); ey.yazıya should be("Mrhaba")   // 'e' yerine 'M'

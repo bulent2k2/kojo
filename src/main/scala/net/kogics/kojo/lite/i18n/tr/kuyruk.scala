@@ -104,6 +104,7 @@ trait QueueMethodsInTurkish {
   type ÖncelikSırası[T] = PriorityQueue[T]
   object ÖncelikSırası {
     def apply[T](elems: T*)(implicit sıralama: Ordering[T]): ÖncelikSırası[T] = PriorityQueue.from(elems)(sıralama)
+    def boş[T](implicit sıralama: Ordering[T]): ÖncelikSırası[T] = PriorityQueue.empty[T](sıralama)
   }
 
   implicit class mutPriQueMethods[T](d: PriorityQueue[T]) {
@@ -116,7 +117,7 @@ trait QueueMethodsInTurkish {
     def ekle(öge: T) = d.addOne(öge)
     def ekle(ögeler: T*) = d.enqueue(ögeler: _*)
     def baştanAl(): T = d.dequeue()
-    def baştanAlHepsini[T2 >: T]: Dizi[T2] = d.dequeueAll
+    def baştanAlHepsini[T2 >: T]: Dizi[T2] = d.dequeueAll.toList // ArraySeq veriyordu: çıktıda DizikDizisi görünüyordu
     def sil(): Birim = d.clear()
     def ikizle(): Col = d.clone()
 
@@ -219,13 +220,16 @@ trait QueueMethodsInTurkish {
 
     // --- YERİNDE değiştirenler -------------------------------------------
     def işleYerinde(işlev: T => T): Col = { d.mapInPlace(işlev); d }
-    def hepsiniEkle(ögeler: YinelenebilirBirKere[T]): Col = { d.addAll(ögeler); d }
+    def ekleHepsini(ögeler: YinelenebilirBirKere[T]): Col = { d.addAll(ögeler); d }
+    @deprecated("eylemle başlayan ada geçildi: ekleHepsini kullanın", "Eylül 2026")
+    def hepsiniEkle(ögeler: YinelenebilirBirKere[T]): Col = ekleHepsini(ögeler)
     def kuyruğa: Kuyruk[T] = d.toQueue
 }
 
   type Kuyruk[T] = Queue[T]
   object Kuyruk {
     def apply[T](elems: T*): Kuyruk[T] = Queue.from(elems)
+    def boş[T]: Kuyruk[T] = Queue.empty[T] // Yığın.boş vardı, bunda yoktu
   }
   implicit class mutQueueMethods[T](d: Queue[T]) {
     type Belki[B] = Option[B]
@@ -237,7 +241,7 @@ trait QueueMethodsInTurkish {
     def ekle(öge: T) = d.addOne(öge)
     def ekleHepsini(ögeler: Dizi[T]): Col = d.enqueueAll(ögeler)
     def baştanAl(): T = d.dequeue()
-    def baştanAlHepsini(deneme: (T) => Boolean): Dizi[T] = d.dequeueAll(deneme)
+    def baştanAlHepsini(deneme: (T) => Boolean): Dizi[T] = d.dequeueAll(deneme).toList
     def sil(): Birim = d.clear()
     def ikizle(): Col = d.clone()
 

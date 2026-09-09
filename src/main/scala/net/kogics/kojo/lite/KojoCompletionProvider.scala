@@ -127,10 +127,17 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     }
     lazy val qualifiedName = s"${ownerName}.${completion.name}"
 
-    def knownCompletion = knownOwners contains ownerName
+    // Türkçe yerelde tr destesinin üyeleri de "bilinen" sayılır (bkz. i18n/tr/package.scala)
+    def türkçeSahip = net.kogics.kojo.lite.i18n.tr.türkçeSahipMi(completion.owner)
 
+    def knownCompletion = (knownOwners contains ownerName) || türkçeSahip
+
+    // specialOwner: yardım/şablon araması nitelikli ad tutmayınca SADE ada da baksın.
+    // Türkçe için şart: help.scala'daki "katla" girdisi Dizi'de de Küme'de de
+    // aynı metni versin diye anahtarlar sade adlar.
     def specialOwner =
-      ownerName.startsWith("Turtle") || ownerName.startsWith("VertexShapeSupport") || ownerName.startsWith("TurkishAPI")
+      ownerName.startsWith("Turtle") || ownerName.startsWith("VertexShapeSupport") ||
+        ownerName.startsWith("TurkishAPI") || türkçeSahip
 
     def knownMethodTemplate: Option[String] = {
       //      println(s"owner for ${completion.name} -- ${completion.owner}")

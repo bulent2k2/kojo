@@ -59,6 +59,8 @@ object TurkishAPI
     with tr.TakvimVeZamanYöntemleri
     with tr.TuvalÇizimYöntemleri
     with tr.TürÇevirileri
+    with tr.YineleyiciYöntemleri
+    with tr.İkisindenBiriYöntemleri
     with tr.UrlInTurkish
     with tr.VectorMethodsInTurkish {
 

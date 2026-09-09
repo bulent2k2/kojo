@@ -356,11 +356,21 @@ trait EsnekDizikYöntemleri {
     def uzatYerinde(boy: Sayı, öge: T): Col = { d.padToInPlace(boy, öge); d }
 
     // --- ekleme / çıkarma (hepsi yerinde) --------------------------------
-    def hepsiniEkle(ögeler: YinelenebilirBirKere[T]): Col = { d.addAll(ögeler); d }
-    def başaEkle(öge: T): Col = { d.prepend(öge); d }
-    def başaEkleHepsini(ögeler: YinelenebilirBirKere[T]): Col = { d.prependAll(ögeler); d }
-    def araEkle(yeri: Sayı, öge: T): Birim = d.insert(yeri, öge)
-    def araEkleHepsini(yeri: Sayı, ögeler: YinelenebilirBirKere[T]): Birim = d.insertAll(yeri, ögeler)
+    def ekleHepsini(ögeler: YinelenebilirBirKere[T]): Col = { d.addAll(ögeler); d }
+    @deprecated("eylemle başlayan ada geçildi: ekleHepsini kullanın", "Eylül 2026")
+    def hepsiniEkle(ögeler: YinelenebilirBirKere[T]): Col = ekleHepsini(ögeler)
+    def ekleBaşa(öge: T): Col = { d.prepend(öge); d }
+    def ekleBaşaHepsini(ögeler: YinelenebilirBirKere[T]): Col = { d.prependAll(ögeler); d }
+    def ekleAraya(yeri: Sayı, öge: T): Birim = d.insert(yeri, öge)
+    def ekleArayaHepsini(yeri: Sayı, ögeler: YinelenebilirBirKere[T]): Birim = d.insertAll(yeri, ögeler)
+    @deprecated("eylemle başlayan ada geçildi: ekleBaşa kullanın", "Eylül 2026")
+    def başaEkle(öge: T): Col = ekleBaşa(öge)
+    @deprecated("eylemle başlayan ada geçildi: ekleBaşaHepsini kullanın", "Eylül 2026")
+    def başaEkleHepsini(ögeler: YinelenebilirBirKere[T]): Col = ekleBaşaHepsini(ögeler)
+    @deprecated("eylemle başlayan ada geçildi: ekleAraya kullanın", "Eylül 2026")
+    def araEkle(yeri: Sayı, öge: T): Birim = ekleAraya(yeri, öge)
+    @deprecated("eylemle başlayan ada geçildi: ekleArayaHepsini kullanın", "Eylül 2026")
+    def araEkleHepsini(yeri: Sayı, ögeler: YinelenebilirBirKere[T]): Birim = ekleArayaHepsini(yeri, ögeler)
     def çıkar(yeri: Sayı, kaçTane: Sayı): Birim = d.remove(yeri, kaçTane)
     def çıkarÖgeyi(öge: T): Col = { d.subtractOne(öge); d }
     def çıkarHepsini(ögeler: YinelenebilirBirKere[T]): Col = { d.subtractAll(ögeler); d }

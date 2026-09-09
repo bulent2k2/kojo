@@ -17,7 +17,7 @@
 package net.kogics.kojo.lite.i18n.tr
 
 object translate {
-  private def common(str: String) = { str
+  private def common(str: String) = { kutuları(str)
     // Aralık bir tür takma adı olduğu için toString ezilemiyor; Range'in
     // 2.13 gösterimi "Range 1 to 5 by 2" biçiminde. NumericRange önce
     // çevriliyor, yoksa "NumericAralık" gibi bir şey çıkardı.
@@ -146,6 +146,29 @@ object translate {
     .replace("why the feature needs to be explicitly enabled.", "https://stackoverflow.com/questions/13011204/scalas-postfix-ops")
   }
 
+  // Çıplak None -> Hiçbiri. Düz replace OLMAZ: "Nonetheless" ya da bir
+  // betikteki NoneOfThese gibi sözcüklerin içini de bozardı. Sözcük sınırı
+  // (\b) ile eşliyoruz; "None.get" ve "= None" yakalanıyor çünkü nokta ve
+  // boşluk sınır sayılıyor.
+  private val çıplakNone = """\bNone\b""".r
+
+  // Left( / Right( / Some( / Option[ de aynı özeni istiyor. Bunlar eskiden düz
+  // replace'ti; açılış ayracı SAĞ sınırı veriyor ama SOL sınırı VERMİYOR, yani
+  // öğrencinin kodundaki originTopLeft(3) -> originTopSol(3), handSome(5) ->
+  // handBiri(5) oluyordu. Ölçüldü. Artık None ile aynı sözcük sınırı kuralı.
+  private val kutuAdları = """\b(?:Left\(|Right\(|Some\(|Option\[)""".r
+  private val kutuKarşılığı =
+    Map("Left(" -> "Sol(", "Right(" -> "Sağ(", "Some(" -> "Biri(", "Option[" -> "Belki[")
+
+  /** common'un ilk adımı: Sol/Sağ/Biri/Belki. typeInfo da common'dan geçtiği
+    * için tür imzalarında da çalışıyor -- bunları common'dan çıkarmak
+    * "Option[Int]" ipucunu İngilizce bırakıyordu. */
+  private def kutuları(str: String) =
+    if (!str.contains("Left(") && !str.contains("Right(") &&
+        !str.contains("Some(") && !str.contains("Option[")) str
+    else
+      kutuAdları.replaceAllIn(str, m => java.util.regex.Matcher.quoteReplacement(kutuKarşılığı(m.matched)))
+
   /**
    * 2.13'ün Range gösterimini öğrenci dostu Türkçe biçime çevirir.
    *
@@ -169,7 +192,7 @@ object translate {
   private val aralıkKalıbı =
     raw"(?<![A-Za-z])(?:empty |inexact )?Range (-?\d+) (to|until) (-?\d+)(?: by (-?\d+))?".r
 
-  def regexpChanges(str: String) = {
+  private def aralığıÇevir(str: String) = {
     if (!str.contains("Range ")) str
     else
       aralıkKalıbı.replaceAllIn(
@@ -194,6 +217,10 @@ object translate {
         }
       )
   }
+
+  // İki düzenli deyiş de uygulanıyor: aralık gösterimi ile çıplak None
+  // birbirinden bağımsız -- biri ötekinin çıktısında yeni eşleşme üretmiyor.
+  def regexpChanges(str: String) = çıplakNone.replaceAllIn(aralığıÇevir(str), "Hiçbiri")
 
   def result(str: String) = { common(beforeCommon(regexpChanges(str)))
     .replace("expected class or object definition", "gereken sınıf ya da nesne tanımı bulunamadı")
