@@ -281,17 +281,25 @@ class KoleksiyonYardımıTest {
     "dizin.scala:ParListYöntemler"
   )
 
-  // `final` hem implicit'ten ÖNCE hem SONRA yazılabiliyor (Scala ikisini de
-  // kabul ediyor). Yalnız önekli biçim aranırsa `implicit final class Foo` iki
-  // kalıptan da kaçar: yöntemleri bir önceki sahibe yazılır (case class
-  // hatasının aynısı) VE sınıflandırılmamış diye bildirilmez -- yani savın
-  // önlemek için var olduğu sessizliğin ta kendisi. İkisi de sınanıyor
+  // Scala değiştiricileri SIRASIZ kabul ediyor: `implicit final class`,
+  // `implicit private class`, `private implicit class`... hepsi geçerli. Bir
+  // sıralamayı kalıba gömmek her seferinde bir kip dışarıda bırakıyordu ve
+  // kaçan satır çift kayıp veriyor: yöntemleri bir önceki sahibe yazılıyor
+  // (case class hatasının aynısı) VE herÖrtükSınıfSınıflandırılmış onu
+  // bildirmiyor -- yani savın önlemek için var olduğu sessizliğin ta kendisi.
+  //
+  // O yüzden sıralama hiç sayılmıyor: değiştirici dizisi TEK GRUP olarak
+  // yakalanıp `implicit` içinde aranıyor. Böylece yarın listeye bir
+  // değiştirici eklense bile aynı tuzak kurulamıyor. `private[paket]` gibi
+  // nitelikli biçimler de kapsanıyor. Altı yazım da sınanıyor
   // (kalıplarKipleriTanıyor).
-  private val örtükSınıfBaşı =
-    """^\s*(?:(?:final|private|protected)\s+)*implicit\s+(?:final\s+)?class\s+([^\s\[(]+)""".r
-
+  private val değiştirici = """(?:case|final|sealed|abstract|implicit|(?:private|protected)(?:\[[^\]]+\])?)"""
   private val sınıfBaşı =
-    """^\s*(?:(?:case|final|sealed|abstract|private|protected)\s+)*(?:implicit\s+(?:final\s+)?class|trait|object|class)\s+([^\s\[(]+)""".r
+    s"""^\\s*((?:$değiştirici\\s+)*)(?:class|trait|object)\\s+([^\\s\\[(]+)""".r
+
+  /** Yakalanan değiştirici dizisinde `implicit` var mı. */
+  private def örtükMü(değiştiriciler: String): Boolean =
+    değiştiriciler.split("\\s+").contains("implicit")
   private val yöntemBaşı =
     """^\s*(?:@deprecated\S*\s*)?(?:final\s+)?def\s+([A-Za-zÇĞİIÖŞÜçğıöşü0-9_]+)""".r
 
@@ -312,10 +320,10 @@ class KoleksiyonYardımıTest {
       val kaynak = scala.io.Source.fromFile(dosya, "UTF-8")
       try kaynak.getLines().foreach { satır =>
         sınıfBaşı.findFirstMatchIn(satır).foreach { m =>
-          sahip = dosya.getName + ":" + m.group(1)
+          sahip = dosya.getName + ":" + m.group(2)
           bütün += sahip
+          if (örtükMü(m.group(1))) örtükler += sahip
         }
-        örtükSınıfBaşı.findFirstMatchIn(satır).foreach(m => örtükler += dosya.getName + ":" + m.group(1))
         yöntemBaşı.findFirstMatchIn(satır).foreach { m =>
           sınıfTürü.get(sahip).foreach(ad => ham(m.group(1)) = ham(m.group(1)) + ad)
         }
@@ -337,28 +345,42 @@ class KoleksiyonYardımıTest {
 
   @Test
   def kalıplarKipleriTanıyor(): Unit = {
-    // İki kalıp da kaynağı SATIR SATIR tarıyor; tanımadıkları bir yazım biçimi
-    // hata vermiyor, sessizce atlanıyor. O yüzden Scala'nın kabul ettiği
-    // sıralamalar burada tek tek çivili -- özellikle `implicit final class`,
-    // ki eskiden ikisinden de kaçıyordu.
+    // Kalıp kaynağı SATIR SATIR tarıyor; tanımadığı bir yazım biçimi hata
+    // vermiyor, sessizce atlanıyor. Scala değiştiricileri sırasız kabul
+    // ettiği için burada BÜTÜN sıralamalar çivili -- bir sıralamayı kalıba
+    // gömme denemesi iki kez ard arda bir kipi dışarıda bıraktı.
     val örtükOlanlar = List(
       "  implicit class Foo[T](x: T) {",
       "  implicit final class Foo[T](x: T) {",
       "  final implicit class Foo[T](x: T) {",
-      "  private implicit class Foo[T](x: T) {"
+      "  implicit private class Foo[T](x: T) {",
+      "  private implicit class Foo[T](x: T) {",
+      "  implicit private final class Foo[T](x: T) {",
+      "  private[i18n] implicit class Foo[T](x: T) {"
     )
     örtükOlanlar.foreach { satır =>
-      assertEquals(s"örtükSınıfBaşı tanımadı: $satır", Some("Foo"),
-        örtükSınıfBaşı.findFirstMatchIn(satır).map(_.group(1)))
-      assertEquals(s"sınıfBaşı tanımadı: $satır", Some("Foo"),
-        sınıfBaşı.findFirstMatchIn(satır).map(_.group(1)))
+      val m = sınıfBaşı.findFirstMatchIn(satır)
+      assertEquals(s"sınıfBaşı tanımadı: $satır", Some("Foo"), m.map(_.group(2)))
+      assertTrue(s"örtük sayılmadı: $satır", m.exists(x => örtükMü(x.group(1))))
     }
 
-    // Örtük OLMAYAN sahipler: sınıfBaşı görmeli, örtükSınıfBaşı görmemeli.
-    List("case class Eşlem[A, D](m: Map[A, D]) {", "object Eşlem {", "trait Foo {").foreach { satır =>
-      assertTrue(s"sınıfBaşı tanımadı: $satır", sınıfBaşı.findFirstMatchIn(satır).nonEmpty)
-      assertTrue(s"örtükSınıfBaşı yanlış eşleşti: $satır", örtükSınıfBaşı.findFirstMatchIn(satır).isEmpty)
+    // Örtük OLMAYAN sahipler: sınıfBaşı görmeli, ama örtük sayılmamalı.
+    List(
+      "case class Eşlem[A, D](m: Map[A, D]) {",
+      "object Eşlem {",
+      "trait Foo {",
+      "sealed abstract class Foo {",
+      "private class Foo {"
+    ).foreach { satır =>
+      val m = sınıfBaşı.findFirstMatchIn(satır)
+      assertTrue(s"sınıfBaşı tanımadı: $satır", m.nonEmpty)
+      assertTrue(s"yanlışlıkla örtük sayıldı: $satır", !m.exists(x => örtükMü(x.group(1))))
     }
+
+    // Sahip OLMAYAN satırlar hiç eşleşmemeli -- `classOf` ve desen eşleme
+    // `class`/`case` sözcüklerini taşıyor ama sınıf başlığı değiller.
+    List("    val c = classOf[Int]", "      case c: PIXI.Container => c.children", "  // class Foo")
+      .foreach(satır => assertTrue(s"yanlış eşleşme: $satır", sınıfBaşı.findFirstMatchIn(satır).isEmpty))
   }
 
   @Test
