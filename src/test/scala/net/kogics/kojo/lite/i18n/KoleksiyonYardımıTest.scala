@@ -232,7 +232,12 @@ class KoleksiyonYardımıTest {
   // Yardım metnindeki "her toplulukta aynı" cümlesinin saydığı beşli
   private val beşli = List("Dizi", "Dizin", "Yöney", "Küme", "Kuyruk")
 
-  private val sınıfBaşı = """^\s*(?:implicit\s+class|trait|object|class)\s+([^\s\[(]+)""".r
+  // case/final/sealed/abstract önekleri de sayılmalı: `case class Eşlem` satırı
+  // eşleşmezse içindeki yöntemler bir ÖNCEKİ sahibe yazılıyordu. Masaüstünde
+  // companion object case class'tan önce geldiği için etiket tesadüfen doğru
+  // çıkıyordu; sıra ters olsaydı sessizce yanlış olurdu.
+  private val sınıfBaşı =
+    """^\s*(?:(?:case|final|sealed|abstract|private|protected)\s+)*(?:implicit\s+class|trait|object|class)\s+([^\s\[(]+)""".r
   private val yöntemBaşı =
     """^\s*(?:@deprecated\S*\s*)?(?:final\s+)?def\s+([A-Za-zÇĞİIÖŞÜçğıöşü0-9_]+)""".r
 
