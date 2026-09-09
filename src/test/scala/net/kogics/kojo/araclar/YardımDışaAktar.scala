@@ -55,14 +55,21 @@ object YardımDışaAktar {
 
   def json: String = {
     val koleksiyon = tr.help.koleksiyonYöntemleri.map {
-      case (ad, imza, açıklama, örnek, sonuç, _) =>
+      case (ad, imza, açıklama, örnek, sonuç, türler) =>
         // sil ve yazı gibi adlar hem elle yazılmış bir komutta hem burada var;
         // content onları BİRLEŞTİRİYOR. Yalnız yapılandırılmış alanları
         // yazsaydık kaplumbağa tarafı dışa aktarımda kaybolurdu.
         val birleşik = tr.help.content.get(ad).filter(_.contains("Bu ad başka bir türde de"))
         val ek = birleşik.map(h => s""","${"html"}":"${kaçır(h)}"""").getOrElse("")
+        // Yöntemin bulunduğu türler. Eskiden bu alan ATILIYORDU: masaüstündeki
+        // tamamlama yardımı türleri söylerken sözlük söylemiyordu (yalnız
+        // content'te birleşen iki girdinin gömülü html'inde görünüyordu).
+        // BOŞ alan "beşlinin hepsinde var" demek -- anlamlı, o yüzden boşken de
+        // yazılıyor; okuyan taraf ikisini ayırt edebilsin.
+        // NOT: `tür` yamalı derleyicide anahtar kelime (type) -- değişken adı olamaz.
+        val türAlanı = s""","${"türler"}":"${kaçır(türler)}""""
         s"""  "${kaçır(ad)}":{"tür":"yöntem",${alan("imza", imza)},${alan("açıklama", açıklama)},""" +
-          s"""${alan("örnek", örnek)},${alan("sonuç", sonuç)}$ek}"""
+          s"""${alan("örnek", örnek)},${alan("sonuç", sonuç)}${türAlanı}$ek}"""
     }
     val koleksiyonAdları = tr.help.koleksiyonYöntemleri.map(_._1).toSet
     val elle = tr.help.content.toList.sortBy(_._1).collect {

@@ -161,13 +161,13 @@ class KoleksiyonYardımıTest {
   // aynı" cümlesi 113 satırda yanlıştı). Burada tr/*.scala taranıp aynı liste
   // yeniden kuruluyor ve karşılaştırılıyor.
   //
-  // Tarama neden yeterli: sarmalayıcı örtükler sınıflar arasında KALITIM YOK --
+  // Tarama neden yeterli: sarmalayıcı örtük sınıflar arasında KALITIM YOK --
   // her tür kendi yöntemlerini ayrı ayrı sayıyor (tasarım gereği) -- yani
   // dosyalardaki `def` satırları sahipleri tam veriyor.
 
   private val trDizini = "src/main/scala/net/kogics/kojo/lite/i18n/tr"
 
-  // örtükler sınıf -> öğrencinin gördüğü tür adı. Burada olmayan sınıflar (iç
+  // örtük sınıf -> öğrencinin gördüğü tür adı. Burada olmayan sınıflar (iç
   // yardımcılar) türe sayılmıyor.
   private val sınıfTürü = Map(
     "dizi.scala:colSeqYöntemleri" -> "Diz",
@@ -240,8 +240,8 @@ class KoleksiyonYardımıTest {
   // eşleşmezse içindeki yöntemler bir ÖNCEKİ sahibe yazılıyordu. Masaüstünde
   // companion object case class'tan önce geldiği için etiket tesadüfen doğru
   // çıkıyordu; sıra ters olsaydı sessizce yanlış olurdu.
-  // Koleksiyon SAYILMAYAN örtükler sınıflar. Bu küme ile sınıfTürü birlikte
-  // tr/*.scala'daki BÜTÜN örtükler sınıfları kapsamak zorunda (aşağıdaki sav).
+  // Koleksiyon SAYILMAYAN örtük sınıflar. Bu küme ile sınıfTürü birlikte
+  // tr/*.scala'daki BÜTÜN örtük sınıfları kapsamak zorunda (aşağıdaki sav).
   //
   // Neden gerekli: türetim sınıfTürü'nden besleniyor, ve bir sarmalayıcı
   // haritada yoksa hem tablo hem türetim birlikte eksiliyordu -- yani test
@@ -281,11 +281,17 @@ class KoleksiyonYardımıTest {
     "dizin.scala:ParListYöntemler"
   )
 
+  // `final` hem implicit'ten ÖNCE hem SONRA yazılabiliyor (Scala ikisini de
+  // kabul ediyor). Yalnız önekli biçim aranırsa `implicit final class Foo` iki
+  // kalıptan da kaçar: yöntemleri bir önceki sahibe yazılır (case class
+  // hatasının aynısı) VE sınıflandırılmamış diye bildirilmez -- yani savın
+  // önlemek için var olduğu sessizliğin ta kendisi. İkisi de sınanıyor
+  // (kalıplarKipleriTanıyor).
   private val örtükSınıfBaşı =
-    """^\s*(?:(?:final|private|protected)\s+)*implicit\s+class\s+([^\s\[(]+)""".r
+    """^\s*(?:(?:final|private|protected)\s+)*implicit\s+(?:final\s+)?class\s+([^\s\[(]+)""".r
 
   private val sınıfBaşı =
-    """^\s*(?:(?:case|final|sealed|abstract|private|protected)\s+)*(?:implicit\s+class|trait|object|class)\s+([^\s\[(]+)""".r
+    """^\s*(?:(?:case|final|sealed|abstract|private|protected)\s+)*(?:implicit\s+(?:final\s+)?class|trait|object|class)\s+([^\s\[(]+)""".r
   private val yöntemBaşı =
     """^\s*(?:@deprecated\S*\s*)?(?:final\s+)?def\s+([A-Za-zÇĞİIÖŞÜçğıöşü0-9_]+)""".r
 
@@ -330,10 +336,36 @@ class KoleksiyonYardımıTest {
   }
 
   @Test
+  def kalıplarKipleriTanıyor(): Unit = {
+    // İki kalıp da kaynağı SATIR SATIR tarıyor; tanımadıkları bir yazım biçimi
+    // hata vermiyor, sessizce atlanıyor. O yüzden Scala'nın kabul ettiği
+    // sıralamalar burada tek tek çivili -- özellikle `implicit final class`,
+    // ki eskiden ikisinden de kaçıyordu.
+    val örtükOlanlar = List(
+      "  implicit class Foo[T](x: T) {",
+      "  implicit final class Foo[T](x: T) {",
+      "  final implicit class Foo[T](x: T) {",
+      "  private implicit class Foo[T](x: T) {"
+    )
+    örtükOlanlar.foreach { satır =>
+      assertEquals(s"örtükSınıfBaşı tanımadı: $satır", Some("Foo"),
+        örtükSınıfBaşı.findFirstMatchIn(satır).map(_.group(1)))
+      assertEquals(s"sınıfBaşı tanımadı: $satır", Some("Foo"),
+        sınıfBaşı.findFirstMatchIn(satır).map(_.group(1)))
+    }
+
+    // Örtük OLMAYAN sahipler: sınıfBaşı görmeli, örtükSınıfBaşı görmemeli.
+    List("case class Eşlem[A, D](m: Map[A, D]) {", "object Eşlem {", "trait Foo {").foreach { satır =>
+      assertTrue(s"sınıfBaşı tanımadı: $satır", sınıfBaşı.findFirstMatchIn(satır).nonEmpty)
+      assertTrue(s"örtükSınıfBaşı yanlış eşleşti: $satır", örtükSınıfBaşı.findFirstMatchIn(satır).isEmpty)
+    }
+  }
+
+  @Test
   def herÖrtükSınıfSınıflandırılmış(): Unit = {
     val sınıflandırılmamış = (tarama._2 -- sınıfTürü.keys -- türeSayılmayanlar).toList.sorted
     assertTrue(
-      s"${sınıflandırılmamış.size} örtükler sınıf ne sınıfTürü'nde ne türeSayılmayanlar'da:\n" +
+      s"${sınıflandırılmamış.size} örtük sınıf ne sınıfTürü'nde ne türeSayılmayanlar'da:\n" +
         sınıflandırılmamış.mkString("\n") +
         "\n(Koleksiyon türüyse sınıfTürü'ne, değilse türeSayılmayanlar'a ekleyin.)",
       sınıflandırılmamış.isEmpty
