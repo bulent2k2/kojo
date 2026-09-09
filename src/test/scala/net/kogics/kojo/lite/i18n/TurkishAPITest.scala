@@ -777,6 +777,14 @@ import net.kogics.kojo.staging
     çevir("NoneOfThese") should be("NoneOfThese")
     çevir("someEffect") should be("someEffect")   // birEfekt'in İngilizcesi
     çevir("Somewhere") should be("Somewhere")
+    // Açılış ayracı SAĞ sınırı veriyor ama SOL sınırı vermiyor: bunlar düz
+    // replace olduğu sürece originTopLeft(3) -> originTopSol(3) oluyordu.
+    çevir("originTopLeft(3)") should be("originTopLeft(3)")
+    çevir("alignRight(2)") should be("alignRight(2)")
+    çevir("handSome(5)") should be("handSome(5)")
+    çevir("MyOption[Int]") should startWith("MyOption[")
+    // ama sözcük başındaysa yine çevriliyor
+    çevir("(Left(1), Some(2))") should be("(Sol(1), Biri(2))")
 
     // tür bilgisinde de Belki görünsün
     tr.translate.typeInfo("Option[Int]") should include("Belki[")

@@ -55,7 +55,7 @@ object YardımDışaAktar {
 
   def json: String = {
     val koleksiyon = tr.help.koleksiyonYöntemleri.map {
-      case (ad, imza, açıklama, örnek, sonuç) =>
+      case (ad, imza, açıklama, örnek, sonuç, _) =>
         // sil ve yazı gibi adlar hem elle yazılmış bir komutta hem burada var;
         // content onları BİRLEŞTİRİYOR. Yalnız yapılandırılmış alanları
         // yazsaydık kaplumbağa tarafı dışa aktarımda kaybolurdu.

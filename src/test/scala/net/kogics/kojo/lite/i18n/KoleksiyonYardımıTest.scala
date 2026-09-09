@@ -54,7 +54,7 @@ class KoleksiyonYardımıTest {
   private def örnekleriKoştur(): Map[String, String] = {
     val kod = tr.help.koleksiyonYöntemleri
       .map {
-        case (ad, _, _, örnek, _) =>
+        case (ad, _, _, örnek, _, _) =>
           s"""try { $toplayıcı.koy("$ad", $örnek) }
              |catch { case t: Throwable => $toplayıcı.koy("$ad", "KURALDIŞI: " + t) }""".stripMargin
       }
@@ -94,7 +94,7 @@ class KoleksiyonYardımıTest {
   def örneklerYazdıklarınıYazıyor(): Unit = {
     val gerçek = örnekleriKoştur()
     val yanlışlar = tr.help.koleksiyonYöntemleri.flatMap {
-      case (ad, _, _, örnek, beklenen) =>
+      case (ad, _, _, örnek, beklenen, _) =>
         gerçek.get(ad) match {
           case None       => Some(s"$ad: örnek hiç çalışmadı -- $örnek")
           case Some(`beklenen`) => None
@@ -146,9 +146,144 @@ class KoleksiyonYardımıTest {
   def herYöntemİçinYardımVar(): Unit = {
     val içerik = tr.help.content
     tr.help.koleksiyonYöntemleri.foreach {
-      case (ad, imza, _, _, _) =>
+      case (ad, imza, _, _, _, _) =>
         val metin = içerik.getOrElse(ad, fail(s"$ad için yardım metni yok").asInstanceOf[String])
         assertTrue(s"$ad metninde imza geçmiyor", metin.contains(imza))
     }
+  }
+
+  // --- 6. alan (yöntemin bulunduğu türler) kaynaktan yeniden türetiliyor ---
+  //
+  // help.scala'daki her satırın son alanı yöntemin hangi türlerde göründüğünü
+  // söylüyor; boşsa "beşlinin hepsinde var" demek. Elle yazılsa bayatlardı: bir
+  // sarmalayıcıya yöntem eklendiğinde yardım metni sessizce yanlış kalırdı --
+  // ki bu tam da bu alanın kapattığı hataydı (koşulsuz basılan "her toplulukta
+  // aynı" cümlesi 113 satırda yanlıştı). Burada tr/*.scala taranıp aynı liste
+  // yeniden kuruluyor ve karşılaştırılıyor.
+  //
+  // Tarama neden yeterli: sarmalayıcı örtük sınıflar arasında KALITIM YOK --
+  // her tür kendi yöntemlerini ayrı ayrı sayıyor (tasarım gereği) -- yani
+  // dosyalardaki `def` satırları sahipleri tam veriyor.
+
+  private val trDizini = "src/main/scala/net/kogics/kojo/lite/i18n/tr"
+
+  // örtük sınıf -> öğrencinin gördüğü tür adı. Burada olmayan sınıflar (iç
+  // yardımcılar) türe sayılmıyor.
+  private val sınıfTürü = Map(
+    "dizi.scala:colSeqYöntemleri" -> "Diz",
+    "dizi.scala:SeqYöntemleri" -> "Dizi",
+    "dizi.scala:IndexedSeqYöntemleri" -> "SıralıDizi",
+    "dizi.scala:IterableMethods" -> "Yinelenebilir",
+    "dizi.scala:ImmutableIterableMethods" -> "Yinelenebilir",
+    "dizin.scala:ListYöntemleri" -> "Dizin",
+    "yoney.scala:YöneyYöntemleri" -> "Yöney",
+    "kume.scala:SetYöntemleri" -> "Küme",
+    "kuyruk.scala:mutQueueMethods" -> "Kuyruk",
+    "kuyruk.scala:YığınYöntemleri" -> "Yığın",
+    "kuyruk.scala:mutPriQueMethods" -> "ÖncelikSırası",
+    "eslem.scala:EşlekYöntemleri" -> "Eşlek",
+    "eslem.scala:Eşlem" -> "Eşlem",
+    "aralik.scala:RangeYöntemleri" -> "Aralık",
+    "yazi.scala:YazıYöntemleri" -> "Yazı",
+    "harf.scala:HarfYöntemleri" -> "Harf",
+    "yineleyici.scala:YineleyiciYöntem" -> "Yineleyici",
+    "yineleyici.scala:BellekliYineleyiciYöntem" -> "Yineleyici",
+    "ikisindenbiri.scala:İkisindenBiriYöntem" -> "İkisindenBiri",
+    "ikisindenbiri.scala:İkisindenBiri" -> "İkisindenBiri",
+    "belki.scala:BelkiYöntemleri" -> "Belki",
+    "belki.scala:Belki" -> "Belki",
+    "miskindizin.scala:LazyListYöntemleri" -> "MiskinDizin",
+    "dizik.scala:ArrayMethods" -> "Dizik",
+    "dizik.scala:ArrayBufferMethods" -> "EsnekDizik",
+    "dizik.scala:EsnekDizik" -> "EsnekDizik",
+    "dizim.scala:Dizim" -> "Dizim",
+    "dizim.scala:EsnekDizim" -> "EsnekDizim"
+  )
+
+  // Gösterilen tür -> sarmalayıcıları ona da uygulanan üst türler.
+  // (Bir yöntem Dizi'de tanımlıysa Dizin'de de görünür.)
+  private val üstTürler = Map(
+    "Dizi" -> Set("Diz", "Yinelenebilir"),
+    "Dizin" -> Set("Dizi", "Diz", "Yinelenebilir"),
+    "Yöney" -> Set("Dizi", "Diz", "SıralıDizi", "Yinelenebilir"),
+    "Küme" -> Set("Yinelenebilir"),
+    "Kuyruk" -> Set("Diz", "Yinelenebilir"),
+    "Yığın" -> Set("Diz", "Yinelenebilir"),
+    "ÖncelikSırası" -> Set("Yinelenebilir"),
+    "Eşlek" -> Set("Yinelenebilir"),
+    "Eşlem" -> Set("Yinelenebilir"),
+    "MiskinDizin" -> Set("Dizi", "Diz", "Yinelenebilir"),
+    "Dizik" -> Set("Yinelenebilir"),
+    "EsnekDizik" -> Set("Diz", "Yinelenebilir"),
+    "Aralık" -> Set("Dizi", "Diz", "SıralıDizi", "Yinelenebilir"),
+    "Dizim" -> Set.empty[String],
+    "EsnekDizim" -> Set.empty[String],
+    "Yazı" -> Set.empty[String],
+    "Harf" -> Set.empty[String],
+    "Yineleyici" -> Set.empty[String],
+    "İkisindenBiri" -> Set.empty[String],
+    "Belki" -> Set.empty[String]
+  )
+
+  // Üst türler tek başına gösterilmiyor: onları kalıtan somut türler zaten
+  // ayrı ayrı yazılıyor, ikisi birden listeyi gereksiz şişirirdi.
+  private val gizliTürler = Set("Yinelenebilir", "SıralıDizi", "Diz")
+
+  // Yardım metnindeki "her toplulukta aynı" cümlesinin saydığı beşli
+  private val beşli = List("Dizi", "Dizin", "Yöney", "Küme", "Kuyruk")
+
+  private val sınıfBaşı = """^\s*(?:implicit\s+class|trait|object|class)\s+([^\s\[(]+)""".r
+  private val yöntemBaşı =
+    """^\s*(?:@deprecated\S*\s*)?(?:final\s+)?def\s+([A-Za-zÇĞİIÖŞÜçğıöşü0-9_]+)""".r
+
+  /** yöntem adı -> onu DOĞRUDAN tanımlayan gösterilen türler */
+  private lazy val kaynaktakiSahipler: Map[String, Set[String]] = {
+    val dizin = new java.io.File(trDizini)
+    assertTrue(s"$trDizini bulunamadı (test proje kökünden koşmalı)", dizin.isDirectory)
+    val ham = scala.collection.mutable.Map.empty[String, Set[String]].withDefaultValue(Set.empty)
+    dizin.listFiles().filter(_.getName.endsWith(".scala")).sortBy(_.getName).foreach { dosya =>
+      var sahip = ""
+      val kaynak = scala.io.Source.fromFile(dosya, "UTF-8")
+      try kaynak.getLines().foreach { satır =>
+        sınıfBaşı.findFirstMatchIn(satır).foreach(m => sahip = dosya.getName + ":" + m.group(1))
+        yöntemBaşı.findFirstMatchIn(satır).foreach { m =>
+          sınıfTürü.get(sahip).foreach(ad => ham(m.group(1)) = ham(m.group(1)) + ad)
+        }
+      }
+      finally kaynak.close()
+    }
+    ham.toMap
+  }
+
+  /** Adın göründüğü türler: doğrudan tanımlayanlar + üstünden kalıtanlar. */
+  private def türleriTüret(ad: String): List[String] = {
+    val doğrudan = kaynaktakiSahipler.getOrElse(ad, Set.empty)
+    üstTürler.collect {
+      case (adı, üstler) if doğrudan(adı) || (doğrudan & üstler).nonEmpty => adı
+    }.toList.filterNot(gizliTürler).sorted
+  }
+
+  @Test
+  def yöntemAdlarıBenzersiz(): Unit = {
+    // Sonuçlar ada göre bir haritada toplanıyor: aynı ad iki kez geçseydi biri
+    // ötekini ezer, yarısı sessizce sınanmamış olurdu.
+    val yinelenen = tr.help.koleksiyonYöntemleri.map(_._1).groupBy(identity).filter(_._2.size > 1).keys
+    assertTrue(s"tabloda yinelenen ad var: ${yinelenen.mkString(", ")}", yinelenen.isEmpty)
+  }
+
+  @Test
+  def türListesiKaynakla_uyuşuyor(): Unit = {
+    val yanlışlar = tr.help.koleksiyonYöntemleri.flatMap {
+      case (ad, _, _, _, _, yazan) =>
+        val türler = türleriTüret(ad)
+        assertTrue(s"$ad hiçbir Türkçe sarmalayıcıda bulunamadı", türler.nonEmpty)
+        // Beşlinin hepsinde varsa alan BOŞ olmalı (eski cümle basılır).
+        val olması = if (beşli.forall(türler.contains)) "" else türler.mkString(", ")
+        if (yazan == olması) None else Some(s"$ad:\n     yazan  : '$yazan'\n     olması : '$olması'")
+    }
+    assertTrue(
+      s"${yanlışlar.size} satırın tür listesi kaynakla uyuşmuyor:\n" + yanlışlar.mkString("\n"),
+      yanlışlar.isEmpty
+    )
   }
 }

@@ -17,19 +17,10 @@
 package net.kogics.kojo.lite.i18n.tr
 
 object translate {
-  private def common(str: String) = { str
+  private def common(str: String) = { kutuları(str)
     // Aralık bir tür takma adı olduğu için toString ezilemiyor; Range'in
     // 2.13 gösterimi "Range 1 to 5 by 2" biçiminde. NumericRange önce
     // çevriliyor, yoksa "NumericAralık" gibi bir şey çıkardı.
-    // Sol(1) / Sağ(1) diye görünsün. Parantezle eşliyoruz: yalnız "Left"/"Right"
-    // deseydik LeftProjection, originTopLeft gibi yerleri de bozardı.
-    .replace("Left(", "Sol(")
-    .replace("Right(", "Sağ(")
-    // Belki de Türkçe görünsün. Some( ve Option[ ayraçla sınırlı, yani
-    // someEffect ya da OptionalX gibi adlara dokunmuyor. Çıplak None için
-    // regexpChanges'teki sözcük sınırlı değiştirme kullanılıyor.
-    .replace("Some(", "Biri(")
-    .replace("Option[", "Belki[")
     .replace("NumericRange ", "SayısalAralık ")
     .replace("Range ", "Aralık ")
     .replace("net.kogics.kojo.lite.i18n.tr.", "")
@@ -160,6 +151,23 @@ object translate {
   // (\b) ile eşliyoruz; "None.get" ve "= None" yakalanıyor çünkü nokta ve
   // boşluk sınır sayılıyor.
   private val çıplakNone = """\bNone\b""".r
+
+  // Left( / Right( / Some( / Option[ de aynı özeni istiyor. Bunlar eskiden düz
+  // replace'ti; açılış ayracı SAĞ sınırı veriyor ama SOL sınırı VERMİYOR, yani
+  // öğrencinin kodundaki originTopLeft(3) -> originTopSol(3), handSome(5) ->
+  // handBiri(5) oluyordu. Ölçüldü. Artık None ile aynı sözcük sınırı kuralı.
+  private val kutuAdları = """\b(?:Left\(|Right\(|Some\(|Option\[)""".r
+  private val kutuKarşılığı =
+    Map("Left(" -> "Sol(", "Right(" -> "Sağ(", "Some(" -> "Biri(", "Option[" -> "Belki[")
+
+  /** common'un ilk adımı: Sol/Sağ/Biri/Belki. typeInfo da common'dan geçtiği
+    * için tür imzalarında da çalışıyor -- bunları common'dan çıkarmak
+    * "Option[Int]" ipucunu İngilizce bırakıyordu. */
+  private def kutuları(str: String) =
+    if (!str.contains("Left(") && !str.contains("Right(") &&
+        !str.contains("Some(") && !str.contains("Option[")) str
+    else
+      kutuAdları.replaceAllIn(str, m => java.util.regex.Matcher.quoteReplacement(kutuKarşılığı(m.matched)))
 
   /**
    * 2.13'ün Range gösterimini öğrenci dostu Türkçe biçime çevirir.
