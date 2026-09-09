@@ -22,6 +22,25 @@ https://github.com/litan/kojo/blob/master/src/main/scala/net/kogics/kojo/lite/La
 
 Then send a pull request.
 
+#### Editing the Hindi UI translation
+
+Edit [src/main/i18n/Bundle_hi.properties](src/main/i18n/Bundle_hi.properties),
+which contains readable UTF-8 Devanagari. The file with the same name under
+`src/main/resources/net/kogics/kojo/lite/` is a checked-in, generated copy with
+Unicode escapes for Java 8 compatibility. Do not edit that cached copy directly.
+
+SBT refreshes the cache before compiling or collecting application resources
+(including for running and packaging). To refresh it without compiling, run:
+
+```sh
+./sbt.sh refreshHindiBundle
+```
+
+IntelliJ can build and run using the cached copy without running SBT. After
+editing the UTF-8 source, refresh the cache before rebuilding in IntelliJ;
+otherwise it will use the previous translation. Commit both the UTF-8 source
+and its refreshed resource copy together.
+
 ### Level 2
 Create `level2_xx.properties` by translating the following file:  
 https://github.com/litan/kojo/blob/master/l10n-level2/level2.properties
@@ -44,4 +63,3 @@ if you want to localize the following sample for Swedish:
 Then you just need to just create the following localized version of the sample:  
 `src/main/resources/samples/sv/spiral.kojo`  
 The version of spiral.kojo under the sv directory will get picked up when Kojo is running in Swedish mode.
-
