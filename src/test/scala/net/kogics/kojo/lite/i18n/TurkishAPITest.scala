@@ -1241,6 +1241,33 @@ import net.kogics.kojo.staging
     ö.ekleHepsini(Dizi(100)); ö.başı should be(100)
   }
 
+  test("Aralık gösterimi: çıktı paneli metni de yazıya ile aynı biçimde") {
+    import net.kogics.kojo.lite.i18n.tr.translate
+    // translate.result çıktı panelinden geçen HER metne uygulanıyor
+    // (OutputPane.showOutputHelper -> updateResult). Daha önce yalnız
+    // "Range " -> "Aralık " yer değiştirmesi vardı ve yarım çeviri
+    // bırakıyordu: "inexact Aralık 1 until 200 by 7".
+    translate.result("Range 1 to 5") should be("Aralık(1, 2, 3, 4, 5)")
+    // tam 10 öge: kısaltma eşiği 10 olduğu için hepsi yazılıyor
+    translate.result("Range 10 until 0 by -1") should be("Aralık(10, 9, 8, 7, 6, 5, 4, 3, 2, 1)")
+    // 11 öge: artık kısaltılıyor
+    translate.result("Range 11 until 0 by -1") should be("Aralık(11, 10, 9, 8, 7 ... 5, 4, 3, 2, 1)")
+    translate.result("inexact Range 1 until 200 by 7") should be(
+      "Aralık(1, 8, 15, 22, 29 ... 169, 176, 183, 190, 197)")
+    translate.result("empty Range 1 until 1") should be("Aralık()")
+    // yazıya ile BİREBİR aynı gövde (tek gerçekleme: Aralık.gösterim)
+    translate.result(Aralık(1, 200, 7).toString) should be(Aralık(1, 200, 7).yazıya)
+    translate.result((1 to 5).toString) should be((1 to 5).yazıya)
+    // NumericRange'e dokunulmuyor; onu düz yer değiştirme karşılıyor
+    translate.result("NumericRange 1 to 5") should be("SayısalAralık 1 to 5")
+    // Öğrencinin kendi metnindeki "Range" bozulmuyor: kalıba uymayan hiçbir şey
+    // düzenli deyişe takılmıyor (düz yer değiştirme onu hâlâ çeviriyor, ayrı iş)
+    translate.result("Range 1 to") should be("Aralık 1 to")
+    // Kurulamayan/çok uzun aralıkta sessizce eski metne düşülüyor (fırlatmıyor):
+    // Range.inclusive(0, 2147483647) uzunluk taşmasıyla patlar.
+    translate.result("Range 0 to 2147483647") should be("Aralık 0 to 2147483647")
+  }
+
   test("Aralık tür takma adı ve EsnekYazı tamponu") {
     // Aralık artık Range: `Aralık(1, 11)` ile `1 |-| 10` AYNI şey ve aynı
     // yöntemleri görüyor (eskiden case class ~20, Range ~110 yöntem veriyordu).
@@ -1252,6 +1279,16 @@ import net.kogics.kojo.staging
     a.yazı() should be("Aralık(1, 4, 7)")     // özel gösterim yöntem olarak korundu
     Aralık(1, 200, 7).yazıya should be("Aralık(1, 8, 15, 22, 29 ... 169, 176, 183, 190, 197)")
     (1 |-| 10) should be(Aralık.kapalı(1, 10))
+    // kapalı'nın uçları ÇİVİLİ: case class döneminde `kapalı(1, 10, 3)`
+    // gerçekte Aralık(1, 11, 3) kuruyordu ve `sonuncu` 11 dönüyordu. Artık
+    // Range.inclusive: sonuncu = end = 10, sonu = last = 10.
+    val k = Aralık.kapalı(1, 10, 3)
+    k.ilki should be(1); k.sonuncu should be(10); k.adım should be(3)
+    k.sonu should be(10); k.dizine should be(Dizin(1, 4, 7, 10))
+    Aralık.kapalı(1, 5).sonuncu should be(5)   // eskiden 6 idi
+    Aralık.kapalı(5, 1, -1).dizine should be(Dizin(5, 4, 3, 2, 1))
+    // açık uçlu biçimde `sonuncu` yine verilen üst sınır (son öge DEĞİL)
+    Aralık(1, 10, 3).sonuncu should be(10); Aralık(1, 10, 3).sonu should be(7)
     // Range olduğu için ortak çekirdek doğrudan çalışıyor
     a.bul(_ > 3) should be(Biri(4))
     a.böl(_ > 3) should be((Dizi(4, 7), Dizi(1)))

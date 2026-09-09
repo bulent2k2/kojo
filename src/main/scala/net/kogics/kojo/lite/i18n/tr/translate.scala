@@ -161,9 +161,58 @@ object translate {
   // boşluk sınır sayılıyor.
   private val çıplakNone = """\bNone\b""".r
 
-  def regexpChanges(str: String) = {
-    çıplakNone.replaceAllIn(str, "Hiçbiri")
+  /**
+   * 2.13'ün Range gösterimini öğrenci dostu Türkçe biçime çevirir.
+   *
+   * `common`'daki düz `Range ` -> `Aralık ` yer değiştirmesi YARIM kalıyordu:
+   * "inexact Range 1 until 200 by 7" -> "inexact Aralık 1 until 200 by 7".
+   * `empty`/`inexact` önekleri ile `to`/`until`/`by` edatları İngilizce
+   * kalıyor ve tek tek `replace` ile çevrilemiyorlar -- öğrencinin kendi
+   * metnindeki aynı sözcükleri de bozarlardı. Bu yüzden kalıbın TAMAMI tek
+   * bir düzenli deyişle yakalanıp aralık yeniden kuruluyor ve
+   * `Aralık.gösterim` ile yazdırılıyor -- `yazıya`'nın verdiği biçimin aynısı.
+   *
+   * 2.13 Range.toString gövdesi:
+   *   s"${prefix}Range $start $preposition $end$stepped"
+   *   prefix = "empty " | "inexact " | "",  preposition = "to" | "until",
+   *   stepped = "" | s" by $step"
+   *
+   * NumericRange'e DOKUNULMUYOR (harf öncesi bakışı onu eliyor); onu
+   * common'daki "NumericRange " -> "SayısalAralık " yer değiştirmesi
+   * karşılıyor. Ondalıklı sınırları burada saymak ayrı bir iş.
+   */
+  private val aralıkKalıbı =
+    raw"(?<![A-Za-z])(?:empty |inexact )?Range (-?\d+) (to|until) (-?\d+)(?: by (-?\d+))?".r
+
+  private def aralığıÇevir(str: String) = {
+    if (!str.contains("Range ")) str
+    else
+      aralıkKalıbı.replaceAllIn(
+        str,
+        m => {
+          val sonuç =
+            try {
+              // NOT: `son` yamalı derleyicide anahtar kelime (final) -- `bitiş`
+              val (ilk, bitiş) = (m.group(1).toInt, m.group(3).toInt)
+              val adım = Option(m.group(4)).map(_.toInt).getOrElse(1)
+              // adım 0 Range'i patlatır; öyle bir gösterim zaten üretilmez
+              if (adım == 0) m.matched
+              else {
+                val r =
+                  if (m.group(2) == "to") Range.inclusive(ilk, bitiş, adım) else Range(ilk, bitiş, adım)
+                // r.size çok uzun aralıklarda fırlatıyor ("More than Int.MaxValue elements")
+                Aralık.gösterim(r)
+              }
+            }
+            catch { case _: Throwable => m.matched }
+          java.util.regex.Matcher.quoteReplacement(sonuç)
+        }
+      )
   }
+
+  // İki düzenli deyiş de uygulanıyor: aralık gösterimi ile çıplak None
+  // birbirinden bağımsız -- biri ötekinin çıktısında yeni eşleşme üretmiyor.
+  def regexpChanges(str: String) = çıplakNone.replaceAllIn(aralığıÇevir(str), "Hiçbiri")
 
   def result(str: String) = { common(beforeCommon(regexpChanges(str)))
     .replace("expected class or object definition", "gereken sınıf ya da nesne tanımı bulunamadı")

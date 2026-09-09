@@ -245,15 +245,17 @@ tanım oyunuKazandıMı(h: Hane): İkil = {
     çapraz2 == hedef
 }
 
-dez bilgiYazısı = büyüt(2.0) * götür(-25, 15) * kalemRengi(beyaz) -> Resim.yazı("")
+den mesajResmi: Resim = yok
 tanım bilgiVer(yazı: Yazı) {
-    dez resim = Resim.diziDikeyDüzenli(bilgiYazısı, Resim.dikeyBoşluk(ta.boyu - 100))
-    çizMerkezde(resim)
-    bilgiYazısı.güncelle(yazı)
+    // Geleceğin bilgisayar programcılarına önemli not: resimler çizildikleri
+    // SIRAYLA üst üste binerler, en son çizilen en üstte durur. Mesajı hep
+    // görebilmemiz için onu her seferinde YENİDEN, yani en son çiziyoruz.
+    // Bir öncekini de siliyoruz; yoksa "Oyna!" ile "Kaybettin" üst üste gelirdi.
+    eğer (mesajResmi != yok) mesajResmi.sil()
+    dez metin = büyüt(2.0) * götür(-25, 15) * kalemRengi(beyaz) -> Resim.yazı(yazı)
+    mesajResmi = Resim.diziDikeyDüzenli(metin, Resim.dikeyBoşluk(ta.boyu - 100))
+    çizMerkezde(mesajResmi)
 }
-// Geleceğin bilgisayar programcılarına önemli not. Genelde değer ve değişkenlerin yerel olmasında çok fayda var.
-// Ama, burada bilgiYazısı değerinin bilgiVer yöntemi içinde yerel değer olması iyi olmaz! 
-// Yoksa "Oyna!" yazısıyla "Berabere" ya da "Kaybettin" yazıları yüstüste gelir en sonda.
 tanım kazanıldıMı() {
     eğer (oyunuKazandıMı(Bilgisayar)) {
         oyunBittiMi = doğru

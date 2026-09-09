@@ -24,9 +24,40 @@ Run a single test class (tests run under JUnit 4 via `@RunWith(JUnitRunner)`):
 ./sbt.sh 'testOnly net.kogics.kojo.lite.i18n.TurkishAPITest'
 ```
 
+### Building on a modern JDK / headless container
+
+`./sbt.sh` assumes Java 8. On a Java 21 container it fails twice, both times
+for reasons that have nothing to do with the code — verified recipe:
+
+```bash
+export LANG=C.UTF-8 LC_ALL=C.UTF-8            # (1)
+java -Xms512M -Xmx2g -Xss2M \
+     -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 \
+     -jar sbt-launch.1.5.5.jar compile          # (2)
+
+xvfb-run -a java -Xms512M -Xmx2g -Xss2M \
+     -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 \
+     -jar sbt-launch.1.5.5.jar \
+     'set Test/javaOptions := Seq("-Xmx1024m","-Xss2m","-Dfile.encoding=UTF-8","--add-opens","java.base/java.lang=ALL-UNNAMED")' \
+     test
+```
+
+1. **UTF-8 is mandatory, not cosmetic.** `lite/i18n/tr/` produces class files
+   with Turkish names (`res$AydınlıkBD.class`). Under a non-UTF-8 default
+   charset zinc dies with
+   `java.nio.file.InvalidPathException: Malformed input or input contains unmappable characters`.
+2. **Drop the CMS flag.** `sbt.sh` passes `-XX:+CMSClassUnloadingEnabled`,
+   which Java 14+ removed: the JVM refuses to start
+   (`Unrecognized VM option`). The flag is right for the Java 8 target — do
+   not delete it from `sbt.sh`; just don't use `sbt.sh` on a modern JDK.
+
+With `--add-opens java.base/java.lang=ALL-UNNAMED` in `Test/javaOptions`
+**the whole suite passes on Java 21** — measured 2026-09: 334 tests, 0
+failures (185 ScalaTest + the JUnit side), 2 ignored.
+
 Caveats:
-- **Tests need a display.** `TestEnv` constructs real Swing/Piccolo objects; there is no headless mode. On a bare container use `xvfb-run ./sbt.sh test`.
-- **Two test frameworks run.** Since the `junit-interface` dependency arrived (2026-08 upstream sync), `sbt test` runs ~166 ScalaTest tests plus ~149 plain-JUnit tests (`TurtleTest`, `CommandHistoryTest`, the `CompilerAndRunnerTestBase` subclasses, …) that were silently dormant before. On Java 9+ the cglib/jmock-based suites (`TraceTest`, `CommandHistoryTest`, `InterpOutputHandlerTest`) additionally need `--add-opens java.base/java.lang=ALL-UNNAMED` in `Test/javaOptions` — `./sbt.sh test` doesn't pass it, so ~22 failures on a modern JDK are that, not real breakage (Java 8, the build target, is unaffected).
+- **Tests need a display.** `TestEnv` constructs real Swing/Piccolo objects; there is no headless mode. On a bare container use `xvfb-run ./sbt.sh test` (on a modern JDK, the recipe above instead).
+- **Two test frameworks run.** Since the `junit-interface` dependency arrived (2026-08 upstream sync), `sbt test` runs ~166 ScalaTest tests plus ~149 plain-JUnit tests (`TurtleTest`, `CommandHistoryTest`, the `CompilerAndRunnerTestBase` subclasses, …) that were silently dormant before. On Java 9+ the cglib/jmock-based suites (`TraceTest`, `CommandHistoryTest`, `InterpOutputHandlerTest`) additionally need `--add-opens java.base/java.lang=ALL-UNNAMED` in `Test/javaOptions`; `./sbt.sh test` doesn't pass it, and failures without it are that, not real breakage. **Pass it and there are none** — see the recipe above.
 - `src/itest/` is not wired into `build.sbt`; `sbt test` never runs it.
 - **No CI exists** — nothing validates builds automatically; always run `./sbt.sh test` yourself.
 - Release packaging: `makezip.sh` (Linux/generic zip), `make-windows-zip.sh`, `stage-i4j-installer` + `installer.i4j/` (install4j projects: `kojo.install4j` English, `koco.install4j` Turkish). All of them call `stage-scala-toolchains.sh`, which stages both Scala toolchains under `lib/scala-en` (stock jars, downloaded from Maven Central and cached in the gitignored `scala-en-jars/`) and `lib/scala-tr` (the Turkish-keyword jars). `installer/jarlist.txt` must be updated when a dependency version changes (it deliberately excludes the four toolchain jars — those are staged by `stage-scala-toolchains.sh`). These scripts contain hard-coded developer paths and need a `scala` CLI on PATH — not portable as-is.
