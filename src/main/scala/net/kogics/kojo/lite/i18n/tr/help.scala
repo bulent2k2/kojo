@@ -304,7 +304,8 @@ açı(n2, n1)
       çıktıyıSil
       dez dizi = <strong>için</strong> (sayı &lt;- 0 |- 21) ver (sayı * sayı)
       satıryaz(dizi)
-      yoksa satıryaz("ilk 20 kare:" ++ dizi.yazıYap("{{", " ", "}}"))      
+      // ya da şöyle yazdırabilirsin:
+      satıryaz("ilk 20 kare:" ++ dizi.yazıYap("{{", " ", "}}"))
     </pre>
 
     </div>.toString,
