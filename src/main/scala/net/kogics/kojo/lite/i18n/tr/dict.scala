@@ -38,6 +38,14 @@ object dict {
     "buffered" -> "bellekte bellekli", //  Bellekteİmge BellekliYineleyici
     "bootstrap" -> "önyükleme",
     "regular expression" -> "düzenli deyiş", // regex
+    // Sınama terimleri. "sınama" deponun kendi kullanımı (KoleksiyonYardımıTest'te
+    // "Örnek sınanıyor", türListesiKaynakla_uyuşuyor savları) -- alıntı "test"
+    // yerine onu sürdürüyoruz.
+    "test" -> "sınama",
+    "test driven development" -> "sınamayla güdümlü geliştirme", // TDD -> SGG
+    "failing test" -> "düşen sınama",
+    "regression test" -> "gerileme sınaması",
+    "red-green-refactor" -> "kırmızı-yeşil-düzelt",
     "companion" -> "eşlik", // HerDeğerinEşliği AnyValCompanion
     "companion object" -> "eş nesne",
     "prompt" -> "istem",
