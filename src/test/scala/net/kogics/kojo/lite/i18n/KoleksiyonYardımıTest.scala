@@ -161,13 +161,13 @@ class KoleksiyonYardımıTest {
   // aynı" cümlesi 113 satırda yanlıştı). Burada tr/*.scala taranıp aynı liste
   // yeniden kuruluyor ve karşılaştırılıyor.
   //
-  // Tarama neden yeterli: sarmalayıcı örtük sınıflar arasında KALITIM YOK --
+  // Tarama neden yeterli: sarmalayıcı örtükler sınıflar arasında KALITIM YOK --
   // her tür kendi yöntemlerini ayrı ayrı sayıyor (tasarım gereği) -- yani
   // dosyalardaki `def` satırları sahipleri tam veriyor.
 
   private val trDizini = "src/main/scala/net/kogics/kojo/lite/i18n/tr"
 
-  // örtük sınıf -> öğrencinin gördüğü tür adı. Burada olmayan sınıflar (iç
+  // örtükler sınıf -> öğrencinin gördüğü tür adı. Burada olmayan sınıflar (iç
   // yardımcılar) türe sayılmıyor.
   private val sınıfTürü = Map(
     "dizi.scala:colSeqYöntemleri" -> "Diz",
@@ -240,29 +240,86 @@ class KoleksiyonYardımıTest {
   // eşleşmezse içindeki yöntemler bir ÖNCEKİ sahibe yazılıyordu. Masaüstünde
   // companion object case class'tan önce geldiği için etiket tesadüfen doğru
   // çıkıyordu; sıra ters olsaydı sessizce yanlış olurdu.
+  // Koleksiyon SAYILMAYAN örtükler sınıflar. Bu küme ile sınıfTürü birlikte
+  // tr/*.scala'daki BÜTÜN örtükler sınıfları kapsamak zorunda (aşağıdaki sav).
+  //
+  // Neden gerekli: türetim sınıfTürü'nden besleniyor, ve bir sarmalayıcı
+  // haritada yoksa hem tablo hem türetim birlikte eksiliyordu -- yani test
+  // yeşil kalırken yardım metni yanlış oluyordu. EsnekYazı tam bu yoldan
+  // geçti ve altı satırı sessizce eksik bıraktı. Artık 46. bir sarmalayıcı
+  // eklendiğinde sessizce eksilmek yerine BURAYA ya da sınıfTürü'ne bir
+  // karar yazmak gerekiyor.
+  private val türeSayılmayanlar = Set(
+    // sayı türleri -- koleksiyon değil
+    "sayi.scala:SayıYöntemleri",
+    "sayi.scala:KısaSayıYöntemleri",
+    "sayi.scala:UzunSayıYöntemleri",
+    "sayi.scala:LokmaYöntemleri",
+    "sayi.scala:KesirYöntemleri",
+    "sayi.scala:İriSayıYöntemleri",
+    "sayi.scala:İriKesirYöntemleri",
+    // çizim/geometri/renk
+    "renk.scala:ColorYöntemleri",
+    "renk.scala:ColorYöntemleri2",
+    "geo.scala:RectYöntemleri",
+    "geo.scala:GeoYolYöntemleri",
+    "geo.scala:GeoNoktaYöntemleri",
+    "tuvalcizim.scala:canvasDrawMethods",
+    // arayüz ve olaylar
+    "arayuz.scala:TuşaBasmaOlayıYöntemleri",
+    "kumanda.scala:KumandaYöntemleri",
+    // her türe uygulanan kök yöntemler -- bir türü değil, hepsini ilgilendiriyor
+    "kokturler.scala:NesneYöntemleri",
+    "kokturler.scala:HerNesneYöntemleri",
+    "kokturler.scala:HerGönderYöntemleri",
+    // koleksiyon olmayan öbür sarmalayıcılar
+    "dosya.scala:DosyaYöntemleri",
+    "gelecek.scala:FutureMethods",
+    "bolumselislev.scala:PartialFunctionMethodsInTurkish",
+    // ParDizi (Dizin.paralel) bilerek dışarıda: öğretilen topluluk takımının
+    // parçası değil, yardım tablosunda da girdisi yok.
+    "dizin.scala:ParListYöntemler"
+  )
+
+  private val örtükSınıfBaşı =
+    """^\s*(?:(?:final|private|protected)\s+)*implicit\s+class\s+([^\s\[(]+)""".r
+
   private val sınıfBaşı =
     """^\s*(?:(?:case|final|sealed|abstract|private|protected)\s+)*(?:implicit\s+class|trait|object|class)\s+([^\s\[(]+)""".r
   private val yöntemBaşı =
     """^\s*(?:@deprecated\S*\s*)?(?:final\s+)?def\s+([A-Za-zÇĞİIÖŞÜçğıöşü0-9_]+)""".r
 
-  /** yöntem adı -> onu DOĞRUDAN tanımlayan gösterilen türler */
-  private lazy val kaynaktakiSahipler: Map[String, Set[String]] = {
+  /**
+   * tr dizinindeki kaynaklar tek geçişte taranıyor. Üç sonuç:
+   *  - sahipler      : yöntem adı -> onu DOĞRUDAN tanımlayan gösterilen türler
+   *  - örtükSınıflar : bulunan bütün `implicit class`lar (sınıflandırma savı için)
+   *  - bütünSahipler : bulunan bütün sınıf/nesne/trait etiketleri (hayalet savı için)
+   */
+  private lazy val tarama: (Map[String, Set[String]], Set[String], Set[String]) = {
     val dizin = new java.io.File(trDizini)
     assertTrue(s"$trDizini bulunamadı (test proje kökünden koşmalı)", dizin.isDirectory)
     val ham = scala.collection.mutable.Map.empty[String, Set[String]].withDefaultValue(Set.empty)
+    val örtükler = scala.collection.mutable.Set.empty[String]
+    val bütün = scala.collection.mutable.Set.empty[String]
     dizin.listFiles().filter(_.getName.endsWith(".scala")).sortBy(_.getName).foreach { dosya =>
       var sahip = ""
       val kaynak = scala.io.Source.fromFile(dosya, "UTF-8")
       try kaynak.getLines().foreach { satır =>
-        sınıfBaşı.findFirstMatchIn(satır).foreach(m => sahip = dosya.getName + ":" + m.group(1))
+        sınıfBaşı.findFirstMatchIn(satır).foreach { m =>
+          sahip = dosya.getName + ":" + m.group(1)
+          bütün += sahip
+        }
+        örtükSınıfBaşı.findFirstMatchIn(satır).foreach(m => örtükler += dosya.getName + ":" + m.group(1))
         yöntemBaşı.findFirstMatchIn(satır).foreach { m =>
           sınıfTürü.get(sahip).foreach(ad => ham(m.group(1)) = ham(m.group(1)) + ad)
         }
       }
       finally kaynak.close()
     }
-    ham.toMap
+    (ham.toMap, örtükler.toSet, bütün.toSet)
   }
+
+  private def kaynaktakiSahipler: Map[String, Set[String]] = tarama._1
 
   /** Adın göründüğü türler: doğrudan tanımlayanlar + üstünden kalıtanlar. */
   private def türleriTüret(ad: String): List[String] = {
@@ -270,6 +327,25 @@ class KoleksiyonYardımıTest {
     üstTürler.collect {
       case (adı, üstler) if doğrudan(adı) || (doğrudan & üstler).nonEmpty => adı
     }.toList.filterNot(gizliTürler).sorted
+  }
+
+  @Test
+  def herÖrtükSınıfSınıflandırılmış(): Unit = {
+    val sınıflandırılmamış = (tarama._2 -- sınıfTürü.keys -- türeSayılmayanlar).toList.sorted
+    assertTrue(
+      s"${sınıflandırılmamış.size} örtükler sınıf ne sınıfTürü'nde ne türeSayılmayanlar'da:\n" +
+        sınıflandırılmamış.mkString("\n") +
+        "\n(Koleksiyon türüyse sınıfTürü'ne, değilse türeSayılmayanlar'a ekleyin.)",
+      sınıflandırılmamış.isEmpty
+    )
+  }
+
+  @Test
+  def haritadaHayaletKayıtYok(): Unit = {
+    // Yeniden adlandırılan ya da silinen bir sarmalayıcı haritada kalırsa
+    // sessizce ölü kayıt olur; sınıfTürü'ndeki her anahtar kaynakta bulunmalı.
+    val hayalet = (sınıfTürü.keys.toSet ++ türeSayılmayanlar -- tarama._3).toList.sorted
+    assertTrue(s"kaynakta karşılığı olmayan kayıt: ${hayalet.mkString(", ")}", hayalet.isEmpty)
   }
 
   @Test
