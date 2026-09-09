@@ -25,6 +25,11 @@ object translate {
     // deseydik LeftProjection, originTopLeft gibi yerleri de bozardı.
     .replace("Left(", "Sol(")
     .replace("Right(", "Sağ(")
+    // Belki de Türkçe görünsün. Some( ve Option[ ayraçla sınırlı, yani
+    // someEffect ya da OptionalX gibi adlara dokunmuyor. Çıplak None için
+    // regexpChanges'teki sözcük sınırlı değiştirme kullanılıyor.
+    .replace("Some(", "Biri(")
+    .replace("Option[", "Belki[")
     .replace("NumericRange ", "SayısalAralık ")
     .replace("Range ", "Aralık ")
     .replace("net.kogics.kojo.lite.i18n.tr.", "")
@@ -150,9 +155,14 @@ object translate {
     .replace("why the feature needs to be explicitly enabled.", "https://stackoverflow.com/questions/13011204/scalas-postfix-ops")
   }
 
+  // Çıplak None -> Hiçbiri. Düz replace OLMAZ: "Nonetheless" ya da bir
+  // betikteki NoneOfThese gibi sözcüklerin içini de bozardı. Sözcük sınırı
+  // (\b) ile eşliyoruz; "None.get" ve "= None" yakalanıyor çünkü nokta ve
+  // boşluk sınır sayılıyor.
+  private val çıplakNone = """\bNone\b""".r
+
   def regexpChanges(str: String) = {
-    // bbx todo regexp match here?
-    str
+    çıplakNone.replaceAllIn(str, "Hiçbiri")
   }
 
   def result(str: String) = { common(beforeCommon(regexpChanges(str)))

@@ -760,6 +760,28 @@ import net.kogics.kojo.staging
     q.ekleHepsini(Dizi(5)); q.sonu should be(5)
   }
 
+  test("Çıktı çevirisi: Belki ve İkisindenBiri Türkçe görünüyor, yanlış eşleşme yok") {
+    dez çevir = tr.translate.result _
+    // DEĞİŞMESİ gerekenler
+    çevir("Some(5)") should be("Biri(5)")
+    çevir("None") should be("Hiçbiri")
+    çevir("Left(1)") should be("Sol(1)")
+    çevir("Right(1)") should be("Sağ(1)")
+    çevir("= None") should be("= Hiçbiri")
+    // öğrencinin en sık gördüğü hatalardan biri
+    çevir("java.util.NoSuchElementException: None.get") should include("Hiçbiri.get")
+    çevir("Some(None)") should be("Biri(Hiçbiri)")
+
+    // DEĞİŞMEMESİ gerekenler -- sözcük sınırı ve ayraç bu yüzden var
+    çevir("Nonetheless") should be("Nonetheless")
+    çevir("NoneOfThese") should be("NoneOfThese")
+    çevir("someEffect") should be("someEffect")   // birEfekt'in İngilizcesi
+    çevir("Somewhere") should be("Somewhere")
+
+    // tür bilgisinde de Belki görünsün
+    tr.translate.typeInfo("Option[Int]") should include("Belki[")
+  }
+
   test("İkisindenBiri: Either'ın Türkçesi") {
     // bölİşle bunu istiyordu; Türkçesi olmadığı için belgelenemiyordu
     Dizin(1, 2, 3, 4).bölİşle(x => eğer (x % 2 == 0) Sağ(x * 10) yoksa Sol(x)) should be(
