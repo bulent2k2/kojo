@@ -52,14 +52,20 @@ xvfb-run -a java -Xms512M -Xmx2g -Xss2M \
    not delete it from `sbt.sh`; just don't use `sbt.sh` on a modern JDK.
 
 With `--add-opens java.base/java.lang=ALL-UNNAMED` in `Test/javaOptions`
-**the whole suite passes on Java 21** — measured 2026-09: 334 tests, 0
-failures (185 ScalaTest + the JUnit side), 2 ignored.
+**the whole suite passes on Java 21** — measured 2026-09: 353 tests, 0
+failures (189 ScalaTest + the JUnit side), 2 ignored. This is exactly what
+CI runs (see the CI caveat below), so a green run here means a green run
+there.
 
 Caveats:
 - **Tests need a display.** `TestEnv` constructs real Swing/Piccolo objects; there is no headless mode. On a bare container use `xvfb-run ./sbt.sh test` (on a modern JDK, the recipe above instead).
 - **Two test frameworks run.** Since the `junit-interface` dependency arrived (2026-08 upstream sync), `sbt test` runs ~166 ScalaTest tests plus ~149 plain-JUnit tests (`TurtleTest`, `CommandHistoryTest`, the `CompilerAndRunnerTestBase` subclasses, …) that were silently dormant before. On Java 9+ the cglib/jmock-based suites (`TraceTest`, `CommandHistoryTest`, `InterpOutputHandlerTest`) additionally need `--add-opens java.base/java.lang=ALL-UNNAMED` in `Test/javaOptions`; `./sbt.sh test` doesn't pass it, and failures without it are that, not real breakage. **Pass it and there are none** — see the recipe above.
 - `src/itest/` is not wired into `build.sbt`; `sbt test` never runs it.
-- **No CI exists** — nothing validates builds automatically; always run `./sbt.sh test` yourself.
+- **CI runs the full suite** (`.github/workflows/testler.yml`, on pull requests and on pushes to
+  `master`). It uses the modern-JDK recipe above verbatim — Java 21, UTF-8, `xvfb-run`,
+  `--add-opens`, and the launcher jar rather than `./sbt.sh`. It is the repo's only CI job;
+  packaging and the install4j projects are still unvalidated. Run the suite locally too — CI
+  tells you after the push, not before.
 - Release packaging: `makezip.sh` (Linux/generic zip), `make-windows-zip.sh`, `stage-i4j-installer` + `installer.i4j/` (install4j projects: `kojo.install4j` English, `koco.install4j` Turkish). All of them call `stage-scala-toolchains.sh`, which stages both Scala toolchains under `lib/scala-en` (stock jars, downloaded from Maven Central and cached in the gitignored `scala-en-jars/`) and `lib/scala-tr` (the Turkish-keyword jars). `installer/jarlist.txt` must be updated when a dependency version changes (it deliberately excludes the four toolchain jars — those are staged by `stage-scala-toolchains.sh`). These scripts contain hard-coded developer paths and need a `scala` CLI on PATH — not portable as-is.
 
 ## The patched Scala compiler (`scala-tr/`)
