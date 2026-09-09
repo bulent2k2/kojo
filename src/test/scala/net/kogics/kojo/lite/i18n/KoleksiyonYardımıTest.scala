@@ -126,6 +126,23 @@ class KoleksiyonYardımıTest {
   }
 
   @Test
+  def elleYazılanYardımlarKaybolmadı(): Unit = {
+    // `elleYazılan ++ koleksiyonYardımı` deseydik aynı adlı girdiler sessizce
+    // ezilirdi. Nitekim bir süre ezildi: sil (tuvali sil) ve yazı (tuvale yaz)
+    // -- ikisi de öğrencinin ilk öğrendiği komutlardan. Artık birleşiyorlar.
+    val çakışanlar = List("sil", "yazı")
+    çakışanlar.foreach { ad =>
+      val metin = tr.help.content.getOrElse(ad, fail(s"$ad için yardım yok").asInstanceOf[String])
+      assertTrue(
+        s"$ad girdisinde iki anlam da yok -- koleksiyon girdisi elle yazılanı ezmiş olabilir",
+        metin.contains("Bu ad başka bir türde de kullanılıyor")
+      )
+    }
+    // sil girdisi hâlâ tuvalden söz ediyor mu (elle yazılan kısım duruyor mu)
+    assertTrue("sil girdisinde tuval/çizim anlatımı kaybolmuş", tr.help.content("sil").contains("tuval"))
+  }
+
+  @Test
   def herYöntemİçinYardımVar(): Unit = {
     val içerik = tr.help.content
     tr.help.koleksiyonYöntemleri.foreach {

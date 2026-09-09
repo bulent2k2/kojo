@@ -105,10 +105,7 @@ object help {
 
   // NOTE: We can't use less than operator! < is meaningful to the xml/html stuff! Instead, use &lt;
   // https://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references
-  // lazy: koleksiyonYardımı aşağıdaki koleksiyonYöntemleri tablosunu okuyor,
-  // o da bu satırdan SONRA tanımlı. Eager olsaydı tablo daha null olurdu
-  // (Scala'nın val ilklendirme sırası tuzağı).
-  lazy val content = Map(
+  private val elleYazılanİçerik = Map(
     "a_kalıp" -> <div>
       <strong>komut</strong>(g1, g2) - Açıklama ... <br/>
       Daha çok açıklama ... <br/>
@@ -656,7 +653,27 @@ açı(n2, n1)
     "sürüm" -> "sürüm - Çıktıya kullanılan Scala sürümünü yazar.",
 
     // todo: much more
-  ) ++ koleksiyonYardımı
+  )
+
+  // Aynı ad hem elle yazılmış bir komutta hem bir koleksiyon yönteminde
+  // olabilir: sil (tuvali sil / yığını boşalt), yazı (tuvale yaz / aralığı
+  // yazıya çevir). `elleYazılanİçerik ++ koleksiyonYardımı` deseydik koleksiyon
+  // girdisi ötekini SESSİZCE ezerdi -- nitekim bir süre ezdi. Çakışanları
+  // birleştiriyoruz, ikisi de görünüyor.
+  //
+  // lazy: koleksiyonYardımı aşağıdaki koleksiyonYöntemleri tablosunu okuyor,
+  // o da bu satırdan SONRA tanımlı (Scala'nın val ilklendirme sırası tuzağı).
+  private val ayraç =
+    "<hr/><em>Bu ad başka bir türde de kullanılıyor:</em><br/>"
+
+  lazy val content: Map[String, String] =
+    koleksiyonYardımı.foldLeft(elleYazılanİçerik) {
+      case (harita, (ad, metin)) =>
+        harita.get(ad) match {
+          case Some(eski) => harita + (ad -> (eski + ayraç + metin))
+          case None       => harita + (ad -> metin)
+        }
+    }
 
   // Koleksiyon yöntemlerinin yardım metinleri: (ad, imza, açıklama, örnek, örneğin sonucu).
   //
