@@ -185,6 +185,9 @@ class KoleksiyonYardımıTest {
     "eslem.scala:Eşlem" -> "Eşlem",
     "aralik.scala:RangeYöntemleri" -> "Aralık",
     "yazi.scala:YazıYöntemleri" -> "Yazı",
+    // EsnekYazı (StringBuilder) haritada YOKTU: sil/harf/parçası/sayıya/kesire
+    // burada da tanımlı, dolayısıyla üretilen listeler eksik çıkıyordu.
+    "yazi.scala:EsnekYazıYöntemleri" -> "EsnekYazı",
     "harf.scala:HarfYöntemleri" -> "Harf",
     "yineleyici.scala:YineleyiciYöntem" -> "Yineleyici",
     "yineleyici.scala:BellekliYineleyiciYöntem" -> "Yineleyici",
@@ -219,6 +222,7 @@ class KoleksiyonYardımıTest {
     "Dizim" -> Set.empty[String],
     "EsnekDizim" -> Set.empty[String],
     "Yazı" -> Set.empty[String],
+    "EsnekYazı" -> Set.empty[String],
     "Harf" -> Set.empty[String],
     "Yineleyici" -> Set.empty[String],
     "İkisindenBiri" -> Set.empty[String],
