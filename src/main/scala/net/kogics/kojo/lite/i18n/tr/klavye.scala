@@ -22,7 +22,7 @@ trait KeyCodesInTurkish {
     val enter = '\n'
     val gir = enter
     val back_space = '\b'
-    val sil_geri = back_space
+    val silGeri = back_space
     val sekme = '\t'
     val cancel = 0x03
     val iptal = cancel
@@ -35,7 +35,7 @@ trait KeyCodesInTurkish {
     val alt = 0x12
     val pause = 0x13
     val dur = pause
-    val büyük_harf_kilitleme = 0x14
+    val büyükHarfKilidi = 0x14
     val escape = 0x1b
     val çık = escape
     val kaç = escape
@@ -44,10 +44,10 @@ trait KeyCodesInTurkish {
     val page_down = 0x22
     val end = 0x23
     val home = 0x24
-    val sayfa_yukarı = page_up
-    val sayfa_aşağı = page_down
-    val satır_sonu = end
-    val satır_başı = home
+    val sayfaYukarı = page_up
+    val sayfaAşağı = page_down
+    val satırSonu = end
+    val satırBaşı = home
     val ev = home
 
     /** Constant for the non-numpad <b>left</b> arrow key.
@@ -105,7 +105,7 @@ trait KeyCodesInTurkish {
 
     /** Constant for the semicolon key, ""
       */
-    val noktalı_virgül = 0x3b
+    val noktalıVirgül = 0x3b
 
     /** Constant for the equals key, "="
       */
@@ -139,6 +139,41 @@ trait KeyCodesInTurkish {
     val x = 0x58
     val y = 0x59
     val z = 0x5a
+
+    // --- Eskitilmiş yazımlar ------------------------------------------------
+    //
+    // Bu yedi ad snake_case idi; ikojo (canlı) camelCase kullanıyor ve bu
+    // deponun kendi Türkçe katmanı da öyle: i18n altında 1341 camelCase tanıma
+    // karşılık 16 snake_case var ve onların 10'u tam da bu dosyadaydı. Yani
+    // aykırı olan burası idi, ikojo değil.
+    //
+    // Ayrışmanın bedeli somut: masaüstünde çalışan bir yazılımcık ikojo'da
+    // "value sayfa_yukarı is not a member of ..." ile patlıyordu.
+    //
+    // Eski adlar takma ad olarak duruyor -- onları kullanan yazılımcıklar
+    // kırılmasın diye. Depodaki kalıp bu (kuyruk/eslem/yazi'daki "eylemle
+    // başlayan ada geçildi" takma adları).
+    //
+    // NE DEĞİŞMEDİ: yukarıdaki üç İNGİLİZCE snake_case ad (back_space,
+    // page_up, page_down) bilerek olduğu gibi bırakıldı -- onlar AWT'nin
+    // VK_BACK_SPACE/VK_PAGE_UP/VK_PAGE_DOWN adlarının birebir karşılığı ve
+    // dosyanın port edildiği kaynağa bağlılar. Yani bu dosyadaki snake_case
+    // sayısı 10'dan 0'a değil 3'e indi; ikojo da (eş PR) aynı üçünü kabul
+    // ediyor, çünkü aradığımız şey iki tarafın AYNI adları tanıması.
+    @deprecated("ikojo ile aynı yazıma geçildi: silGeri kullanın", "Eylül 2026")
+    val sil_geri = silGeri
+    @deprecated("ikojo ile aynı yazıma geçildi: büyükHarfKilidi kullanın", "Eylül 2026")
+    val büyük_harf_kilitleme = büyükHarfKilidi
+    @deprecated("ikojo ile aynı yazıma geçildi: sayfaYukarı kullanın", "Eylül 2026")
+    val sayfa_yukarı = sayfaYukarı
+    @deprecated("ikojo ile aynı yazıma geçildi: sayfaAşağı kullanın", "Eylül 2026")
+    val sayfa_aşağı = sayfaAşağı
+    @deprecated("ikojo ile aynı yazıma geçildi: satırSonu kullanın", "Eylül 2026")
+    val satır_sonu = satırSonu
+    @deprecated("ikojo ile aynı yazıma geçildi: satırBaşı kullanın", "Eylül 2026")
+    val satır_başı = satırBaşı
+    @deprecated("ikojo ile aynı yazıma geçildi: noktalıVirgül kullanın", "Eylül 2026")
+    val noktalı_virgül = noktalıVirgül
   }
 
 }

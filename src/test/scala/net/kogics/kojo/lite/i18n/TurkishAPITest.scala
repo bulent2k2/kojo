@@ -1560,4 +1560,42 @@ import net.kogics.kojo.staging
     dez bkk = BKK(yazı)
     bkk.toExternalForm should be(yazı)
   }
+
+  // Tuş adları ikojo (canlı) ile aynı olmalı.
+  //
+  // Neden: masaüstünde çalışan bir yazılımcık ikojo'ya yapıştırılınca
+  // "value sayfa_yukarı is not a member of ..." ile patlıyordu. Yedi ad burada
+  // snake_case, orada camelCase idi. camelCase'e geçildi (bu deponun kendi
+  // Türkçe katmanında da camelCase 1341'e 16 önde), eski yazımlar takma ad
+  // olarak duruyor.
+  test("tuş adları: camelCase yazımlar ikojo ile aynı") {
+    tuşlar.silGeri should be('\b')
+    tuşlar.büyükHarfKilidi should be(0x14)
+    tuşlar.sayfaYukarı should be(0x21)
+    tuşlar.sayfaAşağı should be(0x22)
+    tuşlar.satırSonu should be(0x23)
+    tuşlar.satırBaşı should be(0x24)
+    tuşlar.noktalıVirgül should be(0x3b)
+  }
+
+  test("tuş adları: eskitilmiş snake_case yazımlar aynı tuşu veriyor") {
+    tuşlar.sil_geri should be(tuşlar.silGeri)
+    tuşlar.büyük_harf_kilitleme should be(tuşlar.büyükHarfKilidi)
+    tuşlar.sayfa_yukarı should be(tuşlar.sayfaYukarı)
+    tuşlar.sayfa_aşağı should be(tuşlar.sayfaAşağı)
+    tuşlar.satır_sonu should be(tuşlar.satırSonu)
+    tuşlar.satır_başı should be(tuşlar.satırBaşı)
+    tuşlar.noktalı_virgül should be(tuşlar.noktalıVirgül)
+  }
+
+  test("tuşBasılıMı: ikojo'daki ad burada da var (DERLEME savı)") {
+    // Bu bir derleme savı, koşan bir sav DEĞİL -- adı öyle koydum ki
+    // yanlış anlaşılmasın. Çağıramıyoruz: tuşBasılıMı rb.isKeyPressed'e
+    // gidiyor, o da gerçek bir tuval ister. Aşağıdaki bağlama ad silinirse
+    // DERLENMEZ; çalışma anında doğruladığı bir şey yok. (Eta genişletmeyle
+    // üretilen işlev değeri hiçbir zaman null olamayacağı için buraya bir
+    // `should not be null` koymak boş bir sav olurdu.)
+    val f: Sayı => İkil = tuşBasılıMı _
+    locally(f)
+  }
 }
