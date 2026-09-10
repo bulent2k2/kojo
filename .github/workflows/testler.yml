@@ -58,13 +58,16 @@ jobs:
             ~/.ivy2/cache
             ~/.sbt
             ~/.cache/coursier
-          key: sbt-${{ runner.os }}-${{ hashFiles('build.sbt', 'project/build.properties') }}
+          key: sbt-${{ runner.os }}-${{ hashFiles('build.sbt', 'project/build.properties', 'project/plugins.sbt') }}
           restore-keys: sbt-${{ runner.os }}-
 
-      # ubuntu-latest imajında xvfb var, ama yoksa iş anlaşılmaz bir hatayla
-      # düşer; ucuz olduğu için açıkça kuruluyor.
-      - name: xvfb
-        run: sudo apt-get update -qq && sudo apt-get install -y -qq xvfb
+      # ubuntu-latest imajında Xvfb zaten var; bu adım "ya bir gün olmazsa"
+      # sigortası. Ama koşulsuz `apt-get update` sigorta olmaktan çıkıp
+      # KIRILGANLIK ekliyordu: runner'larda ara sıra ayna hatası (404 /
+      # hash uyuşmazlığı) veriyor ve iş koddan bağımsız bir sebeple kırmızı
+      # yanıyor. Yalnız gerçekten eksikse kuruluyor.
+      - name: xvfb (yoksa)
+        run: command -v xvfb-run >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq xvfb; }
 
       - name: tam takım
         run: |
