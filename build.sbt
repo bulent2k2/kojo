@@ -9,6 +9,10 @@ scalacOptions := Seq("-feature", "-deprecation")  // "-Ylog-classpath"
 run / javaOptions ++= Seq("-Xmx1024m", "-Xss1m", "-XX:+UseConcMarkSweepGC", "-XX:+CMSClassUnloadingEnabled")
 
 Test / fork := true
+// DİKKAT: CI bu listeyi `:=` ile TAMAMEN değiştiriyor (CMS bayrakları Java
+// 14+'ta JVM'i başlatmıyor, yerlerine --add-opens geliyor) --
+// bkz. .github/workflows/testler.yml. Buraya testler için gereken yeni bir
+// seçenek eklersen CI onu SESSİZCE düşürür; workflow'daki listeye de ekle.
 Test / javaOptions ++= Seq("-Xmx1024m", "-Xss1m", "-XX:+UseConcMarkSweepGC", "-XX:+CMSClassUnloadingEnabled")
 testOptions += Tests.Argument(TestFrameworks.JUnit, "-v", "-s")
 

@@ -1,0 +1,78 @@
+# Depo testleri. Bu deponun İLK CI işi -- daha önce hiçbir şey otomatik
+# doğrulamıyordu, CLAUDE.md de bunu "No CI exists" diye yazıyordu.
+#
+# Aşağıdaki üç ayar KOZMETİK DEĞİL; üçü de ölçülerek bulundu ve CLAUDE.md'de
+# "Building on a modern JDK / headless container" başlığı altında belgeli:
+#
+#  1. UTF-8 zorunlu. lite/i18n/tr/ Türkçe adlı sınıf dosyaları üretiyor
+#     (res$AydınlıkBD.class). UTF-8 olmayan varsayılan charset'te zinc
+#     "InvalidPathException: Malformed input" ile ölüyor.
+#  2. ./sbt.sh KULLANILMIYOR. O betik -XX:+CMSClassUnloadingEnabled veriyor;
+#     Java 14+ o bayrağı kaldırdı, JVM hiç başlamıyor. Bayrak Java 8 hedefi
+#     için doğru, o yüzden sbt.sh'a dokunmuyoruz -- yalnız burada launcher
+#     jar'ı doğrudan çağırıyoruz.
+#  3. --add-opens java.base/java.lang=ALL-UNNAMED. cglib/jmock tabanlı
+#     takımlar (TraceTest, CommandHistoryTest, InterpOutputHandlerTest)
+#     Java 9+ altında bunsuz düşüyor. Bununla tam takım geçiyor.
+#
+# Ayrıca testler EKRAN istiyor: TestEnv gerçek Swing/Piccolo nesneleri
+# kuruyor, headless kipi yok. Bu yüzden xvfb-run.
+#
+# Scala araç zinciri Maven'dan GELMİYOR: build.sbt scalaHome'u depodaki
+# yamalı jarlara (scala-tr/build/pack) sabitliyor. Onlar commit'li, yani
+# indirilecek bir şey yok -- ama scala-tr/build/pack/lib ASLA temizlenmemeli.
+name: testler
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  test:
+    name: tam takım (Java 21, xvfb)
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      # (1) UTF-8 -- Türkçe adlı sınıf dosyaları için şart.
+      LANG: C.UTF-8
+      LC_ALL: C.UTF-8
+    steps:
+      - uses: actions/checkout@v4
+
+      # Java 21 seçildi çünkü ölçülen reçete bu (CLAUDE.md, 353/353).
+      # Yapının HEDEFİ Java 8 ve runtime 8-21 destekliyor; 8 ile koşum bu
+      # işte denenmedi, o yüzden ölçülmüş olanı koşturuyoruz.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      # sbt bağımlılıkları Maven'dan çözüyor (Scala araç zinciri hariç).
+      - uses: actions/cache@v4
+        with:
+          path: |
+            ~/.ivy2/cache
+            ~/.sbt
+            ~/.cache/coursier
+          key: sbt-${{ runner.os }}-${{ hashFiles('build.sbt', 'project/build.properties', 'project/plugins.sbt') }}
+          restore-keys: sbt-${{ runner.os }}-
+
+      # ubuntu-latest imajında Xvfb zaten var; bu adım "ya bir gün olmazsa"
+      # sigortası. Ama koşulsuz `apt-get update` sigorta olmaktan çıkıp
+      # KIRILGANLIK ekliyordu: runner'larda ara sıra ayna hatası (404 /
+      # hash uyuşmazlığı) veriyor ve iş koddan bağımsız bir sebeple kırmızı
+      # yanıyor. Yalnız gerçekten eksikse kuruluyor.
+      - name: xvfb (yoksa)
+        run: command -v xvfb-run >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq xvfb; }
+
+      - name: tam takım
+        run: |
+          xvfb-run -a java -Xms512M -Xmx2g -Xss2M \
+            -Dfile.encoding=UTF-8 -Dsun.jnu.encoding=UTF-8 \
+            -jar sbt-launch.1.5.5.jar \
+            'set Test/javaOptions := Seq("-Xmx1024m","-Xss2m","-Dfile.encoding=UTF-8","--add-opens","java.base/java.lang=ALL-UNNAMED")' \
+            test
