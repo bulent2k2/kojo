@@ -843,6 +843,8 @@ import net.kogics.kojo.staging
     Dizi(1, 2, 3).yineleyici.topla should be(6)
     Dizi(1, 2, 3).yineleyici.enİrisi should be(3)
     Dizi(1, 2, 3).yineleyici.katla(10)(_ + _) should be(16)
+    // taraSağdan yineleyiciyi tüketir; help.scala'daki örnekle aynı sonuç
+    Dizi(1, 2, 3).yineleyici.taraSağdan(0)(_ + _).dizine should be(Dizin(6, 5, 3, 0))
     Dizi(1, 2, 3).yineleyici.bul(_ > 1) should be(Biri(2))
     Dizi(1, 2, 3).yineleyici.say(_ > 1) should be(2)
     Dizi(1, 2).yineleyici.yazıYap("-") should be("1-2")

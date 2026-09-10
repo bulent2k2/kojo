@@ -108,7 +108,9 @@ trait YineleyiciYöntemleri {
     def enİrisiBelki[B](iş: T => B)(implicit karşılaştırma: Ordering[B]): Belki[T] = y.maxByOption(iş)(karşılaştırma)
     def indirgeSoldanBelki[S >: T](işlem: (S, T) => S): Belki[S] = y.reduceLeftOption(işlem)
     def indirgeSağdanBelki[S >: T](işlem: (T, S) => S): Belki[S] = y.reduceRightOption(işlem)
-    def taraSağdan[B](başlangıç: B)(işlem: (T, B) => B): Yineleyici[B] = y.scanRight(başlangıç)(işlem)
+    // Yineleyici.scanRight kullanımdan kalktı; kendi gövdesi zaten buydu -- geri koyma.
+    def taraSağdan[B](başlangıç: B)(işlem: (T, B) => B): Yineleyici[B] =
+      collection.mutable.ArrayBuffer.from(y).scanRight(başlangıç)(işlem).iterator
     def bölYerinden(yeri: Sayı): (Yineleyici[T], Yineleyici[T]) = y.splitAt(yeri)
     // sıradaki'nin hata vermeyen biçimi (başıBelki/sonuBelki ile aynı kalıp)
     def sıradakiBelki: Belki[T] = y.nextOption()
