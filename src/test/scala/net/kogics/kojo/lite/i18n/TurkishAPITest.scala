@@ -1588,10 +1588,14 @@ import net.kogics.kojo.staging
     tuşlar.noktalı_virgül should be(tuşlar.noktalıVirgül)
   }
 
-  test("tuşBasılıMı: ikojo'daki ad burada da var") {
-    // Çağırmıyoruz -- gerçek bir tuval isterdi. İşlev değerine bağlamak
-    // adın varlığını KOŞARAK doğruluyor; ad silinirse burası derlenmez.
+  test("tuşBasılıMı: ikojo'daki ad burada da var (DERLEME savı)") {
+    // Bu bir derleme savı, koşan bir sav DEĞİL -- adı öyle koydum ki
+    // yanlış anlaşılmasın. Çağıramıyoruz: tuşBasılıMı rb.isKeyPressed'e
+    // gidiyor, o da gerçek bir tuval ister. Aşağıdaki bağlama ad silinirse
+    // DERLENMEZ; çalışma anında doğruladığı bir şey yok. (Eta genişletmeyle
+    // üretilen işlev değeri hiçbir zaman null olamayacağı için buraya bir
+    // `should not be null` koymak boş bir sav olurdu.)
     val f: Sayı => İkil = tuşBasılıMı _
-    f should not be null
+    locally(f)
   }
 }

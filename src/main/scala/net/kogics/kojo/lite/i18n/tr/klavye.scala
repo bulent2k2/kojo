@@ -153,6 +153,13 @@ trait KeyCodesInTurkish {
     // Eski adlar takma ad olarak duruyor -- onları kullanan yazılımcıklar
     // kırılmasın diye. Depodaki kalıp bu (kuyruk/eslem/yazi'daki "eylemle
     // başlayan ada geçildi" takma adları).
+    //
+    // NE DEĞİŞMEDİ: yukarıdaki üç İNGİLİZCE snake_case ad (back_space,
+    // page_up, page_down) bilerek olduğu gibi bırakıldı -- onlar AWT'nin
+    // VK_BACK_SPACE/VK_PAGE_UP/VK_PAGE_DOWN adlarının birebir karşılığı ve
+    // dosyanın port edildiği kaynağa bağlılar. Yani bu dosyadaki snake_case
+    // sayısı 10'dan 0'a değil 3'e indi; ikojo da (eş PR) aynı üçünü kabul
+    // ediyor, çünkü aradığımız şey iki tarafın AYNI adları tanıması.
     @deprecated("ikojo ile aynı yazıma geçildi: silGeri kullanın", "Eylül 2026")
     val sil_geri = silGeri
     @deprecated("ikojo ile aynı yazıma geçildi: büyükHarfKilidi kullanın", "Eylül 2026")
