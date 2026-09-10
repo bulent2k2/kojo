@@ -52,14 +52,14 @@ xvfb-run -a java -Xms512M -Xmx2g -Xss2M \
    not delete it from `sbt.sh`; just don't use `sbt.sh` on a modern JDK.
 
 With `--add-opens java.base/java.lang=ALL-UNNAMED` in `Test/javaOptions`
-**the whole suite passes on Java 21** — measured 2026-09: 353 tests, 0
-failures (189 ScalaTest + the JUnit side), 2 ignored. This is exactly what
+**the whole suite passes on Java 21** — measured 2026-09: 356 tests, 0
+failures (192 ScalaTest + the JUnit side), 2 ignored. This is exactly what
 CI runs (see the CI caveat below), so a green run here means a green run
 there.
 
 Caveats:
 - **Tests need a display.** `TestEnv` constructs real Swing/Piccolo objects; there is no headless mode. On a bare container use `xvfb-run ./sbt.sh test` (on a modern JDK, the recipe above instead).
-- **Two test frameworks run.** Since the `junit-interface` dependency arrived (2026-08 upstream sync), `sbt test` runs 189 ScalaTest tests (22 suites) plus 164 plain-JUnit tests (`TurtleTest`, `CommandHistoryTest`, the `CompilerAndRunnerTestBase` subclasses, …) that were silently dormant before — 353 in total, the number quoted above. On Java 9+ the cglib/jmock-based suites (`TraceTest`, `CommandHistoryTest`, `InterpOutputHandlerTest`) additionally need `--add-opens java.base/java.lang=ALL-UNNAMED` in `Test/javaOptions`; `./sbt.sh test` doesn't pass it, and failures without it are that, not real breakage. **Pass it and there are none** — see the recipe above.
+- **Two test frameworks run.** Since the `junit-interface` dependency arrived (2026-08 upstream sync), `sbt test` runs 192 ScalaTest tests (22 suites) plus 164 plain-JUnit tests (`TurtleTest`, `CommandHistoryTest`, the `CompilerAndRunnerTestBase` subclasses, …) that were silently dormant before — 356 in total, the number quoted above. On Java 9+ the cglib/jmock-based suites (`TraceTest`, `CommandHistoryTest`, `InterpOutputHandlerTest`) additionally need `--add-opens java.base/java.lang=ALL-UNNAMED` in `Test/javaOptions`; `./sbt.sh test` doesn't pass it, and failures without it are that, not real breakage. **Pass it and there are none** — see the recipe above.
 - `src/itest/` is not wired into `build.sbt`; `sbt test` never runs it.
 - **CI runs the full suite** (`.github/workflows/testler.yml`, on pull requests and on pushes to
   `master`). It uses the modern-JDK recipe above verbatim — Java 21, UTF-8, `xvfb-run`,

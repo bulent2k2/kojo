@@ -400,6 +400,8 @@ object TurkishAPI
   def tuvaliDöndür(açı: Kesir): Birim = rb.tCanvas.viewRotate(açı)
 
   def tuşaBasılıMı(tuş: Sayı): İkil = rb.isKeyPressed(tuş)
+  // ikojo'da (canlı) bu adla duruyor; iki tarafta da ikisi birden çalışsın.
+  def tuşBasılıMı(tuş: Sayı): İkil = tuşaBasılıMı(tuş)
   def tuşaBasınca(iş: Sayı => Birim): Birim = rb.tCanvas.onKeyPress(iş)
   def tuşuBırakınca(iş: Sayı => Birim): Birim = rb.tCanvas.onKeyRelease(iş)
   def fareyeTıklayınca(iş: (Kesir, Kesir) => Birim): Birim = rb.tCanvas.onMouseClick(iş)
