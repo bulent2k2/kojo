@@ -374,8 +374,8 @@ trait EsnekDizikYöntemleri {
     def çıkar(yeri: Sayı, kaçTane: Sayı): Birim = d.remove(yeri, kaçTane)
     def çıkarÖgeyi(öge: T): Col = { d.subtractOne(öge); d }
     def çıkarHepsini(ögeler: YinelenebilirBirKere[T]): Col = { d.subtractAll(ögeler); d }
-    def baştanKırp(kaçTane: Sayı): Birim = d.trimStart(kaçTane)
-    def sondanKırp(kaçTane: Sayı): Birim = d.trimEnd(kaçTane)
+    def baştanKırp(kaçTane: Sayı): Birim = d.dropInPlace(kaçTane)
+    def sondanKırp(kaçTane: Sayı): Birim = d.dropRightInPlace(kaçTane)
     def boşalt(): Birim = d.clear()
     def kopyası: EsnekDizik[T] = d.clone()
 }
