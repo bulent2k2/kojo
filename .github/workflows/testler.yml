@@ -41,18 +41,23 @@ jobs:
       LANG: C.UTF-8
       LC_ALL: C.UTF-8
     steps:
-      - uses: actions/checkout@v4
+      # Action'lar MAJOR etiketine sabitleniyor (SHA'ya değil): güvenlik
+      # yamalarını kendiliğinden alsınlar, kırıcı değişiklik ise major
+      # atlarken bilinçli olsun. GitHub eskiyen çalışma zamanını (bugün
+      # Node) iş günlüğünde uyarı olarak duyuruyor -- o uyarı çıktığında
+      # buradaki üçü birden tazelenmeli, yoksa bir gün zorla yükseltilir.
+      - uses: actions/checkout@v7
 
       # Java 21 seçildi çünkü ölçülen reçete bu (CLAUDE.md, 353/353).
       # Yapının HEDEFİ Java 8 ve runtime 8-21 destekliyor; 8 ile koşum bu
       # işte denenmedi, o yüzden ölçülmüş olanı koşturuyoruz.
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v6
         with:
           distribution: temurin
           java-version: "21"
 
       # sbt bağımlılıkları Maven'dan çözüyor (Scala araç zinciri hariç).
-      - uses: actions/cache@v4
+      - uses: actions/cache@v6
         with:
           path: |
             ~/.ivy2/cache
