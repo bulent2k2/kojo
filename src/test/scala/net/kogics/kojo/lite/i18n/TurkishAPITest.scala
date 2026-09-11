@@ -1564,11 +1564,16 @@ import net.kogics.kojo.staging
   // Tuş adları ikojo (canlı) ile aynı olmalı.
   //
   // Neden: masaüstünde çalışan bir yazılımcık ikojo'ya yapıştırılınca
-  // "value sayfa_yukarı is not a member of ..." ile patlıyordu. Yedi ad burada
-  // snake_case, orada camelCase idi. camelCase'e geçildi (bu deponun kendi
-  // Türkçe katmanında da camelCase 1341'e 16 önde), eski yazımlar takma ad
-  // olarak duruyor.
-  test("tuş adları: camelCase yazımlar ikojo ile aynı") {
+  // "value sayfa_yukarı is not a member of ..." ile patlıyordu. Yedi Türkçe ad
+  // burada snake_case, orada camelCase idi; camelCase'e geçildi. Bu turda son
+  // üç İNGİLİZCE ad da geçti (back_space/page_up/page_down -> backSpace/
+  // pageUp/pageDown), yani bu dosyada birincil snake_case ad KALMADI. Eski
+  // yazımların hepsi eskitilmiş takma ad olarak duruyor.
+  // DİKKAT -- burada çivilenen değerler AWT VK_*; ikojo'nunkiler DOM keyCode
+  // ve bilerek farklı (`noktalıVirgül` burada 0x3b=59, ikojo'da 186; `enter`
+  // burada 10, orada 13). ikojo ile aynı olan ADLAR, değerler değil -- savın
+  // adı bunu söylüyor.
+  test("tuş adları: camelCase ADLAR ikojo ile aynı (değerler AWT)") {
     tuşlar.silGeri should be('\b')
     tuşlar.büyükHarfKilidi should be(0x14)
     tuşlar.sayfaYukarı should be(0x21)
@@ -1576,6 +1581,10 @@ import net.kogics.kojo.staging
     tuşlar.satırSonu should be(0x23)
     tuşlar.satırBaşı should be(0x24)
     tuşlar.noktalıVirgül should be(0x3b)
+    // bu turda geçen üç İngilizce ad
+    tuşlar.backSpace should be('\b')
+    tuşlar.pageUp should be(0x21)
+    tuşlar.pageDown should be(0x22)
   }
 
   test("tuş adları: eskitilmiş snake_case yazımlar aynı tuşu veriyor") {
@@ -1586,6 +1595,97 @@ import net.kogics.kojo.staging
     tuşlar.satır_sonu should be(tuşlar.satırSonu)
     tuşlar.satır_başı should be(tuşlar.satırBaşı)
     tuşlar.noktalı_virgül should be(tuşlar.noktalıVirgül)
+    tuşlar.back_space should be(tuşlar.backSpace)
+    tuşlar.page_up should be(tuşlar.pageUp)
+    tuşlar.page_down should be(tuşlar.pageDown)
+  }
+
+  /**
+   * BÜTÜN tuş değerleri AWT VK_* ile ÇİVİLİ -- 62 ad.
+   *
+   * NEDEN: yukarıdaki savlar yalnız 7 ayrı değeri çiviliyordu (on satır var
+   * ama backSpace/pageUp/pageDown zaten ilk üçünün takma adı, aynı val).
+   * Kalan 55 ad bağıl zincirdeydi ve sessizce bozulabiliyordu -- ölçüldü:
+   * `sol`u 0x99 yapınca 63 savın hepsi geçti. Üstelik çivili olan on ad
+   * örneklerde HİÇ kullanılmıyor; açıkta kalanlar arasında ise örneklerin
+   * en çok kullandıkları var (yukarı, aşağı, sol, sağ, boşluk).
+   *
+   * Burada elle sayı YAZILMIYOR: bu dosyanın kaynağı AWT'nin KeyEvent'i
+   * (klavye.scala'nın başındaki nota bakın), yani doğruyu JDK'nın kendisi
+   * söylüyor. Bir harf hatası girer girmez kırmızı yanar ve gözle bakılacak
+   * sihirli sayı kalmaz.
+   *
+   * DİKKAT -- enter/backSpace/sekme bu dosyada Char, ötekiler Int. ScalaTest
+   * kutulanmış Character(10) ile Integer(10)'u EŞİT SAYMAZ, o yüzden o üçünde
+   * .toInt var. (ikojo'da bu sav elle yazılmış tabloya dayanmak zorunda --
+   * orada DOM keyCode için bir sabit sınıfı yok.)
+   *
+   * NE YAKALAMAZ: yeni bir ad EKLENMESİ -- liste elle yazılı.
+   */
+  test("tuş adları: BÜTÜN değerler AWT VK_* ile aynı (62 ad)") {
+    import java.awt.event.KeyEvent._
+
+    // Char olanlar -- .toInt şart, yukarıdaki nota bakın
+    tuşlar.enter.toInt should be(VK_ENTER)
+    tuşlar.backSpace.toInt should be(VK_BACK_SPACE)
+    tuşlar.sekme.toInt should be(VK_TAB)
+
+    // denetim ve düzenleme
+    tuşlar.cancel should be(VK_CANCEL)
+    tuşlar.clear should be(VK_CLEAR)
+    tuşlar.shift should be(VK_SHIFT)
+    tuşlar.control should be(VK_CONTROL)
+    tuşlar.alt should be(VK_ALT)
+    tuşlar.pause should be(VK_PAUSE)
+    tuşlar.büyükHarfKilidi should be(VK_CAPS_LOCK)
+    tuşlar.escape should be(VK_ESCAPE)
+    tuşlar.boşluk should be(VK_SPACE)
+    tuşlar.pageUp should be(VK_PAGE_UP)
+    tuşlar.pageDown should be(VK_PAGE_DOWN)
+    tuşlar.end should be(VK_END)
+    tuşlar.home should be(VK_HOME)
+
+    // ok tuşları -- örneklerin en çok kullandıkları
+    tuşlar.sol should be(VK_LEFT)
+    tuşlar.yukarı should be(VK_UP)
+    tuşlar.sağ should be(VK_RIGHT)
+    tuşlar.aşağı should be(VK_DOWN)
+
+    // noktalama
+    tuşlar.virgül should be(VK_COMMA)
+    tuşlar.eksi should be(VK_MINUS)
+    tuşlar.nokta should be(VK_PERIOD)
+    tuşlar.bölü should be(VK_SLASH)
+    tuşlar.noktalıVirgül should be(VK_SEMICOLON)
+    tuşlar.eşittir should be(VK_EQUALS)
+
+    // rakamlar ve harfler
+    val rakamlar = List(
+      tuşlar.n0, tuşlar.n1, tuşlar.n2, tuşlar.n3, tuşlar.n4,
+      tuşlar.n5, tuşlar.n6, tuşlar.n7, tuşlar.n8, tuşlar.n9
+    )
+    rakamlar should have size 10
+    rakamlar.zipWithIndex.foreach { case (değer, i) => değer should be(VK_0 + i) }
+
+    val harfler = List(
+      tuşlar.a, tuşlar.b, tuşlar.c, tuşlar.d, tuşlar.e, tuşlar.f, tuşlar.g,
+      tuşlar.h, tuşlar.i, tuşlar.j, tuşlar.k, tuşlar.l, tuşlar.m, tuşlar.n,
+      tuşlar.o, tuşlar.p, tuşlar.q, tuşlar.r, tuşlar.s, tuşlar.t, tuşlar.u,
+      tuşlar.v, tuşlar.w, tuşlar.x, tuşlar.y, tuşlar.z
+    )
+    harfler should have size 26
+    harfler.zipWithIndex.foreach { case (değer, i) => değer should be(VK_A + i) }
+
+    // Türkçe adlar İngilizce köklerinden kopmamış (bağıl -- kökler yukarıda çivili)
+    tuşlar.gir should be(tuşlar.enter)
+    tuşlar.silGeri should be(tuşlar.backSpace)
+    tuşlar.çık should be(tuşlar.escape)
+    tuşlar.kaç should be(tuşlar.escape)
+    tuşlar.sayfaYukarı should be(tuşlar.pageUp)
+    tuşlar.sayfaAşağı should be(tuşlar.pageDown)
+    tuşlar.satırSonu should be(tuşlar.end)
+    tuşlar.satırBaşı should be(tuşlar.home)
+    tuşlar.ev should be(tuşlar.home)
   }
 
   test("tuşBasılıMı: ikojo'daki ad burada da var (DERLEME savı)") {
