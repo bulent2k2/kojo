@@ -142,10 +142,16 @@ trait KeyCodesInTurkish {
 
     // --- Eskitilmiş yazımlar ------------------------------------------------
     //
-    // Bu yedi ad snake_case idi; ikojo (canlı) camelCase kullanıyor ve bu
-    // deponun kendi Türkçe katmanı da öyle: i18n altında 1341 camelCase tanıma
-    // karşılık 16 snake_case var ve onların 10'u tam da bu dosyadaydı. Yani
-    // aykırı olan burası idi, ikojo değil.
+    // Bu on ad snake_case idi; ikojo (canlı) camelCase kullanıyor ve bu
+    // deponun kendi Türkçe katmanı da öyle. Ölçüm: `lite/i18n/tr/` +
+    // `trInit.scala` altındaki snake_case tanımların 10'u tam da bu
+    // dosyadaydı; geri kalan üçü tuş adı bile değil (`log2_e`, `a_kalıp`,
+    // ve Scala'nın işleç kuralı gereği `unary_-`). Yani aykırı olan burası
+    // idi, ikojo değil.
+    //
+    // (Burada eskiden "i18n altında 1341 camelCase / 16 snake_case" diye bir
+    // sayı vardı; yöntemi kayıtlı olmadığı için yeniden üretilemedi ve
+    // çıkarıldı. Yukarıdaki sayım komutla tekrarlanabilir.)
     //
     // Ayrışmanın bedeli somut: masaüstünde çalışan bir yazılımcık ikojo'da
     // "value sayfa_yukarı is not a member of ..." ile patlıyordu.

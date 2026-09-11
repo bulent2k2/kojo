@@ -1569,7 +1569,11 @@ import net.kogics.kojo.staging
   // üç İNGİLİZCE ad da geçti (back_space/page_up/page_down -> backSpace/
   // pageUp/pageDown), yani bu dosyada birincil snake_case ad KALMADI. Eski
   // yazımların hepsi eskitilmiş takma ad olarak duruyor.
-  test("tuş adları: camelCase yazımlar ikojo ile aynı") {
+  // DİKKAT -- burada çivilenen değerler AWT VK_*; ikojo'nunkiler DOM keyCode
+  // ve bilerek farklı (`noktalıVirgül` burada 0x3b=59, ikojo'da 186; `enter`
+  // burada 10, orada 13). ikojo ile aynı olan ADLAR, değerler değil -- savın
+  // adı bunu söylüyor.
+  test("tuş adları: camelCase ADLAR ikojo ile aynı (değerler AWT)") {
     tuşlar.silGeri should be('\b')
     tuşlar.büyükHarfKilidi should be(0x14)
     tuşlar.sayfaYukarı should be(0x21)
