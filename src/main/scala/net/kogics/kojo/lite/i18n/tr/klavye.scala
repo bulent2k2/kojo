@@ -21,8 +21,8 @@ trait KeyCodesInTurkish {
   object tuşlar {
     val enter = '\n'
     val gir = enter
-    val back_space = '\b'
-    val silGeri = back_space
+    val backSpace = '\b'
+    val silGeri = backSpace
     val sekme = '\t'
     val cancel = 0x03
     val iptal = cancel
@@ -40,12 +40,12 @@ trait KeyCodesInTurkish {
     val çık = escape
     val kaç = escape
     val boşluk = 0x20
-    val page_up = 0x21
-    val page_down = 0x22
+    val pageUp = 0x21
+    val pageDown = 0x22
     val end = 0x23
     val home = 0x24
-    val sayfaYukarı = page_up
-    val sayfaAşağı = page_down
+    val sayfaYukarı = pageUp
+    val sayfaAşağı = pageDown
     val satırSonu = end
     val satırBaşı = home
     val ev = home
@@ -154,12 +154,16 @@ trait KeyCodesInTurkish {
     // kırılmasın diye. Depodaki kalıp bu (kuyruk/eslem/yazi'daki "eylemle
     // başlayan ada geçildi" takma adları).
     //
-    // NE DEĞİŞMEDİ: yukarıdaki üç İNGİLİZCE snake_case ad (back_space,
-    // page_up, page_down) bilerek olduğu gibi bırakıldı -- onlar AWT'nin
-    // VK_BACK_SPACE/VK_PAGE_UP/VK_PAGE_DOWN adlarının birebir karşılığı ve
-    // dosyanın port edildiği kaynağa bağlılar. Yani bu dosyadaki snake_case
-    // sayısı 10'dan 0'a değil 3'e indi; ikojo da (eş PR) aynı üçünü kabul
-    // ediyor, çünkü aradığımız şey iki tarafın AYNI adları tanıması.
+    // SON ÜÇ AD DA GEÇTİ. Önceki turda back_space/page_up/page_down bilerek
+    // bırakılmıştı: AWT'nin VK_BACK_SPACE/VK_PAGE_UP/VK_PAGE_DOWN adlarının
+    // birebir karşılığı oldukları ve dosyanın port edildiği kaynağa bağlı
+    // oldukları için. O karar değişti -- tuş adlarının TEK yazımı camelCase
+    // olsun istendi; AWT'ye bağlılık, Türkçe yüzeyde iki ayrı yazım taşımaya
+    // değmiyor. Artık bu dosyada birincil snake_case ad KALMADI; on yılan
+    // yazım da eskitilmiş takma ad olarak duruyor.
+    //
+    // Eskitmek SİLMEK DEĞİL: bu adlarla yazılmış yazılımcıklar derlenmeye
+    // devam ediyor, yalnız uyarı alıyorlar.
     @deprecated("ikojo ile aynı yazıma geçildi: silGeri kullanın", "Eylül 2026")
     val sil_geri = silGeri
     @deprecated("ikojo ile aynı yazıma geçildi: büyükHarfKilidi kullanın", "Eylül 2026")
@@ -174,6 +178,12 @@ trait KeyCodesInTurkish {
     val satır_başı = satırBaşı
     @deprecated("ikojo ile aynı yazıma geçildi: noktalıVirgül kullanın", "Eylül 2026")
     val noktalı_virgül = noktalıVirgül
+    @deprecated("ikojo ile aynı yazıma geçildi: backSpace kullanın", "Eylül 2026")
+    val back_space = backSpace
+    @deprecated("ikojo ile aynı yazıma geçildi: pageUp kullanın", "Eylül 2026")
+    val page_up = pageUp
+    @deprecated("ikojo ile aynı yazıma geçildi: pageDown kullanın", "Eylül 2026")
+    val page_down = pageDown
   }
 
 }

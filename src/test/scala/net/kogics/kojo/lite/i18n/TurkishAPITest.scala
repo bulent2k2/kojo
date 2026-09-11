@@ -1564,10 +1564,11 @@ import net.kogics.kojo.staging
   // Tuş adları ikojo (canlı) ile aynı olmalı.
   //
   // Neden: masaüstünde çalışan bir yazılımcık ikojo'ya yapıştırılınca
-  // "value sayfa_yukarı is not a member of ..." ile patlıyordu. Yedi ad burada
-  // snake_case, orada camelCase idi. camelCase'e geçildi (bu deponun kendi
-  // Türkçe katmanında da camelCase 1341'e 16 önde), eski yazımlar takma ad
-  // olarak duruyor.
+  // "value sayfa_yukarı is not a member of ..." ile patlıyordu. Yedi Türkçe ad
+  // burada snake_case, orada camelCase idi; camelCase'e geçildi. Bu turda son
+  // üç İNGİLİZCE ad da geçti (back_space/page_up/page_down -> backSpace/
+  // pageUp/pageDown), yani bu dosyada birincil snake_case ad KALMADI. Eski
+  // yazımların hepsi eskitilmiş takma ad olarak duruyor.
   test("tuş adları: camelCase yazımlar ikojo ile aynı") {
     tuşlar.silGeri should be('\b')
     tuşlar.büyükHarfKilidi should be(0x14)
@@ -1576,6 +1577,10 @@ import net.kogics.kojo.staging
     tuşlar.satırSonu should be(0x23)
     tuşlar.satırBaşı should be(0x24)
     tuşlar.noktalıVirgül should be(0x3b)
+    // bu turda geçen üç İngilizce ad
+    tuşlar.backSpace should be('\b')
+    tuşlar.pageUp should be(0x21)
+    tuşlar.pageDown should be(0x22)
   }
 
   test("tuş adları: eskitilmiş snake_case yazımlar aynı tuşu veriyor") {
@@ -1586,6 +1591,9 @@ import net.kogics.kojo.staging
     tuşlar.satır_sonu should be(tuşlar.satırSonu)
     tuşlar.satır_başı should be(tuşlar.satırBaşı)
     tuşlar.noktalı_virgül should be(tuşlar.noktalıVirgül)
+    tuşlar.back_space should be(tuşlar.backSpace)
+    tuşlar.page_up should be(tuşlar.pageUp)
+    tuşlar.page_down should be(tuşlar.pageDown)
   }
 
   test("tuşBasılıMı: ikojo'daki ad burada da var (DERLEME savı)") {
