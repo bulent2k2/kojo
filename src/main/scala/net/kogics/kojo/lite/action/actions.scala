@@ -68,6 +68,17 @@ class FullScreenBaseAction(key: String, fsComp: => JComponent, fsCompHolder: => 
     frame.getContentPane.add(fsComp)
     sdev.setFullScreenWindow(frame)
     frame.validate()
+    // macOS'ta ŞART: setFullScreenWindow pencereyi kendiliğinden ekrana ALMIYOR,
+    // tam ekran kipi gösterilmemiş bir pencereyle açılıyor ve ekran kapkara
+    // kalıyor (Esc yine çalışıyor -- pencere odaklı, yalnızca görünmüyor).
+    // Windows ve Linux'te setFullScreenWindow pencereyi zaten gösterdiği için
+    // bu çağrı oralarda işlemsiz; o yüzden platform koşuluna sarılmadı.
+    // Ölçüldü (JBR 11.0.13 / macOS 26.6.2, ekran ortasındaki piksel):
+    //   setVisible yok            -> R=0   G=0 B=0   (kara)
+    //   FSEM'den SONRA setVisible -> R=255 G=0 B=0   (doğru)
+    //   FSEM'den ÖNCE  setVisible -> R=0   G=0 B=0   (kara -- sıra önemli)
+    //   FSEM'den sonra repaint()  -> R=0   G=0 B=0   (sorun çizim değil)
+    frame.setVisible(true)
 
     val escComp = frame.getMostRecentFocusOwner()
     if (escComp != null) {
