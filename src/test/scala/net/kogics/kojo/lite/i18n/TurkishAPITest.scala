@@ -1600,6 +1600,94 @@ import net.kogics.kojo.staging
     tuşlar.page_down should be(tuşlar.pageDown)
   }
 
+  /**
+   * BÜTÜN tuş değerleri AWT VK_* ile ÇİVİLİ -- 62 ad.
+   *
+   * NEDEN: yukarıdaki savlar yalnız 7 ayrı değeri çiviliyordu (on satır var
+   * ama backSpace/pageUp/pageDown zaten ilk üçünün takma adı, aynı val).
+   * Kalan 55 ad bağıl zincirdeydi ve sessizce bozulabiliyordu -- ölçüldü:
+   * `sol`u 0x99 yapınca 63 savın hepsi geçti. Üstelik çivili olan on ad
+   * örneklerde HİÇ kullanılmıyor; açıkta kalanlar arasında ise örneklerin
+   * en çok kullandıkları var (yukarı, aşağı, sol, sağ, boşluk).
+   *
+   * Burada elle sayı YAZILMIYOR: bu dosyanın kaynağı AWT'nin KeyEvent'i
+   * (klavye.scala'nın başındaki nota bakın), yani doğruyu JDK'nın kendisi
+   * söylüyor. Bir harf hatası girer girmez kırmızı yanar ve gözle bakılacak
+   * sihirli sayı kalmaz.
+   *
+   * DİKKAT -- enter/backSpace/sekme bu dosyada Char, ötekiler Int. ScalaTest
+   * kutulanmış Character(10) ile Integer(10)'u EŞİT SAYMAZ, o yüzden o üçünde
+   * .toInt var. (ikojo'da bu sav elle yazılmış tabloya dayanmak zorunda --
+   * orada DOM keyCode için bir sabit sınıfı yok.)
+   *
+   * NE YAKALAMAZ: yeni bir ad EKLENMESİ -- liste elle yazılı.
+   */
+  test("tuş adları: BÜTÜN değerler AWT VK_* ile aynı (62 ad)") {
+    import java.awt.event.KeyEvent._
+
+    // Char olanlar -- .toInt şart, yukarıdaki nota bakın
+    tuşlar.enter.toInt should be(VK_ENTER)
+    tuşlar.backSpace.toInt should be(VK_BACK_SPACE)
+    tuşlar.sekme.toInt should be(VK_TAB)
+
+    // denetim ve düzenleme
+    tuşlar.cancel should be(VK_CANCEL)
+    tuşlar.clear should be(VK_CLEAR)
+    tuşlar.shift should be(VK_SHIFT)
+    tuşlar.control should be(VK_CONTROL)
+    tuşlar.alt should be(VK_ALT)
+    tuşlar.pause should be(VK_PAUSE)
+    tuşlar.büyükHarfKilidi should be(VK_CAPS_LOCK)
+    tuşlar.escape should be(VK_ESCAPE)
+    tuşlar.boşluk should be(VK_SPACE)
+    tuşlar.pageUp should be(VK_PAGE_UP)
+    tuşlar.pageDown should be(VK_PAGE_DOWN)
+    tuşlar.end should be(VK_END)
+    tuşlar.home should be(VK_HOME)
+
+    // ok tuşları -- örneklerin en çok kullandıkları
+    tuşlar.sol should be(VK_LEFT)
+    tuşlar.yukarı should be(VK_UP)
+    tuşlar.sağ should be(VK_RIGHT)
+    tuşlar.aşağı should be(VK_DOWN)
+
+    // noktalama
+    tuşlar.virgül should be(VK_COMMA)
+    tuşlar.eksi should be(VK_MINUS)
+    tuşlar.nokta should be(VK_PERIOD)
+    tuşlar.bölü should be(VK_SLASH)
+    tuşlar.noktalıVirgül should be(VK_SEMICOLON)
+    tuşlar.eşittir should be(VK_EQUALS)
+
+    // rakamlar ve harfler
+    val rakamlar = List(
+      tuşlar.n0, tuşlar.n1, tuşlar.n2, tuşlar.n3, tuşlar.n4,
+      tuşlar.n5, tuşlar.n6, tuşlar.n7, tuşlar.n8, tuşlar.n9
+    )
+    rakamlar should have size 10
+    rakamlar.zipWithIndex.foreach { case (değer, i) => değer should be(VK_0 + i) }
+
+    val harfler = List(
+      tuşlar.a, tuşlar.b, tuşlar.c, tuşlar.d, tuşlar.e, tuşlar.f, tuşlar.g,
+      tuşlar.h, tuşlar.i, tuşlar.j, tuşlar.k, tuşlar.l, tuşlar.m, tuşlar.n,
+      tuşlar.o, tuşlar.p, tuşlar.q, tuşlar.r, tuşlar.s, tuşlar.t, tuşlar.u,
+      tuşlar.v, tuşlar.w, tuşlar.x, tuşlar.y, tuşlar.z
+    )
+    harfler should have size 26
+    harfler.zipWithIndex.foreach { case (değer, i) => değer should be(VK_A + i) }
+
+    // Türkçe adlar İngilizce köklerinden kopmamış (bağıl -- kökler yukarıda çivili)
+    tuşlar.gir should be(tuşlar.enter)
+    tuşlar.silGeri should be(tuşlar.backSpace)
+    tuşlar.çık should be(tuşlar.escape)
+    tuşlar.kaç should be(tuşlar.escape)
+    tuşlar.sayfaYukarı should be(tuşlar.pageUp)
+    tuşlar.sayfaAşağı should be(tuşlar.pageDown)
+    tuşlar.satırSonu should be(tuşlar.end)
+    tuşlar.satırBaşı should be(tuşlar.home)
+    tuşlar.ev should be(tuşlar.home)
+  }
+
   test("tuşBasılıMı: ikojo'daki ad burada da var (DERLEME savı)") {
     // Bu bir derleme savı, koşan bir sav DEĞİL -- adı öyle koydum ki
     // yanlış anlaşılmasın. Çağıramıyoruz: tuşBasılıMı rb.isKeyPressed'e
