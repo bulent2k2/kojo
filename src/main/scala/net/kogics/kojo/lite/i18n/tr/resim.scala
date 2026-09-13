@@ -47,6 +47,19 @@ object res {
   def götür(x: Kesir, y: Kesir) = GötürBD(x, y)
   def götür(n: Nokta) = GötürBD(n.x, n.y)
   def götür(yy: Yöney2B) = GötürBD(yy.v.x, yy.v.y)
+  // ÖTELEME AİLESİ -- `ötele` ve `götür` EŞİT baş ad, ikisi de eylem.
+  // `öteleme` (isim hali) ikojo'da birincildi; iki depoda da eskitildi ama
+  // SİLİNMEDİ. Buraya YENİ olarak eskitilmiş halde ekleniyor: ikojo'da vardı,
+  // burada yoktu -- yani `öteleme` yazan bir ikojo yazılımcığı masaüstünde
+  // derlenmiyordu. Eskitilmiş de olsa eklemek o ayrışmayı kapatıyor.
+  // GötürBD TEKRARLANMIYOR, götür'e delege ediliyor: böylece üç ad tanım
+  // gereği ayrışamaz. (İlk yazımda üçü de ayrı ayrı GötürBD kuruyordu -- x/y
+  // yer değiştirse sessizce ayrışırlardı.)
+  def ötele(x: Kesir, y: Kesir) = götür(x, y)
+  def ötele(n: Nokta) = götür(n)
+  def ötele(yy: Yöney2B) = götür(yy)
+  @deprecated("eylemle başlayan ada geçildi: ötele ya da götür kullanın", "Eylül 2026")
+  def öteleme(x: Kesir, y: Kesir) = götür(x, y)
   def kaydır(x: Kesir, y: Kesir) = KaydırC(x, y)
   def kaydır(n: Nokta) = KaydırC(n.x, n.y)
   def kaydır(yy: Yöney2B) = KaydırC(yy.v.x, yy.v.y)
@@ -231,6 +244,10 @@ class Resim(var p: richBuiltins.Picture) {
   def götür(x: Kesir, y: Kesir): Birim = p.translate(x, y)
   def götür(n: Nokta): Birim = p.translate(n.x, n.y)
   def götür(yy: Yöney2B): Birim = p.translate(yy.v.x, yy.v.y)
+  // `ötele` = `götür` (translate); bkz. yukarıdaki öteleme notu
+  def ötele(x: Kesir, y: Kesir): Birim = götür(x, y)
+  def ötele(n: Nokta): Birim = götür(n)
+  def ötele(yy: Yöney2B): Birim = götür(yy)
   def hızınıDönüştür(yy: Yöney2B): Birim = p.transv(yy.v)
   def kaydır(x: Kesir, y: Kesir): Birim = p.offset(x, y)
   def kaydır(n: Nokta): Birim = p.offset(n.x, n.y)
