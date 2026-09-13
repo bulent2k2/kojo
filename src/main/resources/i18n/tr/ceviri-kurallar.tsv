@@ -1,0 +1,231 @@
+# ELLE tutulan çeviri kuralları. Üretilmiş sözlük (ceviri-sozlugu.tsv) tek başına
+# karar veremediğinde burası konuşur. Her satır bilinçli bir karar; nedenini
+# "not" sütununa yazın. Biçim: sekmeyle ayrılmış beş sütun.
+#
+#   yön     tr>en | en>tr
+#   ad      çevrilecek ad
+#   bağlam  yalın (önünde `.` yok: sil()) | üye (önünde `.` var: resim.sil()) | * | Alıcı. (yalnız o alıcının üyesi: Resim.)
+#   hedef   çevrilecek ad; "-" ise "bu adı çevirme"; "^ad" ise alıcı ve nokta da yutulur (Resim.dizi -> picStack)
+#   not     neden
+#
+# Kural, üretilmiş sözlüğün en sık görülen adayını EZER. Önce bağlama tam uyan
+# satır, sonra "*" satırı aranır.
+#
+# yön	ad	bağlam	hedef	not
+tr>en	sil	yalın	clear	tuvali temizle; üretilmiş sözlükte 7 clear / 1 erase / 1 delete
+tr>en	sil	üye	erase	resim.sil() -- resmi sil
+en>tr	clear	*	sil
+en>tr	erase	*	sil
+tr>en	al	üye	take	dizi.al(3); get/pop çok daha seyrek
+tr>en	ekle	üye	append
+tr>en	kondur	üye	setPosition	resim.kondur(x, y); moveTo tek bir sarmalayıcıda
+tr>en	enUfağı	*	math.min	Harf.enUfağı sarmalayıcısı MaxValue'ya bağlı (ters, ayrı düzeltme); yalın min İngilizce'de yok, math.min; üyede son parça kalır
+tr>en	enİrisi	*	math.max
+tr>en	verilen	*	given	Scala 3 sözcüğü; scalariform ne given'ı ne verilen'i anahtar sözcük sayıyor
+en>tr	given	*	verilen
+tr>en	Resim	*	Picture	nesne adı; `object Resim` bir sarmalayıcı zinciri taşımıyor
+en>tr	Picture	*	Resim
+tr>en	yinele	yalın	repeat	gövdeli tanım (üreteç çıkaramıyor); sıklık yanlışlıkla iterate'e düşüyordu
+en>tr	repeat	*	yinele
+tr>en	apply	*	-	her nesnede var, çevrilmez
+en>tr	apply	*	-
+tr>en	toString	*	-
+en>tr	toString	*	-
+tr>en	götür	yalın	trans	dönüştürücü: götür(x,y) -> resim; üye götür ise resim.translate
+tr>en	götür	üye	translate
+en>tr	trans	*	götür
+en>tr	translate	*	götür
+tr>en	döndür	yalın	rot	dönüştürücü; üye döndür ise resim.rotate
+tr>en	döndür	üye	rotate
+en>tr	rot	*	döndür
+en>tr	rotate	*	döndür
+tr>en	yazı	yalın	write	kaplumbağa yazısı; Resim.yazı ise text
+tr>en	yazı	üye	text
+tr>en	göster	yalın	visible	kaplumbağayı göster; üye göster (resim) setVisible'a kalır
+tr>en	silVeSakla	*	cleari	gövdesi iki çağrı (clear + görünmez); ilk-zincir sezgisi yalnız clear'ı görüyordu
+en>tr	cleari	*	silVeSakla
+tr>en	kare	yalın	square	gövdeli tanım (yinele ile çizim)
+en>tr	square	*	kare
+tr>en	tuşlar	*	Kc	object tuşlar; masaüstünde bi.Kc bağı yorumda
+en>tr	Kc	*	tuşlar
+tr>en	Matematik	*	math	object Matematik extends MatematikYöntemleri; zincir yok
+en>tr	math	*	Matematik
+en>tr	Double	*	Kesir	JKesir java.lang.Double sarmalayıcısı; kullanıcı Kesir yazar
+en>tr	List	*	Dizin	Aylar/Günler gibi veri dizinleri sahte aday
+en>tr	size	*	boyu
+en>tr	height	*	boyu	level2_tr.properties: height=boy, ama sarmalayıcılar boyu; ikisi de çalışıyor
+en>tr	repeatFor	*	yineleİçin	üç Türkçe yazımı var; yineleİçin trInit'teki asıl tanım
+en>tr	invisible	*	gizle	level2_tr.properties görünmez diyor ama o yalnız Kaplumbağa'da; gizle hem Kaplumbağa hem Resim'de (ölçüldü: memory-cards)
+tr>en	yeniKaplumbağa	*	newTurtle	Kaplumbağa sınıfının yardımcı kurucusu üstünden gidiyor; üreteç oraya inmez
+en>tr	newTurtle	*	yeniKaplumbağa
+tr>en	Renk	*	Color	iki takma ad var (package.scala: Color, renk.scala: AColor); yazılımcıklar Color kullanır
+en>tr	Color	*	Renk
+tr>en	yatay	*	hline	Resim.yatay; ay.değişmez.yatay (HORIZONTAL) eşit sayıda, alfabe onu seçiyordu
+tr>en	dikey	*	vline
+tr>en	kalemRengi	yalın	penColor	dönüştürücü KalemRengiBD sınıfıyla kurulu, zinciri yok
+en>tr	penColor	*	kalemRengi
+tr>en	boyaRengi	yalın	fillColor
+en>tr	fillColor	*	boyaRengi
+tr>en	Yöney2B	*	Vector2D	object Yöney2B + type Yöney2B = tr.Yöney2B; İngilizce ada zincir yok
+en>tr	Vector2D	*	Yöney2B
+tr>en	tuvalAlanı	*	canvasBounds	object tuvalAlanı { def ta = rb.canvasBounds ... }
+en>tr	canvasBounds	*	tuvalAlanı
+en>tr	scale	*	büyüt
+en>tr	setPenThickness	*	kalemKalınlığınıKur	level2_tr.properties
+en>tr	println	*	satıryaz	level2_tr.properties
+en>tr	line	*	çizgi	Resim.çizgi; düz/köşegen takma adları
+en>tr	isKeyPressed	*	tuşaBasılıMı	masaüstü kanoniği (kojo#56)
+en>tr	step	*	adım
+en>tr	Vector	*	Yöney
+en>tr	Boolean	*	İkil	level2_tr.properties: boolean=İkil
+en>tr	get	*	-	Calendar sarmalayıcılarından sahte çiftler (dakika/saat/saniye)
+en>tr	pause	*	durakla
+en>tr	lineTo	*	noktayaGit
+en>tr	toggleFullScreenCanvas	*	tümEkranTuval
+en>tr	Font	*	Yazıyüzü
+en>tr	setVisible	*	görünürlüğüKur	göster()/sakla() ikilisi argümanı taşıyor; doğrudan karşılık bu
+en>tr	sqrt	*	karekökü
+en>tr	write	*	yazı	level2_tr.properties: write=yazı
+en>tr	RowPanel	*	Satır
+tr>en	açı	*	angle	örneklerde değişken adı (37 kullanım); Matematik.açı(x,y)=atan2 seyrek
+tr>en	silipSakla	*	cleari	silVeSakla'nın takma adı; hedefi de kuralla cleari
+tr>en	karesi	*	-	karesi(x) = math.pow(x, 2): sarmalayıcı ARGÜMAN ekliyor, tek ad değişimiyle taşınamaz; görünür kalsın
+tr>en	boyu	tuvalAlanı.	height	tuvalAlanı.boyu = canvasBounds.height; genel boyu kuralı length diyor
+tr>en	eni	tuvalAlanı.	width
+en>tr	Color	alıcı	Renkler	Color.khaki -> Renkler.haki: renk adları Renkler nesnesinde, tür adı Renk
+tr>en	Renkler	alıcı	ColorMaker	adlı renkler İngilizce'de ColorMaker nesnesinde (doodle Color'da yok)
+en>tr	random	*	rastgele	level2 random=rasgele DEĞER takma adı (val rasgele: Kesir); işlev rastgele(n) -- rasgele(n) "Kesir parametre almaz" diye kalıyordu
+tr>en	Çizim	*	Costume	val Çizim = Görünüş; Builtins.Costume
+tr>en	Görünüş	*	Costume
+en>tr	Costume	*	Görünüş
+tr>en	Eşlem	*	collection.mutable.Map	case class Eşlem[A,D](m: Map[A,D]) sarmalayıcı, m += ile DEĞİŞEBİLİR eşlem; düz Map'te += yok (ölçüldü: car-ride)
+tr>en	mutlakDeğer	üye	abs	x.mutlakDeğer -> x.abs; yalın mutlakDeğer(x) -> math.abs(x)
+tr>en	mutlakDeğer	yalın	math.abs
+tr>en	dereceye	üye	toDegrees
+tr>en	dereceye	yalın	math.toDegrees
+tr>en	radyana	üye	toRadians
+tr>en	radyana	yalın	math.toRadians
+tr>en	ada	Renk.	^ColorMaker.hsl	Renk.ada(h,s,l) üç argümanlı; İngilizce betikler ColorMaker.hsl yazıyor (Color.hsla dört ister)
+tr>en	mor	*	purple	val mor = new AColor(0x740f73); CoreBuiltins.purple aynı renk, zincir yok
+en>tr	purple	*	mor
+en>tr	Seq	*	Dizi	Col/Diz iç tür parametreleri sahte aday
+en>tr	ArrayBuffer	*	EsnekDizik	Array=Dizik, ArrayBuffer=EsnekDizik
+en>tr	Array	*	Dizik
+en>tr	Nil	*	Boş
+en>tr	update	*	güncelle
+en>tr	linearGradient	*	doğrusalDeğişim	RenkDoğrusalDeğişim sınıf, RenkDD kısaltma; işlev doğrusalDeğişim
+en>tr	setPosition	üye	konumuKur	konumuKur(x, y) Resim'de de Kaplumbağa'da da var; kondur Resim'de yalnız Nokta alır (ölçüldü: physics-uvats)
+en>tr	setPosition	yalın	konumuKur
+en>tr	collidesWith	*	çarpıştı	gövdesi p.intersects olduğu için üreteç çarpıştı -> intersects bağlıyor
+tr>en	çarpıştı	*	collidesWith
+en>tr	ColorMaker	alıcı	Renkler	ColorMaker.khaki -> Renkler.haki; İngilizce betikler renkleri buradan alır
+en>tr	cm	alıcı	Renkler	cm = ColorMaker kısaltması
+en>tr	GPics	*	Resim.dizi	İngilizce betikler picStack yerine sınıfı doğrudan yazıyor (angles.kojo)
+en>tr	HPics	*	Resim.diziYatay
+en>tr	VPics	*	Resim.diziDikey
+en>tr	GPics2	*	Resim.diziDüzenli
+en>tr	HPics2	*	Resim.diziYatayDüzenli
+en>tr	VPics2	*	Resim.diziDikeyDüzenli
+en>tr	pow	math.	kuvveti	math.pow'a giden üç sarmalayıcı (faktor/karesi/kuvveti); iki argümanlısı kuvveti
+tr>en	biçimleriBelleğeYaz	*	saveStyle	parantezsiz: betik düzeyinde TurtleWorldAPI.saveStyle iletici, parantez almaz
+tr>en	biçimleriGeriYükle	*	restoreStyle	parantezsiz
+tr>en	zıpla	*	hop	gövdeli tanım; ilk-zincir sezgisi saveStyle'ı görüyordu
+en>tr	hop	*	zıpla
+tr>en	piSayısı	*	math.Pi	data.scala piSayısı=Pi yazıyor; betikte math.Pi
+en>tr	Pi	math.	piSayısı
+tr>en	Kaplumbağa	*	Turtle	class Kaplumbağa extends TurkishTurtle; İngilizce tür Turtle
+en>tr	Turtle	*	Kaplumbağa
+en>tr	stageBorder	*	Resim.tuval	resim.scala: `def tuval = tuvalSınırları // stageBorder`
+tr>en	sol	tuşlar.	VK_LEFT	tuş kodları kaynaktan türetilemiyor (tuşlar.sol = hex sabit); en sık beş tuş elle
+tr>en	sağ	tuşlar.	VK_RIGHT
+tr>en	yukarı	tuşlar.	VK_UP
+tr>en	aşağı	tuşlar.	VK_DOWN
+tr>en	boşluk	tuşlar.	VK_SPACE
+en>tr	VK_LEFT	Kc.	sol
+en>tr	VK_RIGHT	Kc.	sağ
+en>tr	VK_UP	Kc.	yukarı
+en>tr	VK_DOWN	Kc.	aşağı
+en>tr	VK_SPACE	Kc.	boşluk
+en>tr	ColorMaker	alıcı(	Renk	ColorMaker.hsla(...) yapıcı: Renk nesnesinde; renk adları (parantezsiz) Renkler'de
+en>tr	cm	alıcı(	Renk
+en>tr	Color	alıcı(	Renk
+en>tr	hsl	*	ada	Renk.ada(h,s,l) = hsla(h,s,l,1.0); hsla dört argümanlısı ada değil -- Renk.ada 3 alır
+en>tr	rgb	*	kym
+en>tr	radialGradient	*	merkezdenDışarıDoğruDeğişim
+en>tr	radialMultiGradient	*	merkezdenDışarıDoğruÇokluDeğişim
+en>tr	hsla	*	adas	dört argümanlı: Renk.adas(h,s,l,a); üç argümanlı hsl -> ada
+en>tr	rgba	*	kyms
+tr>en	davran	*	act	kaplumbağa.davran { kap => } gövdeli tanım
+en>tr	act	*	davran
+en>tr	size	yalın	-	level2 size=boyutKur diyor ama katmanda yok; Koco'da İngilizce ad çalışır, çevirme (üye size -> boyu)
+tr>en	Çalgı	*	Instrument	sabit nesnesi; üyeleri üreteç değerle eşler (sabitNesneler)
+en>tr	Instrument	*	Çalgı
+tr>en	renkler	*	ColorMaker	renk.scala: val renkler = doodle.Color; İngilizce'de Color bir tür + yapıcı (def Color(r,g,b)), alıcı olarak belirsiz -> ColorMaker
+tr>en	Renk	alıcı(	ColorMaker	Renk.ada(...) -> ColorMaker.hsl(...): İngilizce Color alıcı olarak belirsiz (ölçüldü: radiance, fireworks)
+tr>en	Renk	alıcı	ColorMaker
+en>tr	hex	Color.	^renkler.hex	Renk nesnesinde hex yok; renkler (= doodle.Color) var
+en>tr	hexa	Color.	^renkler.hexa
+tr>en	boyu	ta.	height	`dez ta = tuvalAlanı` yaygın deyim (20 kullanım); ta.boyu tuval boyu, length değil
+tr>en	eni	ta.	width
+tr>en	Harf	alıcı(	Character	object Harf { def sayıMı(h) = Character.isDigit(h) }: alıcı olarak Harf nesnesi, tür olarak Char
+en>tr	Character	alıcı(	Harf	Character.isDigit(c) -> Harf.sayıMı(c); JHarf türü betik düzeyinde değer değil
+tr>en	|-|	*	to	sayi.scala: def |-|(b) = a to b; işleç, yalnız kuraldan
+tr>en	tepkiVer	*	react	gövdeli tanım (trInit.scala:228), zincir çıkmıyor
+en>tr	react	*	tepkiVer
+tr>en	eksenleriGöster	yalın	axesOn	yalın eksenleriGöster = axesOn (trInit.scala); Picture.showAxes(resimler*) ayrı bir şey, eşitlikte o kazanıyordu
+tr>en	kalemBoyu	yalın	penThickness	KalemBoyuBD -> strokeWidth zinciri yazılımcıkta yalın değil; Builtins: val penThickness = picture.strokeWidth _
+en>tr	penWidth	*	kalemBoyu	penWidth = penThickness = strokeWidth
+en>tr	penThickness	*	kalemBoyu
+en>tr	strokeWidth	*	kalemBoyu
+tr>en	YumuşakGeçiş	*	easing	object YumuşakGeçiş { val DörtlüGirdiÇıktı = ...QuadInOut }; İngilizce'de easing nesnesi
+en>tr	easing	alıcı	YumuşakGeçiş
+tr>en	Artalan	*	Background	cizim.scala object Artalan; üyeler değerle eşlenir (sabitNesneler)
+en>tr	Background	*	Artalan
+tr>en	en	ta.	width	Türkçe örnekler ta.en / ta.boy da yazıyor (PBounds sarmalayıcısı); 2-3 harfli adlar üretece girmez
+tr>en	boy	ta.	height
+tr>en	santim	*	Cm	data.scala santim=Cm ama Cm iki harf, üretece girmez; clearWithUL(Cm)
+en>tr	Cm	*	santim
+tr>en	EsnekDizim	*	ArrayBuffer	val EsnekDizim = tr.EsnekDizim: İngilizce ada zincir yok
+tr>en	adım	*	by	`1 to 10 adım 2`: sonek çağrı, bağlam yalın görünür; kullanıcı değişkeni adım da by olur (geçerli ad)
+en>tr	by	*	adım
+tr>en	|-	*	until	sayi.scala: def |-(b) = a until b
+tr>en	Geçiş	*	Transition	gövdeli tanım (trInit.scala:433), zincir çıkmıyor
+en>tr	Transition	*	Geçiş
+en>tr	beginShape	yalın	-	yalın beginShape/endShape Kojo komutu; başla/bitir GeoNokta üyesi
+en>tr	endShape	yalın	-
+en>tr	RowPanel	yalın	-	Satır ay nesnesinde (ay.Satır); ay paket takma adı çevrilmiyor
+en>tr	ColPanel	yalın	-
+tr>en	boşluk	üye	withGap	gövdeli tanım (resim.scala:305)
+en>tr	withGap	*	boşluk
+tr>en	veBoya	üye	thatsFilledWith	gövdeli tanımlar (resim.scala:343-344)
+en>tr	thatsFilledWith	*	veBoya
+tr>en	veKalemRengiyle	üye	thatsStrokeColored
+en>tr	thatsStrokeColored	*	veKalemRengiyle
+tr>en	dikdörtgen	Resim.	^Picture.rectangle	Resim.dikdörtgen(en, boy) = Picture.rect(boy, en): argümanlar TERS; rectangle(en, boy) sırayı korur
+en>tr	rectangle	Picture.	^Resim.dikdörtgen
+en>tr	rect	Picture.	^Resim.dikdörtgen(2,1)	Picture.rect(boy, en) = Resim.dikdörtgen(en, boy): argümanlar yer değiştirir ((2,1) = ikinci, birinci)
+tr>en	Ses	*	Sound	ses.scala object Ses; üyeler değerle eşlenir (sabitNesneler)
+en>tr	Sound	*	Ses
+tr>en	en	tuvalAlanı.	width
+tr>en	boy	tuvalAlanı.	height
+en>tr	textu	Picture.	yazıRenkli	Picture.textu(içerik, boy: Int, renk) = Resim.yazıRenkli; Resim.yazı(içerik, yazıyüzü, renk) yalnız yazıyüzü alır
+en>tr	vertex	yalın	-	yalın vertex Kojo şekil komutu; nokta GeoNokta üyesi / Nokta yapıcısı
+tr>en	çarpışma	üye	collision	resim.scala: başkaları.find(...) zinciri find veriyor
+en>tr	collision	*	çarpışma
+tr>en	çarpışmalar	üye	collisions
+en>tr	collisions	*	çarpışmalar
+tr>en	veKondur	üye	withPosition	gövdeli tanım (resim.scala:355)
+en>tr	withPosition	*	veKondur
+tr>en	tuvalinSınırları	Resim.	^stageBorder	Resim.tuvalinSınırları = new Resim(tCanvas.stage); İngilizce yalın stageBorder
+tr>en	tuvalSınırları	Resim.	^stageBorder
+tr>en	tuval	Resim.	^stageBorder	Resim.tuval = tuvalSınırları (resim.scala:438); üretilmiş sözlükteki tuval -> canvas resim.scala:232'deki ÜYE, Picture.canvas yok (inceleme #62 (A))
+en>tr	setColumns	yalın	-	new TextField { setColumns(3) }: Swing üyesi; sütunSayısınıKur Türkçe arayüz sarmalayıcısında
+tr>en	eşEkle	üye	+=	eslem.scala: def eşEkle(ikili) = m += ikili
+tr>en	nokta	üye	vertex	GeoNokta.nokta = vertex (tree2, sprite-boundary-polygon); kaplumbağa.nokta = dot, tuval.nokta = point -- alıcı türü bilinmiyor, en sık kullanılan
+en>tr	setHorizontalAlignment	yalın	-	new Label { setHorizontalAlignment(...) }: Swing üyesi; yatayDüzeniKur Türkçe arayüz sarmalayıcısında
+en>tr	bouncePicVectorOffStage	*	sahneKenarındanYansıtma	resim.scala: Yöney2B(bouncePicOffStage(r.p, v.v)); İngilizce'de iki ad aynı işi görür
+tr>en	çalıyorMu	üye	isMp3Playing	package.scala örtük sınıfı (KMp3), üreteç package.scala'dan yalnız type/val alır
+en>tr	isMp3Playing	üye	çalıyorMu	yalın isMp3Playing yazılımcık komutu, Türkçesi üretilmiş sözlükten
+tr>en	veKalemKalınlığıyla	üye	thatsStrokeSized	gövdeli tanım (resim.scala:345)
+en>tr	thatsStrokeSized	*	veKalemKalınlığıyla
+en>tr	setBorder	yalın	-	new Label { setBorder(...) }: Swing üyesi; çerçeveyiKur Türkçe arayüz sarmalayıcısında

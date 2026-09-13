@@ -127,6 +127,15 @@ Fork conventions:
 - Turkish source uses non-ASCII identifiers (`ı ş ğ ö ü ç İ`); files must stay UTF-8. Beware the Turkish dotless-i trap in `toLowerCase`/`toUpperCase`.
 - A new builtin should also get a Turkish wrapper in `lite/i18n/tr/` and, where relevant, `dict.scala`/`translate.scala` entries.
 
+### Koco ↔ Kojo script translator (`lite/i18n/tr/cevirmen.scala`)
+
+A lexical (token-level, not AST) translator between Turkish Koco scripts and English Kojo scripts, in both directions. Pieces:
+- `cevirisozlugu.scala` — `ÇeviriSözlüğü` loads two TSVs from `src/main/resources/i18n/tr/`: `ceviri-sozlugu.tsv` (**generated** by `SözlükÜreteci` from the Turkish wrappers — chains like `def kalemBoyu(b) = KalemBoyuBD(b)` → `picture.StrokeWidth` → `strokeWidth` are followed, constant objects like `Çalgı`/`Instrument` and `Görünüş`/`Costume` are matched by value, and an in-process compiler probe marks English names that only resolve as members) and `ceviri-kurallar.tsv` (**hand rules** for what the generator cannot decide: receiver-specific names, `-` = leave untouched, `^Picture.rectangle` = swallow the receiver, `(2,1)` = permute the arguments). Regenerate with `runMain net.kogics.kojo.lite.i18n.tr.SözlükÜreteci` and commit the TSV; `CevirmenTest` fails if it is stale.
+- `ceviridogrulama.scala` — compiles a translated script in the target prelude with `nsc.Global` (used by the generator's probe and by `CevirmenDerlemeTest`, which translates every sample both ways and pins the known-broken set with reasons — update that map when you change the dictionary).
+- CLI: `runMain net.kogics.kojo.lite.i18n.tr.CevirmenMain --tr2en|--en2tr <in> [-o <out>] [--dogrula]`.
+- Both `runMain`s work on a modern JDK through the launcher jar (`java -jar sbt-launch.1.5.5.jar 'runMain …'`, with the UTF-8 env from the recipe above): `build.sbt` adds the CMS flags to `run / javaOptions` only when the JVM is older than 14. `./sbt.sh` itself still cannot start on Java 14+.
+Known limits (documented in the test): names whose English target depends on the receiver's type (`.boyu` → height/length), Turkish wrappers that add or drop arguments (`karesi`), user-defined names that collide with library names, the `ay` widget package alias, and Turkish-layer gaps. English names remain valid in Koco, so EN→TR leftovers are cosmetic; TR→EN leftovers break.
+
 ## Conventions
 
 - Tests: ScalaTest pinned at 3.0.8 (old API: `org.scalatest.Matchers`, `org.scalatest.junit.JUnitRunner` — not the 3.1+ paths; don't upgrade casually), run under JUnit 4; named `<Thing>Test.scala` mirroring the main package layout. Shared harnesses: `lite/TestEnv.scala`, `lite/NoOpKojoCtx.scala`, `xscala/CompilerAndRunnerTestBase.scala`.

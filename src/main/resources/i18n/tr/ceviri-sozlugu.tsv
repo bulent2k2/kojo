@@ -1,0 +1,3367 @@
+# ÜRETİLMİŞ DOSYA -- elle düzenlemeyin. Üretim:
+#   ./sbt.sh "runMain net.kogics.kojo.lite.i18n.tr.SözlükÜreteci"
+# Kaynak: lite/i18n/trInit.scala + lite/i18n/tr/*.scala sarmalayıcıları.
+# Elle kararlar için: ceviri-kurallar.tsv
+#
+# cins	tr	en	kaynak	[not: üye = İngilizce ad yalın çözülmüyor, yalnız x.ad biçiminde]
+type	Aralık	Range	data.scala:84
+type	Aralık	Range	package.scala:85
+val	Artalan.demiryolu	Background.trainTrack	TurtleWorldAPI.scala:147
+val	Artalan.demiryolu	Background.trainTrack	cizim.scala:25
+val	Aylar	List	buan.scala:34
+type	BKK	AUrl	bkk.scala:22	üye
+type	BKK	URL	resim.scala:109	üye
+type	BKK	URL	resim.scala:387	üye
+type	BelirtimHatası	AssertionError	turler.scala:55
+type	Belki	Option	belki.scala:21
+type	Belki	Option	data.scala:61
+type	Belki	Option	dizi.scala:197
+type	Belki	Option	dizi.scala:340
+type	Belki	Option	dizi.scala:50
+type	Belki	Option	dizik.scala:190
+type	Belki	Option	dizik.scala:35
+type	Belki	Option	dizin.scala:44
+type	Belki	Option	eslem.scala:191
+type	Belki	Option	eslem.scala:30
+type	Belki	Option	ikisindenbiri.scala:48
+type	Belki	Option	kume.scala:27
+type	Belki	Option	kuyruk.scala:124
+type	Belki	Option	kuyruk.scala:252
+type	Belki	Option	kuyruk.scala:506
+type	Belki	Option	kuyruk.scala:55
+type	Belki	Option	miskindizin.scala:32
+type	Belki	Option	miskindizin.scala:58
+type	Belki	Option	resim.scala:228
+type	Belki	Option	yazi.scala:39
+type	Belki	Option	yineleyici.scala:35
+type	Belki	Option	yoney.scala:31
+type	BellekliYineleyici	BufferedIterator	turler.scala:64
+type	Bellekteİmge	BufferedImage	data.scala:76	üye
+type	Bellekteİmge	BufferedImage	package.scala:114	üye
+type	Bellekteİmge	BufferedImage	turler.scala:45	üye
+type	Bellekteİmgeİşlemi	BufferedImageOp	package.scala:115	üye
+type	Bellekteİmgeİşlemi	BufferedImageOp	turler.scala:46	üye
+type	BenzerDönüşüm	AffineTransform	geo.scala:22	üye
+type	BenzerDönüşüm	AffineTransform	resim.scala:226	üye
+type	Biri	Some	belki.scala:22
+type	Biri	Some	data.scala:62
+type	Birim	Unit	data.scala:36
+type	Birim	Unit	package.scala:50
+type	BirimDiziğiDizisi	ofUnit	turler.scala:106	üye
+type	Biçim	Shape	package.scala:97	üye
+type	Boya	Paint	data.scala:43	üye
+type	Boya	Paint	package.scala:57	üye
+val	Boş	Nil	dizin.scala:33
+type	BoşGöstergeHatası	NullPointerException	turler.scala:61
+type	Bölümselİşlev	PartialFunction	bolumselislev.scala:20
+type	Bölümselİşlev	PartialFunction	data.scala:81
+type	Canlandırma	Animation	trInit.scala:430
+type	Col	Array	dizik.scala:36
+type	Col	ArrayBuffer	dizik.scala:191
+type	Col	ArrayDeque	kuyruk.scala:505	üye
+type	Col	IndexedSeq	dizi.scala:341
+type	Col	Iterable	dizi.scala:482
+type	Col	Iterable	dizi.scala:507
+type	Col	LazyList	miskindizin.scala:59
+type	Col	List	dizin.scala:45
+type	Col	Map	eslem.scala:189
+type	Col	PriorityQueue	kuyruk.scala:125	üye
+type	Col	Queue	kuyruk.scala:253	üye
+type	Col	Seq	dizi.scala:198
+type	Col	Seq	dizi.scala:51
+type	Col	Set	kume.scala:28
+type	Col	Stack	kuyruk.scala:54	üye
+type	DRenk	DColor	renk.scala:25	üye
+val	DRenk	DColor	renk.scala:27	üye
+type	DeğişimliBoya	GradientPaint	renk.scala:23	üye
+type	Dikdörtgen	Rectangle	data.scala:46	üye
+type	Dikdörtgen	Rectangle	package.scala:62	üye
+type	Diz	Seq	package.scala:80
+type	Dizi	Seq	kuyruk.scala:128
+type	Dizi	Seq	kuyruk.scala:256
+type	Dizi	Seq	package.scala:81
+type	Dizi	collection.Seq	data.scala:63
+type	Dizik	Array	dizik.scala:22
+type	Dizik	Array	harf.scala:20
+type	DizikDizisi	ArraySeq	turler.scala:97	üye
+type	DizikSınırıDışınaTaşmaHatası	ArrayIndexOutOfBoundsException	turler.scala:59
+type	DizikYüklemeHatası	ArrayStoreException	turler.scala:60
+type	Dizikİşlemleri	ArrayOps	turler.scala:108	üye
+type	Dizim	Array	data.scala:64
+type	Dizin	List	data.scala:66
+type	Dizin	List	package.scala:82
+def	DokumaBoya	TexturePaint	data.scala:326
+def	DokumaBoya	TexturePaint	trInit.scala:615
+type	Dosya	File	dosya.scala:21	üye
+val	Doğrusal	Linear	trInit.scala:451	üye
+type	DöngüselSınıfHatası	ClassCircularityError	turler.scala:38
+val	DörtlüGirdiÇıktı	QuadInOut	trInit.scala:450	üye
+type	Eklenir	Appendable	turler.scala:25
+type	EksikTanımHatası	NotImplementedError	turler.scala:57
+def	EnUfağı	MinValue	sayi.scala:126	üye
+def	EnUfağı	MinValue	sayi.scala:131	üye
+def	EnUfağı	MinValue	sayi.scala:136	üye
+def	EnUfağı	MinValue	sayi.scala:141	üye
+def	EnUfağı	MinValue	sayi.scala:146	üye
+def	EnUfağı	MinValue	sayi.scala:151	üye
+def	Enİrisi	MaxValue	sayi.scala:125	üye
+def	Enİrisi	MaxValue	sayi.scala:130	üye
+def	Enİrisi	MaxValue	sayi.scala:135	üye
+def	Enİrisi	MaxValue	sayi.scala:140	üye
+def	Enİrisi	MaxValue	sayi.scala:145	üye
+def	Enİrisi	MaxValue	sayi.scala:150	üye
+type	EsnekDizik	ArrayBuffer	dizik.scala:176
+type	EsnekYazı	StringBuilder	yazi.scala:21
+type	Eşlek	Map	dizi.scala:200
+type	Eşlek	Map	dizi.scala:343
+type	Eşlek	Map	dizi.scala:484
+type	Eşlek	Map	dizi.scala:509
+type	Eşlek	Map	dizi.scala:53
+type	Eşlek	Map	dizik.scala:192
+type	Eşlek	Map	dizik.scala:37
+type	Eşlek	Map	dizin.scala:47
+type	Eşlek	Map	eslem.scala:183
+type	Eşlek	Map	kume.scala:29
+type	Eşlek	Map	kuyruk.scala:127
+type	Eşlek	Map	kuyruk.scala:255
+type	Eşlek	Map	miskindizin.scala:57
+type	Eşlek	Map	yazi.scala:41
+type	Eşlek	Map	yineleyici.scala:36
+type	Eşlek	Map	yoney.scala:32
+type	Gelecek	Future	gelecek.scala:26	üye
+type	GeoNokta	VertexShape	data.scala:73	üye
+type	GeoNokta	VertexShape	package.scala:100	üye
+type	GeoYol	GeneralPath	package.scala:99	üye
+type	Geometri	Geometry	geo.scala:24	üye
+type	Geometri	Geometry	resim.scala:225	üye
+type	Grafik2B	Graphics2D	package.scala:101	üye
+type	GöndergeDiziğiDizisi	ofRef	turler.scala:104	üye
+val	Görünüş.araba	"/media/costumes/car.png"	cizim.scala:43
+val	Görünüş.araba	Costume.car	TurtleWorldAPI.scala:139
+val	Görünüş.araba	Costume.car	cizim.scala:43
+val	Görünüş.araba1	"/media/car-ride/car1.png"	cizim.scala:44
+val	Görünüş.araba2	"/media/car-ride/car2.png"	cizim.scala:45
+val	Görünüş.baklava	"/images/field.png"	cizim.scala:35
+val	Görünüş.bayrak1	"/images/generic-flag.png"	cizim.scala:36
+val	Görünüş.daire	"/images/kindmethod.png"	cizim.scala:37
+val	Görünüş.demiryolu	"/media/backgrounds/train-tracks3.gif"	cizim.scala:31
+val	Görünüş.demiryolu	Background.trainTrack	TurtleWorldAPI.scala:147
+val	Görünüş.demiryolu	Background.trainTrack	cizim.scala:31
+val	Görünüş.elSallayanKadın	"/media/costumes/womanwaving.png"	cizim.scala:48
+val	Görünüş.elSallayanKadın	Costume.womanWaving	cizim.scala:48
+val	Görünüş.kadınElSallarken	"/media/costumes/womanwaving.png"	cizim.scala:42
+val	Görünüş.kadınElSallarken	Costume.womanWaving	TurtleWorldAPI.scala:143
+val	Görünüş.kadınElSallarken	Costume.womanWaving	cizim.scala:42
+val	Görünüş.kalem	"/media/costumes/pencil.png"	cizim.scala:41
+val	Görünüş.kalem	Costume.pencil	TurtleWorldAPI.scala:140
+val	Görünüş.kalem	Costume.pencil	cizim.scala:41
+val	Görünüş.kare	"/images/kindvar.png"	cizim.scala:34
+val	Görünüş.scala	"/images/scala16x16.png"	cizim.scala:33
+val	Görünüş.top1	"/media/collidium/ball1.png"	cizim.scala:51
+val	Görünüş.top2	"/media/collidium/ball2.png"	cizim.scala:52
+val	Görünüş.top3	"/media/collidium/ball3.png"	cizim.scala:53
+val	Görünüş.top4	"/media/collidium/ball4.png"	cizim.scala:54
+val	Görünüş.topKanatlı1	"/media/flappy-ball/ballwing1.png"	cizim.scala:56
+val	Görünüş.topKanatlı2	"/media/flappy-ball/ballwing2.png"	cizim.scala:57
+val	Görünüş.tuğla	"/media/collidium/bwall.png"	cizim.scala:50
+val	Görünüş.yarasa1	"/media/costumes/bat1-a.png"	cizim.scala:46
+val	Görünüş.yarasa1	Costume.bat1	cizim.scala:46
+val	Görünüş.yarasa1a	"/media/costumes/bat1-a.png"	cizim.scala:39
+val	Görünüş.yarasa1a	Costume.bat1	TurtleWorldAPI.scala:141
+val	Görünüş.yarasa1a	Costume.bat1	cizim.scala:39
+val	Görünüş.yarasa1b	"/media/costumes/bat1-b.png"	cizim.scala:40
+val	Görünüş.yarasa1b	Costume.bat2	TurtleWorldAPI.scala:142
+val	Görünüş.yarasa1b	Costume.bat2	cizim.scala:40
+val	Görünüş.yarasa2	"/media/costumes/bat1-b.png"	cizim.scala:47
+val	Görünüş.yarasa2	Costume.bat2	cizim.scala:47
+val	Görünüş.yıldız	"/images/star.png"	cizim.scala:38
+val	Günler	List	buan.scala:36
+type	Harf	Char	data.scala:58
+type	Harf	Char	harf.scala:22
+type	Harf	Char	yazi.scala:195
+type	Harf	Char	yazi.scala:26
+type	Harf	Char	yazi.scala:40
+type	HarfDizisi	CharSequence	turler.scala:30
+def	HarfDizisindenDizi	SeqCharSequence	harf.scala:32
+type	HarfDizisindenDizi	SeqCharSequence	harf.scala:25
+def	HarfDizisindenDizik	ArrayCharSequence	harf.scala:31
+type	HarfDizisindenDizik	ArrayCharSequence	harf.scala:24
+type	HarfDiziğiDizisi	ofChar	harf.scala:26	üye
+def	HarftenHarfe	Character2char	harf.scala:28
+type	HatalıSınıfDüzeni	ClassFormatError	turler.scala:39
+type	Her	Any	data.scala:37
+type	Her	Any	package.scala:51
+type	HerDeğer	AnyVal	data.scala:38
+type	HerDeğer	AnyVal	package.scala:52
+type	HerGönder	AnyRef	data.scala:39
+type	HerGönder	AnyRef	package.scala:53
+type	Hiç	Nothing	data.scala:41
+type	Hiç	Nothing	package.scala:55
+val	Hiçbiri	None	belki.scala:23
+val	Hiçbiri	None	data.scala:114
+type	Hız	Speed	data.scala:44	üye
+type	Hız	Speed	package.scala:60	üye
+type	Iter	Iterable	kuyruk.scala:129
+type	Iter	Iterable	kuyruk.scala:257
+type	JGelecek	JFuture	gelecek.scala:25	üye
+type	JHarf	Character	harf.scala:23
+type	JKesir	Double	turler.scala:71
+type	JKısa	Short	turler.scala:75
+type	JLokma	Byte	turler.scala:70
+type	JSayı	Integer	turler.scala:73
+type	JTemelSayı	Number	turler.scala:33
+type	JUfakKesir	Float	turler.scala:72
+type	JUzun	Long	turler.scala:74
+type	Jİkil	Boolean	turler.scala:69
+type	JİriSayı	math.BigInteger	turler.scala:76	üye
+type	KendiKapanır	AutoCloseable	turler.scala:28
+type	Kesir	Double	data.scala:56
+type	Kesir	Double	package.scala:103
+type	Kesir	Double	package.scala:77
+type	Kesir	Double	sayi.scala:33
+type	KesirDiziğiDizisi	ofDouble	turler.scala:100	üye
+def	KesirdenKesire	Double2double	turler.scala:81
+type	KumandaKolu	JoyStick	kumanda.scala:24	üye
+type	KuralDışı	Exception	gelecek.scala:35
+type	KuralDışı	Exception	trInit.scala:89
+type	KuraldışıGirdiHatası	IllegalArgumentException	turler.scala:56
+type	KuraldışıSınıfDökümü	ClassCastException	turler.scala:37
+type	Kuyruk	Queue	kuyruk.scala:246	üye
+type	Küme	Set	data.scala:69
+type	Küme	Set	dizi.scala:510
+type	Küme	Set	kume.scala:20
+type	Küme	Set	resim.scala:227
+type	Kısa	Short	data.scala:51
+type	Kısa	Short	package.scala:72
+type	Kısa	Short	sayi.scala:25
+type	KısaDiziğiDizisi	ofShort	turler.scala:105	üye
+def	KısadanKısaya	Short2short	turler.scala:84
+type	Lokma	Byte	data.scala:50
+type	Lokma	Byte	package.scala:71
+type	Lokma	Byte	sayi.scala:24
+type	LokmaDiziğiDizisi	ofByte	turler.scala:99	üye
+def	LokmadanLokmaya	Byte2byte	turler.scala:79
+type	MatematikselHata	ArithmeticException	turler.scala:26
+type	MiskinDizin	LazyList	data.scala:67
+type	MiskinDizin	LazyList	miskindizin.scala:30
+def	Mp3DöngüsünüDurdur	stopMp3Loop	trInit.scala:354
+def	Mp3ÇalıyorMu	isMp3Playing	trInit.scala:352
+def	Mp3üDurdur	stopMp3	trInit.scala:353
+type	Nesne	Object	data.scala:35
+type	Nesne	Object	package.scala:49
+type	Nokta	Point	data.scala:45
+type	Nokta	Point	package.scala:61
+def	NoktaIşık	PointLight	resim.scala:88
+type	OdakDinleyicisi	FocusListener	arayuz.scala:191	üye
+type	OdakOlayı	FocusEvent	arayuz.scala:190	üye
+type	OdakUyarlayıcısı	FocusAdapter	arayuz.scala:189	üye
+type	Okİlişkisi	ArrowAssoc	turler.scala:27
+type	PEtkinlik	PActivity	gelecek.scala:28	üye
+type	PNokta	PNode	resim.scala:229	üye
+type	PSınırlar	PBounds	geo.scala:23	üye
+type	PSınırlar	PBounds	resim.scala:224	üye
+type	ParDizi	ParSeq	dizin.scala:23	üye
+type	ParDizi	ParSeq	dizin.scala:46	üye
+type	Parça	JComponent	arayuz.scala:34	üye
+type	Renk	AColor	renk.scala:24	üye
+def	Renk	Color	data.scala:135
+type	Renk	Color	data.scala:42
+type	Renk	Color	package.scala:58
+def	RenkADA	hsla	renk.scala:115	üye
+def	RenkArıRenkDoygunlukAydınlık	hsla	renk.scala:125	üye
+def	RenkDD	linearGradient	renk.scala:113	üye
+def	RenkDoğrusalDeğişim	linearGradient	renk.scala:119	üye
+def	RenkKYM	Color	renk.scala:112
+type	Resim	Picture	data.scala:89
+def	Resim.dizi	picStack	resim.scala:460
+def	Resim.dizi	picStack	resim.scala:467
+def	Resim.diziDikey	picCol	resim.scala:461
+def	Resim.diziDikey	picCol	resim.scala:468
+def	Resim.diziDikeyDüzenli	picColCentered	resim.scala:464
+def	Resim.diziDikeyDüzenli	picColCentered	resim.scala:471
+def	Resim.diziDüzenli	picStackCentered	resim.scala:463
+def	Resim.diziDüzenli	picStackCentered	resim.scala:470
+def	Resim.diziYatay	picRow	resim.scala:462
+def	Resim.diziYatay	picRow	resim.scala:469
+def	Resim.diziYatayDüzenli	picRowCentered	resim.scala:465
+def	Resim.diziYatayDüzenli	picRowCentered	resim.scala:472
+def	Resim.küme	picBatch	resim.scala:466
+def	Resim.küme	picBatch	resim.scala:473
+def	Resim.satır	row	resim.scala:401
+def	Resim.sil	erasePictures	resim.scala:459
+def	Resim.sütun	col	resim.scala:402
+def	Resim.süz	filterImage	resim.scala:475
+def	Resim.süz	filterPicture	resim.scala:474
+def	Resim.tuvalBölgesi	stageArea	resim.scala:445
+def	Resim.tuvalSınırları	stage	resim.scala:440
+def	Resim.tuvalinSağı	stageRight	resim.scala:442
+def	Resim.tuvalinSolu	stageLeft	resim.scala:441
+def	Resim.tuvalinTabanı	stageBot	resim.scala:444
+def	Resim.tuvalinTavanı	stageTop	resim.scala:443
+def	Resim.çiz	draw	resim.scala:390
+type	SaatDilimi	TimeZone	buan.scala:24	üye
+def	SahneIşığı	SpotLight	resim.scala:90
+type	Sayı	Int	data.scala:52
+type	Sayı	Int	package.scala:73
+type	Sayı	Int	sayi.scala:26
+type	SayıDiziğiDizisi	ofInt	turler.scala:102	üye
+def	SayıdanSayıya	Integer2int	turler.scala:82
+type	Sayılar	Vector	sayi.scala:39
+val	Ses.arabaFrenYapıyor	"/media/car-ride/car-brake.mp3"	ses.scala:25
+val	Ses.arabaGidiyor	"/media/car-ride/car-move.mp3"	ses.scala:27
+val	Ses.arabaHızlanıyor	"/media/car-ride/car-accel.mp3"	ses.scala:24
+val	Ses.arabaKazaYaptı	"/media/car-ride/car-crash.mp3"	ses.scala:26
+val	Ses.bahçe	"/media/music-loops/Garden.mp3"	ses.scala:35
+val	Ses.basDavulVuruşları	"/media/music-loops/DrumBeats.mp3"	ses.scala:32
+val	Ses.bateri	"/media/music-loops/Drum.mp3"	ses.scala:33
+val	Ses.bateriElektronik	"/media/music-loops/DrumMachine.mp3"	ses.scala:34
+val	Ses.gitar1	"/media/music-loops/GuitarChords1.mp3"	ses.scala:36
+val	Ses.gitar2	"/media/music-loops/GuitarChords2.mp3"	ses.scala:37
+val	Ses.ksilofon1	"/media/music-loops/Xylo1.mp3"	ses.scala:39
+val	Ses.ksilofon2	"/media/music-loops/xylo4.mp3"	ses.scala:40
+val	Ses.mağarada	"/media/music-loops/Cave.mp3"	ses.scala:31
+val	Ses.ortaçağ1	Sound.medieval1	TurtleWorldAPI.scala:151
+val	Ses.ortaçağ1	Sound.medieval1	ses.scala:38
+val	Ses.vuruş	"/media/collidium/hit.mp3"	ses.scala:28
+val	Ses.yaşasın	"/media/collidium/win.mp3"	ses.scala:29
+type	Seçim	Boolean	data.scala:49
+type	Seçim	Boolean	package.scala:67
+type	Sınıf	Class	turler.scala:31
+type	SınıfBulunamadı	ClassNotFoundException	turler.scala:41
+type	SınıfDeğeri	ClassValue	turler.scala:42
+type	SınıfYükleyici	ClassLoader	turler.scala:40
+type	SınırDışınaTaşmaHatası	IndexOutOfBoundsException	turler.scala:58
+type	SıralıDizi	IndexedSeq	dizi.scala:24
+type	SıralıDizi	IndexedSeq	package.scala:89
+type	SıralıDizi	IndexedSeq	turler.scala:95
+type	Takvim	Calendar	buan.scala:22	üye
+type	Tarih	Date	buan.scala:23	üye
+type	Tuval	SCanvas	resim.scala:230	üye
+type	TuvalÇizim	CanvasDraw	tuvalcizim.scala:20
+type	TuşUyarlayıcısı	KeyAdapter	arayuz.scala:187	üye
+type	TuşaBasmaOlayı	KeyEvent	arayuz.scala:188	üye
+type	UfakKesir	Float	data.scala:55
+type	UfakKesir	Float	package.scala:76
+type	UfakKesir	Float	sayi.scala:32
+type	UfakKesirDiziğiDizisi	ofFloat	turler.scala:101	üye
+def	UfakKesirdenUfakKesire	Float2float	turler.scala:80
+type	Uygulama	App	turler.scala:24
+type	Uzun	Long	data.scala:53
+type	Uzun	Long	package.scala:74
+type	Uzun	Long	sayi.scala:27
+type	UzunDiziğiDizisi	ofLong	turler.scala:103	üye
+def	UzundanUzuna	Long2long	turler.scala:83
+type	UzunlukBirimi	UnitLen	data.scala:71	üye
+type	UzunlukBirimi	UnitLen	package.scala:94	üye
+type	VarsılHarf	RichChar	turler.scala:111	üye
+type	VarsılKesir	RichDouble	turler.scala:112	üye
+type	VarsılKısa	RichShort	turler.scala:116	üye
+type	VarsılLokma	RichByte	turler.scala:110	üye
+type	VarsılSayı	RichInt	turler.scala:114	üye
+type	VarsılUfakKesir	RichFloat	turler.scala:113	üye
+type	VarsılUzun	RichLong	turler.scala:115	üye
+type	Varsılİkil	RichBoolean	turler.scala:109	üye
+type	Yapıcıdan	BuildFrom	package.scala:93	üye
+type	Yapıcıdan	BuildFrom	trInit.scala:101	üye
+type	Yazı	String	data.scala:59
+type	Yazı	String	package.scala:118
+type	Yazı	String	yazi.scala:20
+type	Yazıyüzü	Font	arayuz.scala:32
+type	Yazıyüzü	Font	resim.scala:388
+type	Yazıyüzü	Font	tuvalcizim.scala:24
+type	Yinelenebilir	Iterable	package.scala:91
+type	YinelenebilirBirKere	IterableOnce	package.scala:92
+type	Yineleyici	Iterator	package.scala:90
+type	Yok	Null	data.scala:40
+type	Yok	Null	package.scala:54
+type	YumuşakGeçiş	KEasing	resim.scala:478	üye
+type	Yöney	Vector	data.scala:68
+type	Yöney	Vector	dizi.scala:511
+type	Yöney	Vector	yoney.scala:22
+type	Yöney2B	Vector2D	data.scala:88
+type	Yığın	Stack	package.scala:88	üye
+def	a_kalıp	println	trInit.scala:617
+def	ada	hsla	renk.scala:142	üye
+def	adas	hsla	renk.scala:143	üye
+def	adı	getName	dosya.scala:24	üye
+def	adım	step	aralik.scala:68	üye
+def	adımı	step	aralik.scala:67	üye
+def	alDoğruKaldıkça	takeWhile	dizi.scala:236	üye
+def	alDoğruKaldıkça	takeWhile	dizi.scala:378	üye
+def	alDoğruKaldıkça	takeWhile	dizi.scala:89	üye
+def	alDoğruKaldıkça	takeWhile	dizik.scala:234	üye
+def	alDoğruKaldıkça	takeWhile	dizik.scala:78	üye
+def	alDoğruKaldıkça	takeWhile	dizin.scala:83	üye
+def	alDoğruKaldıkça	takeWhile	eslem.scala:243	üye
+def	alDoğruKaldıkça	takeWhile	eslem.scala:87	üye
+def	alDoğruKaldıkça	takeWhile	kume.scala:54	üye
+def	alDoğruKaldıkça	takeWhile	kuyruk.scala:164	üye
+def	alDoğruKaldıkça	takeWhile	kuyruk.scala:297	üye
+def	alDoğruKaldıkça	takeWhile	miskindizin.scala:116	üye
+def	alDoğruKaldıkça	takeWhile	yazi.scala:82	üye
+def	alDoğruKaldıkça	takeWhile	yineleyici.scala:68	üye
+def	alDoğruKaldıkça	takeWhile	yoney.scala:67	üye
+def	alDoğruKaldıkçaYerinde	takeWhileInPlace	dizik.scala:349	üye
+def	alDoğruKaldıkçaYerinde	takeWhileInPlace	kuyruk.scala:431	üye
+def	alDoğruKaldıkçaYerinde	takeWhileInPlace	kuyruk.scala:81	üye
+def	alHepsini	removeAll	kuyruk.scala:447	üye
+def	alHepsini	removeAll	kuyruk.scala:60	üye
+def	alHepsiniTersten	removeAllReverse	kuyruk.scala:448	üye
+def	alHepsiniTersten	removeAllReverse	kuyruk.scala:61	üye
+def	alSağdan	takeRight	dizi.scala:237	üye
+def	alSağdan	takeRight	dizi.scala:379	üye
+def	alSağdan	takeRight	dizi.scala:90	üye
+def	alSağdan	takeRight	dizik.scala:235	üye
+def	alSağdan	takeRight	dizik.scala:79	üye
+def	alSağdan	takeRight	dizin.scala:84	üye
+def	alSağdan	takeRight	eslem.scala:244	üye
+def	alSağdan	takeRight	eslem.scala:88	üye
+def	alSağdan	takeRight	kume.scala:55	üye
+def	alSağdan	takeRight	kuyruk.scala:165	üye
+def	alSağdan	takeRight	kuyruk.scala:298	üye
+def	alSağdan	takeRight	miskindizin.scala:117	üye
+def	alSağdan	takeRight	yazi.scala:83	üye
+def	alSağdan	takeRight	yoney.scala:68	üye
+def	alSağdanYerinde	takeRightInPlace	dizik.scala:348	üye
+def	alSağdanYerinde	takeRightInPlace	kuyruk.scala:430	üye
+def	alSağdanYerinde	takeRightInPlace	kuyruk.scala:80	üye
+def	alSırayla	take	eslem.scala:242	üye
+def	alSırayla	take	eslem.scala:86	üye
+def	alYerinde	takeInPlace	dizik.scala:347	üye
+def	alYerinde	takeInPlace	kuyruk.scala:429	üye
+def	alYerinde	takeInPlace	kuyruk.scala:79	üye
+def	alYoksa	getOrElse	belki.scala:48	üye
+def	alYoksa	getOrElse	eslem.scala:198	üye
+def	alYoksa	getOrElse	eslem.scala:40	üye
+def	alYoksa	getOrElse	ikisindenbiri.scala:68	üye
+def	alYoksaEkle	getOrElseUpdate	eslem.scala:161	üye
+def	alan	area	resim.scala:286
+def	altKümeleri	subsets	kume.scala:81	üye
+def	altKümesiMi	subsetOf	kume.scala:142	üye
+def	alta	below	resim.scala:336	üye
+val	altın	gold	renk.scala:74	üye
+val	altınbaşak	goldenrod	renk.scala:74	üye
+def	altında	over	resim.scala:338	üye
+def	altındaÇiniVarMı	hasTileUnder	cinidunyasi.scala:43	üye
+def	anahtarKümesi	keySet	eslem.scala:200	üye
+def	anahtarKümesi	keySet	eslem.scala:43	üye
+def	anahtarYineleyici	keysIterator	eslem.scala:175	üye
+def	anahtarYineleyici	keysIterator	eslem.scala:324	üye
+def	anahtarlar	keys	eslem.scala:201	üye
+def	anahtarlar	keys	eslem.scala:44	üye
+def	anahtarlarıEle	filterKeys	eslem.scala:173	üye
+def	anahtarlarıEle	filterKeys	eslem.scala:321	üye
+def	araEkle	insert	dizik.scala:371	üye
+def	araEkle	insert	kuyruk.scala:415	üye
+def	araEkle	insert	yazi.scala:212	üye
+def	araEkleHepsini	insertAll	dizik.scala:373	üye
+def	araEkleHepsini	insertAll	yazi.scala:214	üye
+def	aralık	range	miskindizin.scala:48	üye
+def	aralık	range	miskindizin.scala:49	üye
+def	aralığıSil	delete	yazi.scala:215	üye
+def	arayüz	Picture.widget	resim.scala:419
+def	ardaAl	moveToBack	resim.scala:329	üye
+def	arkayaAl	moveToBack	resim.scala:330	üye
+def	artalan	background	tuvalcizim.scala:32	üye
+def	artalan	background	tuvalcizim.scala:33	üye
+def	artalandaOynat	runInBackground	trInit.scala:461
+def	artalanıKur	setBackground	arayuz.scala:109
+def	artalanıKur	setBackground	arayuz.scala:119
+def	artalanıKur	setBackground	arayuz.scala:134
+def	artalanıKur	setBackground	arayuz.scala:149
+def	artalanıKur	setBackground	arayuz.scala:161
+def	artalanıKur	setBackground	arayuz.scala:47
+def	artalanıKur	setBackground	arayuz.scala:60
+def	artalanıKur	setBackground	arayuz.scala:75
+def	artalanıKur	setBackground	arayuz.scala:93
+def	artalanıKur	setBackground	data.scala:136
+def	artalanıKur	setBackground	trInit.scala:247
+def	artalanıKur	setBackground	trInit.scala:248
+def	artalanıKurDik	setBackgroundV	data.scala:137
+def	artalanıKurDik	setBackgroundV	trInit.scala:249
+def	artalanıKurYatay	setBackgroundH	data.scala:138
+def	artalanıKurYatay	setBackgroundH	trInit.scala:250
+def	atla	jumpTo	trInit.scala:153
+def	aydınlık	brit	resim.scala:46
+def	aydınlık	britMod	resim.scala:264
+def	aydınlıkOranınıKur	britMod	resim.scala:260
+def	ayırıcı	separator	dosya.scala:40	üye
+def	ayırıcıHarf	separatorChar	dosya.scala:41	üye
+def	açı	angle	yoney2b.scala:43	üye
+def	açı	math.atan2	matematik.scala:84
+def	açı2	angleTo	yoney2b.scala:44	üye
+val	açıkAltınbaşakSarısı	lightGoldenrodYellow	renk.scala:88	üye
+val	açıkCamgöbeği	lightCyan	renk.scala:88	üye
+val	açıkDenizYeşili	lightSeaGreen	renk.scala:88	üye
+val	açıkGri	lightGray	data.scala:127
+val	açıkGri	lightGray	renk.scala:69
+val	açıkGökMavisi	lightSkyBlue	renk.scala:88	üye
+val	açıkKurşunGrisi	lightSlateGray	renk.scala:88	üye
+val	açıkMavi	lightBlue	renk.scala:88	üye
+val	açıkMercan	lightCoral	renk.scala:88	üye
+val	açıkPembe	lightPink	renk.scala:88	üye
+val	açıkSarı	lightYellow	renk.scala:88	üye
+val	açıkSomon	lightSalmon	renk.scala:88	üye
+val	açıkYeşil	lightGreen	renk.scala:88	üye
+val	açıkÇelikMavisi	lightSteelBlue	renk.scala:88	üye
+def	açısalEğriNoktası	curveVertexRt	geo.scala:56
+def	açısalNokta	vertexRt	geo.scala:55
+def	açıyaDön	setHeading	resim.scala:296
+def	açıyaDön	setHeading	trInit.scala:166
+def	açıÖlçeriGizle	hideProtractor	trInit.scala:420
+def	açıÖlçeriGöster	showProtractor	trInit.scala:419
+def	ağırlıklıToplam	lerp	yoney2b.scala:40	üye
+def	aşağıdakiÇiniyeTaşı	moveToTileBelow	cinidunyasi.scala:46	üye
+def	aşağıdaÇiniVarMı	hasTileBelow	cinidunyasi.scala:42	üye
+val	back_space	backSpace	klavye.scala:188	üye
+val	batı	WEST	arayuz.scala:173	üye
+def	batı	setHeading	trInit.scala:169
+def	başaDön	closePath	geo.scala:43	üye
+def	başaEkle	prepend	dizik.scala:367	üye
+def	başaEkleHepsini	prependAll	dizik.scala:369	üye
+def	başaKoy	prepend	kuyruk.scala:512	üye
+def	başarılı	successful	gelecek.scala:36	üye
+def	başarısız	failed	gelecek.scala:37	üye
+def	başla	beginShape	geo.scala:49
+def	başlangıçNoktasıAltSolKöşeOlsun	originBottomLeft	trInit.scala:620
+def	başlangıçNoktasıÜstSolKöşeOlsun	originTopLeft	trInit.scala:619
+def	baştanAl	dequeue	kuyruk.scala:133	üye
+def	baştanAl	dequeue	kuyruk.scala:266	üye
+def	baştanAl	removeHead	kuyruk.scala:517	üye
+def	baştanAlBelki	removeHeadOption	kuyruk.scala:519	üye
+def	baştanAlHepsini	dequeueAll	kuyruk.scala:267	üye
+def	baştanAlHepsini	toList	kuyruk.scala:134	üye
+def	baştanKırp	dropInPlace	dizik.scala:377	üye
+def	baştanÇıkar	dequeue	kuyruk.scala:399	üye
+def	baştanÇıkarBelki	removeHeadOption	kuyruk.scala:400	üye
+def	baştanÇıkarDoğruKaldıkça	removeHeadWhile	kuyruk.scala:401	üye
+def	baştanÇıkarHepsiniKoşulla	dequeueWhile	kuyruk.scala:403	üye
+def	baştanÇıkarKoşulla	dequeueFirst	kuyruk.scala:402	üye
+def	başı	head	aralik.scala:70	üye
+def	başı	head	dizi.scala:202	üye
+def	başı	head	dizi.scala:345	üye
+def	başı	head	dizi.scala:55	üye
+def	başı	head	dizik.scala:195	üye
+def	başı	head	dizik.scala:38	üye
+def	başı	head	dizin.scala:49	üye
+def	başı	head	eslem.scala:205	üye
+def	başı	head	eslem.scala:48	üye
+def	başı	head	kume.scala:30	üye
+def	başı	head	kuyruk.scala:138	üye
+def	başı	head	kuyruk.scala:271	üye
+def	başı	head	kuyruk.scala:523	üye
+def	başı	head	miskindizin.scala:60	üye
+def	başı	head	yazi.scala:43	üye
+def	başı	head	yineleyici.scala:149	üye
+def	başı	head	yoney.scala:33	üye
+def	başıBelki	headOption	dizi.scala:123	üye
+def	başıBelki	headOption	dizi.scala:267	üye
+def	başıBelki	headOption	dizi.scala:409	üye
+def	başıBelki	headOption	dizik.scala:116	üye
+def	başıBelki	headOption	dizik.scala:269	üye
+def	başıBelki	headOption	dizin.scala:115	üye
+def	başıBelki	headOption	eslem.scala:116	üye
+def	başıBelki	headOption	eslem.scala:276	üye
+def	başıBelki	headOption	kume.scala:96	üye
+def	başıBelki	headOption	kuyruk.scala:198	üye
+def	başıBelki	headOption	kuyruk.scala:326	üye
+def	başıBelki	headOption	kuyruk.scala:525	üye
+def	başıBelki	headOption	miskindizin.scala:64	üye
+def	başıBelki	headOption	yazi.scala:152	üye
+def	başıBelki	headOption	yoney.scala:98	üye
+def	başındaMı	startsWith	dizi.scala:133	üye
+def	başındaMı	startsWith	dizi.scala:277	üye
+def	başındaMı	startsWith	dizi.scala:419	üye
+def	başındaMı	startsWith	dizik.scala:123	üye
+def	başındaMı	startsWith	dizik.scala:279	üye
+def	başındaMı	startsWith	dizin.scala:125	üye
+def	başındaMı	startsWith	kuyruk.scala:336	üye
+def	başındaMı	startsWith	miskindizin.scala:112	üye
+def	başındaMı	startsWith	yazi.scala:119	üye
+def	başındaMı	startsWith	yazi.scala:120	üye
+def	başındaMı	startsWith	yoney.scala:108	üye
+def	başındanAt	stripPrefix	yazi.scala:187	üye
+def	belirt	assert	data.scala:94
+def	belirt	assert	trInit.scala:132
+def	belkiye	toOption	ikisindenbiri.scala:77	üye
+def	bellekli	buffered	yineleyici.scala:128	üye
+def	benzerDönüşümKur	setTransform	resim.scala:266	üye
+def	benzerDönüşümUygula	transformBy	resim.scala:265	üye
+val	beyaz	white	data.scala:123
+val	beyaz	white	renk.scala:66
+val	beyazlatılmışBadem	blanchedAlmond	renk.scala:74	üye
+def	bezierNoktası	bezierVertex	geo.scala:53
+def	bileşim	concat	dizi.scala:179	üye
+def	bileşim	concat	dizi.scala:323	üye
+def	bileşim	concat	dizi.scala:465	üye
+def	bileşim	concat	dizik.scala:325	üye
+def	bileşim	concat	dizin.scala:171	üye
+def	bileşim	concat	kuyruk.scala:382	üye
+def	bileşim	concat	miskindizin.scala:143	üye
+def	bileşim	concat	yineleyici.scala:81	üye
+def	bileşim	concat	yoney.scala:154	üye
+def	bileşim	union	kume.scala:86	üye
+def	bilgiVer	dumpInfo	resim.scala:267	üye
+def	birAdımİleri	step	cinidunyasi.scala:50	üye
+def	birEfekt	effect	resim.scala:84
+def	birleştir	concat	dizik.scala:184	üye
+def	birleştir	fold	ikisindenbiri.scala:59	üye
+def	birsonrakiGiysi	nextCostume	trInit.scala:207
+def	bitir	endShape	geo.scala:50
+def	biçimleriBelleğeYaz	saveStyle	trInit.scala:198
+def	biçimleriGeriYükle	restoreStyle	trInit.scala:199
+def	boy	height	trInit.scala:378	üye
+def	boya	fill	tuvalcizim.scala:29	üye
+def	boya	fill	tuvalcizim.scala:30	üye
+def	boyaRengi	fill	resim.scala:69	üye
+def	boyamaRenginiKur	setFillColor	resim.scala:307
+def	boyamaRenginiKur	setFillColor	trInit.scala:196
+def	boyasız	noFill	tuvalcizim.scala:31	üye
+def	boyu	height	geo.scala:27	üye
+def	boyu	height	trInit.scala:376	üye
+def	boyu	length	aralik.scala:80	üye
+def	boyu	length	dizi.scala:206	üye
+def	boyu	length	dizi.scala:349	üye
+def	boyu	length	dizi.scala:59	üye
+def	boyu	length	dizik.scala:199	üye
+def	boyu	length	dizik.scala:42	üye
+def	boyu	length	dizin.scala:53	üye
+def	boyu	length	kuyruk.scala:142	üye
+def	boyu	length	kuyruk.scala:275	üye
+def	boyu	length	kuyruk.scala:529	üye
+def	boyu	length	miskindizin.scala:66	üye
+def	boyu	length	yazi.scala:47	üye
+def	boyu	length	yineleyici.scala:120	üye
+def	boyu	length	yoney.scala:37	üye
+def	boyu	magnitude	yoney2b.scala:28	üye
+def	boyu	size	eslem.scala:209
+def	boyu	size	eslem.scala:52
+def	boyu	size	kume.scala:32
+def	boyu	size	yazi.scala:198
+def	boyuKur	setLength	yazi.scala:220	üye
+def	boyunKaresi	magSquared	yoney2b.scala:29	üye
+def	boyunuBirYap	normalize	yoney2b.scala:27	üye
+def	boş	Nil	dizin.scala:37
+def	boş	collection.mutable.Map	eslem.scala:23
+def	boş	empty	data.scala:327	üye
+def	boş	empty	dizi.scala:31	üye
+def	boş	empty	dizi.scala:45	üye
+def	boş	empty	dizik.scala:179	üye
+def	boş	empty	dizik.scala:25	üye
+def	boş	empty	dizim.scala:53	üye
+def	boş	empty	kume.scala:23	üye
+def	boş	empty	kume.scala:82	üye
+def	boş	empty	kuyruk.scala:117	üye
+def	boş	empty	kuyruk.scala:249	üye
+def	boş	empty	kuyruk.scala:27	üye
+def	boş	empty	kuyruk.scala:500	üye
+def	boş	empty	miskindizin.scala:38	üye
+def	boş	empty	yoney.scala:26	üye
+def	boş	ofDim	dizik.scala:26	üye
+def	boş	ofDim	dizik.scala:27	üye
+def	boş	ofDim	dizik.scala:28	üye
+def	boş	ofDim	dizim.scala:54	üye
+def	boş	ofDim	dizim.scala:55	üye
+def	boş	ofDim	dizim.scala:56	üye
+def	boşKenar	createEmptyBorder	arayuz.scala:183	üye
+def	boşMu	isEmpty	belki.scala:52	üye
+def	boşMu	isEmpty	dizi.scala:207	üye
+def	boşMu	isEmpty	dizi.scala:350	üye
+def	boşMu	isEmpty	dizi.scala:60	üye
+def	boşMu	isEmpty	dizik.scala:200	üye
+def	boşMu	isEmpty	dizik.scala:43	üye
+def	boşMu	isEmpty	dizim.scala:39	üye
+def	boşMu	isEmpty	dizin.scala:54	üye
+def	boşMu	isEmpty	eslem.scala:210	üye
+def	boşMu	isEmpty	eslem.scala:53	üye
+def	boşMu	isEmpty	kume.scala:33	üye
+def	boşMu	isEmpty	kuyruk.scala:143	üye
+def	boşMu	isEmpty	kuyruk.scala:276	üye
+def	boşMu	isEmpty	kuyruk.scala:531	üye
+def	boşMu	isEmpty	miskindizin.scala:67	üye
+def	boşMu	isEmpty	yazi.scala:48	üye
+def	boşMu	isEmpty	yineleyici.scala:121	üye
+def	boşMu	isEmpty	yoney.scala:38	üye
+def	boşMu	size	yazi.scala:196
+def	boşalt	clear	dizik.scala:379
+def	boşalt	clear	eslem.scala:169
+def	boşalt	clear	kuyruk.scala:418
+def	boşlukMu	isWhitespace	harf.scala:59	üye
+def	boşsaÖbürü	orElse	belki.scala:81	üye
+def	boşsaÖbürü	orElse	ikisindenbiri.scala:69	üye
+def	buAn	currentTimeMillis	buan.scala:64	üye
+def	buAn	epochTimeMillis	data.scala:139
+def	buAn	getInstance	buan.scala:26	üye
+def	buAn2	nanoTime	buan.scala:68	üye
+def	buDizin	currentDir	data.scala:197
+def	buDizin	currentDir	trInit.scala:321
+def	buSaniye	currentTimeMillis	buan.scala:65	üye
+def	buSaniye	epochTime	data.scala:140
+def	buSaniye1	BigDecimal	buan.scala:72
+def	buSaniye2	BigDecimal	buan.scala:69
+val	buan	getInstance	buan.scala:38	üye
+def	bul	find	dizi.scala:125	üye
+def	bul	find	dizi.scala:269	üye
+def	bul	find	dizi.scala:411	üye
+def	bul	find	dizik.scala:118	üye
+def	bul	find	dizik.scala:271	üye
+def	bul	find	dizin.scala:117	üye
+def	bul	find	eslem.scala:118	üye
+def	bul	find	eslem.scala:278	üye
+def	bul	find	kume.scala:98	üye
+def	bul	find	kuyruk.scala:200	üye
+def	bul	find	kuyruk.scala:328	üye
+def	bul	find	miskindizin.scala:110	üye
+def	bul	find	yazi.scala:154	üye
+def	bul	find	yineleyici.scala:54	üye
+def	bul	find	yoney.scala:100	üye
+def	bulSondan	findLast	dizi.scala:126	üye
+def	bulSondan	findLast	dizi.scala:270	üye
+def	bulSondan	findLast	dizi.scala:412	üye
+def	bulSondan	findLast	dizik.scala:272	üye
+def	bulSondan	findLast	dizin.scala:118	üye
+def	bulSondan	findLast	kuyruk.scala:329	üye
+def	bulSondan	findLast	miskindizin.scala:111	üye
+def	bulSondan	findLast	yoney.scala:101	üye
+def	bulanık	blur	resim.scala:77
+def	buradaDur	burdaDur	trInit.scala:333	üye
+def	buradaDurma	burdaDurma	trInit.scala:339	üye
+def	böl	partition	dizi.scala:138	üye
+def	böl	partition	dizi.scala:282	üye
+def	böl	partition	dizi.scala:424	üye
+def	böl	partition	dizik.scala:127	üye
+def	böl	partition	dizik.scala:284	üye
+def	böl	partition	dizin.scala:130	üye
+def	böl	partition	eslem.scala:121	üye
+def	böl	partition	eslem.scala:281	üye
+def	böl	partition	kume.scala:83	üye
+def	böl	partition	kuyruk.scala:341	üye
+def	böl	partition	miskindizin.scala:155	üye
+def	böl	partition	yineleyici.scala:72	üye
+def	böl	partition	yoney.scala:113	üye
+def	böl	split	yazi.scala:105	üye
+def	böl	split	yazi.scala:106	üye
+def	böl	split	yazi.scala:108	üye
+def	bölDoğruKaldıkça	span	dizi.scala:140	üye
+def	bölDoğruKaldıkça	span	dizi.scala:284	üye
+def	bölDoğruKaldıkça	span	dizi.scala:426	üye
+def	bölDoğruKaldıkça	span	dizik.scala:129	üye
+def	bölDoğruKaldıkça	span	dizik.scala:286	üye
+def	bölDoğruKaldıkça	span	dizin.scala:132	üye
+def	bölDoğruKaldıkça	span	eslem.scala:123	üye
+def	bölDoğruKaldıkça	span	eslem.scala:283	üye
+def	bölDoğruKaldıkça	span	kume.scala:102	üye
+def	bölDoğruKaldıkça	span	kuyruk.scala:204	üye
+def	bölDoğruKaldıkça	span	kuyruk.scala:343	üye
+def	bölDoğruKaldıkça	span	miskindizin.scala:157	üye
+def	bölDoğruKaldıkça	span	yazi.scala:158	üye
+def	bölDoğruKaldıkça	span	yineleyici.scala:73	üye
+def	bölDoğruKaldıkça	span	yoney.scala:115	üye
+def	bölYerinden	splitAt	dizi.scala:141	üye
+def	bölYerinden	splitAt	dizi.scala:285	üye
+def	bölYerinden	splitAt	dizi.scala:427	üye
+def	bölYerinden	splitAt	dizik.scala:130	üye
+def	bölYerinden	splitAt	dizik.scala:287	üye
+def	bölYerinden	splitAt	dizin.scala:133	üye
+def	bölYerinden	splitAt	eslem.scala:124	üye
+def	bölYerinden	splitAt	eslem.scala:284	üye
+def	bölYerinden	splitAt	kume.scala:103	üye
+def	bölYerinden	splitAt	kuyruk.scala:205	üye
+def	bölYerinden	splitAt	kuyruk.scala:344	üye
+def	bölYerinden	splitAt	miskindizin.scala:158	üye
+def	bölYerinden	splitAt	yazi.scala:159	üye
+def	bölYerinden	splitAt	yineleyici.scala:114	üye
+def	bölYerinden	splitAt	yoney.scala:116	üye
+def	bölİşle	partitionMap	dizi.scala:139	üye
+def	bölİşle	partitionMap	dizi.scala:283	üye
+def	bölİşle	partitionMap	dizi.scala:425	üye
+def	bölİşle	partitionMap	dizik.scala:128	üye
+def	bölİşle	partitionMap	dizik.scala:285	üye
+def	bölİşle	partitionMap	dizin.scala:131	üye
+def	bölİşle	partitionMap	eslem.scala:122	üye
+def	bölİşle	partitionMap	eslem.scala:282	üye
+def	bölİşle	partitionMap	kume.scala:101	üye
+def	bölİşle	partitionMap	kuyruk.scala:342	üye
+def	bölİşle	partitionMap	miskindizin.scala:156	üye
+def	bölİşle	partitionMap	yoney.scala:114	üye
+def	büyükHarfMi	isUpper	harf.scala:61	üye
+def	büyükHarfe	map	yazi.scala:109	üye
+def	büyükHarfe	toUpper	harf.scala:54	üye
+def	büyüt	scale	resim.scala:242
+def	büyüt	scale	resim.scala:243
+def	büyüt	scale	resim.scala:40
+def	büyüt	scale	resim.scala:41
+def	büyüt	scale	yoney2b.scala:26
+def	büyütXY	scale	resim.scala:42
+def	büyütmeOranı	scaleFactor	resim.scala:297	üye
+def	büyütmeOranınıKur	setScaleFactor	resim.scala:298	üye
+def	büyütmeyiKur	setScale	resim.scala:299	üye
+val	camgöbeği	cyan	data.scala:130
+val	camgöbeği	cyan	renk.scala:72
+def	canlan	react	resim.scala:310	üye
+def	canlan	react	trInit.scala:227	üye
+def	canlandır	animate	trInit.scala:465
+def	canlandırEvreyle	animateWithState	trInit.scala:466
+def	canlandırTuvalÇizimle	animateWithCanvasDraw	trInit.scala:473
+def	canlandırmaBaşlayınca	onAnimationStart	trInit.scala:475
+def	canlandırmaBitince	onAnimationStop	trInit.scala:476
+def	canlandırmaDizisi	animSeq	trInit.scala:454
+def	canlandırmaDizisi	animSeq	trInit.scala:455
+def	canlandırmaEşzamanlı	animPar	trInit.scala:457
+def	canlandırmaEşzamanlı	animPar	trInit.scala:458
+def	canlandırmaHızı	animationDelay	trInit.scala:173
+def	canlandırmaHızınıKur	setAnimationDelay	trInit.scala:172
+def	canlandırmayıDurdur	stopAnimationActivity	trInit.scala:468
+def	cetveliGöster	showScale	trInit.scala:422
+val	codeTemplates	templates	trInit.scala:673
+def	dahaAçıkYap	awtColorToDoodleColor	renk.scala:100	üye
+def	dahaKoyuYap	awtColorToDoodleColor	renk.scala:101	üye
+def	dahaVarMı	hasNext	yineleyici.scala:40	üye
+def	daire	Picture.circle	resim.scala:394
+def	daire	circle	trInit.scala:185
+def	dakika	get	buan.scala:30	üye
+val	denizYeşili	seaGreen	renk.scala:74	üye
+def	dereceye	math.toDegrees	matematik.scala:48
+def	dereceye	toDegrees	data.scala:169	üye
+def	dereceye	toDegrees	sayi.scala:114	üye
+def	devrik	transpose	dizi.scala:185	üye
+def	devrik	transpose	dizi.scala:329	üye
+def	devrik	transpose	dizi.scala:471	üye
+def	devrik	transpose	dizik.scala:161	üye
+def	devrik	transpose	dizik.scala:331	üye
+def	devrik	transpose	dizin.scala:177	üye
+def	devrik	transpose	eslem.scala:151	üye
+def	devrik	transpose	eslem.scala:311	üye
+def	devrik	transpose	kume.scala:132	üye
+def	devrik	transpose	kuyruk.scala:230	üye
+def	devrik	transpose	kuyruk.scala:388	üye
+def	devrik	transpose	miskindizin.scala:76	üye
+def	devrik	transpose	yoney.scala:160	üye
+def	değerYineleyici	valuesIterator	eslem.scala:176	üye
+def	değerYineleyici	valuesIterator	eslem.scala:325	üye
+def	değeri	value	arayuz.scala:145	üye
+def	değeri	value	arayuz.scala:160	üye
+def	değeri	value	arayuz.scala:71	üye
+def	değeri	value	arayuz.scala:91	üye
+def	değerler	values	eslem.scala:203	üye
+def	değerler	values	eslem.scala:46	üye
+def	değerleriİşle	mapValues	eslem.scala:172	üye
+def	değerleriİşle	mapValues	eslem.scala:320	üye
+def	değilseVer	unless	belki.scala:27	üye
+def	değişim	variance	matematik.scala:88	üye
+def	değişim	variance	matematik.scala:89	üye
+def	değişmezden	collection.mutable.Map	eslem.scala:25
+def	değiştir	clone	eslem.scala:78
+def	değiştir	replace	yazi.scala:100	üye
+def	değiştir	replace	yazi.scala:101	üye
+def	değiştir	updated	dizi.scala:228	üye
+def	değiştir	updated	dizi.scala:370	üye
+def	değiştir	updated	dizi.scala:81	üye
+def	değiştir	updated	dizik.scala:224	üye
+def	değiştir	updated	dizik.scala:68	üye
+def	değiştir	updated	dizin.scala:75	üye
+def	değiştir	updated	miskindizin.scala:103	üye
+def	değiştir	updated	yazi.scala:71	üye
+def	değiştir	updated	yoney.scala:59	üye
+def	değiştirAralığını	replace	yazi.scala:217	üye
+def	değiştirHepsini	replaceAll	yazi.scala:102	üye
+def	değiştirYerinde	update	dizik.scala:225	üye
+def	değiştirYerinde	update	dizik.scala:69	üye
+def	değiştirilmiş	updated	eslem.scala:263	üye
+def	değiştirİlkini	replaceFirst	yazi.scala:103	üye
+def	değiştirİşlevle	updatedWith	eslem.scala:317	üye
+def	dikdörtgen	Picture.rect	resim.scala:399
+def	dikdörtgen	rect	tuvalcizim.scala:42	üye
+def	dikey	Picture.vline	resim.scala:398
+val	dikey	VERTICAL	arayuz.scala:173	üye
+def	dikeyBoşluk	Picture.vgap	resim.scala:421
+def	dikeyDüzeniKur	setVerticalAlignment	arayuz.scala:106	üye
+def	dilim	slice	dizi.scala:111	üye
+def	dilim	slice	dizi.scala:255	üye
+def	dilim	slice	dizi.scala:397	üye
+def	dilim	slice	dizik.scala:101	üye
+def	dilim	slice	dizik.scala:257	üye
+def	dilim	slice	dizin.scala:102	üye
+def	dilim	slice	eslem.scala:149	üye
+def	dilim	slice	eslem.scala:309	üye
+def	dilim	slice	kume.scala:70	üye
+def	dilim	slice	kuyruk.scala:179	üye
+def	dilim	slice	kuyruk.scala:312	üye
+def	dilim	slice	miskindizin.scala:154	üye
+def	dilim	slice	yazi.scala:168	üye
+def	dilim	slice	yineleyici.scala:71	üye
+def	dilim	slice	yoney.scala:86	üye
+def	dilimSırası	indexOfSlice	dizi.scala:130	üye
+def	dilimSırası	indexOfSlice	dizi.scala:274	üye
+def	dilimSırası	indexOfSlice	dizi.scala:416	üye
+def	dilimSırası	indexOfSlice	dizik.scala:276	üye
+def	dilimSırası	indexOfSlice	dizin.scala:122	üye
+def	dilimSırası	indexOfSlice	kuyruk.scala:333	üye
+def	dilimSırası	indexOfSlice	yoney.scala:105	üye
+def	dilimSırasıSondan	lastIndexOfSlice	dizi.scala:131	üye
+def	dilimSırasıSondan	lastIndexOfSlice	dizi.scala:275	üye
+def	dilimSırasıSondan	lastIndexOfSlice	dizi.scala:417	üye
+def	dilimSırasıSondan	lastIndexOfSlice	dizik.scala:277	üye
+def	dilimSırasıSondan	lastIndexOfSlice	dizin.scala:123	üye
+def	dilimSırasıSondan	lastIndexOfSlice	kuyruk.scala:334	üye
+def	dilimSırasıSondan	lastIndexOfSlice	yoney.scala:106	üye
+def	dilimYerinde	sliceInPlace	dizik.scala:353	üye
+def	dilimYerinde	sliceInPlace	kuyruk.scala:435	üye
+def	dilimYerinde	sliceInPlace	kuyruk.scala:85	üye
+def	dizi	toList	kuyruk.scala:535	üye
+def	dizi	toSeq	dizim.scala:37	üye
+def	dizi	toSeq	eslem.scala:196	üye
+def	dizi	toSeq	eslem.scala:38	üye
+def	dizi	toSeq	kuyruk.scala:52	üye
+def	diziden	from	dizik.scala:183	üye
+def	diziden	from	miskindizin.scala:46	üye
+def	dizime	toArray	dizi.scala:106	üye
+def	dizime	toArray	dizi.scala:250	üye
+def	dizime	toArray	dizi.scala:392	üye
+def	dizime	toArray	dizi.scala:496	üye
+def	dizime	toArray	dizi.scala:523	üye
+def	dizime	toArray	dizik.scala:252	üye
+def	dizime	toArray	dizik.scala:96	üye
+def	dizime	toArray	dizin.scala:97	üye
+def	dizime	toArray	eslem.scala:253	üye
+def	dizime	toArray	eslem.scala:97	üye
+def	dizime	toArray	kume.scala:65	üye
+def	dizime	toArray	kuyruk.scala:174	üye
+def	dizime	toArray	kuyruk.scala:307	üye
+def	dizime	toArray	kuyruk.scala:98	üye
+def	dizime	toArray	miskindizin.scala:149	üye
+def	dizime	toArray	yazi.scala:126	üye
+def	dizime	toArray	yineleyici.scala:135	üye
+def	dizime	toArray	yoney.scala:81	üye
+def	dizinMi	isDirectory	dosya.scala:27	üye
+def	dizinYap	mkdir	dosya.scala:29	üye
+def	dizine	toList	aralik.scala:79	üye
+def	dizine	toList	belki.scala:61	üye
+def	dizine	toList	dizi.scala:102	üye
+def	dizine	toList	dizi.scala:246	üye
+def	dizine	toList	dizi.scala:388	üye
+def	dizine	toList	dizi.scala:492	üye
+def	dizine	toList	dizi.scala:519	üye
+def	dizine	toList	dizik.scala:248	üye
+def	dizine	toList	dizik.scala:92	üye
+def	dizine	toList	dizin.scala:28	üye
+def	dizine	toList	dizin.scala:93	üye
+def	dizine	toList	eslem.scala:249	üye
+def	dizine	toList	eslem.scala:93	üye
+def	dizine	toList	kume.scala:61	üye
+def	dizine	toList	kuyruk.scala:170	üye
+def	dizine	toList	kuyruk.scala:303	üye
+def	dizine	toList	miskindizin.scala:145	üye
+def	dizine	toList	yazi.scala:132	üye
+def	dizine	toList	yineleyici.scala:131	üye
+def	dizine	toList	yoney.scala:77	üye
+def	diziye	toList	belki.scala:77	üye
+def	diziye	toSeq	aralik.scala:78	üye
+def	diziye	toSeq	dizi.scala:103	üye
+def	diziye	toSeq	dizi.scala:247	üye
+def	diziye	toSeq	dizi.scala:389	üye
+def	diziye	toSeq	dizi.scala:493	üye
+def	diziye	toSeq	dizi.scala:520	üye
+def	diziye	toSeq	dizik.scala:249	üye
+def	diziye	toSeq	dizik.scala:93	üye
+def	diziye	toSeq	dizim.scala:38	üye
+def	diziye	toSeq	dizim.scala:63	üye
+def	diziye	toSeq	dizin.scala:94	üye
+def	diziye	toSeq	eslem.scala:250	üye
+def	diziye	toSeq	eslem.scala:94	üye
+def	diziye	toSeq	ikisindenbiri.scala:78	üye
+def	diziye	toSeq	kume.scala:62	üye
+def	diziye	toSeq	kuyruk.scala:171	üye
+def	diziye	toSeq	kuyruk.scala:304	üye
+def	diziye	toSeq	miskindizin.scala:146	üye
+def	diziye	toSeq	yazi.scala:135	üye
+def	diziye	toSeq	yineleyici.scala:132	üye
+def	diziye	toSeq	yoney.scala:78	üye
+def	doldur	fill	dizik.scala:180	üye
+def	doldur	fill	dizik.scala:181	üye
+def	doldur	fill	dizik.scala:182	üye
+def	doldur	fill	dizik.scala:29	üye
+def	doldur	fill	dizik.scala:30	üye
+def	doldur	fill	dizik.scala:31	üye
+def	doldur	fill	dizim.scala:58	üye
+def	doldur	fill	dizim.scala:59	üye
+def	doldur	fill	dizim.scala:60	üye
+def	doldur	fill	miskindizin.scala:40	üye
+def	doldur	fill	yoney.scala:27	üye
+def	doldur	from	kuyruk.scala:37	üye
+def	doldur	from	kuyruk.scala:501	üye
+def	doldur	tabulate	data.scala:328	üye
+def	doldur	tabulate	dizi.scala:33	üye
+def	doldur	tabulate	dizi.scala:34	üye
+def	doldur	tabulate	dizi.scala:35	üye
+def	doldur	tabulate	dizi.scala:36	üye
+def	doldur	tabulate	dizi.scala:37	üye
+def	doldur	tabulate	dizi.scala:47	üye
+def	doluMu	nonEmpty	belki.scala:53	üye
+def	doluMu	nonEmpty	dizi.scala:208	üye
+def	doluMu	nonEmpty	dizi.scala:351	üye
+def	doluMu	nonEmpty	dizi.scala:61	üye
+def	doluMu	nonEmpty	dizik.scala:201	üye
+def	doluMu	nonEmpty	dizik.scala:44	üye
+def	doluMu	nonEmpty	dizim.scala:40	üye
+def	doluMu	nonEmpty	dizin.scala:55	üye
+def	doluMu	nonEmpty	eslem.scala:211	üye
+def	doluMu	nonEmpty	eslem.scala:54	üye
+def	doluMu	nonEmpty	kume.scala:34	üye
+def	doluMu	nonEmpty	kuyruk.scala:144	üye
+def	doluMu	nonEmpty	kuyruk.scala:277	üye
+def	doluMu	nonEmpty	kuyruk.scala:532	üye
+def	doluMu	nonEmpty	miskindizin.scala:68	üye
+def	doluMu	nonEmpty	yazi.scala:49	üye
+def	doluMu	nonEmpty	yineleyici.scala:122	üye
+def	doluMu	nonEmpty	yoney.scala:39	üye
+def	doluMu	size	yazi.scala:197
+def	dosyaMı	isFile	dosya.scala:28	üye
+def	dosyalar	listFiles	dosya.scala:23	üye
+def	doğalLogu	log	data.scala:159	üye
+def	doğalLogu	math.log	matematik.scala:41
+val	doğru	true	data.scala:104
+def	doğrultu	heading	resim.scala:294
+def	doğrultu	heading	trInit.scala:167
+def	doğrultu	heading	yoney2b.scala:42
+val	doğrultuyuKur	setHeading	resim.scala:295
+def	doğrusalDeğişim	linearGradient	renk.scala:145	üye
+def	doğrusalÇokluDeğişim	linearMultipleGradient	renk.scala:157	üye
+def	doğruÇiz	lineTo	geo.scala:35
+val	doğu	EAST	arayuz.scala:173	üye
+def	doğu	setHeading	trInit.scala:168
+val	dur	pause	klavye.scala:37
+def	durakla	pause	trInit.scala:314
+def	duraklaMiliSaniye	pauseMillis	trInit.scala:315
+def	durdur	stopAnimation	trInit.scala:474
+def	dön	turn	trInit.scala:182
+def	dön	turn	trInit.scala:183
+def	döndür	rot	data.scala:282
+def	döndür	rot	resim.scala:38
+def	döndür	rotate	resim.scala:240	üye
+def	döndür	rotate	yoney2b.scala:25	üye
+def	döndürMerkezli	rotateAboutPoint	resim.scala:241	üye
+def	döndürMerkezli	rotp	resim.scala:39
+def	dönüştür	morph	resim.scala:319	üye
+def	dönüştür	transform	eslem.scala:322
+def	dönüşüm	transform	resim.scala:300
+def	düz	Picture.line	resim.scala:391
+def	düzleştir	flatten	belki.scala:74	üye
+def	düzleştir	flatten	dizi.scala:184	üye
+def	düzleştir	flatten	dizi.scala:328	üye
+def	düzleştir	flatten	dizi.scala:470	üye
+def	düzleştir	flatten	dizik.scala:160	üye
+def	düzleştir	flatten	dizik.scala:330	üye
+def	düzleştir	flatten	dizin.scala:176	üye
+def	düzleştir	flatten	eslem.scala:150	üye
+def	düzleştir	flatten	eslem.scala:310	üye
+def	düzleştir	flatten	ikisindenbiri.scala:66	üye
+def	düzleştir	flatten	kume.scala:131	üye
+def	düzleştir	flatten	kuyruk.scala:229	üye
+def	düzleştir	flatten	kuyruk.scala:387	üye
+def	düzleştir	flatten	miskindizin.scala:75	üye
+def	düzleştir	flatten	yineleyici.scala:48	üye
+def	düzleştir	flatten	yoney.scala:159	üye
+def	düzİşle	flatMap	aralik.scala:85	üye
+def	düzİşle	flatMap	belki.scala:56	üye
+def	düzİşle	flatMap	dizi.scala:212	üye
+def	düzİşle	flatMap	dizi.scala:355	üye
+def	düzİşle	flatMap	dizi.scala:489	üye
+def	düzİşle	flatMap	dizi.scala:516	üye
+def	düzİşle	flatMap	dizi.scala:65	üye
+def	düzİşle	flatMap	dizik.scala:208	üye
+def	düzİşle	flatMap	dizik.scala:52	üye
+def	düzİşle	flatMap	dizin.scala:27	üye
+def	düzİşle	flatMap	dizin.scala:59	üye
+def	düzİşle	flatMap	eslem.scala:217	üye
+def	düzİşle	flatMap	eslem.scala:60	üye
+def	düzİşle	flatMap	gelecek.scala:43	üye
+def	düzİşle	flatMap	ikisindenbiri.scala:65	üye
+def	düzİşle	flatMap	kume.scala:38	üye
+def	düzİşle	flatMap	kuyruk.scala:148	üye
+def	düzİşle	flatMap	kuyruk.scala:281	üye
+def	düzİşle	flatMap	miskindizin.scala:72	üye
+def	düzİşle	flatMap	yazi.scala:54	üye
+def	düzİşle	flatMap	yazi.scala:55	üye
+def	düzİşle	flatMap	yineleyici.scala:47	üye
+def	düzİşle	flatMap	yoney.scala:43	üye
+def	düzİşleYerinde	flatMapInPlace	dizik.scala:343	üye
+def	düzİşleYerinde	flatMapInPlace	kuyruk.scala:440	üye
+def	düzİşleYerinde	flatMapInPlace	kuyruk.scala:75	üye
+def	düğme	Picture.button	resim.scala:416
+def	düşür	drop	dizi.scala:238	üye
+def	düşür	drop	dizi.scala:380	üye
+def	düşür	drop	dizi.scala:91	üye
+def	düşür	drop	dizik.scala:236	üye
+def	düşür	drop	dizik.scala:80	üye
+def	düşür	drop	dizin.scala:85	üye
+def	düşür	drop	eslem.scala:245	üye
+def	düşür	drop	eslem.scala:89	üye
+def	düşür	drop	kume.scala:56	üye
+def	düşür	drop	kuyruk.scala:166	üye
+def	düşür	drop	kuyruk.scala:299	üye
+def	düşür	drop	miskindizin.scala:118	üye
+def	düşür	drop	yazi.scala:84	üye
+def	düşür	drop	yineleyici.scala:69	üye
+def	düşür	drop	yoney.scala:69	üye
+def	düşürDoğruKaldıkça	dropWhile	dizi.scala:239	üye
+def	düşürDoğruKaldıkça	dropWhile	dizi.scala:381	üye
+def	düşürDoğruKaldıkça	dropWhile	dizi.scala:92	üye
+def	düşürDoğruKaldıkça	dropWhile	dizik.scala:237	üye
+def	düşürDoğruKaldıkça	dropWhile	dizik.scala:81	üye
+def	düşürDoğruKaldıkça	dropWhile	dizin.scala:86	üye
+def	düşürDoğruKaldıkça	dropWhile	eslem.scala:246	üye
+def	düşürDoğruKaldıkça	dropWhile	eslem.scala:90	üye
+def	düşürDoğruKaldıkça	dropWhile	kume.scala:57	üye
+def	düşürDoğruKaldıkça	dropWhile	kuyruk.scala:167	üye
+def	düşürDoğruKaldıkça	dropWhile	kuyruk.scala:300	üye
+def	düşürDoğruKaldıkça	dropWhile	miskindizin.scala:119	üye
+def	düşürDoğruKaldıkça	dropWhile	yazi.scala:85	üye
+def	düşürDoğruKaldıkça	dropWhile	yineleyici.scala:70	üye
+def	düşürDoğruKaldıkça	dropWhile	yoney.scala:70	üye
+def	düşürDoğruKaldıkçaYerinde	dropWhileInPlace	dizik.scala:352	üye
+def	düşürDoğruKaldıkçaYerinde	dropWhileInPlace	kuyruk.scala:434	üye
+def	düşürDoğruKaldıkçaYerinde	dropWhileInPlace	kuyruk.scala:84	üye
+def	düşürSağdan	dropRight	dizi.scala:240	üye
+def	düşürSağdan	dropRight	dizi.scala:382	üye
+def	düşürSağdan	dropRight	dizi.scala:93	üye
+def	düşürSağdan	dropRight	dizik.scala:238	üye
+def	düşürSağdan	dropRight	dizik.scala:82	üye
+def	düşürSağdan	dropRight	dizin.scala:87	üye
+def	düşürSağdan	dropRight	eslem.scala:247	üye
+def	düşürSağdan	dropRight	eslem.scala:91	üye
+def	düşürSağdan	dropRight	kume.scala:58	üye
+def	düşürSağdan	dropRight	kuyruk.scala:168	üye
+def	düşürSağdan	dropRight	kuyruk.scala:301	üye
+def	düşürSağdan	dropRight	miskindizin.scala:120	üye
+def	düşürSağdan	dropRight	yazi.scala:86	üye
+def	düşürSağdan	dropRight	yoney.scala:71	üye
+def	düşürSağdanYerinde	dropRightInPlace	dizik.scala:351	üye
+def	düşürSağdanYerinde	dropRightInPlace	kuyruk.scala:433	üye
+def	düşürSağdanYerinde	dropRightInPlace	kuyruk.scala:83	üye
+def	düşürYerinde	dropInPlace	dizik.scala:350	üye
+def	düşürYerinde	dropInPlace	kuyruk.scala:432	üye
+def	düşürYerinde	dropInPlace	kuyruk.scala:82	üye
+def	ekle	addOne	kuyruk.scala:130	üye
+def	ekle	addOne	kuyruk.scala:258	üye
+def	ekle	append	dizik.scala:194	üye
+def	ekle	append	dizim.scala:33	üye
+def	ekle	append	kuyruk.scala:510	üye
+def	ekle	append	yazi.scala:200	üye
+def	ekle	concat	miskindizin.scala:35	üye
+def	ekle	enqueue	kuyruk.scala:132	üye
+def	ekleAraya	insert	dizik.scala:364	üye
+def	ekleAraya	insert	kuyruk.scala:445	üye
+def	ekleAraya	insert	kuyruk.scala:93	üye
+def	ekleAraya	insert	yazi.scala:209	üye
+def	ekleArayaHepsini	insertAll	dizik.scala:365	üye
+def	ekleArayaHepsini	insertAll	kuyruk.scala:446	üye
+def	ekleArayaHepsini	insertAll	kuyruk.scala:94	üye
+def	ekleArayaHepsini	insertAll	yazi.scala:210	üye
+def	ekleBaşa	prepend	dizik.scala:362	üye
+def	ekleBaşaHepsini	prependAll	dizik.scala:363	üye
+def	ekleHepsini	addAll	dizik.scala:359	üye
+def	ekleHepsini	addAll	kuyruk.scala:237	üye
+def	ekleHepsini	addAll	kuyruk.scala:413	üye
+def	ekleHepsini	addAll	kuyruk.scala:514	üye
+def	ekleHepsini	addAll	kuyruk.scala:96	üye
+def	ekleHepsini	appendAll	yazi.scala:208	üye
+def	ekleHepsini	enqueueAll	kuyruk.scala:264	üye
+val	eklentiDizini	extensionsDir	package.scala:156	üye
+def	ekli	incl	kume.scala:139	üye
+def	ekranTazelemeHızınıGöster	showFps	trInit.scala:389
+def	ekranTazelemeHızınıKur	setRefreshRate	trInit.scala:388
+def	eksenler	axesOn	resim.scala:68
+def	eksenleriGizle	axesOff	resim.scala:270
+def	eksenleriGizle	axesOff	trInit.scala:417
+def	eksenleriGöster	Picture.showAxes	resim.scala:433
+def	eksenleriGöster	Picture.showAxes	resim.scala:434
+def	eksenleriGöster	axesOn	resim.scala:269
+def	eksenleriGöster	axesOn	trInit.scala:416
+def	ele	filter	belki.scala:57	üye
+def	ele	filter	dizi.scala:209	üye
+def	ele	filter	dizi.scala:352	üye
+def	ele	filter	dizi.scala:486	üye
+def	ele	filter	dizi.scala:513	üye
+def	ele	filter	dizi.scala:62	üye
+def	ele	filter	dizik.scala:202	üye
+def	ele	filter	dizik.scala:45	üye
+def	ele	filter	dizim.scala:42	üye
+def	ele	filter	dizin.scala:25	üye
+def	ele	filter	dizin.scala:56	üye
+def	ele	filter	eslem.scala:212	üye
+def	ele	filter	eslem.scala:55	üye
+def	ele	filter	gelecek.scala:44	üye
+def	ele	filter	kume.scala:35	üye
+def	ele	filter	kuyruk.scala:145	üye
+def	ele	filter	kuyruk.scala:278	üye
+def	ele	filter	miskindizin.scala:69	üye
+def	ele	filter	yazi.scala:50	üye
+def	ele	filter	yineleyici.scala:44	üye
+def	ele	filter	yoney.scala:40	üye
+def	eleDeğilse	filterNot	belki.scala:58	üye
+def	eleDeğilse	filterNot	dizi.scala:210	üye
+def	eleDeğilse	filterNot	dizi.scala:353	üye
+def	eleDeğilse	filterNot	dizi.scala:487	üye
+def	eleDeğilse	filterNot	dizi.scala:514	üye
+def	eleDeğilse	filterNot	dizi.scala:63	üye
+def	eleDeğilse	filterNot	dizik.scala:203	üye
+def	eleDeğilse	filterNot	dizik.scala:46	üye
+def	eleDeğilse	filterNot	dizin.scala:57	üye
+def	eleDeğilse	filterNot	eslem.scala:213	üye
+def	eleDeğilse	filterNot	eslem.scala:56	üye
+def	eleDeğilse	filterNot	kume.scala:36	üye
+def	eleDeğilse	filterNot	kuyruk.scala:146	üye
+def	eleDeğilse	filterNot	kuyruk.scala:279	üye
+def	eleDeğilse	filterNot	miskindizin.scala:70	üye
+def	eleDeğilse	filterNot	yazi.scala:51	üye
+def	eleDeğilse	filterNot	yineleyici.scala:45	üye
+def	eleDeğilse	filterNot	yoney.scala:41	üye
+def	eleYerinde	filterInPlace	dizik.scala:342	üye
+def	eleYerinde	filterInPlace	kuyruk.scala:407	üye
+def	eleYerinde	filterInPlace	kuyruk.scala:73	üye
+def	elekle	withFilter	aralik.scala:84	üye
+def	elekle	withFilter	belki.scala:59	üye
+def	elekle	withFilter	gelecek.scala:45	üye
+def	elips	Picture.ellipse	resim.scala:395
+def	elips	ellipse	tuvalcizim.scala:37
+def	elipsDikdörtgenİçinde	Picture.ellipseInRect	resim.scala:396
+def	enUfakOrtakKat	lcm	matematik.scala:77	üye
+def	enUfakOrtakKat	lcm	matematik.scala:79	üye
+val	enUfağı	MaxValue	harf.scala:48	üye
+def	enUfağı	math.min	matematik.scala:68
+def	enUfağı	math.min	matematik.scala:70
+def	enUfağı	math.min	matematik.scala:72
+def	enUfağı	math.min	matematik.scala:74
+def	enUfağı	min	data.scala:180	üye
+def	enUfağı	min	dizi.scala:117	üye
+def	enUfağı	min	dizi.scala:261	üye
+def	enUfağı	min	dizi.scala:403	üye
+def	enUfağı	min	dizik.scala:107	üye
+def	enUfağı	min	dizik.scala:263	üye
+def	enUfağı	min	dizin.scala:109	üye
+def	enUfağı	min	eslem.scala:106	üye
+def	enUfağı	min	eslem.scala:265	üye
+def	enUfağı	min	kume.scala:76	üye
+def	enUfağı	min	kuyruk.scala:185	üye
+def	enUfağı	min	kuyruk.scala:318	üye
+def	enUfağı	min	miskindizin.scala:176	üye
+def	enUfağı	min	sayi.scala:107	üye
+def	enUfağı	min	sayi.scala:60	üye
+def	enUfağı	min	sayi.scala:85	üye
+def	enUfağı	min	sayi.scala:97	üye
+def	enUfağı	min	yineleyici.scala:101	üye
+def	enUfağı	min	yoney.scala:92	üye
+def	enUfağı	minBy	dizi.scala:118	üye
+def	enUfağı	minBy	dizi.scala:262	üye
+def	enUfağı	minBy	dizi.scala:404	üye
+def	enUfağı	minBy	dizik.scala:108	üye
+def	enUfağı	minBy	dizik.scala:264	üye
+def	enUfağı	minBy	dizin.scala:110	üye
+def	enUfağı	minBy	eslem.scala:109	üye
+def	enUfağı	minBy	eslem.scala:268	üye
+def	enUfağı	minBy	kume.scala:77	üye
+def	enUfağı	minBy	kuyruk.scala:186	üye
+def	enUfağı	minBy	kuyruk.scala:319	üye
+def	enUfağı	minBy	miskindizin.scala:177	üye
+def	enUfağı	minBy	yineleyici.scala:105	üye
+def	enUfağı	minBy	yoney.scala:93	üye
+def	enUfağıBelki	minByOption	dizi.scala:165	üye
+def	enUfağıBelki	minByOption	dizi.scala:309	üye
+def	enUfağıBelki	minByOption	dizi.scala:451	üye
+def	enUfağıBelki	minByOption	dizik.scala:311	üye
+def	enUfağıBelki	minByOption	dizin.scala:157	üye
+def	enUfağıBelki	minByOption	eslem.scala:140	üye
+def	enUfağıBelki	minByOption	eslem.scala:300	üye
+def	enUfağıBelki	minByOption	kume.scala:123	üye
+def	enUfağıBelki	minByOption	kuyruk.scala:224	üye
+def	enUfağıBelki	minByOption	kuyruk.scala:368	üye
+def	enUfağıBelki	minByOption	miskindizin.scala:181	üye
+def	enUfağıBelki	minByOption	yineleyici.scala:107	üye
+def	enUfağıBelki	minByOption	yoney.scala:140	üye
+def	enUfağıBelki	minOption	dizi.scala:164	üye
+def	enUfağıBelki	minOption	dizi.scala:308	üye
+def	enUfağıBelki	minOption	dizi.scala:450	üye
+def	enUfağıBelki	minOption	dizik.scala:310	üye
+def	enUfağıBelki	minOption	dizin.scala:156	üye
+def	enUfağıBelki	minOption	eslem.scala:139	üye
+def	enUfağıBelki	minOption	eslem.scala:299	üye
+def	enUfağıBelki	minOption	kume.scala:122	üye
+def	enUfağıBelki	minOption	kuyruk.scala:223	üye
+def	enUfağıBelki	minOption	kuyruk.scala:367	üye
+def	enUfağıBelki	minOption	miskindizin.scala:180	üye
+def	enUfağıBelki	minOption	yineleyici.scala:103	üye
+def	enUfağıBelki	minOption	yoney.scala:139	üye
+def	engeldenYansıtma	bouncePicOffPic	resim.scala:104
+def	eni	width	geo.scala:28	üye
+def	enİriOrtakPayda	gcd	matematik.scala:78	üye
+def	enİriOrtakPayda	gcd	matematik.scala:80	üye
+val	enİrisi	MinValue	harf.scala:49	üye
+def	enİrisi	math.max	matematik.scala:67
+def	enİrisi	math.max	matematik.scala:69
+def	enİrisi	math.max	matematik.scala:71
+def	enİrisi	math.max	matematik.scala:73
+def	enİrisi	max	data.scala:181	üye
+def	enİrisi	max	dizi.scala:119	üye
+def	enİrisi	max	dizi.scala:263	üye
+def	enİrisi	max	dizi.scala:405	üye
+def	enİrisi	max	dizik.scala:109	üye
+def	enİrisi	max	dizik.scala:265	üye
+def	enİrisi	max	dizin.scala:111	üye
+def	enİrisi	max	eslem.scala:110	üye
+def	enİrisi	max	eslem.scala:269	üye
+def	enİrisi	max	kume.scala:78	üye
+def	enİrisi	max	kuyruk.scala:187	üye
+def	enİrisi	max	kuyruk.scala:320	üye
+def	enİrisi	max	miskindizin.scala:178	üye
+def	enİrisi	max	sayi.scala:106	üye
+def	enİrisi	max	sayi.scala:59	üye
+def	enİrisi	max	sayi.scala:84	üye
+def	enİrisi	max	sayi.scala:96	üye
+def	enİrisi	max	yineleyici.scala:102	üye
+def	enİrisi	max	yoney.scala:94	üye
+def	enİrisi	maxBy	dizi.scala:120	üye
+def	enİrisi	maxBy	dizi.scala:264	üye
+def	enİrisi	maxBy	dizi.scala:406	üye
+def	enİrisi	maxBy	dizik.scala:110	üye
+def	enİrisi	maxBy	dizik.scala:266	üye
+def	enİrisi	maxBy	dizin.scala:112	üye
+def	enİrisi	maxBy	eslem.scala:111	üye
+def	enİrisi	maxBy	eslem.scala:270	üye
+def	enİrisi	maxBy	kume.scala:79	üye
+def	enİrisi	maxBy	kuyruk.scala:188	üye
+def	enİrisi	maxBy	kuyruk.scala:321	üye
+def	enİrisi	maxBy	miskindizin.scala:179	üye
+def	enİrisi	maxBy	yineleyici.scala:106	üye
+def	enİrisi	maxBy	yoney.scala:95	üye
+def	enİrisiBelki	maxByOption	dizi.scala:167	üye
+def	enİrisiBelki	maxByOption	dizi.scala:311	üye
+def	enİrisiBelki	maxByOption	dizi.scala:453	üye
+def	enİrisiBelki	maxByOption	dizik.scala:313	üye
+def	enİrisiBelki	maxByOption	dizin.scala:159	üye
+def	enİrisiBelki	maxByOption	eslem.scala:143	üye
+def	enİrisiBelki	maxByOption	eslem.scala:303	üye
+def	enİrisiBelki	maxByOption	kume.scala:125	üye
+def	enİrisiBelki	maxByOption	kuyruk.scala:226	üye
+def	enİrisiBelki	maxByOption	kuyruk.scala:370	üye
+def	enİrisiBelki	maxByOption	miskindizin.scala:183	üye
+def	enİrisiBelki	maxByOption	yineleyici.scala:108	üye
+def	enİrisiBelki	maxByOption	yoney.scala:142	üye
+def	enİrisiBelki	maxOption	dizi.scala:166	üye
+def	enİrisiBelki	maxOption	dizi.scala:310	üye
+def	enİrisiBelki	maxOption	dizi.scala:452	üye
+def	enİrisiBelki	maxOption	dizik.scala:312	üye
+def	enİrisiBelki	maxOption	dizin.scala:158	üye
+def	enİrisiBelki	maxOption	eslem.scala:142	üye
+def	enİrisiBelki	maxOption	eslem.scala:302	üye
+def	enİrisiBelki	maxOption	kume.scala:124	üye
+def	enİrisiBelki	maxOption	kuyruk.scala:225	üye
+def	enİrisiBelki	maxOption	kuyruk.scala:369	üye
+def	enİrisiBelki	maxOption	miskindizin.scala:182	üye
+def	enİrisiBelki	maxOption	yineleyici.scala:104	üye
+def	enİrisiBelki	maxOption	yoney.scala:141	üye
+def	etkinliğiKur	setEnabled	arayuz.scala:125	üye
+def	evDizini	homeDir	data.scala:196
+def	evDizini	homeDir	trInit.scala:320
+def	eüssü	exp	data.scala:167	üye
+def	eüssü	math.exp	matematik.scala:39
+def	eğriNoktası	curveVertex	geo.scala:54
+def	eğriÇiz	quadTo	geo.scala:36	üye
+def	eşitMi	equals	kokturler.scala:40
+def	eşitMiKüçükHarfBüyükHarfAyrımıYapmadan	equalsIgnoreCase	yazi.scala:115	üye
+def	eşleme	collection.mutable.Map	dizi.scala:108
+def	eşleme	collection.mutable.Map	dizi.scala:252
+def	eşleme	collection.mutable.Map	dizi.scala:394
+def	eşleme	collection.mutable.Map	dizi.scala:498
+def	eşleme	collection.mutable.Map	dizi.scala:525
+def	eşleme	collection.mutable.Map	dizik.scala:254
+def	eşleme	collection.mutable.Map	dizik.scala:98
+def	eşleme	collection.mutable.Map	dizin.scala:99
+def	eşleme	collection.mutable.Map	kume.scala:67
+def	eşleme	collection.mutable.Map	kuyruk.scala:176
+def	eşleme	collection.mutable.Map	kuyruk.scala:309
+def	eşleme	collection.mutable.Map	miskindizin.scala:151
+def	eşleme	collection.mutable.Map	yazi.scala:134
+def	eşleme	collection.mutable.Map	yoney.scala:83
+def	eşlenirMi	matches	yazi.scala:124	üye
+def	eşleğe	toMap	dizi.scala:107	üye
+def	eşleğe	toMap	dizi.scala:251	üye
+def	eşleğe	toMap	dizi.scala:393	üye
+def	eşleğe	toMap	dizi.scala:497	üye
+def	eşleğe	toMap	dizi.scala:524	üye
+def	eşleğe	toMap	dizik.scala:253	üye
+def	eşleğe	toMap	dizik.scala:97	üye
+def	eşleğe	toMap	dizin.scala:98	üye
+def	eşleğe	toMap	eslem.scala:179	üye
+def	eşleğe	toMap	eslem.scala:328	üye
+def	eşleğe	toMap	kume.scala:66	üye
+def	eşleğe	toMap	kuyruk.scala:175	üye
+def	eşleğe	toMap	kuyruk.scala:308	üye
+def	eşleğe	toMap	miskindizin.scala:150	üye
+def	eşleğe	toMap	yazi.scala:133	üye
+def	eşleğe	toMap	yineleyici.scala:136	üye
+def	eşleğe	toMap	yoney.scala:82	üye
+def	eşli	contains	eslem.scala:192	üye
+def	eşli	contains	eslem.scala:31	üye
+def	fareGirince	onMouseEnter	resim.scala:348	üye
+def	fareKonumu	mousePosition	trInit.scala:462
+def	fareKımıldayınca	onMouseMove	resim.scala:345
+def	fareKımıldayınca	onMouseMove	trInit.scala:410
+def	fareyeBasınca	onMousePress	resim.scala:346	üye
+def	fareyeTıklayınca	onMouseClick	resim.scala:343
+def	fareyeTıklayınca	onMouseClick	trInit.scala:407
+def	fareyeTıklıyınca	onMouseClick	trInit.scala:408
+def	fareyiBırakınca	onMouseRelease	resim.scala:347	üye
+def	fareyiSürükleyince	onMouseDrag	resim.scala:344
+def	fareyiSürükleyince	onMouseDrag	trInit.scala:409
+def	fareÇıkınca	onMouseExit	resim.scala:349	üye
+def	fark	diff	dizi.scala:177	üye
+def	fark	diff	dizi.scala:321	üye
+def	fark	diff	dizi.scala:463	üye
+def	fark	diff	dizik.scala:154	üye
+def	fark	diff	dizik.scala:323	üye
+def	fark	diff	dizin.scala:169	üye
+def	fark	diff	kume.scala:128	üye
+def	fark	diff	kuyruk.scala:380	üye
+def	fark	diff	miskindizin.scala:141	üye
+def	fark	diff	yazi.scala:172	üye
+def	fark	diff	yoney.scala:152	üye
+def	filtre	applyFilter	resim.scala:85	üye
+def	fırça	stroke	tuvalcizim.scala:25	üye
+def	fırça	stroke	tuvalcizim.scala:26	üye
+def	fırçaAğırlığı	strokeWeight	tuvalcizim.scala:28	üye
+def	fırçasız	noStroke	tuvalcizim.scala:27	üye
+def	geometri	picGeom	resim.scala:288	üye
+def	gerekli	require	data.scala:95
+def	gerekli	require	trInit.scala:133
+def	geri	back	trInit.scala:145
+def	geri	back	trInit.scala:146
+def	geçiciDosyaOluştur	createTempFile	dosya.scala:38	üye
+val	gir	enter	klavye.scala:23	üye
+def	girdiDinleyiciEkle	addKeyListener	arayuz.scala:79	üye
+def	girdiOdağıOl	takeFocus	arayuz.scala:78	üye
+def	girdiOdağıOl	takeFocus	arayuz.scala:92	üye
+def	girdiyiAktar	forwardInputTo	resim.scala:327	üye
+def	giysiKur	setCostume	trInit.scala:205
+def	giysiKur	setCostumeImage	trInit.scala:204
+def	giysileriKur	setCostumes	trInit.scala:206
+def	giysiyiBüyült	scaleCostume	trInit.scala:208
+def	gizle	invisible	resim.scala:273
+def	gizle	invisible	trInit.scala:140
+val	gri	gray	data.scala:125
+val	gri	gray	renk.scala:67
+def	gridiGizle	gridOff	trInit.scala:413
+def	gridiGöster	gridOn	trInit.scala:412
+val	gökMavisi	skyBlue	renk.scala:74	üye
+def	görünmez	invisible	trInit.scala:142
+def	görünür	isVisible	resim.scala:275	üye
+def	görünür	visible	trInit.scala:141
+def	görünürlüğüKur	setVisible	arayuz.scala:122	üye
+def	görünürlüğüTersineÇevir	toggleV	resim.scala:274	üye
+def	göster	setVisible	arayuz.scala:111	üye
+def	göster	setVisible	arayuz.scala:124	üye
+def	göster	setVisible	arayuz.scala:138	üye
+def	göster	setVisible	arayuz.scala:153	üye
+def	göster	setVisible	arayuz.scala:165	üye
+def	göster	setVisible	arayuz.scala:51	üye
+def	göster	setVisible	arayuz.scala:64	üye
+def	göster	setVisible	arayuz.scala:84	üye
+def	göster	setVisible	arayuz.scala:97	üye
+def	göster	visible	resim.scala:272
+def	göster	visible	trInit.scala:139
+def	gösterdikleriAynıMı	sameElements	yineleyici.scala:64	üye
+def	götür	trans	resim.scala:47
+def	götür	trans	resim.scala:48
+def	götür	trans	resim.scala:49
+def	götür	translate	resim.scala:244	üye
+def	götür	translate	resim.scala:245	üye
+def	götür	translate	resim.scala:246	üye
+val	gücü	math.pow	matematik.scala:30
+def	gücü	pow	data.scala:154	üye
+def	gün	hepsi	buan.scala:54	üye
+def	güncelle	update	eslem.scala:159	üye
+def	güncelle	update	kuyruk.scala:444	üye
+def	güncelle	update	kuyruk.scala:92	üye
+def	güncelle	update	resim.scala:332	üye
+def	güncelleİşlevle	updateWith	eslem.scala:160	üye
+val	güney	SOUTH	arayuz.scala:173	üye
+def	güney	setHeading	trInit.scala:171
+val	güneybatı	SOUTH_WEST	arayuz.scala:173	üye
+val	güneydoğu	SOUTH_EAST	arayuz.scala:173	üye
+def	gürültü	noise	resim.scala:86
+val	haki	khaki	renk.scala:74	üye
+def	harf	charAt	yazi.scala:114	üye
+def	harf	charAt	yazi.scala:224	üye
+def	harfMi	isLetter	data.scala:331	üye
+def	harfMi	isLetter	harf.scala:36	üye
+def	harfe	toChar	sayi.scala:102	üye
+def	harfe	toChar	sayi.scala:80	üye
+def	harfe	toChar	sayi.scala:92	üye
+def	harfiKur	setCharAt	yazi.scala:219	üye
+def	harfiSil	deleteCharAt	yazi.scala:216	üye
+def	harftenHarfe	char2Character	harf.scala:29
+val	helpContent	content	trInit.scala:674	üye
+def	hepsiDoğruMu	forall	belki.scala:69	üye
+def	hepsiDoğruMu	forall	dizi.scala:231	üye
+def	hepsiDoğruMu	forall	dizi.scala:373	üye
+def	hepsiDoğruMu	forall	dizi.scala:84	üye
+def	hepsiDoğruMu	forall	dizik.scala:228	üye
+def	hepsiDoğruMu	forall	dizik.scala:72	üye
+def	hepsiDoğruMu	forall	dizin.scala:78	üye
+def	hepsiDoğruMu	forall	eslem.scala:237	üye
+def	hepsiDoğruMu	forall	eslem.scala:81	üye
+def	hepsiDoğruMu	forall	ikisindenbiri.scala:73	üye
+def	hepsiDoğruMu	forall	kume.scala:50	üye
+def	hepsiDoğruMu	forall	kuyruk.scala:161	üye
+def	hepsiDoğruMu	forall	kuyruk.scala:294	üye
+def	hepsiDoğruMu	forall	miskindizin.scala:106	üye
+def	hepsiDoğruMu	forall	yazi.scala:76	üye
+def	hepsiDoğruMu	forall	yineleyici.scala:56	üye
+def	hepsiDoğruMu	forall	yoney.scala:62	üye
+def	hepsiniEkle	addAll	dizik.scala:361	üye
+def	hepsiniEkle	addAll	kuyruk.scala:242	üye
+def	hepsiniEkle	addAll	kuyruk.scala:412	üye
+def	hepsiniHesapla	force	miskindizin.scala:138	üye
+def	hepsiÇıkarılmış	removedAll	eslem.scala:319	üye
+def	hepsiÇıkarılmış	removedAll	kume.scala:141	üye
+def	hepsiİçinDoğruMu	forall	belki.scala:70	üye
+def	hepsiİçinDoğruMu	forall	dizi.scala:232	üye
+def	hepsiİçinDoğruMu	forall	dizi.scala:374	üye
+def	hepsiİçinDoğruMu	forall	dizi.scala:85	üye
+def	hepsiİçinDoğruMu	forall	dizik.scala:229	üye
+def	hepsiİçinDoğruMu	forall	dizik.scala:73	üye
+def	hepsiİçinDoğruMu	forall	dizin.scala:79	üye
+def	hepsiİçinDoğruMu	forall	eslem.scala:238	üye
+def	hepsiİçinDoğruMu	forall	eslem.scala:82	üye
+def	hepsiİçinDoğruMu	forall	kume.scala:51	üye
+def	hepsiİçinDoğruMu	forall	kuyruk.scala:162	üye
+def	hepsiİçinDoğruMu	forall	kuyruk.scala:295	üye
+def	hepsiİçinDoğruMu	forall	miskindizin.scala:107	üye
+def	hepsiİçinDoğruMu	forall	yazi.scala:77	üye
+def	hepsiİçinDoğruMu	forall	yineleyici.scala:57	üye
+def	hepsiİçinDoğruMu	forall	yoney.scala:63	üye
+def	herbiriİçin	foreach	aralik.scala:86	üye
+def	herbiriİçin	foreach	belki.scala:71	üye
+def	herbiriİçin	foreach	dizi.scala:229	üye
+def	herbiriİçin	foreach	dizi.scala:371	üye
+def	herbiriİçin	foreach	dizi.scala:490	üye
+def	herbiriİçin	foreach	dizi.scala:517	üye
+def	herbiriİçin	foreach	dizi.scala:82	üye
+def	herbiriİçin	foreach	dizik.scala:226	üye
+def	herbiriİçin	foreach	dizik.scala:70	üye
+def	herbiriİçin	foreach	dizim.scala:46	üye
+def	herbiriİçin	foreach	dizin.scala:76	üye
+def	herbiriİçin	foreach	eslem.scala:193	üye
+def	herbiriİçin	foreach	eslem.scala:35	üye
+def	herbiriİçin	foreach	ikisindenbiri.scala:74	üye
+def	herbiriİçin	foreach	kume.scala:48	üye
+def	herbiriİçin	foreach	kuyruk.scala:159	üye
+def	herbiriİçin	foreach	kuyruk.scala:292	üye
+def	herbiriİçin	foreach	miskindizin.scala:104	üye
+def	herbiriİçin	foreach	yazi.scala:74	üye
+def	herbiriİçin	foreach	yineleyici.scala:51	üye
+def	herbiriİçin	foreach	yoney.scala:60	üye
+def	herÖgeİçin	foreach	aralik.scala:72	üye
+def	herÖgeİçin	foreach	eslem.scala:194	üye
+def	herÖgeİçin	foreach	eslem.scala:36	üye
+def	herİkiliİçin	foreachEntry	eslem.scala:174	üye
+def	herİkiliİçin	foreachEntry	eslem.scala:323	üye
+val	hızlı	Fast	package.scala:108	üye
+val	hızlı	fast	data.scala:108
+def	hızıKur	setSpeed	trInit.scala:209
+def	hızınıDönüştür	transv	resim.scala:251	üye
+def	ikildenİkile	boolean2Boolean	turler.scala:86
+def	ikile	toBoolean	yazi.scala:127	üye
+def	ikile	zip	belki.scala:75	üye
+def	ikile	zip	dizi.scala:112	üye
+def	ikile	zip	dizi.scala:256	üye
+def	ikile	zip	dizi.scala:398	üye
+def	ikile	zip	dizi.scala:499	üye
+def	ikile	zip	dizi.scala:526	üye
+def	ikile	zip	dizik.scala:102	üye
+def	ikile	zip	dizik.scala:258	üye
+def	ikile	zip	dizin.scala:103	üye
+def	ikile	zip	eslem.scala:100	üye
+def	ikile	zip	eslem.scala:256	üye
+def	ikile	zip	kume.scala:71	üye
+def	ikile	zip	kuyruk.scala:180	üye
+def	ikile	zip	kuyruk.scala:313	üye
+def	ikile	zip	miskindizin.scala:166	üye
+def	ikile	zip	yineleyici.scala:85	üye
+def	ikile	zip	yoney.scala:87	üye
+def	ikileBelki	toBooleanOption	yazi.scala:140	üye
+def	ikileHepsini	zipAll	dizi.scala:187	üye
+def	ikileHepsini	zipAll	dizi.scala:331	üye
+def	ikileHepsini	zipAll	dizi.scala:473	üye
+def	ikileHepsini	zipAll	dizik.scala:164	üye
+def	ikileHepsini	zipAll	dizik.scala:333	üye
+def	ikileHepsini	zipAll	dizin.scala:179	üye
+def	ikileHepsini	zipAll	eslem.scala:153	üye
+def	ikileHepsini	zipAll	eslem.scala:313	üye
+def	ikileHepsini	zipAll	kume.scala:134	üye
+def	ikileHepsini	zipAll	kuyruk.scala:232	üye
+def	ikileHepsini	zipAll	kuyruk.scala:390	üye
+def	ikileHepsini	zipAll	miskindizin.scala:169	üye
+def	ikileHepsini	zipAll	yineleyici.scala:86	üye
+def	ikileHepsini	zipAll	yoney.scala:162	üye
+def	ikileKonumla	zipWithIndex	dizi.scala:114	üye
+def	ikileKonumla	zipWithIndex	dizi.scala:258	üye
+def	ikileKonumla	zipWithIndex	dizi.scala:400	üye
+def	ikileKonumla	zipWithIndex	dizi.scala:501	üye
+def	ikileKonumla	zipWithIndex	dizi.scala:528	üye
+def	ikileKonumla	zipWithIndex	dizik.scala:104	üye
+def	ikileKonumla	zipWithIndex	dizik.scala:260	üye
+def	ikileKonumla	zipWithIndex	dizin.scala:105	üye
+def	ikileKonumla	zipWithIndex	kume.scala:73	üye
+def	ikileKonumla	zipWithIndex	kuyruk.scala:182	üye
+def	ikileKonumla	zipWithIndex	kuyruk.scala:315	üye
+def	ikileKonumla	zipWithIndex	miskindizin.scala:168	üye
+def	ikileKonumla	zipWithIndex	yoney.scala:89	üye
+def	ikileSırayla	zipWithIndex	dizi.scala:113	üye
+def	ikileSırayla	zipWithIndex	dizi.scala:257	üye
+def	ikileSırayla	zipWithIndex	dizi.scala:399	üye
+def	ikileSırayla	zipWithIndex	dizi.scala:500	üye
+def	ikileSırayla	zipWithIndex	dizi.scala:527	üye
+def	ikileSırayla	zipWithIndex	dizik.scala:103	üye
+def	ikileSırayla	zipWithIndex	dizik.scala:259	üye
+def	ikileSırayla	zipWithIndex	dizin.scala:104	üye
+def	ikileSırayla	zipWithIndex	eslem.scala:101	üye
+def	ikileSırayla	zipWithIndex	eslem.scala:257	üye
+def	ikileSırayla	zipWithIndex	kume.scala:72	üye
+def	ikileSırayla	zipWithIndex	kuyruk.scala:181	üye
+def	ikileSırayla	zipWithIndex	kuyruk.scala:314	üye
+def	ikileSırayla	zipWithIndex	miskindizin.scala:167	üye
+def	ikileSırayla	zipWithIndex	yineleyici.scala:88	üye
+def	ikileSırayla	zipWithIndex	yoney.scala:88	üye
+def	ikiliyiAç	unzip	belki.scala:76	üye
+def	ikiliyiAç	unzip	dizi.scala:186	üye
+def	ikiliyiAç	unzip	dizi.scala:330	üye
+def	ikiliyiAç	unzip	dizi.scala:472	üye
+def	ikiliyiAç	unzip	dizik.scala:162	üye
+def	ikiliyiAç	unzip	dizik.scala:332	üye
+def	ikiliyiAç	unzip	dizin.scala:178	üye
+def	ikiliyiAç	unzip	eslem.scala:152	üye
+def	ikiliyiAç	unzip	eslem.scala:312	üye
+def	ikiliyiAç	unzip	kume.scala:133	üye
+def	ikiliyiAç	unzip	kuyruk.scala:231	üye
+def	ikiliyiAç	unzip	kuyruk.scala:389	üye
+def	ikiliyiAç	unzip	miskindizin.scala:170	üye
+def	ikiliyiAç	unzip	yoney.scala:161	üye
+def	ikinciDereceNokta	quadraticVertex	geo.scala:52
+def	ikiyeAyır	partition	yazi.scala:181	üye
+def	ikizYap	duplicate	yineleyici.scala:126	üye
+def	ikizle	clone	kuyruk.scala:136
+def	ikizle	clone	kuyruk.scala:269
+def	ikizle	clone	kuyruk.scala:534
+def	ikiÇizimArasıSüre	frameDeltaTime	trInit.scala:638
+def	ileri	forward	trInit.scala:143
+def	ileri	forward	trInit.scala:144
+def	ilerle	moveTo	trInit.scala:154
+def	ilkHarfiBüyült	capitalize	yazi.scala:111	üye
+def	ilki	front	kuyruk.scala:406	üye
+def	ilki	start	aralik.scala:65	üye
+def	imge	Picture.image	resim.scala:409
+def	imge	Picture.image	resim.scala:410
+def	imge	Picture.image	resim.scala:411
+def	imge	Picture.image	resim.scala:412
+def	imge	Picture.image	resim.scala:413
+def	imge	Picture.image	resim.scala:414
+def	imge	image	resim.scala:107
+def	imge	image	resim.scala:108
+def	imge	image	resim.scala:110
+def	imge	image	tuvalcizim.scala:36
+def	imge	toImage	resim.scala:326	üye
+def	imgeNoktası	getImagePixel	resim.scala:111
+def	imgeNoktasınıKur	setImagePixel	resim.scala:112
+def	indirge	reduce	aralik.scala:87	üye
+def	indirge	reduce	dizi.scala:216	üye
+def	indirge	reduce	dizi.scala:359	üye
+def	indirge	reduce	dizi.scala:69	üye
+def	indirge	reduce	dizik.scala:212	üye
+def	indirge	reduce	dizik.scala:56	üye
+def	indirge	reduce	dizin.scala:63	üye
+def	indirge	reduce	eslem.scala:218	üye
+def	indirge	reduce	eslem.scala:61	üye
+def	indirge	reduce	kume.scala:39	üye
+def	indirge	reduce	kuyruk.scala:149	üye
+def	indirge	reduce	kuyruk.scala:282	üye
+def	indirge	reduce	miskindizin.scala:81	üye
+def	indirge	reduce	yazi.scala:59	üye
+def	indirge	reduce	yineleyici.scala:91	üye
+def	indirge	reduce	yoney.scala:47	üye
+def	indirgeBelki	reduceOption	dizi.scala:157	üye
+def	indirgeBelki	reduceOption	dizi.scala:301	üye
+def	indirgeBelki	reduceOption	dizi.scala:443	üye
+def	indirgeBelki	reduceOption	dizik.scala:303	üye
+def	indirgeBelki	reduceOption	dizin.scala:149	üye
+def	indirgeBelki	reduceOption	eslem.scala:135	üye
+def	indirgeBelki	reduceOption	eslem.scala:295	üye
+def	indirgeBelki	reduceOption	kume.scala:116	üye
+def	indirgeBelki	reduceOption	kuyruk.scala:217	üye
+def	indirgeBelki	reduceOption	kuyruk.scala:360	üye
+def	indirgeBelki	reduceOption	miskindizin.scala:84	üye
+def	indirgeBelki	reduceOption	yineleyici.scala:92	üye
+def	indirgeBelki	reduceOption	yoney.scala:132	üye
+def	indirgeSağdan	reduceRight	dizi.scala:156	üye
+def	indirgeSağdan	reduceRight	dizi.scala:300	üye
+def	indirgeSağdan	reduceRight	dizi.scala:442	üye
+def	indirgeSağdan	reduceRight	dizik.scala:302	üye
+def	indirgeSağdan	reduceRight	dizin.scala:148	üye
+def	indirgeSağdan	reduceRight	eslem.scala:220	üye
+def	indirgeSağdan	reduceRight	eslem.scala:63	üye
+def	indirgeSağdan	reduceRight	kume.scala:115	üye
+def	indirgeSağdan	reduceRight	kuyruk.scala:216	üye
+def	indirgeSağdan	reduceRight	kuyruk.scala:359	üye
+def	indirgeSağdan	reduceRight	miskindizin.scala:83	üye
+def	indirgeSağdan	reduceRight	yineleyici.scala:94	üye
+def	indirgeSağdan	reduceRight	yoney.scala:131	üye
+def	indirgeSağdanBelki	reduceRightOption	dizi.scala:159	üye
+def	indirgeSağdanBelki	reduceRightOption	dizi.scala:303	üye
+def	indirgeSağdanBelki	reduceRightOption	dizi.scala:445	üye
+def	indirgeSağdanBelki	reduceRightOption	dizik.scala:305	üye
+def	indirgeSağdanBelki	reduceRightOption	dizin.scala:151	üye
+def	indirgeSağdanBelki	reduceRightOption	eslem.scala:222	üye
+def	indirgeSağdanBelki	reduceRightOption	eslem.scala:65	üye
+def	indirgeSağdanBelki	reduceRightOption	kume.scala:118	üye
+def	indirgeSağdanBelki	reduceRightOption	kuyruk.scala:219	üye
+def	indirgeSağdanBelki	reduceRightOption	kuyruk.scala:362	üye
+def	indirgeSağdanBelki	reduceRightOption	miskindizin.scala:86	üye
+def	indirgeSağdanBelki	reduceRightOption	yineleyici.scala:110	üye
+def	indirgeSağdanBelki	reduceRightOption	yoney.scala:134	üye
+def	indirgeSoldan	reduceLeft	dizi.scala:155	üye
+def	indirgeSoldan	reduceLeft	dizi.scala:299	üye
+def	indirgeSoldan	reduceLeft	dizi.scala:441	üye
+def	indirgeSoldan	reduceLeft	dizik.scala:301	üye
+def	indirgeSoldan	reduceLeft	dizin.scala:147	üye
+def	indirgeSoldan	reduceLeft	eslem.scala:219	üye
+def	indirgeSoldan	reduceLeft	eslem.scala:62	üye
+def	indirgeSoldan	reduceLeft	kume.scala:114	üye
+def	indirgeSoldan	reduceLeft	kuyruk.scala:215	üye
+def	indirgeSoldan	reduceLeft	kuyruk.scala:358	üye
+def	indirgeSoldan	reduceLeft	miskindizin.scala:82	üye
+def	indirgeSoldan	reduceLeft	yineleyici.scala:93	üye
+def	indirgeSoldan	reduceLeft	yoney.scala:130	üye
+def	indirgeSoldanBelki	reduceLeftOption	dizi.scala:158	üye
+def	indirgeSoldanBelki	reduceLeftOption	dizi.scala:302	üye
+def	indirgeSoldanBelki	reduceLeftOption	dizi.scala:444	üye
+def	indirgeSoldanBelki	reduceLeftOption	dizik.scala:304	üye
+def	indirgeSoldanBelki	reduceLeftOption	dizin.scala:150	üye
+def	indirgeSoldanBelki	reduceLeftOption	eslem.scala:221	üye
+def	indirgeSoldanBelki	reduceLeftOption	eslem.scala:64	üye
+def	indirgeSoldanBelki	reduceLeftOption	kume.scala:117	üye
+def	indirgeSoldanBelki	reduceLeftOption	kuyruk.scala:218	üye
+def	indirgeSoldanBelki	reduceLeftOption	kuyruk.scala:361	üye
+def	indirgeSoldanBelki	reduceLeftOption	miskindizin.scala:85	üye
+def	indirgeSoldanBelki	reduceLeftOption	yineleyici.scala:109	üye
+def	indirgeSoldanBelki	reduceLeftOption	yoney.scala:133	üye
+val	inç	Inch	data.scala:112
+val	inç	Inch	package.scala:109
+val	iptal	cancel	klavye.scala:28	üye
+def	iriSayıya	toBigInt	sayi.scala:72	üye
+def	iseVer	when	belki.scala:26	üye
+def	itHepsini	pushAll	kuyruk.scala:46	üye
+def	izdüşümü	project	yoney2b.scala:39
+val	izler	TRAILING	arayuz.scala:173	üye
+def	içeriyorMu	contains	belki.scala:67	üye
+def	içeriyorMu	contains	dizi.scala:233	üye
+def	içeriyorMu	contains	dizi.scala:375	üye
+def	içeriyorMu	contains	dizi.scala:86	üye
+def	içeriyorMu	contains	dizik.scala:231	üye
+def	içeriyorMu	contains	dizik.scala:75	üye
+def	içeriyorMu	contains	dizin.scala:80	üye
+def	içeriyorMu	contains	eslem.scala:240	üye
+def	içeriyorMu	contains	eslem.scala:84	üye
+def	içeriyorMu	contains	ikisindenbiri.scala:71	üye
+def	içeriyorMu	contains	kume.scala:52	üye
+def	içeriyorMu	contains	kuyruk.scala:422	üye
+def	içeriyorMu	contains	miskindizin.scala:108	üye
+def	içeriyorMu	contains	yazi.scala:78	üye
+def	içeriyorMu	contains	yazi.scala:79	üye
+def	içeriyorMu	contains	yineleyici.scala:59	üye
+def	içeriyorMu	contains	yoney.scala:64	üye
+def	içeriyorMuDilim	containsSlice	dizi.scala:234	üye
+def	içeriyorMuDilim	containsSlice	dizi.scala:376	üye
+def	içeriyorMuDilim	containsSlice	dizi.scala:87	üye
+def	içeriyorMuDilim	containsSlice	dizik.scala:232	üye
+def	içeriyorMuDilim	containsSlice	dizik.scala:76	üye
+def	içeriyorMuDilim	containsSlice	dizin.scala:81	üye
+def	içeriyorMuDilim	containsSlice	miskindizin.scala:109	üye
+def	içeriyorMuDilim	containsSlice	yazi.scala:80	üye
+def	içeriyorMuDilim	containsSlice	yoney.scala:65	üye
+def	içinde	contains	resim.scala:284	üye
+def	içindeMi	contains	aralik.scala:81	üye
+def	içÇarpım	dot	yoney2b.scala:38
+def	işareti	sign	data.scala:173	üye
+def	işareti	toInt	matematik.scala:58	üye
+def	işle	map	aralik.scala:83	üye
+def	işle	map	belki.scala:55	üye
+def	işle	map	dizi.scala:211	üye
+def	işle	map	dizi.scala:354	üye
+def	işle	map	dizi.scala:488	üye
+def	işle	map	dizi.scala:515	üye
+def	işle	map	dizi.scala:64	üye
+def	işle	map	dizik.scala:206	üye
+def	işle	map	dizik.scala:50	üye
+def	işle	map	dizim.scala:45	üye
+def	işle	map	dizin.scala:26	üye
+def	işle	map	dizin.scala:58	üye
+def	işle	map	eslem.scala:214	üye
+def	işle	map	eslem.scala:215	üye
+def	işle	map	eslem.scala:57	üye
+def	işle	map	eslem.scala:58	üye
+def	işle	map	gelecek.scala:42	üye
+def	işle	map	ikisindenbiri.scala:64	üye
+def	işle	map	kume.scala:37	üye
+def	işle	map	kuyruk.scala:147	üye
+def	işle	map	kuyruk.scala:280	üye
+def	işle	map	miskindizin.scala:71	üye
+def	işle	map	yazi.scala:52	üye
+def	işle	map	yazi.scala:53	üye
+def	işle	map	yineleyici.scala:46	üye
+def	işle	map	yoney.scala:42	üye
+def	işleYerinde	mapInPlace	dizik.scala:207	üye
+def	işleYerinde	mapInPlace	dizik.scala:51	üye
+def	işleYerinde	mapInPlace	kuyruk.scala:236	üye
+def	işleYerinde	mapInPlace	kuyruk.scala:408	üye
+def	işleYerinde	mapInPlace	kuyruk.scala:74	üye
+val	kahverengi	brown	data.scala:121
+def	kaldır	lift	eslem.scala:202	üye
+def	kaldır	lift	eslem.scala:45	üye
+val	kaldırma	shift	klavye.scala:32	üye
+def	kalemBoyu	strokeWidth	resim.scala:71	üye
+def	kalemBoyunuKur	setPenThickness	resim.scala:303
+def	kalemKalınlığınıKur	setPenThickness	resim.scala:302
+def	kalemKalınlığınıKur	setPenThickness	trInit.scala:197
+def	kalemRengi	stroke	resim.scala:70	üye
+def	kalemRenginiKur	setPenColor	resim.scala:301
+def	kalemRenginiKur	setPenColor	trInit.scala:195
+def	kalemiKaldır	penUp	trInit.scala:193
+def	kalemiKapa	setNoPen	resim.scala:304
+def	kalemiİndir	penDown	trInit.scala:192
+def	kalemİnikMi	down	trInit.scala:194	üye
+def	kalta	fold	eslem.scala:225	üye
+def	kalta	fold	eslem.scala:68	üye
+val	kalın	BoldFont	trInit.scala:603
+def	kapalı	inclusive	aralik.scala:36	üye
+def	kapasitesi	capacity	yazi.scala:223	üye
+object	kaplumbağa	turtle0	trInit.scala:236
+def	kaplumbağa0	turtle0	data.scala:202
+val	kaplumbağa0	turtle0	trInit.scala:329
+def	karekökü	math.sqrt	matematik.scala:37
+def	karekökü	sqrt	data.scala:157	üye
+def	karesi	math.pow	matematik.scala:36
+def	karesi	pow	data.scala:156	üye
+def	karşılıklıMı	corresponds	dizi.scala:135	üye
+def	karşılıklıMı	corresponds	dizi.scala:279	üye
+def	karşılıklıMı	corresponds	dizi.scala:421	üye
+def	karşılıklıMı	corresponds	dizik.scala:281	üye
+def	karşılıklıMı	corresponds	dizin.scala:127	üye
+def	karşılıklıMı	corresponds	eslem.scala:329	üye
+def	karşılıklıMı	corresponds	kuyruk.scala:338	üye
+def	karşılıklıMı	corresponds	miskindizin.scala:114	üye
+def	karşılıklıMı	corresponds	yineleyici.scala:62	üye
+def	karşılıklıMı	corresponds	yoney.scala:110	üye
+def	katla	fold	belki.scala:73	üye
+def	katla	fold	dizi.scala:154	üye
+def	katla	fold	dizi.scala:298	üye
+def	katla	fold	dizi.scala:440	üye
+def	katla	fold	dizik.scala:141	üye
+def	katla	fold	dizik.scala:300	üye
+def	katla	fold	dizin.scala:146	üye
+def	katla	fold	eslem.scala:223	üye
+def	katla	fold	eslem.scala:66	üye
+def	katla	fold	ikisindenbiri.scala:57	üye
+def	katla	fold	kume.scala:113	üye
+def	katla	fold	kuyruk.scala:214	üye
+def	katla	fold	kuyruk.scala:357	üye
+def	katla	fold	miskindizin.scala:87	üye
+def	katla	fold	yazi.scala:167	üye
+def	katla	fold	yineleyici.scala:95	üye
+def	katla	fold	yoney.scala:129	üye
+def	kayarÖbekli	sliding	dizi.scala:143	üye
+def	kayarÖbekli	sliding	dizi.scala:144	üye
+def	kayarÖbekli	sliding	dizi.scala:287	üye
+def	kayarÖbekli	sliding	dizi.scala:288	üye
+def	kayarÖbekli	sliding	dizi.scala:429	üye
+def	kayarÖbekli	sliding	dizi.scala:430	üye
+def	kayarÖbekli	sliding	dizik.scala:132	üye
+def	kayarÖbekli	sliding	dizik.scala:133	üye
+def	kayarÖbekli	sliding	dizik.scala:289	üye
+def	kayarÖbekli	sliding	dizik.scala:290	üye
+def	kayarÖbekli	sliding	dizin.scala:135	üye
+def	kayarÖbekli	sliding	dizin.scala:136	üye
+def	kayarÖbekli	sliding	eslem.scala:126	üye
+def	kayarÖbekli	sliding	eslem.scala:127	üye
+def	kayarÖbekli	sliding	eslem.scala:286	üye
+def	kayarÖbekli	sliding	eslem.scala:287	üye
+def	kayarÖbekli	sliding	kume.scala:104	üye
+def	kayarÖbekli	sliding	kume.scala:105	üye
+def	kayarÖbekli	sliding	kuyruk.scala:207	üye
+def	kayarÖbekli	sliding	kuyruk.scala:346	üye
+def	kayarÖbekli	sliding	kuyruk.scala:347	üye
+def	kayarÖbekli	sliding	miskindizin.scala:160	üye
+def	kayarÖbekli	sliding	miskindizin.scala:161	üye
+def	kayarÖbekli	sliding	yazi.scala:161	üye
+def	kayarÖbekli	sliding	yazi.scala:162	üye
+def	kayarÖbekli	sliding	yineleyici.scala:75	üye
+def	kayarÖbekli	sliding	yineleyici.scala:76	üye
+def	kayarÖbekli	sliding	yoney.scala:118	üye
+def	kayarÖbekli	sliding	yoney.scala:119	üye
+def	kaydır	offset	resim.scala:252
+def	kaydır	offset	resim.scala:253
+def	kaydır	offset	resim.scala:254
+def	kaydır	offset	resim.scala:63
+def	kaydır	offset	resim.scala:64
+def	kaydır	offset	resim.scala:65
+val	kaç	escape	klavye.scala:41	üye
+def	kenarPayınıÇıkar	stripMargin	yazi.scala:123	üye
+def	kesirOku	readDouble	trInit.scala:343
+def	kesirden	BigDecimal	aralik.scala:38
+def	kesirdenAçık	BigDecimal	aralik.scala:39
+def	kesirdenKapalı	inclusive	aralik.scala:40	üye
+def	kesirdenKesire	double2Double	turler.scala:89
+def	kesire	char2double	harf.scala:45	üye
+def	kesire	toDouble	harf.scala:57	üye
+def	kesire	toDouble	sayi.scala:104	üye
+def	kesire	toDouble	sayi.scala:48	üye
+def	kesire	toDouble	sayi.scala:57	üye
+def	kesire	toDouble	sayi.scala:67	üye
+def	kesire	toDouble	sayi.scala:82	üye
+def	kesire	toDouble	sayi.scala:94	üye
+def	kesire	toDouble	yazi.scala:129	üye
+def	kesire	toDouble	yazi.scala:227	üye
+def	kesireBelki	toDoubleOption	yazi.scala:142	üye
+def	kesişim	intersect	dizi.scala:178	üye
+def	kesişim	intersect	dizi.scala:322	üye
+def	kesişim	intersect	dizi.scala:464	üye
+def	kesişim	intersect	dizik.scala:155	üye
+def	kesişim	intersect	dizik.scala:324	üye
+def	kesişim	intersect	dizin.scala:170	üye
+def	kesişim	intersect	kume.scala:85	üye
+def	kesişim	intersect	kuyruk.scala:381	üye
+def	kesişim	intersect	miskindizin.scala:142	üye
+def	kesişim	intersect	yazi.scala:173	üye
+def	kesişim	intersect	yoney.scala:153	üye
+def	kesişim	intersection	resim.scala:283	üye
+def	kesişir	intersects	resim.scala:276	üye
+def	kojoGeçmişBakışaçısınıKur	switchToHistoryBrowsingPerspective	trInit.scala:367
+def	kojoVarsayılanBakışaçısınıKur	switchToDefaultPerspective	trInit.scala:362
+def	kojoVarsayılanİkinciBakışaçısınıKur	switchToDefault2Perspective	trInit.scala:363
+def	kojoYazılımcıkBakışaçısınıKur	switchToScriptEditingPerspective	trInit.scala:364
+def	kojodanÇiniye	kojoToTile	cinidunyasi.scala:37	üye
+def	kojoÇalışmaSayfalıBakışaçısınıKur	switchToWorksheetPerspective	trInit.scala:365
+def	kojoÇıktılıÖyküBakışaçısınıKur	switchToOutputStoryViewingPerspective	trInit.scala:368
+def	kojoÖyküBakışaçısınıKur	switchToStoryViewingPerspective	trInit.scala:366
+def	kolRenginiKur	setControlColor	kumanda.scala:41	üye
+def	kombinasyonlar	combinations	dizi.scala:148	üye
+def	kombinasyonlar	combinations	dizi.scala:292	üye
+def	kombinasyonlar	combinations	dizi.scala:434	üye
+def	kombinasyonlar	combinations	dizik.scala:135	üye
+def	kombinasyonlar	combinations	dizik.scala:294	üye
+def	kombinasyonlar	combinations	dizin.scala:140	üye
+def	kombinasyonlar	combinations	kuyruk.scala:351	üye
+def	kombinasyonlar	combinations	miskindizin.scala:162	üye
+def	kombinasyonlar	combinations	yazi.scala:165	üye
+def	kombinasyonlar	combinations	yoney.scala:123	üye
+def	kondur	moveTo	geo.scala:34
+def	kondur	setPosition	kumanda.scala:31
+def	kondur	setPosition	resim.scala:290
+def	kondur	setPosition	resim.scala:291
+val	kontrol	control	klavye.scala:34	üye
+def	konum	position	resim.scala:289
+def	konum	position	trInit.scala:191
+def	konumVeYönüBelleğeYaz	savePosHe	trInit.scala:200
+def	konumVeYönüGeriYükle	restorePosHe	trInit.scala:201
+def	konumaDoğruGit	animateToPosition	resim.scala:339	üye
+def	konumuDeğiştir	changePosition	trInit.scala:190
+def	konumuKur	setPosition	kumanda.scala:32
+def	konumuKur	setPosition	resim.scala:292
+def	konumuKur	setPosition	resim.scala:293
+def	konumuKur	setPosition	trInit.scala:187
+def	kopyası	clone	dizik.scala:380
+def	kosinüs	cos	data.scala:162	üye
+def	kosinüs	math.cos	matematik.scala:50
+def	kosinüsünAçısı	acos	data.scala:165	üye
+def	kosinüsünAçısı	math.acos	matematik.scala:53
+def	koy	addOne	kuyruk.scala:131	üye
+def	koy	addOne	kuyruk.scala:263	üye
+def	koy	append	kuyruk.scala:509	üye
+def	koy	push	kuyruk.scala:44	üye
+def	koy	put	eslem.scala:158	üye
+def	koyHepsini	addAll	kuyruk.scala:240	üye
+def	koyHepsini	addAll	kuyruk.scala:513	üye
+def	koyHepsini	enqueueAll	kuyruk.scala:265	üye
+def	koyHepsini	pushAll	kuyruk.scala:45	üye
+val	koyuAltınbaşak	darkGoldenrod	renk.scala:81	üye
+val	koyuCamgöbeği	darkCyan	renk.scala:81	üye
+val	koyuDenizYeşili	darkSeaGreen	renk.scala:81	üye
+val	koyuGri	darkGray	data.scala:126
+val	koyuGri	darkGray	renk.scala:68
+val	koyuHaki	darkKhaki	renk.scala:81	üye
+val	koyuKlasikGri	darkGrayClassic	renk.scala:81
+val	koyuKurşunGrisi	darkSlateGray	renk.scala:81	üye
+val	koyuKurşunMavisi	darkSlateBlue	renk.scala:81	üye
+val	koyuKırmızı	darkRed	renk.scala:81	üye
+val	koyuMavi	darkBlue	renk.scala:81	üye
+val	koyuMenekşe	darkViolet	renk.scala:81	üye
+val	koyuMorumsu	darkMagenta	renk.scala:81	üye
+val	koyuOrkidePembesi	darkOrchid	renk.scala:81	üye
+val	koyuSomon	darkSalmon	renk.scala:81	üye
+val	koyuTurkuaz	darkTurquoise	renk.scala:81	üye
+val	koyuTuruncu	darkOrange	renk.scala:81	üye
+val	koyuYeşil	darkGreen	renk.scala:81	üye
+val	koyuZeytinYeşili	darkOliveGreen	renk.scala:81	üye
+def	koşulla	cond	ikisindenbiri.scala:43	üye
+def	kumandaKolu	joystick	trInit.scala:632
+def	kurulumDizini	installDir	data.scala:198
+def	kurulumDizini	installDir	trInit.scala:322
+val	kurşunGrisi	slateGray	renk.scala:74	üye
+val	kurşunMavisi	slateBlue	renk.scala:74	üye
+def	kutudanÇıkar	unbox	harf.scala:41	üye
+def	kutuyaKoy	box	harf.scala:40	üye
+def	kuvveti	math.pow	matematik.scala:38
+def	kuvveti	pow	data.scala:155	üye
+def	kuyruklar	tails	dizi.scala:150	üye
+def	kuyruklar	tails	dizi.scala:294	üye
+def	kuyruklar	tails	dizi.scala:436	üye
+def	kuyruklar	tails	dizik.scala:137	üye
+def	kuyruklar	tails	dizik.scala:296	üye
+def	kuyruklar	tails	dizin.scala:142	üye
+def	kuyruklar	tails	eslem.scala:131	üye
+def	kuyruklar	tails	eslem.scala:291	üye
+def	kuyruklar	tails	kume.scala:109	üye
+def	kuyruklar	tails	kuyruk.scala:212	üye
+def	kuyruklar	tails	kuyruk.scala:353	üye
+def	kuyruklar	tails	miskindizin.scala:164	üye
+def	kuyruklar	tails	yazi.scala:163	üye
+def	kuyruklar	tails	yoney.scala:125	üye
+def	kuyruğa	toQueue	kuyruk.scala:243	üye
+def	kuyruğaEkle	enqueue	kuyruk.scala:397	üye
+def	kuyruğaEkleHepsini	enqueueAll	kuyruk.scala:398	üye
+def	kuyruğu	tail	dizi.scala:203	üye
+def	kuyruğu	tail	dizi.scala:346	üye
+def	kuyruğu	tail	dizi.scala:56	üye
+def	kuyruğu	tail	dizik.scala:196	üye
+def	kuyruğu	tail	dizik.scala:39	üye
+def	kuyruğu	tail	dizin.scala:50	üye
+def	kuyruğu	tail	eslem.scala:206	üye
+def	kuyruğu	tail	eslem.scala:49	üye
+def	kuyruğu	tail	kume.scala:31	üye
+def	kuyruğu	tail	kuyruk.scala:139	üye
+def	kuyruğu	tail	kuyruk.scala:272	üye
+def	kuyruğu	tail	miskindizin.scala:61	üye
+def	kuyruğu	tail	yazi.scala:44	üye
+def	kuyruğu	tail	yoney.scala:34	üye
+val	kuzey	NORTH	arayuz.scala:173	üye
+def	kuzey	setHeading	trInit.scala:170
+val	kuzeybatı	NORTH_WEST	arayuz.scala:173	üye
+val	kuzeydoğu	NORTH_EAST	arayuz.scala:173	üye
+def	kym	rgb	renk.scala:136	üye
+def	kyms	rgba	renk.scala:139	üye
+def	kökDizinler	listRoots	dosya.scala:39	üye
+def	köşegen	Picture.line	resim.scala:392
+def	kümeye	toSet	dizi.scala:104	üye
+def	kümeye	toSet	dizi.scala:248	üye
+def	kümeye	toSet	dizi.scala:390	üye
+def	kümeye	toSet	dizi.scala:494	üye
+def	kümeye	toSet	dizi.scala:521	üye
+def	kümeye	toSet	dizik.scala:250	üye
+def	kümeye	toSet	dizik.scala:94	üye
+def	kümeye	toSet	dizin.scala:95	üye
+def	kümeye	toSet	eslem.scala:251	üye
+def	kümeye	toSet	eslem.scala:95	üye
+def	kümeye	toSet	kume.scala:63	üye
+def	kümeye	toSet	kuyruk.scala:172	üye
+def	kümeye	toSet	kuyruk.scala:305	üye
+def	kümeye	toSet	miskindizin.scala:147	üye
+def	kümeye	toSet	yazi.scala:136	üye
+def	kümeye	toSet	yineleyici.scala:133	üye
+def	kümeye	toSet	yoney.scala:79	üye
+val	küresel	global	gelecek.scala:31	üye
+val	kütüpDizini	libDir	package.scala:155	üye
+def	küçükHarfMi	isLower	harf.scala:60	üye
+def	küçükHarfe	map	yazi.scala:110	üye
+def	küçükHarfe	toLower	harf.scala:55	üye
+val	kırmızı	red	data.scala:116
+val	kırmızı	red	renk.scala:59
+def	kısadanKısaya	short2Short	turler.scala:92
+def	kısalt	trim	yazi.scala:99	üye
+def	kısaya	toShort	yazi.scala:137	üye
+def	kısayaBelki	toShortOption	yazi.scala:145	üye
+def	kıyasla	compareTo	yazi.scala:112	üye
+def	kıyaslaKüçükHarfBüyükHarfAyrımıYapmadan	compareToIgnoreCase	yazi.scala:113	üye
+def	kıymaKodu	hashCode	kokturler.scala:39
+def	kıymaKodu	hashCode	kokturler.scala:48
+val	log2_e	math.log	matematik.scala:44
+def	log2tabanlı	math.log	matematik.scala:45
+def	logTabanlı	log	data.scala:175	üye
+def	logTabanlı	math.log	matematik.scala:43
+def	logaritması	log	data.scala:160	üye
+def	logaritması	math.log	matematik.scala:42
+def	lokmadanLokmaya	byte2Byte	turler.scala:87
+def	lokmaya	toByte	sayi.scala:108	üye
+def	lokmaya	toByte	sayi.scala:61	üye
+def	lokmaya	toByte	sayi.scala:86	üye
+def	lokmaya	toByte	sayi.scala:98	üye
+def	lokmaya	toByte	yazi.scala:128	üye
+def	lokmayaBelki	toByteOption	yazi.scala:141	üye
+val	matematik	math	data.scala:151
+val	mavi	blue	data.scala:115
+val	mavi	blue	renk.scala:58
+val	menekşe	violet	renk.scala:74	üye
+val	mercan	coral	renk.scala:74	üye
+val	merkez	CENTER	arayuz.scala:173	üye
+def	merkezdenDışarıDoğruDeğişim	radialGradient	renk.scala:169	üye
+def	merkezdenDışarıDoğruÇokluDeğişim	radialMultipleGradient	renk.scala:180	üye
+def	merkezeTaşı	center	resim.scala:100
+def	mesafeGit	animateToPositionDelta	resim.scala:341	üye
+val	mor	purple	data.scala:119
+val	morumsu	magenta	data.scala:129
+val	morumsu	magenta	renk.scala:71
+def	mutlakDeğer	abs	data.scala:178	üye
+def	mutlakDeğer	abs	sayi.scala:105	üye
+def	mutlakDeğer	abs	sayi.scala:116	üye
+def	mutlakDeğer	abs	sayi.scala:49	üye
+def	mutlakDeğer	abs	sayi.scala:58	üye
+def	mutlakDeğer	abs	sayi.scala:68	üye
+def	mutlakDeğer	abs	sayi.scala:83	üye
+def	mutlakDeğer	abs	sayi.scala:95	üye
+def	mutlakDeğer	math.abs	matematik.scala:61
+def	mutlakDeğer	math.abs	matematik.scala:62
+def	mutlakDeğer	math.abs	matematik.scala:63
+def	mutlakDeğer	math.abs	matematik.scala:64
+def	mutlakYol	getAbsolutePath	dosya.scala:25	üye
+def	müzikMp3DöngüsünüKapat	stopMp3Loop	trInit.scala:358
+def	müzikMp3üKapat	stopMp3	trInit.scala:357
+def	müzikMp3üÇal	playMp3	trInit.scala:348
+def	müzikMp3üÇalDöngülü	playMp3Loop	trInit.scala:350
+def	müzikMp3üÇalıyorMu	isMp3Playing	trInit.scala:355
+def	müzikÇalıyorMu	isMusicPlaying	trInit.scala:356
+def	müzikİndir	preloadMp3	trInit.scala:346
+def	müziğiDurdur	stopMusic	trInit.scala:359
+def	müziğiKapat	stopMusic	trInit.scala:360
+def	nerede	indexWhere	dizi.scala:127	üye
+def	nerede	indexWhere	dizi.scala:128	üye
+def	nerede	indexWhere	dizi.scala:271	üye
+def	nerede	indexWhere	dizi.scala:272	üye
+def	nerede	indexWhere	dizi.scala:413	üye
+def	nerede	indexWhere	dizi.scala:414	üye
+def	nerede	indexWhere	dizik.scala:119	üye
+def	nerede	indexWhere	dizik.scala:120	üye
+def	nerede	indexWhere	dizik.scala:273	üye
+def	nerede	indexWhere	dizik.scala:274	üye
+def	nerede	indexWhere	dizin.scala:119	üye
+def	nerede	indexWhere	dizin.scala:120	üye
+def	nerede	indexWhere	kuyruk.scala:330	üye
+def	nerede	indexWhere	kuyruk.scala:331	üye
+def	nerede	indexWhere	miskindizin.scala:126	üye
+def	nerede	indexWhere	miskindizin.scala:127	üye
+def	nerede	indexWhere	yazi.scala:155	üye
+def	nerede	indexWhere	yineleyici.scala:61	üye
+def	nerede	indexWhere	yoney.scala:102	üye
+def	nerede	indexWhere	yoney.scala:103	üye
+def	neredeSondan	lastIndexWhere	dizi.scala:129	üye
+def	neredeSondan	lastIndexWhere	dizi.scala:273	üye
+def	neredeSondan	lastIndexWhere	dizi.scala:415	üye
+def	neredeSondan	lastIndexWhere	dizik.scala:121	üye
+def	neredeSondan	lastIndexWhere	dizik.scala:275	üye
+def	neredeSondan	lastIndexWhere	dizin.scala:121	üye
+def	neredeSondan	lastIndexWhere	kuyruk.scala:332	üye
+def	neredeSondan	lastIndexWhere	miskindizin.scala:128	üye
+def	neredeSondan	lastIndexWhere	yazi.scala:156	üye
+def	neredeSondan	lastIndexWhere	yoney.scala:104	üye
+def	nesnesiOlarak	asInstanceOf	kokturler.scala:43
+def	nesnesiOlarak	asInstanceOf	kokturler.scala:52
+def	nokta	dot	trInit.scala:210
+def	nokta	dot	trInit.scala:211
+def	nokta	point	tuvalcizim.scala:40	üye
+def	nokta	vertex	geo.scala:51
+def	noktaIşık	PointLightEffectc	resim.scala:78	üye
+val	noktaSayısı	Pixel	data.scala:110
+val	noktaSayısı	Pixel	package.scala:109
+def	noktadan	Picture.fromVertexShape	resim.scala:423
+def	noktayaDön	towards	trInit.scala:162
+def	noktayaDön	towards	trInit.scala:163
+def	noktayaGit	lineTo	trInit.scala:164
+def	noktayaGit	lineTo	trInit.scala:165
+def	notaÇal	playNote	trInit.scala:621
+def	notaÇalgısınıKur	setNoteInstrument	trInit.scala:622
+def	odakDinleyiciEkle	addFocusListener	arayuz.scala:80	üye
+def	olarak	valueOf	yazi.scala:27
+def	olarak	valueOf	yazi.scala:28
+def	olarak	valueOf	yazi.scala:29
+def	olarak	valueOf	yazi.scala:31
+def	olarak	valueOf	yazi.scala:32
+def	olarak	valueOf	yazi.scala:33
+def	olarak	valueOf	yazi.scala:34
+def	olarak	valueOf	yazi.scala:35
+val	olmaz	never	gelecek.scala:38	üye
+def	onlukTabandaLogu	log10	data.scala:158	üye
+def	onlukTabandaLogu	math.log10	matematik.scala:40
+val	orkidePembesi	orchid	renk.scala:74	üye
+val	orta	Medium	package.scala:108	üye
+val	orta	medium	data.scala:107
+def	ortalama	mean	matematik.scala:87	üye
+def	oynat	movePlayer	kumanda.scala:33	üye
+def	oynat	movePlayer	kumanda.scala:34	üye
+def	oynat	run	trInit.scala:460
+def	oynatSahneİçinde	movePlayerWithinStage	kumanda.scala:35	üye
+def	oynatSahneİçinde	movePlayerWithinStage	kumanda.scala:36	üye
+def	oyunSüresiniGeriyeSayarakGöster	showGameTimeCountdown	trInit.scala:502
+def	oyunSüresiniGöster	showGameTime	trInit.scala:493
+def	pNokta	pnode	resim.scala:233	üye
+val	page_down	pageDown	klavye.scala:192	üye
+val	page_up	pageUp	klavye.scala:190	üye
+def	paralel	par	dizin.scala:48	üye
+def	parlaklık	sat	resim.scala:45
+def	parlaklık	satMod	resim.scala:263
+def	parlaklıkOranınıKur	satMod	resim.scala:259
+def	parçası	substring	yazi.scala:116	üye
+def	parçası	substring	yazi.scala:117	üye
+def	parçası	substring	yazi.scala:225	üye
+def	parçası	substring	yazi.scala:226	üye
+val	pembe	pink	data.scala:120
+val	pembe	pink	renk.scala:63
+def	pencereİçindekiOdağıİste	requestFocusInWindow	arayuz.scala:126	üye
+def	permütasyonlar	permutations	dizi.scala:149	üye
+def	permütasyonlar	permutations	dizi.scala:293	üye
+def	permütasyonlar	permutations	dizi.scala:435	üye
+def	permütasyonlar	permutations	dizik.scala:136	üye
+def	permütasyonlar	permutations	dizik.scala:295	üye
+def	permütasyonlar	permutations	dizin.scala:141	üye
+def	permütasyonlar	permutations	kuyruk.scala:352	üye
+def	permütasyonlar	permutations	miskindizin.scala:163	üye
+def	permütasyonlar	permutations	yazi.scala:166	üye
+def	permütasyonlar	permutations	yoney.scala:124	üye
+def	radyana	math.toRadians	matematik.scala:47
+def	radyana	toRadians	data.scala:168	üye
+def	radyana	toRadians	sayi.scala:115	üye
+def	rasgele	math.random	matematik.scala:60
+def	rastgele	random	data.scala:176
+def	rastgele	random	data.scala:182
+def	rastgele	random	trInit.scala:294
+def	rastgele	random	trInit.scala:295
+def	rastgeleDiziden	randomFrom	data.scala:194
+def	rastgeleDiziden	randomFrom	trInit.scala:308
+def	rastgeleDiziden	randomFrom	trInit.scala:309
+def	rastgeleDoğalKesir	randomNormalDouble	data.scala:188
+def	rastgeleDoğalKesir	randomNormalDouble	trInit.scala:302
+def	rastgeleKarıştır	shuffle	trInit.scala:311
+def	rastgeleKesir	randomDouble	data.scala:185
+def	rastgeleKesir	randomDouble	trInit.scala:298
+def	rastgeleKesir	randomDouble	trInit.scala:299
+def	rastgeleNormalKesir	randomNormalDouble	data.scala:187
+def	rastgeleNormalKesir	randomNormalDouble	trInit.scala:301
+def	rastgeleRenk	randomColor	data.scala:192
+def	rastgeleRenk	randomColor	trInit.scala:306
+def	rastgeleSayı	randomInt	data.scala:183
+def	rastgeleSayı	randomInt	trInit.scala:296
+def	rastgeleSeçim	randomBoolean	data.scala:191
+def	rastgeleSeçim	randomBoolean	trInit.scala:305
+def	rastgeleTohumunuKur	initRandomGenerator	data.scala:189
+def	rastgeleTohumunuKur	initRandomGenerator	trInit.scala:303
+def	rastgeleUzun	randomLong	data.scala:184
+def	rastgeleUzun	randomLong	trInit.scala:297
+def	rastgeleÇanEğrisinden	randomNormalDouble	data.scala:186
+def	rastgeleÇanEğrisinden	randomNormalDouble	trInit.scala:300
+def	rastgeleİkil	randomBoolean	data.scala:190
+def	rastgeleİkil	randomBoolean	trInit.scala:304
+def	rastgeleŞeffafRenk	randomTransparentColor	data.scala:193
+def	rastgeleŞeffafRenk	randomTransparentColor	trInit.scala:307
+val	renkler	Color	renk.scala:29
+val	renkler	ColorMaker	data.scala:132
+val	renksiz	noColor	data.scala:124
+val	renksiz	noColor	renk.scala:57
+def	resimSeç	imageAt	cinidunyasi.scala:58	üye
+def	resimİndir	preloadImage	trInit.scala:345
+val	richBuiltins	asInstanceOf	package.scala:46
+val	richBuiltins	asInstanceOf	trInit.scala:68
+def	saat	get	buan.scala:29	üye
+def	saatDilimi	getTimeZone	buan.scala:28	üye
+def	saatDilimi	hepsi	buan.scala:57	üye
+val	sade	PlainFont	trInit.scala:603
+def	sahneIşığı	SpotLightEffectc	resim.scala:80	üye
+def	sahneKenarındanYansıtma	bouncePicOffStage	resim.scala:102
+def	sakla	setVisible	arayuz.scala:110	üye
+def	sakla	setVisible	arayuz.scala:123	üye
+def	sakla	setVisible	arayuz.scala:137	üye
+def	sakla	setVisible	arayuz.scala:152	üye
+def	sakla	setVisible	arayuz.scala:164	üye
+def	sakla	setVisible	arayuz.scala:50	üye
+def	sakla	setVisible	arayuz.scala:63	üye
+def	sakla	setVisible	arayuz.scala:83	üye
+def	sakla	setVisible	arayuz.scala:96	üye
+def	saniye	get	buan.scala:31	üye
+val	sarı	yellow	data.scala:117
+val	sarı	yellow	renk.scala:60
+val	satırBaşı	home	klavye.scala:50
+val	satırSonu	end	klavye.scala:49	üye
+def	satırSonunuAt	stripLineEnd	yazi.scala:189	üye
+val	satır_başı	home	klavye.scala:184
+val	satır_sonu	end	klavye.scala:182	üye
+def	satırlar	linesIterator	yazi.scala:186	üye
+def	satıroku	readln	data.scala:148
+def	satıroku	readln	trInit.scala:287
+def	satıryaz	println	data.scala:149
+def	satıryaz	println	trInit.scala:288
+def	satıryaz	println	trInit.scala:289
+def	say	count	dizi.scala:109	üye
+def	say	count	dizi.scala:253	üye
+def	say	count	dizi.scala:395	üye
+def	say	count	dizik.scala:255	üye
+def	say	count	dizik.scala:99	üye
+def	say	count	dizin.scala:100	üye
+def	say	count	eslem.scala:254	üye
+def	say	count	eslem.scala:98	üye
+def	say	count	kume.scala:68	üye
+def	say	count	kuyruk.scala:177	üye
+def	say	count	kuyruk.scala:310	üye
+def	say	count	miskindizin.scala:152	üye
+def	say	count	yazi.scala:96	üye
+def	say	count	yineleyici.scala:58	üye
+def	say	count	yoney.scala:84	üye
+def	sayalım	from	data.scala:329	üye
+def	sayalım	from	miskindizin.scala:44	üye
+def	saydamlık	opac	resim.scala:43
+def	saydamlık	opacity	resim.scala:308	üye
+def	saydamlık	opacityMod	resim.scala:261	üye
+def	saydamlıkOranınıKur	opacityMod	resim.scala:257	üye
+def	saydamlığıKur	setOpacity	resim.scala:309	üye
+val	sayfaAşağı	pageDown	klavye.scala:48	üye
+val	sayfaYukarı	pageUp	klavye.scala:47	üye
+val	sayfa_aşağı	pageDown	klavye.scala:180	üye
+val	sayfa_yukarı	pageUp	klavye.scala:178	üye
+def	sayı	size	dizim.scala:32
+def	sayı	size	eslem.scala:195
+def	sayı	size	eslem.scala:37
+def	sayıMı	isDigit	data.scala:330	üye
+def	sayıMı	isDigit	harf.scala:35	üye
+def	sayıMı	isDigit	harf.scala:58	üye
+def	sayıOku	readInt	trInit.scala:342
+def	sayıdanSayıya	int2Integer	turler.scala:90
+def	sayıya	char2int	harf.scala:43	üye
+def	sayıya	toInt	data.scala:174	üye
+def	sayıya	toInt	harf.scala:56	üye
+def	sayıya	toInt	matematik.scala:59	üye
+def	sayıya	toInt	sayi.scala:113	üye
+def	sayıya	toInt	yazi.scala:131	üye
+def	sayıya	toInt	yazi.scala:202	üye
+def	sayıyaBelki	toIntOption	yazi.scala:144	üye
+val	sağ	RIGHT	arayuz.scala:173	üye
+def	sağ	right	trInit.scala:147
+def	sağ	right	trInit.scala:148
+def	sağ	right	trInit.scala:149
+def	sağMı	isRight	ikisindenbiri.scala:52	üye
+def	sağa	toRight	belki.scala:84	üye
+def	sağdakiÇiniyeTaşı	moveToTileRight	cinidunyasi.scala:48	üye
+def	sağdanKatla	foldRight	aralik.scala:89	üye
+def	sağdanKatla	foldRight	dizi.scala:218	üye
+def	sağdanKatla	foldRight	dizi.scala:361	üye
+def	sağdanKatla	foldRight	dizi.scala:71	üye
+def	sağdanKatla	foldRight	dizik.scala:214	üye
+def	sağdanKatla	foldRight	dizik.scala:58	üye
+def	sağdanKatla	foldRight	dizin.scala:65	üye
+def	sağdanKatla	foldRight	eslem.scala:227	üye
+def	sağdanKatla	foldRight	eslem.scala:70	üye
+def	sağdanKatla	foldRight	kume.scala:41	üye
+def	sağdanKatla	foldRight	kuyruk.scala:151	üye
+def	sağdanKatla	foldRight	kuyruk.scala:284	üye
+def	sağdanKatla	foldRight	miskindizin.scala:89	üye
+def	sağdanKatla	foldRight	yazi.scala:61	üye
+def	sağdanKatla	foldRight	yineleyici.scala:97	üye
+def	sağdanKatla	foldRight	yoney.scala:49	üye
+def	sağdaÇiniVarMı	hasTileAtRight	cinidunyasi.scala:41	üye
+def	sesMp3üÇal	playMp3Sound	trInit.scala:349
+def	seçenekleriKur	setOptions	arayuz.scala:147	üye
+def	seçilince	onSelection	arayuz.scala:146	üye
+def	seçİşle	collect	belki.scala:66	üye
+def	seçİşle	collect	dizi.scala:182	üye
+def	seçİşle	collect	dizi.scala:326	üye
+def	seçİşle	collect	dizi.scala:468	üye
+def	seçİşle	collect	dizik.scala:158	üye
+def	seçİşle	collect	dizik.scala:328	üye
+def	seçİşle	collect	dizin.scala:174	üye
+def	seçİşle	collect	eslem.scala:147	üye
+def	seçİşle	collect	eslem.scala:307	üye
+def	seçİşle	collect	kume.scala:129	üye
+def	seçİşle	collect	kuyruk.scala:227	üye
+def	seçİşle	collect	kuyruk.scala:385	üye
+def	seçİşle	collect	miskindizin.scala:73	üye
+def	seçİşle	collect	yazi.scala:185	üye
+def	seçİşle	collect	yineleyici.scala:49	üye
+def	seçİşle	collect	yoney.scala:157	üye
+def	seçİşleİlk	collectFirst	dizi.scala:183	üye
+def	seçİşleİlk	collectFirst	dizi.scala:327	üye
+def	seçİşleİlk	collectFirst	dizi.scala:469	üye
+def	seçİşleİlk	collectFirst	dizik.scala:159	üye
+def	seçİşleİlk	collectFirst	dizik.scala:329	üye
+def	seçİşleİlk	collectFirst	dizin.scala:175	üye
+def	seçİşleİlk	collectFirst	eslem.scala:148	üye
+def	seçİşleİlk	collectFirst	eslem.scala:308	üye
+def	seçİşleİlk	collectFirst	kume.scala:130	üye
+def	seçİşleİlk	collectFirst	kuyruk.scala:228	üye
+def	seçİşleİlk	collectFirst	kuyruk.scala:386	üye
+def	seçİşleİlk	collectFirst	miskindizin.scala:74	üye
+def	seçİşleİlk	collectFirst	yineleyici.scala:50	üye
+def	seçİşleİlk	collectFirst	yoney.scala:158	üye
+def	sil	clear	data.scala:97
+def	sil	clear	dizim.scala:36
+def	sil	clear	kuyruk.scala:135
+def	sil	clear	kuyruk.scala:268
+def	sil	clear	kuyruk.scala:53
+def	sil	clear	kuyruk.scala:533
+def	sil	clear	trInit.scala:138
+def	sil	clear	trInit.scala:237
+def	sil	clear	yazi.scala:199
+def	sil	delete	dosya.scala:30	üye
+def	sil	erase	resim.scala:271	üye
+val	silGeri	backSpace	klavye.scala:25	üye
+def	silVeSakla	clear	trInit.scala:239
+def	silVeSakla	cleari	data.scala:98
+def	silVeÇizimBiriminiKur	clearWithUL	data.scala:101
+def	silVeÇizimBiriminiKur	clearWithUL	trInit.scala:242
+val	sil_geri	backSpace	klavye.scala:174	üye
+def	silipSakla	clear	trInit.scala:238
+def	sinüs	math.sin	matematik.scala:49
+def	sinüs	sin	data.scala:161	üye
+def	sinüsünAçısı	asin	data.scala:164	üye
+def	sinüsünAçısı	math.asin	matematik.scala:52
+val	siyah	black	data.scala:122
+val	siyah	black	renk.scala:65
+val	sol	LEFT	arayuz.scala:173	üye
+def	sol	left	trInit.scala:150
+def	sol	left	trInit.scala:151
+def	sol	left	trInit.scala:152
+def	solMu	isLeft	ikisindenbiri.scala:51	üye
+def	sola	toLeft	belki.scala:83	üye
+def	soldakiÇiniyeTaşı	moveToTileLeft	cinidunyasi.scala:47	üye
+def	soldanKatla	foldLeft	aralik.scala:88	üye
+def	soldanKatla	foldLeft	dizi.scala:217	üye
+def	soldanKatla	foldLeft	dizi.scala:360	üye
+def	soldanKatla	foldLeft	dizi.scala:70	üye
+def	soldanKatla	foldLeft	dizik.scala:213	üye
+def	soldanKatla	foldLeft	dizik.scala:57	üye
+def	soldanKatla	foldLeft	dizin.scala:64	üye
+def	soldanKatla	foldLeft	eslem.scala:226	üye
+def	soldanKatla	foldLeft	eslem.scala:69	üye
+def	soldanKatla	foldLeft	kume.scala:40	üye
+def	soldanKatla	foldLeft	kuyruk.scala:150	üye
+def	soldanKatla	foldLeft	kuyruk.scala:283	üye
+def	soldanKatla	foldLeft	miskindizin.scala:88	üye
+def	soldanKatla	foldLeft	yazi.scala:60	üye
+def	soldanKatla	foldLeft	yineleyici.scala:96	üye
+def	soldanKatla	foldLeft	yoney.scala:48	üye
+def	soldaÇiniVarMı	hasTileAtLeft	cinidunyasi.scala:40	üye
+def	soluk	fade	resim.scala:76
+val	somon	salmon	renk.scala:74	üye
+def	sonaKoy	append	kuyruk.scala:511	üye
+def	sondanAl	removeLast	kuyruk.scala:518	üye
+def	sondanAlBelki	removeLastOption	kuyruk.scala:520	üye
+def	sondanKırp	dropRightInPlace	dizik.scala:378	üye
+def	sondanÇıkar	removeLast	kuyruk.scala:404	üye
+def	sondanÇıkar	removeLast	kuyruk.scala:67	üye
+def	sondanÇıkarBelki	removeLastOption	kuyruk.scala:405	üye
+def	sondanÇıkarBelki	removeLastOption	kuyruk.scala:68	üye
+val	sonraki	NEXT	arayuz.scala:173	üye
+def	sonrakiniGöster	showNext	resim.scala:331	üye
+def	sonsuzYinelenme	repeatedForever	trInit.scala:446	üye
+def	sonu	last	aralik.scala:71	üye
+def	sonu	last	dizi.scala:205	üye
+def	sonu	last	dizi.scala:348	üye
+def	sonu	last	dizi.scala:58	üye
+def	sonu	last	dizik.scala:198	üye
+def	sonu	last	dizik.scala:41	üye
+def	sonu	last	dizin.scala:52	üye
+def	sonu	last	eslem.scala:208	üye
+def	sonu	last	eslem.scala:51	üye
+def	sonu	last	kume.scala:95	üye
+def	sonu	last	kuyruk.scala:141	üye
+def	sonu	last	kuyruk.scala:274	üye
+def	sonu	last	kuyruk.scala:524	üye
+def	sonu	last	miskindizin.scala:63	üye
+def	sonu	last	yazi.scala:46	üye
+def	sonu	last	yoney.scala:36	üye
+def	sonuBelki	lastOption	dizi.scala:124	üye
+def	sonuBelki	lastOption	dizi.scala:268	üye
+def	sonuBelki	lastOption	dizi.scala:410	üye
+def	sonuBelki	lastOption	dizik.scala:117	üye
+def	sonuBelki	lastOption	dizik.scala:270	üye
+def	sonuBelki	lastOption	dizin.scala:116	üye
+def	sonuBelki	lastOption	eslem.scala:117	üye
+def	sonuBelki	lastOption	eslem.scala:277	üye
+def	sonuBelki	lastOption	kume.scala:97	üye
+def	sonuBelki	lastOption	kuyruk.scala:199	üye
+def	sonuBelki	lastOption	kuyruk.scala:327	üye
+def	sonuBelki	lastOption	kuyruk.scala:526	üye
+def	sonuBelki	lastOption	miskindizin.scala:65	üye
+def	sonuBelki	lastOption	yazi.scala:153	üye
+def	sonuBelki	lastOption	yoney.scala:99	üye
+def	sonunaEkle	appended	dizi.scala:170	üye
+def	sonunaEkle	appended	dizi.scala:314	üye
+def	sonunaEkle	appended	dizi.scala:456	üye
+def	sonunaEkle	appended	dizik.scala:147	üye
+def	sonunaEkle	appended	dizik.scala:316	üye
+def	sonunaEkle	appended	dizin.scala:162	üye
+def	sonunaEkle	appended	kuyruk.scala:373	üye
+def	sonunaEkle	appended	miskindizin.scala:134	üye
+def	sonunaEkle	appended	yazi.scala:174	üye
+def	sonunaEkle	appended	yoney.scala:145	üye
+def	sonunaEkleHepsini	appendedAll	dizi.scala:172	üye
+def	sonunaEkleHepsini	appendedAll	dizi.scala:316	üye
+def	sonunaEkleHepsini	appendedAll	dizi.scala:458	üye
+def	sonunaEkleHepsini	appendedAll	dizik.scala:149	üye
+def	sonunaEkleHepsini	appendedAll	dizik.scala:318	üye
+def	sonunaEkleHepsini	appendedAll	dizin.scala:164	üye
+def	sonunaEkleHepsini	appendedAll	kuyruk.scala:375	üye
+def	sonunaEkleHepsini	appendedAll	yazi.scala:176	üye
+def	sonunaEkleHepsini	appendedAll	yoney.scala:147	üye
+def	sonunaEkleHepsini	lazyAppendedAll	miskindizin.scala:136	üye
+def	sonuncu	end	aralik.scala:66	üye
+def	sonundaMı	endsWith	dizi.scala:134	üye
+def	sonundaMı	endsWith	dizi.scala:278	üye
+def	sonundaMı	endsWith	dizi.scala:420	üye
+def	sonundaMı	endsWith	dizik.scala:124	üye
+def	sonundaMı	endsWith	dizik.scala:280	üye
+def	sonundaMı	endsWith	dizin.scala:126	üye
+def	sonundaMı	endsWith	kuyruk.scala:337	üye
+def	sonundaMı	endsWith	miskindizin.scala:113	üye
+def	sonundaMı	endsWith	yazi.scala:121	üye
+def	sonundaMı	endsWith	yoney.scala:109	üye
+def	sonundanAt	stripSuffix	yazi.scala:188	üye
+def	sürekli	continually	miskindizin.scala:37	üye
+def	sürüm	version	trInit.scala:630
+def	sütunSayısınıKur	setColumns	arayuz.scala:73	üye
+def	sınırlar	bounds	resim.scala:239
+def	sınırlarıGöster	Picture.showBounds	resim.scala:435
+def	sınırlarıGöster	Picture.showBounds	resim.scala:436
+def	sıradaki	next	yineleyici.scala:41	üye
+def	sıradakiBelki	nextOption	yineleyici.scala:116	üye
+def	sırala	sortBy	dizi.scala:214	üye
+def	sırala	sortBy	dizi.scala:357	üye
+def	sırala	sortBy	dizi.scala:67	üye
+def	sırala	sortBy	dizik.scala:210	üye
+def	sırala	sortBy	dizik.scala:54	üye
+def	sırala	sortBy	dizin.scala:61	üye
+def	sırala	sortBy	kuyruk.scala:420	üye
+def	sırala	sortBy	miskindizin.scala:79	üye
+def	sırala	sortBy	yazi.scala:57	üye
+def	sırala	sortBy	yoney.scala:45	üye
+def	sıralaYerinde	sortInPlaceBy	dizik.scala:345	üye
+def	sıralaYerinde	sortInPlaceBy	kuyruk.scala:410	üye
+def	sıralaYerinde	sortInPlaceBy	kuyruk.scala:77	üye
+def	sıralar	indices	dizi.scala:132	üye
+def	sıralar	indices	dizi.scala:276	üye
+def	sıralar	indices	dizi.scala:418	üye
+def	sıralar	indices	dizik.scala:122	üye
+def	sıralar	indices	dizik.scala:278	üye
+def	sıralar	indices	dizin.scala:124	üye
+def	sıralar	indices	kuyruk.scala:335	üye
+def	sıralar	indices	miskindizin.scala:129	üye
+def	sıralar	indices	yazi.scala:157	üye
+def	sıralar	indices	yoney.scala:107	üye
+def	sıralı	sorted	dizi.scala:213	üye
+def	sıralı	sorted	dizi.scala:356	üye
+def	sıralı	sorted	dizi.scala:66	üye
+def	sıralı	sorted	dizik.scala:209	üye
+def	sıralı	sorted	dizik.scala:53	üye
+def	sıralı	sorted	dizin.scala:60	üye
+def	sıralı	sorted	kuyruk.scala:419	üye
+def	sıralı	sorted	miskindizin.scala:78	üye
+def	sıralı	sorted	yazi.scala:56	üye
+def	sıralı	sorted	yoney.scala:44	üye
+def	sıralıYerinde	sortInPlace	dizik.scala:344	üye
+def	sıralıYerinde	sortInPlace	kuyruk.scala:409	üye
+def	sıralıYerinde	sortInPlace	kuyruk.scala:76	üye
+def	sırası	indexOf	dizi.scala:241	üye
+def	sırası	indexOf	dizi.scala:242	üye
+def	sırası	indexOf	dizi.scala:383	üye
+def	sırası	indexOf	dizi.scala:384	üye
+def	sırası	indexOf	dizi.scala:94	üye
+def	sırası	indexOf	dizi.scala:95	üye
+def	sırası	indexOf	dizik.scala:243	üye
+def	sırası	indexOf	dizik.scala:244	üye
+def	sırası	indexOf	dizik.scala:87	üye
+def	sırası	indexOf	dizik.scala:88	üye
+def	sırası	indexOf	dizin.scala:88	üye
+def	sırası	indexOf	dizin.scala:89	üye
+def	sırası	indexOf	kuyruk.scala:423	üye
+def	sırası	indexOf	miskindizin.scala:121	üye
+def	sırası	indexOf	miskindizin.scala:122	üye
+def	sırası	indexOf	yazi.scala:87	üye
+def	sırası	indexOf	yazi.scala:88	üye
+def	sırası	indexOf	yazi.scala:89	üye
+def	sırası	indexOf	yazi.scala:90	üye
+def	sırası	indexOf	yineleyici.scala:60	üye
+def	sırası	indexOf	yoney.scala:72	üye
+def	sırası	indexOf	yoney.scala:73	üye
+def	sırasıSondan	lastIndexOf	dizi.scala:243	üye
+def	sırasıSondan	lastIndexOf	dizi.scala:244	üye
+def	sırasıSondan	lastIndexOf	dizi.scala:385	üye
+def	sırasıSondan	lastIndexOf	dizi.scala:386	üye
+def	sırasıSondan	lastIndexOf	dizi.scala:96	üye
+def	sırasıSondan	lastIndexOf	dizi.scala:97	üye
+def	sırasıSondan	lastIndexOf	dizik.scala:245	üye
+def	sırasıSondan	lastIndexOf	dizik.scala:246	üye
+def	sırasıSondan	lastIndexOf	dizik.scala:89	üye
+def	sırasıSondan	lastIndexOf	dizik.scala:90	üye
+def	sırasıSondan	lastIndexOf	dizin.scala:90	üye
+def	sırasıSondan	lastIndexOf	dizin.scala:91	üye
+def	sırasıSondan	lastIndexOf	kuyruk.scala:424	üye
+def	sırasıSondan	lastIndexOf	miskindizin.scala:123	üye
+def	sırasıSondan	lastIndexOf	miskindizin.scala:124	üye
+def	sırasıSondan	lastIndexOf	yazi.scala:91	üye
+def	sırasıSondan	lastIndexOf	yazi.scala:92	üye
+def	sırasıSondan	lastIndexOf	yazi.scala:93	üye
+def	sırasıSondan	lastIndexOf	yazi.scala:94	üye
+def	sırasıSondan	lastIndexOf	yoney.scala:74	üye
+def	sırasıSondan	lastIndexOf	yoney.scala:75	üye
+def	sırayaSok	schedule	trInit.scala:511
+def	sırayaSok	scheduleN	trInit.scala:512
+def	sırayaSok	sortWith	dizi.scala:215	üye
+def	sırayaSok	sortWith	dizi.scala:358	üye
+def	sırayaSok	sortWith	dizi.scala:68	üye
+def	sırayaSok	sortWith	dizik.scala:211	üye
+def	sırayaSok	sortWith	dizik.scala:55	üye
+def	sırayaSok	sortWith	dizin.scala:62	üye
+def	sırayaSok	sortWith	kuyruk.scala:421	üye
+def	sırayaSok	sortWith	miskindizin.scala:80	üye
+def	sırayaSok	sortWith	yazi.scala:58	üye
+def	sırayaSok	sortWith	yoney.scala:46	üye
+def	sırayaSokYerinde	sortInPlaceWith	dizik.scala:346	üye
+def	sırayaSokYerinde	sortInPlaceWith	kuyruk.scala:441	üye
+def	sırayaSokYerinde	sortInPlaceWith	kuyruk.scala:78	üye
+def	sıraylaDoldur	tabulate	miskindizin.scala:42	üye
+def	tNokta	tnode	resim.scala:234	üye
+val	taban	BOTTOM	arayuz.scala:173	üye
+def	taban	floor	data.scala:170	üye
+def	taban	floor	sayi.scala:119	üye
+def	taban	math.floor	matematik.scala:55
+def	takasla	swap	ikisindenbiri.scala:61	üye
+def	tane	size	kuyruk.scala:51
+def	tane	size	kuyruk.scala:530
+def	tanjant	math.tan	matematik.scala:51
+def	tanjant	tan	data.scala:163	üye
+def	tanjantınAçısı	atan	data.scala:166	üye
+def	tanjantınAçısı	math.atan	matematik.scala:54
+def	tanımlıMı	isDefinedAt	bolumselislev.scala:23	üye
+def	tara	scan	dizi.scala:161	üye
+def	tara	scan	dizi.scala:305	üye
+def	tara	scan	dizi.scala:447	üye
+def	tara	scan	dizik.scala:142	üye
+def	tara	scan	dizik.scala:307	üye
+def	tara	scan	dizin.scala:153	üye
+def	tara	scan	eslem.scala:136	üye
+def	tara	scan	eslem.scala:296	üye
+def	tara	scan	kume.scala:119	üye
+def	tara	scan	kuyruk.scala:220	üye
+def	tara	scan	kuyruk.scala:364	üye
+def	tara	scan	miskindizin.scala:91	üye
+def	tara	scan	yoney.scala:136	üye
+def	taraSağdan	from	yineleyici.scala:112	üye
+def	taraSağdan	scanRight	dizi.scala:163	üye
+def	taraSağdan	scanRight	dizi.scala:307	üye
+def	taraSağdan	scanRight	dizi.scala:449	üye
+def	taraSağdan	scanRight	dizik.scala:144	üye
+def	taraSağdan	scanRight	dizik.scala:309	üye
+def	taraSağdan	scanRight	dizin.scala:155	üye
+def	taraSağdan	scanRight	eslem.scala:138	üye
+def	taraSağdan	scanRight	eslem.scala:298	üye
+def	taraSağdan	scanRight	kume.scala:121	üye
+def	taraSağdan	scanRight	kuyruk.scala:222	üye
+def	taraSağdan	scanRight	kuyruk.scala:366	üye
+def	taraSağdan	scanRight	miskindizin.scala:93	üye
+def	taraSağdan	scanRight	yoney.scala:138	üye
+def	taraSoldan	scanLeft	dizi.scala:162	üye
+def	taraSoldan	scanLeft	dizi.scala:306	üye
+def	taraSoldan	scanLeft	dizi.scala:448	üye
+def	taraSoldan	scanLeft	dizik.scala:143	üye
+def	taraSoldan	scanLeft	dizik.scala:308	üye
+def	taraSoldan	scanLeft	dizin.scala:154	üye
+def	taraSoldan	scanLeft	eslem.scala:137	üye
+def	taraSoldan	scanLeft	eslem.scala:297	üye
+def	taraSoldan	scanLeft	kume.scala:120	üye
+def	taraSoldan	scanLeft	kuyruk.scala:221	üye
+def	taraSoldan	scanLeft	kuyruk.scala:365	üye
+def	taraSoldan	scanLeft	miskindizin.scala:92	üye
+def	taraSoldan	scanLeft	yineleyici.scala:98	üye
+def	taraSoldan	scanLeft	yoney.scala:137	üye
+def	tarih	getTime	buan.scala:27	üye
+val	tavan	TOP	arayuz.scala:173	üye
+def	tavan	ceil	data.scala:171	üye
+def	tavan	ceil	sayi.scala:120	üye
+def	tavan	math.ceil	matematik.scala:56
+val	temizle	clear	klavye.scala:30
+def	tepe	top	kuyruk.scala:50	üye
+def	tepesi	top	kuyruk.scala:49	üye
+def	tepkileriDurdur	stopReactions	resim.scala:318	üye
+def	tersi	from	kuyruk.scala:536	üye
+def	tersi	reverse	dizi.scala:227	üye
+def	tersi	reverse	dizi.scala:369	üye
+def	tersi	reverse	dizi.scala:80	üye
+def	tersi	reverse	dizik.scala:223	üye
+def	tersi	reverse	dizik.scala:67	üye
+def	tersi	reverse	dizin.scala:74	üye
+def	tersi	reverse	kuyruk.scala:158	üye
+def	tersi	reverse	kuyruk.scala:291	üye
+def	tersi	reverse	miskindizin.scala:102	üye
+def	tersi	reverse	yazi.scala:70	üye
+def	tersi	reverse	yoney.scala:58	üye
+def	tersiYerinde	reverseInPlace	yazi.scala:221	üye
+def	tersten	reversed	trInit.scala:445	üye
+def	tersİşle	map	dizi.scala:189	üye
+def	tersİşle	map	dizi.scala:333	üye
+def	tersİşle	map	dizi.scala:475	üye
+def	tersİşle	map	dizik.scala:166	üye
+def	tersİşle	map	dizik.scala:335	üye
+def	tersİşle	map	dizin.scala:181	üye
+def	tersİşle	map	kuyruk.scala:392	üye
+def	tersİşle	map	miskindizin.scala:77	üye
+def	tersİşle	map	yoney.scala:164	üye
+def	ton	hue	resim.scala:44
+def	ton	hueMod	resim.scala:262
+def	tonOranınıKur	hueMod	resim.scala:258
+def	topla	sum	dizi.scala:220	üye
+def	topla	sum	dizi.scala:362	üye
+def	topla	sum	dizi.scala:73	üye
+def	topla	sum	dizik.scala:216	üye
+def	topla	sum	dizik.scala:60	üye
+def	topla	sum	dizin.scala:67	üye
+def	topla	sum	eslem.scala:229	üye
+def	topla	sum	eslem.scala:72	üye
+def	topla	sum	kume.scala:43	üye
+def	topla	sum	kuyruk.scala:153	üye
+def	topla	sum	kuyruk.scala:286	üye
+def	topla	sum	miskindizin.scala:95	üye
+def	topla	sum	yazi.scala:63	üye
+def	topla	sum	yineleyici.scala:99	üye
+def	topla	sum	yoney.scala:51	üye
+val	turkuaz	turquoise	renk.scala:74	üye
+val	turuncu	orange	data.scala:128
+val	turuncu	orange	renk.scala:70
+def	tuval	canvas	resim.scala:232	üye
+def	tuvalAlanı	canvasBounds	data.scala:232
+def	tuvalBoyutOranınıKur	setDrawingCanvasAspectRatio	trInit.scala:483
+def	tuvalBoyutlarınıKur	setDrawingCanvasSize	trInit.scala:484
+def	tuvalden	Picture.fromCanvas	resim.scala:428
+def	tuvaleYaz	write	trInit.scala:175
+def	tuvaliDöndür	viewRotate	trInit.scala:400
+def	tuvaliEtkinleştir	activateCanvas	trInit.scala:477
+def	tuvaliKaydır	scroll	trInit.scala:399
+def	tuvaliSabitle	disablePanAndZoom	trInit.scala:398
+def	tuşBasılıMı	isKeyPressed	trInit.scala:404
+def	tuşHarfi	getKeyChar	arayuz.scala:197	üye
+def	tuşKodu	getKeyCode	arayuz.scala:196	üye
+def	tuşaBasılıMı	isKeyPressed	trInit.scala:402
+def	tuşaBasınca	onKeyPress	trInit.scala:405
+def	tuşuBırakınca	onKeyRelease	trInit.scala:406
+def	tüket	consume	arayuz.scala:198	üye
+def	tümEkran	toggleFullScreenCanvas	trInit.scala:372
+def	tümEkranTuval	toggleFullScreenCanvas	trInit.scala:371
+def	tümEkranÇıktı	toggleFullScreenOutput	trInit.scala:370
+def	türet	unfold	miskindizin.scala:53	üye
+def	ufakKesirdenUfakKesire	float2Float	turler.scala:88
+def	ufakKesire	toFloat	yazi.scala:130	üye
+def	ufakKesireBelki	toFloatOption	yazi.scala:143	üye
+def	ufakkesire	char2float	harf.scala:46	üye
+def	uzaklık	distance	yoney2b.scala:41	üye
+def	uzaklık	distanceTo	resim.scala:285	üye
+def	uzaklık	distanceTo	trInit.scala:219	üye
+def	uzaklık	math.sqrt	matematik.scala:82
+def	uzat	padTo	dizi.scala:174	üye
+def	uzat	padTo	dizi.scala:318	üye
+def	uzat	padTo	dizi.scala:460	üye
+def	uzat	padTo	dizik.scala:151	üye
+def	uzat	padTo	dizik.scala:320	üye
+def	uzat	padTo	dizin.scala:166	üye
+def	uzat	padTo	kuyruk.scala:377	üye
+def	uzat	padTo	miskindizin.scala:139	üye
+def	uzat	padTo	yazi.scala:169	üye
+def	uzat	padTo	yineleyici.scala:82	üye
+def	uzat	padTo	yoney.scala:149	üye
+def	uzatYerinde	padToInPlace	dizik.scala:356	üye
+def	uzatYerinde	padToInPlace	kuyruk.scala:436	üye
+def	uzatYerinde	padToInPlace	kuyruk.scala:86	üye
+def	uzuna	char2long	harf.scala:44	üye
+def	uzuna	toLong	yazi.scala:190	üye
+def	uzuna	toLong	yazi.scala:228	üye
+def	uzunaBelki	toLongOption	yazi.scala:191	üye
+def	uzundanUzuna	long2Long	turler.scala:91
+def	uzunluğu	size	aralik.scala:69
+def	varMı	exists	belki.scala:68	üye
+def	varMı	exists	dizi.scala:230	üye
+def	varMı	exists	dizi.scala:372	üye
+def	varMı	exists	dizi.scala:83	üye
+def	varMı	exists	dizik.scala:227	üye
+def	varMı	exists	dizik.scala:71	üye
+def	varMı	exists	dizin.scala:77	üye
+def	varMı	exists	dosya.scala:26	üye
+def	varMı	exists	eslem.scala:235	üye
+def	varMı	exists	eslem.scala:79	üye
+def	varMı	exists	ikisindenbiri.scala:72	üye
+def	varMı	exists	kume.scala:49	üye
+def	varMı	exists	kuyruk.scala:160	üye
+def	varMı	exists	kuyruk.scala:293	üye
+def	varMı	exists	miskindizin.scala:105	üye
+def	varMı	exists	yazi.scala:75	üye
+def	varMı	exists	yineleyici.scala:55	üye
+def	varMı	exists	yoney.scala:61	üye
+def	varMı	isDefined	data.scala:92	üye
+def	varMı	nonEmpty	belki.scala:50	üye
+def	varsayılanDeğerle	withDefaultValue	eslem.scala:104	üye
+def	varsayılanDeğerle	withDefaultValue	eslem.scala:260	üye
+def	varsayılanlı	collection.mutable.Map	eslem.scala:178
+def	varsayılanlı	withDefault	eslem.scala:327	üye
+def	varsayılanı	default	eslem.scala:177	üye
+def	varsayılanı	default	eslem.scala:326	üye
+def	veÇiz	draw	resim.scala:380
+val	vurgulu	ItalicFont	trInit.scala:603
+def	yaklaş	zoom	trInit.scala:392
+def	yaklaş	zoom	trInit.scala:393
+def	yaklaşXY	zoomXY	trInit.scala:394
+def	yaklaşmayaİzinVerme	disablePanAndZoom	trInit.scala:397
+def	yaklaşmayıSil	resetPanAndZoom	trInit.scala:396
+def	yakın	math.round	matematik.scala:65
+def	yakın	math.round	matematik.scala:66
+def	yakın	round	data.scala:179
+def	yakın	round	sayi.scala:121
+def	yakını	math.rint	matematik.scala:57
+def	yakını	rint	data.scala:172	üye
+def	yama	patch	dizi.scala:175	üye
+def	yama	patch	dizi.scala:319	üye
+def	yama	patch	dizi.scala:461	üye
+def	yama	patch	dizik.scala:152	üye
+def	yama	patch	dizik.scala:321	üye
+def	yama	patch	dizin.scala:167	üye
+def	yama	patch	kuyruk.scala:378	üye
+def	yama	patch	miskindizin.scala:140	üye
+def	yama	patch	yazi.scala:170	üye
+def	yama	patch	yineleyici.scala:83	üye
+def	yama	patch	yoney.scala:150	üye
+def	yamaYerinde	patchInPlace	dizik.scala:354	üye
+def	yamaYerinde	patchInPlace	kuyruk.scala:437	üye
+def	yamaYerinde	patchInPlace	kuyruk.scala:87	üye
+def	yana	beside	resim.scala:334	üye
+val	yanlış	false	data.scala:105
+def	yansıt	bounceOff	yoney2b.scala:46	üye
+def	yansıt	reflect	resim.scala:75
+def	yansıtX	flipX	resim.scala:255
+def	yansıtX	flipX	resim.scala:67
+def	yansıtY	flipY	resim.scala:256
+def	yansıtY	flipY	resim.scala:66
+val	yatay	HORIZONTAL	arayuz.scala:173	üye
+def	yatay	Picture.hline	resim.scala:397
+def	yatayBoşluk	Picture.hgap	resim.scala:420
+def	yatayDüzeniKur	setHorizontalAlignment	arayuz.scala:105	üye
+def	yatayDüzeniKur	setHorizontalAlignment	arayuz.scala:74	üye
+val	yavaş	Slow	package.scala:108	üye
+val	yavaş	slow	data.scala:106
+def	yay	Picture.arc	resim.scala:393
+def	yay	arc	trInit.scala:181
+def	yay	arc	tuvalcizim.scala:38
+def	yaz	print	data.scala:150
+def	yaz	print	trInit.scala:290
+def	yazı	Picture.text	resim.scala:403
+def	yazı	Picture.text	resim.scala:404
+def	yazı	Picture.textu	resim.scala:405
+def	yazı	text	tuvalcizim.scala:44	üye
+def	yazı	toString	aralik.scala:75
+def	yazı	write	trInit.scala:176
+def	yazıBoyunuKur	setPenFontSize	trInit.scala:179
+def	yazıRenkli	Picture.textu	resim.scala:406
+def	yazıTamamlamaSeçenekleriniYazdırmayıAçKapa	dumpCompletions	trInit.scala:628	üye
+def	yazıYap	mkString	dizi.scala:224	üye
+def	yazıYap	mkString	dizi.scala:225	üye
+def	yazıYap	mkString	dizi.scala:226	üye
+def	yazıYap	mkString	dizi.scala:366	üye
+def	yazıYap	mkString	dizi.scala:367	üye
+def	yazıYap	mkString	dizi.scala:368	üye
+def	yazıYap	mkString	dizi.scala:77	üye
+def	yazıYap	mkString	dizi.scala:78	üye
+def	yazıYap	mkString	dizi.scala:79	üye
+def	yazıYap	mkString	dizik.scala:220	üye
+def	yazıYap	mkString	dizik.scala:221	üye
+def	yazıYap	mkString	dizik.scala:222	üye
+def	yazıYap	mkString	dizik.scala:64	üye
+def	yazıYap	mkString	dizik.scala:65	üye
+def	yazıYap	mkString	dizik.scala:66	üye
+def	yazıYap	mkString	dizin.scala:71	üye
+def	yazıYap	mkString	dizin.scala:72	üye
+def	yazıYap	mkString	dizin.scala:73	üye
+def	yazıYap	mkString	eslem.scala:232	üye
+def	yazıYap	mkString	eslem.scala:233	üye
+def	yazıYap	mkString	eslem.scala:234	üye
+def	yazıYap	mkString	eslem.scala:75	üye
+def	yazıYap	mkString	eslem.scala:76	üye
+def	yazıYap	mkString	eslem.scala:77	üye
+def	yazıYap	mkString	kume.scala:45	üye
+def	yazıYap	mkString	kume.scala:46	üye
+def	yazıYap	mkString	kume.scala:47	üye
+def	yazıYap	mkString	kuyruk.scala:155	üye
+def	yazıYap	mkString	kuyruk.scala:156	üye
+def	yazıYap	mkString	kuyruk.scala:157	üye
+def	yazıYap	mkString	kuyruk.scala:288	üye
+def	yazıYap	mkString	kuyruk.scala:289	üye
+def	yazıYap	mkString	kuyruk.scala:290	üye
+def	yazıYap	mkString	miskindizin.scala:100	üye
+def	yazıYap	mkString	miskindizin.scala:101	üye
+def	yazıYap	mkString	miskindizin.scala:99	üye
+def	yazıYap	mkString	yazi.scala:67	üye
+def	yazıYap	mkString	yazi.scala:68	üye
+def	yazıYap	mkString	yazi.scala:69	üye
+def	yazıYap	mkString	yineleyici.scala:137	üye
+def	yazıYap	mkString	yineleyici.scala:138	üye
+def	yazıYap	mkString	yineleyici.scala:139	üye
+def	yazıYap	mkString	yoney.scala:55	üye
+def	yazıYap	mkString	yoney.scala:56	üye
+def	yazıYap	mkString	yoney.scala:57	üye
+def	yazıYüzü	textFont	tuvalcizim.scala:43	üye
+def	yazıYüzünüKur	setFont	arayuz.scala:104	üye
+def	yazıYüzünüKur	setFont	arayuz.scala:118	üye
+def	yazıYüzünüKur	setFont	arayuz.scala:133	üye
+def	yazıYüzünüKur	setFont	arayuz.scala:148	üye
+def	yazıYüzünüKur	setFont	arayuz.scala:72	üye
+def	yazıYüzünüKur	setPenFont	trInit.scala:180
+def	yazılımcıkDüzenleyicisiniEtkinleştir	activateEditor	trInit.scala:478
+def	yazıya	toString	data.scala:332
+def	yazıya	toString	dizim.scala:64
+def	yazıya	toString	harf.scala:53
+def	yazıya	toString	kokturler.scala:44
+def	yazıya	toString	kokturler.scala:55
+def	yazıya	toString	sayi.scala:103
+def	yazıya	toString	sayi.scala:112
+def	yazıya	toString	sayi.scala:47
+def	yazıya	toString	sayi.scala:56
+def	yazıya	toString	sayi.scala:66
+def	yazıya	toString	sayi.scala:81
+def	yazıya	toString	sayi.scala:93
+def	yazıya	toString	yazi.scala:201
+def	yazıyüzleri	availableFontNames	data.scala:199
+def	yazıyüzleri	availableFontNames	trInit.scala:323
+def	yazıyüzü	Font	data.scala:200
+def	yazıyüzü	Font	trInit.scala:324
+def	yazıyüzü	Font	trInit.scala:325
+def	yazıyıAl	getText	arayuz.scala:81	üye
+def	yazıyıKur	setText	arayuz.scala:82	üye
+def	yazıÇerçevesi	textExtent	data.scala:201
+def	yazıÇerçevesi	textExtent	trInit.scala:326
+def	yeniKaplumbağa	newTurtle	data.scala:203
+def	yeniMp3Çalar	newMp3Player	data.scala:96
+def	yeniMp3Çalar	newMp3Player	trInit.scala:134
+def	yenidenÇiz	repaint	resim.scala:236	üye
+def	yerAyır	ensureCapacity	yazi.scala:222	üye
+val	yeşil	green	data.scala:118
+val	yeşil	green	renk.scala:61
+val	yeşilimsiSarı	greenYellow	renk.scala:74	üye
+def	yinele	foreachPolyLine	resim.scala:320	üye
+def	yinele	iterate	dizik.scala:185	üye
+def	yinele	iterate	miskindizin.scala:51	üye
+def	yinele	repeat	data.scala:141
+def	yinele	repeat	trInit.scala:259
+def	yineleDizinli	repeati	data.scala:142
+def	yineleDizinli	repeati	trInit.scala:263
+def	yineleDoğruysa	repeatWhile	data.scala:143
+def	yineleDoğruysa	repeatWhile	trInit.scala:267
+def	yineleKere	repeatFor	data.scala:145
+def	yineleKere	repeatFor	trInit.scala:275
+def	yineleOlanaKadar	repeatUntil	data.scala:144
+def	yineleOlanaKadar	repeatUntil	trInit.scala:271
+def	yineleSayaçla	timer	trInit.scala:464
+def	yinelemesiz	distinct	dizi.scala:222	üye
+def	yinelemesiz	distinct	dizi.scala:364	üye
+def	yinelemesiz	distinct	dizi.scala:75	üye
+def	yinelemesiz	distinct	dizik.scala:218	üye
+def	yinelemesiz	distinct	dizik.scala:62	üye
+def	yinelemesiz	distinct	dizin.scala:69	üye
+def	yinelemesiz	distinct	kuyruk.scala:425	üye
+def	yinelemesiz	distinct	miskindizin.scala:97	üye
+def	yinelemesiz	distinct	yazi.scala:65	üye
+def	yinelemesiz	distinct	yineleyici.scala:77	üye
+def	yinelemesiz	distinct	yoney.scala:53	üye
+def	yinelemesizİşlevle	distinctBy	dizi.scala:223	üye
+def	yinelemesizİşlevle	distinctBy	dizi.scala:365	üye
+def	yinelemesizİşlevle	distinctBy	dizi.scala:76	üye
+def	yinelemesizİşlevle	distinctBy	dizik.scala:219	üye
+def	yinelemesizİşlevle	distinctBy	dizik.scala:63	üye
+def	yinelemesizİşlevle	distinctBy	dizin.scala:70	üye
+def	yinelemesizİşlevle	distinctBy	kuyruk.scala:426	üye
+def	yinelemesizİşlevle	distinctBy	miskindizin.scala:98	üye
+def	yinelemesizİşlevle	distinctBy	yazi.scala:66	üye
+def	yinelemesizİşlevle	distinctBy	yineleyici.scala:78	üye
+def	yinelemesizİşlevle	distinctBy	yoney.scala:54	üye
+def	yineleyici	iterator	dizi.scala:101	üye
+def	yineleyici	iterator	kume.scala:60	üye
+def	yineleİlktenSona	repeatFor	trInit.scala:282
+def	yineleİlktenSonra	repeatFor	data.scala:147
+def	yineleİçin	repeatFor	data.scala:146
+def	yineleİçin	repeatFor	trInit.scala:278
+val	yok	null	data.scala:103
+def	yokMu	isEmpty	belki.scala:51	üye
+def	yokMu	isEmpty	data.scala:93	üye
+def	yolAyırıcı	pathSeparator	dosya.scala:42	üye
+def	yolAyırıcıHarf	pathSeparatorChar	dosya.scala:43	üye
+def	yoldan	Picture.fromPath	resim.scala:422
+def	yorumla	interpret	trInit.scala:463
+def	yukarıdakiÇiniyeTaşı	moveToTileAbove	cinidunyasi.scala:45	üye
+def	yukarıdaÇiniVarMı	hasTileAbove	cinidunyasi.scala:39	üye
+val	yumuşakGeçiş	KEasing	resim.scala:479	üye
+def	yuvarla	round	data.scala:177
+def	yöney	currentVector	kumanda.scala:29	üye
+def	yöneye	toVector	dizi.scala:105	üye
+def	yöneye	toVector	dizi.scala:249	üye
+def	yöneye	toVector	dizi.scala:391	üye
+def	yöneye	toVector	dizi.scala:495	üye
+def	yöneye	toVector	dizi.scala:522	üye
+def	yöneye	toVector	dizik.scala:251	üye
+def	yöneye	toVector	dizik.scala:95	üye
+def	yöneye	toVector	dizin.scala:96	üye
+def	yöneye	toVector	eslem.scala:252	üye
+def	yöneye	toVector	eslem.scala:96	üye
+def	yöneye	toVector	kume.scala:64	üye
+def	yöneye	toVector	kuyruk.scala:173	üye
+def	yöneye	toVector	kuyruk.scala:306	üye
+def	yöneye	toVector	miskindizin.scala:148	üye
+def	yöneye	toVector	yazi.scala:138	üye
+def	yöneye	toVector	yineleyici.scala:134	üye
+def	yöneye	toVector	yoney.scala:80	üye
+def	yıl	hepsi	buan.scala:58	üye
+def	zaman	hepsi	buan.scala:56	üye
+def	zamanTut	timeit	data.scala:325
+val	zeytin	olive	renk.scala:74	üye
+def	zıpla	saveStyle	trInit.scala:155
+val	Çalgı.AkustikBas	Instrument.ABASS	Instrument.scala:149
+val	Çalgı.AkustikBas	Instrument.ACOUSTIC_BASS	Instrument.scala:147
+val	Çalgı.AkustikBas	Instrument.ACOUSTIC_BASS	muzik.scala:29
+val	Çalgı.AkustikKuyruklu	Instrument.ACOUSTIC_GRAND	Instrument.scala:23
+val	Çalgı.AkustikKuyruklu	Instrument.ACOUSTIC_GRAND	muzik.scala:23
+val	Çalgı.Alkış	Instrument.APPLAUSE	Instrument.scala:517
+val	Çalgı.Alkış	Instrument.APPLAUSE	muzik.scala:33
+val	Çalgı.ElektroKuyruklu	Instrument.ELECTRIC_GRAND	Instrument.scala:27
+val	Çalgı.ElektroKuyruklu	Instrument.ELECTRIC_GRAND	muzik.scala:25
+val	Çalgı.ElektroPiyano	Instrument.ELECTRIC_PIANO	Instrument.scala:35
+val	Çalgı.ElektroPiyano	Instrument.ELPIANO	Instrument.scala:37
+val	Çalgı.ElektroPiyano	Instrument.EPIANO	Instrument.scala:33
+val	Çalgı.ElektroPiyano	Instrument.EPIANO	muzik.scala:27
+val	Çalgı.ElektroPiyano	Instrument.RHODES	Instrument.scala:39
+val	Çalgı.Helikopter	Instrument.HELICOPTER	Instrument.scala:515
+val	Çalgı.Helikopter	Instrument.HELICOPTER	muzik.scala:32
+val	Çalgı.HonkyTonkPiyano	Instrument.HONKYTONK	Instrument.scala:29
+val	Çalgı.HonkyTonkPiyano	Instrument.HONKYTONK	muzik.scala:26
+val	Çalgı.HonkyTonkPiyano	Instrument.HONKYTONK_PIANO	Instrument.scala:31
+val	Çalgı.Kuş	Instrument.BIRD	Instrument.scala:509
+val	Çalgı.Kuş	Instrument.BIRD	muzik.scala:30
+val	Çalgı.ParlakAkustik	Instrument.BRIGHT_ACOUSTIC	Instrument.scala:25
+val	Çalgı.ParlakAkustik	Instrument.BRIGHT_ACOUSTIC	muzik.scala:24
+val	Çalgı.Piyano	Instrument.PIANO	Instrument.scala:21
+val	Çalgı.Piyano	Instrument.PIANO	muzik.scala:22
+val	Çalgı.Tabanca	Instrument.GUNSHOT	Instrument.scala:519
+val	Çalgı.Tabanca	Instrument.GUNSHOT	muzik.scala:34
+val	Çalgı.Telefon	Instrument.PHONE	Instrument.scala:513
+val	Çalgı.Telefon	Instrument.TELEPHONE	Instrument.scala:511
+val	Çalgı.Telefon	Instrument.TELEPHONE	muzik.scala:31
+type	ÇalışmaSırasıKuralDışı	RuntimeException	trInit.scala:90
+type	Çerçeve	Border	arayuz.scala:33	üye
+type	ÇiniXY	TileXY	cinidunyasi.scala:27
+type	ÇiniXY	TileXY	cinidunyasi.scala:32
+val	ÇiniXY	TileXY	cinidunyasi.scala:28
+val	ÇiniXY	TileXY	cinidunyasi.scala:33
+val	Çizim	Costume	cizim.scala:28
+val	Çizim.araba	"/media/costumes/car.png"	cizim.scala:43	takma
+val	Çizim.araba	Costume.car	TurtleWorldAPI.scala:139	takma
+val	Çizim.araba	Costume.car	cizim.scala:43	takma
+val	Çizim.araba1	"/media/car-ride/car1.png"	cizim.scala:44	takma
+val	Çizim.araba2	"/media/car-ride/car2.png"	cizim.scala:45	takma
+val	Çizim.baklava	"/images/field.png"	cizim.scala:35	takma
+val	Çizim.bayrak1	"/images/generic-flag.png"	cizim.scala:36	takma
+val	Çizim.daire	"/images/kindmethod.png"	cizim.scala:37	takma
+val	Çizim.demiryolu	"/media/backgrounds/train-tracks3.gif"	cizim.scala:31	takma
+val	Çizim.demiryolu	Background.trainTrack	TurtleWorldAPI.scala:147	takma
+val	Çizim.demiryolu	Background.trainTrack	cizim.scala:31	takma
+val	Çizim.elSallayanKadın	"/media/costumes/womanwaving.png"	cizim.scala:48	takma
+val	Çizim.elSallayanKadın	Costume.womanWaving	cizim.scala:48	takma
+val	Çizim.kadınElSallarken	"/media/costumes/womanwaving.png"	cizim.scala:42	takma
+val	Çizim.kadınElSallarken	Costume.womanWaving	TurtleWorldAPI.scala:143	takma
+val	Çizim.kadınElSallarken	Costume.womanWaving	cizim.scala:42	takma
+val	Çizim.kalem	"/media/costumes/pencil.png"	cizim.scala:41	takma
+val	Çizim.kalem	Costume.pencil	TurtleWorldAPI.scala:140	takma
+val	Çizim.kalem	Costume.pencil	cizim.scala:41	takma
+val	Çizim.kare	"/images/kindvar.png"	cizim.scala:34	takma
+val	Çizim.scala	"/images/scala16x16.png"	cizim.scala:33	takma
+val	Çizim.top1	"/media/collidium/ball1.png"	cizim.scala:51	takma
+val	Çizim.top2	"/media/collidium/ball2.png"	cizim.scala:52	takma
+val	Çizim.top3	"/media/collidium/ball3.png"	cizim.scala:53	takma
+val	Çizim.top4	"/media/collidium/ball4.png"	cizim.scala:54	takma
+val	Çizim.topKanatlı1	"/media/flappy-ball/ballwing1.png"	cizim.scala:56	takma
+val	Çizim.topKanatlı2	"/media/flappy-ball/ballwing2.png"	cizim.scala:57	takma
+val	Çizim.tuğla	"/media/collidium/bwall.png"	cizim.scala:50	takma
+val	Çizim.yarasa1	"/media/costumes/bat1-a.png"	cizim.scala:46	takma
+val	Çizim.yarasa1	Costume.bat1	cizim.scala:46	takma
+val	Çizim.yarasa1a	"/media/costumes/bat1-a.png"	cizim.scala:39	takma
+val	Çizim.yarasa1a	Costume.bat1	TurtleWorldAPI.scala:141	takma
+val	Çizim.yarasa1a	Costume.bat1	cizim.scala:39	takma
+val	Çizim.yarasa1b	"/media/costumes/bat1-b.png"	cizim.scala:40	takma
+val	Çizim.yarasa1b	Costume.bat2	TurtleWorldAPI.scala:142	takma
+val	Çizim.yarasa1b	Costume.bat2	cizim.scala:40	takma
+val	Çizim.yarasa2	"/media/costumes/bat1-b.png"	cizim.scala:47	takma
+val	Çizim.yarasa2	Costume.bat2	cizim.scala:47	takma
+val	Çizim.yıldız	"/images/star.png"	cizim.scala:38	takma
+type	ÖncelikKuyruğu	PriorityQueue	kuyruk.scala:112	üye
+val	ÖncelikKuyruğu	PriorityQueue	kuyruk.scala:121	üye
+type	ÖncelikSırası	PriorityQueue	kuyruk.scala:104	üye
+type	ÖnyüklemeYöntemHatası	BootstrapMethodError	turler.scala:63
+type	Üçgen	Triangle2D	data.scala:47	üye
+type	Üçgen	Triangle2D	package.scala:63	üye
+def	çarp	product	dizi.scala:221	üye
+def	çarp	product	dizi.scala:363	üye
+def	çarp	product	dizi.scala:74	üye
+def	çarp	product	dizik.scala:217	üye
+def	çarp	product	dizik.scala:61	üye
+def	çarp	product	dizin.scala:68	üye
+def	çarp	product	eslem.scala:230	üye
+def	çarp	product	eslem.scala:73	üye
+def	çarp	product	kume.scala:44	üye
+def	çarp	product	kuyruk.scala:154	üye
+def	çarp	product	kuyruk.scala:287	üye
+def	çarp	product	miskindizin.scala:96	üye
+def	çarp	product	yazi.scala:64	üye
+def	çarp	product	yineleyici.scala:100	üye
+def	çarp	product	yoney.scala:52	üye
+def	çarptıMı	intersects	resim.scala:277	üye
+def	çarpışma	find	resim.scala:281	üye
+def	çarpışmalar	filter	resim.scala:279	üye
+def	çarpıştı	intersects	resim.scala:278	üye
+def	çek	pop	kuyruk.scala:47	üye
+def	çekBelki	removeHeadOption	kuyruk.scala:63	üye
+def	çekDoğruKaldıkça	popWhile	kuyruk.scala:62	üye
+def	çekHepsini	popAll	kuyruk.scala:59	üye
+val	çelikMavisi	steelBlue	renk.scala:74	üye
+def	çerçeveyiKur	setBorder	arayuz.scala:107	üye
+def	çerçeveyiKur	setBorder	arayuz.scala:121	üye
+def	çerçeveyiKur	setBorder	arayuz.scala:136	üye
+def	çerçeveyiKur	setBorder	arayuz.scala:151	üye
+def	çerçeveyiKur	setBorder	arayuz.scala:163	üye
+def	çerçeveyiKur	setBorder	arayuz.scala:49	üye
+def	çerçeveyiKur	setBorder	arayuz.scala:62	üye
+def	çerçeveyiKur	setBorder	arayuz.scala:77	üye
+def	çerçeveyiKur	setBorder	arayuz.scala:95	üye
+def	çevir	awtColorToDoodleColor	renk.scala:98	üye
+def	çevir	spin	renk.scala:107
+def	çevir	spin	resim.scala:74
+def	çevir	towards	trInit.scala:220
+def	çevirOranla	awtColorToDoodleColor	renk.scala:99	üye
+def	çevre	perimeter	resim.scala:287
+def	çevreKalemRenginiKur	setPerimeterPenColor	kumanda.scala:40	üye
+def	çevreRenginiKur	setPerimeterColor	kumanda.scala:39	üye
+def	çinidenKojoya	tileToKojo	cinidunyasi.scala:36	üye
+def	çiz	draw	cinidunyasi.scala:51
+def	çiz	draw	kumanda.scala:27
+def	çiz	draw	resim.scala:237
+def	çiz	draw	resim.scala:95
+def	çiz	draw	resim.scala:96
+def	çizBaştan	repaint	resim.scala:235	üye
+def	çizMerkezde	drawCentered	resim.scala:97
+def	çizMerkezdeYazı	drawCenteredMessage	resim.scala:99
+def	çizSahne	drawStage	resim.scala:98
+def	çizVeSakla	drawAndHide	trInit.scala:587
+def	çizgi	line	tuvalcizim.scala:41	üye
+def	çizgiKenar	createLineBorder	arayuz.scala:182	üye
+def	çizili	isDrawn	resim.scala:238	üye
+def	çizimiKaydet	exportImage	trInit.scala:424
+def	çizimiKaydet	exportImage	trInit.scala:425
+def	çizimiKaydetBoy	exportImageH	trInit.scala:426
+def	çizimiKaydetEn	exportImageW	trInit.scala:427
+def	çizimiKontrolEt	checkDraw	resim.scala:333	üye
+def	çizimiPulBoyundaKaydet	exportThumbnail	trInit.scala:428
+def	çizimiSil	clearStepDrawing	data.scala:99
+def	çizimiSil	clearStepDrawing	trInit.scala:240
+val	çokHızlı	SuperFast	package.scala:108	üye
+val	çokHızlı	superFast	data.scala:109
+val	çık	escape	klavye.scala:40	üye
+def	çıkar	remove	dizik.scala:193	üye
+def	çıkar	remove	dizik.scala:374	üye
+def	çıkar	remove	dizim.scala:35	üye
+def	çıkar	remove	eslem.scala:162	üye
+def	çıkar	remove	kuyruk.scala:416	üye
+def	çıkar	remove	kuyruk.scala:95	üye
+def	çıkarHepsini	subtractAll	dizik.scala:376	üye
+def	çıkarHepsini	subtractAll	kuyruk.scala:417	üye
+def	çıkarHepsini	subtractAll	kuyruk.scala:97	üye
+def	çıkarSondan	removeLast	kuyruk.scala:452	üye
+def	çıkarSondan	removeLast	kuyruk.scala:65	üye
+def	çıkarSondanBelki	removeLastOption	kuyruk.scala:453	üye
+def	çıkarSondanBelki	removeLastOption	kuyruk.scala:66	üye
+def	çıkarSondanDoğruKaldıkça	removeLastWhile	kuyruk.scala:450	üye
+def	çıkarSondanDoğruKaldıkça	removeLastWhile	kuyruk.scala:69	üye
+def	çıkarÖgeyi	subtractOne	dizik.scala:375	üye
+def	çıkarİlkUyanı	removeFirst	kuyruk.scala:449	üye
+def	çıkarİlkUyanı	removeFirst	kuyruk.scala:70	üye
+def	çıkarılmış	excl	kume.scala:140	üye
+def	çıkarılmış	removed	eslem.scala:318	üye
+def	çıktıArtalanınıKur	setOutputBackground	trInit.scala:480
+def	çıktıYazıRenginiKur	setOutputTextColor	trInit.scala:481
+def	çıktıYazıYüzüBoyunuKur	setOutputTextFontSize	trInit.scala:482
+def	çıktıyıSil	clearOutput	data.scala:100
+def	çıktıyıSil	clearOutput	trInit.scala:241
+def	öbekle	groupBy	dizi.scala:115	üye
+def	öbekle	groupBy	dizi.scala:259	üye
+def	öbekle	groupBy	dizi.scala:401	üye
+def	öbekle	groupBy	dizi.scala:502	üye
+def	öbekle	groupBy	dizi.scala:529	üye
+def	öbekle	groupBy	dizik.scala:105	üye
+def	öbekle	groupBy	dizik.scala:261	üye
+def	öbekle	groupBy	dizin.scala:106	üye
+def	öbekle	groupBy	eslem.scala:262	üye
+def	öbekle	groupBy	kume.scala:74	üye
+def	öbekle	groupBy	kuyruk.scala:183	üye
+def	öbekle	groupBy	kuyruk.scala:316	üye
+def	öbekle	groupBy	miskindizin.scala:171	üye
+def	öbekle	groupBy	yazi.scala:146	üye
+def	öbekle	groupBy	yoney.scala:90	üye
+def	öbekleEsnek	collection.mutable.Map	dizin.scala:107
+def	öbekleİşle	groupMap	dizi.scala:145	üye
+def	öbekleİşle	groupMap	dizi.scala:289	üye
+def	öbekleİşle	groupMap	dizi.scala:431	üye
+def	öbekleİşle	groupMap	dizik.scala:134	üye
+def	öbekleİşle	groupMap	dizik.scala:291	üye
+def	öbekleİşle	groupMap	dizin.scala:137	üye
+def	öbekleİşle	groupMap	eslem.scala:128	üye
+def	öbekleİşle	groupMap	eslem.scala:288	üye
+def	öbekleİşle	groupMap	kume.scala:106	üye
+def	öbekleİşle	groupMap	kuyruk.scala:208	üye
+def	öbekleİşle	groupMap	kuyruk.scala:348	üye
+def	öbekleİşle	groupMap	miskindizin.scala:172	üye
+def	öbekleİşle	groupMap	yoney.scala:120	üye
+def	öbekleİşleİndirge	groupMapReduce	dizi.scala:146	üye
+def	öbekleİşleİndirge	groupMapReduce	dizi.scala:290	üye
+def	öbekleİşleİndirge	groupMapReduce	dizi.scala:432	üye
+def	öbekleİşleİndirge	groupMapReduce	dizik.scala:292	üye
+def	öbekleİşleİndirge	groupMapReduce	dizin.scala:138	üye
+def	öbekleİşleİndirge	groupMapReduce	eslem.scala:129	üye
+def	öbekleİşleİndirge	groupMapReduce	eslem.scala:289	üye
+def	öbekleİşleİndirge	groupMapReduce	kume.scala:107	üye
+def	öbekleİşleİndirge	groupMapReduce	kuyruk.scala:210	üye
+def	öbekleİşleİndirge	groupMapReduce	kuyruk.scala:349	üye
+def	öbekleİşleİndirge	groupMapReduce	miskindizin.scala:173	üye
+def	öbekleİşleİndirge	groupMapReduce	yoney.scala:121	üye
+def	öbekli	grouped	dizi.scala:142	üye
+def	öbekli	grouped	dizi.scala:286	üye
+def	öbekli	grouped	dizi.scala:428	üye
+def	öbekli	grouped	dizik.scala:131	üye
+def	öbekli	grouped	dizik.scala:288	üye
+def	öbekli	grouped	dizin.scala:134	üye
+def	öbekli	grouped	eslem.scala:125	üye
+def	öbekli	grouped	eslem.scala:285	üye
+def	öbekli	grouped	kume.scala:89	üye
+def	öbekli	grouped	kuyruk.scala:206	üye
+def	öbekli	grouped	kuyruk.scala:345	üye
+def	öbekli	grouped	miskindizin.scala:159	üye
+def	öbekli	grouped	yazi.scala:160	üye
+def	öbekli	grouped	yineleyici.scala:74	üye
+def	öbekli	grouped	yoney.scala:117	üye
+def	ölçek	scale	sayi.scala:73
+def	ölçeğiKur	setScale	sayi.scala:74	üye
+def	önalanıKur	setForeground	arayuz.scala:108	üye
+def	önalanıKur	setForeground	arayuz.scala:120	üye
+def	önalanıKur	setForeground	arayuz.scala:135	üye
+def	önalanıKur	setForeground	arayuz.scala:150	üye
+def	önalanıKur	setForeground	arayuz.scala:162	üye
+def	önalanıKur	setForeground	arayuz.scala:48	üye
+def	önalanıKur	setForeground	arayuz.scala:61	üye
+def	önalanıKur	setForeground	arayuz.scala:76	üye
+def	önalanıKur	setForeground	arayuz.scala:94	üye
+val	önceki	PREVIOUS	arayuz.scala:173	üye
+val	önder	LEADING	arayuz.scala:173	üye
+def	öneAl	moveToFront	resim.scala:328	üye
+def	önler	inits	dizi.scala:151	üye
+def	önler	inits	dizi.scala:295	üye
+def	önler	inits	dizi.scala:437	üye
+def	önler	inits	dizik.scala:138	üye
+def	önler	inits	dizik.scala:297	üye
+def	önler	inits	dizin.scala:143	üye
+def	önler	inits	eslem.scala:132	üye
+def	önler	inits	eslem.scala:292	üye
+def	önler	inits	kume.scala:110	üye
+def	önler	inits	kuyruk.scala:213	üye
+def	önler	inits	kuyruk.scala:354	üye
+def	önler	inits	miskindizin.scala:165	üye
+def	önler	inits	yazi.scala:164	üye
+def	önler	inits	yoney.scala:126	üye
+def	önü	init	dizi.scala:204	üye
+def	önü	init	dizi.scala:347	üye
+def	önü	init	dizi.scala:57	üye
+def	önü	init	dizik.scala:197	üye
+def	önü	init	dizik.scala:40	üye
+def	önü	init	dizin.scala:51	üye
+def	önü	init	eslem.scala:207	üye
+def	önü	init	eslem.scala:50	üye
+def	önü	init	kume.scala:94	üye
+def	önü	init	kuyruk.scala:140	üye
+def	önü	init	kuyruk.scala:273	üye
+def	önü	init	miskindizin.scala:62	üye
+def	önü	init	yazi.scala:45	üye
+def	önü	init	yoney.scala:35	üye
+def	önüneEkle	cons	miskindizin.scala:133	üye
+def	önüneEkle	prepended	dizi.scala:171	üye
+def	önüneEkle	prepended	dizi.scala:315	üye
+def	önüneEkle	prepended	dizi.scala:457	üye
+def	önüneEkle	prepended	dizik.scala:148	üye
+def	önüneEkle	prepended	dizik.scala:317	üye
+def	önüneEkle	prepended	dizin.scala:163	üye
+def	önüneEkle	prepended	kuyruk.scala:374	üye
+def	önüneEkle	prepended	yazi.scala:175	üye
+def	önüneEkle	prepended	yoney.scala:146	üye
+def	önüneEkleHepsini	prependedAll	dizi.scala:173	üye
+def	önüneEkleHepsini	prependedAll	dizi.scala:317	üye
+def	önüneEkleHepsini	prependedAll	dizi.scala:459	üye
+def	önüneEkleHepsini	prependedAll	dizik.scala:150	üye
+def	önüneEkleHepsini	prependedAll	dizik.scala:319	üye
+def	önüneEkleHepsini	prependedAll	dizin.scala:165	üye
+def	önüneEkleHepsini	prependedAll	kuyruk.scala:376	üye
+def	önüneEkleHepsini	prependedAll	miskindizin.scala:135	üye
+def	önüneEkleHepsini	prependedAll	yazi.scala:177	üye
+def	önüneEkleHepsini	prependedAll	yoney.scala:148	üye
+def	örgü	weave	resim.scala:87
+def	ötele	trans	resim.scala:248
+def	ötele	trans	resim.scala:249
+def	ötele	trans	resim.scala:250
+def	ötele	trans	resim.scala:58
+def	ötele	trans	resim.scala:59
+def	ötele	trans	resim.scala:60
+def	öteleme	trans	resim.scala:62
+def	öteleme	trans	trInit.scala:572
+def	üste	above	resim.scala:335	üye
+def	üzerinde	over	resim.scala:337	üye
+def	üçgenDöşeme	triangulate	trInit.scala:317
+type	İkiUçluKuyruk	ArrayDeque	kuyruk.scala:114	üye
+type	İkil	Boolean	data.scala:48
+type	İkil	Boolean	package.scala:66
+type	İkilDiziğiDizisi	ofBoolean	turler.scala:98	üye
+def	İkildenİkile	Boolean2boolean	turler.scala:78
+type	İkisindenBiri	Either	ikisindenbiri.scala:31
+type	İmge	Image	data.scala:75
+type	İmge	Image	data.scala:90
+type	İmge	Image	package.scala:111
+type	İmgeİşlemi	ImageOp	package.scala:116
+type	İmgeİşlemi	ImageOp	turler.scala:47
+def	İngilizce	getTime	buan.scala:42	üye
+type	İriKesir	BigDecimal	data.scala:57
+type	İriKesir	BigDecimal	package.scala:78
+type	İriKesir	BigDecimal	sayi.scala:34
+val	İriKesir	BigDecimal	sayi.scala:37
+type	İriSayı	BigInt	data.scala:54
+type	İriSayı	BigInt	package.scala:75
+type	İriSayı	BigInt	sayi.scala:28
+val	İriSayı	BigInt	sayi.scala:36
+type	İşParçacığıÖlümü	ThreadDeath	turler.scala:62
+type	İşletimBağlamı	ExecutionContext	gelecek.scala:27	üye
+type	İşlev1	Function1	data.scala:78
+type	İşlev1	Function1	turler.scala:50
+type	İşlev2	Function2	data.scala:79
+type	İşlev2	Function2	turler.scala:51
+type	İşlev3	Function3	data.scala:80
+type	İşlev3	Function3	turler.scala:52
+def	ızgarayıGizle	gridOff	trInit.scala:415
+def	ızgarayıGöster	gridOn	trInit.scala:414
+def	ışıklar	lights	resim.scala:83
+def	ışınlarıAç	beamsOn	trInit.scala:202
+def	ışınlarıKapat	beamsOff	trInit.scala:203
+def	şekil	drawShape	tuvalcizim.scala:35	üye
