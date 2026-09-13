@@ -772,6 +772,36 @@ import net.kogics.kojo.staging
     ötele(1, 2) should not be götür(2, 1)
   }
 
+  /**
+   * İkiUçluKuyruk yöntemlerinin Yığın ve Kuyruğa BULAŞMASI -- çivili.
+   *
+   * Stack de Queue de ArrayDeque'ten türüyor ve İkiUçluKuyruk bir tür takma
+   * adı. Sonuç: deque'e ÖZGÜ adlar Yığın ve Kuyruk değerlerinde de çalışıyor,
+   * LIFO/FIFO disiplinini bozacak biçimde. Bilinen bedel, kaza değil
+   * (bkz. kuyruk.scala'daki not).
+   *
+   * BU SAV DAVRANIŞI ONAYLAMIYOR, ÇİVİLİYOR: yarın biri sarmalayıcıya çevirir
+   * ya da örtük sınıfı daraltırsa burası kırmızı yansın, karar bilinçli olsun.
+   */
+  test("sızıntı: deque yöntemleri Yığın ve Kuyruğa da bulaşıyor (çivili)") {
+    val ad = classOf[collection.mutable.ArrayDeque[_]]
+    ad.isAssignableFrom(classOf[collection.mutable.Stack[_]]) should be(doğru)
+    ad.isAssignableFrom(classOf[collection.mutable.Queue[_]]) should be(doğru)
+
+    val y = Yığın.boş[Sayı]
+    y.koy(1); y.koy(2)
+    y.tepe should be(2)                 // push, append değil
+    y.başaKoy(0)
+    y.dizi should be(Dizi(0, 2, 1))
+    y.sondanAl() should be(1)           // yığının DİBİNDEN aldı
+
+    val k = Kuyruk.boş[Sayı]
+    k.koy(1); k.koy(2)
+    k.başaKoy(0)
+    k.başı should be(0)                 // kuyruğa KAYNAK yaptı
+    k.sondanAl() should be(2)           // kuyruğun SONUNDAN aldı
+  }
+
   test("İkiUçluKuyruk: iki ucundan da koyulup alınıyor") {
     val d = İkiUçluKuyruk.boş[Sayı]
     d.koy(2); d.koy(3)           // sona

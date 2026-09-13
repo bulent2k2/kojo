@@ -457,14 +457,43 @@ trait QueueMethodsInTurkish {
   /**
    * İki uçlu kuyruk (C++'daki `deque`, Scala'da `ArrayDeque`).
    *
-   * Kuyruk yalnız baştan alır, Yığın yalnız tepeden; bu ikisini birden yapar:
-   * iki ucundan da koyup iki ucundan da alabilirsin. Sırayı iki yönde gezmek
+   * İki ucundan da koyup iki ucundan da alabilirsin. Sırayı iki yönde gezmek
    * gereken işlerde (geri al/yinele, pencere kaydırma, iki uçlu arama)
    * kuyruk ile yığını ayrı ayrı tutmaktan kolay.
    *
    * ADLAR: `koy`/`ekle` sona koyar (Kuyruk ile aynı), `başaKoy` başa. Alma iki
    * uçlu olduğu için ortak `al` YOK -- `baştanAl`/`sondanAl` hangi uçtan
    * alındığını söylüyor.
+   *
+   * (Burada önce "Kuyruk yalnız baştan alır, Yığın yalnız tepeden; bu ikisini
+   * birden yapar" yazıyordu. Aşağıdaki nota bakılırsa "yalnız" doğru değil.)
+   *
+   * ============ DİKKAT: BU YÖNTEMLER YIĞIN VE KUYRUĞA DA BULAŞIYOR ==========
+   *
+   * Scala 2.13'te `mutable.Stack` DE `mutable.Queue` DE `ArrayDeque`ten
+   * türüyor. `İkiUçluKuyruk` bir tür TAKMA ADI olduğu için (sarmalayıcı sınıf
+   * değil) aşağıdaki yöntemler `Yığın` ve `Kuyruk` değerlerinde de
+   * kullanılabiliyor -- ve deque anlamıyla çalışıyorlar. Ölçüldü:
+   *
+   *   Yığın:  koy(1); koy(2)  -> tepe = 2          (doğru, push)
+   *           başaKoy(0)      -> Dizi(0, 2, 1)
+   *           sondanAl()      -> 1                 YIĞININ DİBİNDEN aldı
+   *
+   *   Kuyruk: koy(1); koy(2); başaKoy(0) -> başı = 0   KUYRUĞA KAYNAK yaptı
+   *           sondanAl()      -> 2                 kuyruğun SONUNDAN aldı
+   *
+   * Yani `yığın.sondanAl()` LIFO'yu, `kuyruk.başaKoy(x)` FIFO'yu bozuyor ve
+   * derleyici ses çıkarmıyor. Bu bir KAZA DEĞİL, bilinen bir bedel: tür takma
+   * adı olmasaydı `İkiUçluKuyruk` bütün Diz/Yinelenebilir yöntemlerini
+   * (ele, işle, bul...) kaybederdi. Sarmalayıcıya çevirmek sızıntıyı keser
+   * ama o bedeli getirir.
+   *
+   * ORTAK ADLARDA sorun yok: `koy`, `başı`, `boyu` gibi adlarda daha ÖZEL olan
+   * örtük sınıf kazanıyor (Stack <: ArrayDeque), yani `yığın.koy` push olarak
+   * çalışıyor. Sızan şey yalnız İkiUçluKuyruk'a ÖZGÜ adlar.
+   *
+   * Bugünkü davranış `TurkishAPITest`te çivili -- yarın sessizce değişirse
+   * kırmızı yanar.
    */
   object İkiUçluKuyruk {
     def apply[T](ögeler: T*): İkiUçluKuyruk[T] = ArrayDeque.from(ögeler)
