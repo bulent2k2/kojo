@@ -27,7 +27,7 @@ type	Belki	Option	ikisindenbiri.scala:48
 type	Belki	Option	kume.scala:27
 type	Belki	Option	kuyruk.scala:124
 type	Belki	Option	kuyruk.scala:252
-type	Belki	Option	kuyruk.scala:477
+type	Belki	Option	kuyruk.scala:506
 type	Belki	Option	kuyruk.scala:55
 type	Belki	Option	miskindizin.scala:32
 type	Belki	Option	miskindizin.scala:58
@@ -58,7 +58,7 @@ type	Bölümselİşlev	PartialFunction	data.scala:81
 type	Canlandırma	Animation	trInit.scala:430
 type	Col	Array	dizik.scala:36
 type	Col	ArrayBuffer	dizik.scala:191
-type	Col	ArrayDeque	kuyruk.scala:476	üye
+type	Col	ArrayDeque	kuyruk.scala:505	üye
 type	Col	IndexedSeq	dizi.scala:341
 type	Col	Iterable	dizi.scala:482
 type	Col	Iterable	dizi.scala:507
@@ -519,7 +519,7 @@ def	batı	setHeading	trInit.scala:169
 def	başaDön	closePath	geo.scala:43	üye
 def	başaEkle	prepend	dizik.scala:367	üye
 def	başaEkleHepsini	prependAll	dizik.scala:369	üye
-def	başaKoy	prepend	kuyruk.scala:483	üye
+def	başaKoy	prepend	kuyruk.scala:512	üye
 def	başarılı	successful	gelecek.scala:36	üye
 def	başarısız	failed	gelecek.scala:37	üye
 def	başla	beginShape	geo.scala:49
@@ -527,8 +527,8 @@ def	başlangıçNoktasıAltSolKöşeOlsun	originBottomLeft	trInit.scala:620
 def	başlangıçNoktasıÜstSolKöşeOlsun	originTopLeft	trInit.scala:619
 def	baştanAl	dequeue	kuyruk.scala:133	üye
 def	baştanAl	dequeue	kuyruk.scala:266	üye
-def	baştanAl	removeHead	kuyruk.scala:488	üye
-def	baştanAlBelki	removeHeadOption	kuyruk.scala:490	üye
+def	baştanAl	removeHead	kuyruk.scala:517	üye
+def	baştanAlBelki	removeHeadOption	kuyruk.scala:519	üye
 def	baştanAlHepsini	dequeueAll	kuyruk.scala:267	üye
 def	baştanAlHepsini	toList	kuyruk.scala:134	üye
 def	baştanKırp	dropInPlace	dizik.scala:377	üye
@@ -549,7 +549,7 @@ def	başı	head	eslem.scala:48	üye
 def	başı	head	kume.scala:30	üye
 def	başı	head	kuyruk.scala:138	üye
 def	başı	head	kuyruk.scala:271	üye
-def	başı	head	kuyruk.scala:494	üye
+def	başı	head	kuyruk.scala:523	üye
 def	başı	head	miskindizin.scala:60	üye
 def	başı	head	yazi.scala:43	üye
 def	başı	head	yineleyici.scala:149	üye
@@ -565,7 +565,7 @@ def	başıBelki	headOption	eslem.scala:276	üye
 def	başıBelki	headOption	kume.scala:96	üye
 def	başıBelki	headOption	kuyruk.scala:198	üye
 def	başıBelki	headOption	kuyruk.scala:326	üye
-def	başıBelki	headOption	kuyruk.scala:496	üye
+def	başıBelki	headOption	kuyruk.scala:525	üye
 def	başıBelki	headOption	miskindizin.scala:64	üye
 def	başıBelki	headOption	yazi.scala:152	üye
 def	başıBelki	headOption	yoney.scala:98	üye
@@ -628,7 +628,7 @@ def	boyu	length	dizik.scala:42	üye
 def	boyu	length	dizin.scala:53	üye
 def	boyu	length	kuyruk.scala:142	üye
 def	boyu	length	kuyruk.scala:275	üye
-def	boyu	length	kuyruk.scala:500	üye
+def	boyu	length	kuyruk.scala:529	üye
 def	boyu	length	miskindizin.scala:66	üye
 def	boyu	length	yazi.scala:47	üye
 def	boyu	length	yineleyici.scala:120	üye
@@ -654,7 +654,7 @@ def	boş	empty	kume.scala:82	üye
 def	boş	empty	kuyruk.scala:117	üye
 def	boş	empty	kuyruk.scala:249	üye
 def	boş	empty	kuyruk.scala:27	üye
-def	boş	empty	kuyruk.scala:471	üye
+def	boş	empty	kuyruk.scala:500	üye
 def	boş	empty	miskindizin.scala:38	üye
 def	boş	empty	yoney.scala:26	üye
 def	boş	ofDim	dizik.scala:26	üye
@@ -677,7 +677,7 @@ def	boşMu	isEmpty	eslem.scala:53	üye
 def	boşMu	isEmpty	kume.scala:33	üye
 def	boşMu	isEmpty	kuyruk.scala:143	üye
 def	boşMu	isEmpty	kuyruk.scala:276	üye
-def	boşMu	isEmpty	kuyruk.scala:502	üye
+def	boşMu	isEmpty	kuyruk.scala:531	üye
 def	boşMu	isEmpty	miskindizin.scala:67	üye
 def	boşMu	isEmpty	yazi.scala:48	üye
 def	boşMu	isEmpty	yineleyici.scala:121	üye
@@ -908,7 +908,7 @@ def	dilimSırasıSondan	lastIndexOfSlice	yoney.scala:106	üye
 def	dilimYerinde	sliceInPlace	dizik.scala:353	üye
 def	dilimYerinde	sliceInPlace	kuyruk.scala:435	üye
 def	dilimYerinde	sliceInPlace	kuyruk.scala:85	üye
-def	dizi	toList	kuyruk.scala:506	üye
+def	dizi	toList	kuyruk.scala:535	üye
 def	dizi	toSeq	dizim.scala:37	üye
 def	dizi	toSeq	eslem.scala:196	üye
 def	dizi	toSeq	eslem.scala:38	üye
@@ -989,7 +989,7 @@ def	doldur	fill	dizim.scala:60	üye
 def	doldur	fill	miskindizin.scala:40	üye
 def	doldur	fill	yoney.scala:27	üye
 def	doldur	from	kuyruk.scala:37	üye
-def	doldur	from	kuyruk.scala:472	üye
+def	doldur	from	kuyruk.scala:501	üye
 def	doldur	tabulate	data.scala:328	üye
 def	doldur	tabulate	dizi.scala:33	üye
 def	doldur	tabulate	dizi.scala:34	üye
@@ -1010,7 +1010,7 @@ def	doluMu	nonEmpty	eslem.scala:54	üye
 def	doluMu	nonEmpty	kume.scala:34	üye
 def	doluMu	nonEmpty	kuyruk.scala:144	üye
 def	doluMu	nonEmpty	kuyruk.scala:277	üye
-def	doluMu	nonEmpty	kuyruk.scala:503	üye
+def	doluMu	nonEmpty	kuyruk.scala:532	üye
 def	doluMu	nonEmpty	miskindizin.scala:68	üye
 def	doluMu	nonEmpty	yazi.scala:49	üye
 def	doluMu	nonEmpty	yineleyici.scala:122	üye
@@ -1146,7 +1146,7 @@ def	ekle	addOne	kuyruk.scala:130	üye
 def	ekle	addOne	kuyruk.scala:258	üye
 def	ekle	append	dizik.scala:194	üye
 def	ekle	append	dizim.scala:33	üye
-def	ekle	append	kuyruk.scala:481	üye
+def	ekle	append	kuyruk.scala:510	üye
 def	ekle	append	yazi.scala:200	üye
 def	ekle	concat	miskindizin.scala:35	üye
 def	ekle	enqueue	kuyruk.scala:132	üye
@@ -1163,7 +1163,7 @@ def	ekleBaşaHepsini	prependAll	dizik.scala:363	üye
 def	ekleHepsini	addAll	dizik.scala:359	üye
 def	ekleHepsini	addAll	kuyruk.scala:237	üye
 def	ekleHepsini	addAll	kuyruk.scala:413	üye
-def	ekleHepsini	addAll	kuyruk.scala:485	üye
+def	ekleHepsini	addAll	kuyruk.scala:514	üye
 def	ekleHepsini	addAll	kuyruk.scala:96	üye
 def	ekleHepsini	appendAll	yazi.scala:208	üye
 def	ekleHepsini	enqueueAll	kuyruk.scala:264	üye
@@ -1652,7 +1652,7 @@ def	ikiyeAyır	partition	yazi.scala:181	üye
 def	ikizYap	duplicate	yineleyici.scala:126	üye
 def	ikizle	clone	kuyruk.scala:136
 def	ikizle	clone	kuyruk.scala:269
-def	ikizle	clone	kuyruk.scala:505
+def	ikizle	clone	kuyruk.scala:534
 def	ikiÇizimArasıSüre	frameDeltaTime	trInit.scala:638
 def	ileri	forward	trInit.scala:143
 def	ileri	forward	trInit.scala:144
@@ -1985,11 +1985,11 @@ def	kosinüsünAçısı	acos	data.scala:165	üye
 def	kosinüsünAçısı	math.acos	matematik.scala:53
 def	koy	addOne	kuyruk.scala:131	üye
 def	koy	addOne	kuyruk.scala:263	üye
-def	koy	append	kuyruk.scala:480	üye
+def	koy	append	kuyruk.scala:509	üye
 def	koy	push	kuyruk.scala:44	üye
 def	koy	put	eslem.scala:158	üye
 def	koyHepsini	addAll	kuyruk.scala:240	üye
-def	koyHepsini	addAll	kuyruk.scala:484	üye
+def	koyHepsini	addAll	kuyruk.scala:513	üye
 def	koyHepsini	enqueueAll	kuyruk.scala:265	üye
 def	koyHepsini	pushAll	kuyruk.scala:45	üye
 val	koyuAltınbaşak	darkGoldenrod	renk.scala:81	üye
@@ -2408,8 +2408,8 @@ def	sil	clear	data.scala:97
 def	sil	clear	dizim.scala:36
 def	sil	clear	kuyruk.scala:135
 def	sil	clear	kuyruk.scala:268
-def	sil	clear	kuyruk.scala:504
 def	sil	clear	kuyruk.scala:53
+def	sil	clear	kuyruk.scala:533
 def	sil	clear	trInit.scala:138
 def	sil	clear	trInit.scala:237
 def	sil	clear	yazi.scala:199
@@ -2454,9 +2454,9 @@ def	soldanKatla	foldLeft	yoney.scala:48	üye
 def	soldaÇiniVarMı	hasTileAtLeft	cinidunyasi.scala:40	üye
 def	soluk	fade	resim.scala:76
 val	somon	salmon	renk.scala:74	üye
-def	sonaKoy	append	kuyruk.scala:482	üye
-def	sondanAl	removeLast	kuyruk.scala:489	üye
-def	sondanAlBelki	removeLastOption	kuyruk.scala:491	üye
+def	sonaKoy	append	kuyruk.scala:511	üye
+def	sondanAl	removeLast	kuyruk.scala:518	üye
+def	sondanAlBelki	removeLastOption	kuyruk.scala:520	üye
 def	sondanKırp	dropRightInPlace	dizik.scala:378	üye
 def	sondanÇıkar	removeLast	kuyruk.scala:404	üye
 def	sondanÇıkar	removeLast	kuyruk.scala:67	üye
@@ -2477,7 +2477,7 @@ def	sonu	last	eslem.scala:51	üye
 def	sonu	last	kume.scala:95	üye
 def	sonu	last	kuyruk.scala:141	üye
 def	sonu	last	kuyruk.scala:274	üye
-def	sonu	last	kuyruk.scala:495	üye
+def	sonu	last	kuyruk.scala:524	üye
 def	sonu	last	miskindizin.scala:63	üye
 def	sonu	last	yazi.scala:46	üye
 def	sonu	last	yoney.scala:36	üye
@@ -2492,7 +2492,7 @@ def	sonuBelki	lastOption	eslem.scala:277	üye
 def	sonuBelki	lastOption	kume.scala:97	üye
 def	sonuBelki	lastOption	kuyruk.scala:199	üye
 def	sonuBelki	lastOption	kuyruk.scala:327	üye
-def	sonuBelki	lastOption	kuyruk.scala:497	üye
+def	sonuBelki	lastOption	kuyruk.scala:526	üye
 def	sonuBelki	lastOption	miskindizin.scala:65	üye
 def	sonuBelki	lastOption	yazi.scala:153	üye
 def	sonuBelki	lastOption	yoney.scala:99	üye
@@ -2637,8 +2637,8 @@ def	taban	floor	data.scala:170	üye
 def	taban	floor	sayi.scala:119	üye
 def	taban	math.floor	matematik.scala:55
 def	takasla	swap	ikisindenbiri.scala:61	üye
-def	tane	size	kuyruk.scala:501
 def	tane	size	kuyruk.scala:51
+def	tane	size	kuyruk.scala:530
 def	tanjant	math.tan	matematik.scala:51
 def	tanjant	tan	data.scala:163	üye
 def	tanjantınAçısı	atan	data.scala:166	üye
@@ -2694,7 +2694,7 @@ val	temizle	clear	klavye.scala:30
 def	tepe	top	kuyruk.scala:50	üye
 def	tepesi	top	kuyruk.scala:49	üye
 def	tepkileriDurdur	stopReactions	resim.scala:318	üye
-def	tersi	from	kuyruk.scala:507	üye
+def	tersi	from	kuyruk.scala:536	üye
 def	tersi	reverse	dizi.scala:227	üye
 def	tersi	reverse	dizi.scala:369	üye
 def	tersi	reverse	dizi.scala:80	üye
