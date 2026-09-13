@@ -25,6 +25,7 @@ import org.scalatest.junit.JUnitRunner
 import net.kogics.kojo.lite.i18n.tr.Çevirmen
 import net.kogics.kojo.lite.i18n.tr.Çevirmen.İngilizcedenTürkçeyeYön
 import net.kogics.kojo.lite.i18n.tr.Çevirmen.TürkçedenİngilizceyeYön
+import net.kogics.kojo.lite.i18n.tr.ÇeviriDoğrulama
 import net.kogics.kojo.lite.i18n.tr.ÇeviriSözlüğü
 import net.kogics.kojo.lite.i18n.tr.SözlükÜreteci
 import net.kogics.kojo.lite.i18n.tr.dict
@@ -185,6 +186,23 @@ import net.kogics.kojo.lite.i18n.tr.dict
     kurallar.map(_.bağlam).filterNot(b => b == "yalın" || b == "üye" || b == "alıcı" || b == "alıcı(" || b == "*" || b.endsWith(".")) shouldBe empty
     val anahtarlar = kurallar.map(k => (k.yön, k.ad, k.bağlam))
     anahtarlar.diff(anahtarlar.distinct) shouldBe empty
+  }
+
+  test("en>tr kural hedefleri geri çevrilince İngilizce Kojo'da çözülüyor (tek yönlü kural yok)") {
+    // İnceleme #62 (A): `stageBorder -> Resim.tuval` vardı, `Resim.tuval -> ?` yoktu; geri çeviri
+    // üretilmiş sözlüğün başka bir `tuval`ine (canvas, üye) düşüp `Picture.canvas` üretiyordu.
+    // Her en>tr kuralının nitelenmiş hedefi (Resim.x, ^Resim.x, ^renkler.x) tr>en'den geçirilip
+    // İngilizce başlangıçta çözülüyor mu diye derlenir. Bağlamsız ad-ad karşılaştırma değil:
+    // GPics -> Resim.dizi -> picStack geçerli bir dönüş.
+    val hedefler = Çevirmen.sözlük.kurallar.collect {
+      case k if k.yön == "en>tr" && k.hedef != ÇeviriSözlüğü.Çevirme && k.hedef.contains('.') =>
+        k.hedef.stripPrefix(ÇeviriSözlüğü.AlıcıylaBirlikte).replaceAll("\\(\\d+(,\\d+)*\\)$", "")
+    }.distinct
+    hedefler should not be empty
+    val geri = hedefler.map(h => h -> Çevirmen.türkçedenİngilizceye(h)._1.trim)
+    val çözülenler = ÇeviriDoğrulama.yalınÇözülenler(geri.map { case (_, en) => (en, false) }, türkçe = false)
+    val kırık = geri.filterNot { case (_, en) => çözülenler(en) }
+    withClue(s"geri çevirisi İngilizce'de çözülmeyen kural hedefleri: ${kırık.map { case (tr, en) => s"$tr -> $en" }.mkString(", ")}: ") { kırık shouldBe empty }
   }
 
   // ---- örnek gövdesi -------------------------------------------------------

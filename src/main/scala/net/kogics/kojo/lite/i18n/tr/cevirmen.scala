@@ -392,19 +392,23 @@ object CevirmenMain {
     }
     val kod = SözlükÜreteci.oku(new File(girdi))
     val (çıktı, rapor) = Çevirmen.çevir(kod, yön)
+    // Rapor: çeviri stdout'a gidiyorsa stderr'e (boru hattı temiz kalsın), dosyaya gidiyorsa
+    // stdout'a -- sbt altında stderr her satırı `[error]` diye gösteriyor, başarı iletisi
+    // hata gibi okunuyordu (inceleme #62).
+    val raporla: String => Unit = if (çıktıDosyası.isDefined) println(_) else System.err.println(_)
     çıktıDosyası match {
-      case Some(ç) => java.nio.file.Files.write(new File(ç).toPath, çıktı.getBytes("UTF-8")); System.err.println(s"yazıldı: $ç")
+      case Some(ç) => java.nio.file.Files.write(new File(ç).toPath, çıktı.getBytes("UTF-8")); raporla(s"yazıldı: $ç")
       case None    => print(çıktı)
     }
-    System.err.print(rapor.özet(yön))
+    rapor.özet(yön).linesIterator.foreach(raporla)
     var kusurlu = false
     val kalanlar = Çevirmen.kalanAnahtarSözcükler(çıktı, yön)
-    if (kalanlar.nonEmpty) { System.err.println(s"UYARI: kaynak dilin anahtar sözcüğü kaldı: ${kalanlar.mkString(", ")}"); kusurlu = true }
+    if (kalanlar.nonEmpty) { raporla(s"UYARI: kaynak dilin anahtar sözcüğü kaldı: ${kalanlar.mkString(", ")}"); kusurlu = true }
     if (doğrula) {
       val türkçeHedef = yön == Çevirmen.İngilizcedenTürkçeyeYön
       val hatalar = ÇeviriDoğrulama.türDenetimi(new File(girdi).getName, çıktı, türkçeHedef)
-      if (hatalar.isEmpty) System.err.println("doğrulama: çeviri " + (if (türkçeHedef) "Türkçe" else "İngilizce") + " Kojo prelude'üyle tür denetiminden geçti")
-      else { System.err.println(s"doğrulama: ${hatalar.size} hata"); hatalar.foreach(h => System.err.println("  " + h)); kusurlu = true }
+      if (hatalar.isEmpty) raporla("doğrulama: çeviri " + (if (türkçeHedef) "Türkçe" else "İngilizce") + " Kojo prelude'üyle tür denetiminden geçti")
+      else { raporla(s"doğrulama: ${hatalar.size} hata"); hatalar.foreach(h => raporla("  " + h)); kusurlu = true }
     }
     if (kusurlu) sys.exit(1)
   }

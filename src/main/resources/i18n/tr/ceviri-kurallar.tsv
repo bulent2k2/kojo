@@ -218,6 +218,7 @@ tr>en	veKondur	üye	withPosition	gövdeli tanım (resim.scala:355)
 en>tr	withPosition	*	veKondur
 tr>en	tuvalinSınırları	Resim.	^stageBorder	Resim.tuvalinSınırları = new Resim(tCanvas.stage); İngilizce yalın stageBorder
 tr>en	tuvalSınırları	Resim.	^stageBorder
+tr>en	tuval	Resim.	^stageBorder	Resim.tuval = tuvalSınırları (resim.scala:438); üretilmiş sözlükteki tuval -> canvas resim.scala:232'deki ÜYE, Picture.canvas yok (inceleme #62 (A))
 en>tr	setColumns	yalın	-	new TextField { setColumns(3) }: Swing üyesi; sütunSayısınıKur Türkçe arayüz sarmalayıcısında
 tr>en	eşEkle	üye	+=	eslem.scala: def eşEkle(ikili) = m += ikili
 tr>en	nokta	üye	vertex	GeoNokta.nokta = vertex (tree2, sprite-boundary-polygon); kaplumbağa.nokta = dot, tuval.nokta = point -- alıcı türü bilinmiyor, en sık kullanılan
