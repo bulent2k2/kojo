@@ -712,6 +712,90 @@ import net.kogics.kojo.staging
     sayıyaKadarSay(1000000, doğru) < 0.1 should be(true) // we get: 0.022 (22 msec)
   }
 
+  /**
+   * `koy` üç yapıda da aynı şeyi yapıyor: "içine bir öge koy".
+   *
+   * ÇAKIŞMA SINAMASI: Scala 2.13'te `mutable.Stack`, `ArrayDeque`ten TÜRÜYOR.
+   * `İkiUçluKuyruk` bir tür takma adı (= ArrayDeque) olduğu için `Yığın`
+   * değerlerine İKİ örtük sınıf birden uygulanabilir. Aşağısı iki kademede
+   * sınıyor:
+   *
+   *  1. Belirsizlik olsaydı bu dosya DERLENMEZDİ ("ambiguous implicit
+   *     conversion") -- ilk kanıt savın koşması değil, derlenmesi.
+   *  2. Doğru sınıfın seçildiğini de tutuyor: `Stack.push` BAŞA ekler
+   *     (tepe = 2), `ArrayDeque.append` SONA (tepe 1 olurdu). Aşağıdaki
+   *     `y.tepe should be(2)` ikisini ayırt ediyor.
+   */
+  test("koy: Yığın, Kuyruk ve ÖncelikSırası'nda ortak ad") {
+    val y = Yığın.boş[Sayı]
+    y.koy(1); y.koy(2)
+    y.tepe should be(2)          // Yığın'da koy = it = push
+
+    val k = Kuyruk.boş[Sayı]
+    k.koy(1); k.koy(2)
+    k.başı should be(1)          // Kuyruk'ta koy = ekle = enqueue
+    k.koyHepsini(Dizi(3, 4)); k.boyu should be(4)
+    k.baştanAl() should be(1)    // çıkarmanın ortak adı YOK: hangi uçtan, adında
+
+    val ö = ÖncelikKuyruğu.boş[Sayı]   // ÖncelikSırası ile aynı tür
+    ö.koy(1); ö.koy(3); ö.koy(2)
+    ö.başı should be(3)          // en büyük önce
+    // İMZA ikojo ile aynı (YinelenebilirBirKere); varargs olsaydı burada
+    // T = Dizi[Sayı] çıkarılır, sav derlenmezdi.
+    ö.koyHepsini(Dizi(9)); ö.başı should be(9)
+
+    // `al(n)` hâlâ take(n) -- ÖGE ÇIKARMIYOR. `al()` eklenmemesinin sebebi bu.
+    val k2 = Kuyruk(1, 2, 3)
+    k2.al(2) should be(Kuyruk(1, 2))
+    k2.boyu should be(3)         // değişmedi
+  }
+
+  /**
+   * ÖTELEME AİLESİ: `ötele` ve `götür` EŞİT baş ad, `öteleme` eskitildi.
+   *
+   * NEDEN BURADA, resim savlarının yanında değil: bu dosyadaki
+   * "Translations of Picture" savı YORUMDA (1483'te başlayan blok) -- tam
+   * TestEnv/Builtins kurulumu gerektirdiği için kapatılmış. Oraya sav
+   * eklemek sessizce hiç koşmayan sav yazmak olurdu; ilk denemede tam bunu
+   * yaptım ve ancak kırma denemesi yakaladı.
+   *
+   * `GötürBD` bir case class olduğu için değer karşılaştırması tuval
+   * istemiyor: üç adın da AYNI dönüşüme bağlandığını böyle tutuyoruz --
+   * yalnız adların var olduğunu değil.
+   */
+  test("öteleme ailesi: ötele = götür, öteleme eskitilmiş ama aynı") {
+    ötele(30, 40) should be(götür(30, 40))
+    ötele(Nokta(7, 8)) should be(götür(Nokta(7, 8)))
+    ötele(Yöney2B(5, 6)) should be(götür(Yöney2B(5, 6)))
+    öteleme(30, 40) should be(götür(30, 40))   // eskitilmiş ad hâlâ çalışıyor
+    // x ile y karışmamış olmalı
+    ötele(1, 2) should not be götür(2, 1)
+  }
+
+  test("İkiUçluKuyruk: iki ucundan da koyulup alınıyor") {
+    val d = İkiUçluKuyruk.boş[Sayı]
+    d.koy(2); d.koy(3)           // sona
+    d.başaKoy(1)                 // başa
+    d.dizi should be(Dizi(1, 2, 3))
+    d.başı should be(1); d.sonu should be(3)
+    d.baştanAl() should be(1)
+    d.sondanAl() should be(3)
+    d.dizi should be(Dizi(2))
+    d.boyu should be(1); d.doluMu should be(true)
+
+    d.baştanAl() should be(2)
+    d.boşMu should be(true)
+    d.baştanAlBelki should be(Hiçbiri)
+    d.sondanAlBelki should be(Hiçbiri)
+    d.başıBelki should be(Hiçbiri)
+
+    İkiUçluKuyruk(1, 2, 3).dizi should be(Dizi(1, 2, 3))
+    İkiUçluKuyruk(1, 2, 3).tersi.dizi should be(Dizi(3, 2, 1))
+    İkiUçluKuyruk(1, 2).ikizle().koy(3).boyu should be(3)
+    val e = İkiUçluKuyruk(1, 2); e.ekleHepsini(Dizi(3, 4)); e.dizi should be(Dizi(1, 2, 3, 4))
+    e.sil(); e.boşMu should be(true)
+  }
+
   test("Yığın ve Kuyruk: toplu çekme, yerinde değiştirme, konumla erişim") {
     // Yığın'da 0. sıra TEPEdir
     Yığın(1, 2, 3)(0) should be(3)
