@@ -1228,7 +1228,7 @@ def	elips	ellipse	tuvalcizim.scala:37
 def	elipsDikdörtgenİçinde	Picture.ellipseInRect	resim.scala:396
 def	enUfakOrtakKat	lcm	matematik.scala:77	üye
 def	enUfakOrtakKat	lcm	matematik.scala:79	üye
-val	enUfağı	MaxValue	harf.scala:48	üye
+val	enUfağı	MinValue	harf.scala:48	üye
 def	enUfağı	math.min	matematik.scala:68
 def	enUfağı	math.min	matematik.scala:70
 def	enUfağı	math.min	matematik.scala:72
@@ -1296,7 +1296,7 @@ def	engeldenYansıtma	bouncePicOffPic	resim.scala:104
 def	eni	width	geo.scala:28	üye
 def	enİriOrtakPayda	gcd	matematik.scala:78	üye
 def	enİriOrtakPayda	gcd	matematik.scala:80	üye
-val	enİrisi	MinValue	harf.scala:49	üye
+val	enİrisi	MaxValue	harf.scala:49	üye
 def	enİrisi	math.max	matematik.scala:67
 def	enİrisi	math.max	matematik.scala:69
 def	enİrisi	math.max	matematik.scala:71

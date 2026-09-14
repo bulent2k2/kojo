@@ -19,7 +19,7 @@ en>tr	erase	*	sil
 tr>en	al	üye	take	dizi.al(3); get/pop çok daha seyrek
 tr>en	ekle	üye	append
 tr>en	kondur	üye	setPosition	resim.kondur(x, y); moveTo tek bir sarmalayıcıda
-tr>en	enUfağı	*	math.min	Harf.enUfağı sarmalayıcısı MaxValue'ya bağlı (ters, ayrı düzeltme); yalın min İngilizce'de yok, math.min; üyede son parça kalır
+tr>en	enUfağı	*	math.min	yalın min İngilizce'de yok, math.min; üyede son parça kalır (Harf.enUfağı = Char.MinValue ayrı bir üye)
 tr>en	enİrisi	*	math.max
 tr>en	verilen	*	given	Scala 3 sözcüğü; scalariform ne given'ı ne verilen'i anahtar sözcük sayıyor
 en>tr	given	*	verilen
