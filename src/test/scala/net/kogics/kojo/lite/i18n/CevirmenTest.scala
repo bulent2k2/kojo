@@ -126,24 +126,37 @@ import net.kogics.kojo.lite.i18n.tr.dict
   }
 
   test("belirsiz seçim raporlanır, sessizce yutulmaz; açık üstünlük raporlanmaz") {
-    // Yapay sözlük: `al` 3 kaynakta take, 2'de get (ciddi alternatif: 2*2 >= 3);
+    // Yapay sözlük: `al` 3 tanımda take, 2'de get (ciddi alternatif: 2*2 >= 3);
     // `ileri` 5'te forward, 1'de advance (1*2 < 5: raporlanmaz).
     import ÇeviriSözlüğü.Satır
     val s = new ÇeviriSözlüğü.Sözlük(
-      Seq(Satır("def", "al", "take", "x:1"), Satır("def", "al", "take", "x:2"), Satır("def", "al", "take", "x:3"),
-          Satır("def", "al", "get", "x:4"), Satır("def", "al", "get", "x:5"),
-          Satır("def", "ileri", "forward", "x:6"), Satır("def", "ileri", "forward", "x:7"), Satır("def", "ileri", "forward", "x:8"),
-          Satır("def", "ileri", "forward", "x:9"), Satır("def", "ileri", "forward", "x:10"), Satır("def", "ileri", "advance", "x:11")),
+      Seq(Satır("def", "al", "take", "a.scala", 3), Satır("def", "al", "get", "b.scala", 2),
+          Satır("def", "ileri", "forward", "a.scala", 5), Satır("def", "ileri", "advance", "b.scala", 1)),
       Nil)
     val (çıktı, rapor) = Çevirmen.çevir("al(2)\nileri(3)", TürkçedenİngilizceyeYön, s)
     çıktı shouldBe "take(2)\nforward(3)"
     rapor.belirsiz.map(b => (b.ad, b.seçilen, b.alternatifler)) shouldBe Seq(("al", "take", Seq("get")))
   }
 
+  test("sayı sütunu satır çokluğunun yerine geçer: iki biçim aynı sıklığı verir") {
+    // Kaynak sütunu dosya düzeyine inince aynı dosyadaki özdeş çiftler tek satıra indi;
+    // tartı `sayı`ya taşındı. Ayrı satırlarla yazılmış eski biçim aynı sonucu vermeli.
+    import ÇeviriSözlüğü.Satır
+    def çevir(ss: Seq[Satır]) = Çevirmen.çevir("al(2)", TürkçedenİngilizceyeYön, new ÇeviriSözlüğü.Sözlük(ss, Nil))
+    val ayrıSatırlar = Seq(Satır("def", "al", "take", "a.scala"), Satır("def", "al", "take", "b.scala"),
+                           Satır("def", "al", "take", "c.scala"), Satır("def", "al", "get", "d.scala"))
+    val birleşik = Seq(Satır("def", "al", "take", "a.scala", 3), Satır("def", "al", "get", "d.scala", 1))
+    val (ç1, r1) = çevir(ayrıSatırlar)
+    val (ç2, r2) = çevir(birleşik)
+    ç1 shouldBe "take(2)"
+    ç2 shouldBe ç1
+    r2.belirsiz.map(b => (b.ad, b.seçilen, b.alternatifler)) shouldBe r1.belirsiz.map(b => (b.ad, b.seçilen, b.alternatifler))
+  }
+
   test("eşitlikte sarmalayıcı satırı data.scala tablosunu yener") {
     import ÇeviriSözlüğü.Satır
     val s = new ÇeviriSözlüğü.Sözlük(
-      Seq(Satır("def", "kosinüs", "cos", "data.scala:9"), Satır("def", "kosinüs", "math.cos", "matematik.scala:40")), Nil)
+      Seq(Satır("def", "kosinüs", "cos", "data.scala"), Satır("def", "kosinüs", "math.cos", "matematik.scala")), Nil)
     Çevirmen.çevir("kosinüs(1)", TürkçedenİngilizceyeYön, s)._1 shouldBe "math.cos(1)"
   }
 
@@ -178,6 +191,23 @@ import net.kogics.kojo.lite.i18n.tr.dict
       üretilen.toSet -- ağaçtaki.toSet shouldBe empty
       ağaçtaki.toSet -- üretilen.toSet shouldBe empty
     }
+  }
+
+  test("ceviri-sozlugu.tsv: kaynak dosya adı (satır numarası yok), sayı pozitif, yinelenen satır yok") {
+    val satırlar = Çevirmen.sözlük.satırlar
+    satırlar.size should be > 2000
+    // Satır numarası taşıyan kaynak, sarmalayıcı dosyalarındaki İLGİSİZ bir kaymada bile
+    // tazelik sınamasını kırmızıya düşürüyordu (ölçüldü: #60, sonra #58/#61 master'a girince).
+    // Numara üretim sırasında var, dosyaya yazılırken atılıyor (SözlükÜreteci.birleştir).
+    withClue("kaynakta satır numarası: ") {
+      satırlar.map(_.kaynak).filter(_.matches(""".*:\\d+$""")).distinct shouldBe empty
+    }
+    satırlar.filter(_.sayı < 1) shouldBe empty
+    // Çokluk sayı sütununda durur; aynı (cins, tr, en, kaynak, not) iki kez yazılmaz.
+    val anahtarlar = satırlar.map(s => (s.cins, s.tr, s.en, s.kaynak, s.not))
+    anahtarlar.diff(anahtarlar.distinct) shouldBe empty
+    // Birleştirme gerçekten bir şey topluyor: en az bir çift birden çok tanımdan geliyor.
+    satırlar.map(_.sayı).sum should be > satırlar.size
   }
 
   test("ceviri-kurallar.tsv: geçerli yön/bağlam, yinelenen anahtar yok") {

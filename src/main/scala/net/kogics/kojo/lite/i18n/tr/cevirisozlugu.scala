@@ -55,7 +55,12 @@ import scalariform.lexer.Tokens
 object ÇeviriSözlüğü {
   /** `not` = "üye": İngilizce ad Kojo prelude'ünde yalın çözülmüyor (x.length gibi bir üye ya da
     * iç ad); yalnız üye bağlamında kullanılır. Üreteç derleyiciye sorarak işaretler. */
-  final case class Satır(cins: String, tr: String, en: String, kaynak: String, not: String = "")
+  /** Sözlüğün bir satırı. `kaynak` DOSYA adıdır, satır numarası taşımaz: numara taşıyınca
+    * sarmalayıcı dosyalarında ilgisiz bir satır kayması tazelik sınamasını kırmızıya düşürüyordu
+    * (ölçüldü: #60, sonra #58/#61 master'a girince; iki kez de tek değişiklik satır numarasıydı).
+    * `sayı` o dosyada aynı çifti veren tanım sayısıdır: sıklık tablosu KAÇ tanımın bu hedefe
+    * gittiğine bakar, dosya düzeyine inerken o bilgi kaybolmasın diye sütuna yazılır. */
+  final case class Satır(cins: String, tr: String, en: String, kaynak: String, sayı: Int = 1, not: String = "")
   val YalnızÜye = "üye"
   /** Üreteç içi geçici not: tanımın gövdesi `{ ... }` bloğu, hedef ilk deyimin zinciri.
     * Zincir çözümünde Türkçe sarmalayıcı adları üstünden ilerlemez (bkz. zincirleriÇöz). */
@@ -96,12 +101,16 @@ object ÇeviriSözlüğü {
   private def alanlar(tsv: String): Iterator[Array[String]] =
     tsv.linesIterator.filterNot(l => l.trim.isEmpty || l.startsWith("#")).map(_.split('\t'))
 
-  def satırlarıAyrıştır(tsv: String): Seq[Satır] = alanlar(tsv).map {
-    case Array(cins, tr, en, kaynak, not, _*) => Satır(cins, tr, en, kaynak, not)
-    case Array(cins, tr, en, kaynak)          => Satır(cins, tr, en, kaynak)
-    case Array(cins, tr, en)                  => Satır(cins, tr, en, "")
-    case a                              => sys.error(s"ceviri-sozlugu.tsv: bozuk satır: ${a.mkString("|")}")
-  }.toVector
+  private def sayıyaÇevir(alan: String, satır: Array[String]): Int =
+    alan.toIntOption.filter(_ > 0).getOrElse(sys.error(s"ceviri-sozlugu.tsv: 5. sütun (sayı) pozitif tamsayı olmalı: ${satır.mkString("|")}"))
+
+  def satırlarıAyrıştır(tsv: String): Seq[Satır] = alanlar(tsv).map { a => a match {
+    case Array(cins, tr, en, kaynak, sayı, not, _*) => Satır(cins, tr, en, kaynak, sayıyaÇevir(sayı, a), not)
+    case Array(cins, tr, en, kaynak, sayı)          => Satır(cins, tr, en, kaynak, sayıyaÇevir(sayı, a))
+    case Array(cins, tr, en, kaynak)                => Satır(cins, tr, en, kaynak)
+    case Array(cins, tr, en)                        => Satır(cins, tr, en, "")
+    case _                              => sys.error(s"ceviri-sozlugu.tsv: bozuk satır: ${a.mkString("|")}")
+  }}.toVector
 
   def kurallarıAyrıştır(tsv: String): Seq[Kural] = alanlar(tsv).map {
     case Array(yön, ad, bağlam, hedef, not, _*) => Kural(yön, ad, bağlam, hedef, not)
@@ -117,9 +126,11 @@ object ÇeviriSözlüğü {
     // `MaxValue`a gidiyorsa `min` başa gelir. Eşitlikte SARMALAYICI satırı data.scala tablosunu
     // yener -- tablo elle ve yer yer eskimiş (çokHızlı=SuperFast, kosinüs=cos yazıyor; sarmalayıcı
     // superFast ve math.cos diyor; ölçüldü). En sonda ad sırası (kararlılık).
-    private def adaylar(çiftler: Seq[(String, String, Boolean)]): Map[String, Seq[(String, Int)]] =
+    // Dördüncü alan satırın `sayı`sı: dosya düzeyine inen kaynak sütununda çokluk orada durur,
+    // `ileri -> forward` tek satırda 3 tanım demek olabilir. Satır SAYMAK yerine sayı TOPLANIR.
+    private def adaylar(çiftler: Seq[(String, String, Boolean, Int)]): Map[String, Seq[(String, Int)]] =
       çiftler.groupBy(_._1).map { case (ad, ss) =>
-        val sayım = ss.groupBy(_._2).map { case (hedef, hs) => (hedef, hs.size, hs.count(_._3)) }
+        val sayım = ss.groupBy(_._2).map { case (hedef, hs) => (hedef, hs.map(_._4).sum, hs.filter(_._3).map(_._4).sum) }
         ad -> sayım.toSeq.sortBy { case (hedef, n, sarmalayıcı) => (-n, -sarmalayıcı, hedef) }.map { case (hedef, n, _) => (hedef, n) }
       }
     private def sarmalayıcıdan(s: Satır) = !s.kaynak.startsWith("data.scala")
@@ -132,23 +143,23 @@ object ÇeviriSözlüğü {
       case _                     => Nil
     }
 
-    private val trAdaylar = adaylar(satırlar.map(s => (s.tr, s.en, sarmalayıcıdan(s))))
-    private val enAdaylar = adaylar(satırlar.map(s => (s.en, s.tr, sarmalayıcıdan(s))))
+    private val trAdaylar = adaylar(satırlar.map(s => (s.tr, s.en, sarmalayıcıdan(s), s.sayı)))
+    private val enAdaylar = adaylar(satırlar.map(s => (s.en, s.tr, sarmalayıcıdan(s), s.sayı)))
     // Yalın bağlam için: derleyicinin yalın çözemediği İngilizce hedefler dışarıda.
     private val yalınSatırlar = satırlar.filterNot(_.not == YalnızÜye)
-    private val trAdaylarYalın = adaylar(yalınSatırlar.map(s => (s.tr, s.en, sarmalayıcıdan(s))))
-    private val enAdaylarYalın = adaylar(yalınSatırlar.map(s => (s.en, s.tr, sarmalayıcıdan(s))))
+    private val trAdaylarYalın = adaylar(yalınSatırlar.map(s => (s.tr, s.en, sarmalayıcıdan(s), s.sayı)))
+    private val enAdaylarYalın = adaylar(yalınSatırlar.map(s => (s.en, s.tr, sarmalayıcıdan(s), s.sayı)))
     // `kuvveti -> math.pow`: ters yönde tek jeton `pow` gelir, alıcısı `math`. Nitelenmiş
     // hedefler alıcı bağlamıyla (`math.`) ayrıca dizinlenir; `math` kendisi `Matematik`e
     // çevrilir, üye buradan `kuvveti` olur. Ölçüldü: yoksa `Matematik.pow` kalıyordu.
     private val enAlıcılıAdaylar = adaylar(satırlar.collect {
-      case s if s.en.contains('.') && s.not != TakmaAd => (s.en.substring(0, s.en.lastIndexOf('.') + 1) + "\u0000" + s.en.substring(s.en.lastIndexOf('.') + 1), s.tr, sarmalayıcıdan(s))
+      case s if s.en.contains('.') && s.not != TakmaAd => (s.en.substring(0, s.en.lastIndexOf('.') + 1) + "\u0000" + s.en.substring(s.en.lastIndexOf('.') + 1), s.tr, sarmalayıcıdan(s), s.sayı)
     })
     // `Resim.dizi -> picStack`: Türkçe nesnenin üyesi İngilizce'de YALIN. Üreteç böyle satırların
     // tr'sini nitelenmiş yazar; buradan TR->EN alıcılı arama `^picStack` (alıcı yutulur),
     // EN->TR ise enAdaylar üstünden zaten `Resim.dizi` verir.
     private val trAlıcılıAdaylar = adaylar(satırlar.collect {
-      case s if s.tr.contains('.') => (s.tr.substring(0, s.tr.lastIndexOf('.') + 1) + "\u0000" + s.tr.substring(s.tr.lastIndexOf('.') + 1), AlıcıylaBirlikte + s.en, sarmalayıcıdan(s))
+      case s if s.tr.contains('.') => (s.tr.substring(0, s.tr.lastIndexOf('.') + 1) + "\u0000" + s.tr.substring(s.tr.lastIndexOf('.') + 1), AlıcıylaBirlikte + s.en, sarmalayıcıdan(s), s.sayı)
     })
     private def parantezsizMi(k: Kural) = k.not.contains(Parantezsiz)
 
@@ -373,7 +384,7 @@ object SözlükÜreteci {
             zincir(e + 1, params).foreach { case (en, _) =>
               if (en != sonraki.text && !params(en) && !yerelDeğer && sarmalayıcıAdı(sonraki.text) && hedefAdı(en)) {
                 val trAdı = if (kapsayıcıNesne.contains("Resim") && !en.contains('.') && cins == "def") "Resim." + sonraki.text else sonraki.text
-                sonuç += Satır(cins, trAdı, en, kaynak, if (gövdeli) Gövdeli else "")
+                sonuç += Satır(cins, trAdı, en, kaynak, not = if (gövdeli) Gövdeli else "")
               }
             }
           }
@@ -557,8 +568,22 @@ object SözlükÜreteci {
     // sözlükten düşer. Bu tek adım, kaynakların birbiriyle çelişen tercihlerini eler.
     val sondalar = çözülmüş.map(s => (s.en, s.cins == "type")).distinct
     val çözülenler = ÇeviriDoğrulama.yalınÇözülenler(sondalar, türkçe = false)
-    çözülmüş.map(s => if (çözülenler(s.en)) s else s.copy(not = YalnızÜye)).sortBy(s => (s.tr, s.en, s.cins, s.kaynak))
+    birleştir(çözülmüş.map(s => if (çözülenler(s.en)) s else s.copy(not = YalnızÜye)))
   }
+
+  /** Üretim boyunca `kaynak` satır numarası taşır (hangi tanım? -- ayıklarken gerekiyor);
+    * dosyaya YAZILIRKEN numara atılır ve aynı dosyadaki özdeş çiftler tek satıra iner.
+    * Neden: numara, sarmalayıcı dosyalarında ilgisiz bir ekleme olduğunda bile değişiyor ve
+    * tazelik sınamasını kırmızıya düşürüyordu; oysa sözlüğün içeriği aynı. Çokluk `sayı`
+    * sütununa geçer, yoksa sıklık tablosu (`ileri` 3 tanımda `forward`) yanlış tartardı. */
+  private def satırNumarasınıAt(kaynak: String) = {
+    val i = kaynak.lastIndexOf(':')
+    if (i < 0 || !kaynak.substring(i + 1).forall(_.isDigit)) kaynak else kaynak.substring(0, i)
+  }
+  def birleştir(satırlar: Seq[Satır]): Seq[Satır] =
+    satırlar.groupBy(s => (s.cins, s.tr, s.en, satırNumarasınıAt(s.kaynak), s.not)).toSeq
+      .map { case ((cins, tr, en, kaynak, not), ss) => Satır(cins, tr, en, kaynak, ss.map(_.sayı).sum, not) }
+      .sortBy(s => (s.tr, s.en, s.cins, s.kaynak))
 
   def tsv(satırlar: Seq[Satır]): String = {
     val başlık =
@@ -567,9 +592,12 @@ object SözlükÜreteci {
          |# Kaynak: lite/i18n/trInit.scala + lite/i18n/tr/*.scala sarmalayıcıları.
          |# Elle kararlar için: ceviri-kurallar.tsv
          |#
-         |# cins	tr	en	kaynak	[not: üye = İngilizce ad yalın çözülmüyor, yalnız x.ad biçiminde]
+         |# cins	tr	en	kaynak	sayı	[not]
+         |#   kaynak: DOSYA adı (satır numarası bilerek yok -- ilgisiz kaymalar sözlüğü kirletmesin)
+         |#   sayı  : o dosyada bu çifti veren tanım sayısı; sıklık tablosunun tartısı
+         |#   not   : üye = İngilizce ad yalın çözülmüyor, yalnız x.ad biçiminde; takma = takma ad alıcısı
          |""".stripMargin
-    başlık + satırlar.map(s => s"${s.cins}\t${s.tr}\t${s.en}\t${s.kaynak}" + (if (s.not.nonEmpty) "\t" + s.not else "")).mkString("", "\n", "\n")
+    başlık + satırlar.map(s => s"${s.cins}\t${s.tr}\t${s.en}\t${s.kaynak}\t${s.sayı}" + (if (s.not.nonEmpty) "\t" + s.not else "")).mkString("", "\n", "\n")
   }
 
   def main(args: Array[String]): Unit = {
