@@ -45,8 +45,8 @@ trait CharMethodsInTurkish {
     def kesire(h: Harf) = Char.char2double(h)
     def ufakkesire(h: Harf) = Char.char2float(h)
 
-    val enUfağı = Char.MaxValue
-    val enİrisi = Char.MinValue
+    val enUfağı = Char.MinValue // '\u0000'; ters yazılmıştı (MaxValue), TurkishAPITest'teki sav bu yüzden yorumdaydı
+    val enİrisi = Char.MaxValue // '\uffff'
   }
 
   implicit class HarfYöntemleri(h: Harf) {

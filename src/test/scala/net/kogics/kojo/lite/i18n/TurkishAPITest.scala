@@ -385,10 +385,20 @@ import net.kogics.kojo.staging
     Harf.sayıMı('a') should be(false)
     Harf.harfMi('a') should be(true)
 
-    /*
-     Harf.enUfağı should be('\u0000')
-     Harf.enİrisi should be('\uffff')
-     */
+    // enUfağı/enİrisi MaxValue/MinValue'ya ters bağlıydı; savlar o yüzden yorumdaydı.
+    Harf.enUfağı should be('\u0000')
+    Harf.enİrisi should be('\uffff')
+    Harf.enUfağı should be < Harf.enİrisi
+    net.kogics.kojo.lite.i18n.tr.dict.method2en("Harf.enUfağı") should be("Char.MinValue")
+    net.kogics.kojo.lite.i18n.tr.dict.method2en("Harf.enİrisi") should be("Char.MaxValue")
+  }
+
+  test("dict.type2en: anahtarlar tür adı, sonunda virgül yok") {
+    // "Birim," / "Her," / "HerDeğer," / "HerGönder," diye yazılmıştı; Birim aranınca bulunmuyordu.
+    val virgüllü = net.kogics.kojo.lite.i18n.tr.dict.type2en.keySet.filter(_.contains(","))
+    virgüllü shouldBe empty
+    net.kogics.kojo.lite.i18n.tr.dict.type2en("Birim") should be("Unit")
+    net.kogics.kojo.lite.i18n.tr.dict.type2en("HerGönder") should be("AnyRef")
   }
   test("Translations needed for mandelbrot sample should work") {
     case class Dörtgen(x1: Kesir, x2: Kesir, y1: Kesir, y2: Kesir) {
