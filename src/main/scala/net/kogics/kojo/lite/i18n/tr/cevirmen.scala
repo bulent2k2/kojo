@@ -45,6 +45,12 @@ import scalariform.lexer.Tokens
  *   - Alıcının TÜRÜNE bağlı adlar (yazı.boyu -> length, resim.boyu -> height)
  *     sözcük düzeyinde ayırt edilemez; en sık görülen alınır ve Rapor.belirsiz'e
  *     yazılır. Kesin kanıt hedef dilin derleyicisidir: çıktıyı derleyin.
+ *   - Aynı sınıftan bir ad ELLE KURALLA tek hedefe bağlanmışsa (en>tr take -> al)
+ *     seçim tek adaylı olur, yani Rapor.belirsiz'e de DÜŞMEZ. `take` çoğunluk
+ *     derlemlerde `al` (13 tanım), Eşlem/Eşlek'te `alSırayla` (orada `al` = get).
+ *     Yazı anahtarlı eşlemde yanlış gürültülüdür (tür uyuşmazlığı, derlenmez);
+ *     SAYI anahtarlıda sessizdir: `Eşlek(1->"bir",...).al(2)` derlenir ama `take`
+ *     değil `get` demektir. Eşlemde `take` çeviriyorsanız çıktıyı gözle doğrulayın.
  *   - Kullanıcının kendi adları sözlükteki bir adla çakışırsa (dez renk = 3)
  *     tutarlı biçimde çevrilir (tanım ve kullanım birlikte); çalışan program
  *     çalışan program olarak kalır.
