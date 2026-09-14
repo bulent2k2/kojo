@@ -200,7 +200,7 @@ import net.kogics.kojo.lite.i18n.tr.dict
     // tazelik sınamasını kırmızıya düşürüyordu (ölçüldü: #60, sonra #58/#61 master'a girince).
     // Numara üretim sırasında var, dosyaya yazılırken atılıyor (SözlükÜreteci.birleştir).
     withClue("kaynakta satır numarası: ") {
-      satırlar.map(_.kaynak).filter(_.matches(""".*:\\d+$""")).distinct shouldBe empty
+      satırlar.map(_.kaynak).filter(_.matches(""".*:\d+$""")).distinct shouldBe empty
     }
     satırlar.filter(_.sayı < 1) shouldBe empty
     // Çokluk sayı sütununda durur; aynı (cins, tr, en, kaynak, not) iki kez yazılmaz.
@@ -208,6 +208,16 @@ import net.kogics.kojo.lite.i18n.tr.dict
     anahtarlar.diff(anahtarlar.distinct) shouldBe empty
     // Birleştirme gerçekten bir şey topluyor: en az bir çift birden çok tanımdan geliyor.
     satırlar.map(_.sayı).sum should be > satırlar.size
+  }
+
+  test("ceviri-sozlugu.tsv ayrıştırıcısı: sayı sütunu eksikse ya da sayı değilse hata verir") {
+    // sayı sıklık tartısını taşıyor; eksik sütuna sessizce 1 demek satırı gürültüsüzce yanlış
+    // ağırlıklandırırdı (inceleme #65).
+    def ayrıştır(satır: String) = ÇeviriSözlüğü.satırlarıAyrıştır(satır)
+    an[RuntimeException] should be thrownBy ayrıştır("def\tal\ttake\ta.scala")
+    an[RuntimeException] should be thrownBy ayrıştır("def\tal\ttake\ta.scala\tçok")
+    an[RuntimeException] should be thrownBy ayrıştır("def\tal\ttake\ta.scala\t0")
+    ayrıştır("def\tal\ttake\ta.scala\t3\tüye") shouldBe Seq(ÇeviriSözlüğü.Satır("def", "al", "take", "a.scala", 3, "üye"))
   }
 
   test("ceviri-kurallar.tsv: geçerli yön/bağlam, yinelenen anahtar yok") {

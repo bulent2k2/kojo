@@ -107,9 +107,9 @@ object ÇeviriSözlüğü {
   def satırlarıAyrıştır(tsv: String): Seq[Satır] = alanlar(tsv).map { a => a match {
     case Array(cins, tr, en, kaynak, sayı, not, _*) => Satır(cins, tr, en, kaynak, sayıyaÇevir(sayı, a), not)
     case Array(cins, tr, en, kaynak, sayı)          => Satır(cins, tr, en, kaynak, sayıyaÇevir(sayı, a))
-    case Array(cins, tr, en, kaynak)                => Satır(cins, tr, en, kaynak)
-    case Array(cins, tr, en)                        => Satır(cins, tr, en, "")
-    case _                              => sys.error(s"ceviri-sozlugu.tsv: bozuk satır: ${a.mkString("|")}")
+    // Eksik sütun HATA: `sayı` sıklık tartısını taşıyor, sessizce 1 demek satırı gürültüsüzce
+    // yanlış ağırlıklandırırdı (inceleme #65). Savunmacı varsayılan, yük taşıyan alanda yanlış.
+    case _ => sys.error(s"ceviri-sozlugu.tsv: bozuk satır (beklenen: cins tr en kaynak sayı [not]): ${a.mkString("|")}")
   }}.toVector
 
   def kurallarıAyrıştır(tsv: String): Seq[Kural] = alanlar(tsv).map {
