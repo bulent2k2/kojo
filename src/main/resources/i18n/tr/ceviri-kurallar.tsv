@@ -17,7 +17,7 @@ tr>en	sil	üye	erase	resim.sil() -- resmi sil
 en>tr	clear	*	sil
 en>tr	erase	*	sil
 tr>en	al	üye	take	dizi.al(3); get/pop çok daha seyrek
-en>tr	take	üye	al	al 2 harfli, üreteç 3'ten kısa adı atlıyor; 14 derlemde al, yalnız Eşlem'de alSırayla (orada al = get)
+en>tr	take	üye	al	al 2 harfli, üreteç 3'ten kısa adı atlıyor; 13 derlemde al, yalnız Eşlem'de alSırayla (orada al = get; sayı anahtarlıda sessiz yanlış -- bkz. Çevirmen SINIRLAR)
 tr>en	ekle	üye	append
 tr>en	kondur	üye	setPosition	resim.kondur(x, y); moveTo tek bir sarmalayıcıda
 tr>en	enUfağı	*	math.min	yalın min İngilizce'de yok, math.min; üyede son parça kalır (Harf.enUfağı = Char.MinValue ayrı bir üye)
