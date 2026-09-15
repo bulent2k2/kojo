@@ -917,7 +917,7 @@ val	eklentiDizini	extensionsDir	package.scala	1	üye
 def	ekli	incl	kume.scala	1	üye
 def	ekranTazelemeHızınıGöster	showFps	trInit.scala	1
 def	ekranTazelemeHızınıKur	setRefreshRate	trInit.scala	1
-def	eksenler	AxesOn	resim.scala	1	üye
+def	eksenler	axesOn	resim.scala	1
 def	eksenleriGizle	axesOff	resim.scala	1
 def	eksenleriGizle	axesOff	trInit.scala	1
 def	eksenleriGöster	Picture.showAxes	resim.scala	2
@@ -2105,10 +2105,8 @@ def	yana	beside	resim.scala	1	üye
 val	yanlış	false	data.scala	1
 def	yansıt	bounceOff	yoney2b.scala	1	üye
 def	yansıt	reflect	resim.scala	1
-def	yansıtX	FlipX	resim.scala	1	üye
-def	yansıtX	flipX	resim.scala	1
-def	yansıtY	FlipY	resim.scala	1	üye
-def	yansıtY	flipY	resim.scala	1
+def	yansıtX	flipX	resim.scala	2
+def	yansıtY	flipY	resim.scala	2
 val	yatay	HORIZONTAL	arayuz.scala	1	üye
 def	yatay	Picture.hline	resim.scala	1
 def	yatayBoşluk	Picture.hgap	resim.scala	1

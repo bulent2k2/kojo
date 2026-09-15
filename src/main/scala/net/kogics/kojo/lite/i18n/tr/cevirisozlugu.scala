@@ -591,8 +591,14 @@ object SözlükÜreteci {
   private val dönüştürücüSınıfı = "case (?:class|object)\\s+([A-Za-z0-9İıŞşĞğÖöÜüÇç_]+)[^{}\\n]*(?:\\n[^{}\\n]*)?\\{\\s*def apply\\(r: Resim\\) = new Resim\\(picture\\.([A-Za-z]+)\\(".r
   private val ingilizceSarmalayıcı = "\\n  (?:def|val)\\s+([a-zA-Z]+)(?:\\([^\\n=]*\\))?\\s*=\\s*([A-Z][A-Za-z]*c)\\b".r
   /** `case class Xc(...) extends Composable... { def apply(p: Picture) = Y(...) }` */
+  // `case object` ve parametresiz biçim de sayılır: FlipXc/FlipYc/AxesOnc
+  // (transforms.scala:318-327) parametre almıyor ve `object`. Yalnız `case class` arayınca
+  // tabloya girmiyorlardı ve ham iç sınıf adına düşülüyordu (`FlipX`, `AxesOn`) -- ikisi de
+  // kaynakta VAR ama birleştirilemez, yani hayalet sayacı da yakalamıyordu. Ölçüldü:
+  // `r * eksenler` derlenmiyordu ("not found: value AxesOn"), `r.yansıtX()` Picture'da
+  // olmayan üyeye gidiyordu. Bunun için CevirmenDerlemeTest'e dönüştürücü betiği kondu.
   private val birleştirilebilirSınıf =
-    "case class ([A-Za-z]+c)\\([^)]*\\)\\s*extends\\s+Composable[A-Za-z]*\\s*\\{\\s*def apply\\(p: Picture\\) =\\s*([A-Za-z]+)".r
+    "case (?:class|object) ([A-Za-z]+c)(?:\\([^)]*\\))?\\s*extends\\s+Composable[A-Za-z]*\\s*\\{\\s*def apply\\(p: Picture\\) =\\s*([A-Za-z]+)".r
 
   /** İÇ sınıf adı -> BİRLEŞTİRİLEBİLİR sınıf adı (picture dizinindeki kaynaklardan okunur).
     *
