@@ -1687,6 +1687,7 @@ def	rastgeleİkil	randomBoolean	data.scala	1
 def	rastgeleİkil	randomBoolean	trInit.scala	1
 def	rastgeleŞeffafRenk	randomTransparentColor	data.scala	1
 def	rastgeleŞeffafRenk	randomTransparentColor	trInit.scala	1
+def	renkKur	Color	renk.scala	1
 val	renkler	Color	renk.scala	1
 val	renkler	ColorMaker	data.scala	1
 val	renksiz	noColor	data.scala	1
@@ -2027,6 +2028,7 @@ def	tuvaliDöndür	viewRotate	trInit.scala	1
 def	tuvaliEtkinleştir	activateCanvas	trInit.scala	1
 def	tuvaliKaydır	scroll	trInit.scala	1
 def	tuvaliSabitle	disablePanAndZoom	trInit.scala	1
+def	tuvaliYakınlaştır	zoomXY	trInit.scala	1
 def	tuşBasılıMı	isKeyPressed	trInit.scala	1
 def	tuşHarfi	getKeyChar	arayuz.scala	1	üye
 def	tuşKodu	getKeyCode	arayuz.scala	1	üye

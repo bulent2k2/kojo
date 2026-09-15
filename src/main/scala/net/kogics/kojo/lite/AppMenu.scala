@@ -242,6 +242,14 @@ trait AppMenu {
     physicsMenu.add(menuItemFor("S_NewtonsSecond", "physics-fma.kojo"))
     samplesMenu.add(physicsMenu)
 
+    val simulationMenu = newJMenu(Utils.loadString("S_Simulation"))
+    simulationMenu.add(menuItemFor("S_ThreeBodies", "nbody-three.kojo"))
+    simulationMenu.add(menuItemFor("S_StableTriple", "nbody-stable-triple.kojo"))
+    simulationMenu.add(menuItemFor("S_FourBodies", "nbody-four.kojo"))
+    simulationMenu.add(menuItemFor("S_FourBodiesByHand", "nbody-four-by-hand.kojo"))
+    simulationMenu.add(menuItemFor("S_SolarSystem", "nbody-solar.kojo"))
+    samplesMenu.add(simulationMenu)
+
     val generativeArtMenu = newJMenu(Utils.loadString("S_GenerativeArt"))
     generativeArtMenu.add(menuItemFor("S_TiledLines", "genart-tiled-lines.kojo"))
     generativeArtMenu.add(menuItemFor("S_JoyDivision", "genart-joy-division.kojo"))

@@ -370,6 +370,12 @@ class Resim(var p: richBuiltins.Picture) {
   def veÇerçeveyle: Resim = { p = p.withLocalBounds; this }
   def veSaydamlıkla(saydamlık: Kesir): Resim = { p = p.withOpacity(saydamlık); this }
   def veKondur(x: Kesir, y: Kesir): Resim = { p = p.withPosition(x, y); this }
+
+  // Sıfat biçimli eş adlar: resim.taşınmış(x, y) zincirde ve* biçiminden akıcı okunuyor.
+  // Aynı işi yapıyorlar (yeni resim değil, aynı resmin dönüşümü değişiyor).
+  def taşınmış(x: Kesir, y: Kesir): Resim = { p = p.withTranslation(x, y); this }
+  def boyalı(renk: Boya): Resim = { p = p.thatsFilledWith(renk); this }
+  def kalemRenkli(renk: Boya): Resim = { p = p.thatsStrokeColored(renk); this }
   def veZDizinle(dizin: Sayı): Resim = { p = p.withZIndex(dizin); this }
   def veZEndeksle(dizin: Sayı): Resim = { p = p.withZIndex(dizin); this }
   def veKeserek(biçim: Biçim): Resim = { p = p.withClipping(biçim); this }
