@@ -608,8 +608,10 @@ object SözlükÜreteci {
     * Çoğunda ikisi tek harf farklı, o yüzden eskiden sona `c` ekleniyordu. İki yerde
     * DEĞİL: `PointLightEffect`in birleştirilebiliri `PointLightc`, `SpotLightEffect`inki
     * `SpotLightc` -- gövdede `Effect` var, sınıf adında yok. `+ "c"` oralarda Kojo'da
-    * HİÇ VAR OLMAYAN `PointLightEffectc` üretiyordu (ölçüldü: TSV'deki 996 İngilizce
-    * adın kaynakta karşılığı bulunmayan yalnız o ikisiydi).
+    * HİÇ VAR OLMAYAN bir ad üretiyordu (iç sınıf adı + `c`); ölçüldü, TSV'deki 996
+    * İngilizce adın kaynakta karşılığı bulunmayan yalnız o ikisiydi. O adlar burada
+    * BİLEREK yazılmıyor: bu dosyada geçtikleri anda "kaynakta var mı" diye bakan bir
+    * sayacı yanıltıyorlar (inceleme sırasında tam bu oldu).
     *
     * Tablo iki yönden kuruluyor: sınıfın kendi kökü (`StrokeWidthc` -> `StrokeWidth`) ve
     * `apply` gövdesinin çağırdığı ad (`PointLightc` -> `PointLightEffect`). Gövdesi `p.x`
