@@ -547,11 +547,11 @@ def	boyuKur	setLength	yazi.scala	1	üye
 def	boyunKaresi	magSquared	yoney2b.scala	1	üye
 def	boyunuBirYap	normalize	yoney2b.scala	1	üye
 def	boş	Nil	dizin.scala	1
-def	boş	collection.mutable.Map	eslem.scala	1
 def	boş	empty	data.scala	1	üye
 def	boş	empty	dizi.scala	2	üye
 def	boş	empty	dizik.scala	2	üye
-def	boş	empty	dizim.scala	1	üye
+def	boş	empty	dizim.scala	2	üye
+def	boş	empty	eslem.scala	1	üye
 def	boş	empty	kume.scala	2	üye
 def	boş	empty	kuyruk.scala	4	üye
 def	boş	empty	miskindizin.scala	1	üye
@@ -671,8 +671,8 @@ def	canlandırmaHızınıKur	setAnimationDelay	trInit.scala	1
 def	canlandırmayıDurdur	stopAnimationActivity	trInit.scala	1
 def	cetveliGöster	showScale	trInit.scala	1
 val	codeTemplates	templates	trInit.scala	1
-def	dahaAçıkYap	awtColorToDoodleColor	renk.scala	1	üye
-def	dahaKoyuYap	awtColorToDoodleColor	renk.scala	1	üye
+def	dahaAçıkYap	lighten	renk.scala	1	üye
+def	dahaKoyuYap	darken	renk.scala	1	üye
 def	dahaVarMı	hasNext	yineleyici.scala	1	üye
 def	daire	Picture.circle	resim.scala	1
 def	daire	circle	trInit.scala	1
@@ -695,8 +695,8 @@ def	değerler	values	eslem.scala	2	üye
 def	değerleriİşle	mapValues	eslem.scala	2	üye
 def	değilseVer	unless	belki.scala	1	üye
 def	değişim	variance	matematik.scala	2	üye
-def	değişmezden	collection.mutable.Map	eslem.scala	1
-def	değiştir	clone	eslem.scala	1
+def	değişmezden	from	eslem.scala	1	üye
+def	değiştir	addOne	eslem.scala	1	üye
 def	değiştir	replace	yazi.scala	2	üye
 def	değiştir	updated	dizi.scala	3	üye
 def	değiştir	updated	dizik.scala	2	üye
@@ -917,7 +917,7 @@ val	eklentiDizini	extensionsDir	package.scala	1	üye
 def	ekli	incl	kume.scala	1	üye
 def	ekranTazelemeHızınıGöster	showFps	trInit.scala	1
 def	ekranTazelemeHızınıKur	setRefreshRate	trInit.scala	1
-def	eksenler	axesOn	resim.scala	1
+def	eksenler	AxesOn	resim.scala	1	üye
 def	eksenleriGizle	axesOff	resim.scala	1
 def	eksenleriGizle	axesOff	trInit.scala	1
 def	eksenleriGöster	Picture.showAxes	resim.scala	2
@@ -1048,14 +1048,14 @@ def	eğriNoktası	curveVertex	geo.scala	1
 def	eğriÇiz	quadTo	geo.scala	1	üye
 def	eşitMi	equals	kokturler.scala	1
 def	eşitMiKüçükHarfBüyükHarfAyrımıYapmadan	equalsIgnoreCase	yazi.scala	1	üye
-def	eşleme	collection.mutable.Map	dizi.scala	5
-def	eşleme	collection.mutable.Map	dizik.scala	2
-def	eşleme	collection.mutable.Map	dizin.scala	1
-def	eşleme	collection.mutable.Map	kume.scala	1
-def	eşleme	collection.mutable.Map	kuyruk.scala	2
-def	eşleme	collection.mutable.Map	miskindizin.scala	1
-def	eşleme	collection.mutable.Map	yazi.scala	1
-def	eşleme	collection.mutable.Map	yoney.scala	1
+def	eşleme	from	dizi.scala	5	üye
+def	eşleme	from	dizik.scala	2	üye
+def	eşleme	from	dizin.scala	1	üye
+def	eşleme	from	kume.scala	1	üye
+def	eşleme	from	kuyruk.scala	2	üye
+def	eşleme	from	miskindizin.scala	1	üye
+def	eşleme	from	yazi.scala	1	üye
+def	eşleme	from	yoney.scala	1	üye
 def	eşlenirMi	matches	yazi.scala	1	üye
 def	eşleğe	toMap	dizi.scala	5	üye
 def	eşleğe	toMap	dizik.scala	2	üye
@@ -1616,7 +1616,7 @@ def	nesnesiOlarak	asInstanceOf	kokturler.scala	2
 def	nokta	dot	trInit.scala	2
 def	nokta	point	tuvalcizim.scala	1	üye
 def	nokta	vertex	geo.scala	1
-def	noktaIşık	PointLightEffectc	resim.scala	1	üye
+def	noktaIşık	pointLight	resim.scala	1	üye
 val	noktaSayısı	Pixel	data.scala	1
 val	noktaSayısı	Pixel	package.scala	1
 def	noktadan	Picture.fromVertexShape	resim.scala	1
@@ -1699,7 +1699,7 @@ def	saat	get	buan.scala	1	üye
 def	saatDilimi	getTimeZone	buan.scala	1	üye
 def	saatDilimi	hepsi	buan.scala	1	üye
 val	sade	PlainFont	trInit.scala	1
-def	sahneIşığı	SpotLightEffectc	resim.scala	1	üye
+def	sahneIşığı	spotLight	resim.scala	1	üye
 def	sahneKenarındanYansıtma	bouncePicOffStage	resim.scala	1
 def	sakla	setVisible	arayuz.scala	9	üye
 def	saniye	get	buan.scala	1	üye
@@ -1958,7 +1958,6 @@ def	tara	scan	kume.scala	1	üye
 def	tara	scan	kuyruk.scala	2	üye
 def	tara	scan	miskindizin.scala	1	üye
 def	tara	scan	yoney.scala	1	üye
-def	taraSağdan	from	yineleyici.scala	1	üye
 def	taraSağdan	scanRight	dizi.scala	3	üye
 def	taraSağdan	scanRight	dizik.scala	2	üye
 def	taraSağdan	scanRight	dizin.scala	1	üye
@@ -1966,6 +1965,7 @@ def	taraSağdan	scanRight	eslem.scala	2	üye
 def	taraSağdan	scanRight	kume.scala	1	üye
 def	taraSağdan	scanRight	kuyruk.scala	2	üye
 def	taraSağdan	scanRight	miskindizin.scala	1	üye
+def	taraSağdan	scanRight	yineleyici.scala	1	üye
 def	taraSağdan	scanRight	yoney.scala	1	üye
 def	taraSoldan	scanLeft	dizi.scala	3	üye
 def	taraSoldan	scanLeft	dizik.scala	2	üye
@@ -2105,8 +2105,10 @@ def	yana	beside	resim.scala	1	üye
 val	yanlış	false	data.scala	1
 def	yansıt	bounceOff	yoney2b.scala	1	üye
 def	yansıt	reflect	resim.scala	1
-def	yansıtX	flipX	resim.scala	2
-def	yansıtY	flipY	resim.scala	2
+def	yansıtX	FlipX	resim.scala	1	üye
+def	yansıtX	flipX	resim.scala	1
+def	yansıtY	FlipY	resim.scala	1	üye
+def	yansıtY	flipY	resim.scala	1
 val	yatay	HORIZONTAL	arayuz.scala	1	üye
 def	yatay	Picture.hline	resim.scala	1
 def	yatayBoşluk	Picture.hgap	resim.scala	1
@@ -2325,11 +2327,10 @@ def	çekDoğruKaldıkça	popWhile	kuyruk.scala	1	üye
 def	çekHepsini	popAll	kuyruk.scala	1	üye
 val	çelikMavisi	steelBlue	renk.scala	1	üye
 def	çerçeveyiKur	setBorder	arayuz.scala	9	üye
-def	çevir	awtColorToDoodleColor	renk.scala	1	üye
-def	çevir	spin	renk.scala	1
+def	çevir	spin	renk.scala	2
 def	çevir	spin	resim.scala	1
 def	çevir	towards	trInit.scala	1
-def	çevirOranla	awtColorToDoodleColor	renk.scala	1	üye
+def	çevirOranla	spinBy	renk.scala	1	üye
 def	çevre	perimeter	resim.scala	1
 def	çevreKalemRenginiKur	setPerimeterPenColor	kumanda.scala	1	üye
 def	çevreRenginiKur	setPerimeterColor	kumanda.scala	1	üye
@@ -2382,7 +2383,7 @@ def	öbekle	groupBy	kuyruk.scala	2	üye
 def	öbekle	groupBy	miskindizin.scala	1	üye
 def	öbekle	groupBy	yazi.scala	1	üye
 def	öbekle	groupBy	yoney.scala	1	üye
-def	öbekleEsnek	collection.mutable.Map	dizin.scala	1
+def	öbekleEsnek	from	dizin.scala	1	üye
 def	öbekleİşle	groupMap	dizi.scala	3	üye
 def	öbekleİşle	groupMap	dizik.scala	2	üye
 def	öbekleİşle	groupMap	dizin.scala	1	üye
