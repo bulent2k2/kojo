@@ -1,4 +1,4 @@
-// Benzetim yolculuğu, adım 2/11: yansıma.
+// Benzetim yolculuğu, adım 2/12: yansıma.
 // Durmak yerine sekiyoruz: kayma miktarını (dx, dy) değişkene aldık, duvara
 // değince işaretini çeviriyoruz. Döngü artık hiç bitmiyor.
 silVeSakla

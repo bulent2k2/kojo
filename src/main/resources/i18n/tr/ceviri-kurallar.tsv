@@ -6,6 +6,8 @@
 #   ad      çevrilecek ad
 #   bağlam  yalın (önünde `.` yok: sil()) | üye (önünde `.` var: resim.sil()) | * | Alıcı. (yalnız o alıcının üyesi: Resim.)
 #   hedef   çevrilecek ad; "-" ise "bu adı çevirme"; "^ad" ise alıcı ve nokta da yutulur (Resim.dizi -> picStack)
+#           "ad(2,1)" argümanları yeniden sıralar; girdi "'sabit" ise o argüman sabit yazılır
+#           (math.pow(1,'2) = birinci argüman, sonra 2) -- sarmalayıcı argüman ekliyorsa tek yol bu
 #   not     neden
 #
 # Kural, üretilmiş sözlüğün en sık görülen adayını EZER. Önce bağlama tam uyan
@@ -99,7 +101,11 @@ en>tr	write	*	yazı	level2_tr.properties: write=yazı
 en>tr	RowPanel	*	Satır
 tr>en	açı	*	angle	örneklerde değişken adı (37 kullanım); Matematik.açı(x,y)=atan2 seyrek
 tr>en	silipSakla	*	cleari	silVeSakla'nın takma adı; hedefi de kuralla cleari
-tr>en	karesi	*	-	karesi(x) = math.pow(x, 2): sarmalayıcı ARGÜMAN ekliyor, tek ad değişimiyle taşınamaz; görünür kalsın
+tr>en	karesi	*	math.pow(1,'2)	karesi(x) = math.pow(x, 2): ikinci argüman sabit ('2). Ters yön yok; math.pow iki argümanlı, kuvveti'ye gider
+tr>en	X	üye	getMaxX	tuvalAlanı.X = sağ kenar; üreteç 3'ten kısa adı atlıyor. Büyük harfli tek harfli üye başka yerde yok
+en>tr	getMaxX	üye	X
+tr>en	Y	üye	getMaxY	tuvalAlanı.Y = üst kenar
+en>tr	getMaxY	üye	Y
 tr>en	boyu	tuvalAlanı.	height	tuvalAlanı.boyu = canvasBounds.height; genel boyu kuralı length diyor
 tr>en	eni	tuvalAlanı.	width
 en>tr	Color	alıcı	Renkler	Color.khaki -> Renkler.haki: renk adları Renkler nesnesinde, tür adı Renk

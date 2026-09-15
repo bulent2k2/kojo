@@ -1,4 +1,4 @@
-// Benzetim yolculuğu, adım 11/11: baskın merkezî kütle.
+// Benzetim yolculuğu, adım 11/12: baskın merkezî kütle.
 // Güneş sistemi taslağı: ortada ağır bir yıldız, çevresinde dört küçük cisim.
 // Bir cisim baskın biçimde ağır olunca üç-cisim kaosu yerine düzgün yörüngeler
 // çıkıyor -- Üç Cisim örneğiyle karşılaştırın, kod neredeyse aynı, kütleler farklı.

@@ -1,4 +1,4 @@
-// Benzetim yolculuğu, adım 3/11: bilardo masası.
+// Benzetim yolculuğu, adım 3/12: bilardo masası.
 // Kenarlar artık koda gömülü sayı değil; masayı çizdik ve sekme sınırlarını
 // masanın kenarlarından hesaplıyoruz. Topun yarıçapını da hesaba katıyoruz ki
 // top kenarı aşmasın.

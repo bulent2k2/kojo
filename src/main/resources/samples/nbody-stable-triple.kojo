@@ -1,4 +1,4 @@
-// Simulation journey, step 10/11: the same code, a different start.
+// Simulation journey, step 10/12: the same code, a different start.
 // A stable triple. Real triple star systems are usually built like this: a close
 // pair, plus a third body going round both of them from far away. The only
 // difference from the chaotic one (see the Three Bodies sample) is the starting

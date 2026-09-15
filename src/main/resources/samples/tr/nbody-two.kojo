@@ -1,4 +1,4 @@
-// Benzetim yolculuğu, adım 6/11: uzaya çıktık.
+// Benzetim yolculuğu, adım 6/12: uzaya çıktık.
 // Kütle çekimine ilelebet tutsak ikiz yıldızın dansı. Artık duvar yok; hızı
 // değiştiren tek şey iki cismin birbirine uyguladığı çekim.
 // yer:          yıldızların başlangıç noktası: x,y=40,40 biri, -40,-40 öbürü

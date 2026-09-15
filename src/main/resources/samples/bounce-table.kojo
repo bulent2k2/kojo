@@ -1,4 +1,4 @@
-// Simulation journey, step 3/11: the billiard table.
+// Simulation journey, step 3/12: the billiard table.
 // The walls are no longer numbers buried in the code: we draw the table and work
 // the bounce limits out from its edges. The ball's radius counts too, so that it
 // stops at the cushion instead of sinking into it.

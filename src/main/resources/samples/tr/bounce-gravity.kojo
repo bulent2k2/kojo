@@ -1,4 +1,4 @@
-// Benzetim yolculuğu, adım 4/11: yerçekimi.
+// Benzetim yolculuğu, adım 4/12: yerçekimi.
 // Dikey hız artık sabit değil: her adımda yerçekimi kadar azalıyor. Yere
 // değince işaret dönüyor, yani top hiç enerji kaybetmeden zıplıyor -- bir
 // sonraki adımda buna sürtünme ve enerji kaybı ekleyeceğiz.

@@ -10,11 +10,12 @@
 // 8- Then four; by now 12 separate variables and five helpers
 // 9- Then the Vec and Body classes: the same simulation, a third of the code
 // 10- Then the same code with different starting values: a stable triple
-// 11- And finally a solar system with one dominant central mass
+// 11- Then a solar system with one dominant central mass
+// 12- And back to the table: now the balls bounce off each other too
 //
-// The eleven samples under Samples > Simulation, in exactly this order.
+// The twelve samples under Samples > Simulation, in exactly this order.
 //
-// Step 1/11: the simplest version. Draw a circle, nudge it a little every step.
+// Step 1/12: the simplest version. Draw a circle, nudge it a little every step.
 cleari
 gridOn
 axesOn

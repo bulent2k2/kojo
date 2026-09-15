@@ -1,4 +1,4 @@
-// Simulation journey, step 2/11: reflection.
+// Simulation journey, step 2/12: reflection.
 // Instead of stopping we bounce: the step sizes (dx, dy) are variables now, and
 // we flip their sign when we hit a wall. The loop never ends.
 cleari

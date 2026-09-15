@@ -1,4 +1,4 @@
-// Benzetim yolculuğu, adım 5/11: sürtünme ve enerji kaybı.
+// Benzetim yolculuğu, adım 5/12: sürtünme ve enerji kaybı.
 // Üç yeni katsayı: havada yavaşlama, yerde yavaşlama, ve her zıplamada yitip
 // giden enerji. Dikey hız yeterince küçülünce top yuvarlanmaya başlıyor.
 silVeSakla
@@ -8,7 +8,7 @@ dez (yarıçap, yerçekimi, zıplamadaEnerjiKaybı) = (9, 0.2, 0.79)
 dez (havaSürtünmesi, yerSürtünmesi) = (0.999, 0.99)
 dez top = Resim.daire(yarıçap)
 dez (ta, yç) = (tuvalAlanı, yarıçap)
-dez (başla, yer, sol, sağ) = (ta.y + ta.boy - yç, ta.y + yç, ta.x + yç, ta.x + ta.en - yç)
+dez (başla, yer, sol, sağ) = (ta.Y - yç, ta.y + yç, ta.x + yç, ta.X - yç)
 çiz(götür(sol, başla) * boyaRengi(sarı) -> top)
 den (dx, dy) = (3.0, 0.0)
 canlandır {
