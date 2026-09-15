@@ -157,6 +157,36 @@ import net.kogics.kojo.lite.i18n.tr.SözlükÜreteci
     aslıGeçen should be >= 75
   }
 
+  // NEDEN AYRI SINAMA: dönüştürücü adları (eksenler, yansıtX, yansıtY, döndür...) örnek
+  // betiklerin hiçbirinde `->` ile YALIN kullanılmıyor, o yüzden yukarıdaki iki toplu sınama
+  // onları hiç çevirmiyor. Ölçüldü: 226 sınama yeşilken `eksenler` derlenmeyen koda
+  // (`not found: value AxesOn`), `yansıtX`/`yansıtY` Picture'da olmayan üyeye çevriliyordu.
+  // Kök, birleştirilebilir sınıf tablosunun `case object` biçimini kaçırmasıydı; iniş
+  // kopunca ham iç sınıf adına düşülüyor ve o ad KAYNAKTA VAR olduğu için hayalet sayacı
+  // da susuyor. Bu sınama o sessiz yolu kapatıyor.
+  //
+  // Işıklar bilerek DIŞARIDA: `noktaIşık`/`sahneIşığı` doğru adı (picture.pointLight)
+  // buluyor ama Builtins onu yalın açmıyor -- bilinen sarmalayıcı boşluğu, yukarıda
+  // tr/eye-effects.kojo olarak listeli.
+  test("dönüştürücü adları birleştirilebilir sarmalayıcıya çözülüyor mu (eksenler, yansıtX, yansıtY)") {
+    val betik =
+      """|dez r = Resim.daire(50)
+         |dez a = eksenler -> r
+         |dez b = yansıtX -> r
+         |dez c = (yansıtX * yansıtY) -> r
+         |r.yansıtX()
+         |r.yansıtY()
+         |""".stripMargin
+    val (çıktı, _) = Çevirmen.türkçedenİngilizceye(betik)
+    çıktı should include("axesOn -> r")
+    çıktı should include("flipX -> r")
+    çıktı should include("(flipX * flipY) -> r")
+    çıktı should include("r.flipX()")
+    // Asıl sav: yalnız ad değil, DERLENİYOR olması. Ham iç sınıf adı (AxesOn, FlipX)
+    // kaynakta var ama birleştirilemez; ancak typer bunu söyleyebilir.
+    ÇeviriDoğrulama.türDenetimi("dönüştürücüler.kojo", çıktı, türkçe = false) shouldBe empty
+  }
+
   test("tek betik: angles.kojo'nun İngilizce çevirisi Kojo prelude'üyle derleniyor mu (sınır: karesi)") {
     val f = new File(örneklerKökü, "tr/angles.kojo")
     assume(f.exists())

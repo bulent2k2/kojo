@@ -274,6 +274,25 @@ object SözlükÜreteci {
     def id(t: Token) = t.tokenType.isId && !t.text.startsWith("`") && t.text.exists(_.isLetter)
     val sonuç = Vector.newBuilder[Satır]
 
+    /** ts(i) bir açan ise eşleşen kapayanın konumu, değilse i. */
+    def eşiniBul(i0: Int): Int = {
+      if (i0 >= ts.length || !açanlar(ts(i0).tokenType)) return i0
+      var i = i0; var derinlik = 0
+      while (i < ts.length) {
+        if (açanlar(ts(i).tokenType)) derinlik += 1
+        else if (kapayanlar(ts(i).tokenType)) { derinlik -= 1; if (derinlik == 0) return i }
+        i += 1
+      }
+      ts.length - 1
+    }
+
+    /** ts(i)'deki çağrı parantezinin içinde tanımın parametrelerinden biri geçiyor mu. */
+    def argümanParametreKullanıyor(i0: Int, params: Set[String]): Boolean = {
+      if (i0 >= ts.length || ts(i0).tokenType != Tokens.LPAREN) return false
+      val kapanış = eşiniBul(i0)
+      (i0 + 1 until kapanış).exists(j => id(ts(j)) && params(ts(j).text))
+    }
+
     // i konumundan başlayarak `id (DOT id)*` zincirini okur; sondaki adı ve bir sonraki konumu verir.
     def zincir(i0: Int, params: Set[String] = Set.empty): Option[(String, Int)] = {
       val yeniyle = i0 < ts.length && ts(i0).tokenType == Tokens.NEW
@@ -305,9 +324,38 @@ object SözlükÜreteci {
       // `Yöney2B(rb.bouncePicVectorOffStage(p, v))`: `new`suz sarmalayıcı yapıcısı da aynı --
       // hedef içteki zincir (ölçüldü: lunar-lander.kojo, sahneKenarındanYansıtma -> Vector2D).
       val sarmalayıcıYapıcısı = p.length == 1 && sarmalayıcıYapıcıları(p.head)
+      // `new Eşlem[A,D](Map.from(...))`: tür parametresi listesi sınıf adıyla parantez
+      // arasına giriyor ve inişi engelliyordu -- hedef `Eşlem`de kalıp elle kuralla
+      // `collection.mutable.Map`e bağlanıyordu (ölçüldü: eşleme/öbekleEsnek dahil 12 satır,
+      // `çiftler.eşleme` -> `çiftler.collection.mutable.Map`). Köşeli liste atlanır.
+      if ((yeniyle || sarmalayıcıYapıcısı) && i < ts.length && ts(i).tokenType == Tokens.LBRACKET)
+        i = eşiniBul(i) + 1
       if ((yeniyle || sarmalayıcıYapıcısı) && i < ts.length && ts(i).tokenType == Tokens.LPAREN) return zincir(i + 1, params) match {
         case Some(iç) if !params(iç._1) => Some(iç)
         case _                          => None
+      }
+      // `Utils.awtColorToDoodleColor(r).lighten(açıklık)`: zincir çağrı parantezinde
+      // kesiliyordu, hedef `awtColorToDoodleColor` kalıyordu. Ama "sonuncuyu al" da
+      // yanlış: `y.grouped(boy).map(_.toSeq)` içinde anlamlı olan İLK çağrı.
+      // Ölçüt ölçümle seçildi (8 tanımın 8'i): TANIMIN KENDİ PARAMETRESİNİ alan çağrı
+      // anlamlı olandır -- `lighten(açıklık)` evet, `map(_.toSeq)` hayır. Böyle çağrı
+      // yoksa ilki kalır, yani eski davranış.
+      if (params.nonEmpty) {
+        var halkalar = Vector((sonAd, argümanParametreKullanıyor(i, params)))
+        var j = i
+        var devam = true
+        while (devam && j < ts.length && ts(j).tokenType == Tokens.LPAREN) {
+          val kapanış = eşiniBul(j)
+          if (kapanış + 2 < ts.length && ts(kapanış + 1).tokenType == Tokens.DOT && id(ts(kapanış + 2))) {
+            j = kapanış + 3
+            halkalar :+= ((ts(kapanış + 2).text, argümanParametreKullanıyor(j, params)))
+          }
+          else devam = false
+        }
+        halkalar.lastIndexWhere(_._2) match {
+          case k if k > 0 => return Some((halkalar(k)._1, j))
+          case _          => ()
+        }
       }
       Some((sonAd, i))
     }
@@ -542,11 +590,54 @@ object SözlükÜreteci {
     * ad başka olabilir (penThickness): derleyici sondası ve kurallar karar verir. */
   private val dönüştürücüSınıfı = "case (?:class|object)\\s+([A-Za-z0-9İıŞşĞğÖöÜüÇç_]+)[^{}\\n]*(?:\\n[^{}\\n]*)?\\{\\s*def apply\\(r: Resim\\) = new Resim\\(picture\\.([A-Za-z]+)\\(".r
   private val ingilizceSarmalayıcı = "\\n  (?:def|val)\\s+([a-zA-Z]+)(?:\\([^\\n=]*\\))?\\s*=\\s*([A-Z][A-Za-z]*c)\\b".r
+  /** `case class Xc(...) extends Composable... { def apply(p: Picture) = Y(...) }` */
+  // `case object` ve parametresiz biçim de sayılır: FlipXc/FlipYc/AxesOnc
+  // (transforms.scala:318-327) parametre almıyor ve `object`. Yalnız `case class` arayınca
+  // tabloya girmiyorlardı ve ham iç sınıf adına düşülüyordu (`FlipX`, `AxesOn`) -- ikisi de
+  // kaynakta VAR ama birleştirilemez, yani hayalet sayacı da yakalamıyordu. Ölçüldü:
+  // `r * eksenler` derlenmiyordu ("not found: value AxesOn"), `r.yansıtX()` Picture'da
+  // olmayan üyeye gidiyordu. Bunun için CevirmenDerlemeTest'e dönüştürücü betiği kondu.
+  private val birleştirilebilirSınıf =
+    "case (?:class|object) ([A-Za-z]+c)(?:\\([^)]*\\))?\\s*extends\\s+Composable[A-Za-z]*\\s*\\{\\s*def apply\\(p: Picture\\) =\\s*([A-Za-z]+)".r
+
+  /** İÇ sınıf adı -> BİRLEŞTİRİLEBİLİR sınıf adı (picture dizinindeki kaynaklardan okunur).
+    *
+    * NEDEN TABLO, NEDEN `+ "c"` DEĞİL: dönüştürücü zinciri `resim.scala`'daki gövdeden
+    * iç sınıfı görüyor (`new Resim(picture.StrokeWidth(w)(r.p))`), ama betikte yazılan ad
+    * BİRLEŞTİRİLEBİLİR olandır (`StrokeWidthc`, çünkü `*` ve `->` onda tanımlı).
+    * Çoğunda ikisi tek harf farklı, o yüzden eskiden sona `c` ekleniyordu. İki yerde
+    * DEĞİL: `PointLightEffect`in birleştirilebiliri `PointLightc`, `SpotLightEffect`inki
+    * `SpotLightc` -- gövdede `Effect` var, sınıf adında yok. `+ "c"` oralarda Kojo'da
+    * HİÇ VAR OLMAYAN bir ad üretiyordu (iç sınıf adı + `c`); ölçüldü, TSV'deki 996
+    * İngilizce adın kaynakta karşılığı bulunmayan yalnız o ikisiydi. O adlar burada
+    * BİLEREK yazılmıyor: bu dosyada geçtikleri anda "kaynakta var mı" diye bakan bir
+    * sayacı yanıltıyorlar (inceleme sırasında tam bu oldu).
+    *
+    * Tablo iki yönden kuruluyor: sınıfın kendi kökü (`StrokeWidthc` -> `StrokeWidth`) ve
+    * `apply` gövdesinin çağırdığı ad (`PointLightc` -> `PointLightEffect`). Gövdesi `p.x`
+    * diye başlayanlar (Fillc, Strokec) iç sınıf çağırmıyor, köklerinden geliyor. */
+  private val birleştirilebilirÖnbellek = scala.collection.mutable.Map.empty[String, Map[String, String]]
+  def birleştirilebilirler(kök: File): Map[String, String] =
+    birleştirilebilirÖnbellek.getOrElseUpdate(kök.getPath, {
+      val dizin = new File(kök, "src/main/scala/net/kogics/kojo/picture")
+      val dosyalar = Option(dizin.listFiles()).getOrElse(Array.empty[File]).filter(_.getName.endsWith(".scala"))
+      val çiftler = dosyalar.toSeq.flatMap { f =>
+        birleştirilebilirSınıf.findAllMatchIn(oku(f)).toSeq.flatMap { m =>
+          val cli = m.group(1)
+          val iç = m.group(2)
+          Seq(cli.dropRight(1) -> cli) ++ (if (iç.length > 1) Seq(iç -> cli) else Nil)
+        }
+      }
+      çiftler.toMap
+    })
+
   def yardımcıZincirler(kök: File): Seq[Satır] = {
     val resim = new File(kök, "src/main/scala/net/kogics/kojo/lite/i18n/tr/resim.scala")
     val paket = new File(kök, "src/main/scala/net/kogics/kojo/picture/package.scala")
-    val sınıflar = if (resim.exists()) dönüştürücüSınıfı.findAllMatchIn(oku(resim)).toSeq.map(m => Satır("class", m.group(1), m.group(2) + "c", "resim.scala")) else Nil
     val sarmalayıcılar = if (paket.exists()) ingilizceSarmalayıcı.findAllMatchIn(oku(paket)).toSeq.map(m => Satır("def", m.group(2), m.group(1), "picture/package.scala")) else Nil
+    val sınıflar = if (resim.exists()) dönüştürücüSınıfı.findAllMatchIn(oku(resim)).toSeq.map { m =>
+      Satır("class", m.group(1), birleştirilebilirler(kök).getOrElse(m.group(2), m.group(2)), "resim.scala")
+    } else Nil
     sınıflar ++ sarmalayıcılar
   }
 
