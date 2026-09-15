@@ -1,3 +1,4 @@
+// Benzetim yolculuğu, adım 10/11: aynı kod, başka başlangıç.
 // Kararlı üçlü. Gerçek üçlü yıldız sistemleri genelde böyle kurulu: birbirine
 // yakın bir ikili, ve ikisini birden uzaktan dolanan üçüncü bir cisim. Kaotik
 // üçlüyle (Üç Cisim örneği) aradaki tek fark başlangıç değerleri -- kod aynı.

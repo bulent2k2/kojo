@@ -1,3 +1,4 @@
+// Benzetim yolculuğu, adım 9/11: aynı benzetim, Yöney ve Cisim türleriyle.
 // Dört cisim: iki çift ikiz yıldız. Renkler saydam olduğu için yörüngeler
 // üst üste binince yeni renkler çıkıyor. fırça'yı 0 yaparsanız yalnız cisimleri
 // görürsünüz; büyütürseniz yörüngeler kalınlaşır.

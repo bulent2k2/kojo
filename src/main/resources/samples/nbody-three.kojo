@@ -1,3 +1,4 @@
+// Simulation journey, step 7/11: add a third body and you get chaos.
 // Three bodies, chaos. Triple star systems do exist, but a real one usually has
 // two stars close together and a third far away in a wide orbit (see Stable
 // Triple). Otherwise you get what you see here: there is no closed-form solution

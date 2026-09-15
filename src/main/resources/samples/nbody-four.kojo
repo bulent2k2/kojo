@@ -1,3 +1,4 @@
+// Simulation journey, step 9/11: the same simulation, with the Vec and Body types.
 // Four bodies: two pairs of twin stars. The colors are translucent, so where the
 // orbits cross you get new colors. Set brush to 0 to see just the bodies, or make
 // it bigger for fatter orbits.

@@ -242,11 +242,19 @@ trait AppMenu {
     physicsMenu.add(menuItemFor("S_NewtonsSecond", "physics-fma.kojo"))
     samplesMenu.add(physicsMenu)
 
+    // Bir yolculuk: her örnek bir öncekinin üstüne bir şey ekliyor. Sıra bilerek
+    // böyle; yol haritası bounce-start.kojo'nun başında yazılı.
     val simulationMenu = newJMenu(Utils.loadString("S_Simulation"))
+    simulationMenu.add(menuItemFor("S_SimStart", "bounce-start.kojo"))
+    simulationMenu.add(menuItemFor("S_SimReflection", "bounce-reflect.kojo"))
+    simulationMenu.add(menuItemFor("S_SimTable", "bounce-table.kojo"))
+    simulationMenu.add(menuItemFor("S_SimGravity", "bounce-gravity.kojo"))
+    simulationMenu.add(menuItemFor("S_SimFriction", "bounce-friction.kojo"))
+    simulationMenu.add(menuItemFor("S_SimTwoBodies", "nbody-two.kojo"))
     simulationMenu.add(menuItemFor("S_ThreeBodies", "nbody-three.kojo"))
-    simulationMenu.add(menuItemFor("S_StableTriple", "nbody-stable-triple.kojo"))
-    simulationMenu.add(menuItemFor("S_FourBodies", "nbody-four.kojo"))
     simulationMenu.add(menuItemFor("S_FourBodiesByHand", "nbody-four-by-hand.kojo"))
+    simulationMenu.add(menuItemFor("S_FourBodies", "nbody-four.kojo"))
+    simulationMenu.add(menuItemFor("S_StableTriple", "nbody-stable-triple.kojo"))
     simulationMenu.add(menuItemFor("S_SolarSystem", "nbody-solar.kojo"))
     samplesMenu.add(simulationMenu)
 

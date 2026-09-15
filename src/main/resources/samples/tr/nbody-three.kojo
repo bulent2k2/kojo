@@ -1,3 +1,4 @@
+// Benzetim yolculuğu, adım 7/11: üçüncü cismi ekleyince kaos.
 // Üç cisim, kaos. Üçlü yıldız sistemleri var; ama gerçekte genelde ikisi yakın,
 // üçüncüsü büyük bir gezegen gibi uzak bir yörüngede oluyor (bkz. Kararlı Üçlü).
 // Yoksa burada gördüğümüz gibi kaotik durumlar çıkıyor: üç cismin yörüngesi için

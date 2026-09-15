@@ -1,3 +1,4 @@
+// Benzetim yolculuğu, adım 8/11: dördüncü cisim, hâlâ türsüz.
 // Aynı dört cisim, ama türler olmadan: her cisim için ayrı bir değişken, her
 // hız bileşeni için ayrı bir "den", ve kuvveti açıyla ayrıştıran beş yardımcı.
 // Dört Cisim örneğiyle yan yana okuyun: aynı benzetim, aynı sonuç. Türler bir
