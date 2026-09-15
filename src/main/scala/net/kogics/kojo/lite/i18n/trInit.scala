@@ -393,6 +393,8 @@ object TurkishAPI
   def yaklaş(oran: Kesir, xMerkez: Kesir, yMerkez: Kesir): Birim = rb.tCanvas.zoom(oran, xMerkez, yMerkez)
   def yaklaşXY(xOran: Kesir, yOran: Kesir, xMerkez: Kesir, yMerkez: Kesir): Birim =
     rb.tCanvas.zoomXY(xOran, yOran, xMerkez, yMerkez)
+  def tuvaliYakınlaştır(xOran: Kesir, yOran: Kesir, xMerkez: Kesir, yMerkez: Kesir): Birim =
+    rb.tCanvas.zoomXY(xOran, yOran, xMerkez, yMerkez)
   def yaklaşmayıSil(): Birim = rb.tCanvas.resetPanAndZoom()
   def yaklaşmayaİzinVerme(): Birim = rb.tCanvas.disablePanAndZoom()
   def tuvaliSabitle(): Birim = yaklaşmayaİzinVerme()

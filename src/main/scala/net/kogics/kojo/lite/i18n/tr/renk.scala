@@ -110,6 +110,7 @@ trait RenkYöntemleri {
   // shorter aliases like RenkKYM, RenkDD and RenkADA for ease of use
   // This one is also to show up in completion pop-up help (Renk type overrides Renk function!)
   def RenkKYM(kırmızı: Sayı, yeşil: Sayı, mavi: Sayı, saydam: Sayı = 255): Renk = Renk(kırmızı, yeşil, mavi, saydam)
+  def renkKur(kırmızı: Sayı, yeşil: Sayı, mavi: Sayı, saydam: Sayı = 255): Renk = Renk(kırmızı, yeşil, mavi, saydam)
   def RenkDD(x1: Sayı, y1: Sayı, renk1: Renk, x2: Sayı, y2: Sayı, renk2: Renk, dönüşlü: İkil = yanlış): DeğişimliBoya =
     Renk.doğrusalDeğişim(x1, y1, renk1, x2, y2, renk2, dönüşlü)
   def RenkADA(arıRenk: Sayı, doygunluk: Sayı, aydınlık: Sayı) =

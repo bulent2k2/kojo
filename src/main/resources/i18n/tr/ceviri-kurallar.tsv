@@ -18,6 +18,15 @@ en>tr	clear	*	sil
 en>tr	erase	*	sil
 tr>en	al	üye	take	dizi.al(3); get/pop çok daha seyrek
 en>tr	take	üye	al	al 2 harfli, üreteç 3'ten kısa adı atlıyor; 13 derlemde al, yalnız Eşlem'de alSırayla (orada al = get; sayı anahtarlıda sessiz yanlış -- bkz. Çevirmen SINIRLAR)
+tr>en	taşınmış	üye	withTranslation	ve* ailesinin sıfat biçimi; gövdesi blok olduğu için üreteç göremiyor
+en>tr	withTranslation	üye	taşınmış
+tr>en	boyalı	üye	withFillColor
+en>tr	withFillColor	üye	boyalı
+tr>en	kalemRenkli	üye	withPenColor
+en>tr	withPenColor	üye	kalemRenkli
+tr>en	renkKur	*	Color	RenkKYM ile aynı; en>tr yönü Renk'te kalıyor (Color kuralı yukarıda)
+tr>en	tuvaliYakınlaştır	*	zoomXY
+en>tr	zoomXY	*	tuvaliYakınlaştır	yaklaşXY ile eşit oyda; açık seçim, ad daha anlaşılır
 tr>en	ekle	üye	append
 tr>en	kondur	üye	setPosition	resim.kondur(x, y); moveTo tek bir sarmalayıcıda
 tr>en	enUfağı	*	math.min	yalın min İngilizce'de yok, math.min; üyede son parça kalır (Harf.enUfağı = Char.MinValue ayrı bir üye)
