@@ -180,12 +180,17 @@ object Çevirmen {
     // `^Resim.dikdörtgen(2,1)`: alıcılı hedefin ardındaki argüman listesi yeniden sıralanır --
     // Picture.rect(boy, en) = Resim.dikdörtgen(en, boy). Parantez arası çıktı parça parça
     // (üst düzey virgüllerde bölünerek) yakalanır, kapanışta verilen sırayla yazılır.
-    final class Yakalama(val kapanış: Int, val virgüller: Set[Int], val sıra: Seq[Int]) {
+    final class Yakalama(val kapanış: Int, val virgüller: Set[Int], val sıra: Seq[String]) {
       val parçalar = scala.collection.mutable.ArrayBuffer(new StringBuilder)
     }
     var yakalama: Option[Yakalama] = None
     var yakalamaBaşlat: Option[Yakalama] = None // hedef yazıldıktan SONRA başlar; yoksa hedef ilk parçaya giriyordu
-    val sıralıHedef = "^(.*)\\((\\d+(?:,\\d+)*)\\)$".r
+    // Hedefte argüman listesi: `Resim.dikdörtgen(2,1)` argümanları yeniden sıralar,
+    // `math.pow(1,'2)` ise ikinciye SABİT yazar. Girdi rakamsa kaçıncı argüman (1'den),
+    // `'` ile başlıyorsa gerisi olduğu gibi basılır. Sarmalayıcı argüman ekliyorsa
+    // (karesi(x) = math.pow(x, 2)) tek yol budur.
+    val sıralıHedef = "^(.*)\\(((?:\\d+|'[^,()]*)(?:,(?:\\d+|'[^,()]*))*)\\)$".r
+    def argümanMı(girdi: String) = girdi.nonEmpty && girdi.forall(_.isDigit)
     /** `(` jetonundan eşleşen `)`ye: (kapanış dizini, üst düzey virgül dizinleri). */
     def argümanListesi(açılış: Int): Option[(Int, Set[Int])] = {
       var d = 0; var k = açılış; val virgüller = Set.newBuilder[Int]
@@ -199,6 +204,24 @@ object Çevirmen {
         k += 1
       }
       None
+    }
+    /** Hedefteki argüman listesini uygular: ardındaki `(` ... `)` yakalanır, kapanışta
+      * girdilere göre yeniden yazılır. Argüman sayısı uymuyorsa hiçbir şey yapılmaz
+      * (ad yine çevrilir, liste olduğu gibi kalır). Tanım bağlamında ÇAĞRILMAZ: orada
+      * parantez içi parametre listesidir, argüman değil. */
+    def yakalamayıKur(sıra: String, sonJeton: Int): Unit = {
+      val sıralama = sıra.split(',').toSeq
+      val açılış = sonrakiAnlamlı(sonJeton).filter(p => jetonlar(p).tokenType == Tokens.LPAREN)
+      açılış.flatMap(argümanListesi) match {
+        case Some((kapanış, virgüller)) if virgüller.size + 1 == sıralama.count(argümanMı) =>
+          atla = atla + açılış.get; yakalamaBaşlat = Some(new Yakalama(kapanış, virgüller, sıralama))
+        case _ => // argüman sayısı uymuyor: adı çevir, listeye dokunma
+      }
+    }
+    /** Hedefi (ad, argüman listesi) diye ayırır. */
+    def hedefiAyır(hedef: String): (String, Option[String]) = hedef match {
+      case sıralıHedef(ad, sıra) => (ad, Some(sıra))
+      case _                     => (hedef, None)
     }
     // Kullanıcının kendi adı (`case class Rectangle(width: Double)` / `r.width`): tanım yeri
     // yalın, kullanım yeri üye bağlamında bakılınca ikisi ayrı yere düşüyordu (width tanımda
@@ -269,18 +292,9 @@ object Çevirmen {
           else alıcılıHedef match {
             case Some((n, m, hedef)) =>
               atla = atla + n + m; çevrilen += 1
-              hedef match {
-                case sıralıHedef(ad, sıra) =>
-                  val sıralama = sıra.split(',').map(_.toInt).toSeq
-                  val açılış = sonrakiAnlamlı(m).filter(p => jetonlar(p).tokenType == Tokens.LPAREN)
-                  açılış.flatMap(argümanListesi) match {
-                    case Some((kapanış, virgüller)) if virgüller.size + 1 == sıralama.size =>
-                      atla = atla + açılış.get; yakalamaBaşlat = Some(new Yakalama(kapanış, virgüller, sıralama))
-                    case _ => // argüman sayısı uymuyor: adı çevir, sırayı bırak
-                  }
-                  ad
-                case _ => hedef
-              }
+              val (ad, sıra) = hedefiAyır(hedef)
+              sıra.foreach(yakalamayıKur(_, m))
+              ad
             case None =>
               // Sıra: alıcıya özel düz kural (`tuvalAlanı.` -> height), sonra alıcı/üye/yalın bağlamı.
               val alıcıAdı = if (üye) öncekininÖncekisi.filter(tanımlayıcı).map(_.text + ".") else None
@@ -319,8 +333,14 @@ object Çevirmen {
                                           m <- sonrakiAnlamlı(n) if jetonlar(m).tokenType == Tokens.RPAREN } yield (n, m)
                   if (s.parantezsiz && !tanımBağlamı && yön == TürkçedenİngilizceyeYön) boşParantez.foreach { case (n, m) => atla = atla + n + m }
                   val parantezEki = ""
+                  // Ad ile argüman listesini önce ayır: sabitte nokta olabilir ('0.5), son
+                  // parçayı almadan ayırmazsak substring listenin içine düşer.
+                  val (hedefAdı, argSırası) = hedefiAyır(s.hedef)
+                  // Tanım bağlamında parantez içi PARAMETRE listesidir; yakalama kurulursa
+                  // `tanım karesi(x: Kesir)` -> `def pow(x: Kesir, 2)` olurdu.
+                  if (!tanımBağlamı) argSırası.foreach(yakalamayıKur(_, i))
                   // Üye bağlamında da: `Matematik.karekökü` -> alıcı zaten `math`, üye `sqrt`.
-                  (if (tanımBağlamı || üye) s.hedef.substring(s.hedef.lastIndexOf('.') + 1) else s.hedef) + parantezEki
+                  (if (tanımBağlamı || üye) hedefAdı.substring(hedefAdı.lastIndexOf('.') + 1) else hedefAdı) + parantezEki
                 case None =>
                   dokunulmayan(t.text) += 1
                   // Sözcükleyicinin anahtar sözcük saymadığı Türkçe sözcük (verilen) de ad olarak
@@ -333,7 +353,8 @@ object Çevirmen {
       yakalama match {
         case Some(y) if i == y.kapanış =>
           val parçalar = y.parçalar.map(_.toString.trim)
-          çıktı.append("(").append(y.sıra.map(k => parçalar(k - 1)).mkString(", ")).append(")"); yakalama = None
+          val yazılan = y.sıra.map(g => if (argümanMı(g)) parçalar(g.toInt - 1) else g.substring(1))
+          çıktı.append("(").append(yazılan.mkString(", ")).append(")"); yakalama = None
         case Some(y) if y.virgüller(i) => y.parçalar += new StringBuilder
         case Some(y)                   => y.parçalar.last.append(metin)
         case None                      => çıktı.append(metin)

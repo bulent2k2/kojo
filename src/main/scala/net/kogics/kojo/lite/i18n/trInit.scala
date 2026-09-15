@@ -378,8 +378,10 @@ object TurkishAPI
     def boy: Kesir = ta.height
     def x: Kesir = ta.x
     def y: Kesir = ta.y
-    def X = ta.x + ta.width
-    def Y = ta.y + ta.height
+    // Sağ ve üst kenar. getMaxX/getMaxY ile aynı şey (x + en, y + boy); İngilizce
+    // karşılıkları olsun diye onların üstünden yazıldı -- çevirmen kuralı buna dayanıyor.
+    def X = ta.getMaxX
+    def Y = ta.getMaxY
     // todo: more..
   }
   def yatayMerkezKonumu(uzunluk: Kesir): Kesir = tuvalAlanı.x + (tuvalAlanı.en - uzunluk) / 2

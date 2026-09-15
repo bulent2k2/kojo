@@ -1,4 +1,4 @@
-// Simulation journey, step 5/11: friction and energy loss.
+// Simulation journey, step 5/12: friction and energy loss.
 // Three new coefficients: slowing down in the air, slowing down on the ground,
 // and the energy lost on every bounce. Once the vertical speed gets small enough
 // the ball stops bouncing and starts rolling.
@@ -9,7 +9,7 @@ val (radius, gravity, bounceLoss) = (9, 0.2, 0.79)
 val (airFriction, groundFriction) = (0.999, 0.99)
 val ball = Picture.circle(radius)
 val (cb, r) = (canvasBounds, radius)
-val (start, groundLevel, left, right) = (cb.y + cb.height - r, cb.y + r, cb.x + r, cb.x + cb.width - r)
+val (start, groundLevel, left, right) = (cb.getMaxY - r, cb.y + r, cb.x + r, cb.getMaxX - r)
 draw(trans(left, start) * fillColor(yellow) -> ball)
 var (dx, dy) = (3.0, 0.0)
 animate {

@@ -256,6 +256,7 @@ trait AppMenu {
     simulationMenu.add(menuItemFor("S_FourBodies", "nbody-four.kojo"))
     simulationMenu.add(menuItemFor("S_StableTriple", "nbody-stable-triple.kojo"))
     simulationMenu.add(menuItemFor("S_SolarSystem", "nbody-solar.kojo"))
+    simulationMenu.add(menuItemFor("S_SimCollision", "bounce-collision.kojo"))
     samplesMenu.add(simulationMenu)
 
     val generativeArtMenu = newJMenu(Utils.loadString("S_GenerativeArt"))

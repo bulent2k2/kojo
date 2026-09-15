@@ -81,11 +81,9 @@ import net.kogics.kojo.lite.i18n.tr.SözlükÜreteci
   val bilinenTrEn: Map[String, String] = Map(
     "tr/addition-game.kojo" -> "PAKET: `ay.Yazıgirdisi`",
     "tr/angle-experiment.kojo" -> "ALICI: `textExtent(..).boyu` -> length (Rectangle.height gerekli)",
-    "tr/angles.kojo" -> "SARMALAYICI: `karesi(x)` = math.pow(x, 2); bilerek çevrilmiyor, görünür kalıyor",
     "tr/animated-square-creation.kojo" -> "ALICI: `yol.kondur(x, y)` GeneralPath.moveTo; kural setPosition (Resim/Kaplumbağa) diyor",
     "tr/car-ride.kojo" -> "ALICI: `mp3.durdur()` KMp3.stop; sözlük stopAnimation seçiyor",
     "tr/collidium.kojo" -> "KULLANICI: kullanıcı tanımı `doğruÇiz` ile GeoYol.doğruÇiz ikisi de lineTo oluyor, özyineleme sanılıyor",
-    "tr/estimating-pi-mc.kojo" -> "SARMALAYICI: `karesi`",
     "tr/eye-effects.kojo" -> "SARMALAYICI: `sahneIşığı(...)` dönüştürücüsünün İngilizce yalın karşılığı yok (spotLight Builtins'te kapalı)",
     "tr/fireworks-canvas.kojo" -> "KULLANICI: sınıf içi `göster(tuval)` tanımı yalın (draw), çağrısı üye (setVisible)",
     "tr/fireworks.kojo" -> "KULLANICI: sınıf içi `göster()` tanımı",
@@ -187,15 +185,24 @@ import net.kogics.kojo.lite.i18n.tr.SözlükÜreteci
     ÇeviriDoğrulama.türDenetimi("dönüştürücüler.kojo", çıktı, türkçe = false) shouldBe empty
   }
 
-  test("tek betik: angles.kojo'nun İngilizce çevirisi Kojo prelude'üyle derleniyor mu (sınır: karesi)") {
+  test("tek betik: angles.kojo'nun İngilizce çevirisi Kojo prelude'üyle derleniyor (karesi dahil)") {
     val f = new File(örneklerKökü, "tr/angles.kojo")
     assume(f.exists())
     val (çıktı, rapor) = Çevirmen.türkçedenİngilizceye(SözlükÜreteci.oku(f))
     Çevirmen.kalanAnahtarSözcükler(çıktı, Çevirmen.TürkçedenİngilizceyeYön) shouldBe empty
-    // karesi bilerek çevrilmiyor; rapor onu Türkçe kalan diye göstermeli, derleyici de yakalamalı
-    rapor.türkçeKalanlar.keySet should contain("karesi")
-    val hatalar = ÇeviriDoğrulama.türDenetimi("angles.kojo", çıktı, türkçe = false)
-    hatalar.map(_.ileti).exists(_.contains("karesi")) shouldBe true
-    hatalar.filterNot(_.ileti.contains("karesi")) shouldBe empty
+    // `karesi(x)` bir ARGÜMAN ekliyor (math.pow(x, 2)). Eskiden taşınamıyordu ve bilerek
+    // Türkçe bırakılıyordu; artık kural dosyası sabit argüman yazabiliyor: math.pow(1,'2).
+    rapor.türkçeKalanlar.keySet should not contain "karesi"
+    çıktı should include("math.pow(")
+    çıktı should not include "karesi"
+    ÇeviriDoğrulama.türDenetimi("angles.kojo", çıktı, türkçe = false) shouldBe empty
+  }
+
+  test("sabit argümanlı kural: karesi(x) -> math.pow(x, 2)") {
+    val (çıktı, _) = Çevirmen.türkçedenİngilizceye("tanım u(x: Kesir) = karesi(x) + karesi(x + 1)\n")
+    çıktı shouldBe "def u(x: Double) = math.pow(x, 2) + math.pow(x + 1, 2)\n"
+    // Tanım bağlamında parantez içi PARAMETRE listesi; oraya sabit yazılmamalı
+    val (kullanıcınınki, _) = Çevirmen.türkçedenİngilizceye("tanım karesi(x: Kesir) = x * x\ndez y = karesi(2.0)\n")
+    kullanıcınınki should include("def pow(x: Double) = x * x")
   }
 }

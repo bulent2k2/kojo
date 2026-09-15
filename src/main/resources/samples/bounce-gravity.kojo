@@ -1,4 +1,4 @@
-// Simulation journey, step 4/11: gravity.
+// Simulation journey, step 4/12: gravity.
 // The vertical speed is not constant any more: every step it drops by gravity.
 // Hitting the ground flips the sign, so the ball bounces back to exactly the same
 // height -- no energy lost. The next step adds friction and energy loss.

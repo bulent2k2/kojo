@@ -1,4 +1,4 @@
-// Simulation journey, step 8/11: a fourth body, still without types.
+// Simulation journey, step 8/12: a fourth body, still without types.
 // The same four bodies, but without the types: a separate variable for every
 // body, a separate var for every velocity component, and five helpers that split
 // the force up by angle. Read it side by side with the Four Bodies sample: same

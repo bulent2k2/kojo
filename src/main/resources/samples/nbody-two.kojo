@@ -1,4 +1,4 @@
-// Simulation journey, step 6/11: out into space.
+// Simulation journey, step 6/12: out into space.
 // The dance of two twin stars, trapped by gravity forever. No walls any more;
 // the only thing changing their speed is the pull they put on each other.
 // pos:        where the stars start: one at x,y = 40,40, the other at -40,-40

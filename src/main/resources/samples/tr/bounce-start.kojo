@@ -10,11 +10,12 @@
 // 8- Sonra dört; artık 12 ayrı değişken ve beş yardımcı
 // 9- Sonra Yöney ve Cisim sınıflarının eklenmesi: aynı benzetim, üçte bir kod
 // 10- Sonra aynı kodun başka başlangıç değerleriyle kararlı üçlü vermesi
-// 11- Ve sonunda baskın merkezî kütleli bir güneş sistemi
+// 11- Sonra baskın merkezî kütleli bir güneş sistemi
+// 12- Ve masaya dönüş: toplar artık birbirinden de sekiyor
 //
-// Örnekler > Benzetim menüsündeki on bir örnek, tam da bu sırayla.
+// Örnekler > Benzetim menüsündeki on iki örnek, tam da bu sırayla.
 //
-// Adım 1/11: en yalın hâli. Bir daire çiz, her adımda biraz kaydır.
+// Adım 1/12: en yalın hâli. Bir daire çiz, her adımda biraz kaydır.
 silVeSakla
 gridiGöster
 eksenleriGöster

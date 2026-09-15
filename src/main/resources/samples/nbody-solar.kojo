@@ -1,4 +1,4 @@
-// Simulation journey, step 11/11: one dominant central mass.
+// Simulation journey, step 11/12: one dominant central mass.
 // A sketch of a solar system: one heavy star in the middle and four small bodies
 // around it. When one mass dominates you get tidy orbits instead of three-body
 // chaos -- compare with the Three Bodies sample: almost the same code, different masses.
