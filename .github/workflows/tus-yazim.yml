@@ -18,6 +18,13 @@
 # "::error::masaüstü: ..." bu depo, "::error::ikojo: ..." öteki. Dosya yolu
 # klona göreli yazılıyor, yani bu deponun dosyaları "../src/..." görünüyor.
 #
+# TAKASIN İKİNCİ YÜZÜ: gözcü PİNLENMEMİŞ -- aşağıdaki checkout `ref:` vermiyor,
+# yani kojojs-dev'in varsayılan dalı okunuyor. Yani bu depoda tek bir commit
+# olmadan da CI kızarabilir: kuralı oradan gelen bir değişiklik sıkarsa burada
+# görünür. Bilerek böyle; pinlemek "kopya kaynağından ayrıldı" hatasını geri
+# getirir, yalnız adı değişir (pin eskir). Ama CI'ın neden kızardığını arayan
+# biri önce bunu bilsin -- son commit'e bakıp bir şey bulamayabilir.
+#
 # NE YAKALIYOR (kojojs-dev#76, #77; göç kojo#57 / kojojs-dev#74):
 #   tuşlar içindeki her snake_case val/def, @deprecated taşımalı.
 # Annotation silinirse ya da yeni bir BİRİNCİL snake_case ad eklenirse
