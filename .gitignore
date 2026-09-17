@@ -36,3 +36,9 @@ installer.i4j/updates.xml
 .weakpkg
 KojoWin.zip
 scala-en-jars/
+
+# CI'nın gözcüyü okumak için yan yana klonladığı ikojo deposu
+# (.github/workflows/tus-yazim.yml). Çalışma ağacında izlenmeden
+# durursa "üretilenler tazeyken mi" türü bir denetim eklendiğinde
+# kırmızı yanar -- kojojs-dev'de tam bu olmuştu.
+ikojo-kaynak/
