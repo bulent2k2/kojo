@@ -1,0 +1,68 @@
+# Tuş adlarının deve yazım göçü yerinde duruyor mu.
+#
+# NEDEN AYRI BİR İŞ: testler.yml tam sbt takımını koşuyor (dakikalar, 45 dk
+# zaman aşımı). Buradaki denetim saniyeler sürüyor ve JVM istemiyor; ağır
+# takımın arkasına gömülürse katkıcı yanıtı dakikalarca bekler.
+#
+# NEDEN KURAL BURADA YAZILI DEĞİL: aynı kural ikojo'da (bulent2k2/kojojs-dev)
+# da koşuyor. Betiği buraya KOPYALAMAK, bu deponun bütün gün uğraştığı hatayı
+# bir kez daha üretirdi: "kopya kaynağından sessizce ayrıldı". O yüzden betik
+# kaynağından okunuyor -- kojojs-dev klonlanıp kendi gözcüsü koşturuluyor.
+# Klon sığ: ~25 MB, ~2 saniye.
+#
+# BUNUN BİR SONUCU VAR, saklamıyoruz: betik iki dosyaya birden bakıyor, yani
+# bu iş ikojo'nun klavye.scala'sını DA yargılıyor. O dosya kojojs-dev'de her
+# PR'da ve master'da aynı gözcüyle korunuyor, yani pratikte yeşil; kırmızı
+# yanarsa ortak kural gerçekten bir yerde bozulmuş demektir. Buradaki
+# katkıcıyı yanıltmasın diye ileti hangi deponun dosyası olduğunu söylüyor:
+# "::error::masaüstü: ..." bu depo, "::error::ikojo: ..." öteki. Dosya yolu
+# klona göreli yazılıyor, yani bu deponun dosyaları "../src/..." görünüyor.
+#
+# NE YAKALIYOR (kojojs-dev#76, #77; göç kojo#57 / kojojs-dev#74):
+#   tuşlar içindeki her snake_case val/def, @deprecated taşımalı.
+# Annotation silinirse ya da yeni bir BİRİNCİL snake_case ad eklenirse
+# kırmızı yanar. Bilerek bırakılmış eskitilmiş takma adlar annotation
+# taşıdıkları için muaf -- "eskitmek silmek değil".
+name: tuş yazımı
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  tus-yazim:
+    name: tuş adları deve yazımda mı
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      # Tuş adlarında Türkçe harfler var (satır_başı, sayfa_aşağı); ileti
+      # ve dosya okuması UTF-8 olmadan bozulur.
+      LANG: C.UTF-8
+      LC_ALL: C.UTF-8
+    steps:
+      # Action'lar MAJOR etiketine sabitleniyor -- gerekçe testler.yml'de.
+      # SIRA ÖNEMLİ: yolsuz checkout çalışma dizinini TEMİZLİYOR, yani
+      # kojojs-dev klonundan önce gelmeli, yoksa onu siler.
+      - uses: actions/checkout@v7
+
+      # Gözcünün kaynağı. Genel (public) depo olduğu için varsayılan
+      # GITHUB_TOKEN yetiyor -- kojojs-dev de bu deponun klonunu aynı
+      # biçimde çekiyor, yani yol iki yönde de ölçülmüş durumda.
+      - uses: actions/checkout@v7
+        with:
+          repository: bulent2k2/kojojs-dev
+          path: ikojo-kaynak
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+
+      # Argüman: bu deponun kökü. Betik buradaki
+      # lite/i18n/tr/klavye.scala'yı "masaüstü" diye denetliyor.
+      - name: tuş adları deve yazımda mı
+        run: python3 ikojo-kaynak/araclar/tus-yazim-denetle.py .
