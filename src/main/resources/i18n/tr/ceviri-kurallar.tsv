@@ -247,3 +247,4 @@ en>tr	thatsStrokeSized	*	veKalemKalınlığıyla
 en>tr	setBorder	yalın	-	new Label { setBorder(...) }: Swing üyesi; çerçeveyiKur Türkçe arayüz sarmalayıcısında
 tr>en	eşleme	*	toMap	sarmalayıcı `Eşlem.değişmezden(d.toMap)` diyor; üreteç dış yapıcıyı görüyor, anlamlı olan argümandaki toMap. Kardeşi eşleğe zaten toMap.
 tr>en	öbekleEsnek	*	groupBy	aynı kalıp: `Eşlem.değişmezden(d.groupBy(iş))`; sonuç Eşlem, işlem groupBy.
+tr>en	varsayılanlı	*	withDefault	aynı kalıp: `Eşlem(m.withDefault(işlev))`; üretilmiş sözlükte 1-1 beraberlik (collection.mutable.Map / withDefault) alfabetik bozuluyor ve yanlış olan kazanıyor.
