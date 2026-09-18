@@ -60,8 +60,20 @@ object ÇeviriSözlüğü {
     * (ölçüldü: #60, sonra #58/#61 master'a girince; iki kez de tek değişiklik satır numarasıydı).
     * `sayı` o dosyada aynı çifti veren tanım sayısıdır: sıklık tablosu KAÇ tanımın bu hedefe
     * gittiğine bakar, dosya düzeyine inerken o bilgi kaybolmasın diye sütuna yazılır. */
-  final case class Satır(cins: String, tr: String, en: String, kaynak: String, sayı: Int = 1, not: String = "")
+  final case class Satır(cins: String, tr: String, en: String, kaynak: String, sayı: Int = 1, not: String = "") {
+    /** `not` bir İM KÜMESİ: virgülle ayrılmış sıfır ya da daha çok im ("üye", "eskitilmiş",
+      * "üye,eskitilmiş"). Tek değerli olduğu varsayımı #63'te kırıldı: eskitilmiş bir ad
+      * aynı zamanda yalnız-üye olabiliyor. Sütun eklemek yerine imi kümeye çevirmek
+      * TSV'nin şemasını (`cins tr en kaynak sayı [not]`) olduğu gibi bırakıyor. */
+    def notlar: Set[String] = if (not.isEmpty) Set.empty else not.split(',').iterator.map(_.trim).filter(_.nonEmpty).toSet
+    def notluMu(im: String): Boolean = notlar(im)
+  }
   val YalnızÜye = "üye"
+  /** Tanımın başında `@deprecated` var. EN->TR'de eskitilmiş bir Türkçe ad, eşit oylu
+    * eskitilmemiş kardeşine YENİLİR (bkz. adaylar). TR->EN'de hiçbir şey değişmez:
+    * `sil_geri` yazan eski bir Koco betiği yine çevrilebilmeli -- yani bu bir SIRALAMA
+    * ölçütü, süzgeç değil (#63). */
+  val Eskitilmiş = "eskitilmiş"
   /** Üreteç içi geçici not: tanımın gövdesi `{ ... }` bloğu, hedef ilk deyimin zinciri.
     * Zincir çözümünde Türkçe sarmalayıcı adları üstünden ilerlemez (bkz. zincirleriÇöz). */
   val Gövdeli = "gövdeli"
@@ -128,10 +140,19 @@ object ÇeviriSözlüğü {
     // superFast ve math.cos diyor; ölçüldü). En sonda ad sırası (kararlılık).
     // Dördüncü alan satırın `sayı`sı: dosya düzeyine inen kaynak sütununda çokluk orada durur,
     // `ileri -> forward` tek satırda 3 tanım demek olabilir. Satır SAYMAK yerine sayı TOPLANIR.
-    private def adaylar(çiftler: Seq[(String, String, Boolean, Int)]): Map[String, Seq[(String, Int)]] =
+    // Beşinci alan: HEDEF eskitilmiş mi (#63). Sıklıktan SONRA, sarmalayıcıdan ÖNCE bakılıyor:
+    // eşit oyda eskitilmemiş kardeş kazansın, ama daha çok kaynağı olan bir hedefi
+    // eskitilmişlik yenmesin -- sıklık hâlâ baskın ölçüt.
+    // Yalnız EN->TR'de dolu: orada hedef Türkçe addır ve `back_space` gibi bir adı ÜRETMEK
+    // istemiyoruz. TR->EN'de hedef İngilizce ve eskitilmişliğini bilmiyoruz; ayrıca eskitilmiş
+    // Türkçe adı ÇEVİREBİLMEK gerekiyor, o yön kaynağa bakar, hedefe değil.
+    private def adaylar(çiftler: Seq[(String, String, Boolean, Int, Boolean)]): Map[String, Seq[(String, Int)]] =
       çiftler.groupBy(_._1).map { case (ad, ss) =>
-        val sayım = ss.groupBy(_._2).map { case (hedef, hs) => (hedef, hs.map(_._4).sum, hs.filter(_._3).map(_._4).sum) }
-        ad -> sayım.toSeq.sortBy { case (hedef, n, sarmalayıcı) => (-n, -sarmalayıcı, hedef) }.map { case (hedef, n, _) => (hedef, n) }
+        val sayım = ss.groupBy(_._2).map { case (hedef, hs) =>
+          (hedef, hs.map(_._4).sum, hs.filter(_._3).map(_._4).sum, hs.exists(_._5)) }
+        ad -> sayım.toSeq
+          .sortBy { case (hedef, n, sarmalayıcı, eskitilmiş) => (-n, eskitilmiş, -sarmalayıcı, hedef) }
+          .map { case (hedef, n, _, _) => (hedef, n) }
       }
     private def sarmalayıcıdan(s: Satır) = !s.kaynak.startsWith("data.scala")
 
@@ -143,23 +164,23 @@ object ÇeviriSözlüğü {
       case _                     => Nil
     }
 
-    private val trAdaylar = adaylar(satırlar.map(s => (s.tr, s.en, sarmalayıcıdan(s), s.sayı)))
-    private val enAdaylar = adaylar(satırlar.map(s => (s.en, s.tr, sarmalayıcıdan(s), s.sayı)))
+    private val trAdaylar = adaylar(satırlar.map(s => (s.tr, s.en, sarmalayıcıdan(s), s.sayı, false)))
+    private val enAdaylar = adaylar(satırlar.map(s => (s.en, s.tr, sarmalayıcıdan(s), s.sayı, s.notluMu(Eskitilmiş))))
     // Yalın bağlam için: derleyicinin yalın çözemediği İngilizce hedefler dışarıda.
-    private val yalınSatırlar = satırlar.filterNot(_.not == YalnızÜye)
-    private val trAdaylarYalın = adaylar(yalınSatırlar.map(s => (s.tr, s.en, sarmalayıcıdan(s), s.sayı)))
-    private val enAdaylarYalın = adaylar(yalınSatırlar.map(s => (s.en, s.tr, sarmalayıcıdan(s), s.sayı)))
+    private val yalınSatırlar = satırlar.filterNot(_.notluMu(YalnızÜye))
+    private val trAdaylarYalın = adaylar(yalınSatırlar.map(s => (s.tr, s.en, sarmalayıcıdan(s), s.sayı, false)))
+    private val enAdaylarYalın = adaylar(yalınSatırlar.map(s => (s.en, s.tr, sarmalayıcıdan(s), s.sayı, s.notluMu(Eskitilmiş))))
     // `kuvveti -> math.pow`: ters yönde tek jeton `pow` gelir, alıcısı `math`. Nitelenmiş
     // hedefler alıcı bağlamıyla (`math.`) ayrıca dizinlenir; `math` kendisi `Matematik`e
     // çevrilir, üye buradan `kuvveti` olur. Ölçüldü: yoksa `Matematik.pow` kalıyordu.
     private val enAlıcılıAdaylar = adaylar(satırlar.collect {
-      case s if s.en.contains('.') && s.not != TakmaAd => (s.en.substring(0, s.en.lastIndexOf('.') + 1) + "\u0000" + s.en.substring(s.en.lastIndexOf('.') + 1), s.tr, sarmalayıcıdan(s), s.sayı)
+      case s if s.en.contains('.') && !s.notluMu(TakmaAd) => (s.en.substring(0, s.en.lastIndexOf('.') + 1) + "\u0000" + s.en.substring(s.en.lastIndexOf('.') + 1), s.tr, sarmalayıcıdan(s), s.sayı, s.notluMu(Eskitilmiş))
     })
     // `Resim.dizi -> picStack`: Türkçe nesnenin üyesi İngilizce'de YALIN. Üreteç böyle satırların
     // tr'sini nitelenmiş yazar; buradan TR->EN alıcılı arama `^picStack` (alıcı yutulur),
     // EN->TR ise enAdaylar üstünden zaten `Resim.dizi` verir.
     private val trAlıcılıAdaylar = adaylar(satırlar.collect {
-      case s if s.tr.contains('.') => (s.tr.substring(0, s.tr.lastIndexOf('.') + 1) + "\u0000" + s.tr.substring(s.tr.lastIndexOf('.') + 1), AlıcıylaBirlikte + s.en, sarmalayıcıdan(s), s.sayı)
+      case s if s.tr.contains('.') => (s.tr.substring(0, s.tr.lastIndexOf('.') + 1) + "\u0000" + s.tr.substring(s.tr.lastIndexOf('.') + 1), AlıcıylaBirlikte + s.en, sarmalayıcıdan(s), s.sayı, false)
     })
     private def parantezsizMi(k: Kural) = k.not.contains(Parantezsiz)
 
@@ -220,7 +241,7 @@ object ÇeviriSözlüğü {
  * sözcükleri hem dizgi/yorum sınırlarını doğru biliyor.
  */
 object SözlükÜreteci {
-  import ÇeviriSözlüğü.{Satır, YalnızÜye, TakmaAd, Gövdeli}
+  import ÇeviriSözlüğü.{Satır, YalnızÜye, TakmaAd, Gövdeli, Eskitilmiş}
 
   /** Sarmalayıcı olmayan dosyalar: sözlük tabloları, çıktı çevirisi, yardım metni... */
   val atlananDosyalar = Set("dict.scala", "translate.scala", "help.scala", "templates.scala",
@@ -284,6 +305,29 @@ object SözlükÜreteci {
         i += 1
       }
       ts.length - 1
+    }
+
+    /**
+     * ts(i0)'deki bildirimin başında `@deprecated` var mı (#63).
+     *
+     * Jeton dizisinde boşluk ve yorum süzülmüş durumda, yani açıklama doğrudan bildirimin
+     * önünde duruyor: `@ deprecated ( "..." , "..." ) val sil_geri`. Parantezli ve
+     * parantezsiz iki biçim de var; değiştiriciler (private, lazy, override) araya girebilir.
+     */
+    def eskitilmişMi(i0: Int): Boolean = {
+      var i = i0 - 1
+      while (i >= 0 && ts(i).tokenType.isKeyword && !bildirimTürleri(ts(i).tokenType)) i -= 1
+      if (i >= 0 && kapayanlar(ts(i).tokenType)) {
+        var derinlik = 0
+        var açanBulundu = false
+        while (i >= 0 && !açanBulundu) {
+          if (kapayanlar(ts(i).tokenType)) derinlik += 1
+          else if (açanlar(ts(i).tokenType)) { derinlik -= 1; if (derinlik == 0) açanBulundu = true }
+          if (!açanBulundu) i -= 1
+        }
+        i -= 1
+      }
+      i >= 1 && ts(i).text == "deprecated" && ts(i - 1).tokenType == Tokens.AT
     }
 
     /** ts(i)'deki çağrı parantezinin içinde tanımın parametrelerinden biri geçiyor mu. */
@@ -432,7 +476,8 @@ object SözlükÜreteci {
             zincir(e + 1, params).foreach { case (en, _) =>
               if (en != sonraki.text && !params(en) && !yerelDeğer && sarmalayıcıAdı(sonraki.text) && hedefAdı(en)) {
                 val trAdı = if (kapsayıcıNesne.contains("Resim") && !en.contains('.') && cins == "def") "Resim." + sonraki.text else sonraki.text
-                sonuç += Satır(cins, trAdı, en, kaynak, not = if (gövdeli) Gövdeli else "")
+                val imler = Seq(if (gövdeli) Gövdeli else "", if (eskitilmişMi(i)) Eskitilmiş else "").filter(_.nonEmpty)
+                sonuç += Satır(cins, trAdı, en, kaynak, not = imler.mkString(","))
               }
             }
           }
@@ -527,7 +572,7 @@ object SözlükÜreteci {
     // çıkıyor ve kullanıcının `tanım üçgen` tanımı `def repeat` oluyordu (ölçüldü:
     // sierpinski-tri.kojo). Gövdeli satır yalnız doğrudan İngilizce hedefe bağlanır.
     ham.flatMap { s =>
-      if (s.not == Gövdeli) { if (hedefi.contains(s.en)) None else çöz(s.en, 1, Set(s.tr)).map(en => s.copy(en = en, not = "")) }
+      if (s.notluMu(Gövdeli)) { if (hedefi.contains(s.en)) None else çöz(s.en, 1, Set(s.tr)).map(en => s.copy(en = en, not = "")) }
       else çöz(s.en, 4, Set(s.tr)).map(en => s.copy(en = en))
     }
   }
@@ -659,7 +704,7 @@ object SözlükÜreteci {
     // sözlükten düşer. Bu tek adım, kaynakların birbiriyle çelişen tercihlerini eler.
     val sondalar = çözülmüş.map(s => (s.en, s.cins == "type")).distinct
     val çözülenler = ÇeviriDoğrulama.yalınÇözülenler(sondalar, türkçe = false)
-    birleştir(çözülmüş.map(s => if (çözülenler(s.en)) s else s.copy(not = YalnızÜye)))
+    birleştir(çözülmüş.map(s => if (çözülenler(s.en)) s else s.copy(not = (s.notlar + YalnızÜye).toSeq.sorted.mkString(","))))
   }
 
   /** Üretim boyunca `kaynak` satır numarası taşır (hangi tanım? -- ayıklarken gerekiyor);
@@ -694,7 +739,7 @@ object SözlükÜreteci {
   def main(args: Array[String]): Unit = {
     val kök = new File(args.headOption.getOrElse("."))
     val satırlar = çıkar(kök)
-    println(s"derleyici sondası: ${satırlar.count(_.not == ÇeviriSözlüğü.YalnızÜye)} satır yalnız üye bağlamında")
+    println(s"derleyici sondası: ${satırlar.count(_.notluMu(ÇeviriSözlüğü.YalnızÜye))} satır yalnız üye bağlamında")
     val çıktı = new File(kök, "src/main/resources" + ÇeviriSözlüğü.sözlükYolu)
     val eski = if (çıktı.exists()) oku(çıktı) else ""
     val yeniMetin = tsv(satırlar)
