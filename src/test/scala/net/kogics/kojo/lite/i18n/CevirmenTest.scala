@@ -115,6 +115,33 @@ import net.kogics.kojo.lite.i18n.tr.dict
     tr2en("sil()\nresim.sil()") shouldBe "clear()\nresim.erase()"
   }
 
+  test("saydamlık: arity'ye göre ayrılıyor -- üye( opacityMod, üye opacity, yalın opac (#75)") {
+    // Üç aday da n=1 olduğu için karar alfabetiğe kalıyordu ve Resim'in üyesi OLMAYAN
+    // `opac` kazanıyordu (yalın yazılımcık komutu için üretilmiş satır). İki İngilizce
+    // yöntem yalnız arity ile ayrıldığı için ad düzeyinde tek kural yetmiyor; ölçüldü:
+    //   üye opacityMod -> `r.saydamlık` kırık ("missing argument list")
+    //   üye opacity    -> `r.saydamlık(0.5)` kırık ("Double does not take parameters")
+    // `r` küçük harfle kullanıcının adı, sözlükte yok: olduğu gibi kalır.
+    tr2en("r.saydamlık(0.5)\nr.saydamlık\nsaydamlık(0.5)") shouldBe
+      "r.opacityMod(0.5)\nr.opacity\nopac(0.5)"
+  }
+
+  test("üye( bağlamı AYNI SATIRDA aranıyor: sonraki satırın ( ile başlaması çağrı değil (#75)") {
+    // sonrakiAnlamlı satır sonunu atlıyor, yani satır sonundaki bir üye adı bir sonraki
+    // satırın `(` ile başlamasını kendi argüman listesi sanardı. Scala 2'de bunlar iki
+    // ayrı deyim; arity ayrımı bu yüzden satır numarasına da bakıyor.
+    tr2en("r.saydamlık\n(0.5)") shouldBe "r.opacity\n(0.5)"
+  }
+
+  test("üye( bağlamı ÜYE tablosunu kullanmayı sürdürüyor (#75 tuzağı)") {
+    // `üye(` bağlamı üyeBağlamı()'na eklenmezse ARGÜMANLI her üye çağrısı yalın tabloya
+    // düşer ve `üye` işaretli satırlar -- sözlüğün büyük bölümü -- aday olmaktan çıkar.
+    // Sessiz ve geniş bir gerileme: kırma sınamasında iki örnek-gövdesi savı birden
+    // kırıldı. Bu sav onu tek bir adla, hızlıca çiviliyor:
+    // varsayılanDeğerle yalnız `üye` işaretli bir satırdan geliyor ve argüman alıyor.
+    tr2en("m.varsayılanDeğerle(0)") shouldBe "m.withDefaultValue(0)"
+  }
+
   test("götür/döndür: yalın dönüştürücü trans/rot, üye translate/rotate") {
     tr2en("götür(10, 0) -> r\nr.götür(10, 0)\ndöndür(30) -> r\nr.döndür(30)") shouldBe
       "trans(10, 0) -> r\nr.translate(10, 0)\nrot(30) -> r\nr.rotate(30)"
@@ -223,7 +250,12 @@ import net.kogics.kojo.lite.i18n.tr.dict
   test("ceviri-kurallar.tsv: geçerli yön/bağlam, yinelenen anahtar yok") {
     val kurallar = Çevirmen.sözlük.kurallar
     kurallar.map(_.yön).toSet should contain only ("tr>en", "en>tr")
-    kurallar.map(_.bağlam).filterNot(b => b == "yalın" || b == "üye" || b == "alıcı" || b == "alıcı(" || b == "*" || b.endsWith(".")) shouldBe empty
+    // Sabitlerden okunuyor, elle yazılmış dizgilerden değil: `üye(` eklenince (#75) bu liste
+    // eskidi ve sav kırmızıya döndü -- doğru yakalama ama listeyi iki yerde tutmak gereksiz.
+    val geçerliBağlamlar = Set(ÇeviriSözlüğü.BağlamYalın, ÇeviriSözlüğü.BağlamÜye,
+      ÇeviriSözlüğü.BağlamÜyeÇağrı, ÇeviriSözlüğü.BağlamAlıcı, ÇeviriSözlüğü.BağlamAlıcıÇağrı,
+      ÇeviriSözlüğü.BağlamHepsi)
+    kurallar.map(_.bağlam).filterNot(b => geçerliBağlamlar(b) || b.endsWith(".")) shouldBe empty
     val anahtarlar = kurallar.map(k => (k.yön, k.ad, k.bağlam))
     anahtarlar.diff(anahtarlar.distinct) shouldBe empty
   }
