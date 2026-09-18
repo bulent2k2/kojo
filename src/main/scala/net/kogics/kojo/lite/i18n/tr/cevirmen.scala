@@ -298,7 +298,20 @@ object Çevirmen {
             case None =>
               // Sıra: alıcıya özel düz kural (`tuvalAlanı.` -> height), sonra alıcı/üye/yalın bağlamı.
               val alıcıAdı = if (üye) öncekininÖncekisi.filter(tanımlayıcı).map(_.text + ".") else None
-              val bağlam = if (üye) ÇeviriSözlüğü.BağlamÜye else if (çağrılanınAlıcısı) ÇeviriSözlüğü.BağlamAlıcıÇağrı else if (alıcıOlarak) ÇeviriSözlüğü.BağlamAlıcı else ÇeviriSözlüğü.BağlamYalın
+              // `r.saydamlık(0.5)` ile `r.saydamlık` arity'si farklı iki İngilizce yönteme
+              // gidiyor (opacityMod / opacity); bağlamda ayırmazsak ad düzeyinde kural
+              // ikisini ayırt edemez (sorun #75). AYNI SATIRDA aranıyor: sonrakiAnlamlı
+              // satır sonunu atlıyor, yani `r.saydamlık` satır sonundayken bir SONRAKİ
+              // satırın `(` ile başlaması çağrı sanılırdı.
+              val üyeÇağrısı = üye && sonrakiAnlamlı(i).exists { n =>
+                jetonlar(n).tokenType == Tokens.LPAREN && satırNo(jetonlar(n)) == satırNo(t)
+              }
+              val bağlam =
+                if (üyeÇağrısı) ÇeviriSözlüğü.BağlamÜyeÇağrı
+                else if (üye) ÇeviriSözlüğü.BağlamÜye
+                else if (çağrılanınAlıcısı) ÇeviriSözlüğü.BağlamAlıcıÇağrı
+                else if (alıcıOlarak) ÇeviriSözlüğü.BağlamAlıcı
+                else ÇeviriSözlüğü.BağlamYalın
               // `tanım dereceye(k) = ...`, `tanım araba(imge: Yazı)`: tanımlanan ad nitelenmiş olamaz
               // (`def math.toDegrees`, `araba(Picture.image: String)` ayrıştırılmaz -- ölçüldü:
               // angles.kojo, car-ride.kojo). Önünde def/val/... ya da ardında `:` varsa tanım bağlamı;

@@ -97,6 +97,20 @@ object ÇeviriSözlüğü {
   /** Bağlam "alıcı(": çağrılan bir üyenin alıcısı (`ColorMaker.hsla(...)` içindeki ColorMaker).
     * Kural yoksa "alıcı"ya, o da yoksa "*"a düşer. */
   val BağlamAlıcıÇağrı = "alıcı("
+  /**
+   * Bağlam "üye(": ARGÜMAN LİSTESİYLE çağrılan üye (`r.saydamlık(0.5)`), argümansız
+   * kullanımdan (`r.saydamlık`) ayrı. Kural yoksa "üye"ye, o da yoksa "*"a düşer.
+   *
+   * NEDEN VAR: bir Türkçe ad, arity'si farklı iki İngilizce yönteme gidebiliyor ve
+   * ad düzeyinde kural bunu ayırt edemiyordu. Ölçülen örnek `saydamlık`
+   * (resim.scala:261 argümanlı -> opacityMod, :308 argümansız -> opacity): üç aday da
+   * n=1, karar alfabetiğe kalıyor ve `opac` kazanıyordu -- Resim'in üyesi olmayan,
+   * yalın yazılımcık komutu için üretilmiş satır. Tek bir `üye` kuralı yazmak yarısını
+   * bozuyordu, ölçüldü (sorun #75):
+   *   üye opacityMod -> `r.saydamlık` kırık ("missing argument list")
+   *   üye opacity    -> `r.saydamlık(0.5)` kırık ("Double does not take parameters")
+   */
+  val BağlamÜyeÇağrı = "üye("
 
   private def alanlar(tsv: String): Iterator[Array[String]] =
     tsv.linesIterator.filterNot(l => l.trim.isEmpty || l.startsWith("#")).map(_.split('\t'))
@@ -169,6 +183,7 @@ object ÇeviriSözlüğü {
     private def kural(yön: String, ad: String, bağlam: String): Option[Kural] =
       kurallar.find(k => k.yön == yön && k.ad == ad && k.bağlam == bağlam)
         .orElse(if (bağlam == BağlamAlıcıÇağrı) kurallar.find(k => k.yön == yön && k.ad == ad && k.bağlam == BağlamAlıcı) else None)
+        .orElse(if (bağlam == BağlamÜyeÇağrı) kurallar.find(k => k.yön == yön && k.ad == ad && k.bağlam == BağlamÜye) else None)
         .orElse(if (bağlam.endsWith(".")) None else kurallar.find(k => k.yön == yön && k.ad == ad && k.bağlam == BağlamHepsi))
 
     // Alıcıya özel arama (`resim.`) yalnız KURAL bilir; kural yoksa None döner ki çağıran
@@ -184,7 +199,11 @@ object ÇeviriSözlüğü {
         case None                           => tablo.get(ad).map(as => Seçim(as.head._1, ciddiAlternatifler(as)))
       }
 
-    private def üyeBağlamı(bağlam: String) = bağlam == BağlamÜye || bağlam.endsWith(".")
+    // DİKKAT: "üye(" de üye bağlamıdır. Burayı atlamak sessiz ve geniş bir gerileme olurdu:
+    // ARGÜMANLI her üye çağrısı yalın tabloya (trAdaylarYalın) düşer ve `üye` işaretli
+    // satırlar -- sözlüğün büyük bölümü -- aday olmaktan çıkardı.
+    private def üyeBağlamı(bağlam: String) =
+      bağlam == BağlamÜye || bağlam == BağlamÜyeÇağrı || bağlam.endsWith(".")
     /** Bu ad için bu bağlamda açık bir "çevirme" (-) kuralı var mı? Yön: "tr>en" | "en>tr". */
     def çevrilmez(yön: String, ad: String, bağlam: String): Boolean = kural(yön, ad, bağlam).exists(_.hedef == Çevirme)
     def türkçedenİngilizceye(ad: String, bağlam: String): Option[Seçim] =
