@@ -187,6 +187,59 @@ import net.kogics.kojo.lite.i18n.tr.dict
     Çevirmen.çevir("kosinüs(1)", TürkçedenİngilizceyeYön, s)._1 shouldBe "math.cos(1)"
   }
 
+  // ---- eskitilmiş adlar (#63) ----------------------------------------------
+  //
+  // EN->TR'de eskitilmiş bir Türkçe ad ÜRETİLMEMELİ: çevrilen betik derleniyor ama
+  // anında eskitme uyarısı veriyor ve öğrenciye tam da bıraktığımız yazımı öğretiyor.
+  // Sorun yalnız EŞİTLİK hallerinde çıkıyor -- tuş adlarında eşitlik kural, çünkü her ad
+  // tek bir `val`. Çare süzgeç DEĞİL sıralama ölçütü: eskitilmiş ad TR->EN'de kalmalı.
+
+  test("eşitlikte eskitilmemiş ad eskitilmişi yener (#63)") {
+    import ÇeviriSözlüğü.{Satır, Eskitilmiş}
+    val s = new ÇeviriSözlüğü.Sözlük(
+      Seq(
+        Satır("val", "back_space", "backSpace", "klavye.scala", 1, Eskitilmiş),
+        Satır("val", "silGeri", "backSpace", "klavye.scala")
+      ), Nil)
+    // Adlar KAYDIN kendi durumu: alfabetik sıra `back_space`i ('b') `silGeri`den ('s')
+    // önce koyuyor, yani ölçüt olmasa ESKİTİLMİŞ ad kazanır.
+    // DİKKAT: ilk yazdığımda `sil_geri`/`silGeri` seçmiştim ve sav mutasyonda YEŞİL kaldı --
+    // orada alfabetik sıra zaten doğruyu seçiyor ('G' 71 < '_' 95), yani sav doğru şeyi
+    // iddia ediyor ama kırılamıyordu.
+    Çevirmen.çevir("keys.backSpace", İngilizcedenTürkçeyeYön, s)._1 shouldBe "keys.silGeri"
+  }
+
+  test("eskitilmiş ad TR->EN'de HÂLÂ çevriliyor: ölçüt süzgeç değil (#63)") {
+    import ÇeviriSözlüğü.{Satır, Eskitilmiş}
+    val s = new ÇeviriSözlüğü.Sözlük(
+      Seq(
+        Satır("val", "sil_geri", "backSpace", "klavye.scala", 1, Eskitilmiş),
+        Satır("val", "silGeri", "backSpace", "klavye.scala")
+      ), Nil)
+    // Eski bir Koco betiği `sil_geri` yazmış olabilir; çevrilebilmeli.
+    Çevirmen.çevir("keys.sil_geri", TürkçedenİngilizceyeYön, s)._1 shouldBe "keys.backSpace"
+  }
+
+  test("sıklık eskitilmişliği yener: ölçüt -n'den SONRA bakıyor (#63)") {
+    import ÇeviriSözlüğü.{Satır, Eskitilmiş}
+    val s = new ÇeviriSözlüğü.Sözlük(
+      Seq(
+        Satır("val", "çokKaynaklı", "x", "a.scala", 3, Eskitilmiş),
+        Satır("val", "azKaynaklı", "x", "b.scala", 1)
+      ), Nil)
+    // Eskitilmişlik sıklığın ÖNÜNE geçseydi `azKaynaklı` kazanırdı. Sıklık baskın
+    // ölçüt kalmalı, yoksa iyi belgelenmiş bir ad tek kaynaklı bir kardeşe yenilir.
+    Çevirmen.çevir("x", İngilizcedenTürkçeyeYön, s)._1 shouldBe "çokKaynaklı"
+  }
+
+  test("gerçek sözlükle: backSpace/pageUp deve yazıma çevriliyor (#63 reprosu)") {
+    en2tr("val a = keys.backSpace\nval b = keys.pageUp") shouldBe "dez a = keys.silGeri\ndez b = keys.sayfaYukarı"
+  }
+
+  test("gerçek sözlükle: eskitilmiş yılan yazım TR->EN'de çevriliyor (#63)") {
+    tr2en("dez a = keys.sil_geri\ndez b = keys.sayfa_yukarı") shouldBe "val a = keys.backSpace\nval b = keys.pageUp"
+  }
+
   test("alıcı bağlamı: renk adı Renkler'den, yapıcı çağrısı Renk'ten") {
     en2tr("val a = ColorMaker.khaki\nval b = ColorMaker.hsla(1, 2, 3, 4)") shouldBe "dez a = Renkler.haki\ndez b = Renk.adas(1, 2, 3, 4)"
   }

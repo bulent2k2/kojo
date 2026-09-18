@@ -393,11 +393,11 @@ def	anahtarKümesi	keySet	eslem.scala	2	üye
 def	anahtarYineleyici	keysIterator	eslem.scala	2	üye
 def	anahtarlar	keys	eslem.scala	2	üye
 def	anahtarlarıEle	filterKeys	eslem.scala	2	üye
-def	araEkle	insert	dizik.scala	1	üye
-def	araEkle	insert	kuyruk.scala	1	üye
-def	araEkle	insert	yazi.scala	1	üye
-def	araEkleHepsini	insertAll	dizik.scala	1	üye
-def	araEkleHepsini	insertAll	yazi.scala	1	üye
+def	araEkle	insert	dizik.scala	1	eskitilmiş,üye
+def	araEkle	insert	kuyruk.scala	1	eskitilmiş,üye
+def	araEkle	insert	yazi.scala	1	eskitilmiş,üye
+def	araEkleHepsini	insertAll	dizik.scala	1	eskitilmiş,üye
+def	araEkleHepsini	insertAll	yazi.scala	1	eskitilmiş,üye
 def	aralık	range	miskindizin.scala	2	üye
 def	aralığıSil	delete	yazi.scala	1	üye
 def	arayüz	Picture.widget	resim.scala	1
@@ -444,12 +444,12 @@ def	açıÖlçeriGöster	showProtractor	trInit.scala	1
 def	ağırlıklıToplam	lerp	yoney2b.scala	1	üye
 def	aşağıdakiÇiniyeTaşı	moveToTileBelow	cinidunyasi.scala	1	üye
 def	aşağıdaÇiniVarMı	hasTileBelow	cinidunyasi.scala	1	üye
-val	back_space	backSpace	klavye.scala	1	üye
+val	back_space	backSpace	klavye.scala	1	eskitilmiş,üye
 val	batı	WEST	arayuz.scala	1	üye
 def	batı	setHeading	trInit.scala	1
 def	başaDön	closePath	geo.scala	1	üye
-def	başaEkle	prepend	dizik.scala	1	üye
-def	başaEkleHepsini	prependAll	dizik.scala	1	üye
+def	başaEkle	prepend	dizik.scala	1	eskitilmiş,üye
+def	başaEkleHepsini	prependAll	dizik.scala	1	eskitilmiş,üye
 def	başaKoy	prepend	kuyruk.scala	1	üye
 def	başarılı	successful	gelecek.scala	1	üye
 def	başarısız	failed	gelecek.scala	1	üye
@@ -1156,8 +1156,8 @@ def	hepsiDoğruMu	forall	miskindizin.scala	1	üye
 def	hepsiDoğruMu	forall	yazi.scala	1	üye
 def	hepsiDoğruMu	forall	yineleyici.scala	1	üye
 def	hepsiDoğruMu	forall	yoney.scala	1	üye
-def	hepsiniEkle	addAll	dizik.scala	1	üye
-def	hepsiniEkle	addAll	kuyruk.scala	2	üye
+def	hepsiniEkle	addAll	dizik.scala	1	eskitilmiş,üye
+def	hepsiniEkle	addAll	kuyruk.scala	2	eskitilmiş,üye
 def	hepsiniHesapla	force	miskindizin.scala	1	üye
 def	hepsiÇıkarılmış	removedAll	eslem.scala	1	üye
 def	hepsiÇıkarılmış	removedAll	kume.scala	1	üye
@@ -1374,7 +1374,7 @@ def	kalemiKaldır	penUp	trInit.scala	1
 def	kalemiKapa	setNoPen	resim.scala	1
 def	kalemiİndir	penDown	trInit.scala	1
 def	kalemİnikMi	down	trInit.scala	1	üye
-def	kalta	fold	eslem.scala	2	üye
+def	kalta	fold	eslem.scala	2	eskitilmiş,üye
 val	kalın	BoldFont	trInit.scala	1
 def	kapalı	inclusive	aralik.scala	1	üye
 def	kapasitesi	capacity	yazi.scala	1	üye
@@ -1639,8 +1639,8 @@ def	oynatSahneİçinde	movePlayerWithinStage	kumanda.scala	2	üye
 def	oyunSüresiniGeriyeSayarakGöster	showGameTimeCountdown	trInit.scala	1
 def	oyunSüresiniGöster	showGameTime	trInit.scala	1
 def	pNokta	pnode	resim.scala	1	üye
-val	page_down	pageDown	klavye.scala	1	üye
-val	page_up	pageUp	klavye.scala	1	üye
+val	page_down	pageDown	klavye.scala	1	eskitilmiş,üye
+val	page_up	pageUp	klavye.scala	1	eskitilmiş,üye
 def	paralel	par	dizin.scala	1	üye
 def	parlaklık	sat	resim.scala	1
 def	parlaklık	satMod	resim.scala	1
@@ -1709,8 +1709,8 @@ val	sarı	yellow	renk.scala	1
 val	satırBaşı	home	klavye.scala	1
 val	satırSonu	end	klavye.scala	1	üye
 def	satırSonunuAt	stripLineEnd	yazi.scala	1	üye
-val	satır_başı	home	klavye.scala	1
-val	satır_sonu	end	klavye.scala	1	üye
+val	satır_başı	home	klavye.scala	1	eskitilmiş
+val	satır_sonu	end	klavye.scala	1	eskitilmiş,üye
 def	satırlar	linesIterator	yazi.scala	1	üye
 def	satıroku	readln	data.scala	1
 def	satıroku	readln	trInit.scala	1
@@ -1735,8 +1735,8 @@ def	saydamlıkOranınıKur	opacityMod	resim.scala	1	üye
 def	saydamlığıKur	setOpacity	resim.scala	1	üye
 val	sayfaAşağı	pageDown	klavye.scala	1	üye
 val	sayfaYukarı	pageUp	klavye.scala	1	üye
-val	sayfa_aşağı	pageDown	klavye.scala	1	üye
-val	sayfa_yukarı	pageUp	klavye.scala	1	üye
+val	sayfa_aşağı	pageDown	klavye.scala	1	eskitilmiş,üye
+val	sayfa_yukarı	pageUp	klavye.scala	1	eskitilmiş,üye
 def	sayı	size	dizim.scala	1
 def	sayı	size	eslem.scala	2
 def	sayıMı	isDigit	data.scala	1	üye
@@ -1802,7 +1802,7 @@ def	silVeSakla	clear	trInit.scala	1
 def	silVeSakla	cleari	data.scala	1
 def	silVeÇizimBiriminiKur	clearWithUL	data.scala	1
 def	silVeÇizimBiriminiKur	clearWithUL	trInit.scala	1
-val	sil_geri	backSpace	klavye.scala	1	üye
+val	sil_geri	backSpace	klavye.scala	1	eskitilmiş,üye
 def	silipSakla	clear	trInit.scala	1
 def	sinüs	math.sin	matematik.scala	1
 def	sinüs	sin	data.scala	1	üye
@@ -2450,8 +2450,8 @@ def	önüneEkleHepsini	prependedAll	yazi.scala	1	üye
 def	önüneEkleHepsini	prependedAll	yoney.scala	1	üye
 def	örgü	weave	resim.scala	1
 def	ötele	trans	resim.scala	6
-def	öteleme	trans	resim.scala	1
-def	öteleme	trans	trInit.scala	1
+def	öteleme	trans	resim.scala	1	eskitilmiş
+def	öteleme	trans	trInit.scala	1	eskitilmiş
 def	üste	above	resim.scala	1	üye
 def	üzerinde	over	resim.scala	1	üye
 def	üçgenDöşeme	triangulate	trInit.scala	1
