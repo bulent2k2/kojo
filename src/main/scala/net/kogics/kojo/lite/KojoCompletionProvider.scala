@@ -125,10 +125,18 @@ class KojoCompletionProvider(execSupport: CodeExecutionSupport) extends Completi
     }
     lazy val qualifiedName = s"${ownerName}.${completion.name}"
 
-    def knownCompletion = knownOwners contains ownerName
+    // In the Turkish locale, members of the tr package count as "known" owners too
+    // (see i18n/tr/package.scala); outside it, türkçeSahipMi is always false.
+    def türkçeSahip = net.kogics.kojo.lite.i18n.tr.türkçeSahipMi(completion.owner)
 
+    def knownCompletion = (knownOwners contains ownerName) || türkçeSahip
+
+    // specialOwner: when a qualified name finds no help/template, fall back to the
+    // PLAIN name. Turkish needs this: help entries are keyed by plain name so that
+    // e.g. "katla" (fold) gives the same text whether the owner is Dizi or Küme.
     def specialOwner =
-      ownerName.startsWith("Turtle") || ownerName.startsWith("VertexShapeSupport") || ownerName.startsWith("TurkishAPI")
+      ownerName.startsWith("Turtle") || ownerName.startsWith("VertexShapeSupport") ||
+        ownerName.startsWith("TurkishAPI") || türkçeSahip
 
     def knownMethodTemplate: Option[String] = {
       //      println(s"owner for ${completion.name} -- ${completion.owner}")

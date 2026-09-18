@@ -47,6 +47,7 @@ object TurkishAPI
     with tr.ParalelDiziYöntemleri
     with tr.PartialFunctionMethodsInTurkish
     with tr.QueueMethodsInTurkish
+    with tr.StackMethodsInTurkish
     with tr.RangeMethodsInTurkish
     with tr.RenkYöntemleri
     with tr.SayıYöntemleri
@@ -58,6 +59,8 @@ object TurkishAPI
     with tr.TakvimVeZamanYöntemleri
     with tr.TuvalÇizimYöntemleri
     with tr.TürÇevirileri
+    with tr.YineleyiciYöntemleri
+    with tr.İkisindenBiriYöntemleri
     with tr.UrlInTurkish
     with tr.VectorMethodsInTurkish {
 
@@ -375,8 +378,10 @@ object TurkishAPI
     def boy: Kesir = ta.height
     def x: Kesir = ta.x
     def y: Kesir = ta.y
-    def X = ta.x + ta.width
-    def Y = ta.y + ta.height
+    // Sağ ve üst kenar. getMaxX/getMaxY ile aynı şey (x + en, y + boy); İngilizce
+    // karşılıkları olsun diye onların üstünden yazıldı -- çevirmen kuralı buna dayanıyor.
+    def X = ta.getMaxX
+    def Y = ta.getMaxY
     // todo: more..
   }
   def yatayMerkezKonumu(uzunluk: Kesir): Kesir = tuvalAlanı.x + (tuvalAlanı.en - uzunluk) / 2
@@ -390,6 +395,8 @@ object TurkishAPI
   def yaklaş(oran: Kesir, xMerkez: Kesir, yMerkez: Kesir): Birim = rb.tCanvas.zoom(oran, xMerkez, yMerkez)
   def yaklaşXY(xOran: Kesir, yOran: Kesir, xMerkez: Kesir, yMerkez: Kesir): Birim =
     rb.tCanvas.zoomXY(xOran, yOran, xMerkez, yMerkez)
+  def tuvaliYakınlaştır(xOran: Kesir, yOran: Kesir, xMerkez: Kesir, yMerkez: Kesir): Birim =
+    rb.tCanvas.zoomXY(xOran, yOran, xMerkez, yMerkez)
   def yaklaşmayıSil(): Birim = rb.tCanvas.resetPanAndZoom()
   def yaklaşmayaİzinVerme(): Birim = rb.tCanvas.disablePanAndZoom()
   def tuvaliSabitle(): Birim = yaklaşmayaİzinVerme()
@@ -397,6 +404,8 @@ object TurkishAPI
   def tuvaliDöndür(açı: Kesir): Birim = rb.tCanvas.viewRotate(açı)
 
   def tuşaBasılıMı(tuş: Sayı): İkil = rb.isKeyPressed(tuş)
+  // ikojo'da (canlı) bu adla duruyor; iki tarafta da ikisi birden çalışsın.
+  def tuşBasılıMı(tuş: Sayı): İkil = tuşaBasılıMı(tuş)
   def tuşaBasınca(iş: Sayı => Birim): Birim = rb.tCanvas.onKeyPress(iş)
   def tuşuBırakınca(iş: Sayı => Birim): Birim = rb.tCanvas.onKeyRelease(iş)
   def fareyeTıklayınca(iş: (Kesir, Kesir) => Birim): Birim = rb.tCanvas.onMouseClick(iş)
@@ -559,6 +568,12 @@ object TurkishAPI
   def götür(n: Nokta) = r.götür(n)
   def götür(x: Kesir, y: Kesir) = r.götür(x, y)
   def götür(yy: Yöney2B) = r.götür(yy)
+  // `ötele` = `götür`; `öteleme` eskitildi (bkz. tr/resim.scala)
+  def ötele(n: Nokta) = r.ötele(n)
+  def ötele(x: Kesir, y: Kesir) = r.ötele(x, y)
+  def ötele(yy: Yöney2B) = r.ötele(yy)
+  @deprecated("eylemle başlayan ada geçildi: ötele ya da götür kullanın", "Eylül 2026")
+  def öteleme(x: Kesir, y: Kesir) = r.götür(x, y)
   def kaydır(n: Nokta) = r.kaydır(n)
   def kaydır(x: Kesir, y: Kesir) = r.kaydır(x, y)
   def kaydır(yy: Yöney2B) = r.kaydır(yy)

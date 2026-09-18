@@ -21,8 +21,8 @@ trait KeyCodesInTurkish {
   object tuşlar {
     val enter = '\n'
     val gir = enter
-    val back_space = '\b'
-    val sil_geri = back_space
+    val backSpace = '\b'
+    val silGeri = backSpace
     val sekme = '\t'
     val cancel = 0x03
     val iptal = cancel
@@ -35,19 +35,19 @@ trait KeyCodesInTurkish {
     val alt = 0x12
     val pause = 0x13
     val dur = pause
-    val büyük_harf_kilitleme = 0x14
+    val büyükHarfKilidi = 0x14
     val escape = 0x1b
     val çık = escape
     val kaç = escape
     val boşluk = 0x20
-    val page_up = 0x21
-    val page_down = 0x22
+    val pageUp = 0x21
+    val pageDown = 0x22
     val end = 0x23
     val home = 0x24
-    val sayfa_yukarı = page_up
-    val sayfa_aşağı = page_down
-    val satır_sonu = end
-    val satır_başı = home
+    val sayfaYukarı = pageUp
+    val sayfaAşağı = pageDown
+    val satırSonu = end
+    val satırBaşı = home
     val ev = home
 
     /** Constant for the non-numpad <b>left</b> arrow key.
@@ -105,7 +105,7 @@ trait KeyCodesInTurkish {
 
     /** Constant for the semicolon key, ""
       */
-    val noktalı_virgül = 0x3b
+    val noktalıVirgül = 0x3b
 
     /** Constant for the equals key, "="
       */
@@ -139,6 +139,57 @@ trait KeyCodesInTurkish {
     val x = 0x58
     val y = 0x59
     val z = 0x5a
+
+    // --- Eskitilmiş yazımlar ------------------------------------------------
+    //
+    // Bu on ad snake_case idi; ikojo (canlı) camelCase kullanıyor ve bu
+    // deponun kendi Türkçe katmanı da öyle. Ölçüm: `lite/i18n/tr/` +
+    // `trInit.scala` altındaki snake_case tanımların 10'u tam da bu
+    // dosyadaydı; geri kalan üçü tuş adı bile değil (`log2_e`, `a_kalıp`,
+    // ve Scala'nın işleç kuralı gereği `unary_-`). Yani aykırı olan burası
+    // idi, ikojo değil.
+    //
+    // (Burada eskiden "i18n altında 1341 camelCase / 16 snake_case" diye bir
+    // sayı vardı; yöntemi kayıtlı olmadığı için yeniden üretilemedi ve
+    // çıkarıldı. Yukarıdaki sayım komutla tekrarlanabilir.)
+    //
+    // Ayrışmanın bedeli somut: masaüstünde çalışan bir yazılımcık ikojo'da
+    // "value sayfa_yukarı is not a member of ..." ile patlıyordu.
+    //
+    // Eski adlar takma ad olarak duruyor -- onları kullanan yazılımcıklar
+    // kırılmasın diye. Depodaki kalıp bu (kuyruk/eslem/yazi'daki "eylemle
+    // başlayan ada geçildi" takma adları).
+    //
+    // SON ÜÇ AD DA GEÇTİ. Önceki turda back_space/page_up/page_down bilerek
+    // bırakılmıştı: AWT'nin VK_BACK_SPACE/VK_PAGE_UP/VK_PAGE_DOWN adlarının
+    // birebir karşılığı oldukları ve dosyanın port edildiği kaynağa bağlı
+    // oldukları için. O karar değişti -- tuş adlarının TEK yazımı camelCase
+    // olsun istendi; AWT'ye bağlılık, Türkçe yüzeyde iki ayrı yazım taşımaya
+    // değmiyor. Artık bu dosyada birincil snake_case ad KALMADI; on yılan
+    // yazım da eskitilmiş takma ad olarak duruyor.
+    //
+    // Eskitmek SİLMEK DEĞİL: bu adlarla yazılmış yazılımcıklar derlenmeye
+    // devam ediyor, yalnız uyarı alıyorlar.
+    @deprecated("ikojo ile aynı yazıma geçildi: silGeri kullanın", "Eylül 2026")
+    val sil_geri = silGeri
+    @deprecated("ikojo ile aynı yazıma geçildi: büyükHarfKilidi kullanın", "Eylül 2026")
+    val büyük_harf_kilitleme = büyükHarfKilidi
+    @deprecated("ikojo ile aynı yazıma geçildi: sayfaYukarı kullanın", "Eylül 2026")
+    val sayfa_yukarı = sayfaYukarı
+    @deprecated("ikojo ile aynı yazıma geçildi: sayfaAşağı kullanın", "Eylül 2026")
+    val sayfa_aşağı = sayfaAşağı
+    @deprecated("ikojo ile aynı yazıma geçildi: satırSonu kullanın", "Eylül 2026")
+    val satır_sonu = satırSonu
+    @deprecated("ikojo ile aynı yazıma geçildi: satırBaşı kullanın", "Eylül 2026")
+    val satır_başı = satırBaşı
+    @deprecated("ikojo ile aynı yazıma geçildi: noktalıVirgül kullanın", "Eylül 2026")
+    val noktalı_virgül = noktalıVirgül
+    @deprecated("ikojo ile aynı yazıma geçildi: backSpace kullanın", "Eylül 2026")
+    val back_space = backSpace
+    @deprecated("ikojo ile aynı yazıma geçildi: pageUp kullanın", "Eylül 2026")
+    val page_up = pageUp
+    @deprecated("ikojo ile aynı yazıma geçildi: pageDown kullanın", "Eylül 2026")
+    val page_down = pageDown
   }
 
 }

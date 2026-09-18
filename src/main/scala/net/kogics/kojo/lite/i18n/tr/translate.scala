@@ -17,7 +17,12 @@
 package net.kogics.kojo.lite.i18n.tr
 
 object translate {
-  private def common(str: String) = { str
+  private def common(str: String) = { kutuları(str)
+    // Aralık bir tür takma adı olduğu için toString ezilemiyor; Range'in
+    // 2.13 gösterimi "Range 1 to 5 by 2" biçiminde. NumericRange önce
+    // çevriliyor, yoksa "NumericAralık" gibi bir şey çıkardı.
+    .replace("NumericRange ", "SayısalAralık ")
+    .replace("Range ", "Aralık ")
     .replace("net.kogics.kojo.lite.i18n.tr.", "")
     .replace("UserCode.this.TurkishAPI.", "")
     .replace("UserCode", "KullanıcınınYazılımı")
@@ -141,10 +146,81 @@ object translate {
     .replace("why the feature needs to be explicitly enabled.", "https://stackoverflow.com/questions/13011204/scalas-postfix-ops")
   }
 
-  def regexpChanges(str: String) = {
-    // bbx todo regexp match here?
-    str
+  // Çıplak None -> Hiçbiri. Düz replace OLMAZ: "Nonetheless" ya da bir
+  // betikteki NoneOfThese gibi sözcüklerin içini de bozardı. Sözcük sınırı
+  // (\b) ile eşliyoruz; "None.get" ve "= None" yakalanıyor çünkü nokta ve
+  // boşluk sınır sayılıyor.
+  private val çıplakNone = """\bNone\b""".r
+
+  // Left( / Right( / Some( / Option[ de aynı özeni istiyor. Bunlar eskiden düz
+  // replace'ti; açılış ayracı SAĞ sınırı veriyor ama SOL sınırı VERMİYOR, yani
+  // öğrencinin kodundaki originTopLeft(3) -> originTopSol(3), handSome(5) ->
+  // handBiri(5) oluyordu. Ölçüldü. Artık None ile aynı sözcük sınırı kuralı.
+  private val kutuAdları = """\b(?:Left\(|Right\(|Some\(|Option\[)""".r
+  private val kutuKarşılığı =
+    Map("Left(" -> "Sol(", "Right(" -> "Sağ(", "Some(" -> "Biri(", "Option[" -> "Belki[")
+
+  /** common'un ilk adımı: Sol/Sağ/Biri/Belki. typeInfo da common'dan geçtiği
+    * için tür imzalarında da çalışıyor -- bunları common'dan çıkarmak
+    * "Option[Int]" ipucunu İngilizce bırakıyordu. */
+  private def kutuları(str: String) =
+    if (!str.contains("Left(") && !str.contains("Right(") &&
+        !str.contains("Some(") && !str.contains("Option[")) str
+    else
+      kutuAdları.replaceAllIn(str, m => java.util.regex.Matcher.quoteReplacement(kutuKarşılığı(m.matched)))
+
+  /**
+   * 2.13'ün Range gösterimini öğrenci dostu Türkçe biçime çevirir.
+   *
+   * `common`'daki düz `Range ` -> `Aralık ` yer değiştirmesi YARIM kalıyordu:
+   * "inexact Range 1 until 200 by 7" -> "inexact Aralık 1 until 200 by 7".
+   * `empty`/`inexact` önekleri ile `to`/`until`/`by` edatları İngilizce
+   * kalıyor ve tek tek `replace` ile çevrilemiyorlar -- öğrencinin kendi
+   * metnindeki aynı sözcükleri de bozarlardı. Bu yüzden kalıbın TAMAMI tek
+   * bir düzenli deyişle yakalanıp aralık yeniden kuruluyor ve
+   * `Aralık.gösterim` ile yazdırılıyor -- `yazıya`'nın verdiği biçimin aynısı.
+   *
+   * 2.13 Range.toString gövdesi:
+   *   s"${prefix}Range $start $preposition $end$stepped"
+   *   prefix = "empty " | "inexact " | "",  preposition = "to" | "until",
+   *   stepped = "" | s" by $step"
+   *
+   * NumericRange'e DOKUNULMUYOR (harf öncesi bakışı onu eliyor); onu
+   * common'daki "NumericRange " -> "SayısalAralık " yer değiştirmesi
+   * karşılıyor. Ondalıklı sınırları burada saymak ayrı bir iş.
+   */
+  private val aralıkKalıbı =
+    raw"(?<![A-Za-z])(?:empty |inexact )?Range (-?\d+) (to|until) (-?\d+)(?: by (-?\d+))?".r
+
+  private def aralığıÇevir(str: String) = {
+    if (!str.contains("Range ")) str
+    else
+      aralıkKalıbı.replaceAllIn(
+        str,
+        m => {
+          val sonuç =
+            try {
+              // NOT: `son` yamalı derleyicide anahtar kelime (final) -- `bitiş`
+              val (ilk, bitiş) = (m.group(1).toInt, m.group(3).toInt)
+              val adım = Option(m.group(4)).map(_.toInt).getOrElse(1)
+              // adım 0 Range'i patlatır; öyle bir gösterim zaten üretilmez
+              if (adım == 0) m.matched
+              else {
+                val r =
+                  if (m.group(2) == "to") Range.inclusive(ilk, bitiş, adım) else Range(ilk, bitiş, adım)
+                // r.size çok uzun aralıklarda fırlatıyor ("More than Int.MaxValue elements")
+                Aralık.gösterim(r)
+              }
+            }
+            catch { case _: Throwable => m.matched }
+          java.util.regex.Matcher.quoteReplacement(sonuç)
+        }
+      )
   }
+
+  // İki düzenli deyiş de uygulanıyor: aralık gösterimi ile çıplak None
+  // birbirinden bağımsız -- biri ötekinin çıktısında yeni eşleşme üretmiyor.
+  def regexpChanges(str: String) = çıplakNone.replaceAllIn(aralığıÇevir(str), "Hiçbiri")
 
   def result(str: String) = { common(beforeCommon(regexpChanges(str)))
     .replace("expected class or object definition", "gereken sınıf ya da nesne tanımı bulunamadı")
