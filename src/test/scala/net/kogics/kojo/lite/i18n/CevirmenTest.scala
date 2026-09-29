@@ -147,6 +147,13 @@ import net.kogics.kojo.lite.i18n.tr.dict
       "trans(10, 0) -> r\nr.translate(10, 0)\nrot(30) -> r\nr.rotate(30)"
   }
 
+  test("konumuOku/yönüOku -> readPosition/readHeading (iKojo), iki yönde de; kaplumbağa üyesi de") {
+    tr2en("konumuOku { n => satıryaz(n.x) }\nk1.yönüOku { a => satıryaz(a) }") shouldBe
+      "readPosition { n => println(n.x) }\nk1.readHeading { a => println(a) }"
+    en2tr("readPosition { p => println(p.y) }\nreadHeading(println)") shouldBe
+      "konumuOku { p => satıryaz(p.y) }\nyönüOku(satıryaz)"
+  }
+
   test("yinele gövdeli bir tanım; kural repeat'e bağlar (sıklık iterate'e düşürüyordu)") {
     tr2en("yinele(3) { ileri(10) }") shouldBe "repeat(3) { forward(10) }"
     en2tr("repeat(3) { forward(10) }") shouldBe "yinele(3) { ileri(10) }"
