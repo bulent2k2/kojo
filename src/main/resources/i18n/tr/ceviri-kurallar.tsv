@@ -250,3 +250,7 @@ tr>en	öbekleEsnek	*	groupBy	aynı kalıp: `Eşlem.değişmezden(d.groupBy(iş))
 tr>en	varsayılanlı	*	withDefault	aynı kalıp: `Eşlem(m.withDefault(işlev))`; üretilmiş sözlükte 1-1 beraberlik (collection.mutable.Map / withDefault) alfabetik bozuluyor ve yanlış olan kazanıyor.
 tr>en	saydamlık	üye(	opacityMod	argümanlı hâl (resim.scala:261). Üç aday da n=1, karar alfabetiğe kalıyor ve Resim'in üyesi OLMAYAN `opac` kazanıyordu (#75).
 tr>en	saydamlık	üye	opacity	argümansız hâl (resim.scala:308). Arity'yi ancak bağlam ayırıyor; tek kural yarısını bozuyordu, ölçüldü (#75).
+tr>en	konumuOku	*	readPosition	yalnız iKojo'da: kaplumbağa kuyruğa girdiği için konum geri çağırmayla okunuyor (kojojs-dev#181). Masaüstü İngilizcesinde karşılığı yok; masaüstü betiği `position` kullanır.
+en>tr	readPosition	*	konumuOku
+tr>en	yönüOku	*	readHeading	konumuOku'nun kardeşi, yalnız iKojo'da; yön 0-360 arası (kojojs-dev#181).
+en>tr	readHeading	*	yönüOku
