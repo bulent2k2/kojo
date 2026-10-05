@@ -624,6 +624,8 @@ object TurkishAPI
   def başlangıçNoktasıAltSolKöşeOlsun() = rb.originBottomLeft()
   def notaÇal(frekans: Sayı, süreMiliSaniye: Sayı, ses: Sayı = 80): Birim = rb.playNote(frekans, süreMiliSaniye, ses)
   def notaÇalgısınıKur(çalgı: Sayı): Birim = rb.setNoteInstrument(çalgı)
+  def notaÇalarıDurdur(): Birim = notaÇalarıKapat()
+  def notaÇalarıKapat(): Birim = rb.stopNotePlayer()
 
   // to help facilitate testing of turkish keyword hiliting in:
   // ~/kojo-repo/src/test/scala/net/kogics/kojo/lexer/ScalariformTokenMakerTest.scala
