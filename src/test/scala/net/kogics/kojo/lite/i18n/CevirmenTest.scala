@@ -159,6 +159,23 @@ import net.kogics.kojo.lite.i18n.tr.dict
     en2tr("repeat(3) { forward(10) }") shouldBe "yinele(3) { ileri(10) }"
   }
 
+  test("göster: yalın ve üye ikisi de visible; kullanıcının kendi göster()'i tanım ile çağrıda tutarlı") {
+    tr2en("göster()\nateş.göster()") shouldBe "visible()\nateş.visible()"
+    // tanım yalın (visible), çağrı üye idi (setVisible): lunar-lander'da ikisi ayrışıyordu
+    tr2en("tanım göster() = ateş.göster()\ngöster()") shouldBe
+      "def visible() = ateş.visible()\nvisible()"
+  }
+
+  test("durdur: Mp3Çalar üyesi stopMp3, yalın durdur stopAnimation kalıyor") {
+    tr2en("frenSesiÇalar.durdur()\ndurdur()") shouldBe "frenSesiÇalar.stopMp3()\nstopAnimation()"
+  }
+
+  test("Dizim/Dizik.boş boyutlu: Array.ofDim; EsnekDizim.boş ArrayBuffer.empty kalıyor") {
+    tr2en("Dizim.boş[Nokta](3, 4)") shouldBe "Array.ofDim[Point](3, 4)"
+    tr2en("Dizik.boş[Sayı](2)") shouldBe "Array.ofDim[Int](2)"
+    tr2en("EsnekDizim.boş[Nokta]") should startWith("ArrayBuffer.empty")
+  }
+
   test("belirsiz seçim raporlanır, sessizce yutulmaz; açık üstünlük raporlanmaz") {
     // Yapay sözlük: `al` 3 tanımda take, 2'de get (ciddi alternatif: 2*2 >= 3);
     // `ileri` 5'te forward, 1'de advance (1*2 < 5: raporlanmaz).
