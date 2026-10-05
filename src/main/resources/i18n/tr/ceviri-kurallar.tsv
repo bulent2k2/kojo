@@ -254,3 +254,4 @@ tr>en	konumuOku	*	readPosition	yalnız iKojo'da: kaplumbağa kuyruğa girdiği i
 en>tr	readPosition	*	konumuOku
 tr>en	yönüOku	*	readHeading	konumuOku'nun kardeşi, yalnız iKojo'da; yön 0-360 arası (kojojs-dev#181).
 en>tr	readHeading	*	yönüOku
+en>tr	stopNotePlayer	*	notaÇalarıKapat	asıl ad Kapat, Durdur takma ad; üretilmiş sözlükte eşit oy (stopMusic -> müziğiDurdur gibi), açık seçim
