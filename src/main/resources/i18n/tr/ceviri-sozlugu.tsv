@@ -1623,9 +1623,9 @@ def	noktadan	Picture.fromVertexShape	resim.scala	1
 def	noktayaDön	towards	trInit.scala	2
 def	noktayaGit	lineTo	trInit.scala	2
 def	notaÇal	playNote	trInit.scala	1
+def	notaÇalarıDurdur	stopNotePlayer	trInit.scala	1
+def	notaÇalarıKapat	stopNotePlayer	trInit.scala	1
 def	notaÇalgısınıKur	setNoteInstrument	trInit.scala	1
-def	notaÇalıcıyıDurdur	stopNotePlayer	trInit.scala	1
-def	notaÇalıcıyıKapat	stopNotePlayer	trInit.scala	1
 def	odakDinleyiciEkle	addFocusListener	arayuz.scala	1	üye
 def	olarak	valueOf	yazi.scala	8
 val	olmaz	never	gelecek.scala	1	üye
