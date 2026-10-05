@@ -53,7 +53,11 @@ en>tr	rot	*	döndür
 en>tr	rotate	*	döndür
 tr>en	yazı	yalın	write	kaplumbağa yazısı; Resim.yazı ise text
 tr>en	yazı	üye	text
-tr>en	göster	yalın	visible	kaplumbağayı göster; üye göster (resim) setVisible'a kalır
+tr>en	göster	yalın	visible	kaplumbağayı göster
+tr>en	göster	üye	visible	resim.göster() ve KULLANICININ kendi göster() yöntemi (tanım yalın = visible, çağrı üye idi = setVisible: tanım ile çağrı ayrışıyordu, lunar-lander). setVisible yalnız widget'larda ve orada göster ARGÜMANSIZ özellik (def göster = setVisible(true)): çevirisi zaten hiçbir zaman derlenmiyordu, yani bu kural onu bozmuyor
+tr>en	durdur	üye	stopMp3	Mp3Çalar.durdur() = KMp3.stopMp3 (car-ride); yalın durdur() = stopAnimation, aşağıda üretilmiş sözlükten. Üyede başka durdur yok
+tr>en	boş	Dizim.	ofDim	Dizim.boş[T](n, m) = Array.ofDim; argümansız Dizim.boş[T] = Array.empty ama ayrı kural gerekmiyor: örneklerde tek kullanım (genart-tri-mesh) boyutlu, argümansız boş dizi işe yaramaz. Ters yön üretilmiş sözlükte (ofDim -> boş)
+tr>en	boş	Dizik.	ofDim	Dizik = Array takma adı; aynı gerekçe
 tr>en	silVeSakla	*	cleari	gövdesi iki çağrı (clear + görünmez); ilk-zincir sezgisi yalnız clear'ı görüyordu
 en>tr	cleari	*	silVeSakla
 tr>en	kare	yalın	square	gövdeli tanım (yinele ile çizim)
