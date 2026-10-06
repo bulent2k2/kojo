@@ -259,3 +259,8 @@ en>tr	readPosition	*	konumuOku
 tr>en	yönüOku	*	readHeading	konumuOku'nun kardeşi, yalnız iKojo'da; yön 0-360 arası (kojojs-dev#181).
 en>tr	readHeading	*	yönüOku
 en>tr	stopNotePlayer	*	notaÇalarıKapat	asıl ad Kapat, Durdur takma ad; üretilmiş sözlükte eşit oy (stopMusic -> müziğiDurdur gibi), açık seçim
+tr>en	kalemKalınlığı	yalın	penThickness	iKojo'nun Resim dönüştürücüsü (kb.penThickness); masaüstünde adı kalemBoyu. Birim çember örneği (kalemKalınlığı(4) * ...)
+tr>en	döndürme	yalın	rot	iKojo'nun Resim dönüştürücüsü (kb.rot); masaüstünde döndür
+tr>en	renkliYazı	üye	textu	iKojo: Resim.renkliYazı(içerik, boy, renk) = Picture.textu; masaüstünde yazıRenkli
+tr>en	soluk	üye	fadeOut	iKojo: yeşil.soluk(0.8) = Color.fadeOut; masaüstünde Renk'te soluk yok, yalın soluk(n) Resim dönüştürücüsü = fade (üretilmiş sözlükte)
+tr>en	canlandırmayıDurdur	yalın	stopAnimation	iKojo'da canlandırmayıDurdur() bağımsız değişkensizdir (= durdur()). Masaüstünün canlandırmayıDurdur(etkinlik) = stopAnimationActivity(etkinlik) biçimi bunun ARDINDAN çevrilmez: kural bağımsız değişken sayısına bakamıyor, hiçbir örnek ikisini de kullanmıyor

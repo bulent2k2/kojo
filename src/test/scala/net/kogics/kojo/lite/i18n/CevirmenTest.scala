@@ -170,6 +170,26 @@ import net.kogics.kojo.lite.i18n.tr.dict
     tr2en("frenSesiÇalar.durdur()\ndurdur()") shouldBe "frenSesiÇalar.stopMp3()\nstopAnimation()"
   }
 
+  test("iKojo'ya özgü Resim adları: kalemKalınlığı/döndürme/renkliYazı/soluk (birim çember betiği)") {
+    tr2en("çiz(kalemKalınlığı(4) * döndürme(30) -> Resim.daire(5))") shouldBe
+      "draw(penThickness(4) * rot(30) -> Picture.circle(5))"
+    // büyütme kuralı YOK: lamp-animation2 kendi `tanım büyütme`sini yazıyor, kural onu büyüt'le aynı scale'e çarpıştırıyordu
+    tr2en("büyütme(2)") shouldBe "büyütme(2)"
+    tr2en("çiz(öteleme(0, 1) -> Resim.renkliYazı(\"a\", 40, mavi))") shouldBe
+      "draw(trans(0, 1) -> Picture.textu(\"a\", 40, blue))"
+    // Renk üyesi soluk = fadeOut; yalın soluk(n) Resim dönüştürücüsü = fade
+    tr2en("dez r = yeşil.soluk(0.8)\nçiz(soluk(100) -> Resim.daire(5))") shouldBe
+      "val r = green.fadeOut(0.8)\ndraw(fade(100) -> Picture.circle(5))"
+    tr2en("canlandırmayıDurdur()") shouldBe "stopAnimation()"
+  }
+
+  test("kullanıcının kendi değişkeni yalnız ÜYE olan bir kütüphane adıyla çakışırsa dokunulmaz (merkez, zaman)") {
+    // sözlükte `merkez` yalnız `ay.değişmez.merkez` üyesi, `zaman` yalnız `Buan.zaman`:
+    // noktadan sonra hiç gelmeyen yalın kullanım kullanıcının adıdır (CENTER/hepsi olmamalı)
+    tr2en("dez merkez = 3\nçiz(merkez)\nden zaman = 0\nzaman += 1") shouldBe
+      "val merkez = 3\ndraw(merkez)\nvar zaman = 0\nzaman += 1"
+  }
+
   test("Dizim/Dizik.boş boyutlu: Array.ofDim; EsnekDizim.boş ArrayBuffer.empty kalıyor") {
     tr2en("Dizim.boş[Nokta](3, 4)") shouldBe "Array.ofDim[Point](3, 4)"
     tr2en("Dizik.boş[Sayı](2)") shouldBe "Array.ofDim[Int](2)"

@@ -228,10 +228,21 @@ object Çevirmen {
     // İki bağlamda da karşılığı olan ad (yazı, boyu) bağlamına göre çevrilir: kullanıcı adı
     // bir yazılımcık adıyla çakışıyordur, tek karşılığa zorlamak yazılımcık çağrısını bozuyor
     // (ölçüldü: tic-tac-toe Resim.yazı -> Picture.write, tiled-lines ta.boyu -> ta.size).
+    // YALNIZ ÜYE karşılığı olan ad ise betikte gerçekten bir ÜYE olarak (`r.width`) kullanılıyorsa
+    // çevrilir. Hiç noktadan sonra gelmeyen `dez merkez = ...; çiz(merkez)` ise kullanıcının kendi
+    // değişkenidir: sözlükteki `merkez` yalnız `ay.değişmez.merkez` üyesidir, yalın bir `merkez`
+    // oraya çıkamaz. Önceden `merkez` -> `CENTER`, `zaman` -> `hepsi` oluyordu (tutarlı, derlenir,
+    // ama okunmaz; ölçüldü: birim çember betiği). YALNIZ TR->EN: EN->TR'de aynı süzgeç 8 betiği
+    // kırdı (height, last, partition, koy: tanım yeri çevriliyor, yalın kullanım yeri kalıyordu --
+    // ölçüldü: CevirmenDerlemeTest), orada eski, tutarlı davranış sürüyor.
+    val üyeOlarakKullanılanlar: Set[String] = {
+      val a = jetonlar.filter(anlamlı)
+      a.zip(a.drop(1)).collect { case (nokta, ad) if nokta.tokenType == Tokens.DOT && tanımlayıcı(ad) => ad.text }.toSet
+    }
     lazy val kullanıcıÇevirisi: Map[String, ÇeviriSözlüğü.Seçim] = kullanıcıAdları.iterator.flatMap { ad =>
       (seç(ad, ÇeviriSözlüğü.BağlamYalın), seç(ad, ÇeviriSözlüğü.BağlamÜye)) match {
         case (Some(y), None) => Some(ad -> y)
-        case (None, Some(ü)) => Some(ad -> ü)
+        case (None, Some(ü)) if yön != TürkçedenİngilizceyeYön || üyeOlarakKullanılanlar(ad) => Some(ad -> ü)
         case _               => None
       }
     }.toMap
@@ -330,7 +341,9 @@ object Çevirmen {
                 // Açık "-" kuralı (vertex yalın, setColumns yalın) sonek düşüşünü de keser (ölçüldü: tree2).
                 else if (alıcıyaÖzelÇevirme || sözlük.çevrilmez(yönAdı, t.text, bağlam)) None
                 else alıcıAdı.flatMap(a => seç(t.text, a)).orElse(seç(t.text, bağlam))
-                  .orElse(if (sonekKonumu) seç(t.text, ÇeviriSözlüğü.BağlamÜye) else None)
+                  // Kullanıcının kendi adı (TR->EN) sonek sayılıp üye tablosuna bakmaz: `zaman += 1`, önündeki
+                  // jeton bir değer olsa da `zaman` -> `hepsi` olmamalı (tanım yerinde kalıyor, tutarsız olurdu).
+                  .orElse(if (sonekKonumu && !(yön == TürkçedenİngilizceyeYön && kullanıcıAdları(t.text))) seç(t.text, ÇeviriSözlüğü.BağlamÜye) else None)
               seçim match {
                 case Some(s) =>
                   çevrilen += 1
