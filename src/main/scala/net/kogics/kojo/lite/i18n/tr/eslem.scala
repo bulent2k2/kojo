@@ -101,7 +101,8 @@ case class Eşlem[A,D](val m: Map[A,D]) {
   def ikileSırayla = m.zipWithIndex
 
   //
-  def varsayılanDeğerle(d: D) = m.withDefaultValue(d: D)
+  def varsayılanDeğerle(d: D): Map[A, D] = m.withDefaultValue(d)
+  def öntanımlıDeğerle(d: D): Map[A, D] = m.withDefaultValue(d) // varsayılanDeğerle takma adı
 
   def enUfağı[B >: Pair](implicit sıralama: math.Ordering[B]): Pair = m.min(sıralama)
   // `B >: Pair` idi: `enUfağı(_._2)` çağrısında B = Any çıkıp Ordering bulunamıyordu.
@@ -176,6 +177,7 @@ case class Eşlem[A,D](val m: Map[A,D]) {
   def değerYineleyici: Yineleyici[D] = m.valuesIterator
   def varsayılanı(anahtar: A): D = m.default(anahtar)
   def varsayılanlı(işlev: A => D): Eşlem[A, D] = Eşlem(m.withDefault(işlev))
+  def öntanımlı(işlev: A => D): Eşlem[A, D] = Eşlem(m.withDefault(işlev)) // varsayılanlı takma adı
   def eşleğe: collection.immutable.Map[A, D] = m.toMap
 }
 
@@ -257,7 +259,9 @@ trait MapMethodsInTurkish {
     def ikileSırayla = m.zipWithIndex
 
     //
-    def varsayılanDeğerle(d: D) = m.withDefaultValue(d: D)
+    // stdlib gibi [V1 >: V]: değer türünü genişletebilir
+    def varsayılanDeğerle[D1 >: D](d: D1): Eşlek[A, D1] = m.withDefaultValue(d)
+    def öntanımlıDeğerle[D1 >: D](d: D1): Eşlek[A, D1] = m.withDefaultValue(d) // varsayılanDeğerle takma adı
     // öbekle, bölükle, bölüklereAyır, parçala, gruplaştır
     def öbekle(iş: ((A, D)) => A): Eşlek[A, Eşlek[A, D]] = m.groupBy(iş)
     def değiştirilmiş[D1 >: D](a: A, d: D1): Eşlek[A, D1] = m.updated(a, d)
@@ -324,7 +328,8 @@ trait MapMethodsInTurkish {
     def anahtarYineleyici: Yineleyici[A] = m.keysIterator
     def değerYineleyici: Yineleyici[D] = m.valuesIterator
     def varsayılanı(anahtar: A): D = m.default(anahtar)
-    def varsayılanlı(işlev: A => D): Eşlek[A, D] = m.withDefault(işlev)
+    def varsayılanlı[D1 >: D](işlev: A => D1): Eşlek[A, D1] = m.withDefault(işlev)
+    def öntanımlı[D1 >: D](işlev: A => D1): Eşlek[A, D1] = m.withDefault(işlev) // varsayılanlı takma adı
     def eşleğe: collection.immutable.Map[A, D] = m.toMap
     def karşılıklıMı[S](öbürü: collection.Seq[S])(deneme: (Pair, S) => İkil): İkil = m.corresponds(öbürü)(deneme)
 }
