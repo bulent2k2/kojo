@@ -1356,6 +1356,7 @@ import net.kogics.kojo.staging
     ek.değerleriİşle(_ * 10) should be(Eşlek("a" -> 10, "b" -> 20))
     ek.dönüştür((_, d) => d + 1) should be(Eşlek("a" -> 2, "b" -> 3))
     ek.varsayılanlı(_ => 0).getOrElse("z", -1) should be(-1)
+    ek.öntanımlı(_ => 0)("z") should be(0) // varsayılanlı takma adı, aynı iş
   }
 
   test("ÖncelikSırası: ortak çekirdek (sonuç Dizi)") {

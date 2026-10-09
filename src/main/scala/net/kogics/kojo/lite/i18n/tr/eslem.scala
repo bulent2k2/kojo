@@ -176,6 +176,7 @@ case class Eşlem[A,D](val m: Map[A,D]) {
   def değerYineleyici: Yineleyici[D] = m.valuesIterator
   def varsayılanı(anahtar: A): D = m.default(anahtar)
   def varsayılanlı(işlev: A => D): Eşlem[A, D] = Eşlem(m.withDefault(işlev))
+  def öntanımlı(işlev: A => D): Eşlem[A, D] = Eşlem(m.withDefault(işlev)) // varsayılanlı takma adı
   def eşleğe: collection.immutable.Map[A, D] = m.toMap
 }
 
@@ -325,6 +326,7 @@ trait MapMethodsInTurkish {
     def değerYineleyici: Yineleyici[D] = m.valuesIterator
     def varsayılanı(anahtar: A): D = m.default(anahtar)
     def varsayılanlı(işlev: A => D): Eşlek[A, D] = m.withDefault(işlev)
+    def öntanımlı(işlev: A => D): Eşlek[A, D] = m.withDefault(işlev) // varsayılanlı takma adı
     def eşleğe: collection.immutable.Map[A, D] = m.toMap
     def karşılıklıMı[S](öbürü: collection.Seq[S])(deneme: (Pair, S) => İkil): İkil = m.corresponds(öbürü)(deneme)
 }

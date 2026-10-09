@@ -2427,6 +2427,8 @@ def	önler	inits	kuyruk.scala	2	üye
 def	önler	inits	miskindizin.scala	1	üye
 def	önler	inits	yazi.scala	1	üye
 def	önler	inits	yoney.scala	1	üye
+def	öntanımlı	collection.mutable.Map	eslem.scala	1
+def	öntanımlı	withDefault	eslem.scala	1	üye
 def	önü	init	dizi.scala	3	üye
 def	önü	init	dizik.scala	2	üye
 def	önü	init	dizin.scala	1	üye
