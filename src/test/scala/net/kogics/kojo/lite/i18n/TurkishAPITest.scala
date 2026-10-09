@@ -1013,6 +1013,10 @@ import net.kogics.kojo.staging
     val m = Eşlem("a" -> 10, "b" -> 3)
     m.enUfağı(_._2)._2 should be(3)
     m.enİrisi(_._2)._2 should be(10)
+    // değişebilen Eşlem: varsayılanDeğerle ve takma adı öntanımlıDeğerle
+    m.varsayılanDeğerle(0)("yok") should be(0)
+    m.öntanımlıDeğerle(0)("yok") should be(0)
+    m.öntanımlı(_.length)("yok") should be(3)
   }
 
   test("Companion objects for translations to work") {
@@ -1357,6 +1361,13 @@ import net.kogics.kojo.staging
     ek.dönüştür((_, d) => d + 1) should be(Eşlek("a" -> 2, "b" -> 3))
     ek.varsayılanlı(_ => 0).getOrElse("z", -1) should be(-1)
     ek.öntanımlı(_ => 0)("z") should be(0) // varsayılanlı takma adı, aynı iş
+    ek.varsayılanDeğerle(7)("z") should be(7)
+    ek.öntanımlıDeğerle(7)("z") should be(7) // varsayılanDeğerle takma adı, aynı iş
+    // stdlib gibi genişliyor: değer türü Sayı iken Kesir verilebiliyor
+    val geniş: Eşlek[Yazı, AnyVal] = ek.öntanımlıDeğerle(1.5)
+    geniş("z") should be(1.5); geniş("a") should be(1)
+    val genişİşlevli: Eşlek[Yazı, AnyVal] = ek.öntanımlı(_ => 1.5)
+    genişİşlevli("z") should be(1.5)
   }
 
   test("ÖncelikSırası: ortak çekirdek (sonuç Dizi)") {
