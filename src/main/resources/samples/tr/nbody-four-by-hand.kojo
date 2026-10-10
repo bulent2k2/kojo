@@ -6,7 +6,7 @@
 // iniyor, ve beşinci bir cisim eklemek orada tek satır, burada dört blok.
 dez (kon, boy, ilkHız, yerçekimiSabiti, örnekle) = (50, 5, 1.0, 100, 4)
 dez fırça = 6 // yörüngeleri boyar. 0 = kapalı
-dez saydamlık = 50
+dez saydamlık = 100
 dez kırmızı = renkKur(255, 0, 0, saydamlık)
 dez yeşil = renkKur(0, 255, 0, saydamlık)
 dez mavi = renkKur(0, 110, 255, saydamlık)

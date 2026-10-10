@@ -7,7 +7,7 @@
 // body is one line there and four blocks here.
 val (pos, size, initSpeed, gravity, sample) = (50, 5, 1.0, 100, 4)
 val brush = 6 // paints the orbits. 0 = off
-val alpha = 50
+val alpha = 100
 val red = Color(255, 0, 0, alpha)
 val green = Color(0, 255, 0, alpha)
 val blue = Color(0, 110, 255, alpha)

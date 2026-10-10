@@ -4,7 +4,7 @@
 // görürsünüz; büyütürseniz yörüngeler kalınlaşır.
 dez (kon, boy, ilkHız, yerçekimiSabiti, örnekle) = (50.0, 5.0, 1.0, 100.0, 4)
 dez fırça = 6           // yörüngeleri boyar. 0 = kapalı
-dez saydamlık = 50
+dez saydamlık = 100
 dez yumuşatma = boy * 3 // en yakın yaklaşma sınırı: çekim bundan yakında artık büyümez
 
 dez kırmızı = renkKur(255, 0, 0, saydamlık)

@@ -4,7 +4,7 @@
 // it bigger for fatter orbits.
 val (pos, size, initSpeed, gravity, sample) = (50.0, 5.0, 1.0, 100.0, 4)
 val brush = 6            // paints the orbits. 0 = off
-val alpha = 50
+val alpha = 100
 val softening = size * 3 // closest-approach limit: gravity stops growing below this
 
 val red = Color(255, 0, 0, alpha)
