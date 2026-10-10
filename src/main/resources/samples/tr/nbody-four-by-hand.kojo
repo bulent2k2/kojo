@@ -34,12 +34,21 @@ tanım dv(p1: Nokta, p2: Nokta) = {
   (eğer (p1.x > p2.x) -fx yoksa fx,
    eğer (p1.y > p2.y) -fy yoksa fy)
 }
+// Her cisim için görünmez bir kaplumbağa yörüngesini çizgi olarak çizer. (Her nokta için yeni bir
+// daire çizmek birkaç dakika sonra Kojo'nun resim kotasını bitiriyordu: bkz. #87.)
+dez izler = Diz(c1, c2, c3, c4).işle { c =>
+  dez k = yeniKaplumbağa(0, 0)
+  k.gizle(); k.canlandırmaHızınıKur(0)
+  k.kalemRenginiKur(c); k.kalemKalınlığınıKur(2 * fırça)
+  k
+}
+
 den adım = 1
 canlandır {
   dez (p1, p2, p3, p4) = (b1.konum, b2.konum, b3.konum, b4.konum)
   eğer (fırça > 0 && adım % örnekle == 1) {
-    için ((p, c) <- Diz((p1, c1), (p2, c2), (p3, c3), (p4, c4)))
-      çiz(Resim.daire(fırça).kalemRenkli(c).boyalı(c).taşınmış(p.x, p.y))
+    için ((p, k) <- Diz(p1, p2, p3, p4).ikile(izler))
+      eğer (adım == 1) k.atla(p.x, p.y) yoksa k.ilerle(p.x, p.y) // ilk örnek yalnız başlangıcı belirler
   }
   adım += 1
   için (p <- Diz(p2, p3, p4)) { dez (fx, fy) = dv(p1, p); dx1 += fx; dy1 += fy }

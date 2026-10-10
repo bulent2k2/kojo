@@ -73,6 +73,7 @@ object TurkishAPI
   // todo: metaprog on these?
   type Nesne = tr.Nesne
   type Birim = tr.Birim
+  type Eskiz = tr.Eskiz
   type Her = tr.Her
   type HerDeğer = tr.HerDeğer
   type HerGönder = tr.HerGönder
@@ -475,6 +476,9 @@ object TurkishAPI
     rb.animateWithRedraw(ilkEvre, sonrakiEvre, işlev2)
   }
   def canlandırTuvalÇizimle(görüntüyüÇiz: TuvalÇizim => Birim): Birim = rb.animateWithCanvasDraw(görüntüyüÇiz)
+  def canlandırKurulumluTuvalÇizimle(kurulum: TuvalÇizim => Birim)(görüntüyüÇiz: TuvalÇizim => Birim): Birim =
+    rb.animateWithSetupCanvasDraw(kurulum)(görüntüyüÇiz)
+  def tuvalEskizi(eskiz: Eskiz, ölçekÇarpanı: Kesir = 1): Birim = rb.canvasSketch(new tr.EskizUyarlayıcı(eskiz), ölçekÇarpanı)
   def durdur() = rb.stopAnimation()
   def canlandırmaBaşlayınca(işlev: => Birim) = rb.tCanvas.onAnimationStart(işlev)
   def canlandırmaBitince(işlev: => Birim) = rb.tCanvas.onAnimationStop(işlev)

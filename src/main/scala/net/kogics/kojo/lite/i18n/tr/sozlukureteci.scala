@@ -50,7 +50,7 @@ object SözlükÜreteci {
   /** Sarmalayıcı olmayan dosyalar: sözlük tabloları, çıktı çevirisi, yardım metni... */
   val atlananDosyalar = Set("dict.scala", "translate.scala", "help.scala", "templates.scala",
     "cevirmen.scala", "cevirmenmain.scala", "cevirisozlugu.scala", "sozlukureteci.scala",
-    "ceviridogrulama.scala") // çevirmenin kendisi sarmalayıcı değil
+    "ceviridogrulama.scala", "eskiz.scala") // çevirmenin kendisi sarmalayıcı değil; eskiz.scala: Eskiz arayüzü + yansıma uyarlayıcısı
 
   private val ascii = "^[A-Za-z_][A-Za-z0-9_]*(\\.[A-Za-z_][A-Za-z0-9_]*)?$".r
   /** Yazılımcıkta niteleyicisiyle yazılan İngilizce nesneler: `math.sqrt`, `math.Pi`. */

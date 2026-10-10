@@ -163,6 +163,28 @@ object translate {
   /** common'un ilk adımı: Sol/Sağ/Biri/Belki. typeInfo da common'dan geçtiği
     * için tür imzalarında da çalışıyor -- bunları common'dan çıkarmak
     * "Option[Int]" ipucunu İngilizce bırakıyordu. */
+  /**
+   * Kojo'nun İngilizce, kelime kelime çevrilemeyen iletileri: bütün cümle olarak çevriliyor, yoksa
+   * aşağıdaki kelime değişimleri cümleyi bozuyor (ölçüldü: "go ahead with this" -> "go ahead with bu", #87).
+   * Kaynak: CoreBuiltins.checkForLargeDrawing. Sıra önemli: common'dan ÖNCE uygulanıyor.
+   */
+  private val tamCümleÇiftleri = Seq(
+    "There are too many pics in your drawing, and trying to draw them might freeze Kojo." ->
+      "Çiziminizde çok fazla resim var; hepsini çizmeye çalışmak Kojo'yu dondurabilir.",
+    "If you still want to go ahead with this, use the pic.draw() method." ->
+      "Yine de çizmek isterseniz r.çiz() yöntemini kullanın.",
+    "Or use Picture.fromSketch(...)." ->
+      "Ya da Resim.eskizden(...) kullanın: çok sayıda küçük çizim (iz noktaları gibi) için en uygunu o.",
+    "Too many pics to draw - Kojo might freeze." ->
+      "Çizilecek resim sayısı çok fazla - Kojo donabilir."
+  )
+  // Türkçe cümleler, kelime değişimlerinden (min -> enUfak, this -> bu, ...) korunmak için önce
+  // yer tutucuyla saklanıyor, en sonda geri konuyor ("Çiziminizde" içindeki "min" bozuluyordu).
+  private def tamCümleleriKoru(str: String): String =
+    tamCümleÇiftleri.zipWithIndex.foldLeft(str) { case (s, ((en, _), i)) => s.replace(en, s"§c$i§") }
+  private def tamCümleleriAç(str: String): String =
+    tamCümleÇiftleri.zipWithIndex.foldLeft(str) { case (s, ((_, tr), i)) => s.replace(s"§c$i§", tr) }
+
   private def kutuları(str: String) =
     if (!str.contains("Left(") && !str.contains("Right(") &&
         !str.contains("Some(") && !str.contains("Option[")) str
@@ -222,7 +244,8 @@ object translate {
   // birbirinden bağımsız -- biri ötekinin çıktısında yeni eşleşme üretmiyor.
   def regexpChanges(str: String) = çıplakNone.replaceAllIn(aralığıÇevir(str), "Hiçbiri")
 
-  def result(str: String) = { common(beforeCommon(regexpChanges(str)))
+  def result(str: String): String = tamCümleleriAç(sözcüklerleSonuç(tamCümleleriKoru(str)))
+  private def sözcüklerleSonuç(str: String) = { common(beforeCommon(regexpChanges(str)))
     .replace("expected class or object definition", "gereken sınıf ya da nesne tanımı bulunamadı")
     .replace("val res", "dez sonuç")
     .replace("<not computed>", "<hesaplanmadı>")
