@@ -18,7 +18,7 @@ val angleStep = 0.01
 class Rose {
     var (n, d) = choices(0)
     var angle = 0.0
-    var wait = 0
+    var pause = 0
 
     def r(a: Double) = radius * math.cos(n.toDouble / d * a)
 
@@ -35,8 +35,8 @@ class Rose {
 
     def drawLoop(cd: CanvasDraw) {
         if (angle > 2 * math.Pi * d) { // the curve has closed
-            wait += 1
-            if (wait > 180) { wait = 0; pickNew(cd) }
+            pause += 1
+            if (pause > 180) { pause = 0; pickNew(cd) }
         }
         else {
             cd.pushMatrix()
