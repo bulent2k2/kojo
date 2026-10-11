@@ -29,9 +29,9 @@ case class Eşlem[A,D](val m: Map[A,D]) {
   // todo: duplicated most of the api in Eşlek
   type Belki[T] = Option[T]
   def eşli(a: A) = m.contains(a)
-  def eşEkle(ikili: Pair) = m += ikili
-  def +=(ikili: Pair) = this eşEkle ikili
-  def -=(birinci: A) = m -= birinci
+  def eşEkle(ikili: Pair): this.type = { m += ikili; this }
+  def +=(ikili: Pair): this.type = eşEkle(ikili)
+  def -=(birinci: A): this.type = { m -= birinci; this }
   def herbiriİçin(komutlar: ((A, D)) => Birim) = m.foreach(komutlar)
   def herÖgeİçin(komutlar: ((A, D)) => Birim) = m.foreach(komutlar)
   def sayı: Sayı = m.size
@@ -46,15 +46,15 @@ case class Eşlem[A,D](val m: Map[A,D]) {
   def değerler = m.values
 
   def başı = m.head
-  def kuyruğu = m.tail
-  def önü = m.init
+  def kuyruğu: Eşlem[A, D] = Eşlem(m.tail)
+  def önü: Eşlem[A, D] = Eşlem(m.init)
   def sonu = m.last
   def boyu: Sayı = m.size
   def boşMu: İkil = m.isEmpty
   def doluMu: İkil = m.nonEmpty
-  def ele(deneme: ((A, D)) => İkil) = m.filter(deneme)
-  def eleDeğilse(deneme: ((A, D)) => İkil) = m.filterNot(deneme)
-  def işle[A2, D2](işlev: ((A, D)) => (A2, D2)) = m.map(işlev)
+  def ele(deneme: ((A, D)) => İkil): Eşlem[A, D] = Eşlem(m.filter(deneme))
+  def eleDeğilse(deneme: ((A, D)) => İkil): Eşlem[A, D] = Eşlem(m.filterNot(deneme))
+  def işle[A2, D2](işlev: ((A, D)) => (A2, D2)): Eşlem[A2, D2] = Eşlem(m.map(işlev))
   def işle[C](işlev: ((A, D)) => C) = m.map(işlev)
   // todo: Dizi[B] or Iterable?
   def düzİşle[B](işlev: ((A, D)) => collection.mutable.Iterable[B]) = m.flatMap(işlev)
@@ -75,7 +75,18 @@ case class Eşlem[A,D](val m: Map[A,D]) {
   def yazıYap: Yazı = m.mkString
   def yazıYap(ara: Yazı): Yazı = m.mkString(ara)
   def yazıYap(başı: Yazı, ara: Yazı, sonu: Yazı): Yazı = m.mkString(başı, ara, sonu)
-  def değiştir(a: A, d: D) = m.clone().addOne(a -> d)
+  def değiştir(a: A, d: D): Eşlem[A, D] = Eşlem(m.clone().addOne(a -> d))
+  // Eşlek'teki aynı adlı yöntemlerin değişebilen karşılıkları: yeni bir Eşlem verir, olanı değiştirmez
+  def değiştirilmiş(a: A, d: D): Eşlem[A, D] = değiştir(a, d)
+  def değiştirİşlevle(anahtar: A)(işlev: Belki[D] => Belki[D]): Eşlem[A, D] = {
+    val kopya = m.clone(); kopya.updateWith(anahtar)(işlev); Eşlem(kopya)
+  }
+  def çıkarılmış(anahtar: A): Eşlem[A, D] = Eşlem(m.clone().subtractOne(anahtar))
+  def hepsiÇıkarılmış(anahtarlar: YinelenebilirBirKere[A]): Eşlem[A, D] = Eşlem(m.clone().subtractAll(anahtarlar))
+  // dönüştür (transform) bilerek YOK: İngilizcesi değişebilen haritada yerinde çalışıyor (Eşlek'inki yeni harita veriyor);
+  // yerinde olanı değerleriİşleYerinde, yenisini işle { case (a, d) => (a, ...) } yapar.
+  def öbekle[K](iş: Pair => K): collection.immutable.Map[K, Eşlem[A, D]] = m.groupBy(iş).view.mapValues(Eşlem(_)).toMap
+  def karşılıklıMı[S](öbürü: collection.Seq[S])(deneme: (Pair, S) => İkil): İkil = m.corresponds(öbürü)(deneme)
   def varMı(deneme: ((A, D)) => İkil): İkil = m.exists(deneme)
 
   def hepsiDoğruMu(deneme: ((A, D)) => İkil): İkil = m.forall(deneme)
@@ -83,12 +94,12 @@ case class Eşlem[A,D](val m: Map[A,D]) {
 
   def içeriyorMu(anahtar: A): İkil = m.contains(anahtar)
 
-  def alSırayla(n: Sayı) = m.take(n)
-  def alDoğruKaldıkça(deneme: ((A, D)) => İkil) = m.takeWhile(deneme)
-  def alSağdan(n: Sayı) = m.takeRight(n)
-  def düşür(n: Sayı) = m.drop(n)
-  def düşürDoğruKaldıkça(deneme: ((A, D)) => İkil) = m.dropWhile(deneme)
-  def düşürSağdan(n: Sayı) = m.dropRight(n)
+  def alSırayla(n: Sayı): Eşlem[A, D] = Eşlem(m.take(n))
+  def alDoğruKaldıkça(deneme: ((A, D)) => İkil): Eşlem[A, D] = Eşlem(m.takeWhile(deneme))
+  def alSağdan(n: Sayı): Eşlem[A, D] = Eşlem(m.takeRight(n))
+  def düşür(n: Sayı): Eşlem[A, D] = Eşlem(m.drop(n))
+  def düşürDoğruKaldıkça(deneme: ((A, D)) => İkil): Eşlem[A, D] = Eşlem(m.dropWhile(deneme))
+  def düşürSağdan(n: Sayı): Eşlem[A, D] = Eşlem(m.dropRight(n))
 
   def dizine = m.toList
   def diziye = m.toSeq
@@ -101,8 +112,8 @@ case class Eşlem[A,D](val m: Map[A,D]) {
   def ikileSırayla = m.zipWithIndex
 
   //
-  def varsayılanDeğerle(d: D): Map[A, D] = m.withDefaultValue(d)
-  def öntanımlıDeğerle(d: D): Map[A, D] = m.withDefaultValue(d) // varsayılanDeğerle takma adı
+  def varsayılanDeğerle(d: D): Eşlem[A, D] = Eşlem(m.withDefaultValue(d))
+  def öntanımlıDeğerle(d: D): Eşlem[A, D] = Eşlem(m.withDefaultValue(d)) // varsayılanDeğerle takma adı
 
   def enUfağı[B >: Pair](implicit sıralama: math.Ordering[B]): Pair = m.min(sıralama)
   // `B >: Pair` idi: `enUfağı(_._2)` çağrısında B = Any çıkıp Ordering bulunamıyordu.
@@ -119,18 +130,18 @@ case class Eşlem[A,D](val m: Map[A,D]) {
   def bul(deneme: Pair => İkil): Belki[Pair] = m.find(deneme)
 
   // --- bölme, öbekleme -----------------------------------------------
-  def böl(deneme: Pair => İkil) = m.partition(deneme)
+  def böl(deneme: Pair => İkil): (Eşlem[A, D], Eşlem[A, D]) = { val (a, b) = m.partition(deneme); (Eşlem(a), Eşlem(b)) }
   def bölİşle[A1, A2](işlev: Pair => Either[A1, A2]) = m.partitionMap(işlev)
-  def bölDoğruKaldıkça(deneme: Pair => İkil) = m.span(deneme)
-  def bölYerinden(yeri: Sayı) = m.splitAt(yeri)
-  def öbekli(boy: Sayı) = m.grouped(boy)
-  def kayarÖbekli(boy: Sayı) = m.sliding(boy)
-  def kayarÖbekli(boy: Sayı, adım: Sayı) = m.sliding(boy, adım)
+  def bölDoğruKaldıkça(deneme: Pair => İkil): (Eşlem[A, D], Eşlem[A, D]) = { val (a, b) = m.span(deneme); (Eşlem(a), Eşlem(b)) }
+  def bölYerinden(yeri: Sayı): (Eşlem[A, D], Eşlem[A, D]) = { val (a, b) = m.splitAt(yeri); (Eşlem(a), Eşlem(b)) }
+  def öbekli(boy: Sayı): Iterator[Eşlem[A, D]] = m.grouped(boy).map(Eşlem(_))
+  def kayarÖbekli(boy: Sayı): Iterator[Eşlem[A, D]] = m.sliding(boy).map(Eşlem(_))
+  def kayarÖbekli(boy: Sayı, adım: Sayı): Iterator[Eşlem[A, D]] = m.sliding(boy, adım).map(Eşlem(_))
   def öbekleİşle[K, B](anahtar: Pair => K)(değer: Pair => B) = m.groupMap(anahtar)(değer)
   def öbekleİşleİndirge[K, B](anahtar: Pair => K)(değer: Pair => B)(indirge: (B, B) => B) =
     m.groupMapReduce(anahtar)(değer)(indirge)
-  def kuyruklar = m.tails
-  def önler = m.inits
+  def kuyruklar: Iterator[Eşlem[A, D]] = m.tails.map(Eşlem(_))
+  def önler: Iterator[Eşlem[A, D]] = m.inits.map(Eşlem(_))
 
   // --- indirgeme, tarama ----------------------------------------------
   def indirgeBelki[B >: Pair](işlem: (B, B) => B): Belki[B] = m.reduceOption(işlem)
@@ -147,7 +158,7 @@ case class Eşlem[A,D](val m: Map[A,D]) {
   // --- seçme, dilimleme, ikili işlemler -------------------------------
   def seçİşle[B](işlev: PartialFunction[Pair, B]) = m.collect(işlev)
   def seçİşleİlk[B](işlev: PartialFunction[Pair, B]): Belki[B] = m.collectFirst(işlev)
-  def dilim(nereden: Sayı, nereye: Sayı) = m.slice(nereden, nereye)
+  def dilim(nereden: Sayı, nereye: Sayı): Eşlem[A, D] = Eşlem(m.slice(nereden, nereye))
   def düzleştir[B](implicit delil: Pair => YinelenebilirBirKere[B]) = m.flatten(delil)
   def devrik[B](implicit delil: Pair => Yinelenebilir[B]) = m.transpose(delil)
   def ikiliyiAç[A1, A2](implicit delil: Pair => (A1, A2)) = m.unzip(delil)

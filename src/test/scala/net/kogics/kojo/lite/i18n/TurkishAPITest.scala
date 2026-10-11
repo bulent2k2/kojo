@@ -1222,16 +1222,68 @@ import net.kogics.kojo.staging
     val m = Eşlem("a" -> 1, "b" -> 2, "c" -> 3)
     m.başıBelki should be(Biri(("a", 1)))
     m.bul(_._2 > 2) should be(Biri(("c", 3)))
-    m.böl(_._2 > 1)._1.size should be(2)
-    m.bölYerinden(1)._2.size should be(2)
+    m.böl(_._2 > 1)._1.boyu should be(2)
+    m.bölYerinden(1)._2.boyu should be(2)
     m.öbekli(2).toList.boyu should be(2)
     m.öbekleİşleİndirge(_._2 % 2)(_._2)(_ + _) should be(Eşlek(1 -> 4, 0 -> 2))
     m.indirgeBelki((x, y) => (x._1 + y._1, x._2 + y._2)) should be(Biri(("abc", 6)))
     m.taraSoldan(0)((s, ikili) => s + ikili._2).dizine should be(Dizin(0, 1, 3, 6))
     m.enİrisiBelki(_._2) should be(Biri(("c", 3)))
     m.seçİşle { case (a, d) if d > 1 => a }.kümeye should be(Küme("b", "c"))
-    m.dilim(0, 2).size should be(2)
+    m.dilim(0, 2).boyu should be(2)
     m.boyu should be(3) // hiçbiri m'i DEĞİŞTİRMEDİ
+  }
+
+  test("#86: Eşlem'in harita döndüren yöntemleri Eşlem veriyor, Türkçe zincir sürüyor") {
+    val m = Eşlem("a" -> 1, "b" -> 2, "c" -> 3)
+    // süzme / dilimleme: sonuç yine Eşlem, Türkçe yöntemler çalışıyor, m değişmiyor
+    m.ele(_._2 > 1).al("b") should be(Biri(2))
+    m.eleDeğilse(_._2 > 1).al("a") should be(Biri(1))
+    m.işle { case (a, d) => (a + a, d * 10) }.al("aa") should be(Biri(10))
+    m.alSırayla(2).boyu should be(2); m.alSağdan(1).boyu should be(1); m.alDoğruKaldıkça(_._2 < 3).boyu should be(2)
+    m.düşür(1).boyu should be(2); m.düşürSağdan(1).boyu should be(2); m.düşürDoğruKaldıkça(_._2 < 2).boyu should be(2)
+    m.dilim(1, 3).boyu should be(2); m.kuyruğu.boyu should be(2); m.önü.boyu should be(2)
+    val (küçük, büyük) = m.böl(_._2 < 2)
+    küçük.boyu should be(1); büyük.boyu should be(2)
+    m.bölDoğruKaldıkça(_._2 < 2)._2.boyu should be(2); m.bölYerinden(2)._1.boyu should be(2)
+    m.öbekli(2).toList.map(_.boyu) should be(Dizin(2, 1))
+    m.kayarÖbekli(2).toList.map(_.boyu) should be(Dizin(2, 2))
+    m.kuyruklar.toList.map(_.boyu) should be(Dizin(3, 2, 1, 0)); m.önler.toList.map(_.boyu) should be(Dizin(3, 2, 1, 0))
+    m.boyu should be(3) // hiçbiri m'i DEĞİŞTİRMEDİ
+
+    // eşEkle, += ve -= artık Eşlem'in KENDİSİNİ veriyor: zincirleme çalışıyor
+    val z = Eşlem("a" -> 1)
+    (z eşEkle ("b" -> 2) eşEkle ("c" -> 3)) should be theSameInstanceAs z
+    (z += ("d" -> 4)) should be theSameInstanceAs z
+    (z -= "a") should be theSameInstanceAs z
+    z.boyu should be(3); z.eşli("a") should be(yanlış)
+
+    // varsayılan değerli görünüm yazma-geçişli: yazılan asıl Eşlem'e de gidiyor
+    val asıl = Eşlem("a" -> 1)
+    val vd = asıl.varsayılanDeğerle(0)
+    vd("yok") should be(0); vd.al("yok") should be(Hiçbiri)
+    vd.eşEkle("b" -> 2); asıl("b") should be(2)
+    val ö = asıl.öntanımlıDeğerle(-1)
+    ö("yine yok") should be(-1)
+    ö.eşEkle("c" -> 3); asıl("c") should be(3)
+    asıl.öntanımlı(_.length)("üç").shouldBe(2)
+  }
+
+  test("#86: Eşlek'te olup Eşlem'de eksik olan altı yöntem") {
+    val m = Eşlem("a" -> 1, "b" -> 2)
+    // hepsi YENİ bir Eşlem verir, m'i değiştirmez
+    val d1 = m.değiştirilmiş("c", 3)
+    d1.boyu should be(3); m.boyu should be(2)
+    val d2 = m.değiştirİşlevle("a")(_.işle(_ + 10))
+    d2("a") should be(11); m("a") should be(1)
+    m.değiştirİşlevle("yeni")(_ => Biri(7)).boyu should be(3)
+    val d3 = m.çıkarılmış("a")
+    d3.eşli("a") should be(yanlış); m.eşli("a") should be(doğru)
+    m.hepsiÇıkarılmış(Dizi("a", "b")).boyu should be(0); m.boyu should be(2)
+    val ö = Eşlem("a" -> 1, "b" -> 2, "c" -> 3).öbekle(_._2 % 2)
+    ö(1).boyu should be(2); ö(0).boyu should be(1)
+    m.karşılıklıMı(Dizi(1, 2))((ikili, s) => ikili._2 == s) should be(doğru)
+    m.karşılıklıMı(Dizi(1, 3))((ikili, s) => ikili._2 == s) should be(yanlış)
   }
 
   test("Kuyruk, Yazı ve Belki: ortak çekirdek") {

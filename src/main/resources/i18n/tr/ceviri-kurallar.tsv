@@ -253,6 +253,8 @@ tr>en	eşleme	*	toMap	sarmalayıcı `Eşlem.değişmezden(d.toMap)` diyor; üret
 tr>en	öbekleEsnek	*	groupBy	aynı kalıp: `Eşlem.değişmezden(d.groupBy(iş))`; sonuç Eşlem, işlem groupBy.
 tr>en	varsayılanlı	*	withDefault	aynı kalıp: `Eşlem(m.withDefault(işlev))`; üretilmiş sözlükte 1-1 beraberlik (collection.mutable.Map / withDefault) alfabetik bozuluyor ve yanlış olan kazanıyor.
 tr>en	öntanımlı	*	withDefault	varsayılanlı'nın takma adı; aynı kalıp, aynı beraberlik.
+tr>en	kuyruklar	*	tails	Eşlem'de zincir `m.tails.map(Eşlem(_))`: sarmalayıcı yineleyiciyi dolaylı çağırıyor, üreteç `map`i hedef sanıyor (#86).
+tr>en	önler	*	inits	Eşlem'de zincir `m.inits.map(Eşlem(_))` (bkz. kuyruklar).
 tr>en	saydamlık	üye(	opacityMod	argümanlı hâl (resim.scala:261). Üç aday da n=1, karar alfabetiğe kalıyor ve Resim'in üyesi OLMAYAN `opac` kazanıyordu (#75).
 tr>en	saydamlık	üye	opacity	argümansız hâl (resim.scala:308). Arity'yi ancak bağlam ayırıyor; tek kural yarısını bozuyordu, ölçüldü (#75).
 tr>en	konumuOku	*	readPosition	yalnız iKojo'da: kaplumbağa kuyruğa girdiği için konum geri çağırmayla okunuyor (kojojs-dev#181). Masaüstü İngilizcesinde karşılığı yok; masaüstü betiği `position` kullanır.
