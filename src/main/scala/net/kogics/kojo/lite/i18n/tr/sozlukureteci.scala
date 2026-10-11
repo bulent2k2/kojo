@@ -55,8 +55,9 @@ object SözlükÜreteci {
   private val ascii = "^[A-Za-z_][A-Za-z0-9_]*(\\.[A-Za-z_][A-Za-z0-9_]*)?$".r
   /** Yazılımcıkta niteleyicisiyle yazılan İngilizce nesneler: `math.sqrt`, `math.Pi`. */
   private val nitelenmişKalır = Set("math", "Picture")
-  /** `new`suz kurulan Türkçe sarmalayıcı sınıflar: `Yöney2B(v.rotate(a))` içteki zinciri sarar. */
-  private val sarmalayıcıYapıcıları = Set("Yöney2B")
+  /** `new`suz kurulan Türkçe sarmalayıcı sınıflar: `Yöney2B(v.rotate(a))` ve `Eşlem(m.filter(f))` içteki zinciri sarar
+    * (yoksa `ele -> collection.mutable.Map` gibi sahte rakipler çıkıp `ele -> filter` ile berabere kalıyordu, #86). */
+  private val sarmalayıcıYapıcıları = Set("Yöney2B", "Eşlem")
   /** Her nesnede olan, çevrilmesi anlamsız adlar; sözlüğe girerlerse `apply -> Resim`
     * gibi 28 kaynaklı sahte çiftler çıkıyor (ölçüldü). */
   private val evrenselAdlar = Set("apply", "unapply", "toString", "equals", "hashCode", "copy", "main", "compare")

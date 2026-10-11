@@ -614,7 +614,7 @@ def	buradaDurma	burdaDurma	trInit.scala	1	üye
 def	böl	partition	dizi.scala	3	üye
 def	böl	partition	dizik.scala	2	üye
 def	böl	partition	dizin.scala	1	üye
-def	böl	partition	eslem.scala	2	üye
+def	böl	partition	eslem.scala	1	üye
 def	böl	partition	kume.scala	1	üye
 def	böl	partition	kuyruk.scala	1	üye
 def	böl	partition	miskindizin.scala	1	üye
@@ -624,7 +624,7 @@ def	böl	split	yazi.scala	3	üye
 def	bölDoğruKaldıkça	span	dizi.scala	3	üye
 def	bölDoğruKaldıkça	span	dizik.scala	2	üye
 def	bölDoğruKaldıkça	span	dizin.scala	1	üye
-def	bölDoğruKaldıkça	span	eslem.scala	2	üye
+def	bölDoğruKaldıkça	span	eslem.scala	1	üye
 def	bölDoğruKaldıkça	span	kume.scala	1	üye
 def	bölDoğruKaldıkça	span	kuyruk.scala	2	üye
 def	bölDoğruKaldıkça	span	miskindizin.scala	1	üye
@@ -634,7 +634,7 @@ def	bölDoğruKaldıkça	span	yoney.scala	1	üye
 def	bölYerinden	splitAt	dizi.scala	3	üye
 def	bölYerinden	splitAt	dizik.scala	2	üye
 def	bölYerinden	splitAt	dizin.scala	1	üye
-def	bölYerinden	splitAt	eslem.scala	2	üye
+def	bölYerinden	splitAt	eslem.scala	1	üye
 def	bölYerinden	splitAt	kume.scala	1	üye
 def	bölYerinden	splitAt	kuyruk.scala	2	üye
 def	bölYerinden	splitAt	miskindizin.scala	1	üye
@@ -712,7 +712,7 @@ def	değiştir	updated	yoney.scala	1	üye
 def	değiştirAralığını	replace	yazi.scala	1	üye
 def	değiştirHepsini	replaceAll	yazi.scala	1	üye
 def	değiştirYerinde	update	dizik.scala	2	üye
-def	değiştirilmiş	updated	eslem.scala	1	üye
+def	değiştirilmiş	updated	eslem.scala	2	üye
 def	değiştirİlkini	replaceFirst	yazi.scala	1	üye
 def	değiştirİşlevle	updatedWith	eslem.scala	1	üye
 def	dikdörtgen	Picture.rect	resim.scala	1
@@ -1178,6 +1178,7 @@ def	hepsiniEkle	addAll	kuyruk.scala	2	eskitilmiş,üye
 def	hepsiniHesapla	force	miskindizin.scala	1	üye
 def	hepsiÇıkarılmış	removedAll	eslem.scala	1	üye
 def	hepsiÇıkarılmış	removedAll	kume.scala	1	üye
+def	hepsiÇıkarılmış	subtractAll	eslem.scala	1	üye
 def	hepsiİçinDoğruMu	forall	belki.scala	1	üye
 def	hepsiİçinDoğruMu	forall	dizi.scala	3	üye
 def	hepsiİçinDoğruMu	forall	dizik.scala	2	üye
@@ -1408,7 +1409,7 @@ def	karışımKipi	blendMode	tuvalcizim.scala	1	üye
 def	karşılıklıMı	corresponds	dizi.scala	3	üye
 def	karşılıklıMı	corresponds	dizik.scala	1	üye
 def	karşılıklıMı	corresponds	dizin.scala	1	üye
-def	karşılıklıMı	corresponds	eslem.scala	1	üye
+def	karşılıklıMı	corresponds	eslem.scala	2	üye
 def	karşılıklıMı	corresponds	kuyruk.scala	1	üye
 def	karşılıklıMı	corresponds	miskindizin.scala	1	üye
 def	karşılıklıMı	corresponds	yineleyici.scala	1	üye
@@ -1528,10 +1529,11 @@ def	kutudanÇıkar	unbox	harf.scala	1	üye
 def	kutuyaKoy	box	harf.scala	1	üye
 def	kuvveti	math.pow	matematik.scala	1
 def	kuvveti	pow	data.scala	1	üye
+def	kuyruklar	map	eslem.scala	1	üye
 def	kuyruklar	tails	dizi.scala	3	üye
 def	kuyruklar	tails	dizik.scala	2	üye
 def	kuyruklar	tails	dizin.scala	1	üye
-def	kuyruklar	tails	eslem.scala	2	üye
+def	kuyruklar	tails	eslem.scala	1	üye
 def	kuyruklar	tails	kume.scala	1	üye
 def	kuyruklar	tails	kuyruk.scala	2	üye
 def	kuyruklar	tails	miskindizin.scala	1	üye
@@ -2106,8 +2108,7 @@ def	varMı	exists	yoney.scala	1	üye
 def	varMı	isDefined	data.scala	1	üye
 def	varMı	nonEmpty	belki.scala	1	üye
 def	varsayılanDeğerle	withDefaultValue	eslem.scala	2	üye
-def	varsayılanlı	collection.mutable.Map	eslem.scala	1
-def	varsayılanlı	withDefault	eslem.scala	1	üye
+def	varsayılanlı	withDefault	eslem.scala	2	üye
 def	varsayılanı	default	eslem.scala	2	üye
 def	veÇiz	draw	resim.scala	1
 val	vurgulu	ItalicFont	trInit.scala	1
@@ -2398,6 +2399,7 @@ def	çıkarÖgeyi	subtractOne	dizik.scala	1	üye
 def	çıkarİlkUyanı	removeFirst	kuyruk.scala	2	üye
 def	çıkarılmış	excl	kume.scala	1	üye
 def	çıkarılmış	removed	eslem.scala	1	üye
+def	çıkarılmış	subtractOne	eslem.scala	1	üye
 def	çıktıArtalanınıKur	setOutputBackground	trInit.scala	1
 def	çıktıYazıRenginiKur	setOutputTextColor	trInit.scala	1
 def	çıktıYazıYüzüBoyunuKur	setOutputTextFontSize	trInit.scala	1
@@ -2406,7 +2408,7 @@ def	çıktıyıSil	clearOutput	trInit.scala	1
 def	öbekle	groupBy	dizi.scala	5	üye
 def	öbekle	groupBy	dizik.scala	2	üye
 def	öbekle	groupBy	dizin.scala	1	üye
-def	öbekle	groupBy	eslem.scala	1	üye
+def	öbekle	groupBy	eslem.scala	2	üye
 def	öbekle	groupBy	kume.scala	1	üye
 def	öbekle	groupBy	kuyruk.scala	2	üye
 def	öbekle	groupBy	miskindizin.scala	1	üye
@@ -2448,14 +2450,14 @@ def	öneAl	moveToFront	resim.scala	1	üye
 def	önler	inits	dizi.scala	3	üye
 def	önler	inits	dizik.scala	2	üye
 def	önler	inits	dizin.scala	1	üye
-def	önler	inits	eslem.scala	2	üye
+def	önler	inits	eslem.scala	1	üye
 def	önler	inits	kume.scala	1	üye
 def	önler	inits	kuyruk.scala	2	üye
 def	önler	inits	miskindizin.scala	1	üye
 def	önler	inits	yazi.scala	1	üye
 def	önler	inits	yoney.scala	1	üye
-def	öntanımlı	collection.mutable.Map	eslem.scala	1
-def	öntanımlı	withDefault	eslem.scala	1	üye
+def	önler	map	eslem.scala	1	üye
+def	öntanımlı	withDefault	eslem.scala	2	üye
 def	öntanımlıDeğerle	withDefaultValue	eslem.scala	2	üye
 def	önü	init	dizi.scala	3	üye
 def	önü	init	dizik.scala	2	üye
