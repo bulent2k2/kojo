@@ -435,7 +435,9 @@ val	açıkSarı	lightYellow	renk.scala	1	üye
 val	açıkSomon	lightSalmon	renk.scala	1	üye
 val	açıkYeşil	lightGreen	renk.scala	1	üye
 val	açıkÇelikMavisi	lightSteelBlue	renk.scala	1	üye
+def	açısalEğriKöşesi	curveVertexRt	tuvalcizim.scala	1
 def	açısalEğriNoktası	curveVertexRt	geo.scala	1
+def	açısalKöşe	vertexRt	tuvalcizim.scala	1
 def	açısalNokta	vertexRt	geo.scala	1
 def	açıyaDön	setHeading	resim.scala	1
 def	açıyaDön	setHeading	trInit.scala	1
@@ -504,6 +506,7 @@ def	benzerDönüşümUygula	transformBy	resim.scala	1	üye
 val	beyaz	white	data.scala	1
 val	beyaz	white	renk.scala	1
 val	beyazlatılmışBadem	blanchedAlmond	renk.scala	1	üye
+def	bezierKöşesi	bezierVertex	tuvalcizim.scala	1
 def	bezierNoktası	bezierVertex	geo.scala	1
 def	bileşim	concat	dizi.scala	3	üye
 def	bileşim	concat	dizik.scala	1	üye
@@ -650,6 +653,7 @@ def	büyükHarfMi	isUpper	harf.scala	1	üye
 def	büyükHarfe	map	yazi.scala	1	üye
 def	büyükHarfe	toUpper	harf.scala	1	üye
 def	büyüt	scale	resim.scala	4
+def	büyüt	scale	tuvalcizim.scala	2
 def	büyüt	scale	yoney2b.scala	1
 def	büyütXY	scale	resim.scala	1
 def	büyütmeOranı	scaleFactor	resim.scala	1	üye
@@ -661,6 +665,7 @@ def	canlan	react	resim.scala	1	üye
 def	canlan	react	trInit.scala	1	üye
 def	canlandır	animate	trInit.scala	1
 def	canlandırEvreyle	animateWithState	trInit.scala	1
+def	canlandırKurulumluTuvalÇizimle	animateWithSetupCanvasDraw	trInit.scala	1
 def	canlandırTuvalÇizimle	animateWithCanvasDraw	trInit.scala	1
 def	canlandırmaBaşlayınca	onAnimationStart	trInit.scala	1
 def	canlandırmaBitince	onAnimationStop	trInit.scala	1
@@ -825,11 +830,17 @@ def	döndür	rot	data.scala	1
 def	döndür	rot	resim.scala	1
 def	döndür	rotate	resim.scala	1	üye
 def	döndür	rotate	yoney2b.scala	1	üye
+def	döndürDerece	rotateDegrees	tuvalcizim.scala	1	üye
 def	döndürMerkezli	rotateAboutPoint	resim.scala	1	üye
 def	döndürMerkezli	rotp	resim.scala	1
+def	döndürRadyan	rotate	tuvalcizim.scala	1	üye
+def	döngüdeMi	loop	tuvalcizim.scala	1	üye
+def	döngüyüDurdur	noLoop	tuvalcizim.scala	1	üye
 def	dönüştür	morph	resim.scala	1	üye
 def	dönüştür	transform	eslem.scala	1
 def	dönüşüm	transform	resim.scala	1
+def	dönüşümüGeriYükle	popMatrix	tuvalcizim.scala	1	üye
+def	dönüşümüKaydet	pushMatrix	tuvalcizim.scala	1	üye
 def	düz	Picture.line	resim.scala	1
 def	düzleştir	flatten	belki.scala	1	üye
 def	düzleştir	flatten	dizi.scala	3	üye
@@ -1039,11 +1050,14 @@ def	enİrisiBelki	maxOption	kuyruk.scala	2	üye
 def	enİrisiBelki	maxOption	miskindizin.scala	1	üye
 def	enİrisiBelki	maxOption	yineleyici.scala	1	üye
 def	enİrisiBelki	maxOption	yoney.scala	1	üye
+def	eskizden	Picture.fromSketch	resim.scala	1
 def	etkinliğiKur	setEnabled	arayuz.scala	1	üye
 def	evDizini	homeDir	data.scala	1
 def	evDizini	homeDir	trInit.scala	1
 def	eüssü	exp	data.scala	1	üye
 def	eüssü	math.exp	matematik.scala	1
+def	eğikBirleşim	BEVEL	tuvalcizim.scala	1	üye
+def	eğriKöşesi	curveVertex	tuvalcizim.scala	1
 def	eğriNoktası	curveVertex	geo.scala	1
 def	eğriÇiz	quadTo	geo.scala	1	üye
 def	eşitMi	equals	kokturler.scala	1
@@ -1091,6 +1105,8 @@ def	fark	diff	yoney.scala	1	üye
 def	filtre	applyFilter	resim.scala	1	üye
 def	fırça	stroke	tuvalcizim.scala	2	üye
 def	fırçaAğırlığı	strokeWeight	tuvalcizim.scala	1	üye
+def	fırçaBirleşimi	strokeJoin	tuvalcizim.scala	1	üye
+def	fırçaUcu	strokeCap	tuvalcizim.scala	1	üye
 def	fırçasız	noStroke	tuvalcizim.scala	1	üye
 def	geometri	picGeom	resim.scala	1	üye
 def	gerekli	require	data.scala	1
@@ -1123,6 +1139,7 @@ def	göster	visible	trInit.scala	1
 def	gösterdikleriAynıMı	sameElements	yineleyici.scala	1	üye
 def	götür	trans	resim.scala	3
 def	götür	translate	resim.scala	3	üye
+def	götür	translate	tuvalcizim.scala	1	üye
 val	gücü	math.pow	matematik.scala	1
 def	gücü	pow	data.scala	1	üye
 def	gün	hepsi	buan.scala	1	üye
@@ -1240,6 +1257,7 @@ def	ikiliyiAç	unzip	kume.scala	1	üye
 def	ikiliyiAç	unzip	kuyruk.scala	2	üye
 def	ikiliyiAç	unzip	miskindizin.scala	1	üye
 def	ikiliyiAç	unzip	yoney.scala	1	üye
+def	ikinciDereceKöşe	quadraticVertex	tuvalcizim.scala	1
 def	ikinciDereceNokta	quadraticVertex	geo.scala	1
 def	ikiyeAyır	partition	yazi.scala	1	üye
 def	ikizYap	duplicate	yineleyici.scala	1	üye
@@ -1381,10 +1399,12 @@ def	kapasitesi	capacity	yazi.scala	1	üye
 object	kaplumbağa	turtle0	trInit.scala	1
 def	kaplumbağa0	turtle0	data.scala	1
 val	kaplumbağa0	turtle0	trInit.scala	1
+def	kareUç	SQUARE	tuvalcizim.scala	1	üye
 def	karekökü	math.sqrt	matematik.scala	1
 def	karekökü	sqrt	data.scala	1	üye
 def	karesi	math.pow	matematik.scala	1
 def	karesi	pow	data.scala	1	üye
+def	karışımKipi	blendMode	tuvalcizim.scala	1	üye
 def	karşılıklıMı	corresponds	dizi.scala	3	üye
 def	karşılıklıMı	corresponds	dizik.scala	1	üye
 def	karşılıklıMı	corresponds	dizin.scala	1	üye
@@ -1536,6 +1556,7 @@ val	kuzeydoğu	NORTH_EAST	arayuz.scala	1	üye
 def	kym	rgb	renk.scala	1	üye
 def	kyms	rgba	renk.scala	1	üye
 def	kökDizinler	listRoots	dosya.scala	1	üye
+def	köşe	vertex	tuvalcizim.scala	1
 def	köşegen	Picture.line	resim.scala	1
 def	kümeye	toSet	dizi.scala	5	üye
 def	kümeye	toSet	dizik.scala	2	üye
@@ -1658,6 +1679,7 @@ def	permütasyonlar	permutations	kuyruk.scala	1	üye
 def	permütasyonlar	permutations	miskindizin.scala	1	üye
 def	permütasyonlar	permutations	yazi.scala	1	üye
 def	permütasyonlar	permutations	yoney.scala	1	üye
+def	projeUç	PROJECT	tuvalcizim.scala	1	üye
 def	radyana	math.toRadians	matematik.scala	1
 def	radyana	toRadians	data.scala	1	üye
 def	radyana	toRadians	sayi.scala	1	üye
@@ -1679,6 +1701,7 @@ def	rastgeleSayı	randomInt	data.scala	1
 def	rastgeleSayı	randomInt	trInit.scala	1
 def	rastgeleSeçim	randomBoolean	data.scala	1
 def	rastgeleSeçim	randomBoolean	trInit.scala	1
+def	rastgeleTohum	randomSeed	tuvalcizim.scala	1	üye
 def	rastgeleTohumunuKur	initRandomGenerator	data.scala	1
 def	rastgeleTohumunuKur	initRandomGenerator	trInit.scala	1
 def	rastgeleUzun	randomLong	data.scala	1
@@ -1810,6 +1833,7 @@ def	sinüs	math.sin	matematik.scala	1
 def	sinüs	sin	data.scala	1	üye
 def	sinüsünAçısı	asin	data.scala	1	üye
 def	sinüsünAçısı	math.asin	matematik.scala	1
+def	sivriBirleşim	MITER	tuvalcizim.scala	1	üye
 val	siyah	black	data.scala	1
 val	siyah	black	renk.scala	1
 val	sol	LEFT	arayuz.scala	1	üye
@@ -2024,6 +2048,7 @@ def	tuval	canvas	resim.scala	1	üye
 def	tuvalAlanı	canvasBounds	data.scala	1
 def	tuvalBoyutOranınıKur	setDrawingCanvasAspectRatio	trInit.scala	1
 def	tuvalBoyutlarınıKur	setDrawingCanvasSize	trInit.scala	1
+def	tuvalEskizi	canvasSketch	trInit.scala	1
 def	tuvalden	Picture.fromCanvas	resim.scala	1
 def	tuvaleYaz	write	trInit.scala	1
 def	tuvaliDöndür	viewRotate	trInit.scala	1
@@ -2120,6 +2145,7 @@ val	yavaş	slow	data.scala	1
 def	yay	Picture.arc	resim.scala	1
 def	yay	arc	trInit.scala	1
 def	yay	arc	tuvalcizim.scala	1
+def	yayKöşesi	arcVertex	tuvalcizim.scala	1
 def	yaz	print	data.scala	1
 def	yaz	print	trInit.scala	1
 def	yazı	Picture.text	resim.scala	2
@@ -2213,6 +2239,7 @@ def	yukarıdakiÇiniyeTaşı	moveToTileAbove	cinidunyasi.scala	1	üye
 def	yukarıdaÇiniVarMı	hasTileAbove	cinidunyasi.scala	1	üye
 val	yumuşakGeçiş	KEasing	resim.scala	1	üye
 def	yuvarla	round	data.scala	1
+def	yuvarlakUç	ROUND	tuvalcizim.scala	1	üye
 def	yöney	currentVector	kumanda.scala	1	üye
 def	yöneye	toVector	dizi.scala	5	üye
 def	yöneye	toVector	dizik.scala	2	üye
@@ -2493,3 +2520,5 @@ def	ışıklar	lights	resim.scala	1
 def	ışınlarıAç	beamsOn	trInit.scala	1
 def	ışınlarıKapat	beamsOff	trInit.scala	1
 def	şekil	drawShape	tuvalcizim.scala	1	üye
+def	şekilBaşla	beginShape	tuvalcizim.scala	1
+def	şekilBitir	endShape	tuvalcizim.scala	1

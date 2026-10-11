@@ -4,7 +4,7 @@
 // it bigger for fatter orbits.
 val (pos, size, initSpeed, gravity, sample) = (50.0, 5.0, 1.0, 100.0, 4)
 val brush = 6            // paints the orbits. 0 = off
-val alpha = 50
+val alpha = 100
 val softening = size * 3 // closest-approach limit: gravity stops growing below this
 
 val red = Color(255, 0, 0, alpha)
@@ -40,10 +40,19 @@ def dv(p1: Point, p2: Point, mass2: Double) = { // change in velocity, i.e. acce
   v.scaleBy(gravity * mass2 / (d * d * v.awayFromZero))
 }
 
+// A hidden turtle per body traces its orbit as a line. (Drawing a new circle for every dot
+// used up Kojo's picture budget after a few minutes of running: see issue #87.)
+val trails = bodies.map { b =>
+  val t = newTurtle(b.startPos.x, b.startPos.y)
+  t.invisible(); t.setAnimationDelay(0)
+  t.setPenColor(b.look.color); t.setPenThickness(2 * brush)
+  t
+}
+
 var frame = 1
 animate {
   if (brush > 0 && frame % sample == 1)
-    for (b <- bodies) draw(trans(b.p.position.x, b.p.position.y) * b.look.transform -> Picture.circle(brush))
+    for ((b, t) <- bodies.zip(trails)) t.moveTo(b.p.position.x, b.p.position.y)
   frame += 1
   for (b <- bodies) // first every velocity is worked out from the same snapshot...
     for (other <- bodies if other != b)

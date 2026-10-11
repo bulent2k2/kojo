@@ -36,10 +36,19 @@ tanım dv(p1: Nokta, p2: Nokta, kütle2: Kesir) = { // hızdaki değişim (ivme)
   v.ölçekle(kütle2 / v.uzunluk3)
 }
 
+// Her cisim için görünmez bir kaplumbağa yörüngesini çizgi olarak çizer. (Her nokta için yeni bir
+// daire çizmek birkaç dakika sonra Kojo'nun resim kotasını bitiriyordu: bkz. #87.)
+dez izler = cisimler.işle { b =>
+  dez k = yeniKaplumbağa(b.ilkKonum.x, b.ilkKonum.y)
+  k.gizle(); k.canlandırmaHızınıKur(0)
+  k.kalemRenginiKur(b.resim.renk); k.kalemKalınlığınıKur(4)
+  k
+}
+
 den adım = 0
 canlandır {
   eğer (adım % örnekle == 0)
-    için (b <- cisimler) çiz(öteleme(b.p.konum.x, b.p.konum.y) * b.resim.dönüşüm -> Resim.daire(2))
+    için ((b, k) <- cisimler.ikile(izler)) k.ilerle(b.p.konum.x, b.p.konum.y)
   adım += 1
   için (b <- cisimler) {
     için (öbürü <- cisimler eğer öbürü != b)

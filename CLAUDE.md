@@ -126,6 +126,7 @@ Fork conventions:
 - Keep new Turkish work inside `lite/i18n/` to minimize upstream merge conflicts. The Koco revision/date is deliberately kept in a comment at the top of `lite/i18n/tr/dict.scala`, **not** in `Versions.scala`.
 - Turkish source uses non-ASCII identifiers (`ı ş ğ ö ü ç İ`); files must stay UTF-8. Beware the Turkish dotless-i trap in `toLowerCase`/`toUpperCase`.
 - A new builtin should also get a Turkish wrapper in `lite/i18n/tr/` and, where relevant, `dict.scala`/`translate.scala` entries.
+- **Picture budget**: `draw(pic)` (and so `çiz(r)`) refuses to run once `PicCache.size > 60000`, and every picture *constructed* (not just drawn) adds entries — about 3 per `Resim.daire(..).kalemRenkli(..).boyalı(..).taşınmış(..)` dot, 4 once drawn. A loop that draws a new picture per frame therefore stops after a few minutes (#87). Trails/many small marks belong in a turtle line (`yeniKaplumbağa` + `ilerle(x, y)`, see `samples/tr/nbody-*.kojo`) or in a sketch: `Resim.eskizden(eskiz)` / `tuvalEskizi` / `canlandırTuvalÇizimle` (`tr/eskiz.scala`, `tr/tuvalcizim.scala`), which paint pixels on one picture.
 
 ### Koco ↔ Kojo script translator (`lite/i18n/tr/cevirmen.scala`)
 
@@ -142,6 +143,6 @@ Known limits (documented in the test): names whose English target depends on the
 
 ## Conventions
 
-- Tests: ScalaTest pinned at 3.0.8 (old API: `org.scalatest.Matchers`, `org.scalatest.junit.JUnitRunner` — not the 3.1+ paths; don't upgrade casually), run under JUnit 4; named `<Thing>Test.scala` mirroring the main package layout. Shared harnesses: `lite/TestEnv.scala`, `lite/NoOpKojoCtx.scala`, `xscala/CompilerAndRunnerTestBase.scala`.
+- Tests: ScalaTest pinned at 3.0.8 (old API: `org.scalatest.Matchers`, `org.scalatest.junit.JUnitRunner` — not the 3.1+ paths; don't upgrade casually), run under JUnit 4; named `<Thing>Test.scala` mirroring the main package layout. Shared harnesses: `lite/TestEnv.scala`, `lite/NoOpKojoCtx.scala`, `xscala/CompilerAndRunnerTestBase.scala`. **Don't build `TestEnv` in a new test class**: it constructs a `CodeExecutionSupport`, which redirects `System.out/err` to the output window for the whole (shared) test JVM, and `InterpOutputHandlerTest` then dies with `StackOverflowError` (measured). To get a `Builtins`, build `SpriteCanvas`/`TurtleWorldAPI`/`DrawingCanvasAPI`/`staging.API` directly, as `lite/i18n/TurkishEskizTest.scala` does.
 - `.scalafmt.conf` exists (scalafmt 3.7.1, maxColumn 120) but there is **no sbt formatting plugin** and much of the codebase (especially `lite/i18n/tr/`) is not formatted to it. Format only the code you touch; never bulk-reformat.
 - License is GPLv3; every source file carries the header — keep it on new files.

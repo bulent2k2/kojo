@@ -427,6 +427,9 @@ object Resim {
   def dikeyBoşluk(boy: Kesir) = new Resim(richBuiltins.Picture.vgap(boy))
   def yoldan(işlev: GeoYol => Birim) = new Resim(richBuiltins.Picture.fromPath(işlev))
   def noktadan(işlev: GeoNokta => Birim) = new Resim(richBuiltins.Picture.fromVertexShape(işlev))
+  // fromSketch: tek bir tuval resmi, çizilenler piksel -- bkz. eskiz.scala
+  def eskizden(eskiz: Eskiz, ölçekÇarpanı: Kesir = 1): Resim =
+    new Resim(richBuiltins.Picture.fromSketch(new EskizUyarlayıcı(eskiz), ölçekÇarpanı))
   def kaplumbağadan(işlev: Kaplumbağa => Birim) = { // todo: does this work?
     val f = new Function1[Turtle, Unit] { def apply(t: Turtle): Unit = işlev(new Kaplumbağa(t)) }
     new Resim(richBuiltins.Picture.fromTurtle(f))

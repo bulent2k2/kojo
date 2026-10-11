@@ -7,7 +7,7 @@
 // body is one line there and four blocks here.
 val (pos, size, initSpeed, gravity, sample) = (50, 5, 1.0, 100, 4)
 val brush = 6 // paints the orbits. 0 = off
-val alpha = 50
+val alpha = 100
 val red = Color(255, 0, 0, alpha)
 val green = Color(0, 255, 0, alpha)
 val blue = Color(0, 110, 255, alpha)
@@ -35,12 +35,21 @@ def dv(p1: Point, p2: Point) = {
   (if (p1.x > p2.x) -fx else fx,
    if (p1.y > p2.y) -fy else fy)
 }
+// A hidden turtle per body traces its orbit as a line. (Drawing a new circle for every dot
+// used up Kojo's picture budget after a few minutes of running: see issue #87.)
+val trails = Seq(c1, c2, c3, c4).map { c =>
+  val t = newTurtle(0, 0)
+  t.invisible(); t.setAnimationDelay(0)
+  t.setPenColor(c); t.setPenThickness(2 * brush)
+  t
+}
+
 var frame = 1
 animate {
   val (p1, p2, p3, p4) = (b1.position, b2.position, b3.position, b4.position)
   if (brush > 0 && frame % sample == 1) {
-    for ((p, c) <- Seq((p1, c1), (p2, c2), (p3, c3), (p4, c4)))
-      draw(Picture.circle(brush).withPenColor(c).withFillColor(c).withTranslation(p.x, p.y))
+    for ((p, t) <- Seq(p1, p2, p3, p4).zip(trails))
+      if (frame == 1) t.jumpTo(p.x, p.y) else t.moveTo(p.x, p.y) // the first sample only sets the start
   }
   frame += 1
   for (p <- Seq(p2, p3, p4)) { val (fx, fy) = dv(p1, p); dx1 += fx; dy1 += fy }

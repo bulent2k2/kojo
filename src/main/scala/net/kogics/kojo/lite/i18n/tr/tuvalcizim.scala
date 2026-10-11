@@ -42,5 +42,42 @@ trait TuvalÇizimYöntemleri {
     def dikdörtgen(x1: Kesir, y1: Kesir, x2: Kesir, y2: Kesir): Birim = tç.rect(x1, y1, x2, y2)
     def yazıYüzü(yy: Yazıyüzü): Birim = tç.textFont(yy)
     def yazı(yazı: Yazı, x: Kesir, y: Kesir): Birim = tç.text(yazı, x, y)
+
+    // Rastgelelik ve döngü
+    def rastgeleTohum(tohum: Uzun): Birim = tç.randomSeed(tohum)
+    def döngüyüDurdur(): Birim = tç.noLoop()
+    def döngüdeMi: İkil = tç.loop
+
+    // Dönüşümler: götür/döndür/büyüt, Resim'dekilerle aynı adlar.
+    // Tuvalde döndürRadyan radyanla, döndürDerece derece ile çalışır (rotate / rotateDegrees).
+    def götür(x: Kesir, y: Kesir): Birim = tç.translate(x, y)
+    def döndürRadyan(açı: Kesir): Birim = tç.rotate(açı)
+    def döndürDerece(derece: Kesir): Birim = tç.rotateDegrees(derece)
+    def büyüt(çarpan: Kesir): Birim = tç.scale(çarpan)
+    def büyüt(xÇarpanı: Kesir, yÇarpanı: Kesir): Birim = tç.scale(xÇarpanı, yÇarpanı)
+    def dönüşümüKaydet(): Birim = tç.pushMatrix()
+    def dönüşümüGeriYükle(): Birim = tç.popMatrix()
+
+    // Fırça ucu ve birleşimi, karışım kipi
+    def fırçaUcu(uç: Sayı): Birim = tç.strokeCap(uç)
+    def fırçaBirleşimi(birleşim: Sayı): Birim = tç.strokeJoin(birleşim)
+    def yuvarlakUç: Sayı = tç.ROUND        // fırçaUcu(tuval.yuvarlakUç)
+    def projeUç: Sayı = tç.PROJECT
+    def kareUç: Sayı = tç.SQUARE
+    def sivriBirleşim: Sayı = tç.MITER     // fırçaBirleşimi(tuval.sivriBirleşim)
+    def eğikBirleşim: Sayı = tç.BEVEL
+    def karışımKipi(kip: java.awt.Composite): Birim = tç.blendMode(kip)
+
+    // Köşe noktalarıyla şekil çizmek (GeoNokta'daki başla/bitir/nokta ile aynı iş; tuvalde nokta zaten başka)
+    def şekilBaşla(): Birim = tç.beginShape()
+    def şekilBitir(): Birim = tç.endShape()
+    def köşe(x: Kesir, y: Kesir): Birim = tç.vertex(x, y)
+    def ikinciDereceKöşe(mx: Kesir, my: Kesir, x2: Kesir, y2: Kesir): Birim = tç.quadraticVertex(mx, my, x2, y2)
+    def bezierKöşesi(mx1: Kesir, my1: Kesir, mx2: Kesir, my2: Kesir, x2: Kesir, y2: Kesir): Birim =
+      tç.bezierVertex(mx1, my1, mx2, my2, x2, y2)
+    def eğriKöşesi(x: Kesir, y: Kesir): Birim = tç.curveVertex(x, y)
+    def yayKöşesi(x: Kesir, y: Kesir, açı: Kesir): Birim = tç.arcVertex(x, y, açı)
+    def açısalKöşe(boyu: Kesir, açısı: Kesir): Birim = tç.vertexRt(boyu, açısı)
+    def açısalEğriKöşesi(boyu: Kesir, açısı: Kesir): Birim = tç.curveVertexRt(boyu, açısı)
   }
 }
