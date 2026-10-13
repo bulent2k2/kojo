@@ -131,6 +131,17 @@ class ScriptEditor(val execSupport: CodeExecutionSupport, frame: JFrame) extends
     )
   }
 
+  // On the Mac, RSyntaxTextArea binds the Emacs-style Ctrl+N (caret-down) and Ctrl+O (insert-break).
+  // The focused editor handles those keys before the menu accelerators, so File > New Scratchpad (Ctrl+N)
+  // and File > Open (Ctrl+O) never fired, and Ctrl+O even inserted a new line. Binding the keys to a
+  // non-existent action ("none") makes the editor ignore them, and the menu gets them.
+  if (Utils.isMac) {
+    inputMaps.foreach { im =>
+      im.put(KeyStroke.getKeyStroke("control N"), "none")
+      im.put(KeyStroke.getKeyStroke("control O"), "none")
+    }
+  }
+
   val realIncreaseFontSizeAction = new IncreaseFontSizeAction()
   val increaseFontSizeAction = new AbstractAction() {
     override def actionPerformed(e: ActionEvent) = {
