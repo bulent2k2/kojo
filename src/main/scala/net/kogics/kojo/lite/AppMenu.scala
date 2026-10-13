@@ -40,6 +40,28 @@ trait AppMenu {
   def menuBar = {
     val menuBar = new JMenuBar
 
+    // On the Mac, the shortcuts for File > New Scratchpad, Open and Save are Cmd+N/O/S (the Mac
+    // standard), and Ctrl+N/O/S keep working. Open and Save get a native Cmd accelerator.
+    // New Scratchpad gets none: the JetBrains runtime that ships in the Kojo app (11.0.13) never
+    // fires a native "N" shortcut. Its Cmd+N and Ctrl+N are plain Swing key bindings on the menu bar,
+    // which work on every runtime. (Ctrl+N/O also need the editor to leave them alone: see ScriptEditor.)
+    def setShortcut(item: JMenuItem, ctrlKey: String, vk: Int, nativeCmd: Boolean): Unit = {
+      val ctrl = KeyStroke.getKeyStroke(ctrlKey)
+      if (!Utils.isMac) {
+        item.setAccelerator(ctrl)
+      }
+      else {
+        val cmd = KeyStroke.getKeyStroke(vk, java.awt.Toolkit.getDefaultToolkit.getMenuShortcutKeyMask)
+        if (nativeCmd) item.setAccelerator(cmd)
+        val bound = if (nativeCmd) List(ctrl) else List(cmd, ctrl)
+        val actionKey = "kojo-shortcut-" + ctrlKey
+        bound.foreach(ks => menuBar.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(ks, actionKey))
+        menuBar.getActionMap.put(actionKey, new AbstractAction {
+          def actionPerformed(e: ActionEvent): Unit = item.doClick(0)
+        })
+      }
+    }
+
     val fileMenu = newJMenu(Utils.loadString("S_File"))
     fileMenu.setMnemonic('F')
 
@@ -93,13 +115,13 @@ trait AppMenu {
     val openFile = new JMenuItem(Utils.loadString("S_Open"))
     openFile.addActionListener(new LoadFrom(scriptEditor))
     openFile.setIcon(Utils.loadIcon("/images/extra/open.gif"))
-    openFile.setAccelerator(KeyStroke.getKeyStroke("control O"))
+    setShortcut(openFile, "control O", java.awt.event.KeyEvent.VK_O, nativeCmd = true)
     fileMenu.add(openFile)
 
     val saveFile = new JMenuItem(Utils.loadString("S_Save"))
     saveFile.addActionListener(new Save(scriptEditor))
     saveFile.setIcon(Utils.loadIcon("/images/extra/save.gif"))
-    saveFile.setAccelerator(KeyStroke.getKeyStroke("control S"))
+    setShortcut(saveFile, "control S", java.awt.event.KeyEvent.VK_S, nativeCmd = true)
     fileMenu.add(saveFile)
 
     val saveAsActionListener = new SaveAs(scriptEditor)
@@ -120,7 +142,7 @@ trait AppMenu {
         KojoScratchpadRunner.newScratchPad()
       }
     })
-    newKojo.setAccelerator(KeyStroke.getKeyStroke("control N"))
+    setShortcut(newKojo, "control N", java.awt.event.KeyEvent.VK_N, nativeCmd = false)
     fileMenu.add(newKojo)
 
     fileMenu.add(new JMenuItem(new AbstractAction(Utils.loadString("S_Settings")) {
