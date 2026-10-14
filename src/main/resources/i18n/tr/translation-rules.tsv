@@ -1,0 +1,271 @@
+# HAND-maintained translation rules. This is where the generated dictionary
+# (translation-dictionary.tsv) speaks up when it cannot decide on its own. Every
+# row is a deliberate decision; write the reason in the "note" column.
+# Format: five tab-separated columns.
+#
+#   direction  tr>en | en>tr
+#   name       the name to translate
+#   context    bare (no `.` before it: sil()) | member (a `.` before it: resim.sil()) | * | Receiver. (only a member of that receiver: Resim.)
+#   target     the name to translate to; if "-", "do not translate this name"; if "^name", the receiver and the dot are swallowed too (Resim.dizi -> picStack)
+#              "name(2,1)" reorders the arguments; if an entry is "'constant", that argument is written as a constant
+#              (math.pow(1,'2) = first argument, then 2) -- the only way when the wrapper adds an argument
+#   note       why
+#
+# A rule OVERRIDES the most frequent candidate of the generated dictionary. A row
+# that matches the context exactly is looked up first, then the "*" row.
+#
+# direction	name	context	target	note
+tr>en	sil	bare	clear	clear the canvas; the generated dictionary has 7 clear / 1 erase / 1 delete
+tr>en	sil	member	erase	resim.sil() -- delete the picture
+en>tr	clear	*	sil
+en>tr	erase	*	sil
+tr>en	al	member	take	dizi.al(3); get/pop are much rarer
+en>tr	take	member	al	al has 2 letters and the generator skips names shorter than 3; in 13 compilations al appears, only in Eşlem alSırayla (there al = get; with a numeric key this is a silent wrong translation -- see Translator LIMITS)
+tr>en	taşınmış	member	withTranslation	the adjectival form of the ve* family; the generator cannot see it because the body is a block
+en>tr	withTranslation	member	taşınmış
+tr>en	boyalı	member	withFillColor
+en>tr	withFillColor	member	boyalı
+tr>en	kalemRenkli	member	withPenColor
+en>tr	withPenColor	member	kalemRenkli
+tr>en	renkKur	*	Color	same as RenkKYM; the en>tr direction stays at Renk (the Color rule is above)
+tr>en	tuvaliYakınlaştır	*	zoomXY
+en>tr	zoomXY	*	tuvaliYakınlaştır	tied with yaklaşXY on votes; explicit choice, the name is clearer
+tr>en	ekle	member	append
+tr>en	kondur	member	setPosition	resim.kondur(x, y); moveTo is in only one wrapper
+tr>en	enUfağı	*	math.min	there is no bare min in English, it is math.min; for a member the last part remains (Harf.enUfağı = Char.MinValue is a separate member)
+tr>en	enİrisi	*	math.max
+tr>en	verilen	*	given	a Scala 3 word; scalariform treats neither given nor verilen as a keyword
+en>tr	given	*	verilen
+tr>en	Resim	*	Picture	object name; `object Resim` carries no wrapper chain
+en>tr	Picture	*	Resim
+tr>en	yinele	bare	repeat	block-bodied definition (the generator cannot extract it); the frequency count wrongly fell to iterate
+en>tr	repeat	*	yinele
+tr>en	apply	*	-	exists on every object, not translated
+en>tr	apply	*	-
+tr>en	toString	*	-
+en>tr	toString	*	-
+tr>en	götür	bare	trans	transformer: götür(x,y) -> picture; the member götür is picture.translate
+tr>en	götür	member	translate
+en>tr	trans	*	götür
+en>tr	translate	*	götür
+tr>en	döndür	bare	rot	transformer; the member döndür is picture.rotate
+tr>en	döndür	member	rotate
+en>tr	rot	*	döndür
+en>tr	rotate	*	döndür
+tr>en	yazı	bare	write	turtle text output; Resim.yazı is text
+tr>en	yazı	member	text
+tr>en	göster	bare	visible	show the turtle
+tr>en	göster	member	visible	resim.göster() and the USER's own göster() method (the definition was bare = visible, the call was a member = setVisible: definition and call diverged, lunar-lander). setVisible exists only on widgets, and there göster is an ARGUMENT-LESS property (def göster = setVisible(true)): its translation never compiled anyway, so this rule does not break it
+tr>en	durdur	member	stopMp3	Mp3Çalar.durdur() = KMp3.stopMp3 (car-ride); bare durdur() = stopAnimation, below from the generated dictionary. There is no other durdur as a member
+tr>en	boş	Dizim.	ofDim	Dizim.boş[T](n, m) = Array.ofDim; argument-less Dizim.boş[T] = Array.empty but a separate rule is not needed: the only use in the samples (genart-tri-mesh) is sized, an empty array without arguments is useless. The reverse direction is in the generated dictionary (ofDim -> boş)
+tr>en	boş	Dizik.	ofDim	Dizik is an alias of Array; same reason
+tr>en	silVeSakla	*	cleari	the body is two calls (clear + invisible); the first-chain heuristic saw only clear
+en>tr	cleari	*	silVeSakla
+tr>en	kare	bare	square	block-bodied definition (drawing with repeat)
+en>tr	square	*	kare
+tr>en	tuşlar	*	Kc	object tuşlar; the bi.Kc binding on the desktop is in a comment
+en>tr	Kc	*	tuşlar
+tr>en	Matematik	*	math	object Matematik extends MatematikYöntemleri; no chain
+en>tr	math	*	Matematik
+en>tr	Double	*	Kesir	JKesir is a wrapper of java.lang.Double; the user writes Kesir
+en>tr	List	*	Dizin	data lists like Aylar/Günler are bogus candidates
+en>tr	size	*	boyu
+en>tr	height	*	boyu	level2_tr.properties: height=boy, but the wrappers say boyu; both work
+en>tr	repeatFor	*	yineleİçin	has three Turkish spellings; yineleİçin is the real definition in trInit
+en>tr	invisible	*	gizle	level2_tr.properties says görünmez but that is only on Kaplumbağa; gizle is on both Kaplumbağa and Resim (measured: memory-cards)
+tr>en	yeniKaplumbağa	*	newTurtle	goes through the helper constructor of the Kaplumbağa class; the generator does not descend there
+en>tr	newTurtle	*	yeniKaplumbağa
+tr>en	Renk	*	Color	there are two aliases (package.scala: Color, renk.scala: AColor); sketches use Color
+en>tr	Color	*	Renk
+tr>en	yatay	*	hline	Resim.yatay; ay.değişmez.yatay (HORIZONTAL) has an equal count, the alphabet was choosing it
+tr>en	dikey	*	vline
+tr>en	kalemRengi	bare	penColor	the transformer is built with the KalemRengiBD class, it has no chain
+en>tr	penColor	*	kalemRengi
+tr>en	boyaRengi	bare	fillColor
+en>tr	fillColor	*	boyaRengi
+tr>en	Yöney2B	*	Vector2D	object Yöney2B + type Yöney2B = tr.Yöney2B; no chain for the English name
+en>tr	Vector2D	*	Yöney2B
+tr>en	tuvalAlanı	*	canvasBounds	object tuvalAlanı { def ta = rb.canvasBounds ... }
+en>tr	canvasBounds	*	tuvalAlanı
+en>tr	scale	*	büyüt
+en>tr	setPenThickness	*	kalemKalınlığınıKur	level2_tr.properties
+en>tr	println	*	satıryaz	level2_tr.properties
+en>tr	line	*	çizgi	Resim.çizgi; düz/köşegen aliases
+en>tr	isKeyPressed	*	tuşaBasılıMı	canonical on the desktop (kojo#56)
+en>tr	step	*	adım
+en>tr	Vector	*	Yöney
+en>tr	Boolean	*	İkil	level2_tr.properties: boolean=İkil
+en>tr	get	*	-	bogus pairs from the Calendar wrappers (dakika/saat/saniye)
+en>tr	pause	*	durakla
+en>tr	lineTo	*	noktayaGit
+en>tr	toggleFullScreenCanvas	*	tümEkranTuval
+en>tr	Font	*	Yazıyüzü
+en>tr	setVisible	*	görünürlüğüKur	the göster()/sakla() pair carries an argument; this is the direct counterpart
+en>tr	sqrt	*	karekökü
+en>tr	write	*	yazı	level2_tr.properties: write=yazı
+en>tr	RowPanel	*	Satır
+tr>en	açı	*	angle	a variable name in the samples (37 uses); Matematik.açı(x,y)=atan2 is rare
+tr>en	silipSakla	*	cleari	alias of silVeSakla; its target is also cleari by rule
+tr>en	karesi	*	math.pow(1,'2)	karesi(x) = math.pow(x, 2): the second argument is constant ('2). No reverse direction; math.pow takes two arguments, it goes to kuvveti
+tr>en	X	member	getMaxX	tuvalAlanı.X = right edge; the generator skips names shorter than 3. There is no other single-letter upper-case member
+en>tr	getMaxX	member	X
+tr>en	Y	member	getMaxY	tuvalAlanı.Y = top edge
+en>tr	getMaxY	member	Y
+tr>en	boyu	tuvalAlanı.	height	tuvalAlanı.boyu = canvasBounds.height; the general boyu rule says length
+tr>en	eni	tuvalAlanı.	width
+en>tr	Color	receiver	Renkler	Color.khaki -> Renkler.haki: color names are in the Renkler object, the type name is Renk
+tr>en	Renkler	receiver	ColorMaker	named colors are in the ColorMaker object in English (doodle Color does not have them)
+en>tr	random	*	rastgele	level2 random=rasgele is a VALUE alias (val rasgele: Kesir); the function is rastgele(n) -- rasgele(n) was left over because of "Kesir parametre almaz" (a Turkish compiler error message: "Kesir takes no parameters")
+tr>en	Çizim	*	Costume	val Çizim = Görünüş; Builtins.Costume
+tr>en	Görünüş	*	Costume
+en>tr	Costume	*	Görünüş
+tr>en	Eşlem	*	collection.mutable.Map	case class Eşlem[A,D](m: Map[A,D]) wrapper, a MUTABLE map via m +=; a plain Map has no += (measured: car-ride)
+tr>en	mutlakDeğer	member	abs	x.mutlakDeğer -> x.abs; bare mutlakDeğer(x) -> math.abs(x)
+tr>en	mutlakDeğer	bare	math.abs
+tr>en	dereceye	member	toDegrees
+tr>en	dereceye	bare	math.toDegrees
+tr>en	radyana	member	toRadians
+tr>en	radyana	bare	math.toRadians
+tr>en	ada	Renk.	^ColorMaker.hsl	Renk.ada(h,s,l) takes three arguments; English scripts write ColorMaker.hsl (Color.hsla wants four)
+tr>en	mor	*	purple	val mor = new AColor(0x740f73); CoreBuiltins.purple is the same color, no chain
+en>tr	purple	*	mor
+en>tr	Seq	*	Dizi	the inner type parameters Col/Diz are bogus candidates
+en>tr	ArrayBuffer	*	EsnekDizik	Array=Dizik, ArrayBuffer=EsnekDizik
+en>tr	Array	*	Dizik
+en>tr	Nil	*	Boş
+en>tr	update	*	güncelle
+en>tr	linearGradient	*	doğrusalDeğişim	RenkDoğrusalDeğişim is the class, RenkDD the abbreviation; the function is doğrusalDeğişim
+en>tr	setPosition	member	konumuKur	konumuKur(x, y) exists on both Resim and Kaplumbağa; kondur takes only a Nokta on Resim (measured: physics-uvats)
+en>tr	setPosition	bare	konumuKur
+en>tr	collidesWith	*	çarpıştı	the body is p.intersects, so the generator binds çarpıştı -> intersects
+tr>en	çarpıştı	*	collidesWith
+en>tr	ColorMaker	receiver	Renkler	ColorMaker.khaki -> Renkler.haki; English scripts take colors from here
+en>tr	cm	receiver	Renkler	cm = abbreviation of ColorMaker
+en>tr	GPics	*	Resim.dizi	English scripts write the class directly instead of picStack (angles.kojo)
+en>tr	HPics	*	Resim.diziYatay
+en>tr	VPics	*	Resim.diziDikey
+en>tr	GPics2	*	Resim.diziDüzenli
+en>tr	HPics2	*	Resim.diziYatayDüzenli
+en>tr	VPics2	*	Resim.diziDikeyDüzenli
+en>tr	pow	math.	kuvveti	three wrappers that go to math.pow (faktor/karesi/kuvveti); the two-argument one is kuvveti
+tr>en	biçimleriBelleğeYaz	*	saveStyle	no-parens: at script level TurtleWorldAPI.saveStyle is a forwarder, it takes no parentheses
+tr>en	biçimleriGeriYükle	*	restoreStyle	no-parens
+tr>en	zıpla	*	hop	block-bodied definition; the first-chain heuristic saw saveStyle
+en>tr	hop	*	zıpla
+tr>en	piSayısı	*	math.Pi	data.scala says piSayısı=Pi; in a script it is math.Pi
+en>tr	Pi	math.	piSayısı
+tr>en	Kaplumbağa	*	Turtle	class Kaplumbağa extends TurkishTurtle; the English type is Turtle
+en>tr	Turtle	*	Kaplumbağa
+en>tr	stageBorder	*	Resim.tuval	resim.scala: `def tuval = tuvalSınırları // stageBorder`
+tr>en	sol	tuşlar.	VK_LEFT	key codes cannot be derived from the source (tuşlar.sol = hex constant); the five most common keys by hand
+tr>en	sağ	tuşlar.	VK_RIGHT
+tr>en	yukarı	tuşlar.	VK_UP
+tr>en	aşağı	tuşlar.	VK_DOWN
+tr>en	boşluk	tuşlar.	VK_SPACE
+en>tr	VK_LEFT	Kc.	sol
+en>tr	VK_RIGHT	Kc.	sağ
+en>tr	VK_UP	Kc.	yukarı
+en>tr	VK_DOWN	Kc.	aşağı
+en>tr	VK_SPACE	Kc.	boşluk
+en>tr	ColorMaker	receiver(	Renk	ColorMaker.hsla(...) constructor: on the Renk object; color names (without parentheses) are in Renkler
+en>tr	cm	receiver(	Renk
+en>tr	Color	receiver(	Renk
+en>tr	hsl	*	ada	Renk.ada(h,s,l) = hsla(h,s,l,1.0); the four-argument hsla is not ada -- Renk.ada takes 3
+en>tr	rgb	*	kym
+en>tr	radialGradient	*	merkezdenDışarıDoğruDeğişim
+en>tr	radialMultiGradient	*	merkezdenDışarıDoğruÇokluDeğişim
+en>tr	hsla	*	adas	four arguments: Renk.adas(h,s,l,a); the three-argument hsl -> ada
+en>tr	rgba	*	kyms
+tr>en	davran	*	act	kaplumbağa.davran { kap => } block-bodied definition
+en>tr	act	*	davran
+en>tr	size	bare	-	level2 says size=boyutKur but it is not in the layer; in Koco the English name works, do not translate (member size -> boyu)
+tr>en	Çalgı	*	Instrument	constant object; the generator maps its members by value (constantObjects)
+en>tr	Instrument	*	Çalgı
+tr>en	renkler	*	ColorMaker	renk.scala: val renkler = doodle.Color; in English Color is a type + constructor (def Color(r,g,b)), ambiguous as a receiver -> ColorMaker
+tr>en	Renk	receiver(	ColorMaker	Renk.ada(...) -> ColorMaker.hsl(...): English Color is ambiguous as a receiver (measured: radiance, fireworks)
+tr>en	Renk	receiver	ColorMaker
+en>tr	hex	Color.	^renkler.hex	there is no hex on the Renk object; there is one on renkler (= doodle.Color)
+en>tr	hexa	Color.	^renkler.hexa
+tr>en	boyu	ta.	height	`dez ta = tuvalAlanı` is a common idiom (20 uses); ta.boyu is the canvas height, not length
+tr>en	eni	ta.	width
+tr>en	Harf	receiver(	Character	object Harf { def sayıMı(h) = Character.isDigit(h) }: the Harf object as a receiver, Char as a type
+en>tr	Character	receiver(	Harf	Character.isDigit(c) -> Harf.sayıMı(c); the JHarf type is not a value at script level
+tr>en	|-|	*	to	sayi.scala: def |-|(b) = a to b; an operator, only from a rule
+tr>en	tepkiVer	*	react	block-bodied definition (trInit.scala:228), no chain comes out
+en>tr	react	*	tepkiVer
+tr>en	eksenleriGöster	bare	axesOn	bare eksenleriGöster = axesOn (trInit.scala); Picture.showAxes(resimler*) is a different thing, and it won the tie
+tr>en	kalemBoyu	bare	penThickness	the KalemBoyuBD -> strokeWidth chain is not bare in the sketch; Builtins: val penThickness = picture.strokeWidth _
+en>tr	penWidth	*	kalemBoyu	penWidth = penThickness = strokeWidth
+en>tr	penThickness	*	kalemBoyu
+en>tr	strokeWidth	*	kalemBoyu
+tr>en	YumuşakGeçiş	*	easing	object YumuşakGeçiş { val DörtlüGirdiÇıktı = ...QuadInOut }; in English it is the easing object
+en>tr	easing	receiver	YumuşakGeçiş
+tr>en	Artalan	*	Background	cizim.scala object Artalan; members are mapped by value (constantObjects)
+en>tr	Background	*	Artalan
+tr>en	en	ta.	width	Turkish samples also write ta.en / ta.boy (PBounds wrapper); names of 2-3 letters do not enter the generator
+tr>en	boy	ta.	height
+tr>en	santim	*	Cm	data.scala santim=Cm but Cm has two letters, it does not enter the generator; clearWithUL(Cm)
+en>tr	Cm	*	santim
+tr>en	EsnekDizim	*	ArrayBuffer	val EsnekDizim = tr.EsnekDizim: no chain for the English name
+tr>en	adım	*	by	`1 to 10 adım 2`: a postfix call, the context looks bare; a user variable adım also becomes by (a valid name)
+en>tr	by	*	adım
+tr>en	|-	*	until	sayi.scala: def |-(b) = a until b
+tr>en	Geçiş	*	Transition	block-bodied definition (trInit.scala:433), no chain comes out
+en>tr	Transition	*	Geçiş
+en>tr	beginShape	bare	-	bare beginShape/endShape is a Kojo command; başla/bitir is a GeoNokta member
+en>tr	endShape	bare	-
+en>tr	RowPanel	bare	-	Satır is in the ay object (ay.Satır); the ay package alias is not translated
+en>tr	ColPanel	bare	-
+tr>en	boşluk	member	withGap	block-bodied definition (resim.scala:305)
+en>tr	withGap	*	boşluk
+tr>en	veBoya	member	thatsFilledWith	block-bodied definitions (resim.scala:343-344)
+en>tr	thatsFilledWith	*	veBoya
+tr>en	veKalemRengiyle	member	thatsStrokeColored
+en>tr	thatsStrokeColored	*	veKalemRengiyle
+tr>en	dikdörtgen	Resim.	^Picture.rectangle	Resim.dikdörtgen(en, boy) = Picture.rect(boy, en): the arguments are REVERSED; rectangle(en, boy) keeps the order
+en>tr	rectangle	Picture.	^Resim.dikdörtgen
+en>tr	rect	Picture.	^Resim.dikdörtgen(2,1)	Picture.rect(boy, en) = Resim.dikdörtgen(en, boy): the arguments swap places ((2,1) = second, first)
+tr>en	Ses	*	Sound	ses.scala object Ses; members are mapped by value (constantObjects)
+en>tr	Sound	*	Ses
+tr>en	en	tuvalAlanı.	width
+tr>en	boy	tuvalAlanı.	height
+en>tr	textu	Picture.	yazıRenkli	Picture.textu(content, size: Int, color) = Resim.yazıRenkli; Resim.yazı(content, font, color) takes only a font
+en>tr	vertex	bare	-	bare vertex is a Kojo shape command; nokta is a GeoNokta member / the Nokta constructor
+tr>en	çarpışma	member	collision	resim.scala: the chain başkaları.find(...) yields find
+en>tr	collision	*	çarpışma
+tr>en	çarpışmalar	member	collisions
+en>tr	collisions	*	çarpışmalar
+tr>en	veKondur	member	withPosition	block-bodied definition (resim.scala:355)
+en>tr	withPosition	*	veKondur
+tr>en	tuvalinSınırları	Resim.	^stageBorder	Resim.tuvalinSınırları = new Resim(tCanvas.stage); bare in English it is stageBorder
+tr>en	tuvalSınırları	Resim.	^stageBorder
+tr>en	tuval	Resim.	^stageBorder	Resim.tuval = tuvalSınırları (resim.scala:438); the tuval -> canvas in the generated dictionary is the MEMBER at resim.scala:232, there is no Picture.canvas (review #62 (A))
+en>tr	setColumns	bare	-	new TextField { setColumns(3) }: a Swing member; sütunSayısınıKur is in the Turkish UI wrapper
+tr>en	eşEkle	member	+=	eslem.scala: def eşEkle(ikili) = m += ikili
+tr>en	nokta	member	vertex	GeoNokta.nokta = vertex (tree2, sprite-boundary-polygon); turtle.nokta = dot, canvas.nokta = point -- the receiver type is unknown, the most frequently used one
+tr>en	nokta	TuvalÇizim.	point	if the receiver is TuvalÇizim (a `tuval: TuvalÇizim` declaration or a canlandırTuvalÇizimle lambda parameter, see Translator.canvasVariables): vertex fails when run without an open shape (fireworks-canvas, kojojs-dev#220)
+en>tr	setHorizontalAlignment	bare	-	new Label { setHorizontalAlignment(...) }: a Swing member; yatayDüzeniKur is in the Turkish UI wrapper
+en>tr	bouncePicVectorOffStage	*	sahneKenarındanYansıtma	resim.scala: Yöney2B(bouncePicOffStage(r.p, v.v)); in English two names do the same job
+tr>en	çalıyorMu	member	isMp3Playing	the implicit class in package.scala (KMp3); the generator takes only type/val from package.scala
+en>tr	isMp3Playing	member	çalıyorMu	bare isMp3Playing is a sketch command, its Turkish comes from the generated dictionary
+tr>en	veKalemKalınlığıyla	member	thatsStrokeSized	block-bodied definition (resim.scala:345)
+en>tr	thatsStrokeSized	*	veKalemKalınlığıyla
+en>tr	setBorder	bare	-	new Label { setBorder(...) }: a Swing member; çerçeveyiKur is in the Turkish UI wrapper
+tr>en	eşleme	*	toMap	the wrapper says `Eşlem.değişmezden(d.toMap)`; the generator sees the outer constructor, what matters is the toMap in the argument. Its sibling eşleğe already gets toMap.
+tr>en	öbekleEsnek	*	groupBy	same pattern: `Eşlem.değişmezden(d.groupBy(iş))`; the result is Eşlem, the operation is groupBy.
+tr>en	varsayılanlı	*	withDefault	same pattern: `Eşlem(m.withDefault(işlev))`; in the generated dictionary a 1-1 tie (collection.mutable.Map / withDefault) is broken alphabetically and the wrong one wins.
+tr>en	öntanımlı	*	withDefault	alias of varsayılanlı; same pattern, same tie.
+tr>en	kuyruklar	*	tails	in Eşlem the chain is `m.tails.map(Eşlem(_))`: the wrapper calls the iterator implicitly, the generator takes `map` to be the target (#86).
+tr>en	önler	*	inits	in Eşlem the chain is `m.inits.map(Eşlem(_))` (see kuyruklar).
+tr>en	saydamlık	member(	opacityMod	the form with an argument (resim.scala:261). All three candidates have n=1, the decision falls to the alphabet and `opac`, which is NOT a member of Resim, was winning (#75).
+tr>en	saydamlık	member	opacity	the form without an argument (resim.scala:308). Only the context can tell the arity apart; a single rule broke half of it, measured (#75).
+tr>en	konumuOku	*	readPosition	only in iKojo: since the turtle goes into a queue, the position is read via a callback (kojojs-dev#181). There is no counterpart in desktop English; a desktop script uses `position`.
+en>tr	readPosition	*	konumuOku
+tr>en	yönüOku	*	readHeading	sibling of konumuOku, only in iKojo; the heading is between 0 and 360 (kojojs-dev#181).
+en>tr	readHeading	*	yönüOku
+en>tr	stopNotePlayer	*	notaÇalarıKapat	the real name is Kapat, Durdur is an alias; equal votes in the generated dictionary (like stopMusic -> müziğiDurdur), explicit choice
+tr>en	kalemKalınlığı	bare	penThickness	iKojo's Resim transformer (kb.penThickness); on the desktop it is called kalemBoyu. Unit circle sample (kalemKalınlığı(4) * ...)
+tr>en	döndürme	bare	rot	iKojo's Resim transformer (kb.rot); on the desktop it is döndür
+tr>en	renkliYazı	member	textu	iKojo: Resim.renkliYazı(content, size, color) = Picture.textu; on the desktop it is yazıRenkli
+tr>en	soluk	member	fadeOut	iKojo: yeşil.soluk(0.8) = Color.fadeOut; on the desktop Renk has no soluk, the bare soluk(n) Resim transformer = fade (in the generated dictionary)
+tr>en	canlandırmayıDurdur	bare	stopAnimation	in iKojo canlandırmayıDurdur() takes no arguments (= durdur()). The desktop form canlandırmayıDurdur(etkinlik) = stopAnimationActivity(etkinlik) is NOT translated after this: the rule cannot look at the number of arguments, and no sample uses both

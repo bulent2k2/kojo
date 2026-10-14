@@ -7,7 +7,7 @@ scalaHome := Some(file("./scala-tr/build/pack"))
 run / fork := true
 scalacOptions := Seq("-feature", "-deprecation")  // "-Ylog-classpath"
 // CMS bayrakları Java 8 hedefi için; Java 14+ onları kaldırdı ve JVM hiç başlamıyor
-// ("Unrecognized VM option"). runMain (SözlükÜreteci, CevirmenMain) modern JDK'da da
+// ("Unrecognized VM option"). runMain (DictionaryGenerator, TranslatorMain) modern JDK'da da
 // çalışsın diye yalnız eski JVM'de eklenir. Test/javaOptions'ı CI zaten eziyor (aşağıda).
 lazy val cmsBayrakları = {
   val sürüm = System.getProperty("java.specification.version").split('.').last.toInt

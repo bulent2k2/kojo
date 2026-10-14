@@ -1,0 +1,2526 @@
+# GENERATED FILE -- do not edit by hand. Generate with:
+#   ./sbt.sh "runMain net.kogics.kojo.lite.i18n.tr.DictionaryGenerator"
+# Source: the wrappers in lite/i18n/trInit.scala + lite/i18n/tr/*.scala.
+# For manual decisions: translation-rules.tsv
+#
+# kind	tr	en	source	count	[note]
+#   source: FILE name (deliberately no line number -- so that unrelated shifts do not pollute the dictionary)
+#   count : number of definitions in that file giving this pair; the weight in the frequency table
+#   note  : member-only = the English name does not resolve bare, only in the form x.name; alias = alias-receiver row; deprecated = the Turkish definition is deprecated
+type	Aralık	Range	data.scala	1
+type	Aralık	Range	package.scala	1
+val	Artalan.demiryolu	Background.trainTrack	TurtleWorldAPI.scala	1
+val	Artalan.demiryolu	Background.trainTrack	cizim.scala	1
+val	Aylar	List	buan.scala	1
+type	BKK	AUrl	bkk.scala	1	member-only
+type	BKK	URL	resim.scala	2	member-only
+type	BelirtimHatası	AssertionError	turler.scala	1
+type	Belki	Option	belki.scala	1
+type	Belki	Option	data.scala	1
+type	Belki	Option	dizi.scala	3
+type	Belki	Option	dizik.scala	2
+type	Belki	Option	dizin.scala	1
+type	Belki	Option	eslem.scala	2
+type	Belki	Option	ikisindenbiri.scala	1
+type	Belki	Option	kume.scala	1
+type	Belki	Option	kuyruk.scala	4
+type	Belki	Option	miskindizin.scala	2
+type	Belki	Option	resim.scala	1
+type	Belki	Option	yazi.scala	1
+type	Belki	Option	yineleyici.scala	1
+type	Belki	Option	yoney.scala	1
+type	BellekliYineleyici	BufferedIterator	turler.scala	1
+type	Bellekteİmge	BufferedImage	data.scala	1	member-only
+type	Bellekteİmge	BufferedImage	package.scala	1	member-only
+type	Bellekteİmge	BufferedImage	turler.scala	1	member-only
+type	Bellekteİmgeİşlemi	BufferedImageOp	package.scala	1	member-only
+type	Bellekteİmgeİşlemi	BufferedImageOp	turler.scala	1	member-only
+type	BenzerDönüşüm	AffineTransform	geo.scala	1	member-only
+type	BenzerDönüşüm	AffineTransform	resim.scala	1	member-only
+type	Biri	Some	belki.scala	1
+type	Biri	Some	data.scala	1
+type	Birim	Unit	data.scala	1
+type	Birim	Unit	package.scala	1
+type	BirimDiziğiDizisi	ofUnit	turler.scala	1	member-only
+type	Biçim	Shape	package.scala	1	member-only
+type	Boya	Paint	data.scala	1	member-only
+type	Boya	Paint	package.scala	1	member-only
+val	Boş	Nil	dizin.scala	1
+type	BoşGöstergeHatası	NullPointerException	turler.scala	1
+type	Bölümselİşlev	PartialFunction	bolumselislev.scala	1
+type	Bölümselİşlev	PartialFunction	data.scala	1
+type	Canlandırma	Animation	trInit.scala	1
+type	Col	Array	dizik.scala	1
+type	Col	ArrayBuffer	dizik.scala	1
+type	Col	ArrayDeque	kuyruk.scala	1	member-only
+type	Col	IndexedSeq	dizi.scala	1
+type	Col	Iterable	dizi.scala	2
+type	Col	LazyList	miskindizin.scala	1
+type	Col	List	dizin.scala	1
+type	Col	Map	eslem.scala	1
+type	Col	PriorityQueue	kuyruk.scala	1	member-only
+type	Col	Queue	kuyruk.scala	1	member-only
+type	Col	Seq	dizi.scala	2
+type	Col	Set	kume.scala	1
+type	Col	Stack	kuyruk.scala	1	member-only
+type	DRenk	DColor	renk.scala	1	member-only
+val	DRenk	DColor	renk.scala	1	member-only
+type	DeğişimliBoya	GradientPaint	renk.scala	1	member-only
+type	Dikdörtgen	Rectangle	data.scala	1	member-only
+type	Dikdörtgen	Rectangle	package.scala	1	member-only
+type	Diz	Seq	package.scala	1
+type	Dizi	Seq	kuyruk.scala	2
+type	Dizi	Seq	package.scala	1
+type	Dizi	collection.Seq	data.scala	1
+type	Dizik	Array	dizik.scala	1
+type	Dizik	Array	harf.scala	1
+type	DizikDizisi	ArraySeq	turler.scala	1	member-only
+type	DizikSınırıDışınaTaşmaHatası	ArrayIndexOutOfBoundsException	turler.scala	1
+type	DizikYüklemeHatası	ArrayStoreException	turler.scala	1
+type	Dizikİşlemleri	ArrayOps	turler.scala	1	member-only
+type	Dizim	Array	data.scala	1
+type	Dizin	List	data.scala	1
+type	Dizin	List	package.scala	1
+def	DokumaBoya	TexturePaint	data.scala	1
+def	DokumaBoya	TexturePaint	trInit.scala	1
+type	Dosya	File	dosya.scala	1	member-only
+val	Doğrusal	Linear	trInit.scala	1	member-only
+type	DöngüselSınıfHatası	ClassCircularityError	turler.scala	1
+val	DörtlüGirdiÇıktı	QuadInOut	trInit.scala	1	member-only
+type	Eklenir	Appendable	turler.scala	1
+type	EksikTanımHatası	NotImplementedError	turler.scala	1
+def	EnUfağı	MinValue	sayi.scala	6	member-only
+def	Enİrisi	MaxValue	sayi.scala	6	member-only
+type	EsnekDizik	ArrayBuffer	dizik.scala	1
+type	EsnekYazı	StringBuilder	yazi.scala	1
+type	Eşlek	Map	dizi.scala	5
+type	Eşlek	Map	dizik.scala	2
+type	Eşlek	Map	dizin.scala	1
+type	Eşlek	Map	eslem.scala	1
+type	Eşlek	Map	kume.scala	1
+type	Eşlek	Map	kuyruk.scala	2
+type	Eşlek	Map	miskindizin.scala	1
+type	Eşlek	Map	yazi.scala	1
+type	Eşlek	Map	yineleyici.scala	1
+type	Eşlek	Map	yoney.scala	1
+type	Gelecek	Future	gelecek.scala	1	member-only
+type	GeoNokta	VertexShape	data.scala	1	member-only
+type	GeoNokta	VertexShape	package.scala	1	member-only
+type	GeoYol	GeneralPath	package.scala	1	member-only
+type	Geometri	Geometry	geo.scala	1	member-only
+type	Geometri	Geometry	resim.scala	1	member-only
+type	Grafik2B	Graphics2D	package.scala	1	member-only
+type	GöndergeDiziğiDizisi	ofRef	turler.scala	1	member-only
+val	Görünüş.araba	"/media/costumes/car.png"	cizim.scala	1
+val	Görünüş.araba	Costume.car	TurtleWorldAPI.scala	1
+val	Görünüş.araba	Costume.car	cizim.scala	1
+val	Görünüş.araba1	"/media/car-ride/car1.png"	cizim.scala	1
+val	Görünüş.araba2	"/media/car-ride/car2.png"	cizim.scala	1
+val	Görünüş.baklava	"/images/field.png"	cizim.scala	1
+val	Görünüş.bayrak1	"/images/generic-flag.png"	cizim.scala	1
+val	Görünüş.daire	"/images/kindmethod.png"	cizim.scala	1
+val	Görünüş.demiryolu	"/media/backgrounds/train-tracks3.gif"	cizim.scala	1
+val	Görünüş.demiryolu	Background.trainTrack	TurtleWorldAPI.scala	1
+val	Görünüş.demiryolu	Background.trainTrack	cizim.scala	1
+val	Görünüş.elSallayanKadın	"/media/costumes/womanwaving.png"	cizim.scala	1
+val	Görünüş.elSallayanKadın	Costume.womanWaving	cizim.scala	1
+val	Görünüş.kadınElSallarken	"/media/costumes/womanwaving.png"	cizim.scala	1
+val	Görünüş.kadınElSallarken	Costume.womanWaving	TurtleWorldAPI.scala	1
+val	Görünüş.kadınElSallarken	Costume.womanWaving	cizim.scala	1
+val	Görünüş.kalem	"/media/costumes/pencil.png"	cizim.scala	1
+val	Görünüş.kalem	Costume.pencil	TurtleWorldAPI.scala	1
+val	Görünüş.kalem	Costume.pencil	cizim.scala	1
+val	Görünüş.kare	"/images/kindvar.png"	cizim.scala	1
+val	Görünüş.scala	"/images/scala16x16.png"	cizim.scala	1
+val	Görünüş.top1	"/media/collidium/ball1.png"	cizim.scala	1
+val	Görünüş.top2	"/media/collidium/ball2.png"	cizim.scala	1
+val	Görünüş.top3	"/media/collidium/ball3.png"	cizim.scala	1
+val	Görünüş.top4	"/media/collidium/ball4.png"	cizim.scala	1
+val	Görünüş.topKanatlı1	"/media/flappy-ball/ballwing1.png"	cizim.scala	1
+val	Görünüş.topKanatlı2	"/media/flappy-ball/ballwing2.png"	cizim.scala	1
+val	Görünüş.tuğla	"/media/collidium/bwall.png"	cizim.scala	1
+val	Görünüş.yarasa1	"/media/costumes/bat1-a.png"	cizim.scala	1
+val	Görünüş.yarasa1	Costume.bat1	cizim.scala	1
+val	Görünüş.yarasa1a	"/media/costumes/bat1-a.png"	cizim.scala	1
+val	Görünüş.yarasa1a	Costume.bat1	TurtleWorldAPI.scala	1
+val	Görünüş.yarasa1a	Costume.bat1	cizim.scala	1
+val	Görünüş.yarasa1b	"/media/costumes/bat1-b.png"	cizim.scala	1
+val	Görünüş.yarasa1b	Costume.bat2	TurtleWorldAPI.scala	1
+val	Görünüş.yarasa1b	Costume.bat2	cizim.scala	1
+val	Görünüş.yarasa2	"/media/costumes/bat1-b.png"	cizim.scala	1
+val	Görünüş.yarasa2	Costume.bat2	cizim.scala	1
+val	Görünüş.yıldız	"/images/star.png"	cizim.scala	1
+val	Günler	List	buan.scala	1
+type	Harf	Char	data.scala	1
+type	Harf	Char	harf.scala	1
+type	Harf	Char	yazi.scala	3
+type	HarfDizisi	CharSequence	turler.scala	1
+def	HarfDizisindenDizi	SeqCharSequence	harf.scala	1
+type	HarfDizisindenDizi	SeqCharSequence	harf.scala	1
+def	HarfDizisindenDizik	ArrayCharSequence	harf.scala	1
+type	HarfDizisindenDizik	ArrayCharSequence	harf.scala	1
+type	HarfDiziğiDizisi	ofChar	harf.scala	1	member-only
+def	HarftenHarfe	Character2char	harf.scala	1
+type	HatalıSınıfDüzeni	ClassFormatError	turler.scala	1
+type	Her	Any	data.scala	1
+type	Her	Any	package.scala	1
+type	HerDeğer	AnyVal	data.scala	1
+type	HerDeğer	AnyVal	package.scala	1
+type	HerGönder	AnyRef	data.scala	1
+type	HerGönder	AnyRef	package.scala	1
+type	Hiç	Nothing	data.scala	1
+type	Hiç	Nothing	package.scala	1
+val	Hiçbiri	None	belki.scala	1
+val	Hiçbiri	None	data.scala	1
+type	Hız	Speed	data.scala	1	member-only
+type	Hız	Speed	package.scala	1	member-only
+type	Iter	Iterable	kuyruk.scala	2
+type	JGelecek	JFuture	gelecek.scala	1	member-only
+type	JHarf	Character	harf.scala	1
+type	JKesir	Double	turler.scala	1
+type	JKısa	Short	turler.scala	1
+type	JLokma	Byte	turler.scala	1
+type	JSayı	Integer	turler.scala	1
+type	JTemelSayı	Number	turler.scala	1
+type	JUfakKesir	Float	turler.scala	1
+type	JUzun	Long	turler.scala	1
+type	Jİkil	Boolean	turler.scala	1
+type	JİriSayı	math.BigInteger	turler.scala	1	member-only
+type	KendiKapanır	AutoCloseable	turler.scala	1
+type	Kesir	Double	data.scala	1
+type	Kesir	Double	package.scala	2
+type	Kesir	Double	sayi.scala	1
+type	KesirDiziğiDizisi	ofDouble	turler.scala	1	member-only
+def	KesirdenKesire	Double2double	turler.scala	1
+type	KumandaKolu	JoyStick	kumanda.scala	1	member-only
+type	KuralDışı	Exception	gelecek.scala	1
+type	KuralDışı	Exception	trInit.scala	1
+type	KuraldışıGirdiHatası	IllegalArgumentException	turler.scala	1
+type	KuraldışıSınıfDökümü	ClassCastException	turler.scala	1
+type	Kuyruk	Queue	kuyruk.scala	1	member-only
+type	Küme	Set	data.scala	1
+type	Küme	Set	dizi.scala	1
+type	Küme	Set	kume.scala	1
+type	Küme	Set	resim.scala	1
+type	Kısa	Short	data.scala	1
+type	Kısa	Short	package.scala	1
+type	Kısa	Short	sayi.scala	1
+type	KısaDiziğiDizisi	ofShort	turler.scala	1	member-only
+def	KısadanKısaya	Short2short	turler.scala	1
+type	Lokma	Byte	data.scala	1
+type	Lokma	Byte	package.scala	1
+type	Lokma	Byte	sayi.scala	1
+type	LokmaDiziğiDizisi	ofByte	turler.scala	1	member-only
+def	LokmadanLokmaya	Byte2byte	turler.scala	1
+type	MatematikselHata	ArithmeticException	turler.scala	1
+type	MiskinDizin	LazyList	data.scala	1
+type	MiskinDizin	LazyList	miskindizin.scala	1
+def	Mp3DöngüsünüDurdur	stopMp3Loop	trInit.scala	1
+def	Mp3ÇalıyorMu	isMp3Playing	trInit.scala	1
+def	Mp3üDurdur	stopMp3	trInit.scala	1
+type	Nesne	Object	data.scala	1
+type	Nesne	Object	package.scala	1
+type	Nokta	Point	data.scala	1
+type	Nokta	Point	package.scala	1
+def	NoktaIşık	PointLight	resim.scala	1
+type	OdakDinleyicisi	FocusListener	arayuz.scala	1	member-only
+type	OdakOlayı	FocusEvent	arayuz.scala	1	member-only
+type	OdakUyarlayıcısı	FocusAdapter	arayuz.scala	1	member-only
+type	Okİlişkisi	ArrowAssoc	turler.scala	1
+type	PEtkinlik	PActivity	gelecek.scala	1	member-only
+type	PNokta	PNode	resim.scala	1	member-only
+type	PSınırlar	PBounds	geo.scala	1	member-only
+type	PSınırlar	PBounds	resim.scala	1	member-only
+type	ParDizi	ParSeq	dizin.scala	2	member-only
+type	Parça	JComponent	arayuz.scala	1	member-only
+type	Renk	AColor	renk.scala	1	member-only
+def	Renk	Color	data.scala	1
+type	Renk	Color	data.scala	1
+type	Renk	Color	package.scala	1
+def	RenkADA	hsla	renk.scala	1	member-only
+def	RenkArıRenkDoygunlukAydınlık	hsla	renk.scala	1	member-only
+def	RenkDD	linearGradient	renk.scala	1	member-only
+def	RenkDoğrusalDeğişim	linearGradient	renk.scala	1	member-only
+def	RenkKYM	Color	renk.scala	1
+type	Resim	Picture	data.scala	1
+def	Resim.dizi	picStack	resim.scala	2
+def	Resim.diziDikey	picCol	resim.scala	2
+def	Resim.diziDikeyDüzenli	picColCentered	resim.scala	2
+def	Resim.diziDüzenli	picStackCentered	resim.scala	2
+def	Resim.diziYatay	picRow	resim.scala	2
+def	Resim.diziYatayDüzenli	picRowCentered	resim.scala	2
+def	Resim.küme	picBatch	resim.scala	2
+def	Resim.satır	row	resim.scala	1
+def	Resim.sil	erasePictures	resim.scala	1
+def	Resim.sütun	col	resim.scala	1
+def	Resim.süz	filterImage	resim.scala	1
+def	Resim.süz	filterPicture	resim.scala	1
+def	Resim.tuvalBölgesi	stageArea	resim.scala	1
+def	Resim.tuvalSınırları	stage	resim.scala	1
+def	Resim.tuvalinSağı	stageRight	resim.scala	1
+def	Resim.tuvalinSolu	stageLeft	resim.scala	1
+def	Resim.tuvalinTabanı	stageBot	resim.scala	1
+def	Resim.tuvalinTavanı	stageTop	resim.scala	1
+def	Resim.çiz	draw	resim.scala	1
+type	SaatDilimi	TimeZone	buan.scala	1	member-only
+def	SahneIşığı	SpotLight	resim.scala	1
+type	Sayı	Int	data.scala	1
+type	Sayı	Int	package.scala	1
+type	Sayı	Int	sayi.scala	1
+type	SayıDiziğiDizisi	ofInt	turler.scala	1	member-only
+def	SayıdanSayıya	Integer2int	turler.scala	1
+type	Sayılar	Vector	sayi.scala	1
+val	Ses.arabaFrenYapıyor	"/media/car-ride/car-brake.mp3"	ses.scala	1
+val	Ses.arabaGidiyor	"/media/car-ride/car-move.mp3"	ses.scala	1
+val	Ses.arabaHızlanıyor	"/media/car-ride/car-accel.mp3"	ses.scala	1
+val	Ses.arabaKazaYaptı	"/media/car-ride/car-crash.mp3"	ses.scala	1
+val	Ses.bahçe	"/media/music-loops/Garden.mp3"	ses.scala	1
+val	Ses.basDavulVuruşları	"/media/music-loops/DrumBeats.mp3"	ses.scala	1
+val	Ses.bateri	"/media/music-loops/Drum.mp3"	ses.scala	1
+val	Ses.bateriElektronik	"/media/music-loops/DrumMachine.mp3"	ses.scala	1
+val	Ses.gitar1	"/media/music-loops/GuitarChords1.mp3"	ses.scala	1
+val	Ses.gitar2	"/media/music-loops/GuitarChords2.mp3"	ses.scala	1
+val	Ses.ksilofon1	"/media/music-loops/Xylo1.mp3"	ses.scala	1
+val	Ses.ksilofon2	"/media/music-loops/xylo4.mp3"	ses.scala	1
+val	Ses.mağarada	"/media/music-loops/Cave.mp3"	ses.scala	1
+val	Ses.ortaçağ1	Sound.medieval1	TurtleWorldAPI.scala	1
+val	Ses.ortaçağ1	Sound.medieval1	ses.scala	1
+val	Ses.vuruş	"/media/collidium/hit.mp3"	ses.scala	1
+val	Ses.yaşasın	"/media/collidium/win.mp3"	ses.scala	1
+type	Seçim	Boolean	data.scala	1
+type	Seçim	Boolean	package.scala	1
+type	Sınıf	Class	turler.scala	1
+type	SınıfBulunamadı	ClassNotFoundException	turler.scala	1
+type	SınıfDeğeri	ClassValue	turler.scala	1
+type	SınıfYükleyici	ClassLoader	turler.scala	1
+type	SınırDışınaTaşmaHatası	IndexOutOfBoundsException	turler.scala	1
+type	SıralıDizi	IndexedSeq	dizi.scala	1
+type	SıralıDizi	IndexedSeq	package.scala	1
+type	SıralıDizi	IndexedSeq	turler.scala	1
+type	Takvim	Calendar	buan.scala	1	member-only
+type	Tarih	Date	buan.scala	1	member-only
+type	Tuval	SCanvas	resim.scala	1	member-only
+type	TuvalÇizim	CanvasDraw	tuvalcizim.scala	1
+type	TuşUyarlayıcısı	KeyAdapter	arayuz.scala	1	member-only
+type	TuşaBasmaOlayı	KeyEvent	arayuz.scala	1	member-only
+type	UfakKesir	Float	data.scala	1
+type	UfakKesir	Float	package.scala	1
+type	UfakKesir	Float	sayi.scala	1
+type	UfakKesirDiziğiDizisi	ofFloat	turler.scala	1	member-only
+def	UfakKesirdenUfakKesire	Float2float	turler.scala	1
+type	Uygulama	App	turler.scala	1
+type	Uzun	Long	data.scala	1
+type	Uzun	Long	package.scala	1
+type	Uzun	Long	sayi.scala	1
+type	UzunDiziğiDizisi	ofLong	turler.scala	1	member-only
+def	UzundanUzuna	Long2long	turler.scala	1
+type	UzunlukBirimi	UnitLen	data.scala	1	member-only
+type	UzunlukBirimi	UnitLen	package.scala	1	member-only
+type	VarsılHarf	RichChar	turler.scala	1	member-only
+type	VarsılKesir	RichDouble	turler.scala	1	member-only
+type	VarsılKısa	RichShort	turler.scala	1	member-only
+type	VarsılLokma	RichByte	turler.scala	1	member-only
+type	VarsılSayı	RichInt	turler.scala	1	member-only
+type	VarsılUfakKesir	RichFloat	turler.scala	1	member-only
+type	VarsılUzun	RichLong	turler.scala	1	member-only
+type	Varsılİkil	RichBoolean	turler.scala	1	member-only
+type	Yapıcıdan	BuildFrom	package.scala	1	member-only
+type	Yapıcıdan	BuildFrom	trInit.scala	1	member-only
+type	Yazı	String	data.scala	1
+type	Yazı	String	package.scala	1
+type	Yazı	String	yazi.scala	1
+type	Yazıyüzü	Font	arayuz.scala	1
+type	Yazıyüzü	Font	resim.scala	1
+type	Yazıyüzü	Font	tuvalcizim.scala	1
+type	Yinelenebilir	Iterable	package.scala	1
+type	YinelenebilirBirKere	IterableOnce	package.scala	1
+type	Yineleyici	Iterator	package.scala	1
+type	Yok	Null	data.scala	1
+type	Yok	Null	package.scala	1
+type	YumuşakGeçiş	KEasing	resim.scala	1	member-only
+type	Yöney	Vector	data.scala	1
+type	Yöney	Vector	dizi.scala	1
+type	Yöney	Vector	yoney.scala	1
+type	Yöney2B	Vector2D	data.scala	1
+type	Yığın	Stack	package.scala	1	member-only
+def	a_kalıp	println	trInit.scala	1
+def	ada	hsla	renk.scala	1	member-only
+def	adas	hsla	renk.scala	1	member-only
+def	adı	getName	dosya.scala	1	member-only
+def	adım	step	aralik.scala	1	member-only
+def	adımı	step	aralik.scala	1	member-only
+def	alDoğruKaldıkça	takeWhile	dizi.scala	3	member-only
+def	alDoğruKaldıkça	takeWhile	dizik.scala	2	member-only
+def	alDoğruKaldıkça	takeWhile	dizin.scala	1	member-only
+def	alDoğruKaldıkça	takeWhile	eslem.scala	2	member-only
+def	alDoğruKaldıkça	takeWhile	kume.scala	1	member-only
+def	alDoğruKaldıkça	takeWhile	kuyruk.scala	2	member-only
+def	alDoğruKaldıkça	takeWhile	miskindizin.scala	1	member-only
+def	alDoğruKaldıkça	takeWhile	yazi.scala	1	member-only
+def	alDoğruKaldıkça	takeWhile	yineleyici.scala	1	member-only
+def	alDoğruKaldıkça	takeWhile	yoney.scala	1	member-only
+def	alDoğruKaldıkçaYerinde	takeWhileInPlace	dizik.scala	1	member-only
+def	alDoğruKaldıkçaYerinde	takeWhileInPlace	kuyruk.scala	2	member-only
+def	alHepsini	removeAll	kuyruk.scala	2	member-only
+def	alHepsiniTersten	removeAllReverse	kuyruk.scala	2	member-only
+def	alSağdan	takeRight	dizi.scala	3	member-only
+def	alSağdan	takeRight	dizik.scala	2	member-only
+def	alSağdan	takeRight	dizin.scala	1	member-only
+def	alSağdan	takeRight	eslem.scala	2	member-only
+def	alSağdan	takeRight	kume.scala	1	member-only
+def	alSağdan	takeRight	kuyruk.scala	2	member-only
+def	alSağdan	takeRight	miskindizin.scala	1	member-only
+def	alSağdan	takeRight	yazi.scala	1	member-only
+def	alSağdan	takeRight	yoney.scala	1	member-only
+def	alSağdanYerinde	takeRightInPlace	dizik.scala	1	member-only
+def	alSağdanYerinde	takeRightInPlace	kuyruk.scala	2	member-only
+def	alSırayla	take	eslem.scala	2	member-only
+def	alYerinde	takeInPlace	dizik.scala	1	member-only
+def	alYerinde	takeInPlace	kuyruk.scala	2	member-only
+def	alYoksa	getOrElse	belki.scala	1	member-only
+def	alYoksa	getOrElse	eslem.scala	2	member-only
+def	alYoksa	getOrElse	ikisindenbiri.scala	1	member-only
+def	alYoksaEkle	getOrElseUpdate	eslem.scala	1	member-only
+def	alan	area	resim.scala	1
+def	altKümeleri	subsets	kume.scala	1	member-only
+def	altKümesiMi	subsetOf	kume.scala	1	member-only
+def	alta	below	resim.scala	1	member-only
+val	altın	gold	renk.scala	1	member-only
+val	altınbaşak	goldenrod	renk.scala	1	member-only
+def	altında	over	resim.scala	1	member-only
+def	altındaÇiniVarMı	hasTileUnder	cinidunyasi.scala	1	member-only
+def	anahtarKümesi	keySet	eslem.scala	2	member-only
+def	anahtarYineleyici	keysIterator	eslem.scala	2	member-only
+def	anahtarlar	keys	eslem.scala	2	member-only
+def	anahtarlarıEle	filterKeys	eslem.scala	2	member-only
+def	araEkle	insert	dizik.scala	1	deprecated,member-only
+def	araEkle	insert	kuyruk.scala	1	deprecated,member-only
+def	araEkle	insert	yazi.scala	1	deprecated,member-only
+def	araEkleHepsini	insertAll	dizik.scala	1	deprecated,member-only
+def	araEkleHepsini	insertAll	yazi.scala	1	deprecated,member-only
+def	aralık	range	miskindizin.scala	2	member-only
+def	aralığıSil	delete	yazi.scala	1	member-only
+def	arayüz	Picture.widget	resim.scala	1
+def	ardaAl	moveToBack	resim.scala	1	member-only
+def	arkayaAl	moveToBack	resim.scala	1	member-only
+def	artalan	background	tuvalcizim.scala	2	member-only
+def	artalandaOynat	runInBackground	trInit.scala	1
+def	artalanıKur	setBackground	arayuz.scala	9
+def	artalanıKur	setBackground	data.scala	1
+def	artalanıKur	setBackground	trInit.scala	2
+def	artalanıKurDik	setBackgroundV	data.scala	1
+def	artalanıKurDik	setBackgroundV	trInit.scala	1
+def	artalanıKurYatay	setBackgroundH	data.scala	1
+def	artalanıKurYatay	setBackgroundH	trInit.scala	1
+def	atla	jumpTo	trInit.scala	1
+def	aydınlık	brit	resim.scala	1
+def	aydınlık	britMod	resim.scala	1
+def	aydınlıkOranınıKur	britMod	resim.scala	1
+def	ayırıcı	separator	dosya.scala	1	member-only
+def	ayırıcıHarf	separatorChar	dosya.scala	1	member-only
+def	açı	angle	yoney2b.scala	1	member-only
+def	açı	math.atan2	matematik.scala	1
+def	açı2	angleTo	yoney2b.scala	1	member-only
+val	açıkAltınbaşakSarısı	lightGoldenrodYellow	renk.scala	1	member-only
+val	açıkCamgöbeği	lightCyan	renk.scala	1	member-only
+val	açıkDenizYeşili	lightSeaGreen	renk.scala	1	member-only
+val	açıkGri	lightGray	data.scala	1
+val	açıkGri	lightGray	renk.scala	1
+val	açıkGökMavisi	lightSkyBlue	renk.scala	1	member-only
+val	açıkKurşunGrisi	lightSlateGray	renk.scala	1	member-only
+val	açıkMavi	lightBlue	renk.scala	1	member-only
+val	açıkMercan	lightCoral	renk.scala	1	member-only
+val	açıkPembe	lightPink	renk.scala	1	member-only
+val	açıkSarı	lightYellow	renk.scala	1	member-only
+val	açıkSomon	lightSalmon	renk.scala	1	member-only
+val	açıkYeşil	lightGreen	renk.scala	1	member-only
+val	açıkÇelikMavisi	lightSteelBlue	renk.scala	1	member-only
+def	açısalEğriKöşesi	curveVertexRt	tuvalcizim.scala	1
+def	açısalEğriNoktası	curveVertexRt	geo.scala	1
+def	açısalKöşe	vertexRt	tuvalcizim.scala	1
+def	açısalNokta	vertexRt	geo.scala	1
+def	açıyaDön	setHeading	resim.scala	1
+def	açıyaDön	setHeading	trInit.scala	1
+def	açıÖlçeriGizle	hideProtractor	trInit.scala	1
+def	açıÖlçeriGöster	showProtractor	trInit.scala	1
+def	ağırlıklıToplam	lerp	yoney2b.scala	1	member-only
+def	aşağıdakiÇiniyeTaşı	moveToTileBelow	cinidunyasi.scala	1	member-only
+def	aşağıdaÇiniVarMı	hasTileBelow	cinidunyasi.scala	1	member-only
+val	back_space	backSpace	klavye.scala	1	deprecated,member-only
+val	batı	WEST	arayuz.scala	1	member-only
+def	batı	setHeading	trInit.scala	1
+def	başaDön	closePath	geo.scala	1	member-only
+def	başaEkle	prepend	dizik.scala	1	deprecated,member-only
+def	başaEkleHepsini	prependAll	dizik.scala	1	deprecated,member-only
+def	başaKoy	prepend	kuyruk.scala	1	member-only
+def	başarılı	successful	gelecek.scala	1	member-only
+def	başarısız	failed	gelecek.scala	1	member-only
+def	başla	beginShape	geo.scala	1
+def	başlangıçNoktasıAltSolKöşeOlsun	originBottomLeft	trInit.scala	1
+def	başlangıçNoktasıÜstSolKöşeOlsun	originTopLeft	trInit.scala	1
+def	baştanAl	dequeue	kuyruk.scala	2	member-only
+def	baştanAl	removeHead	kuyruk.scala	1	member-only
+def	baştanAlBelki	removeHeadOption	kuyruk.scala	1	member-only
+def	baştanAlHepsini	dequeueAll	kuyruk.scala	1	member-only
+def	baştanAlHepsini	toList	kuyruk.scala	1	member-only
+def	baştanKırp	dropInPlace	dizik.scala	1	member-only
+def	baştanÇıkar	dequeue	kuyruk.scala	1	member-only
+def	baştanÇıkarBelki	removeHeadOption	kuyruk.scala	1	member-only
+def	baştanÇıkarDoğruKaldıkça	removeHeadWhile	kuyruk.scala	1	member-only
+def	baştanÇıkarHepsiniKoşulla	dequeueWhile	kuyruk.scala	1	member-only
+def	baştanÇıkarKoşulla	dequeueFirst	kuyruk.scala	1	member-only
+def	başı	head	aralik.scala	1	member-only
+def	başı	head	dizi.scala	3	member-only
+def	başı	head	dizik.scala	2	member-only
+def	başı	head	dizin.scala	1	member-only
+def	başı	head	eslem.scala	2	member-only
+def	başı	head	kume.scala	1	member-only
+def	başı	head	kuyruk.scala	3	member-only
+def	başı	head	miskindizin.scala	1	member-only
+def	başı	head	yazi.scala	1	member-only
+def	başı	head	yineleyici.scala	1	member-only
+def	başı	head	yoney.scala	1	member-only
+def	başıBelki	headOption	dizi.scala	3	member-only
+def	başıBelki	headOption	dizik.scala	2	member-only
+def	başıBelki	headOption	dizin.scala	1	member-only
+def	başıBelki	headOption	eslem.scala	2	member-only
+def	başıBelki	headOption	kume.scala	1	member-only
+def	başıBelki	headOption	kuyruk.scala	3	member-only
+def	başıBelki	headOption	miskindizin.scala	1	member-only
+def	başıBelki	headOption	yazi.scala	1	member-only
+def	başıBelki	headOption	yoney.scala	1	member-only
+def	başındaMı	startsWith	dizi.scala	3	member-only
+def	başındaMı	startsWith	dizik.scala	2	member-only
+def	başındaMı	startsWith	dizin.scala	1	member-only
+def	başındaMı	startsWith	kuyruk.scala	1	member-only
+def	başındaMı	startsWith	miskindizin.scala	1	member-only
+def	başındaMı	startsWith	yazi.scala	2	member-only
+def	başındaMı	startsWith	yoney.scala	1	member-only
+def	başındanAt	stripPrefix	yazi.scala	1	member-only
+def	belirt	assert	data.scala	1
+def	belirt	assert	trInit.scala	1
+def	belkiye	toOption	ikisindenbiri.scala	1	member-only
+def	bellekli	buffered	yineleyici.scala	1	member-only
+def	benzerDönüşümKur	setTransform	resim.scala	1	member-only
+def	benzerDönüşümUygula	transformBy	resim.scala	1	member-only
+val	beyaz	white	data.scala	1
+val	beyaz	white	renk.scala	1
+val	beyazlatılmışBadem	blanchedAlmond	renk.scala	1	member-only
+def	bezierKöşesi	bezierVertex	tuvalcizim.scala	1
+def	bezierNoktası	bezierVertex	geo.scala	1
+def	bileşim	concat	dizi.scala	3	member-only
+def	bileşim	concat	dizik.scala	1	member-only
+def	bileşim	concat	dizin.scala	1	member-only
+def	bileşim	concat	kuyruk.scala	1	member-only
+def	bileşim	concat	miskindizin.scala	1	member-only
+def	bileşim	concat	yineleyici.scala	1	member-only
+def	bileşim	concat	yoney.scala	1	member-only
+def	bileşim	union	kume.scala	1	member-only
+def	bilgiVer	dumpInfo	resim.scala	1	member-only
+def	birAdımİleri	step	cinidunyasi.scala	1	member-only
+def	birEfekt	effect	resim.scala	1
+def	birleştir	concat	dizik.scala	1	member-only
+def	birleştir	fold	ikisindenbiri.scala	1	member-only
+def	birsonrakiGiysi	nextCostume	trInit.scala	1
+def	bitir	endShape	geo.scala	1
+def	biçimleriBelleğeYaz	saveStyle	trInit.scala	1
+def	biçimleriGeriYükle	restoreStyle	trInit.scala	1
+def	boy	height	trInit.scala	1	member-only
+def	boya	fill	tuvalcizim.scala	2	member-only
+def	boyaRengi	fill	resim.scala	1	member-only
+def	boyamaRenginiKur	setFillColor	resim.scala	1
+def	boyamaRenginiKur	setFillColor	trInit.scala	1
+def	boyasız	noFill	tuvalcizim.scala	1	member-only
+def	boyu	height	geo.scala	1	member-only
+def	boyu	height	trInit.scala	1	member-only
+def	boyu	length	aralik.scala	1	member-only
+def	boyu	length	dizi.scala	3	member-only
+def	boyu	length	dizik.scala	2	member-only
+def	boyu	length	dizin.scala	1	member-only
+def	boyu	length	kuyruk.scala	3	member-only
+def	boyu	length	miskindizin.scala	1	member-only
+def	boyu	length	yazi.scala	1	member-only
+def	boyu	length	yineleyici.scala	1	member-only
+def	boyu	length	yoney.scala	1	member-only
+def	boyu	magnitude	yoney2b.scala	1	member-only
+def	boyu	size	eslem.scala	2
+def	boyu	size	kume.scala	1
+def	boyu	size	yazi.scala	1
+def	boyuKur	setLength	yazi.scala	1	member-only
+def	boyunKaresi	magSquared	yoney2b.scala	1	member-only
+def	boyunuBirYap	normalize	yoney2b.scala	1	member-only
+def	boş	Nil	dizin.scala	1
+def	boş	empty	data.scala	1	member-only
+def	boş	empty	dizi.scala	2	member-only
+def	boş	empty	dizik.scala	2	member-only
+def	boş	empty	dizim.scala	2	member-only
+def	boş	empty	eslem.scala	1	member-only
+def	boş	empty	kume.scala	2	member-only
+def	boş	empty	kuyruk.scala	4	member-only
+def	boş	empty	miskindizin.scala	1	member-only
+def	boş	empty	yoney.scala	1	member-only
+def	boş	ofDim	dizik.scala	3	member-only
+def	boş	ofDim	dizim.scala	3	member-only
+def	boşKenar	createEmptyBorder	arayuz.scala	1	member-only
+def	boşMu	isEmpty	belki.scala	1	member-only
+def	boşMu	isEmpty	dizi.scala	3	member-only
+def	boşMu	isEmpty	dizik.scala	2	member-only
+def	boşMu	isEmpty	dizim.scala	1	member-only
+def	boşMu	isEmpty	dizin.scala	1	member-only
+def	boşMu	isEmpty	eslem.scala	2	member-only
+def	boşMu	isEmpty	kume.scala	1	member-only
+def	boşMu	isEmpty	kuyruk.scala	3	member-only
+def	boşMu	isEmpty	miskindizin.scala	1	member-only
+def	boşMu	isEmpty	yazi.scala	1	member-only
+def	boşMu	isEmpty	yineleyici.scala	1	member-only
+def	boşMu	isEmpty	yoney.scala	1	member-only
+def	boşMu	size	yazi.scala	1
+def	boşalt	clear	dizik.scala	1
+def	boşalt	clear	eslem.scala	1
+def	boşalt	clear	kuyruk.scala	1
+def	boşlukMu	isWhitespace	harf.scala	1	member-only
+def	boşsaÖbürü	orElse	belki.scala	1	member-only
+def	boşsaÖbürü	orElse	ikisindenbiri.scala	1	member-only
+def	buAn	currentTimeMillis	buan.scala	1	member-only
+def	buAn	epochTimeMillis	data.scala	1
+def	buAn	getInstance	buan.scala	1	member-only
+def	buAn2	nanoTime	buan.scala	1	member-only
+def	buDizin	currentDir	data.scala	1
+def	buDizin	currentDir	trInit.scala	1
+def	buSaniye	currentTimeMillis	buan.scala	1	member-only
+def	buSaniye	epochTime	data.scala	1
+def	buSaniye1	BigDecimal	buan.scala	1
+def	buSaniye2	BigDecimal	buan.scala	1
+val	buan	getInstance	buan.scala	1	member-only
+def	bul	find	dizi.scala	3	member-only
+def	bul	find	dizik.scala	2	member-only
+def	bul	find	dizin.scala	1	member-only
+def	bul	find	eslem.scala	2	member-only
+def	bul	find	kume.scala	1	member-only
+def	bul	find	kuyruk.scala	2	member-only
+def	bul	find	miskindizin.scala	1	member-only
+def	bul	find	yazi.scala	1	member-only
+def	bul	find	yineleyici.scala	1	member-only
+def	bul	find	yoney.scala	1	member-only
+def	bulSondan	findLast	dizi.scala	3	member-only
+def	bulSondan	findLast	dizik.scala	1	member-only
+def	bulSondan	findLast	dizin.scala	1	member-only
+def	bulSondan	findLast	kuyruk.scala	1	member-only
+def	bulSondan	findLast	miskindizin.scala	1	member-only
+def	bulSondan	findLast	yoney.scala	1	member-only
+def	bulanık	blur	resim.scala	1
+def	buradaDur	burdaDur	trInit.scala	1	member-only
+def	buradaDurma	burdaDurma	trInit.scala	1	member-only
+def	böl	partition	dizi.scala	3	member-only
+def	böl	partition	dizik.scala	2	member-only
+def	böl	partition	dizin.scala	1	member-only
+def	böl	partition	eslem.scala	1	member-only
+def	böl	partition	kume.scala	1	member-only
+def	böl	partition	kuyruk.scala	1	member-only
+def	böl	partition	miskindizin.scala	1	member-only
+def	böl	partition	yineleyici.scala	1	member-only
+def	böl	partition	yoney.scala	1	member-only
+def	böl	split	yazi.scala	3	member-only
+def	bölDoğruKaldıkça	span	dizi.scala	3	member-only
+def	bölDoğruKaldıkça	span	dizik.scala	2	member-only
+def	bölDoğruKaldıkça	span	dizin.scala	1	member-only
+def	bölDoğruKaldıkça	span	eslem.scala	1	member-only
+def	bölDoğruKaldıkça	span	kume.scala	1	member-only
+def	bölDoğruKaldıkça	span	kuyruk.scala	2	member-only
+def	bölDoğruKaldıkça	span	miskindizin.scala	1	member-only
+def	bölDoğruKaldıkça	span	yazi.scala	1	member-only
+def	bölDoğruKaldıkça	span	yineleyici.scala	1	member-only
+def	bölDoğruKaldıkça	span	yoney.scala	1	member-only
+def	bölYerinden	splitAt	dizi.scala	3	member-only
+def	bölYerinden	splitAt	dizik.scala	2	member-only
+def	bölYerinden	splitAt	dizin.scala	1	member-only
+def	bölYerinden	splitAt	eslem.scala	1	member-only
+def	bölYerinden	splitAt	kume.scala	1	member-only
+def	bölYerinden	splitAt	kuyruk.scala	2	member-only
+def	bölYerinden	splitAt	miskindizin.scala	1	member-only
+def	bölYerinden	splitAt	yazi.scala	1	member-only
+def	bölYerinden	splitAt	yineleyici.scala	1	member-only
+def	bölYerinden	splitAt	yoney.scala	1	member-only
+def	bölİşle	partitionMap	dizi.scala	3	member-only
+def	bölİşle	partitionMap	dizik.scala	2	member-only
+def	bölİşle	partitionMap	dizin.scala	1	member-only
+def	bölİşle	partitionMap	eslem.scala	2	member-only
+def	bölİşle	partitionMap	kume.scala	1	member-only
+def	bölİşle	partitionMap	kuyruk.scala	1	member-only
+def	bölİşle	partitionMap	miskindizin.scala	1	member-only
+def	bölİşle	partitionMap	yoney.scala	1	member-only
+def	büyükHarfMi	isUpper	harf.scala	1	member-only
+def	büyükHarfe	map	yazi.scala	1	member-only
+def	büyükHarfe	toUpper	harf.scala	1	member-only
+def	büyüt	scale	resim.scala	4
+def	büyüt	scale	tuvalcizim.scala	2
+def	büyüt	scale	yoney2b.scala	1
+def	büyütXY	scale	resim.scala	1
+def	büyütmeOranı	scaleFactor	resim.scala	1	member-only
+def	büyütmeOranınıKur	setScaleFactor	resim.scala	1	member-only
+def	büyütmeyiKur	setScale	resim.scala	1	member-only
+val	camgöbeği	cyan	data.scala	1
+val	camgöbeği	cyan	renk.scala	1
+def	canlan	react	resim.scala	1	member-only
+def	canlan	react	trInit.scala	1	member-only
+def	canlandır	animate	trInit.scala	1
+def	canlandırEvreyle	animateWithState	trInit.scala	1
+def	canlandırKurulumluTuvalÇizimle	animateWithSetupCanvasDraw	trInit.scala	1
+def	canlandırTuvalÇizimle	animateWithCanvasDraw	trInit.scala	1
+def	canlandırmaBaşlayınca	onAnimationStart	trInit.scala	1
+def	canlandırmaBitince	onAnimationStop	trInit.scala	1
+def	canlandırmaDizisi	animSeq	trInit.scala	2
+def	canlandırmaEşzamanlı	animPar	trInit.scala	2
+def	canlandırmaHızı	animationDelay	trInit.scala	1
+def	canlandırmaHızınıKur	setAnimationDelay	trInit.scala	1
+def	canlandırmayıDurdur	stopAnimationActivity	trInit.scala	1
+def	cetveliGöster	showScale	trInit.scala	1
+val	codeTemplates	templates	trInit.scala	1
+def	dahaAçıkYap	lighten	renk.scala	1	member-only
+def	dahaKoyuYap	darken	renk.scala	1	member-only
+def	dahaVarMı	hasNext	yineleyici.scala	1	member-only
+def	daire	Picture.circle	resim.scala	1
+def	daire	circle	trInit.scala	1
+def	dakika	get	buan.scala	1	member-only
+val	denizYeşili	seaGreen	renk.scala	1	member-only
+def	dereceye	math.toDegrees	matematik.scala	1
+def	dereceye	toDegrees	data.scala	1	member-only
+def	dereceye	toDegrees	sayi.scala	1	member-only
+def	devrik	transpose	dizi.scala	3	member-only
+def	devrik	transpose	dizik.scala	2	member-only
+def	devrik	transpose	dizin.scala	1	member-only
+def	devrik	transpose	eslem.scala	2	member-only
+def	devrik	transpose	kume.scala	1	member-only
+def	devrik	transpose	kuyruk.scala	2	member-only
+def	devrik	transpose	miskindizin.scala	1	member-only
+def	devrik	transpose	yoney.scala	1	member-only
+def	değerYineleyici	valuesIterator	eslem.scala	2	member-only
+def	değeri	value	arayuz.scala	4	member-only
+def	değerler	values	eslem.scala	2	member-only
+def	değerleriİşle	mapValues	eslem.scala	2	member-only
+def	değilseVer	unless	belki.scala	1	member-only
+def	değişim	variance	matematik.scala	2	member-only
+def	değişmezden	from	eslem.scala	1	member-only
+def	değiştir	addOne	eslem.scala	1	member-only
+def	değiştir	replace	yazi.scala	2	member-only
+def	değiştir	updated	dizi.scala	3	member-only
+def	değiştir	updated	dizik.scala	2	member-only
+def	değiştir	updated	dizin.scala	1	member-only
+def	değiştir	updated	miskindizin.scala	1	member-only
+def	değiştir	updated	yazi.scala	1	member-only
+def	değiştir	updated	yoney.scala	1	member-only
+def	değiştirAralığını	replace	yazi.scala	1	member-only
+def	değiştirHepsini	replaceAll	yazi.scala	1	member-only
+def	değiştirYerinde	update	dizik.scala	2	member-only
+def	değiştirilmiş	updated	eslem.scala	2	member-only
+def	değiştirİlkini	replaceFirst	yazi.scala	1	member-only
+def	değiştirİşlevle	updatedWith	eslem.scala	1	member-only
+def	dikdörtgen	Picture.rect	resim.scala	1
+def	dikdörtgen	rect	tuvalcizim.scala	1	member-only
+def	dikey	Picture.vline	resim.scala	1
+val	dikey	VERTICAL	arayuz.scala	1	member-only
+def	dikeyBoşluk	Picture.vgap	resim.scala	1
+def	dikeyDüzeniKur	setVerticalAlignment	arayuz.scala	1	member-only
+def	dilim	slice	dizi.scala	3	member-only
+def	dilim	slice	dizik.scala	2	member-only
+def	dilim	slice	dizin.scala	1	member-only
+def	dilim	slice	eslem.scala	2	member-only
+def	dilim	slice	kume.scala	1	member-only
+def	dilim	slice	kuyruk.scala	2	member-only
+def	dilim	slice	miskindizin.scala	1	member-only
+def	dilim	slice	yazi.scala	1	member-only
+def	dilim	slice	yineleyici.scala	1	member-only
+def	dilim	slice	yoney.scala	1	member-only
+def	dilimSırası	indexOfSlice	dizi.scala	3	member-only
+def	dilimSırası	indexOfSlice	dizik.scala	1	member-only
+def	dilimSırası	indexOfSlice	dizin.scala	1	member-only
+def	dilimSırası	indexOfSlice	kuyruk.scala	1	member-only
+def	dilimSırası	indexOfSlice	yoney.scala	1	member-only
+def	dilimSırasıSondan	lastIndexOfSlice	dizi.scala	3	member-only
+def	dilimSırasıSondan	lastIndexOfSlice	dizik.scala	1	member-only
+def	dilimSırasıSondan	lastIndexOfSlice	dizin.scala	1	member-only
+def	dilimSırasıSondan	lastIndexOfSlice	kuyruk.scala	1	member-only
+def	dilimSırasıSondan	lastIndexOfSlice	yoney.scala	1	member-only
+def	dilimYerinde	sliceInPlace	dizik.scala	1	member-only
+def	dilimYerinde	sliceInPlace	kuyruk.scala	2	member-only
+def	dizi	toList	kuyruk.scala	1	member-only
+def	dizi	toSeq	dizim.scala	1	member-only
+def	dizi	toSeq	eslem.scala	2	member-only
+def	dizi	toSeq	kuyruk.scala	1	member-only
+def	diziden	from	dizik.scala	1	member-only
+def	diziden	from	miskindizin.scala	1	member-only
+def	dizime	toArray	dizi.scala	5	member-only
+def	dizime	toArray	dizik.scala	2	member-only
+def	dizime	toArray	dizin.scala	1	member-only
+def	dizime	toArray	eslem.scala	2	member-only
+def	dizime	toArray	kume.scala	1	member-only
+def	dizime	toArray	kuyruk.scala	3	member-only
+def	dizime	toArray	miskindizin.scala	1	member-only
+def	dizime	toArray	yazi.scala	1	member-only
+def	dizime	toArray	yineleyici.scala	1	member-only
+def	dizime	toArray	yoney.scala	1	member-only
+def	dizinMi	isDirectory	dosya.scala	1	member-only
+def	dizinYap	mkdir	dosya.scala	1	member-only
+def	dizine	toList	aralik.scala	1	member-only
+def	dizine	toList	belki.scala	1	member-only
+def	dizine	toList	dizi.scala	5	member-only
+def	dizine	toList	dizik.scala	2	member-only
+def	dizine	toList	dizin.scala	2	member-only
+def	dizine	toList	eslem.scala	2	member-only
+def	dizine	toList	kume.scala	1	member-only
+def	dizine	toList	kuyruk.scala	2	member-only
+def	dizine	toList	miskindizin.scala	1	member-only
+def	dizine	toList	yazi.scala	1	member-only
+def	dizine	toList	yineleyici.scala	1	member-only
+def	dizine	toList	yoney.scala	1	member-only
+def	diziye	toList	belki.scala	1	member-only
+def	diziye	toSeq	aralik.scala	1	member-only
+def	diziye	toSeq	dizi.scala	5	member-only
+def	diziye	toSeq	dizik.scala	2	member-only
+def	diziye	toSeq	dizim.scala	2	member-only
+def	diziye	toSeq	dizin.scala	1	member-only
+def	diziye	toSeq	eslem.scala	2	member-only
+def	diziye	toSeq	ikisindenbiri.scala	1	member-only
+def	diziye	toSeq	kume.scala	1	member-only
+def	diziye	toSeq	kuyruk.scala	2	member-only
+def	diziye	toSeq	miskindizin.scala	1	member-only
+def	diziye	toSeq	yazi.scala	1	member-only
+def	diziye	toSeq	yineleyici.scala	1	member-only
+def	diziye	toSeq	yoney.scala	1	member-only
+def	doldur	fill	dizik.scala	6	member-only
+def	doldur	fill	dizim.scala	3	member-only
+def	doldur	fill	miskindizin.scala	1	member-only
+def	doldur	fill	yoney.scala	1	member-only
+def	doldur	from	kuyruk.scala	2	member-only
+def	doldur	tabulate	data.scala	1	member-only
+def	doldur	tabulate	dizi.scala	6	member-only
+def	doluMu	nonEmpty	belki.scala	1	member-only
+def	doluMu	nonEmpty	dizi.scala	3	member-only
+def	doluMu	nonEmpty	dizik.scala	2	member-only
+def	doluMu	nonEmpty	dizim.scala	1	member-only
+def	doluMu	nonEmpty	dizin.scala	1	member-only
+def	doluMu	nonEmpty	eslem.scala	2	member-only
+def	doluMu	nonEmpty	kume.scala	1	member-only
+def	doluMu	nonEmpty	kuyruk.scala	3	member-only
+def	doluMu	nonEmpty	miskindizin.scala	1	member-only
+def	doluMu	nonEmpty	yazi.scala	1	member-only
+def	doluMu	nonEmpty	yineleyici.scala	1	member-only
+def	doluMu	nonEmpty	yoney.scala	1	member-only
+def	doluMu	size	yazi.scala	1
+def	dosyaMı	isFile	dosya.scala	1	member-only
+def	dosyalar	listFiles	dosya.scala	1	member-only
+def	doğalLogu	log	data.scala	1	member-only
+def	doğalLogu	math.log	matematik.scala	1
+val	doğru	true	data.scala	1
+def	doğrultu	heading	resim.scala	1
+def	doğrultu	heading	trInit.scala	1
+def	doğrultu	heading	yoney2b.scala	1
+val	doğrultuyuKur	setHeading	resim.scala	1
+def	doğrusalDeğişim	linearGradient	renk.scala	1	member-only
+def	doğrusalÇokluDeğişim	linearMultipleGradient	renk.scala	1	member-only
+def	doğruÇiz	lineTo	geo.scala	1
+val	doğu	EAST	arayuz.scala	1	member-only
+def	doğu	setHeading	trInit.scala	1
+val	dur	pause	klavye.scala	1
+def	durakla	pause	trInit.scala	1
+def	duraklaMiliSaniye	pauseMillis	trInit.scala	1
+def	durdur	stopAnimation	trInit.scala	1
+def	dön	turn	trInit.scala	2
+def	döndür	rot	data.scala	1
+def	döndür	rot	resim.scala	1
+def	döndür	rotate	resim.scala	1	member-only
+def	döndür	rotate	yoney2b.scala	1	member-only
+def	döndürDerece	rotateDegrees	tuvalcizim.scala	1	member-only
+def	döndürMerkezli	rotateAboutPoint	resim.scala	1	member-only
+def	döndürMerkezli	rotp	resim.scala	1
+def	döndürRadyan	rotate	tuvalcizim.scala	1	member-only
+def	döngüdeMi	loop	tuvalcizim.scala	1	member-only
+def	döngüyüDurdur	noLoop	tuvalcizim.scala	1	member-only
+def	dönüştür	morph	resim.scala	1	member-only
+def	dönüştür	transform	eslem.scala	1
+def	dönüşüm	transform	resim.scala	1
+def	dönüşümüGeriYükle	popMatrix	tuvalcizim.scala	1	member-only
+def	dönüşümüKaydet	pushMatrix	tuvalcizim.scala	1	member-only
+def	düz	Picture.line	resim.scala	1
+def	düzleştir	flatten	belki.scala	1	member-only
+def	düzleştir	flatten	dizi.scala	3	member-only
+def	düzleştir	flatten	dizik.scala	2	member-only
+def	düzleştir	flatten	dizin.scala	1	member-only
+def	düzleştir	flatten	eslem.scala	2	member-only
+def	düzleştir	flatten	ikisindenbiri.scala	1	member-only
+def	düzleştir	flatten	kume.scala	1	member-only
+def	düzleştir	flatten	kuyruk.scala	2	member-only
+def	düzleştir	flatten	miskindizin.scala	1	member-only
+def	düzleştir	flatten	yineleyici.scala	1	member-only
+def	düzleştir	flatten	yoney.scala	1	member-only
+def	düzİşle	flatMap	aralik.scala	1	member-only
+def	düzİşle	flatMap	belki.scala	1	member-only
+def	düzİşle	flatMap	dizi.scala	5	member-only
+def	düzİşle	flatMap	dizik.scala	2	member-only
+def	düzİşle	flatMap	dizin.scala	2	member-only
+def	düzİşle	flatMap	eslem.scala	2	member-only
+def	düzİşle	flatMap	gelecek.scala	1	member-only
+def	düzİşle	flatMap	ikisindenbiri.scala	1	member-only
+def	düzİşle	flatMap	kume.scala	1	member-only
+def	düzİşle	flatMap	kuyruk.scala	2	member-only
+def	düzİşle	flatMap	miskindizin.scala	1	member-only
+def	düzİşle	flatMap	yazi.scala	2	member-only
+def	düzİşle	flatMap	yineleyici.scala	1	member-only
+def	düzİşle	flatMap	yoney.scala	1	member-only
+def	düzİşleYerinde	flatMapInPlace	dizik.scala	1	member-only
+def	düzİşleYerinde	flatMapInPlace	kuyruk.scala	2	member-only
+def	düğme	Picture.button	resim.scala	1
+def	düşür	drop	dizi.scala	3	member-only
+def	düşür	drop	dizik.scala	2	member-only
+def	düşür	drop	dizin.scala	1	member-only
+def	düşür	drop	eslem.scala	2	member-only
+def	düşür	drop	kume.scala	1	member-only
+def	düşür	drop	kuyruk.scala	2	member-only
+def	düşür	drop	miskindizin.scala	1	member-only
+def	düşür	drop	yazi.scala	1	member-only
+def	düşür	drop	yineleyici.scala	1	member-only
+def	düşür	drop	yoney.scala	1	member-only
+def	düşürDoğruKaldıkça	dropWhile	dizi.scala	3	member-only
+def	düşürDoğruKaldıkça	dropWhile	dizik.scala	2	member-only
+def	düşürDoğruKaldıkça	dropWhile	dizin.scala	1	member-only
+def	düşürDoğruKaldıkça	dropWhile	eslem.scala	2	member-only
+def	düşürDoğruKaldıkça	dropWhile	kume.scala	1	member-only
+def	düşürDoğruKaldıkça	dropWhile	kuyruk.scala	2	member-only
+def	düşürDoğruKaldıkça	dropWhile	miskindizin.scala	1	member-only
+def	düşürDoğruKaldıkça	dropWhile	yazi.scala	1	member-only
+def	düşürDoğruKaldıkça	dropWhile	yineleyici.scala	1	member-only
+def	düşürDoğruKaldıkça	dropWhile	yoney.scala	1	member-only
+def	düşürDoğruKaldıkçaYerinde	dropWhileInPlace	dizik.scala	1	member-only
+def	düşürDoğruKaldıkçaYerinde	dropWhileInPlace	kuyruk.scala	2	member-only
+def	düşürSağdan	dropRight	dizi.scala	3	member-only
+def	düşürSağdan	dropRight	dizik.scala	2	member-only
+def	düşürSağdan	dropRight	dizin.scala	1	member-only
+def	düşürSağdan	dropRight	eslem.scala	2	member-only
+def	düşürSağdan	dropRight	kume.scala	1	member-only
+def	düşürSağdan	dropRight	kuyruk.scala	2	member-only
+def	düşürSağdan	dropRight	miskindizin.scala	1	member-only
+def	düşürSağdan	dropRight	yazi.scala	1	member-only
+def	düşürSağdan	dropRight	yoney.scala	1	member-only
+def	düşürSağdanYerinde	dropRightInPlace	dizik.scala	1	member-only
+def	düşürSağdanYerinde	dropRightInPlace	kuyruk.scala	2	member-only
+def	düşürYerinde	dropInPlace	dizik.scala	1	member-only
+def	düşürYerinde	dropInPlace	kuyruk.scala	2	member-only
+def	ekle	addOne	kuyruk.scala	2	member-only
+def	ekle	append	dizik.scala	1	member-only
+def	ekle	append	dizim.scala	1	member-only
+def	ekle	append	kuyruk.scala	1	member-only
+def	ekle	append	yazi.scala	1	member-only
+def	ekle	concat	miskindizin.scala	1	member-only
+def	ekle	enqueue	kuyruk.scala	1	member-only
+def	ekleAraya	insert	dizik.scala	1	member-only
+def	ekleAraya	insert	kuyruk.scala	2	member-only
+def	ekleAraya	insert	yazi.scala	1	member-only
+def	ekleArayaHepsini	insertAll	dizik.scala	1	member-only
+def	ekleArayaHepsini	insertAll	kuyruk.scala	2	member-only
+def	ekleArayaHepsini	insertAll	yazi.scala	1	member-only
+def	ekleBaşa	prepend	dizik.scala	1	member-only
+def	ekleBaşaHepsini	prependAll	dizik.scala	1	member-only
+def	ekleHepsini	addAll	dizik.scala	1	member-only
+def	ekleHepsini	addAll	kuyruk.scala	4	member-only
+def	ekleHepsini	appendAll	yazi.scala	1	member-only
+def	ekleHepsini	enqueueAll	kuyruk.scala	1	member-only
+val	eklentiDizini	extensionsDir	package.scala	1	member-only
+def	ekli	incl	kume.scala	1	member-only
+def	ekranTazelemeHızınıGöster	showFps	trInit.scala	1
+def	ekranTazelemeHızınıKur	setRefreshRate	trInit.scala	1
+def	eksenler	axesOn	resim.scala	1
+def	eksenleriGizle	axesOff	resim.scala	1
+def	eksenleriGizle	axesOff	trInit.scala	1
+def	eksenleriGöster	Picture.showAxes	resim.scala	2
+def	eksenleriGöster	axesOn	resim.scala	1
+def	eksenleriGöster	axesOn	trInit.scala	1
+def	ele	filter	belki.scala	1	member-only
+def	ele	filter	dizi.scala	5	member-only
+def	ele	filter	dizik.scala	2	member-only
+def	ele	filter	dizim.scala	1	member-only
+def	ele	filter	dizin.scala	2	member-only
+def	ele	filter	eslem.scala	2	member-only
+def	ele	filter	gelecek.scala	1	member-only
+def	ele	filter	kume.scala	1	member-only
+def	ele	filter	kuyruk.scala	2	member-only
+def	ele	filter	miskindizin.scala	1	member-only
+def	ele	filter	yazi.scala	1	member-only
+def	ele	filter	yineleyici.scala	1	member-only
+def	ele	filter	yoney.scala	1	member-only
+def	eleDeğilse	filterNot	belki.scala	1	member-only
+def	eleDeğilse	filterNot	dizi.scala	5	member-only
+def	eleDeğilse	filterNot	dizik.scala	2	member-only
+def	eleDeğilse	filterNot	dizin.scala	1	member-only
+def	eleDeğilse	filterNot	eslem.scala	2	member-only
+def	eleDeğilse	filterNot	kume.scala	1	member-only
+def	eleDeğilse	filterNot	kuyruk.scala	2	member-only
+def	eleDeğilse	filterNot	miskindizin.scala	1	member-only
+def	eleDeğilse	filterNot	yazi.scala	1	member-only
+def	eleDeğilse	filterNot	yineleyici.scala	1	member-only
+def	eleDeğilse	filterNot	yoney.scala	1	member-only
+def	eleYerinde	filterInPlace	dizik.scala	1	member-only
+def	eleYerinde	filterInPlace	kuyruk.scala	2	member-only
+def	elekle	withFilter	aralik.scala	1	member-only
+def	elekle	withFilter	belki.scala	1	member-only
+def	elekle	withFilter	gelecek.scala	1	member-only
+def	elips	Picture.ellipse	resim.scala	1
+def	elips	ellipse	tuvalcizim.scala	1
+def	elipsDikdörtgenİçinde	Picture.ellipseInRect	resim.scala	1
+def	enUfakOrtakKat	lcm	matematik.scala	2	member-only
+val	enUfağı	MinValue	harf.scala	1	member-only
+def	enUfağı	math.min	matematik.scala	4
+def	enUfağı	min	data.scala	1	member-only
+def	enUfağı	min	dizi.scala	3	member-only
+def	enUfağı	min	dizik.scala	2	member-only
+def	enUfağı	min	dizin.scala	1	member-only
+def	enUfağı	min	eslem.scala	2	member-only
+def	enUfağı	min	kume.scala	1	member-only
+def	enUfağı	min	kuyruk.scala	2	member-only
+def	enUfağı	min	miskindizin.scala	1	member-only
+def	enUfağı	min	sayi.scala	4	member-only
+def	enUfağı	min	yineleyici.scala	1	member-only
+def	enUfağı	min	yoney.scala	1	member-only
+def	enUfağı	minBy	dizi.scala	3	member-only
+def	enUfağı	minBy	dizik.scala	2	member-only
+def	enUfağı	minBy	dizin.scala	1	member-only
+def	enUfağı	minBy	eslem.scala	2	member-only
+def	enUfağı	minBy	kume.scala	1	member-only
+def	enUfağı	minBy	kuyruk.scala	2	member-only
+def	enUfağı	minBy	miskindizin.scala	1	member-only
+def	enUfağı	minBy	yineleyici.scala	1	member-only
+def	enUfağı	minBy	yoney.scala	1	member-only
+def	enUfağıBelki	minByOption	dizi.scala	3	member-only
+def	enUfağıBelki	minByOption	dizik.scala	1	member-only
+def	enUfağıBelki	minByOption	dizin.scala	1	member-only
+def	enUfağıBelki	minByOption	eslem.scala	2	member-only
+def	enUfağıBelki	minByOption	kume.scala	1	member-only
+def	enUfağıBelki	minByOption	kuyruk.scala	2	member-only
+def	enUfağıBelki	minByOption	miskindizin.scala	1	member-only
+def	enUfağıBelki	minByOption	yineleyici.scala	1	member-only
+def	enUfağıBelki	minByOption	yoney.scala	1	member-only
+def	enUfağıBelki	minOption	dizi.scala	3	member-only
+def	enUfağıBelki	minOption	dizik.scala	1	member-only
+def	enUfağıBelki	minOption	dizin.scala	1	member-only
+def	enUfağıBelki	minOption	eslem.scala	2	member-only
+def	enUfağıBelki	minOption	kume.scala	1	member-only
+def	enUfağıBelki	minOption	kuyruk.scala	2	member-only
+def	enUfağıBelki	minOption	miskindizin.scala	1	member-only
+def	enUfağıBelki	minOption	yineleyici.scala	1	member-only
+def	enUfağıBelki	minOption	yoney.scala	1	member-only
+def	engeldenYansıtma	bouncePicOffPic	resim.scala	1
+def	eni	width	geo.scala	1	member-only
+def	enİriOrtakPayda	gcd	matematik.scala	2	member-only
+val	enİrisi	MaxValue	harf.scala	1	member-only
+def	enİrisi	math.max	matematik.scala	4
+def	enİrisi	max	data.scala	1	member-only
+def	enİrisi	max	dizi.scala	3	member-only
+def	enİrisi	max	dizik.scala	2	member-only
+def	enİrisi	max	dizin.scala	1	member-only
+def	enİrisi	max	eslem.scala	2	member-only
+def	enİrisi	max	kume.scala	1	member-only
+def	enİrisi	max	kuyruk.scala	2	member-only
+def	enİrisi	max	miskindizin.scala	1	member-only
+def	enİrisi	max	sayi.scala	4	member-only
+def	enİrisi	max	yineleyici.scala	1	member-only
+def	enİrisi	max	yoney.scala	1	member-only
+def	enİrisi	maxBy	dizi.scala	3	member-only
+def	enİrisi	maxBy	dizik.scala	2	member-only
+def	enİrisi	maxBy	dizin.scala	1	member-only
+def	enİrisi	maxBy	eslem.scala	2	member-only
+def	enİrisi	maxBy	kume.scala	1	member-only
+def	enİrisi	maxBy	kuyruk.scala	2	member-only
+def	enİrisi	maxBy	miskindizin.scala	1	member-only
+def	enİrisi	maxBy	yineleyici.scala	1	member-only
+def	enİrisi	maxBy	yoney.scala	1	member-only
+def	enİrisiBelki	maxByOption	dizi.scala	3	member-only
+def	enİrisiBelki	maxByOption	dizik.scala	1	member-only
+def	enİrisiBelki	maxByOption	dizin.scala	1	member-only
+def	enİrisiBelki	maxByOption	eslem.scala	2	member-only
+def	enİrisiBelki	maxByOption	kume.scala	1	member-only
+def	enİrisiBelki	maxByOption	kuyruk.scala	2	member-only
+def	enİrisiBelki	maxByOption	miskindizin.scala	1	member-only
+def	enİrisiBelki	maxByOption	yineleyici.scala	1	member-only
+def	enİrisiBelki	maxByOption	yoney.scala	1	member-only
+def	enİrisiBelki	maxOption	dizi.scala	3	member-only
+def	enİrisiBelki	maxOption	dizik.scala	1	member-only
+def	enİrisiBelki	maxOption	dizin.scala	1	member-only
+def	enİrisiBelki	maxOption	eslem.scala	2	member-only
+def	enİrisiBelki	maxOption	kume.scala	1	member-only
+def	enİrisiBelki	maxOption	kuyruk.scala	2	member-only
+def	enİrisiBelki	maxOption	miskindizin.scala	1	member-only
+def	enİrisiBelki	maxOption	yineleyici.scala	1	member-only
+def	enİrisiBelki	maxOption	yoney.scala	1	member-only
+def	eskizden	Picture.fromSketch	resim.scala	1
+def	etkinliğiKur	setEnabled	arayuz.scala	1	member-only
+def	evDizini	homeDir	data.scala	1
+def	evDizini	homeDir	trInit.scala	1
+def	eüssü	exp	data.scala	1	member-only
+def	eüssü	math.exp	matematik.scala	1
+def	eğikBirleşim	BEVEL	tuvalcizim.scala	1	member-only
+def	eğriKöşesi	curveVertex	tuvalcizim.scala	1
+def	eğriNoktası	curveVertex	geo.scala	1
+def	eğriÇiz	quadTo	geo.scala	1	member-only
+def	eşitMi	equals	kokturler.scala	1
+def	eşitMiKüçükHarfBüyükHarfAyrımıYapmadan	equalsIgnoreCase	yazi.scala	1	member-only
+def	eşleme	from	dizi.scala	5	member-only
+def	eşleme	from	dizik.scala	2	member-only
+def	eşleme	from	dizin.scala	1	member-only
+def	eşleme	from	kume.scala	1	member-only
+def	eşleme	from	kuyruk.scala	2	member-only
+def	eşleme	from	miskindizin.scala	1	member-only
+def	eşleme	from	yazi.scala	1	member-only
+def	eşleme	from	yoney.scala	1	member-only
+def	eşlenirMi	matches	yazi.scala	1	member-only
+def	eşleğe	toMap	dizi.scala	5	member-only
+def	eşleğe	toMap	dizik.scala	2	member-only
+def	eşleğe	toMap	dizin.scala	1	member-only
+def	eşleğe	toMap	eslem.scala	2	member-only
+def	eşleğe	toMap	kume.scala	1	member-only
+def	eşleğe	toMap	kuyruk.scala	2	member-only
+def	eşleğe	toMap	miskindizin.scala	1	member-only
+def	eşleğe	toMap	yazi.scala	1	member-only
+def	eşleğe	toMap	yineleyici.scala	1	member-only
+def	eşleğe	toMap	yoney.scala	1	member-only
+def	eşli	contains	eslem.scala	2	member-only
+def	fareGirince	onMouseEnter	resim.scala	1	member-only
+def	fareKonumu	mousePosition	trInit.scala	1
+def	fareKımıldayınca	onMouseMove	resim.scala	1
+def	fareKımıldayınca	onMouseMove	trInit.scala	1
+def	fareyeBasınca	onMousePress	resim.scala	1	member-only
+def	fareyeTıklayınca	onMouseClick	resim.scala	1
+def	fareyeTıklayınca	onMouseClick	trInit.scala	1
+def	fareyeTıklıyınca	onMouseClick	trInit.scala	1
+def	fareyiBırakınca	onMouseRelease	resim.scala	1	member-only
+def	fareyiSürükleyince	onMouseDrag	resim.scala	1
+def	fareyiSürükleyince	onMouseDrag	trInit.scala	1
+def	fareÇıkınca	onMouseExit	resim.scala	1	member-only
+def	fark	diff	dizi.scala	3	member-only
+def	fark	diff	dizik.scala	2	member-only
+def	fark	diff	dizin.scala	1	member-only
+def	fark	diff	kume.scala	1	member-only
+def	fark	diff	kuyruk.scala	1	member-only
+def	fark	diff	miskindizin.scala	1	member-only
+def	fark	diff	yazi.scala	1	member-only
+def	fark	diff	yoney.scala	1	member-only
+def	filtre	applyFilter	resim.scala	1	member-only
+def	fırça	stroke	tuvalcizim.scala	2	member-only
+def	fırçaAğırlığı	strokeWeight	tuvalcizim.scala	1	member-only
+def	fırçaBirleşimi	strokeJoin	tuvalcizim.scala	1	member-only
+def	fırçaUcu	strokeCap	tuvalcizim.scala	1	member-only
+def	fırçasız	noStroke	tuvalcizim.scala	1	member-only
+def	geometri	picGeom	resim.scala	1	member-only
+def	gerekli	require	data.scala	1
+def	gerekli	require	trInit.scala	1
+def	geri	back	trInit.scala	2
+def	geçiciDosyaOluştur	createTempFile	dosya.scala	1	member-only
+val	gir	enter	klavye.scala	1	member-only
+def	girdiDinleyiciEkle	addKeyListener	arayuz.scala	1	member-only
+def	girdiOdağıOl	takeFocus	arayuz.scala	2	member-only
+def	girdiyiAktar	forwardInputTo	resim.scala	1	member-only
+def	giysiKur	setCostume	trInit.scala	1
+def	giysiKur	setCostumeImage	trInit.scala	1
+def	giysileriKur	setCostumes	trInit.scala	1
+def	giysiyiBüyült	scaleCostume	trInit.scala	1
+def	gizle	invisible	resim.scala	1
+def	gizle	invisible	trInit.scala	1
+val	gri	gray	data.scala	1
+val	gri	gray	renk.scala	1
+def	gridiGizle	gridOff	trInit.scala	1
+def	gridiGöster	gridOn	trInit.scala	1
+val	gökMavisi	skyBlue	renk.scala	1	member-only
+def	görünmez	invisible	trInit.scala	1
+def	görünür	isVisible	resim.scala	1	member-only
+def	görünür	visible	trInit.scala	1
+def	görünürlüğüKur	setVisible	arayuz.scala	1	member-only
+def	görünürlüğüTersineÇevir	toggleV	resim.scala	1	member-only
+def	göster	setVisible	arayuz.scala	9	member-only
+def	göster	visible	resim.scala	1
+def	göster	visible	trInit.scala	1
+def	gösterdikleriAynıMı	sameElements	yineleyici.scala	1	member-only
+def	götür	trans	resim.scala	3
+def	götür	translate	resim.scala	3	member-only
+def	götür	translate	tuvalcizim.scala	1	member-only
+val	gücü	math.pow	matematik.scala	1
+def	gücü	pow	data.scala	1	member-only
+def	gün	hepsi	buan.scala	1	member-only
+def	güncelle	update	eslem.scala	1	member-only
+def	güncelle	update	kuyruk.scala	2	member-only
+def	güncelle	update	resim.scala	1	member-only
+def	güncelleİşlevle	updateWith	eslem.scala	1	member-only
+val	güney	SOUTH	arayuz.scala	1	member-only
+def	güney	setHeading	trInit.scala	1
+val	güneybatı	SOUTH_WEST	arayuz.scala	1	member-only
+val	güneydoğu	SOUTH_EAST	arayuz.scala	1	member-only
+def	gürültü	noise	resim.scala	1
+val	haki	khaki	renk.scala	1	member-only
+def	harf	charAt	yazi.scala	2	member-only
+def	harfMi	isLetter	data.scala	1	member-only
+def	harfMi	isLetter	harf.scala	1	member-only
+def	harfe	toChar	sayi.scala	3	member-only
+def	harfiKur	setCharAt	yazi.scala	1	member-only
+def	harfiSil	deleteCharAt	yazi.scala	1	member-only
+def	harftenHarfe	char2Character	harf.scala	1
+val	helpContent	content	trInit.scala	1	member-only
+def	hepsiDoğruMu	forall	belki.scala	1	member-only
+def	hepsiDoğruMu	forall	dizi.scala	3	member-only
+def	hepsiDoğruMu	forall	dizik.scala	2	member-only
+def	hepsiDoğruMu	forall	dizin.scala	1	member-only
+def	hepsiDoğruMu	forall	eslem.scala	2	member-only
+def	hepsiDoğruMu	forall	ikisindenbiri.scala	1	member-only
+def	hepsiDoğruMu	forall	kume.scala	1	member-only
+def	hepsiDoğruMu	forall	kuyruk.scala	2	member-only
+def	hepsiDoğruMu	forall	miskindizin.scala	1	member-only
+def	hepsiDoğruMu	forall	yazi.scala	1	member-only
+def	hepsiDoğruMu	forall	yineleyici.scala	1	member-only
+def	hepsiDoğruMu	forall	yoney.scala	1	member-only
+def	hepsiniEkle	addAll	dizik.scala	1	deprecated,member-only
+def	hepsiniEkle	addAll	kuyruk.scala	2	deprecated,member-only
+def	hepsiniHesapla	force	miskindizin.scala	1	member-only
+def	hepsiÇıkarılmış	removedAll	eslem.scala	1	member-only
+def	hepsiÇıkarılmış	removedAll	kume.scala	1	member-only
+def	hepsiÇıkarılmış	subtractAll	eslem.scala	1	member-only
+def	hepsiİçinDoğruMu	forall	belki.scala	1	member-only
+def	hepsiİçinDoğruMu	forall	dizi.scala	3	member-only
+def	hepsiİçinDoğruMu	forall	dizik.scala	2	member-only
+def	hepsiİçinDoğruMu	forall	dizin.scala	1	member-only
+def	hepsiİçinDoğruMu	forall	eslem.scala	2	member-only
+def	hepsiİçinDoğruMu	forall	kume.scala	1	member-only
+def	hepsiİçinDoğruMu	forall	kuyruk.scala	2	member-only
+def	hepsiİçinDoğruMu	forall	miskindizin.scala	1	member-only
+def	hepsiİçinDoğruMu	forall	yazi.scala	1	member-only
+def	hepsiİçinDoğruMu	forall	yineleyici.scala	1	member-only
+def	hepsiİçinDoğruMu	forall	yoney.scala	1	member-only
+def	herbiriİçin	foreach	aralik.scala	1	member-only
+def	herbiriİçin	foreach	belki.scala	1	member-only
+def	herbiriİçin	foreach	dizi.scala	5	member-only
+def	herbiriİçin	foreach	dizik.scala	2	member-only
+def	herbiriİçin	foreach	dizim.scala	1	member-only
+def	herbiriİçin	foreach	dizin.scala	1	member-only
+def	herbiriİçin	foreach	eslem.scala	2	member-only
+def	herbiriİçin	foreach	ikisindenbiri.scala	1	member-only
+def	herbiriİçin	foreach	kume.scala	1	member-only
+def	herbiriİçin	foreach	kuyruk.scala	2	member-only
+def	herbiriİçin	foreach	miskindizin.scala	1	member-only
+def	herbiriİçin	foreach	yazi.scala	1	member-only
+def	herbiriİçin	foreach	yineleyici.scala	1	member-only
+def	herbiriİçin	foreach	yoney.scala	1	member-only
+def	herÖgeİçin	foreach	aralik.scala	1	member-only
+def	herÖgeİçin	foreach	eslem.scala	2	member-only
+def	herİkiliİçin	foreachEntry	eslem.scala	2	member-only
+val	hızlı	Fast	package.scala	1	member-only
+val	hızlı	fast	data.scala	1
+def	hızıKur	setSpeed	trInit.scala	1
+def	hızınıDönüştür	transv	resim.scala	1	member-only
+def	ikildenİkile	boolean2Boolean	turler.scala	1
+def	ikile	toBoolean	yazi.scala	1	member-only
+def	ikile	zip	belki.scala	1	member-only
+def	ikile	zip	dizi.scala	5	member-only
+def	ikile	zip	dizik.scala	2	member-only
+def	ikile	zip	dizin.scala	1	member-only
+def	ikile	zip	eslem.scala	2	member-only
+def	ikile	zip	kume.scala	1	member-only
+def	ikile	zip	kuyruk.scala	2	member-only
+def	ikile	zip	miskindizin.scala	1	member-only
+def	ikile	zip	yineleyici.scala	1	member-only
+def	ikile	zip	yoney.scala	1	member-only
+def	ikileBelki	toBooleanOption	yazi.scala	1	member-only
+def	ikileHepsini	zipAll	dizi.scala	3	member-only
+def	ikileHepsini	zipAll	dizik.scala	2	member-only
+def	ikileHepsini	zipAll	dizin.scala	1	member-only
+def	ikileHepsini	zipAll	eslem.scala	2	member-only
+def	ikileHepsini	zipAll	kume.scala	1	member-only
+def	ikileHepsini	zipAll	kuyruk.scala	2	member-only
+def	ikileHepsini	zipAll	miskindizin.scala	1	member-only
+def	ikileHepsini	zipAll	yineleyici.scala	1	member-only
+def	ikileHepsini	zipAll	yoney.scala	1	member-only
+def	ikileKonumla	zipWithIndex	dizi.scala	5	member-only
+def	ikileKonumla	zipWithIndex	dizik.scala	2	member-only
+def	ikileKonumla	zipWithIndex	dizin.scala	1	member-only
+def	ikileKonumla	zipWithIndex	kume.scala	1	member-only
+def	ikileKonumla	zipWithIndex	kuyruk.scala	2	member-only
+def	ikileKonumla	zipWithIndex	miskindizin.scala	1	member-only
+def	ikileKonumla	zipWithIndex	yoney.scala	1	member-only
+def	ikileSırayla	zipWithIndex	dizi.scala	5	member-only
+def	ikileSırayla	zipWithIndex	dizik.scala	2	member-only
+def	ikileSırayla	zipWithIndex	dizin.scala	1	member-only
+def	ikileSırayla	zipWithIndex	eslem.scala	2	member-only
+def	ikileSırayla	zipWithIndex	kume.scala	1	member-only
+def	ikileSırayla	zipWithIndex	kuyruk.scala	2	member-only
+def	ikileSırayla	zipWithIndex	miskindizin.scala	1	member-only
+def	ikileSırayla	zipWithIndex	yineleyici.scala	1	member-only
+def	ikileSırayla	zipWithIndex	yoney.scala	1	member-only
+def	ikiliyiAç	unzip	belki.scala	1	member-only
+def	ikiliyiAç	unzip	dizi.scala	3	member-only
+def	ikiliyiAç	unzip	dizik.scala	2	member-only
+def	ikiliyiAç	unzip	dizin.scala	1	member-only
+def	ikiliyiAç	unzip	eslem.scala	2	member-only
+def	ikiliyiAç	unzip	kume.scala	1	member-only
+def	ikiliyiAç	unzip	kuyruk.scala	2	member-only
+def	ikiliyiAç	unzip	miskindizin.scala	1	member-only
+def	ikiliyiAç	unzip	yoney.scala	1	member-only
+def	ikinciDereceKöşe	quadraticVertex	tuvalcizim.scala	1
+def	ikinciDereceNokta	quadraticVertex	geo.scala	1
+def	ikiyeAyır	partition	yazi.scala	1	member-only
+def	ikizYap	duplicate	yineleyici.scala	1	member-only
+def	ikizle	clone	kuyruk.scala	3
+def	ikiÇizimArasıSüre	frameDeltaTime	trInit.scala	1
+def	ileri	forward	trInit.scala	2
+def	ilerle	moveTo	trInit.scala	1
+def	ilkHarfiBüyült	capitalize	yazi.scala	1	member-only
+def	ilki	front	kuyruk.scala	1	member-only
+def	ilki	start	aralik.scala	1	member-only
+def	imge	Picture.image	resim.scala	6
+def	imge	image	resim.scala	3
+def	imge	image	tuvalcizim.scala	1
+def	imge	toImage	resim.scala	1	member-only
+def	imgeNoktası	getImagePixel	resim.scala	1
+def	imgeNoktasınıKur	setImagePixel	resim.scala	1
+def	indirge	reduce	aralik.scala	1	member-only
+def	indirge	reduce	dizi.scala	3	member-only
+def	indirge	reduce	dizik.scala	2	member-only
+def	indirge	reduce	dizin.scala	1	member-only
+def	indirge	reduce	eslem.scala	2	member-only
+def	indirge	reduce	kume.scala	1	member-only
+def	indirge	reduce	kuyruk.scala	2	member-only
+def	indirge	reduce	miskindizin.scala	1	member-only
+def	indirge	reduce	yazi.scala	1	member-only
+def	indirge	reduce	yineleyici.scala	1	member-only
+def	indirge	reduce	yoney.scala	1	member-only
+def	indirgeBelki	reduceOption	dizi.scala	3	member-only
+def	indirgeBelki	reduceOption	dizik.scala	1	member-only
+def	indirgeBelki	reduceOption	dizin.scala	1	member-only
+def	indirgeBelki	reduceOption	eslem.scala	2	member-only
+def	indirgeBelki	reduceOption	kume.scala	1	member-only
+def	indirgeBelki	reduceOption	kuyruk.scala	2	member-only
+def	indirgeBelki	reduceOption	miskindizin.scala	1	member-only
+def	indirgeBelki	reduceOption	yineleyici.scala	1	member-only
+def	indirgeBelki	reduceOption	yoney.scala	1	member-only
+def	indirgeSağdan	reduceRight	dizi.scala	3	member-only
+def	indirgeSağdan	reduceRight	dizik.scala	1	member-only
+def	indirgeSağdan	reduceRight	dizin.scala	1	member-only
+def	indirgeSağdan	reduceRight	eslem.scala	2	member-only
+def	indirgeSağdan	reduceRight	kume.scala	1	member-only
+def	indirgeSağdan	reduceRight	kuyruk.scala	2	member-only
+def	indirgeSağdan	reduceRight	miskindizin.scala	1	member-only
+def	indirgeSağdan	reduceRight	yineleyici.scala	1	member-only
+def	indirgeSağdan	reduceRight	yoney.scala	1	member-only
+def	indirgeSağdanBelki	reduceRightOption	dizi.scala	3	member-only
+def	indirgeSağdanBelki	reduceRightOption	dizik.scala	1	member-only
+def	indirgeSağdanBelki	reduceRightOption	dizin.scala	1	member-only
+def	indirgeSağdanBelki	reduceRightOption	eslem.scala	2	member-only
+def	indirgeSağdanBelki	reduceRightOption	kume.scala	1	member-only
+def	indirgeSağdanBelki	reduceRightOption	kuyruk.scala	2	member-only
+def	indirgeSağdanBelki	reduceRightOption	miskindizin.scala	1	member-only
+def	indirgeSağdanBelki	reduceRightOption	yineleyici.scala	1	member-only
+def	indirgeSağdanBelki	reduceRightOption	yoney.scala	1	member-only
+def	indirgeSoldan	reduceLeft	dizi.scala	3	member-only
+def	indirgeSoldan	reduceLeft	dizik.scala	1	member-only
+def	indirgeSoldan	reduceLeft	dizin.scala	1	member-only
+def	indirgeSoldan	reduceLeft	eslem.scala	2	member-only
+def	indirgeSoldan	reduceLeft	kume.scala	1	member-only
+def	indirgeSoldan	reduceLeft	kuyruk.scala	2	member-only
+def	indirgeSoldan	reduceLeft	miskindizin.scala	1	member-only
+def	indirgeSoldan	reduceLeft	yineleyici.scala	1	member-only
+def	indirgeSoldan	reduceLeft	yoney.scala	1	member-only
+def	indirgeSoldanBelki	reduceLeftOption	dizi.scala	3	member-only
+def	indirgeSoldanBelki	reduceLeftOption	dizik.scala	1	member-only
+def	indirgeSoldanBelki	reduceLeftOption	dizin.scala	1	member-only
+def	indirgeSoldanBelki	reduceLeftOption	eslem.scala	2	member-only
+def	indirgeSoldanBelki	reduceLeftOption	kume.scala	1	member-only
+def	indirgeSoldanBelki	reduceLeftOption	kuyruk.scala	2	member-only
+def	indirgeSoldanBelki	reduceLeftOption	miskindizin.scala	1	member-only
+def	indirgeSoldanBelki	reduceLeftOption	yineleyici.scala	1	member-only
+def	indirgeSoldanBelki	reduceLeftOption	yoney.scala	1	member-only
+val	inç	Inch	data.scala	1
+val	inç	Inch	package.scala	1
+val	iptal	cancel	klavye.scala	1	member-only
+def	iriSayıya	toBigInt	sayi.scala	1	member-only
+def	iseVer	when	belki.scala	1	member-only
+def	itHepsini	pushAll	kuyruk.scala	1	member-only
+def	izdüşümü	project	yoney2b.scala	1
+val	izler	TRAILING	arayuz.scala	1	member-only
+def	içeriyorMu	contains	belki.scala	1	member-only
+def	içeriyorMu	contains	dizi.scala	3	member-only
+def	içeriyorMu	contains	dizik.scala	2	member-only
+def	içeriyorMu	contains	dizin.scala	1	member-only
+def	içeriyorMu	contains	eslem.scala	2	member-only
+def	içeriyorMu	contains	ikisindenbiri.scala	1	member-only
+def	içeriyorMu	contains	kume.scala	1	member-only
+def	içeriyorMu	contains	kuyruk.scala	1	member-only
+def	içeriyorMu	contains	miskindizin.scala	1	member-only
+def	içeriyorMu	contains	yazi.scala	2	member-only
+def	içeriyorMu	contains	yineleyici.scala	1	member-only
+def	içeriyorMu	contains	yoney.scala	1	member-only
+def	içeriyorMuDilim	containsSlice	dizi.scala	3	member-only
+def	içeriyorMuDilim	containsSlice	dizik.scala	2	member-only
+def	içeriyorMuDilim	containsSlice	dizin.scala	1	member-only
+def	içeriyorMuDilim	containsSlice	miskindizin.scala	1	member-only
+def	içeriyorMuDilim	containsSlice	yazi.scala	1	member-only
+def	içeriyorMuDilim	containsSlice	yoney.scala	1	member-only
+def	içinde	contains	resim.scala	1	member-only
+def	içindeMi	contains	aralik.scala	1	member-only
+def	içÇarpım	dot	yoney2b.scala	1
+def	işareti	sign	data.scala	1	member-only
+def	işareti	toInt	matematik.scala	1	member-only
+def	işle	map	aralik.scala	1	member-only
+def	işle	map	belki.scala	1	member-only
+def	işle	map	dizi.scala	5	member-only
+def	işle	map	dizik.scala	2	member-only
+def	işle	map	dizim.scala	1	member-only
+def	işle	map	dizin.scala	2	member-only
+def	işle	map	eslem.scala	4	member-only
+def	işle	map	gelecek.scala	1	member-only
+def	işle	map	ikisindenbiri.scala	1	member-only
+def	işle	map	kume.scala	1	member-only
+def	işle	map	kuyruk.scala	2	member-only
+def	işle	map	miskindizin.scala	1	member-only
+def	işle	map	yazi.scala	2	member-only
+def	işle	map	yineleyici.scala	1	member-only
+def	işle	map	yoney.scala	1	member-only
+def	işleYerinde	mapInPlace	dizik.scala	2	member-only
+def	işleYerinde	mapInPlace	kuyruk.scala	3	member-only
+val	kahverengi	brown	data.scala	1
+def	kaldır	lift	eslem.scala	2	member-only
+val	kaldırma	shift	klavye.scala	1	member-only
+def	kalemBoyu	strokeWidth	resim.scala	1	member-only
+def	kalemBoyunuKur	setPenThickness	resim.scala	1
+def	kalemKalınlığınıKur	setPenThickness	resim.scala	1
+def	kalemKalınlığınıKur	setPenThickness	trInit.scala	1
+def	kalemRengi	stroke	resim.scala	1	member-only
+def	kalemRenginiKur	setPenColor	resim.scala	1
+def	kalemRenginiKur	setPenColor	trInit.scala	1
+def	kalemiKaldır	penUp	trInit.scala	1
+def	kalemiKapa	setNoPen	resim.scala	1
+def	kalemiİndir	penDown	trInit.scala	1
+def	kalemİnikMi	down	trInit.scala	1	member-only
+def	kalta	fold	eslem.scala	2	deprecated,member-only
+val	kalın	BoldFont	trInit.scala	1
+def	kapalı	inclusive	aralik.scala	1	member-only
+def	kapasitesi	capacity	yazi.scala	1	member-only
+object	kaplumbağa	turtle0	trInit.scala	1
+def	kaplumbağa0	turtle0	data.scala	1
+val	kaplumbağa0	turtle0	trInit.scala	1
+def	kareUç	SQUARE	tuvalcizim.scala	1	member-only
+def	karekökü	math.sqrt	matematik.scala	1
+def	karekökü	sqrt	data.scala	1	member-only
+def	karesi	math.pow	matematik.scala	1
+def	karesi	pow	data.scala	1	member-only
+def	karışımKipi	blendMode	tuvalcizim.scala	1	member-only
+def	karşılıklıMı	corresponds	dizi.scala	3	member-only
+def	karşılıklıMı	corresponds	dizik.scala	1	member-only
+def	karşılıklıMı	corresponds	dizin.scala	1	member-only
+def	karşılıklıMı	corresponds	eslem.scala	2	member-only
+def	karşılıklıMı	corresponds	kuyruk.scala	1	member-only
+def	karşılıklıMı	corresponds	miskindizin.scala	1	member-only
+def	karşılıklıMı	corresponds	yineleyici.scala	1	member-only
+def	karşılıklıMı	corresponds	yoney.scala	1	member-only
+def	katla	fold	belki.scala	1	member-only
+def	katla	fold	dizi.scala	3	member-only
+def	katla	fold	dizik.scala	2	member-only
+def	katla	fold	dizin.scala	1	member-only
+def	katla	fold	eslem.scala	2	member-only
+def	katla	fold	ikisindenbiri.scala	1	member-only
+def	katla	fold	kume.scala	1	member-only
+def	katla	fold	kuyruk.scala	2	member-only
+def	katla	fold	miskindizin.scala	1	member-only
+def	katla	fold	yazi.scala	1	member-only
+def	katla	fold	yineleyici.scala	1	member-only
+def	katla	fold	yoney.scala	1	member-only
+def	kayarÖbekli	sliding	dizi.scala	6	member-only
+def	kayarÖbekli	sliding	dizik.scala	4	member-only
+def	kayarÖbekli	sliding	dizin.scala	2	member-only
+def	kayarÖbekli	sliding	eslem.scala	4	member-only
+def	kayarÖbekli	sliding	kume.scala	2	member-only
+def	kayarÖbekli	sliding	kuyruk.scala	3	member-only
+def	kayarÖbekli	sliding	miskindizin.scala	2	member-only
+def	kayarÖbekli	sliding	yazi.scala	2	member-only
+def	kayarÖbekli	sliding	yineleyici.scala	2	member-only
+def	kayarÖbekli	sliding	yoney.scala	2	member-only
+def	kaydır	offset	resim.scala	6
+val	kaç	escape	klavye.scala	1	member-only
+def	kenarPayınıÇıkar	stripMargin	yazi.scala	1	member-only
+def	kesirOku	readDouble	trInit.scala	1
+def	kesirden	BigDecimal	aralik.scala	1
+def	kesirdenAçık	BigDecimal	aralik.scala	1
+def	kesirdenKapalı	inclusive	aralik.scala	1	member-only
+def	kesirdenKesire	double2Double	turler.scala	1
+def	kesire	char2double	harf.scala	1	member-only
+def	kesire	toDouble	harf.scala	1	member-only
+def	kesire	toDouble	sayi.scala	6	member-only
+def	kesire	toDouble	yazi.scala	2	member-only
+def	kesireBelki	toDoubleOption	yazi.scala	1	member-only
+def	kesişim	intersect	dizi.scala	3	member-only
+def	kesişim	intersect	dizik.scala	2	member-only
+def	kesişim	intersect	dizin.scala	1	member-only
+def	kesişim	intersect	kume.scala	1	member-only
+def	kesişim	intersect	kuyruk.scala	1	member-only
+def	kesişim	intersect	miskindizin.scala	1	member-only
+def	kesişim	intersect	yazi.scala	1	member-only
+def	kesişim	intersect	yoney.scala	1	member-only
+def	kesişim	intersection	resim.scala	1	member-only
+def	kesişir	intersects	resim.scala	1	member-only
+def	kojoGeçmişBakışaçısınıKur	switchToHistoryBrowsingPerspective	trInit.scala	1
+def	kojoVarsayılanBakışaçısınıKur	switchToDefaultPerspective	trInit.scala	1
+def	kojoVarsayılanİkinciBakışaçısınıKur	switchToDefault2Perspective	trInit.scala	1
+def	kojoYazılımcıkBakışaçısınıKur	switchToScriptEditingPerspective	trInit.scala	1
+def	kojodanÇiniye	kojoToTile	cinidunyasi.scala	1	member-only
+def	kojoÇalışmaSayfalıBakışaçısınıKur	switchToWorksheetPerspective	trInit.scala	1
+def	kojoÇıktılıÖyküBakışaçısınıKur	switchToOutputStoryViewingPerspective	trInit.scala	1
+def	kojoÖyküBakışaçısınıKur	switchToStoryViewingPerspective	trInit.scala	1
+def	kolRenginiKur	setControlColor	kumanda.scala	1	member-only
+def	kombinasyonlar	combinations	dizi.scala	3	member-only
+def	kombinasyonlar	combinations	dizik.scala	2	member-only
+def	kombinasyonlar	combinations	dizin.scala	1	member-only
+def	kombinasyonlar	combinations	kuyruk.scala	1	member-only
+def	kombinasyonlar	combinations	miskindizin.scala	1	member-only
+def	kombinasyonlar	combinations	yazi.scala	1	member-only
+def	kombinasyonlar	combinations	yoney.scala	1	member-only
+def	kondur	moveTo	geo.scala	1
+def	kondur	setPosition	kumanda.scala	1
+def	kondur	setPosition	resim.scala	2
+val	kontrol	control	klavye.scala	1	member-only
+def	konum	position	resim.scala	1
+def	konum	position	trInit.scala	1
+def	konumVeYönüBelleğeYaz	savePosHe	trInit.scala	1
+def	konumVeYönüGeriYükle	restorePosHe	trInit.scala	1
+def	konumaDoğruGit	animateToPosition	resim.scala	1	member-only
+def	konumuDeğiştir	changePosition	trInit.scala	1
+def	konumuKur	setPosition	kumanda.scala	1
+def	konumuKur	setPosition	resim.scala	2
+def	konumuKur	setPosition	trInit.scala	1
+def	kopyası	clone	dizik.scala	1
+def	kosinüs	cos	data.scala	1	member-only
+def	kosinüs	math.cos	matematik.scala	1
+def	kosinüsünAçısı	acos	data.scala	1	member-only
+def	kosinüsünAçısı	math.acos	matematik.scala	1
+def	koy	addOne	kuyruk.scala	2	member-only
+def	koy	append	kuyruk.scala	1	member-only
+def	koy	push	kuyruk.scala	1	member-only
+def	koy	put	eslem.scala	1	member-only
+def	koyHepsini	addAll	kuyruk.scala	2	member-only
+def	koyHepsini	enqueueAll	kuyruk.scala	1	member-only
+def	koyHepsini	pushAll	kuyruk.scala	1	member-only
+val	koyuAltınbaşak	darkGoldenrod	renk.scala	1	member-only
+val	koyuCamgöbeği	darkCyan	renk.scala	1	member-only
+val	koyuDenizYeşili	darkSeaGreen	renk.scala	1	member-only
+val	koyuGri	darkGray	data.scala	1
+val	koyuGri	darkGray	renk.scala	1
+val	koyuHaki	darkKhaki	renk.scala	1	member-only
+val	koyuKlasikGri	darkGrayClassic	renk.scala	1
+val	koyuKurşunGrisi	darkSlateGray	renk.scala	1	member-only
+val	koyuKurşunMavisi	darkSlateBlue	renk.scala	1	member-only
+val	koyuKırmızı	darkRed	renk.scala	1	member-only
+val	koyuMavi	darkBlue	renk.scala	1	member-only
+val	koyuMenekşe	darkViolet	renk.scala	1	member-only
+val	koyuMorumsu	darkMagenta	renk.scala	1	member-only
+val	koyuOrkidePembesi	darkOrchid	renk.scala	1	member-only
+val	koyuSomon	darkSalmon	renk.scala	1	member-only
+val	koyuTurkuaz	darkTurquoise	renk.scala	1	member-only
+val	koyuTuruncu	darkOrange	renk.scala	1	member-only
+val	koyuYeşil	darkGreen	renk.scala	1	member-only
+val	koyuZeytinYeşili	darkOliveGreen	renk.scala	1	member-only
+def	koşulla	cond	ikisindenbiri.scala	1	member-only
+def	kumandaKolu	joystick	trInit.scala	1
+def	kurulumDizini	installDir	data.scala	1
+def	kurulumDizini	installDir	trInit.scala	1
+val	kurşunGrisi	slateGray	renk.scala	1	member-only
+val	kurşunMavisi	slateBlue	renk.scala	1	member-only
+def	kutudanÇıkar	unbox	harf.scala	1	member-only
+def	kutuyaKoy	box	harf.scala	1	member-only
+def	kuvveti	math.pow	matematik.scala	1
+def	kuvveti	pow	data.scala	1	member-only
+def	kuyruklar	map	eslem.scala	1	member-only
+def	kuyruklar	tails	dizi.scala	3	member-only
+def	kuyruklar	tails	dizik.scala	2	member-only
+def	kuyruklar	tails	dizin.scala	1	member-only
+def	kuyruklar	tails	eslem.scala	1	member-only
+def	kuyruklar	tails	kume.scala	1	member-only
+def	kuyruklar	tails	kuyruk.scala	2	member-only
+def	kuyruklar	tails	miskindizin.scala	1	member-only
+def	kuyruklar	tails	yazi.scala	1	member-only
+def	kuyruklar	tails	yoney.scala	1	member-only
+def	kuyruğa	toQueue	kuyruk.scala	1	member-only
+def	kuyruğaEkle	enqueue	kuyruk.scala	1	member-only
+def	kuyruğaEkleHepsini	enqueueAll	kuyruk.scala	1	member-only
+def	kuyruğu	tail	dizi.scala	3	member-only
+def	kuyruğu	tail	dizik.scala	2	member-only
+def	kuyruğu	tail	dizin.scala	1	member-only
+def	kuyruğu	tail	eslem.scala	2	member-only
+def	kuyruğu	tail	kume.scala	1	member-only
+def	kuyruğu	tail	kuyruk.scala	2	member-only
+def	kuyruğu	tail	miskindizin.scala	1	member-only
+def	kuyruğu	tail	yazi.scala	1	member-only
+def	kuyruğu	tail	yoney.scala	1	member-only
+val	kuzey	NORTH	arayuz.scala	1	member-only
+def	kuzey	setHeading	trInit.scala	1
+val	kuzeybatı	NORTH_WEST	arayuz.scala	1	member-only
+val	kuzeydoğu	NORTH_EAST	arayuz.scala	1	member-only
+def	kym	rgb	renk.scala	1	member-only
+def	kyms	rgba	renk.scala	1	member-only
+def	kökDizinler	listRoots	dosya.scala	1	member-only
+def	köşe	vertex	tuvalcizim.scala	1
+def	köşegen	Picture.line	resim.scala	1
+def	kümeye	toSet	dizi.scala	5	member-only
+def	kümeye	toSet	dizik.scala	2	member-only
+def	kümeye	toSet	dizin.scala	1	member-only
+def	kümeye	toSet	eslem.scala	2	member-only
+def	kümeye	toSet	kume.scala	1	member-only
+def	kümeye	toSet	kuyruk.scala	2	member-only
+def	kümeye	toSet	miskindizin.scala	1	member-only
+def	kümeye	toSet	yazi.scala	1	member-only
+def	kümeye	toSet	yineleyici.scala	1	member-only
+def	kümeye	toSet	yoney.scala	1	member-only
+val	küresel	global	gelecek.scala	1	member-only
+val	kütüpDizini	libDir	package.scala	1	member-only
+def	küçükHarfMi	isLower	harf.scala	1	member-only
+def	küçükHarfe	map	yazi.scala	1	member-only
+def	küçükHarfe	toLower	harf.scala	1	member-only
+val	kırmızı	red	data.scala	1
+val	kırmızı	red	renk.scala	1
+def	kısadanKısaya	short2Short	turler.scala	1
+def	kısalt	trim	yazi.scala	1	member-only
+def	kısaya	toShort	yazi.scala	1	member-only
+def	kısayaBelki	toShortOption	yazi.scala	1	member-only
+def	kıyasla	compareTo	yazi.scala	1	member-only
+def	kıyaslaKüçükHarfBüyükHarfAyrımıYapmadan	compareToIgnoreCase	yazi.scala	1	member-only
+def	kıymaKodu	hashCode	kokturler.scala	2
+val	log2_e	math.log	matematik.scala	1
+def	log2tabanlı	math.log	matematik.scala	1
+def	logTabanlı	log	data.scala	1	member-only
+def	logTabanlı	math.log	matematik.scala	1
+def	logaritması	log	data.scala	1	member-only
+def	logaritması	math.log	matematik.scala	1
+def	lokmadanLokmaya	byte2Byte	turler.scala	1
+def	lokmaya	toByte	sayi.scala	4	member-only
+def	lokmaya	toByte	yazi.scala	1	member-only
+def	lokmayaBelki	toByteOption	yazi.scala	1	member-only
+val	matematik	math	data.scala	1
+val	mavi	blue	data.scala	1
+val	mavi	blue	renk.scala	1
+val	menekşe	violet	renk.scala	1	member-only
+val	mercan	coral	renk.scala	1	member-only
+val	merkez	CENTER	arayuz.scala	1	member-only
+def	merkezdenDışarıDoğruDeğişim	radialGradient	renk.scala	1	member-only
+def	merkezdenDışarıDoğruÇokluDeğişim	radialMultipleGradient	renk.scala	1	member-only
+def	merkezeTaşı	center	resim.scala	1
+def	mesafeGit	animateToPositionDelta	resim.scala	1	member-only
+val	mor	purple	data.scala	1
+val	morumsu	magenta	data.scala	1
+val	morumsu	magenta	renk.scala	1
+def	mutlakDeğer	abs	data.scala	1	member-only
+def	mutlakDeğer	abs	sayi.scala	7	member-only
+def	mutlakDeğer	math.abs	matematik.scala	4
+def	mutlakYol	getAbsolutePath	dosya.scala	1	member-only
+def	müzikMp3DöngüsünüKapat	stopMp3Loop	trInit.scala	1
+def	müzikMp3üKapat	stopMp3	trInit.scala	1
+def	müzikMp3üÇal	playMp3	trInit.scala	1
+def	müzikMp3üÇalDöngülü	playMp3Loop	trInit.scala	1
+def	müzikMp3üÇalıyorMu	isMp3Playing	trInit.scala	1
+def	müzikÇalıyorMu	isMusicPlaying	trInit.scala	1
+def	müzikİndir	preloadMp3	trInit.scala	1
+def	müziğiDurdur	stopMusic	trInit.scala	1
+def	müziğiKapat	stopMusic	trInit.scala	1
+def	nerede	indexWhere	dizi.scala	6	member-only
+def	nerede	indexWhere	dizik.scala	4	member-only
+def	nerede	indexWhere	dizin.scala	2	member-only
+def	nerede	indexWhere	kuyruk.scala	2	member-only
+def	nerede	indexWhere	miskindizin.scala	2	member-only
+def	nerede	indexWhere	yazi.scala	1	member-only
+def	nerede	indexWhere	yineleyici.scala	1	member-only
+def	nerede	indexWhere	yoney.scala	2	member-only
+def	neredeSondan	lastIndexWhere	dizi.scala	3	member-only
+def	neredeSondan	lastIndexWhere	dizik.scala	2	member-only
+def	neredeSondan	lastIndexWhere	dizin.scala	1	member-only
+def	neredeSondan	lastIndexWhere	kuyruk.scala	1	member-only
+def	neredeSondan	lastIndexWhere	miskindizin.scala	1	member-only
+def	neredeSondan	lastIndexWhere	yazi.scala	1	member-only
+def	neredeSondan	lastIndexWhere	yoney.scala	1	member-only
+def	nesnesiOlarak	asInstanceOf	kokturler.scala	2
+def	nokta	dot	trInit.scala	2
+def	nokta	point	tuvalcizim.scala	1	member-only
+def	nokta	vertex	geo.scala	1
+def	noktaIşık	pointLight	resim.scala	1	member-only
+val	noktaSayısı	Pixel	data.scala	1
+val	noktaSayısı	Pixel	package.scala	1
+def	noktadan	Picture.fromVertexShape	resim.scala	1
+def	noktayaDön	towards	trInit.scala	2
+def	noktayaGit	lineTo	trInit.scala	2
+def	notaÇal	playNote	trInit.scala	1
+def	notaÇalarıDurdur	stopNotePlayer	trInit.scala	1
+def	notaÇalarıKapat	stopNotePlayer	trInit.scala	1
+def	notaÇalgısınıKur	setNoteInstrument	trInit.scala	1
+def	odakDinleyiciEkle	addFocusListener	arayuz.scala	1	member-only
+def	olarak	valueOf	yazi.scala	8
+val	olmaz	never	gelecek.scala	1	member-only
+def	onlukTabandaLogu	log10	data.scala	1	member-only
+def	onlukTabandaLogu	math.log10	matematik.scala	1
+val	orkidePembesi	orchid	renk.scala	1	member-only
+val	orta	Medium	package.scala	1	member-only
+val	orta	medium	data.scala	1
+def	ortalama	mean	matematik.scala	1	member-only
+def	oynat	movePlayer	kumanda.scala	2	member-only
+def	oynat	run	trInit.scala	1
+def	oynatSahneİçinde	movePlayerWithinStage	kumanda.scala	2	member-only
+def	oyunSüresiniGeriyeSayarakGöster	showGameTimeCountdown	trInit.scala	1
+def	oyunSüresiniGöster	showGameTime	trInit.scala	1
+def	pNokta	pnode	resim.scala	1	member-only
+val	page_down	pageDown	klavye.scala	1	deprecated,member-only
+val	page_up	pageUp	klavye.scala	1	deprecated,member-only
+def	paralel	par	dizin.scala	1	member-only
+def	parlaklık	sat	resim.scala	1
+def	parlaklık	satMod	resim.scala	1
+def	parlaklıkOranınıKur	satMod	resim.scala	1
+def	parçası	substring	yazi.scala	4	member-only
+val	pembe	pink	data.scala	1
+val	pembe	pink	renk.scala	1
+def	pencereİçindekiOdağıİste	requestFocusInWindow	arayuz.scala	1	member-only
+def	permütasyonlar	permutations	dizi.scala	3	member-only
+def	permütasyonlar	permutations	dizik.scala	2	member-only
+def	permütasyonlar	permutations	dizin.scala	1	member-only
+def	permütasyonlar	permutations	kuyruk.scala	1	member-only
+def	permütasyonlar	permutations	miskindizin.scala	1	member-only
+def	permütasyonlar	permutations	yazi.scala	1	member-only
+def	permütasyonlar	permutations	yoney.scala	1	member-only
+def	projeUç	PROJECT	tuvalcizim.scala	1	member-only
+def	radyana	math.toRadians	matematik.scala	1
+def	radyana	toRadians	data.scala	1	member-only
+def	radyana	toRadians	sayi.scala	1	member-only
+def	rasgele	math.random	matematik.scala	1
+def	rastgele	random	data.scala	2
+def	rastgele	random	trInit.scala	2
+def	rastgeleDiziden	randomFrom	data.scala	1
+def	rastgeleDiziden	randomFrom	trInit.scala	2
+def	rastgeleDoğalKesir	randomNormalDouble	data.scala	1
+def	rastgeleDoğalKesir	randomNormalDouble	trInit.scala	1
+def	rastgeleKarıştır	shuffle	trInit.scala	1
+def	rastgeleKesir	randomDouble	data.scala	1
+def	rastgeleKesir	randomDouble	trInit.scala	2
+def	rastgeleNormalKesir	randomNormalDouble	data.scala	1
+def	rastgeleNormalKesir	randomNormalDouble	trInit.scala	1
+def	rastgeleRenk	randomColor	data.scala	1
+def	rastgeleRenk	randomColor	trInit.scala	1
+def	rastgeleSayı	randomInt	data.scala	1
+def	rastgeleSayı	randomInt	trInit.scala	1
+def	rastgeleSeçim	randomBoolean	data.scala	1
+def	rastgeleSeçim	randomBoolean	trInit.scala	1
+def	rastgeleTohum	randomSeed	tuvalcizim.scala	1	member-only
+def	rastgeleTohumunuKur	initRandomGenerator	data.scala	1
+def	rastgeleTohumunuKur	initRandomGenerator	trInit.scala	1
+def	rastgeleUzun	randomLong	data.scala	1
+def	rastgeleUzun	randomLong	trInit.scala	1
+def	rastgeleÇanEğrisinden	randomNormalDouble	data.scala	1
+def	rastgeleÇanEğrisinden	randomNormalDouble	trInit.scala	1
+def	rastgeleİkil	randomBoolean	data.scala	1
+def	rastgeleİkil	randomBoolean	trInit.scala	1
+def	rastgeleŞeffafRenk	randomTransparentColor	data.scala	1
+def	rastgeleŞeffafRenk	randomTransparentColor	trInit.scala	1
+def	renkKur	Color	renk.scala	1
+val	renkler	Color	renk.scala	1
+val	renkler	ColorMaker	data.scala	1
+val	renksiz	noColor	data.scala	1
+val	renksiz	noColor	renk.scala	1
+def	resimSeç	imageAt	cinidunyasi.scala	1	member-only
+def	resimİndir	preloadImage	trInit.scala	1
+val	richBuiltins	asInstanceOf	package.scala	1
+val	richBuiltins	asInstanceOf	trInit.scala	1
+def	saat	get	buan.scala	1	member-only
+def	saatDilimi	getTimeZone	buan.scala	1	member-only
+def	saatDilimi	hepsi	buan.scala	1	member-only
+val	sade	PlainFont	trInit.scala	1
+def	sahneIşığı	spotLight	resim.scala	1	member-only
+def	sahneKenarındanYansıtma	bouncePicOffStage	resim.scala	1
+def	sakla	setVisible	arayuz.scala	9	member-only
+def	saniye	get	buan.scala	1	member-only
+val	sarı	yellow	data.scala	1
+val	sarı	yellow	renk.scala	1
+val	satırBaşı	home	klavye.scala	1
+val	satırSonu	end	klavye.scala	1	member-only
+def	satırSonunuAt	stripLineEnd	yazi.scala	1	member-only
+val	satır_başı	home	klavye.scala	1	deprecated
+val	satır_sonu	end	klavye.scala	1	deprecated,member-only
+def	satırlar	linesIterator	yazi.scala	1	member-only
+def	satıroku	readln	data.scala	1
+def	satıroku	readln	trInit.scala	1
+def	satıryaz	println	data.scala	1
+def	satıryaz	println	trInit.scala	2
+def	say	count	dizi.scala	3	member-only
+def	say	count	dizik.scala	2	member-only
+def	say	count	dizin.scala	1	member-only
+def	say	count	eslem.scala	2	member-only
+def	say	count	kume.scala	1	member-only
+def	say	count	kuyruk.scala	2	member-only
+def	say	count	miskindizin.scala	1	member-only
+def	say	count	yazi.scala	1	member-only
+def	say	count	yineleyici.scala	1	member-only
+def	say	count	yoney.scala	1	member-only
+def	sayalım	from	data.scala	1	member-only
+def	sayalım	from	miskindizin.scala	1	member-only
+def	saydamlık	opac	resim.scala	1
+def	saydamlık	opacity	resim.scala	1	member-only
+def	saydamlık	opacityMod	resim.scala	1	member-only
+def	saydamlıkOranınıKur	opacityMod	resim.scala	1	member-only
+def	saydamlığıKur	setOpacity	resim.scala	1	member-only
+val	sayfaAşağı	pageDown	klavye.scala	1	member-only
+val	sayfaYukarı	pageUp	klavye.scala	1	member-only
+val	sayfa_aşağı	pageDown	klavye.scala	1	deprecated,member-only
+val	sayfa_yukarı	pageUp	klavye.scala	1	deprecated,member-only
+def	sayı	size	dizim.scala	1
+def	sayı	size	eslem.scala	2
+def	sayıMı	isDigit	data.scala	1	member-only
+def	sayıMı	isDigit	harf.scala	2	member-only
+def	sayıOku	readInt	trInit.scala	1
+def	sayıdanSayıya	int2Integer	turler.scala	1
+def	sayıya	char2int	harf.scala	1	member-only
+def	sayıya	toInt	data.scala	1	member-only
+def	sayıya	toInt	harf.scala	1	member-only
+def	sayıya	toInt	matematik.scala	1	member-only
+def	sayıya	toInt	sayi.scala	1	member-only
+def	sayıya	toInt	yazi.scala	2	member-only
+def	sayıyaBelki	toIntOption	yazi.scala	1	member-only
+val	sağ	RIGHT	arayuz.scala	1	member-only
+def	sağ	right	trInit.scala	3
+def	sağMı	isRight	ikisindenbiri.scala	1	member-only
+def	sağa	toRight	belki.scala	1	member-only
+def	sağdakiÇiniyeTaşı	moveToTileRight	cinidunyasi.scala	1	member-only
+def	sağdanKatla	foldRight	aralik.scala	1	member-only
+def	sağdanKatla	foldRight	dizi.scala	3	member-only
+def	sağdanKatla	foldRight	dizik.scala	2	member-only
+def	sağdanKatla	foldRight	dizin.scala	1	member-only
+def	sağdanKatla	foldRight	eslem.scala	2	member-only
+def	sağdanKatla	foldRight	kume.scala	1	member-only
+def	sağdanKatla	foldRight	kuyruk.scala	2	member-only
+def	sağdanKatla	foldRight	miskindizin.scala	1	member-only
+def	sağdanKatla	foldRight	yazi.scala	1	member-only
+def	sağdanKatla	foldRight	yineleyici.scala	1	member-only
+def	sağdanKatla	foldRight	yoney.scala	1	member-only
+def	sağdaÇiniVarMı	hasTileAtRight	cinidunyasi.scala	1	member-only
+def	sesMp3üÇal	playMp3Sound	trInit.scala	1
+def	seçenekleriKur	setOptions	arayuz.scala	1	member-only
+def	seçilince	onSelection	arayuz.scala	1	member-only
+def	seçİşle	collect	belki.scala	1	member-only
+def	seçİşle	collect	dizi.scala	3	member-only
+def	seçİşle	collect	dizik.scala	2	member-only
+def	seçİşle	collect	dizin.scala	1	member-only
+def	seçİşle	collect	eslem.scala	2	member-only
+def	seçİşle	collect	kume.scala	1	member-only
+def	seçİşle	collect	kuyruk.scala	2	member-only
+def	seçİşle	collect	miskindizin.scala	1	member-only
+def	seçİşle	collect	yazi.scala	1	member-only
+def	seçİşle	collect	yineleyici.scala	1	member-only
+def	seçİşle	collect	yoney.scala	1	member-only
+def	seçİşleİlk	collectFirst	dizi.scala	3	member-only
+def	seçİşleİlk	collectFirst	dizik.scala	2	member-only
+def	seçİşleİlk	collectFirst	dizin.scala	1	member-only
+def	seçİşleİlk	collectFirst	eslem.scala	2	member-only
+def	seçİşleİlk	collectFirst	kume.scala	1	member-only
+def	seçİşleİlk	collectFirst	kuyruk.scala	2	member-only
+def	seçİşleİlk	collectFirst	miskindizin.scala	1	member-only
+def	seçİşleİlk	collectFirst	yineleyici.scala	1	member-only
+def	seçİşleİlk	collectFirst	yoney.scala	1	member-only
+def	sil	clear	data.scala	1
+def	sil	clear	dizim.scala	1
+def	sil	clear	kuyruk.scala	4
+def	sil	clear	trInit.scala	2
+def	sil	clear	yazi.scala	1
+def	sil	delete	dosya.scala	1	member-only
+def	sil	erase	resim.scala	1	member-only
+val	silGeri	backSpace	klavye.scala	1	member-only
+def	silVeSakla	clear	trInit.scala	1
+def	silVeSakla	cleari	data.scala	1
+def	silVeÇizimBiriminiKur	clearWithUL	data.scala	1
+def	silVeÇizimBiriminiKur	clearWithUL	trInit.scala	1
+val	sil_geri	backSpace	klavye.scala	1	deprecated,member-only
+def	silipSakla	clear	trInit.scala	1
+def	sinüs	math.sin	matematik.scala	1
+def	sinüs	sin	data.scala	1	member-only
+def	sinüsünAçısı	asin	data.scala	1	member-only
+def	sinüsünAçısı	math.asin	matematik.scala	1
+def	sivriBirleşim	MITER	tuvalcizim.scala	1	member-only
+val	siyah	black	data.scala	1
+val	siyah	black	renk.scala	1
+val	sol	LEFT	arayuz.scala	1	member-only
+def	sol	left	trInit.scala	3
+def	solMu	isLeft	ikisindenbiri.scala	1	member-only
+def	sola	toLeft	belki.scala	1	member-only
+def	soldakiÇiniyeTaşı	moveToTileLeft	cinidunyasi.scala	1	member-only
+def	soldanKatla	foldLeft	aralik.scala	1	member-only
+def	soldanKatla	foldLeft	dizi.scala	3	member-only
+def	soldanKatla	foldLeft	dizik.scala	2	member-only
+def	soldanKatla	foldLeft	dizin.scala	1	member-only
+def	soldanKatla	foldLeft	eslem.scala	2	member-only
+def	soldanKatla	foldLeft	kume.scala	1	member-only
+def	soldanKatla	foldLeft	kuyruk.scala	2	member-only
+def	soldanKatla	foldLeft	miskindizin.scala	1	member-only
+def	soldanKatla	foldLeft	yazi.scala	1	member-only
+def	soldanKatla	foldLeft	yineleyici.scala	1	member-only
+def	soldanKatla	foldLeft	yoney.scala	1	member-only
+def	soldaÇiniVarMı	hasTileAtLeft	cinidunyasi.scala	1	member-only
+def	soluk	fade	resim.scala	1
+val	somon	salmon	renk.scala	1	member-only
+def	sonaKoy	append	kuyruk.scala	1	member-only
+def	sondanAl	removeLast	kuyruk.scala	1	member-only
+def	sondanAlBelki	removeLastOption	kuyruk.scala	1	member-only
+def	sondanKırp	dropRightInPlace	dizik.scala	1	member-only
+def	sondanÇıkar	removeLast	kuyruk.scala	2	member-only
+def	sondanÇıkarBelki	removeLastOption	kuyruk.scala	2	member-only
+val	sonraki	NEXT	arayuz.scala	1	member-only
+def	sonrakiniGöster	showNext	resim.scala	1	member-only
+def	sonsuzYinelenme	repeatedForever	trInit.scala	1	member-only
+def	sonu	last	aralik.scala	1	member-only
+def	sonu	last	dizi.scala	3	member-only
+def	sonu	last	dizik.scala	2	member-only
+def	sonu	last	dizin.scala	1	member-only
+def	sonu	last	eslem.scala	2	member-only
+def	sonu	last	kume.scala	1	member-only
+def	sonu	last	kuyruk.scala	3	member-only
+def	sonu	last	miskindizin.scala	1	member-only
+def	sonu	last	yazi.scala	1	member-only
+def	sonu	last	yoney.scala	1	member-only
+def	sonuBelki	lastOption	dizi.scala	3	member-only
+def	sonuBelki	lastOption	dizik.scala	2	member-only
+def	sonuBelki	lastOption	dizin.scala	1	member-only
+def	sonuBelki	lastOption	eslem.scala	2	member-only
+def	sonuBelki	lastOption	kume.scala	1	member-only
+def	sonuBelki	lastOption	kuyruk.scala	3	member-only
+def	sonuBelki	lastOption	miskindizin.scala	1	member-only
+def	sonuBelki	lastOption	yazi.scala	1	member-only
+def	sonuBelki	lastOption	yoney.scala	1	member-only
+def	sonunaEkle	appended	dizi.scala	3	member-only
+def	sonunaEkle	appended	dizik.scala	2	member-only
+def	sonunaEkle	appended	dizin.scala	1	member-only
+def	sonunaEkle	appended	kuyruk.scala	1	member-only
+def	sonunaEkle	appended	miskindizin.scala	1	member-only
+def	sonunaEkle	appended	yazi.scala	1	member-only
+def	sonunaEkle	appended	yoney.scala	1	member-only
+def	sonunaEkleHepsini	appendedAll	dizi.scala	3	member-only
+def	sonunaEkleHepsini	appendedAll	dizik.scala	2	member-only
+def	sonunaEkleHepsini	appendedAll	dizin.scala	1	member-only
+def	sonunaEkleHepsini	appendedAll	kuyruk.scala	1	member-only
+def	sonunaEkleHepsini	appendedAll	yazi.scala	1	member-only
+def	sonunaEkleHepsini	appendedAll	yoney.scala	1	member-only
+def	sonunaEkleHepsini	lazyAppendedAll	miskindizin.scala	1	member-only
+def	sonuncu	end	aralik.scala	1	member-only
+def	sonundaMı	endsWith	dizi.scala	3	member-only
+def	sonundaMı	endsWith	dizik.scala	2	member-only
+def	sonundaMı	endsWith	dizin.scala	1	member-only
+def	sonundaMı	endsWith	kuyruk.scala	1	member-only
+def	sonundaMı	endsWith	miskindizin.scala	1	member-only
+def	sonundaMı	endsWith	yazi.scala	1	member-only
+def	sonundaMı	endsWith	yoney.scala	1	member-only
+def	sonundanAt	stripSuffix	yazi.scala	1	member-only
+def	sürekli	continually	miskindizin.scala	1	member-only
+def	sürüm	version	trInit.scala	1
+def	sütunSayısınıKur	setColumns	arayuz.scala	1	member-only
+def	sınırlar	bounds	resim.scala	1
+def	sınırlarıGöster	Picture.showBounds	resim.scala	2
+def	sıradaki	next	yineleyici.scala	1	member-only
+def	sıradakiBelki	nextOption	yineleyici.scala	1	member-only
+def	sırala	sortBy	dizi.scala	3	member-only
+def	sırala	sortBy	dizik.scala	2	member-only
+def	sırala	sortBy	dizin.scala	1	member-only
+def	sırala	sortBy	kuyruk.scala	1	member-only
+def	sırala	sortBy	miskindizin.scala	1	member-only
+def	sırala	sortBy	yazi.scala	1	member-only
+def	sırala	sortBy	yoney.scala	1	member-only
+def	sıralaYerinde	sortInPlaceBy	dizik.scala	1	member-only
+def	sıralaYerinde	sortInPlaceBy	kuyruk.scala	2	member-only
+def	sıralar	indices	dizi.scala	3	member-only
+def	sıralar	indices	dizik.scala	2	member-only
+def	sıralar	indices	dizin.scala	1	member-only
+def	sıralar	indices	kuyruk.scala	1	member-only
+def	sıralar	indices	miskindizin.scala	1	member-only
+def	sıralar	indices	yazi.scala	1	member-only
+def	sıralar	indices	yoney.scala	1	member-only
+def	sıralı	sorted	dizi.scala	3	member-only
+def	sıralı	sorted	dizik.scala	2	member-only
+def	sıralı	sorted	dizin.scala	1	member-only
+def	sıralı	sorted	kuyruk.scala	1	member-only
+def	sıralı	sorted	miskindizin.scala	1	member-only
+def	sıralı	sorted	yazi.scala	1	member-only
+def	sıralı	sorted	yoney.scala	1	member-only
+def	sıralıYerinde	sortInPlace	dizik.scala	1	member-only
+def	sıralıYerinde	sortInPlace	kuyruk.scala	2	member-only
+def	sırası	indexOf	dizi.scala	6	member-only
+def	sırası	indexOf	dizik.scala	4	member-only
+def	sırası	indexOf	dizin.scala	2	member-only
+def	sırası	indexOf	kuyruk.scala	1	member-only
+def	sırası	indexOf	miskindizin.scala	2	member-only
+def	sırası	indexOf	yazi.scala	4	member-only
+def	sırası	indexOf	yineleyici.scala	1	member-only
+def	sırası	indexOf	yoney.scala	2	member-only
+def	sırasıSondan	lastIndexOf	dizi.scala	6	member-only
+def	sırasıSondan	lastIndexOf	dizik.scala	4	member-only
+def	sırasıSondan	lastIndexOf	dizin.scala	2	member-only
+def	sırasıSondan	lastIndexOf	kuyruk.scala	1	member-only
+def	sırasıSondan	lastIndexOf	miskindizin.scala	2	member-only
+def	sırasıSondan	lastIndexOf	yazi.scala	4	member-only
+def	sırasıSondan	lastIndexOf	yoney.scala	2	member-only
+def	sırayaSok	schedule	trInit.scala	1
+def	sırayaSok	scheduleN	trInit.scala	1
+def	sırayaSok	sortWith	dizi.scala	3	member-only
+def	sırayaSok	sortWith	dizik.scala	2	member-only
+def	sırayaSok	sortWith	dizin.scala	1	member-only
+def	sırayaSok	sortWith	kuyruk.scala	1	member-only
+def	sırayaSok	sortWith	miskindizin.scala	1	member-only
+def	sırayaSok	sortWith	yazi.scala	1	member-only
+def	sırayaSok	sortWith	yoney.scala	1	member-only
+def	sırayaSokYerinde	sortInPlaceWith	dizik.scala	1	member-only
+def	sırayaSokYerinde	sortInPlaceWith	kuyruk.scala	2	member-only
+def	sıraylaDoldur	tabulate	miskindizin.scala	1	member-only
+def	tNokta	tnode	resim.scala	1	member-only
+val	taban	BOTTOM	arayuz.scala	1	member-only
+def	taban	floor	data.scala	1	member-only
+def	taban	floor	sayi.scala	1	member-only
+def	taban	math.floor	matematik.scala	1
+def	takasla	swap	ikisindenbiri.scala	1	member-only
+def	tane	size	kuyruk.scala	2
+def	tanjant	math.tan	matematik.scala	1
+def	tanjant	tan	data.scala	1	member-only
+def	tanjantınAçısı	atan	data.scala	1	member-only
+def	tanjantınAçısı	math.atan	matematik.scala	1
+def	tanımlıMı	isDefinedAt	bolumselislev.scala	1	member-only
+def	tara	scan	dizi.scala	3	member-only
+def	tara	scan	dizik.scala	2	member-only
+def	tara	scan	dizin.scala	1	member-only
+def	tara	scan	eslem.scala	2	member-only
+def	tara	scan	kume.scala	1	member-only
+def	tara	scan	kuyruk.scala	2	member-only
+def	tara	scan	miskindizin.scala	1	member-only
+def	tara	scan	yoney.scala	1	member-only
+def	taraSağdan	scanRight	dizi.scala	3	member-only
+def	taraSağdan	scanRight	dizik.scala	2	member-only
+def	taraSağdan	scanRight	dizin.scala	1	member-only
+def	taraSağdan	scanRight	eslem.scala	2	member-only
+def	taraSağdan	scanRight	kume.scala	1	member-only
+def	taraSağdan	scanRight	kuyruk.scala	2	member-only
+def	taraSağdan	scanRight	miskindizin.scala	1	member-only
+def	taraSağdan	scanRight	yineleyici.scala	1	member-only
+def	taraSağdan	scanRight	yoney.scala	1	member-only
+def	taraSoldan	scanLeft	dizi.scala	3	member-only
+def	taraSoldan	scanLeft	dizik.scala	2	member-only
+def	taraSoldan	scanLeft	dizin.scala	1	member-only
+def	taraSoldan	scanLeft	eslem.scala	2	member-only
+def	taraSoldan	scanLeft	kume.scala	1	member-only
+def	taraSoldan	scanLeft	kuyruk.scala	2	member-only
+def	taraSoldan	scanLeft	miskindizin.scala	1	member-only
+def	taraSoldan	scanLeft	yineleyici.scala	1	member-only
+def	taraSoldan	scanLeft	yoney.scala	1	member-only
+def	tarih	getTime	buan.scala	1	member-only
+val	tavan	TOP	arayuz.scala	1	member-only
+def	tavan	ceil	data.scala	1	member-only
+def	tavan	ceil	sayi.scala	1	member-only
+def	tavan	math.ceil	matematik.scala	1
+val	temizle	clear	klavye.scala	1
+def	tepe	top	kuyruk.scala	1	member-only
+def	tepesi	top	kuyruk.scala	1	member-only
+def	tepkileriDurdur	stopReactions	resim.scala	1	member-only
+def	tersi	from	kuyruk.scala	1	member-only
+def	tersi	reverse	dizi.scala	3	member-only
+def	tersi	reverse	dizik.scala	2	member-only
+def	tersi	reverse	dizin.scala	1	member-only
+def	tersi	reverse	kuyruk.scala	2	member-only
+def	tersi	reverse	miskindizin.scala	1	member-only
+def	tersi	reverse	yazi.scala	1	member-only
+def	tersi	reverse	yoney.scala	1	member-only
+def	tersiYerinde	reverseInPlace	yazi.scala	1	member-only
+def	tersten	reversed	trInit.scala	1	member-only
+def	tersİşle	map	dizi.scala	3	member-only
+def	tersİşle	map	dizik.scala	2	member-only
+def	tersİşle	map	dizin.scala	1	member-only
+def	tersİşle	map	kuyruk.scala	1	member-only
+def	tersİşle	map	miskindizin.scala	1	member-only
+def	tersİşle	map	yoney.scala	1	member-only
+def	ton	hue	resim.scala	1
+def	ton	hueMod	resim.scala	1
+def	tonOranınıKur	hueMod	resim.scala	1
+def	topla	sum	dizi.scala	3	member-only
+def	topla	sum	dizik.scala	2	member-only
+def	topla	sum	dizin.scala	1	member-only
+def	topla	sum	eslem.scala	2	member-only
+def	topla	sum	kume.scala	1	member-only
+def	topla	sum	kuyruk.scala	2	member-only
+def	topla	sum	miskindizin.scala	1	member-only
+def	topla	sum	yazi.scala	1	member-only
+def	topla	sum	yineleyici.scala	1	member-only
+def	topla	sum	yoney.scala	1	member-only
+val	turkuaz	turquoise	renk.scala	1	member-only
+val	turuncu	orange	data.scala	1
+val	turuncu	orange	renk.scala	1
+def	tuval	canvas	resim.scala	1	member-only
+def	tuvalAlanı	canvasBounds	data.scala	1
+def	tuvalBoyutOranınıKur	setDrawingCanvasAspectRatio	trInit.scala	1
+def	tuvalBoyutlarınıKur	setDrawingCanvasSize	trInit.scala	1
+def	tuvalEskizi	canvasSketch	trInit.scala	1
+def	tuvalden	Picture.fromCanvas	resim.scala	1
+def	tuvaleYaz	write	trInit.scala	1
+def	tuvaliDöndür	viewRotate	trInit.scala	1
+def	tuvaliEtkinleştir	activateCanvas	trInit.scala	1
+def	tuvaliKaydır	scroll	trInit.scala	1
+def	tuvaliSabitle	disablePanAndZoom	trInit.scala	1
+def	tuvaliYakınlaştır	zoomXY	trInit.scala	1
+def	tuşBasılıMı	isKeyPressed	trInit.scala	1
+def	tuşHarfi	getKeyChar	arayuz.scala	1	member-only
+def	tuşKodu	getKeyCode	arayuz.scala	1	member-only
+def	tuşaBasılıMı	isKeyPressed	trInit.scala	1
+def	tuşaBasınca	onKeyPress	trInit.scala	1
+def	tuşuBırakınca	onKeyRelease	trInit.scala	1
+def	tüket	consume	arayuz.scala	1	member-only
+def	tümEkran	toggleFullScreenCanvas	trInit.scala	1
+def	tümEkranTuval	toggleFullScreenCanvas	trInit.scala	1
+def	tümEkranÇıktı	toggleFullScreenOutput	trInit.scala	1
+def	türet	unfold	miskindizin.scala	1	member-only
+def	ufakKesirdenUfakKesire	float2Float	turler.scala	1
+def	ufakKesire	toFloat	yazi.scala	1	member-only
+def	ufakKesireBelki	toFloatOption	yazi.scala	1	member-only
+def	ufakkesire	char2float	harf.scala	1	member-only
+def	uzaklık	distance	yoney2b.scala	1	member-only
+def	uzaklık	distanceTo	resim.scala	1	member-only
+def	uzaklık	distanceTo	trInit.scala	1	member-only
+def	uzaklık	math.sqrt	matematik.scala	1
+def	uzat	padTo	dizi.scala	3	member-only
+def	uzat	padTo	dizik.scala	2	member-only
+def	uzat	padTo	dizin.scala	1	member-only
+def	uzat	padTo	kuyruk.scala	1	member-only
+def	uzat	padTo	miskindizin.scala	1	member-only
+def	uzat	padTo	yazi.scala	1	member-only
+def	uzat	padTo	yineleyici.scala	1	member-only
+def	uzat	padTo	yoney.scala	1	member-only
+def	uzatYerinde	padToInPlace	dizik.scala	1	member-only
+def	uzatYerinde	padToInPlace	kuyruk.scala	2	member-only
+def	uzuna	char2long	harf.scala	1	member-only
+def	uzuna	toLong	yazi.scala	2	member-only
+def	uzunaBelki	toLongOption	yazi.scala	1	member-only
+def	uzundanUzuna	long2Long	turler.scala	1
+def	uzunluğu	size	aralik.scala	1
+def	varMı	exists	belki.scala	1	member-only
+def	varMı	exists	dizi.scala	3	member-only
+def	varMı	exists	dizik.scala	2	member-only
+def	varMı	exists	dizin.scala	1	member-only
+def	varMı	exists	dosya.scala	1	member-only
+def	varMı	exists	eslem.scala	2	member-only
+def	varMı	exists	ikisindenbiri.scala	1	member-only
+def	varMı	exists	kume.scala	1	member-only
+def	varMı	exists	kuyruk.scala	2	member-only
+def	varMı	exists	miskindizin.scala	1	member-only
+def	varMı	exists	yazi.scala	1	member-only
+def	varMı	exists	yineleyici.scala	1	member-only
+def	varMı	exists	yoney.scala	1	member-only
+def	varMı	isDefined	data.scala	1	member-only
+def	varMı	nonEmpty	belki.scala	1	member-only
+def	varsayılanDeğerle	withDefaultValue	eslem.scala	2	member-only
+def	varsayılanlı	withDefault	eslem.scala	2	member-only
+def	varsayılanı	default	eslem.scala	2	member-only
+def	veÇiz	draw	resim.scala	1
+val	vurgulu	ItalicFont	trInit.scala	1
+def	yaklaş	zoom	trInit.scala	2
+def	yaklaşXY	zoomXY	trInit.scala	1
+def	yaklaşmayaİzinVerme	disablePanAndZoom	trInit.scala	1
+def	yaklaşmayıSil	resetPanAndZoom	trInit.scala	1
+def	yakın	math.round	matematik.scala	2
+def	yakın	round	data.scala	1
+def	yakın	round	sayi.scala	1
+def	yakını	math.rint	matematik.scala	1
+def	yakını	rint	data.scala	1	member-only
+def	yama	patch	dizi.scala	3	member-only
+def	yama	patch	dizik.scala	2	member-only
+def	yama	patch	dizin.scala	1	member-only
+def	yama	patch	kuyruk.scala	1	member-only
+def	yama	patch	miskindizin.scala	1	member-only
+def	yama	patch	yazi.scala	1	member-only
+def	yama	patch	yineleyici.scala	1	member-only
+def	yama	patch	yoney.scala	1	member-only
+def	yamaYerinde	patchInPlace	dizik.scala	1	member-only
+def	yamaYerinde	patchInPlace	kuyruk.scala	2	member-only
+def	yana	beside	resim.scala	1	member-only
+val	yanlış	false	data.scala	1
+def	yansıt	bounceOff	yoney2b.scala	1	member-only
+def	yansıt	reflect	resim.scala	1
+def	yansıtX	flipX	resim.scala	2
+def	yansıtY	flipY	resim.scala	2
+val	yatay	HORIZONTAL	arayuz.scala	1	member-only
+def	yatay	Picture.hline	resim.scala	1
+def	yatayBoşluk	Picture.hgap	resim.scala	1
+def	yatayDüzeniKur	setHorizontalAlignment	arayuz.scala	2	member-only
+val	yavaş	Slow	package.scala	1	member-only
+val	yavaş	slow	data.scala	1
+def	yay	Picture.arc	resim.scala	1
+def	yay	arc	trInit.scala	1
+def	yay	arc	tuvalcizim.scala	1
+def	yayKöşesi	arcVertex	tuvalcizim.scala	1
+def	yaz	print	data.scala	1
+def	yaz	print	trInit.scala	1
+def	yazı	Picture.text	resim.scala	2
+def	yazı	Picture.textu	resim.scala	1
+def	yazı	text	tuvalcizim.scala	1	member-only
+def	yazı	toString	aralik.scala	1
+def	yazı	write	trInit.scala	1
+def	yazıBoyunuKur	setPenFontSize	trInit.scala	1
+def	yazıRenkli	Picture.textu	resim.scala	1
+def	yazıTamamlamaSeçenekleriniYazdırmayıAçKapa	dumpCompletions	trInit.scala	1	member-only
+def	yazıYap	mkString	dizi.scala	9	member-only
+def	yazıYap	mkString	dizik.scala	6	member-only
+def	yazıYap	mkString	dizin.scala	3	member-only
+def	yazıYap	mkString	eslem.scala	6	member-only
+def	yazıYap	mkString	kume.scala	3	member-only
+def	yazıYap	mkString	kuyruk.scala	6	member-only
+def	yazıYap	mkString	miskindizin.scala	3	member-only
+def	yazıYap	mkString	yazi.scala	3	member-only
+def	yazıYap	mkString	yineleyici.scala	3	member-only
+def	yazıYap	mkString	yoney.scala	3	member-only
+def	yazıYüzü	textFont	tuvalcizim.scala	1	member-only
+def	yazıYüzünüKur	setFont	arayuz.scala	5	member-only
+def	yazıYüzünüKur	setPenFont	trInit.scala	1
+def	yazılımcıkDüzenleyicisiniEtkinleştir	activateEditor	trInit.scala	1
+def	yazıya	toString	data.scala	1
+def	yazıya	toString	dizim.scala	1
+def	yazıya	toString	harf.scala	1
+def	yazıya	toString	kokturler.scala	2
+def	yazıya	toString	sayi.scala	7
+def	yazıya	toString	yazi.scala	1
+def	yazıyüzleri	availableFontNames	data.scala	1
+def	yazıyüzleri	availableFontNames	trInit.scala	1
+def	yazıyüzü	Font	data.scala	1
+def	yazıyüzü	Font	trInit.scala	2
+def	yazıyıAl	getText	arayuz.scala	1	member-only
+def	yazıyıKur	setText	arayuz.scala	1	member-only
+def	yazıÇerçevesi	textExtent	data.scala	1
+def	yazıÇerçevesi	textExtent	trInit.scala	1
+def	yeniKaplumbağa	newTurtle	data.scala	1
+def	yeniMp3Çalar	newMp3Player	data.scala	1
+def	yeniMp3Çalar	newMp3Player	trInit.scala	1
+def	yenidenÇiz	repaint	resim.scala	1	member-only
+def	yerAyır	ensureCapacity	yazi.scala	1	member-only
+val	yeşil	green	data.scala	1
+val	yeşil	green	renk.scala	1
+val	yeşilimsiSarı	greenYellow	renk.scala	1	member-only
+def	yinele	foreachPolyLine	resim.scala	1	member-only
+def	yinele	iterate	dizik.scala	1	member-only
+def	yinele	iterate	miskindizin.scala	1	member-only
+def	yinele	repeat	data.scala	1
+def	yinele	repeat	trInit.scala	1
+def	yineleDizinli	repeati	data.scala	1
+def	yineleDizinli	repeati	trInit.scala	1
+def	yineleDoğruysa	repeatWhile	data.scala	1
+def	yineleDoğruysa	repeatWhile	trInit.scala	1
+def	yineleKere	repeatFor	data.scala	1
+def	yineleKere	repeatFor	trInit.scala	1
+def	yineleOlanaKadar	repeatUntil	data.scala	1
+def	yineleOlanaKadar	repeatUntil	trInit.scala	1
+def	yineleSayaçla	timer	trInit.scala	1
+def	yinelemesiz	distinct	dizi.scala	3	member-only
+def	yinelemesiz	distinct	dizik.scala	2	member-only
+def	yinelemesiz	distinct	dizin.scala	1	member-only
+def	yinelemesiz	distinct	kuyruk.scala	1	member-only
+def	yinelemesiz	distinct	miskindizin.scala	1	member-only
+def	yinelemesiz	distinct	yazi.scala	1	member-only
+def	yinelemesiz	distinct	yineleyici.scala	1	member-only
+def	yinelemesiz	distinct	yoney.scala	1	member-only
+def	yinelemesizİşlevle	distinctBy	dizi.scala	3	member-only
+def	yinelemesizİşlevle	distinctBy	dizik.scala	2	member-only
+def	yinelemesizİşlevle	distinctBy	dizin.scala	1	member-only
+def	yinelemesizİşlevle	distinctBy	kuyruk.scala	1	member-only
+def	yinelemesizİşlevle	distinctBy	miskindizin.scala	1	member-only
+def	yinelemesizİşlevle	distinctBy	yazi.scala	1	member-only
+def	yinelemesizİşlevle	distinctBy	yineleyici.scala	1	member-only
+def	yinelemesizİşlevle	distinctBy	yoney.scala	1	member-only
+def	yineleyici	iterator	dizi.scala	1	member-only
+def	yineleyici	iterator	kume.scala	1	member-only
+def	yineleİlktenSona	repeatFor	trInit.scala	1
+def	yineleİlktenSonra	repeatFor	data.scala	1
+def	yineleİçin	repeatFor	data.scala	1
+def	yineleİçin	repeatFor	trInit.scala	1
+val	yok	null	data.scala	1
+def	yokMu	isEmpty	belki.scala	1	member-only
+def	yokMu	isEmpty	data.scala	1	member-only
+def	yolAyırıcı	pathSeparator	dosya.scala	1	member-only
+def	yolAyırıcıHarf	pathSeparatorChar	dosya.scala	1	member-only
+def	yoldan	Picture.fromPath	resim.scala	1
+def	yorumla	interpret	trInit.scala	1
+def	yukarıdakiÇiniyeTaşı	moveToTileAbove	cinidunyasi.scala	1	member-only
+def	yukarıdaÇiniVarMı	hasTileAbove	cinidunyasi.scala	1	member-only
+val	yumuşakGeçiş	KEasing	resim.scala	1	member-only
+def	yuvarla	round	data.scala	1
+def	yuvarlakUç	ROUND	tuvalcizim.scala	1	member-only
+def	yöney	currentVector	kumanda.scala	1	member-only
+def	yöneye	toVector	dizi.scala	5	member-only
+def	yöneye	toVector	dizik.scala	2	member-only
+def	yöneye	toVector	dizin.scala	1	member-only
+def	yöneye	toVector	eslem.scala	2	member-only
+def	yöneye	toVector	kume.scala	1	member-only
+def	yöneye	toVector	kuyruk.scala	2	member-only
+def	yöneye	toVector	miskindizin.scala	1	member-only
+def	yöneye	toVector	yazi.scala	1	member-only
+def	yöneye	toVector	yineleyici.scala	1	member-only
+def	yöneye	toVector	yoney.scala	1	member-only
+def	yıl	hepsi	buan.scala	1	member-only
+def	zaman	hepsi	buan.scala	1	member-only
+def	zamanTut	timeit	data.scala	1
+val	zeytin	olive	renk.scala	1	member-only
+def	zıpla	saveStyle	trInit.scala	1
+val	Çalgı.AkustikBas	Instrument.ABASS	Instrument.scala	1
+val	Çalgı.AkustikBas	Instrument.ACOUSTIC_BASS	Instrument.scala	1
+val	Çalgı.AkustikBas	Instrument.ACOUSTIC_BASS	muzik.scala	1
+val	Çalgı.AkustikKuyruklu	Instrument.ACOUSTIC_GRAND	Instrument.scala	1
+val	Çalgı.AkustikKuyruklu	Instrument.ACOUSTIC_GRAND	muzik.scala	1
+val	Çalgı.Alkış	Instrument.APPLAUSE	Instrument.scala	1
+val	Çalgı.Alkış	Instrument.APPLAUSE	muzik.scala	1
+val	Çalgı.ElektroKuyruklu	Instrument.ELECTRIC_GRAND	Instrument.scala	1
+val	Çalgı.ElektroKuyruklu	Instrument.ELECTRIC_GRAND	muzik.scala	1
+val	Çalgı.ElektroPiyano	Instrument.ELECTRIC_PIANO	Instrument.scala	1
+val	Çalgı.ElektroPiyano	Instrument.ELPIANO	Instrument.scala	1
+val	Çalgı.ElektroPiyano	Instrument.EPIANO	Instrument.scala	1
+val	Çalgı.ElektroPiyano	Instrument.EPIANO	muzik.scala	1
+val	Çalgı.ElektroPiyano	Instrument.RHODES	Instrument.scala	1
+val	Çalgı.Helikopter	Instrument.HELICOPTER	Instrument.scala	1
+val	Çalgı.Helikopter	Instrument.HELICOPTER	muzik.scala	1
+val	Çalgı.HonkyTonkPiyano	Instrument.HONKYTONK	Instrument.scala	1
+val	Çalgı.HonkyTonkPiyano	Instrument.HONKYTONK	muzik.scala	1
+val	Çalgı.HonkyTonkPiyano	Instrument.HONKYTONK_PIANO	Instrument.scala	1
+val	Çalgı.Kuş	Instrument.BIRD	Instrument.scala	1
+val	Çalgı.Kuş	Instrument.BIRD	muzik.scala	1
+val	Çalgı.ParlakAkustik	Instrument.BRIGHT_ACOUSTIC	Instrument.scala	1
+val	Çalgı.ParlakAkustik	Instrument.BRIGHT_ACOUSTIC	muzik.scala	1
+val	Çalgı.Piyano	Instrument.PIANO	Instrument.scala	1
+val	Çalgı.Piyano	Instrument.PIANO	muzik.scala	1
+val	Çalgı.Tabanca	Instrument.GUNSHOT	Instrument.scala	1
+val	Çalgı.Tabanca	Instrument.GUNSHOT	muzik.scala	1
+val	Çalgı.Telefon	Instrument.PHONE	Instrument.scala	1
+val	Çalgı.Telefon	Instrument.TELEPHONE	Instrument.scala	1
+val	Çalgı.Telefon	Instrument.TELEPHONE	muzik.scala	1
+type	ÇalışmaSırasıKuralDışı	RuntimeException	trInit.scala	1
+type	Çerçeve	Border	arayuz.scala	1	member-only
+type	ÇiniXY	TileXY	cinidunyasi.scala	2
+val	ÇiniXY	TileXY	cinidunyasi.scala	2
+val	Çizim	Costume	cizim.scala	1
+val	Çizim.araba	"/media/costumes/car.png"	cizim.scala	1	alias
+val	Çizim.araba	Costume.car	TurtleWorldAPI.scala	1	alias
+val	Çizim.araba	Costume.car	cizim.scala	1	alias
+val	Çizim.araba1	"/media/car-ride/car1.png"	cizim.scala	1	alias
+val	Çizim.araba2	"/media/car-ride/car2.png"	cizim.scala	1	alias
+val	Çizim.baklava	"/images/field.png"	cizim.scala	1	alias
+val	Çizim.bayrak1	"/images/generic-flag.png"	cizim.scala	1	alias
+val	Çizim.daire	"/images/kindmethod.png"	cizim.scala	1	alias
+val	Çizim.demiryolu	"/media/backgrounds/train-tracks3.gif"	cizim.scala	1	alias
+val	Çizim.demiryolu	Background.trainTrack	TurtleWorldAPI.scala	1	alias
+val	Çizim.demiryolu	Background.trainTrack	cizim.scala	1	alias
+val	Çizim.elSallayanKadın	"/media/costumes/womanwaving.png"	cizim.scala	1	alias
+val	Çizim.elSallayanKadın	Costume.womanWaving	cizim.scala	1	alias
+val	Çizim.kadınElSallarken	"/media/costumes/womanwaving.png"	cizim.scala	1	alias
+val	Çizim.kadınElSallarken	Costume.womanWaving	TurtleWorldAPI.scala	1	alias
+val	Çizim.kadınElSallarken	Costume.womanWaving	cizim.scala	1	alias
+val	Çizim.kalem	"/media/costumes/pencil.png"	cizim.scala	1	alias
+val	Çizim.kalem	Costume.pencil	TurtleWorldAPI.scala	1	alias
+val	Çizim.kalem	Costume.pencil	cizim.scala	1	alias
+val	Çizim.kare	"/images/kindvar.png"	cizim.scala	1	alias
+val	Çizim.scala	"/images/scala16x16.png"	cizim.scala	1	alias
+val	Çizim.top1	"/media/collidium/ball1.png"	cizim.scala	1	alias
+val	Çizim.top2	"/media/collidium/ball2.png"	cizim.scala	1	alias
+val	Çizim.top3	"/media/collidium/ball3.png"	cizim.scala	1	alias
+val	Çizim.top4	"/media/collidium/ball4.png"	cizim.scala	1	alias
+val	Çizim.topKanatlı1	"/media/flappy-ball/ballwing1.png"	cizim.scala	1	alias
+val	Çizim.topKanatlı2	"/media/flappy-ball/ballwing2.png"	cizim.scala	1	alias
+val	Çizim.tuğla	"/media/collidium/bwall.png"	cizim.scala	1	alias
+val	Çizim.yarasa1	"/media/costumes/bat1-a.png"	cizim.scala	1	alias
+val	Çizim.yarasa1	Costume.bat1	cizim.scala	1	alias
+val	Çizim.yarasa1a	"/media/costumes/bat1-a.png"	cizim.scala	1	alias
+val	Çizim.yarasa1a	Costume.bat1	TurtleWorldAPI.scala	1	alias
+val	Çizim.yarasa1a	Costume.bat1	cizim.scala	1	alias
+val	Çizim.yarasa1b	"/media/costumes/bat1-b.png"	cizim.scala	1	alias
+val	Çizim.yarasa1b	Costume.bat2	TurtleWorldAPI.scala	1	alias
+val	Çizim.yarasa1b	Costume.bat2	cizim.scala	1	alias
+val	Çizim.yarasa2	"/media/costumes/bat1-b.png"	cizim.scala	1	alias
+val	Çizim.yarasa2	Costume.bat2	cizim.scala	1	alias
+val	Çizim.yıldız	"/images/star.png"	cizim.scala	1	alias
+type	ÖncelikKuyruğu	PriorityQueue	kuyruk.scala	1	member-only
+val	ÖncelikKuyruğu	PriorityQueue	kuyruk.scala	1	member-only
+type	ÖncelikSırası	PriorityQueue	kuyruk.scala	1	member-only
+type	ÖnyüklemeYöntemHatası	BootstrapMethodError	turler.scala	1
+type	Üçgen	Triangle2D	data.scala	1	member-only
+type	Üçgen	Triangle2D	package.scala	1	member-only
+def	çarp	product	dizi.scala	3	member-only
+def	çarp	product	dizik.scala	2	member-only
+def	çarp	product	dizin.scala	1	member-only
+def	çarp	product	eslem.scala	2	member-only
+def	çarp	product	kume.scala	1	member-only
+def	çarp	product	kuyruk.scala	2	member-only
+def	çarp	product	miskindizin.scala	1	member-only
+def	çarp	product	yazi.scala	1	member-only
+def	çarp	product	yineleyici.scala	1	member-only
+def	çarp	product	yoney.scala	1	member-only
+def	çarptıMı	intersects	resim.scala	1	member-only
+def	çarpışma	find	resim.scala	1	member-only
+def	çarpışmalar	filter	resim.scala	1	member-only
+def	çarpıştı	intersects	resim.scala	1	member-only
+def	çek	pop	kuyruk.scala	1	member-only
+def	çekBelki	removeHeadOption	kuyruk.scala	1	member-only
+def	çekDoğruKaldıkça	popWhile	kuyruk.scala	1	member-only
+def	çekHepsini	popAll	kuyruk.scala	1	member-only
+val	çelikMavisi	steelBlue	renk.scala	1	member-only
+def	çerçeveyiKur	setBorder	arayuz.scala	9	member-only
+def	çevir	spin	renk.scala	2
+def	çevir	spin	resim.scala	1
+def	çevir	towards	trInit.scala	1
+def	çevirOranla	spinBy	renk.scala	1	member-only
+def	çevre	perimeter	resim.scala	1
+def	çevreKalemRenginiKur	setPerimeterPenColor	kumanda.scala	1	member-only
+def	çevreRenginiKur	setPerimeterColor	kumanda.scala	1	member-only
+def	çinidenKojoya	tileToKojo	cinidunyasi.scala	1	member-only
+def	çiz	draw	cinidunyasi.scala	1
+def	çiz	draw	kumanda.scala	1
+def	çiz	draw	resim.scala	3
+def	çizBaştan	repaint	resim.scala	1	member-only
+def	çizMerkezde	drawCentered	resim.scala	1
+def	çizMerkezdeYazı	drawCenteredMessage	resim.scala	1
+def	çizSahne	drawStage	resim.scala	1
+def	çizVeSakla	drawAndHide	trInit.scala	1
+def	çizgi	line	tuvalcizim.scala	1	member-only
+def	çizgiKenar	createLineBorder	arayuz.scala	1	member-only
+def	çizili	isDrawn	resim.scala	1	member-only
+def	çizimiKaydet	exportImage	trInit.scala	2
+def	çizimiKaydetBoy	exportImageH	trInit.scala	1
+def	çizimiKaydetEn	exportImageW	trInit.scala	1
+def	çizimiKontrolEt	checkDraw	resim.scala	1	member-only
+def	çizimiPulBoyundaKaydet	exportThumbnail	trInit.scala	1
+def	çizimiSil	clearStepDrawing	data.scala	1
+def	çizimiSil	clearStepDrawing	trInit.scala	1
+val	çokHızlı	SuperFast	package.scala	1	member-only
+val	çokHızlı	superFast	data.scala	1
+val	çık	escape	klavye.scala	1	member-only
+def	çıkar	remove	dizik.scala	2	member-only
+def	çıkar	remove	dizim.scala	1	member-only
+def	çıkar	remove	eslem.scala	1	member-only
+def	çıkar	remove	kuyruk.scala	2	member-only
+def	çıkarHepsini	subtractAll	dizik.scala	1	member-only
+def	çıkarHepsini	subtractAll	kuyruk.scala	2	member-only
+def	çıkarSondan	removeLast	kuyruk.scala	2	member-only
+def	çıkarSondanBelki	removeLastOption	kuyruk.scala	2	member-only
+def	çıkarSondanDoğruKaldıkça	removeLastWhile	kuyruk.scala	2	member-only
+def	çıkarÖgeyi	subtractOne	dizik.scala	1	member-only
+def	çıkarİlkUyanı	removeFirst	kuyruk.scala	2	member-only
+def	çıkarılmış	excl	kume.scala	1	member-only
+def	çıkarılmış	removed	eslem.scala	1	member-only
+def	çıkarılmış	subtractOne	eslem.scala	1	member-only
+def	çıktıArtalanınıKur	setOutputBackground	trInit.scala	1
+def	çıktıYazıRenginiKur	setOutputTextColor	trInit.scala	1
+def	çıktıYazıYüzüBoyunuKur	setOutputTextFontSize	trInit.scala	1
+def	çıktıyıSil	clearOutput	data.scala	1
+def	çıktıyıSil	clearOutput	trInit.scala	1
+def	öbekle	groupBy	dizi.scala	5	member-only
+def	öbekle	groupBy	dizik.scala	2	member-only
+def	öbekle	groupBy	dizin.scala	1	member-only
+def	öbekle	groupBy	eslem.scala	2	member-only
+def	öbekle	groupBy	kume.scala	1	member-only
+def	öbekle	groupBy	kuyruk.scala	2	member-only
+def	öbekle	groupBy	miskindizin.scala	1	member-only
+def	öbekle	groupBy	yazi.scala	1	member-only
+def	öbekle	groupBy	yoney.scala	1	member-only
+def	öbekleEsnek	from	dizin.scala	1	member-only
+def	öbekleİşle	groupMap	dizi.scala	3	member-only
+def	öbekleİşle	groupMap	dizik.scala	2	member-only
+def	öbekleİşle	groupMap	dizin.scala	1	member-only
+def	öbekleİşle	groupMap	eslem.scala	2	member-only
+def	öbekleİşle	groupMap	kume.scala	1	member-only
+def	öbekleİşle	groupMap	kuyruk.scala	2	member-only
+def	öbekleİşle	groupMap	miskindizin.scala	1	member-only
+def	öbekleİşle	groupMap	yoney.scala	1	member-only
+def	öbekleİşleİndirge	groupMapReduce	dizi.scala	3	member-only
+def	öbekleİşleİndirge	groupMapReduce	dizik.scala	1	member-only
+def	öbekleİşleİndirge	groupMapReduce	dizin.scala	1	member-only
+def	öbekleİşleİndirge	groupMapReduce	eslem.scala	2	member-only
+def	öbekleİşleİndirge	groupMapReduce	kume.scala	1	member-only
+def	öbekleİşleİndirge	groupMapReduce	kuyruk.scala	2	member-only
+def	öbekleİşleİndirge	groupMapReduce	miskindizin.scala	1	member-only
+def	öbekleİşleİndirge	groupMapReduce	yoney.scala	1	member-only
+def	öbekli	grouped	dizi.scala	3	member-only
+def	öbekli	grouped	dizik.scala	2	member-only
+def	öbekli	grouped	dizin.scala	1	member-only
+def	öbekli	grouped	eslem.scala	2	member-only
+def	öbekli	grouped	kume.scala	1	member-only
+def	öbekli	grouped	kuyruk.scala	2	member-only
+def	öbekli	grouped	miskindizin.scala	1	member-only
+def	öbekli	grouped	yazi.scala	1	member-only
+def	öbekli	grouped	yineleyici.scala	1	member-only
+def	öbekli	grouped	yoney.scala	1	member-only
+def	ölçek	scale	sayi.scala	1
+def	ölçeğiKur	setScale	sayi.scala	1	member-only
+def	önalanıKur	setForeground	arayuz.scala	9	member-only
+val	önceki	PREVIOUS	arayuz.scala	1	member-only
+val	önder	LEADING	arayuz.scala	1	member-only
+def	öneAl	moveToFront	resim.scala	1	member-only
+def	önler	inits	dizi.scala	3	member-only
+def	önler	inits	dizik.scala	2	member-only
+def	önler	inits	dizin.scala	1	member-only
+def	önler	inits	eslem.scala	1	member-only
+def	önler	inits	kume.scala	1	member-only
+def	önler	inits	kuyruk.scala	2	member-only
+def	önler	inits	miskindizin.scala	1	member-only
+def	önler	inits	yazi.scala	1	member-only
+def	önler	inits	yoney.scala	1	member-only
+def	önler	map	eslem.scala	1	member-only
+def	öntanımlı	withDefault	eslem.scala	2	member-only
+def	öntanımlıDeğerle	withDefaultValue	eslem.scala	2	member-only
+def	önü	init	dizi.scala	3	member-only
+def	önü	init	dizik.scala	2	member-only
+def	önü	init	dizin.scala	1	member-only
+def	önü	init	eslem.scala	2	member-only
+def	önü	init	kume.scala	1	member-only
+def	önü	init	kuyruk.scala	2	member-only
+def	önü	init	miskindizin.scala	1	member-only
+def	önü	init	yazi.scala	1	member-only
+def	önü	init	yoney.scala	1	member-only
+def	önüneEkle	cons	miskindizin.scala	1	member-only
+def	önüneEkle	prepended	dizi.scala	3	member-only
+def	önüneEkle	prepended	dizik.scala	2	member-only
+def	önüneEkle	prepended	dizin.scala	1	member-only
+def	önüneEkle	prepended	kuyruk.scala	1	member-only
+def	önüneEkle	prepended	yazi.scala	1	member-only
+def	önüneEkle	prepended	yoney.scala	1	member-only
+def	önüneEkleHepsini	prependedAll	dizi.scala	3	member-only
+def	önüneEkleHepsini	prependedAll	dizik.scala	2	member-only
+def	önüneEkleHepsini	prependedAll	dizin.scala	1	member-only
+def	önüneEkleHepsini	prependedAll	kuyruk.scala	1	member-only
+def	önüneEkleHepsini	prependedAll	miskindizin.scala	1	member-only
+def	önüneEkleHepsini	prependedAll	yazi.scala	1	member-only
+def	önüneEkleHepsini	prependedAll	yoney.scala	1	member-only
+def	örgü	weave	resim.scala	1
+def	ötele	trans	resim.scala	6
+def	öteleme	trans	resim.scala	1	deprecated
+def	öteleme	trans	trInit.scala	1	deprecated
+def	üste	above	resim.scala	1	member-only
+def	üzerinde	over	resim.scala	1	member-only
+def	üçgenDöşeme	triangulate	trInit.scala	1
+type	İkiUçluKuyruk	ArrayDeque	kuyruk.scala	1	member-only
+type	İkil	Boolean	data.scala	1
+type	İkil	Boolean	package.scala	1
+type	İkilDiziğiDizisi	ofBoolean	turler.scala	1	member-only
+def	İkildenİkile	Boolean2boolean	turler.scala	1
+type	İkisindenBiri	Either	ikisindenbiri.scala	1
+type	İmge	Image	data.scala	2
+type	İmge	Image	package.scala	1
+type	İmgeİşlemi	ImageOp	package.scala	1
+type	İmgeİşlemi	ImageOp	turler.scala	1
+def	İngilizce	getTime	buan.scala	1	member-only
+type	İriKesir	BigDecimal	data.scala	1
+type	İriKesir	BigDecimal	package.scala	1
+type	İriKesir	BigDecimal	sayi.scala	1
+val	İriKesir	BigDecimal	sayi.scala	1
+type	İriSayı	BigInt	data.scala	1
+type	İriSayı	BigInt	package.scala	1
+type	İriSayı	BigInt	sayi.scala	1
+val	İriSayı	BigInt	sayi.scala	1
+type	İşParçacığıÖlümü	ThreadDeath	turler.scala	1
+type	İşletimBağlamı	ExecutionContext	gelecek.scala	1	member-only
+type	İşlev1	Function1	data.scala	1
+type	İşlev1	Function1	turler.scala	1
+type	İşlev2	Function2	data.scala	1
+type	İşlev2	Function2	turler.scala	1
+type	İşlev3	Function3	data.scala	1
+type	İşlev3	Function3	turler.scala	1
+def	ızgarayıGizle	gridOff	trInit.scala	1
+def	ızgarayıGöster	gridOn	trInit.scala	1
+def	ışıklar	lights	resim.scala	1
+def	ışınlarıAç	beamsOn	trInit.scala	1
+def	ışınlarıKapat	beamsOff	trInit.scala	1
+def	şekil	drawShape	tuvalcizim.scala	1	member-only
+def	şekilBaşla	beginShape	tuvalcizim.scala	1
+def	şekilBitir	endShape	tuvalcizim.scala	1
