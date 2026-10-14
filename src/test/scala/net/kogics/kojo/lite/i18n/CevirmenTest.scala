@@ -115,6 +115,21 @@ import net.kogics.kojo.lite.i18n.tr.dict
     tr2en("sil()\nresim.sil()") shouldBe "clear()\nresim.erase()"
   }
 
+  test("nokta: alıcı TuvalÇizim ise point, değilse vertex -- tür bildirimi ya da canlandırTuvalÇizimle lambdası (fireworks-canvas)") {
+    // bildirimli parametre
+    tr2en("tanım göster(tuval: TuvalÇizim) { tuval.nokta(1, 2) }") should include("tuval.point(1, 2)")
+    // tek bloklu lambda
+    tr2en("canlandırTuvalÇizimle { t => t.nokta(1, 2) }") should include("t.point(1, 2)")
+    // kurulumlu biçim: iki blok, ikisinin parametresi de tuval
+    val iki = tr2en("canlandırKurulumluTuvalÇizimle { a => a.nokta(0, 0) } { b => b.nokta(3, 4) }")
+    iki should include("a.point(0, 0)")
+    iki should include("b.point(3, 4)")
+    // TuvalÇizim olmayan alıcı: eski davranış (GeoNokta.nokta = vertex)
+    tr2en("tanım f(n: GeoNokta) { n.nokta(1, 2) }") should include("n.vertex(1, 2)")
+    // lambdanın İÇİNDEKİ başka lambda parametresi tuval sayılmaz
+    tr2en("canlandırTuvalÇizimle { t => liste.herbiriİçin { p => p.nokta(1, 2) } }") should include("p.vertex(1, 2)")
+  }
+
   test("saydamlık: arity'ye göre ayrılıyor -- üye( opacityMod, üye opacity, yalın opac (#75)") {
     // Üç aday da n=1 olduğu için karar alfabetiğe kalıyordu ve Resim'in üyesi OLMAYAN
     // `opac` kazanıyordu (yalın yazılımcık komutu için üretilmiş satır). İki İngilizce

@@ -242,6 +242,7 @@ tr>en	tuval	Resim.	^stageBorder	Resim.tuval = tuvalSınırları (resim.scala:438
 en>tr	setColumns	yalın	-	new TextField { setColumns(3) }: Swing üyesi; sütunSayısınıKur Türkçe arayüz sarmalayıcısında
 tr>en	eşEkle	üye	+=	eslem.scala: def eşEkle(ikili) = m += ikili
 tr>en	nokta	üye	vertex	GeoNokta.nokta = vertex (tree2, sprite-boundary-polygon); kaplumbağa.nokta = dot, tuval.nokta = point -- alıcı türü bilinmiyor, en sık kullanılan
+tr>en	nokta	TuvalÇizim.	point	Alıcı TuvalÇizim ise (`tuval: TuvalÇizim` bildirimi ya da canlandırTuvalÇizimle lambda parametresi, bkz. Çevirmen.tuvalDeğişkenleri): vertex şekil açılmadan çalışınca düşer (fireworks-canvas, kojojs-dev#220)
 en>tr	setHorizontalAlignment	yalın	-	new Label { setHorizontalAlignment(...) }: Swing üyesi; yatayDüzeniKur Türkçe arayüz sarmalayıcısında
 en>tr	bouncePicVectorOffStage	*	sahneKenarındanYansıtma	resim.scala: Yöney2B(bouncePicOffStage(r.p, v.v)); İngilizce'de iki ad aynı işi görür
 tr>en	çalıyorMu	üye	isMp3Playing	package.scala örtük sınıfı (KMp3), üreteç package.scala'dan yalnız type/val alır

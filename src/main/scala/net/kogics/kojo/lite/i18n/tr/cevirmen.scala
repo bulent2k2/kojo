@@ -161,6 +161,43 @@ object Çevirmen {
       }
       küme.result()
     }
+    // TuvalÇizim türündeki değişkenler (yalnız TR->EN): `tuval: TuvalÇizim` bildirimleri ile
+    // `canlandırTuvalÇizimle { tuval => ... }` (ve kurulumlu biçiminin iki bloğu) lambda
+    // parametreleri. Neden: `tuval.nokta(x, y)` -> point, `GeoNokta.nokta` -> vertex, ikisi de
+    // `nokta`; sözcük düzeyinde alıcının türü bilinmiyor ve en sık görülen (vertex) alınıyordu --
+    // betik derleniyor, çalışınca `beginShape` olmadan düşüyordu. Alıcı bu kümedeyse üye araması
+    // sanal `TuvalÇizim.` alıcısıyla yapılır (ceviri-kurallar.tsv: `nokta  TuvalÇizim.  point`).
+    // Bildirimsiz kullanım (başka işleve geçen tuval) bilinmez; o zaman eski, alıcısız davranış.
+    val tuvalDeğişkenleri: Set[String] =
+      if (yön != TürkçedenİngilizceyeYön) Set.empty
+      else {
+        val an = jetonlar.indices.filter(j => anlamlı(jetonlar(j))).toVector
+        val küme = Set.newBuilder[String]
+        def jt(k: Int) = jetonlar(an(k)).tokenType
+        def metin(k: Int) = jetonlar(an(k)).text
+        for (k <- an.indices) {
+          // `ad: TuvalÇizim`
+          if (k >= 2 && metin(k) == "TuvalÇizim" && jt(k - 1) == Tokens.COLON && tanımlayıcı(jetonlar(an(k - 2)))) küme += metin(k - 2)
+          // `canlandırTuvalÇizimle { ad => ...}`; kurulumlu biçimde ikinci blok da
+          if (metin(k) == "canlandırTuvalÇizimle" || metin(k) == "canlandırKurulumluTuvalÇizimle") {
+            // m'deki bloğun lambda parametresini al, eşleşen kapanıştan sonraki konumu döndür
+            def blok(m: Int): Int =
+              if (m + 2 < an.length && (jt(m) == Tokens.LBRACE || jt(m) == Tokens.LPAREN)) {
+                if (tanımlayıcı(jetonlar(an(m + 1))) && jt(m + 2) == Tokens.ARROW) küme += metin(m + 1)
+                val açan = jt(m); val kapan = if (açan == Tokens.LBRACE) Tokens.RBRACE else Tokens.RPAREN
+                var derinlik = 0; var n = m
+                do {
+                  if (jt(n) == açan) derinlik += 1 else if (jt(n) == kapan) derinlik -= 1
+                  n += 1
+                } while (derinlik > 0 && n < an.length)
+                n
+              } else an.length
+            val ilkSon = blok(k + 1)
+            if (metin(k) == "canlandırKurulumluTuvalÇizimle") blok(ilkSon)
+          }
+        }
+        küme.result()
+      }
     var önceki: Option[Token] = None // boşluk/yorum dışı bir önceki jeton
     var öncekininÖncekisi: Option[Token] = None
     var atla = Set.empty[Int]        // alıcı+nokta+ad birden değiştirilince yutulan jetonlar
@@ -307,6 +344,8 @@ object Çevirmen {
             case None =>
               // Sıra: alıcıya özel düz kural (`tuvalAlanı.` -> height), sonra alıcı/üye/yalın bağlamı.
               val alıcıAdı = if (üye) öncekininÖncekisi.filter(tanımlayıcı).map(_.text + ".") else None
+              // Alıcı bir TuvalÇizim ise önce sanal `TuvalÇizim.` alıcısına bakılır (bkz. tuvalDeğişkenleri).
+              val tuvalAlıcısı = üye && öncekininÖncekisi.exists(a => tuvalDeğişkenleri(a.text))
               // `r.saydamlık(0.5)` ile `r.saydamlık` arity'si farklı iki İngilizce yönteme
               // gidiyor (opacityMod / opacity); bağlamda ayırmazsak ad düzeyinde kural
               // ikisini ayırt edemez (sorun #75). AYNI SATIRDA aranıyor: sonrakiAnlamlı
@@ -340,7 +379,8 @@ object Çevirmen {
                 if (kullanıcıTanımlı) Some(kullanıcıÇevirisi(t.text))
                 // Açık "-" kuralı (vertex yalın, setColumns yalın) sonek düşüşünü de keser (ölçüldü: tree2).
                 else if (alıcıyaÖzelÇevirme || sözlük.çevrilmez(yönAdı, t.text, bağlam)) None
-                else alıcıAdı.flatMap(a => seç(t.text, a)).orElse(seç(t.text, bağlam))
+                else (if (tuvalAlıcısı) seç(t.text, "TuvalÇizim.") else None)
+                  .orElse(alıcıAdı.flatMap(a => seç(t.text, a))).orElse(seç(t.text, bağlam))
                   // Kullanıcının kendi adı (TR->EN) sonek sayılıp üye tablosuna bakmaz: `zaman += 1`, önündeki
                   // jeton bir değer olsa da `zaman` -> `hepsi` olmamalı (tanım yerinde kalıyor, tutarsız olurdu).
                   .orElse(if (sonekKonumu && !(yön == TürkçedenİngilizceyeYön && kullanıcıAdları(t.text))) seç(t.text, ÇeviriSözlüğü.BağlamÜye) else None)
