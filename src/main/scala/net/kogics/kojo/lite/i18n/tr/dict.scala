@@ -25,13 +25,13 @@ Ref Kojo version: ../../Versions.scala
 package net.kogics.kojo.lite.i18n.tr
 
 object dict {
-  // Ekşi sözlükten: application programming interface.. yani ne diyor "uygulama programlama arabirimi". demek ki uygulama programlamak icin saglanan arabirimlere grup olarak api deniyormuş
+  // From Ekşi Sözlük (a Turkish user-contributed dictionary): application programming interface.. so what does it say: "uygulama programlama arabirimi". Apparently the interfaces provided for programming applications are called API as a group
   val miscCreativeMapping = Map(
     "group" -> "öbek", // groupBy öbekle, grouped öbekli
-    "default" -> "öntanım", // varsayılan yerine; withDefault öntanımlı (varsayılanlı takma adı)
+    "default" -> "öntanım", // instead of varsayılan; withDefault öntanımlı (varsayılanlı is its alias)
     "withDefault" -> "öntanımlı",
     "hash" -> "kıyma", // hashCode kıymaKodu HashMap KıymaEşlek HashSet KıymaKüme
-    "refresh" -> "ekran tazeleme", // refresh rate, E.T. hızı. ETH
+    "refresh" -> "ekran tazeleme", // refresh rate: E.T. hızı (ETH)
     "frame" -> "çizim",
     "nil" -> "boş",
     "double quotes" -> "çift tırnak işareti",
@@ -40,9 +40,9 @@ object dict {
     "buffered" -> "bellekte bellekli", //  Bellekteİmge BellekliYineleyici
     "bootstrap" -> "önyükleme",
     "regular expression" -> "düzenli deyiş", // regex
-    // Sınama terimleri. "sınama" deponun kendi kullanımı (KoleksiyonYardımıTest'te
-    // "Örnek sınanıyor", türListesiKaynakla_uyuşuyor savları) -- alıntı "test"
-    // yerine onu sürdürüyoruz.
+    // Testing terms. "sınama" is the repository's own usage (in KoleksiyonYardımıTest,
+    // "Örnek sınanıyor", the türListesiKaynakla_uyuşuyor assertions) -- we keep using it
+    // instead of the loanword "test".
     "test" -> "sınama",
     "test driven development" -> "sınamayla güdümlü geliştirme", // TDD -> SGG
     "failing test" -> "düşen sınama",
@@ -55,7 +55,7 @@ object dict {
     "hesap" -> "ölçüm",
     "cebir" -> "ölçülüm",
     "polynomial" -> "çok terimli",
-    "iterate" -> "yinele",  // todo not repeat -- üzerinden geçmek
+    "iterate" -> "yinele",  // todo not "repeat" -- it means going over (something)
     "iteration" -> "yineleme",
     "iterator" -> "yineleyici",
     "iterable" -> "yinelenebilir",
@@ -67,8 +67,8 @@ object dict {
     "runtime" -> "çalışmasırası",
     "compile" -> "derleme",
     "compiler" -> "derleyici",
-    "point" -> "göster", // işaret et
-    "pointer" -> "gösterge", // işaretçi
+    "point" -> "göster", // "işaret et" (mark, indicate)
+    "pointer" -> "gösterge", // "işaretçi" (pointer, as in a marker)
     "reference" -> "gönderge",
     "operation" -> "işlem",
     "unary" -> "biril", // todo: unary_!
@@ -88,18 +88,18 @@ object dict {
     "wrap" -> "sar sargı",
     "Wrapper" -> "Sarıcı",
     "UserCode" -> "KullanıcınınYazılımı",
-    "thread" -> "iş parçacığı", // thread dispatching: iş parçacığı işlemci zamanlaması!
-    "script" -> "betik", // veya yazılımcık
+    "thread" -> "iş parçacığı", // thread dispatching: iş parçacığı işlemci zamanlaması! (processor scheduling of threads)
+    "script" -> "betik", // or "yazılımcık"
     "generic" -> "genel",
   )
 
-  // skala kılavuzunda kullanma sırasıyla (yaklaşık olarak)
+  // in the order of use in the Scala guide (approximately)
   // excludes scala (2 and 3) and java keywords which are in the next map
   val otherCommonWords = Map(
     "cursor" -> "imleç",
     "programlama" -> "yazılım",
     "kelime" -> "sözcük", // ttodo!
-    "method" -> "yöntem", // ttodo! metod yerine yöntem sözcüğünü kullan!
+    "method" -> "yöntem", // ttodo! use the word yöntem instead of metod!
     "set" -> "kur veya küme",
     "to" -> "|-| anlamı: ilkSayıdanSonSayıyaKadar", // 1 to 4 -> Aralık.kapalı(1, 4)
     "until" -> "|- anlamı: ilkSayıdanSonSayıyaKadarAmaSonSayıHariç", // 1 until 4 -> Aralık(1, 4)
@@ -147,7 +147,7 @@ object dict {
     "contains" -> "içeriyorMu",
     "containsSlice" -> "içeriyorMuDilim",
     "element" -> "öge",
-    "indexOf" -> "sırası", // ya da konumu
+    "indexOf" -> "sırası", // or konumu (position)
     "lastIndexOf" -> "sırasıSondan",
     "charAt" -> "harf",
     "substring" -> "parçası",
@@ -162,13 +162,13 @@ object dict {
     "init" -> "önü",
     "initialize" -> "başlat, ilklendir, en baştan başlat",
     "last" -> "sonu",
-    "forall" -> "hepsiİçinDoğruMu", // hepsiDoğruMu
+    "forall" -> "hepsiİçinDoğruMu", // or hepsiDoğruMu
     "slice" -> "dilim",
     "zip" -> "ikile",
     "zipWithIndex" -> "ikileSırayla",
     "spin" -> "çevir",
-    "rgb" -> "kym",  // kırmızı yeşil mavi
-    "rgba" -> "kyms",  // saydamlık
+    "rgb" -> "kym",  // red green blue (kırmızı yeşil mavi)
+    "rgba" -> "kyms",  // opacity (saydamlık)
     "linearGradient" -> "doğrusalDeğişim",
     "linearMultipleGradient" -> "doğrusalÇokluDeğişim",
     "radialGradient" -> "merkezdenDışarıDoğruDeğişim",
@@ -207,7 +207,7 @@ object dict {
     "execution" -> "işletim",
     "application" -> "uygulanış",
     "" -> "",
-    // Yerinde değiştirenler ve türe özgü yöntemler
+    // In-place mutators and type-specific methods
     "filterInPlace" -> "eleYerinde",
     "mapInPlace" -> "işleYerinde",
     "flatMapInPlace" -> "düzİşleYerinde",
@@ -223,16 +223,16 @@ object dict {
     "sliceInPlace" -> "dilimYerinde",
     "patchInPlace" -> "yamaYerinde",
     "padToInPlace" -> "uzatYerinde",
-    "addAll" -> "ekleHepsini", // eski ad: hepsiniEkle (eskitildi)
-    "prepend" -> "ekleBaşa", // eski ad: başaEkle (eskitildi)
-    "prependAll" -> "ekleBaşaHepsini", // eski ad: başaEkleHepsini (eskitildi)
-    "insert" -> "ekleAraya", // eski ad: araEkle (eskitildi)
+    "addAll" -> "ekleHepsini", // old name: hepsiniEkle (deprecated)
+    "prepend" -> "ekleBaşa", // old name: başaEkle (deprecated)
+    "prependAll" -> "ekleBaşaHepsini", // old name: başaEkleHepsini (deprecated)
+    "insert" -> "ekleAraya", // old name: araEkle (deprecated)
     "insertAll" -> "ekleArayaHepsini",
     "removeAll" -> "alHepsini",
     "removeAllReverse" -> "alHepsiniTersten",
     "removeFirst" -> "çıkarİlkUyanı",
-    "removeLast" -> "çıkarSondan", // takma adı: sondanÇıkar
-    "removeLastOption" -> "çıkarSondanBelki", // takma adı: sondanÇıkarBelki
+    "removeLast" -> "çıkarSondan", // alias: sondanÇıkar
+    "removeLastOption" -> "çıkarSondanBelki", // alias: sondanÇıkarBelki
     "removeLastWhile" -> "çıkarSondanDoğruKaldıkça",
     "popAll" -> "çekHepsini",
     "popWhile" -> "çekDoğruKaldıkça",
@@ -253,14 +253,14 @@ object dict {
     "removeLastOption" -> "sondanÇıkarBelki",
     "front" -> "ilki",
     "toQueue" -> "kuyruğa",
-    // İkisindenBiri (bkz. i18n/tr/ikisindenbiri.scala)
+    // İkisindenBiri (see i18n/tr/ikisindenbiri.scala)
     "isLeft" -> "solMu",
     "isRight" -> "sağMı",
     "swap" -> "takasla",
     "merge" -> "birleştir",
     "toOption" -> "belkiye",
     "cond" -> "koşulla",
-    // Yineleyici (bkz. i18n/tr/yineleyici.scala)
+    // Yineleyici (see i18n/tr/yineleyici.scala)
     "hasNext" -> "dahaVarMı",
     "next" -> "sıradaki",
     "nextOption" -> "sıradakiBelki",
@@ -268,7 +268,7 @@ object dict {
     "duplicate" -> "ikizYap",
     "sameElements" -> "gösterdikleriAynıMı",
     "dequeueAll" -> "baştanAlHepsini",
-    // Yığın (Stack) -- it/koy ve çek/al ikili adlarında sözlüğe İLK ad giriyor
+    // Yığın (Stack) -- of the paired names it/koy and çek/al, the FIRST name is the one that enters the dictionary
     "push" -> "it",
     "pushAll" -> "itHepsini",
     "pop" -> "çek",
@@ -289,7 +289,7 @@ object dict {
     "updatedWith" -> "değiştirİşlevle",
     "removed" -> "çıkarılmış",
     "removedAll" -> "hepsiÇıkarılmış",
-    "withDefault" -> "varsayılanlı", // takma adı: öntanımlı
+    "withDefault" -> "varsayılanlı", // alias: öntanımlı
     "foreachEntry" -> "herİkiliİçin",
     "keysIterator" -> "anahtarYineleyici",
     "valuesIterator" -> "değerYineleyici",
@@ -308,7 +308,7 @@ object dict {
     "toRight" -> "sağa",
     "when" -> "iseVer",
     "unless" -> "değilseVer",
-    // Dizi ailesi + MiskinDizin ortak çekirdeği -- bkz. dizi/dizin/dizik/yoney/miskindizin.scala
+    // The Dizi family + the common core of MiskinDizin -- see dizi/dizin/dizik/yoney/miskindizin.scala
     "indexOfSlice" -> "dilimSırası",
     "lastIndexOfSlice" -> "dilimSırasıSondan",
     "find" -> "bul",
@@ -371,7 +371,7 @@ object dict {
   // ~/src/scala-2/src/reflect/scala/reflect/internal/StdNames.scala
   // https://docs.scala-lang.org/scala3/reference/syntax.html
   // TODO: make sure these are not used in any turkish samples or turkish translation code!
-  // They are in abc-order:
+  // They are in alphabetical order:
   //   baskın bazı bildir birlikte bu damgalı den dene deste dez doğru durum eğer eşle geriDön getir
   //   için koru miskin nesne sakla son sonunda soyut sınıf tanım tür ver yakala yanlış yap
   //   yayar yeni yineleDoğruKaldıkça yok yoksa örtük özellik üst
@@ -419,9 +419,9 @@ object dict {
   )
   val keywordTranslation = Map(
     "abstract" -> "soyut",
-    "case" -> "durum", // ya da olgu: case class -> durum sınıf, match/case eşle/durum
+    "case" -> "durum", // or "olgu": case class -> durum sınıf, match/case eşle/durum
     "catch" -> "yakala",
-    "class" -> "sınıf", // çeşit ya da cins. type -> tür
+    "class" -> "sınıf", // "çeşit" or "cins" (kind, sort). type -> tür
     "def" -> "tanım",
     "do" -> "yap",
     "else" -> "yoksa",
@@ -431,8 +431,8 @@ object dict {
     "false" -> "yanlış",
     "final" -> "son",
     "finally" -> "sonunda",
-    "for" -> "için",  // yerine içinYinele
-    "forSome" -> "bazı", // eskitilmiş ve dilden çıkarılmış
+    "for" -> "için",  // instead of içinYinele
+    "forSome" -> "bazı", // deprecated and removed from the language
     "given" -> "verilen",
     "if" -> "eğer",
     "implicit" -> "örtük",
@@ -442,9 +442,9 @@ object dict {
     "new" -> "yeni",
     "null" -> "yok",
     "object" -> "nesne",
-    "override" -> "baskın", // override def -> baskın (üstüne ya da yeniden) tanım TODO
+    "override" -> "baskın", // override def -> baskın (over, or again) tanım TODO
     "package" -> "deste",
-    "private" -> "gizli", // sakla?
+    "private" -> "gizli", // sakla? (hide, keep)
     "protected" -> "koru",
     "return" -> "geriDön",
     "sealed" -> "damgalı",
@@ -456,8 +456,8 @@ object dict {
     "true" -> "doğru",
     "try" -> "dene",
     "type" -> "tür",
-    "val" -> "dez", // değişmez değer
-    "var" -> "den", // değişken değer
+    "val" -> "dez", // immutable value (değişmez değer)
+    "var" -> "den", // variable value (değişken değer)
     "while" -> "yineleDoğruKaldıkça", // predicate: koşul
     "with" -> "birlikte",
     "yield" -> "ver"
