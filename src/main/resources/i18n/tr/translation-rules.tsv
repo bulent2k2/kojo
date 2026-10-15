@@ -244,6 +244,10 @@ en>tr	setColumns	bare	-	new TextField { setColumns(3) }: a Swing member; sütunS
 tr>en	eşEkle	member	+=	eslem.scala: def eşEkle(ikili) = m += ikili
 tr>en	nokta	member	vertex	GeoNokta.nokta = vertex (tree2, sprite-boundary-polygon); turtle.nokta = dot, canvas.nokta = point -- the receiver type is unknown, the most frequently used one
 tr>en	nokta	TuvalÇizim.	point	if the receiver is TuvalÇizim (a `tuval: TuvalÇizim` declaration or a canlandırTuvalÇizimle lambda parameter, see Translator.canvasVariables): vertex fails when run without an open shape (fireworks-canvas, kojojs-dev#220)
+en>tr	fill	CanvasDraw.	boya	if the receiver is a CanvasDraw (a `cd: CanvasDraw` declaration or an animateWithCanvasDraw lambda parameter, see Translator.canvasVariables): fill is boya on the canvas, doldur on a picture
+en>tr	rotate	CanvasDraw.	döndürRadyan	CanvasDraw.rotate takes radians = döndürRadyan (döndürDerece is rotateDegrees); on a picture rotate is döndür
+en>tr	beginShape	CanvasDraw.	şekilBaşla	CanvasDraw.beginShape = şekilBaşla; bare başla is a different object's member
+en>tr	endShape	CanvasDraw.	şekilBitir	CanvasDraw.endShape = şekilBitir; bare bitir is a different object's member
 en>tr	setHorizontalAlignment	bare	-	new Label { setHorizontalAlignment(...) }: a Swing member; yatayDüzeniKur is in the Turkish UI wrapper
 en>tr	bouncePicVectorOffStage	*	sahneKenarındanYansıtma	resim.scala: Yöney2B(bouncePicOffStage(r.p, v.v)); in English two names do the same job
 tr>en	çalıyorMu	member	isMp3Playing	the implicit class in package.scala (KMp3); the generator takes only type/val from package.scala

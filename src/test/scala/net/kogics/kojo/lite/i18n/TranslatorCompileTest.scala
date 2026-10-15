@@ -114,8 +114,6 @@ import net.kogics.kojo.lite.i18n.tr.DictionaryGenerator
     "animated-square-creation.kojo" -> "RECEIVER: `path.moveTo` -> ilerle (turtle); kondur on GeoYol",
     "car-ride.kojo" -> "LAYER: `moveToBackAboveStage`",
     "collidium.kojo" -> "LAYER: `Yöney2B.limit`",
-    "eskiz-gezginler.kojo" -> "RECEIVER: `cd.fill(r,g,b,a)` -> doldur; boya on TuvalÇizim (same as fireworks-canvas.kojo)",
-    "fireworks-canvas.kojo" -> "RECEIVER: `canvas.fill(r,g,b,a)` -> doldur; boya on TuvalÇizim",
     "genart-delaunay.kojo" -> "WRAPPER: `üçgenDöşeme(Dizi[Nokta])` does not match Seq[Point]",
     "genart-joy-division.kojo" -> "RECEIVER: `path.moveTo`",
     "genart-tri-mesh.kojo" -> "RECEIVER: `path.moveTo`",
