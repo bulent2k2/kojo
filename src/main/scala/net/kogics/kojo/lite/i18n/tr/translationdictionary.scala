@@ -67,6 +67,12 @@ object TranslationDictionary {
     * an old Koco script that says `sil_geri` must still be translatable -- so this is a RANKING
     * criterion, not a filter (#63). */
   val DeprecatedNote = "deprecated"
+  /** The Turkish definition only DELEGATES to another Turkish definition (`def tuvaliSabitle() =
+    * yaklaşmayaİzinVerme()`): the row was reached through a Turkish hop, so the name is an ALIAS of the
+    * wrapper that does the work. In EN->TR an alias loses to the wrapper it points at when the votes are
+    * equal (see candidates). Before this, such a tie fell to alphabetical order and gave `tuvaliSabitle` for
+    * `disablePanAndZoom`. Like `deprecated` it is a RANKING criterion, not a filter: TR->EN still translates the alias. */
+  val DelegatesNote = "delegates"
   /** Temporary note inside the generator: the definition body is a `{ ... }` block, and the target is
     * the chain of the first statement. Chain resolution does not go through Turkish wrapper names
     * (see resolveChains). */
@@ -167,13 +173,13 @@ object TranslationDictionary {
     // Filled only in EN->TR: there the target is a Turkish name and we do not want to PRODUCE a name like
     // `back_space`. In TR->EN the target is English and we do not know whether it is deprecated; besides, we need to be able to
     // TRANSLATE a deprecated Turkish name, and that direction looks at the source, not the target.
-    private def candidates(pairs: Seq[(String, String, Boolean, Int, Boolean)]): Map[String, Seq[(String, Int)]] =
+    private def candidates(pairs: Seq[(String, String, Boolean, Int, Boolean, Boolean)]): Map[String, Seq[(String, Int)]] =
       pairs.groupBy(_._1).map { case (name, ss) =>
         val tally = ss.groupBy(_._2).map { case (target, hs) =>
-          (target, hs.map(_._4).sum, hs.filter(_._3).map(_._4).sum, hs.exists(_._5)) }
+          (target, hs.map(_._4).sum, hs.filter(_._3).map(_._4).sum, hs.exists(_._5), hs.forall(_._6)) }
         name -> tally.toSeq
-          .sortBy { case (target, n, wrapperCount, isDeprecated) => (-n, isDeprecated, -wrapperCount, target) }
-          .map { case (target, n, _, _) => (target, n) }
+          .sortBy { case (target, n, wrapperCount, isDeprecated, onlyDelegates) => (-n, isDeprecated, onlyDelegates, -wrapperCount, target) }
+          .map { case (target, n, _, _, _) => (target, n) }
       }
     private def fromWrapper(s: Row) = !s.source.startsWith("data.scala")
 
@@ -185,23 +191,23 @@ object TranslationDictionary {
       case _                        => Nil
     }
 
-    private val trCandidates = candidates(rows.map(s => (s.tr, s.en, fromWrapper(s), s.count, false)))
-    private val enCandidates = candidates(rows.map(s => (s.en, s.tr, fromWrapper(s), s.count, s.hasNote(DeprecatedNote))))
+    private val trCandidates = candidates(rows.map(s => (s.tr, s.en, fromWrapper(s), s.count, false, false)))
+    private val enCandidates = candidates(rows.map(s => (s.en, s.tr, fromWrapper(s), s.count, s.hasNote(DeprecatedNote), s.hasNote(DelegatesNote))))
     // For the bare context: English targets the compiler cannot resolve bare are left out.
     private val bareRows = rows.filterNot(_.hasNote(MemberOnlyNote))
-    private val trBareCandidates = candidates(bareRows.map(s => (s.tr, s.en, fromWrapper(s), s.count, false)))
-    private val enBareCandidates = candidates(bareRows.map(s => (s.en, s.tr, fromWrapper(s), s.count, s.hasNote(DeprecatedNote))))
+    private val trBareCandidates = candidates(bareRows.map(s => (s.tr, s.en, fromWrapper(s), s.count, false, false)))
+    private val enBareCandidates = candidates(bareRows.map(s => (s.en, s.tr, fromWrapper(s), s.count, s.hasNote(DeprecatedNote), s.hasNote(DelegatesNote))))
     // `kuvveti -> math.pow`: in the reverse direction a single token `pow` arrives, with receiver `math`. Qualified
     // targets are indexed separately under the receiver context (`math.`); `math` itself is
     // translated to `Matematik`, and the member becomes `kuvveti` from here. Measured: without it `Matematik.pow` was left over.
     private val enReceiverCandidates = candidates(rows.collect {
-      case s if s.en.contains('.') && !s.hasNote(AliasNote) => (s.en.substring(0, s.en.lastIndexOf('.') + 1) + "\u0000" + s.en.substring(s.en.lastIndexOf('.') + 1), s.tr, fromWrapper(s), s.count, s.hasNote(DeprecatedNote))
+      case s if s.en.contains('.') && !s.hasNote(AliasNote) => (s.en.substring(0, s.en.lastIndexOf('.') + 1) + "\u0000" + s.en.substring(s.en.lastIndexOf('.') + 1), s.tr, fromWrapper(s), s.count, s.hasNote(DeprecatedNote), s.hasNote(DelegatesNote))
     })
     // `Resim.dizi -> picStack`: a member of the Turkish object is BARE in English. The generator writes the tr
     // of such rows qualified; from here the TR->EN lookup with a receiver gives `^picStack` (the receiver is swallowed),
     // while EN->TR already gives `Resim.dizi` through enCandidates.
     private val trReceiverCandidates = candidates(rows.collect {
-      case s if s.tr.contains('.') => (s.tr.substring(0, s.tr.lastIndexOf('.') + 1) + "\u0000" + s.tr.substring(s.tr.lastIndexOf('.') + 1), SwallowReceiver + s.en, fromWrapper(s), s.count, false)
+      case s if s.tr.contains('.') => (s.tr.substring(0, s.tr.lastIndexOf('.') + 1) + "\u0000" + s.tr.substring(s.tr.lastIndexOf('.') + 1), SwallowReceiver + s.en, fromWrapper(s), s.count, false, false)
     })
     private def hasNoParensNote(k: Rule) = k.note.contains(NoParensNote)
 

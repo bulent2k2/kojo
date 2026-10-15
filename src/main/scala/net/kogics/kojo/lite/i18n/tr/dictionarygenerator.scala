@@ -45,7 +45,7 @@ import scalariform.lexer.Tokens
  * keywords and the string/comment boundaries correctly.
  */
 object DictionaryGenerator {
-  import TranslationDictionary.{Row, MemberOnlyNote, AliasNote, BlockBodyNote, DeprecatedNote}
+  import TranslationDictionary.{Row, MemberOnlyNote, AliasNote, BlockBodyNote, DeprecatedNote, DelegatesNote}
 
   /** Files that are not wrappers: dictionary tables, output translation, help text... */
   val skippedFiles = Set("dict.scala", "translate.scala", "help.scala", "templates.scala",
@@ -379,7 +379,11 @@ object DictionaryGenerator {
     // sierpinski-tri.kojo). A row with a block body is linked only directly to an English target.
     raw.flatMap { s =>
       if (s.hasNote(BlockBodyNote)) { if (targetsOf.contains(s.en)) None else resolve(s.en, 1, Set(s.tr)).map(en => s.copy(en = en, note = "")) }
-      else resolve(s.en, 4, Set(s.tr)).map(en => s.copy(en = en))
+      else resolve(s.en, 4, Set(s.tr)).map { en =>
+        // The target was a Turkish name defined here (reached through a hop): this definition DELEGATES to a wrapper, so it is an alias.
+        if (targetsOf.contains(s.en)) s.copy(en = en, note = (s.notes + DelegatesNote).toSeq.sorted.mkString(","))
+        else s.copy(en = en)
+      }
     }
   }
 
@@ -537,7 +541,7 @@ object DictionaryGenerator {
          |# kind	tr	en	source	count	[note]
          |#   source: FILE name (deliberately no line number -- so that unrelated shifts do not pollute the dictionary)
          |#   count : number of definitions in that file giving this pair; the weight in the frequency table
-         |#   note  : member-only = the English name does not resolve bare, only in the form x.name; alias = alias-receiver row; deprecated = the Turkish definition is deprecated
+         |#   note  : member-only = the English name does not resolve bare, only in the form x.name; alias = alias-receiver row; deprecated = the Turkish definition is deprecated; delegates = the Turkish definition only calls another Turkish definition (an alias; loses EN->TR ties)
          |""".stripMargin
     header + rows.map(s => s"${s.kind}\t${s.tr}\t${s.en}\t${s.source}\t${s.count}" + (if (s.note.nonEmpty) "\t" + s.note else "")).mkString("", "\n", "\n")
   }
