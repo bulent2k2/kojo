@@ -115,6 +115,14 @@ import net.kogics.kojo.lite.i18n.tr.dict
     tr2en("sil()\nresim.sil()") shouldBe "clear()\nresim.erase()"
   }
 
+  test("alias loses ties (delegates): EN->TR gives the wrapper, TR->EN still translates the alias") {
+    // trInit.scala: `def Mp3üDurdur() = müzikMp3üKapat()` (alias) and `def müzikMp3üKapat() = rb.stopMp3()` (wrapper)
+    en2tr("stopMp3()") shouldBe "müzikMp3üKapat()"
+    en2tr("stopMusic()") shouldBe "müziğiKapat()"
+    tr2en("Mp3üDurdur()") shouldBe "stopMp3()"
+    tr2en("müziğiDurdur()") shouldBe "stopMusic()"
+  }
+
   test("disablePanAndZoom: EN->TR gives the wrapper yaklaşmayaİzinVerme, not its alias tuvaliSabitle; both go back to disablePanAndZoom") {
     en2tr("disablePanAndZoom()") shouldBe "yaklaşmayaİzinVerme()"
     tr2en("yaklaşmayaİzinVerme()") shouldBe "disablePanAndZoom()"

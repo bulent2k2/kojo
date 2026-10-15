@@ -6,7 +6,7 @@
 # kind	tr	en	source	count	[note]
 #   source: FILE name (deliberately no line number -- so that unrelated shifts do not pollute the dictionary)
 #   count : number of definitions in that file giving this pair; the weight in the frequency table
-#   note  : member-only = the English name does not resolve bare, only in the form x.name; alias = alias-receiver row; deprecated = the Turkish definition is deprecated
+#   note  : member-only = the English name does not resolve bare, only in the form x.name; alias = alias-receiver row; deprecated = the Turkish definition is deprecated; delegates = the Turkish definition only calls another Turkish definition (an alias; loses EN->TR ties)
 type	Aralık	Range	data.scala	1
 type	Aralık	Range	package.scala	1
 val	Artalan.demiryolu	Background.trainTrack	TurtleWorldAPI.scala	1
@@ -50,19 +50,20 @@ type	BoşGöstergeHatası	NullPointerException	turler.scala	1
 type	Bölümselİşlev	PartialFunction	bolumselislev.scala	1
 type	Bölümselİşlev	PartialFunction	data.scala	1
 type	Canlandırma	Animation	trInit.scala	1
-type	Col	Array	dizik.scala	1
-type	Col	ArrayBuffer	dizik.scala	1
-type	Col	ArrayDeque	kuyruk.scala	1	member-only
-type	Col	IndexedSeq	dizi.scala	1
-type	Col	Iterable	dizi.scala	2
-type	Col	LazyList	miskindizin.scala	1
-type	Col	List	dizin.scala	1
-type	Col	Map	eslem.scala	1
-type	Col	PriorityQueue	kuyruk.scala	1	member-only
-type	Col	Queue	kuyruk.scala	1	member-only
-type	Col	Seq	dizi.scala	2
-type	Col	Set	kume.scala	1
-type	Col	Stack	kuyruk.scala	1	member-only
+type	Col	Array	dizik.scala	1	delegates
+type	Col	ArrayBuffer	dizik.scala	1	delegates
+type	Col	ArrayDeque	kuyruk.scala	1	delegates,member-only
+type	Col	IndexedSeq	dizi.scala	1	delegates
+type	Col	Iterable	dizi.scala	1	delegates
+type	Col	Iterable	dizi.scala	1
+type	Col	LazyList	miskindizin.scala	1	delegates
+type	Col	List	dizin.scala	1	delegates
+type	Col	Map	eslem.scala	1	delegates
+type	Col	PriorityQueue	kuyruk.scala	1	delegates,member-only
+type	Col	Queue	kuyruk.scala	1	delegates,member-only
+type	Col	Seq	dizi.scala	2	delegates
+type	Col	Set	kume.scala	1	delegates
+type	Col	Stack	kuyruk.scala	1	delegates,member-only
 type	DRenk	DColor	renk.scala	1	member-only
 val	DRenk	DColor	renk.scala	1	member-only
 type	DeğişimliBoya	GradientPaint	renk.scala	1	member-only
@@ -215,9 +216,9 @@ def	LokmadanLokmaya	Byte2byte	turler.scala	1
 type	MatematikselHata	ArithmeticException	turler.scala	1
 type	MiskinDizin	LazyList	data.scala	1
 type	MiskinDizin	LazyList	miskindizin.scala	1
-def	Mp3DöngüsünüDurdur	stopMp3Loop	trInit.scala	1
-def	Mp3ÇalıyorMu	isMp3Playing	trInit.scala	1
-def	Mp3üDurdur	stopMp3	trInit.scala	1
+def	Mp3DöngüsünüDurdur	stopMp3Loop	trInit.scala	1	delegates
+def	Mp3ÇalıyorMu	isMp3Playing	trInit.scala	1	delegates
+def	Mp3üDurdur	stopMp3	trInit.scala	1	delegates
 type	Nesne	Object	data.scala	1
 type	Nesne	Object	package.scala	1
 type	Nokta	Point	data.scala	1
@@ -237,11 +238,11 @@ type	Renk	AColor	renk.scala	1	member-only
 def	Renk	Color	data.scala	1
 type	Renk	Color	data.scala	1
 type	Renk	Color	package.scala	1
-def	RenkADA	hsla	renk.scala	1	member-only
-def	RenkArıRenkDoygunlukAydınlık	hsla	renk.scala	1	member-only
-def	RenkDD	linearGradient	renk.scala	1	member-only
-def	RenkDoğrusalDeğişim	linearGradient	renk.scala	1	member-only
-def	RenkKYM	Color	renk.scala	1
+def	RenkADA	hsla	renk.scala	1	delegates,member-only
+def	RenkArıRenkDoygunlukAydınlık	hsla	renk.scala	1	delegates,member-only
+def	RenkDD	linearGradient	renk.scala	1	delegates,member-only
+def	RenkDoğrusalDeğişim	linearGradient	renk.scala	1	delegates,member-only
+def	RenkKYM	Color	renk.scala	1	delegates
 type	Resim	Picture	data.scala	1
 def	Resim.dizi	picStack	resim.scala	2
 def	Resim.diziDikey	picCol	resim.scala	2
@@ -393,16 +394,16 @@ def	anahtarKümesi	keySet	eslem.scala	2	member-only
 def	anahtarYineleyici	keysIterator	eslem.scala	2	member-only
 def	anahtarlar	keys	eslem.scala	2	member-only
 def	anahtarlarıEle	filterKeys	eslem.scala	2	member-only
-def	araEkle	insert	dizik.scala	1	deprecated,member-only
-def	araEkle	insert	kuyruk.scala	1	deprecated,member-only
-def	araEkle	insert	yazi.scala	1	deprecated,member-only
-def	araEkleHepsini	insertAll	dizik.scala	1	deprecated,member-only
-def	araEkleHepsini	insertAll	yazi.scala	1	deprecated,member-only
+def	araEkle	insert	dizik.scala	1	delegates,deprecated,member-only
+def	araEkle	insert	kuyruk.scala	1	delegates,deprecated,member-only
+def	araEkle	insert	yazi.scala	1	delegates,deprecated,member-only
+def	araEkleHepsini	insertAll	dizik.scala	1	delegates,deprecated,member-only
+def	araEkleHepsini	insertAll	yazi.scala	1	delegates,deprecated,member-only
 def	aralık	range	miskindizin.scala	2	member-only
 def	aralığıSil	delete	yazi.scala	1	member-only
 def	arayüz	Picture.widget	resim.scala	1
 def	ardaAl	moveToBack	resim.scala	1	member-only
-def	arkayaAl	moveToBack	resim.scala	1	member-only
+def	arkayaAl	moveToBack	resim.scala	1	delegates,member-only
 def	artalan	background	tuvalcizim.scala	2	member-only
 def	artalandaOynat	runInBackground	trInit.scala	1
 def	artalanıKur	setBackground	arayuz.scala	9
@@ -413,7 +414,7 @@ def	artalanıKurDik	setBackgroundV	trInit.scala	1
 def	artalanıKurYatay	setBackgroundH	data.scala	1
 def	artalanıKurYatay	setBackgroundH	trInit.scala	1
 def	atla	jumpTo	trInit.scala	1
-def	aydınlık	brit	resim.scala	1
+def	aydınlık	brit	resim.scala	1	delegates
 def	aydınlık	britMod	resim.scala	1
 def	aydınlıkOranınıKur	britMod	resim.scala	1
 def	ayırıcı	separator	dosya.scala	1	member-only
@@ -450,8 +451,8 @@ val	back_space	backSpace	klavye.scala	1	deprecated,member-only
 val	batı	WEST	arayuz.scala	1	member-only
 def	batı	setHeading	trInit.scala	1
 def	başaDön	closePath	geo.scala	1	member-only
-def	başaEkle	prepend	dizik.scala	1	deprecated,member-only
-def	başaEkleHepsini	prependAll	dizik.scala	1	deprecated,member-only
+def	başaEkle	prepend	dizik.scala	1	delegates,deprecated,member-only
+def	başaEkleHepsini	prependAll	dizik.scala	1	delegates,deprecated,member-only
 def	başaKoy	prepend	kuyruk.scala	1	member-only
 def	başarılı	successful	gelecek.scala	1	member-only
 def	başarısız	failed	gelecek.scala	1	member-only
@@ -518,7 +519,7 @@ def	bileşim	concat	yoney.scala	1	member-only
 def	bileşim	union	kume.scala	1	member-only
 def	bilgiVer	dumpInfo	resim.scala	1	member-only
 def	birAdımİleri	step	cinidunyasi.scala	1	member-only
-def	birEfekt	effect	resim.scala	1
+def	birEfekt	effect	resim.scala	1	delegates
 def	birleştir	concat	dizik.scala	1	member-only
 def	birleştir	fold	ikisindenbiri.scala	1	member-only
 def	birsonrakiGiysi	nextCostume	trInit.scala	1
@@ -527,12 +528,12 @@ def	biçimleriBelleğeYaz	saveStyle	trInit.scala	1
 def	biçimleriGeriYükle	restoreStyle	trInit.scala	1
 def	boy	height	trInit.scala	1	member-only
 def	boya	fill	tuvalcizim.scala	2	member-only
-def	boyaRengi	fill	resim.scala	1	member-only
+def	boyaRengi	fill	resim.scala	1	delegates,member-only
 def	boyamaRenginiKur	setFillColor	resim.scala	1
 def	boyamaRenginiKur	setFillColor	trInit.scala	1
 def	boyasız	noFill	tuvalcizim.scala	1	member-only
 def	boyu	height	geo.scala	1	member-only
-def	boyu	height	trInit.scala	1	member-only
+def	boyu	height	trInit.scala	1	delegates,member-only
 def	boyu	length	aralik.scala	1	member-only
 def	boyu	length	dizi.scala	3	member-only
 def	boyu	length	dizik.scala	2	member-only
@@ -591,7 +592,7 @@ def	buSaniye	currentTimeMillis	buan.scala	1	member-only
 def	buSaniye	epochTime	data.scala	1
 def	buSaniye1	BigDecimal	buan.scala	1
 def	buSaniye2	BigDecimal	buan.scala	1
-val	buan	getInstance	buan.scala	1	member-only
+val	buan	getInstance	buan.scala	1	delegates,member-only
 def	bul	find	dizi.scala	3	member-only
 def	bul	find	dizik.scala	2	member-only
 def	bul	find	dizin.scala	1	member-only
@@ -608,7 +609,7 @@ def	bulSondan	findLast	dizin.scala	1	member-only
 def	bulSondan	findLast	kuyruk.scala	1	member-only
 def	bulSondan	findLast	miskindizin.scala	1	member-only
 def	bulSondan	findLast	yoney.scala	1	member-only
-def	bulanık	blur	resim.scala	1
+def	bulanık	blur	resim.scala	1	delegates
 def	buradaDur	burdaDur	trInit.scala	1	member-only
 def	buradaDurma	burdaDurma	trInit.scala	1	member-only
 def	böl	partition	dizi.scala	3	member-only
@@ -652,10 +653,11 @@ def	bölİşle	partitionMap	yoney.scala	1	member-only
 def	büyükHarfMi	isUpper	harf.scala	1	member-only
 def	büyükHarfe	map	yazi.scala	1	member-only
 def	büyükHarfe	toUpper	harf.scala	1	member-only
-def	büyüt	scale	resim.scala	4
+def	büyüt	scale	resim.scala	2
+def	büyüt	scale	resim.scala	2	delegates
 def	büyüt	scale	tuvalcizim.scala	2
 def	büyüt	scale	yoney2b.scala	1
-def	büyütXY	scale	resim.scala	1
+def	büyütXY	scale	resim.scala	1	delegates
 def	büyütmeOranı	scaleFactor	resim.scala	1	member-only
 def	büyütmeOranınıKur	setScaleFactor	resim.scala	1	member-only
 def	büyütmeyiKur	setScale	resim.scala	1	member-only
@@ -712,7 +714,8 @@ def	değiştir	updated	yoney.scala	1	member-only
 def	değiştirAralığını	replace	yazi.scala	1	member-only
 def	değiştirHepsini	replaceAll	yazi.scala	1	member-only
 def	değiştirYerinde	update	dizik.scala	2	member-only
-def	değiştirilmiş	updated	eslem.scala	2	member-only
+def	değiştirilmiş	updated	eslem.scala	1	member-only
+def	değiştirilmiş	updated	eslem.scala	1	delegates,member-only
 def	değiştirİlkini	replaceFirst	yazi.scala	1	member-only
 def	değiştirİşlevle	updatedWith	eslem.scala	1	member-only
 def	dikdörtgen	Picture.rect	resim.scala	1
@@ -815,7 +818,7 @@ val	doğru	true	data.scala	1
 def	doğrultu	heading	resim.scala	1
 def	doğrultu	heading	trInit.scala	1
 def	doğrultu	heading	yoney2b.scala	1
-val	doğrultuyuKur	setHeading	resim.scala	1
+val	doğrultuyuKur	setHeading	resim.scala	1	delegates
 def	doğrusalDeğişim	linearGradient	renk.scala	1	member-only
 def	doğrusalÇokluDeğişim	linearMultipleGradient	renk.scala	1	member-only
 def	doğruÇiz	lineTo	geo.scala	1
@@ -827,12 +830,12 @@ def	duraklaMiliSaniye	pauseMillis	trInit.scala	1
 def	durdur	stopAnimation	trInit.scala	1
 def	dön	turn	trInit.scala	2
 def	döndür	rot	data.scala	1
-def	döndür	rot	resim.scala	1
+def	döndür	rot	resim.scala	1	delegates
 def	döndür	rotate	resim.scala	1	member-only
 def	döndür	rotate	yoney2b.scala	1	member-only
 def	döndürDerece	rotateDegrees	tuvalcizim.scala	1	member-only
 def	döndürMerkezli	rotateAboutPoint	resim.scala	1	member-only
-def	döndürMerkezli	rotp	resim.scala	1
+def	döndürMerkezli	rotp	resim.scala	1	delegates
 def	döndürRadyan	rotate	tuvalcizim.scala	1	member-only
 def	döngüdeMi	loop	tuvalcizim.scala	1	member-only
 def	döngüyüDurdur	noLoop	tuvalcizim.scala	1	member-only
@@ -928,7 +931,7 @@ val	eklentiDizini	extensionsDir	package.scala	1	member-only
 def	ekli	incl	kume.scala	1	member-only
 def	ekranTazelemeHızınıGöster	showFps	trInit.scala	1
 def	ekranTazelemeHızınıKur	setRefreshRate	trInit.scala	1
-def	eksenler	axesOn	resim.scala	1
+def	eksenler	axesOn	resim.scala	1	delegates
 def	eksenleriGizle	axesOff	resim.scala	1
 def	eksenleriGizle	axesOff	trInit.scala	1
 def	eksenleriGöster	Picture.showAxes	resim.scala	2
@@ -1062,14 +1065,14 @@ def	eğriNoktası	curveVertex	geo.scala	1
 def	eğriÇiz	quadTo	geo.scala	1	member-only
 def	eşitMi	equals	kokturler.scala	1
 def	eşitMiKüçükHarfBüyükHarfAyrımıYapmadan	equalsIgnoreCase	yazi.scala	1	member-only
-def	eşleme	from	dizi.scala	5	member-only
-def	eşleme	from	dizik.scala	2	member-only
-def	eşleme	from	dizin.scala	1	member-only
-def	eşleme	from	kume.scala	1	member-only
-def	eşleme	from	kuyruk.scala	2	member-only
-def	eşleme	from	miskindizin.scala	1	member-only
-def	eşleme	from	yazi.scala	1	member-only
-def	eşleme	from	yoney.scala	1	member-only
+def	eşleme	from	dizi.scala	5	delegates,member-only
+def	eşleme	from	dizik.scala	2	delegates,member-only
+def	eşleme	from	dizin.scala	1	delegates,member-only
+def	eşleme	from	kume.scala	1	delegates,member-only
+def	eşleme	from	kuyruk.scala	2	delegates,member-only
+def	eşleme	from	miskindizin.scala	1	delegates,member-only
+def	eşleme	from	yazi.scala	1	delegates,member-only
+def	eşleme	from	yoney.scala	1	delegates,member-only
 def	eşlenirMi	matches	yazi.scala	1	member-only
 def	eşleğe	toMap	dizi.scala	5	member-only
 def	eşleğe	toMap	dizik.scala	2	member-only
@@ -1102,7 +1105,7 @@ def	fark	diff	kuyruk.scala	1	member-only
 def	fark	diff	miskindizin.scala	1	member-only
 def	fark	diff	yazi.scala	1	member-only
 def	fark	diff	yoney.scala	1	member-only
-def	filtre	applyFilter	resim.scala	1	member-only
+def	filtre	applyFilter	resim.scala	1	delegates,member-only
 def	fırça	stroke	tuvalcizim.scala	2	member-only
 def	fırçaAğırlığı	strokeWeight	tuvalcizim.scala	1	member-only
 def	fırçaBirleşimi	strokeJoin	tuvalcizim.scala	1	member-only
@@ -1122,7 +1125,7 @@ def	giysiKur	setCostumeImage	trInit.scala	1
 def	giysileriKur	setCostumes	trInit.scala	1
 def	giysiyiBüyült	scaleCostume	trInit.scala	1
 def	gizle	invisible	resim.scala	1
-def	gizle	invisible	trInit.scala	1
+def	gizle	invisible	trInit.scala	1	delegates
 val	gri	gray	data.scala	1
 val	gri	gray	renk.scala	1
 def	gridiGizle	gridOff	trInit.scala	1
@@ -1135,12 +1138,12 @@ def	görünürlüğüKur	setVisible	arayuz.scala	1	member-only
 def	görünürlüğüTersineÇevir	toggleV	resim.scala	1	member-only
 def	göster	setVisible	arayuz.scala	9	member-only
 def	göster	visible	resim.scala	1
-def	göster	visible	trInit.scala	1
+def	göster	visible	trInit.scala	1	delegates
 def	gösterdikleriAynıMı	sameElements	yineleyici.scala	1	member-only
-def	götür	trans	resim.scala	3
+def	götür	trans	resim.scala	3	delegates
 def	götür	translate	resim.scala	3	member-only
 def	götür	translate	tuvalcizim.scala	1	member-only
-val	gücü	math.pow	matematik.scala	1
+val	gücü	math.pow	matematik.scala	1	delegates
 def	gücü	pow	data.scala	1	member-only
 def	gün	hepsi	buan.scala	1	member-only
 def	güncelle	update	eslem.scala	1	member-only
@@ -1151,7 +1154,7 @@ val	güney	SOUTH	arayuz.scala	1	member-only
 def	güney	setHeading	trInit.scala	1
 val	güneybatı	SOUTH_WEST	arayuz.scala	1	member-only
 val	güneydoğu	SOUTH_EAST	arayuz.scala	1	member-only
-def	gürültü	noise	resim.scala	1
+def	gürültü	noise	resim.scala	1	delegates
 val	haki	khaki	renk.scala	1	member-only
 def	harf	charAt	yazi.scala	2	member-only
 def	harfMi	isLetter	data.scala	1	member-only
@@ -1173,8 +1176,8 @@ def	hepsiDoğruMu	forall	miskindizin.scala	1	member-only
 def	hepsiDoğruMu	forall	yazi.scala	1	member-only
 def	hepsiDoğruMu	forall	yineleyici.scala	1	member-only
 def	hepsiDoğruMu	forall	yoney.scala	1	member-only
-def	hepsiniEkle	addAll	dizik.scala	1	deprecated,member-only
-def	hepsiniEkle	addAll	kuyruk.scala	2	deprecated,member-only
+def	hepsiniEkle	addAll	dizik.scala	1	delegates,deprecated,member-only
+def	hepsiniEkle	addAll	kuyruk.scala	2	delegates,deprecated,member-only
 def	hepsiniHesapla	force	miskindizin.scala	1	member-only
 def	hepsiÇıkarılmış	removedAll	eslem.scala	1	member-only
 def	hepsiÇıkarılmış	removedAll	kume.scala	1	member-only
@@ -1382,24 +1385,24 @@ def	işleYerinde	mapInPlace	kuyruk.scala	3	member-only
 val	kahverengi	brown	data.scala	1
 def	kaldır	lift	eslem.scala	2	member-only
 val	kaldırma	shift	klavye.scala	1	member-only
-def	kalemBoyu	strokeWidth	resim.scala	1	member-only
+def	kalemBoyu	strokeWidth	resim.scala	1	delegates,member-only
 def	kalemBoyunuKur	setPenThickness	resim.scala	1
 def	kalemKalınlığınıKur	setPenThickness	resim.scala	1
 def	kalemKalınlığınıKur	setPenThickness	trInit.scala	1
-def	kalemRengi	stroke	resim.scala	1	member-only
+def	kalemRengi	stroke	resim.scala	1	delegates,member-only
 def	kalemRenginiKur	setPenColor	resim.scala	1
 def	kalemRenginiKur	setPenColor	trInit.scala	1
 def	kalemiKaldır	penUp	trInit.scala	1
 def	kalemiKapa	setNoPen	resim.scala	1
 def	kalemiİndir	penDown	trInit.scala	1
 def	kalemİnikMi	down	trInit.scala	1	member-only
-def	kalta	fold	eslem.scala	2	deprecated,member-only
+def	kalta	fold	eslem.scala	2	delegates,deprecated,member-only
 val	kalın	BoldFont	trInit.scala	1
 def	kapalı	inclusive	aralik.scala	1	member-only
 def	kapasitesi	capacity	yazi.scala	1	member-only
 object	kaplumbağa	turtle0	trInit.scala	1
 def	kaplumbağa0	turtle0	data.scala	1
-val	kaplumbağa0	turtle0	trInit.scala	1
+val	kaplumbağa0	turtle0	trInit.scala	1	delegates
 def	kareUç	SQUARE	tuvalcizim.scala	1	member-only
 def	karekökü	math.sqrt	matematik.scala	1
 def	karekökü	sqrt	data.scala	1	member-only
@@ -1436,7 +1439,8 @@ def	kayarÖbekli	sliding	miskindizin.scala	2	member-only
 def	kayarÖbekli	sliding	yazi.scala	2	member-only
 def	kayarÖbekli	sliding	yineleyici.scala	2	member-only
 def	kayarÖbekli	sliding	yoney.scala	2	member-only
-def	kaydır	offset	resim.scala	6
+def	kaydır	offset	resim.scala	3
+def	kaydır	offset	resim.scala	3	delegates
 val	kaç	escape	klavye.scala	1	member-only
 def	kenarPayınıÇıkar	stripMargin	yazi.scala	1	member-only
 def	kesirOku	readDouble	trInit.scala	1
@@ -1618,7 +1622,7 @@ def	müzikMp3üÇalDöngülü	playMp3Loop	trInit.scala	1
 def	müzikMp3üÇalıyorMu	isMp3Playing	trInit.scala	1
 def	müzikÇalıyorMu	isMusicPlaying	trInit.scala	1
 def	müzikİndir	preloadMp3	trInit.scala	1
-def	müziğiDurdur	stopMusic	trInit.scala	1
+def	müziğiDurdur	stopMusic	trInit.scala	1	delegates
 def	müziğiKapat	stopMusic	trInit.scala	1
 def	nerede	indexWhere	dizi.scala	6	member-only
 def	nerede	indexWhere	dizik.scala	4	member-only
@@ -1639,14 +1643,14 @@ def	nesnesiOlarak	asInstanceOf	kokturler.scala	2
 def	nokta	dot	trInit.scala	2
 def	nokta	point	tuvalcizim.scala	1	member-only
 def	nokta	vertex	geo.scala	1
-def	noktaIşık	pointLight	resim.scala	1	member-only
+def	noktaIşık	pointLight	resim.scala	1	delegates,member-only
 val	noktaSayısı	Pixel	data.scala	1
 val	noktaSayısı	Pixel	package.scala	1
 def	noktadan	Picture.fromVertexShape	resim.scala	1
 def	noktayaDön	towards	trInit.scala	2
 def	noktayaGit	lineTo	trInit.scala	2
 def	notaÇal	playNote	trInit.scala	1
-def	notaÇalarıDurdur	stopNotePlayer	trInit.scala	1
+def	notaÇalarıDurdur	stopNotePlayer	trInit.scala	1	delegates
 def	notaÇalarıKapat	stopNotePlayer	trInit.scala	1
 def	notaÇalgısınıKur	setNoteInstrument	trInit.scala	1
 def	odakDinleyiciEkle	addFocusListener	arayuz.scala	1	member-only
@@ -1667,7 +1671,7 @@ def	pNokta	pnode	resim.scala	1	member-only
 val	page_down	pageDown	klavye.scala	1	deprecated,member-only
 val	page_up	pageUp	klavye.scala	1	deprecated,member-only
 def	paralel	par	dizin.scala	1	member-only
-def	parlaklık	sat	resim.scala	1
+def	parlaklık	sat	resim.scala	1	delegates
 def	parlaklık	satMod	resim.scala	1
 def	parlaklıkOranınıKur	satMod	resim.scala	1
 def	parçası	substring	yazi.scala	4	member-only
@@ -1696,7 +1700,7 @@ def	rastgeleKarıştır	shuffle	trInit.scala	1
 def	rastgeleKesir	randomDouble	data.scala	1
 def	rastgeleKesir	randomDouble	trInit.scala	2
 def	rastgeleNormalKesir	randomNormalDouble	data.scala	1
-def	rastgeleNormalKesir	randomNormalDouble	trInit.scala	1
+def	rastgeleNormalKesir	randomNormalDouble	trInit.scala	1	delegates
 def	rastgeleRenk	randomColor	data.scala	1
 def	rastgeleRenk	randomColor	trInit.scala	1
 def	rastgeleSayı	randomInt	data.scala	1
@@ -1709,12 +1713,12 @@ def	rastgeleTohumunuKur	initRandomGenerator	trInit.scala	1
 def	rastgeleUzun	randomLong	data.scala	1
 def	rastgeleUzun	randomLong	trInit.scala	1
 def	rastgeleÇanEğrisinden	randomNormalDouble	data.scala	1
-def	rastgeleÇanEğrisinden	randomNormalDouble	trInit.scala	1
+def	rastgeleÇanEğrisinden	randomNormalDouble	trInit.scala	1	delegates
 def	rastgeleİkil	randomBoolean	data.scala	1
-def	rastgeleİkil	randomBoolean	trInit.scala	1
+def	rastgeleİkil	randomBoolean	trInit.scala	1	delegates
 def	rastgeleŞeffafRenk	randomTransparentColor	data.scala	1
 def	rastgeleŞeffafRenk	randomTransparentColor	trInit.scala	1
-def	renkKur	Color	renk.scala	1
+def	renkKur	Color	renk.scala	1	delegates
 val	renkler	Color	renk.scala	1
 val	renkler	ColorMaker	data.scala	1
 val	renksiz	noColor	data.scala	1
@@ -1727,7 +1731,7 @@ def	saat	get	buan.scala	1	member-only
 def	saatDilimi	getTimeZone	buan.scala	1	member-only
 def	saatDilimi	hepsi	buan.scala	1	member-only
 val	sade	PlainFont	trInit.scala	1
-def	sahneIşığı	spotLight	resim.scala	1	member-only
+def	sahneIşığı	spotLight	resim.scala	1	delegates,member-only
 def	sahneKenarındanYansıtma	bouncePicOffStage	resim.scala	1
 def	sakla	setVisible	arayuz.scala	9	member-only
 def	saniye	get	buan.scala	1	member-only
@@ -1736,8 +1740,8 @@ val	sarı	yellow	renk.scala	1
 val	satırBaşı	home	klavye.scala	1
 val	satırSonu	end	klavye.scala	1	member-only
 def	satırSonunuAt	stripLineEnd	yazi.scala	1	member-only
-val	satır_başı	home	klavye.scala	1	deprecated
-val	satır_sonu	end	klavye.scala	1	deprecated,member-only
+val	satır_başı	home	klavye.scala	1	delegates,deprecated
+val	satır_sonu	end	klavye.scala	1	delegates,deprecated,member-only
 def	satırlar	linesIterator	yazi.scala	1	member-only
 def	satıroku	readln	data.scala	1
 def	satıroku	readln	trInit.scala	1
@@ -1755,15 +1759,15 @@ def	say	count	yineleyici.scala	1	member-only
 def	say	count	yoney.scala	1	member-only
 def	sayalım	from	data.scala	1	member-only
 def	sayalım	from	miskindizin.scala	1	member-only
-def	saydamlık	opac	resim.scala	1
+def	saydamlık	opac	resim.scala	1	delegates
 def	saydamlık	opacity	resim.scala	1	member-only
 def	saydamlık	opacityMod	resim.scala	1	member-only
 def	saydamlıkOranınıKur	opacityMod	resim.scala	1	member-only
 def	saydamlığıKur	setOpacity	resim.scala	1	member-only
 val	sayfaAşağı	pageDown	klavye.scala	1	member-only
 val	sayfaYukarı	pageUp	klavye.scala	1	member-only
-val	sayfa_aşağı	pageDown	klavye.scala	1	deprecated,member-only
-val	sayfa_yukarı	pageUp	klavye.scala	1	deprecated,member-only
+val	sayfa_aşağı	pageDown	klavye.scala	1	delegates,deprecated,member-only
+val	sayfa_yukarı	pageUp	klavye.scala	1	delegates,deprecated,member-only
 def	sayı	size	dizim.scala	1
 def	sayı	size	eslem.scala	2
 def	sayıMı	isDigit	data.scala	1	member-only
@@ -1829,8 +1833,8 @@ def	silVeSakla	clear	trInit.scala	1
 def	silVeSakla	cleari	data.scala	1
 def	silVeÇizimBiriminiKur	clearWithUL	data.scala	1
 def	silVeÇizimBiriminiKur	clearWithUL	trInit.scala	1
-val	sil_geri	backSpace	klavye.scala	1	deprecated,member-only
-def	silipSakla	clear	trInit.scala	1
+val	sil_geri	backSpace	klavye.scala	1	delegates,deprecated,member-only
+def	silipSakla	clear	trInit.scala	1	delegates
 def	sinüs	math.sin	matematik.scala	1
 def	sinüs	sin	data.scala	1	member-only
 def	sinüsünAçısı	asin	data.scala	1	member-only
@@ -1855,7 +1859,7 @@ def	soldanKatla	foldLeft	yazi.scala	1	member-only
 def	soldanKatla	foldLeft	yineleyici.scala	1	member-only
 def	soldanKatla	foldLeft	yoney.scala	1	member-only
 def	soldaÇiniVarMı	hasTileAtLeft	cinidunyasi.scala	1	member-only
-def	soluk	fade	resim.scala	1
+def	soluk	fade	resim.scala	1	delegates
 val	somon	salmon	renk.scala	1	member-only
 def	sonaKoy	append	kuyruk.scala	1	member-only
 def	sondanAl	removeLast	kuyruk.scala	1	member-only
@@ -2030,7 +2034,7 @@ def	tersİşle	map	dizin.scala	1	member-only
 def	tersİşle	map	kuyruk.scala	1	member-only
 def	tersİşle	map	miskindizin.scala	1	member-only
 def	tersİşle	map	yoney.scala	1	member-only
-def	ton	hue	resim.scala	1
+def	ton	hue	resim.scala	1	delegates
 def	ton	hueMod	resim.scala	1
 def	tonOranınıKur	hueMod	resim.scala	1
 def	topla	sum	dizi.scala	3	member-only
@@ -2052,13 +2056,13 @@ def	tuvalBoyutOranınıKur	setDrawingCanvasAspectRatio	trInit.scala	1
 def	tuvalBoyutlarınıKur	setDrawingCanvasSize	trInit.scala	1
 def	tuvalEskizi	canvasSketch	trInit.scala	1
 def	tuvalden	Picture.fromCanvas	resim.scala	1
-def	tuvaleYaz	write	trInit.scala	1
+def	tuvaleYaz	write	trInit.scala	1	delegates
 def	tuvaliDöndür	viewRotate	trInit.scala	1
 def	tuvaliEtkinleştir	activateCanvas	trInit.scala	1
 def	tuvaliKaydır	scroll	trInit.scala	1
-def	tuvaliSabitle	disablePanAndZoom	trInit.scala	1
+def	tuvaliSabitle	disablePanAndZoom	trInit.scala	1	delegates
 def	tuvaliYakınlaştır	zoomXY	trInit.scala	1
-def	tuşBasılıMı	isKeyPressed	trInit.scala	1
+def	tuşBasılıMı	isKeyPressed	trInit.scala	1	delegates
 def	tuşHarfi	getKeyChar	arayuz.scala	1	member-only
 def	tuşKodu	getKeyCode	arayuz.scala	1	member-only
 def	tuşaBasılıMı	isKeyPressed	trInit.scala	1
@@ -2066,7 +2070,7 @@ def	tuşaBasınca	onKeyPress	trInit.scala	1
 def	tuşuBırakınca	onKeyRelease	trInit.scala	1
 def	tüket	consume	arayuz.scala	1	member-only
 def	tümEkran	toggleFullScreenCanvas	trInit.scala	1
-def	tümEkranTuval	toggleFullScreenCanvas	trInit.scala	1
+def	tümEkranTuval	toggleFullScreenCanvas	trInit.scala	1	delegates
 def	tümEkranÇıktı	toggleFullScreenOutput	trInit.scala	1
 def	türet	unfold	miskindizin.scala	1	member-only
 def	ufakKesirdenUfakKesire	float2Float	turler.scala	1
@@ -2134,9 +2138,11 @@ def	yamaYerinde	patchInPlace	kuyruk.scala	2	member-only
 def	yana	beside	resim.scala	1	member-only
 val	yanlış	false	data.scala	1
 def	yansıt	bounceOff	yoney2b.scala	1	member-only
-def	yansıt	reflect	resim.scala	1
-def	yansıtX	flipX	resim.scala	2
-def	yansıtY	flipY	resim.scala	2
+def	yansıt	reflect	resim.scala	1	delegates
+def	yansıtX	flipX	resim.scala	1	delegates
+def	yansıtX	flipX	resim.scala	1
+def	yansıtY	flipY	resim.scala	1	delegates
+def	yansıtY	flipY	resim.scala	1
 val	yatay	HORIZONTAL	arayuz.scala	1	member-only
 def	yatay	Picture.hline	resim.scala	1
 def	yatayBoşluk	Picture.hgap	resim.scala	1
@@ -2152,7 +2158,7 @@ def	yaz	print	trInit.scala	1
 def	yazı	Picture.text	resim.scala	2
 def	yazı	Picture.textu	resim.scala	1
 def	yazı	text	tuvalcizim.scala	1	member-only
-def	yazı	toString	aralik.scala	1
+def	yazı	toString	aralik.scala	1	delegates
 def	yazı	write	trInit.scala	1
 def	yazıBoyunuKur	setPenFontSize	trInit.scala	1
 def	yazıRenkli	Picture.textu	resim.scala	1
@@ -2332,7 +2338,7 @@ val	Çizim.yarasa2	"/media/costumes/bat1-b.png"	cizim.scala	1	alias
 val	Çizim.yarasa2	Costume.bat2	cizim.scala	1	alias
 val	Çizim.yıldız	"/images/star.png"	cizim.scala	1	alias
 type	ÖncelikKuyruğu	PriorityQueue	kuyruk.scala	1	member-only
-val	ÖncelikKuyruğu	PriorityQueue	kuyruk.scala	1	member-only
+val	ÖncelikKuyruğu	PriorityQueue	kuyruk.scala	1	delegates,member-only
 type	ÖncelikSırası	PriorityQueue	kuyruk.scala	1	member-only
 type	ÖnyüklemeYöntemHatası	BootstrapMethodError	turler.scala	1
 type	Üçgen	Triangle2D	data.scala	1	member-only
@@ -2347,7 +2353,7 @@ def	çarp	product	miskindizin.scala	1	member-only
 def	çarp	product	yazi.scala	1	member-only
 def	çarp	product	yineleyici.scala	1	member-only
 def	çarp	product	yoney.scala	1	member-only
-def	çarptıMı	intersects	resim.scala	1	member-only
+def	çarptıMı	intersects	resim.scala	1	delegates,member-only
 def	çarpışma	find	resim.scala	1	member-only
 def	çarpışmalar	filter	resim.scala	1	member-only
 def	çarpıştı	intersects	resim.scala	1	member-only
@@ -2358,7 +2364,7 @@ def	çekHepsini	popAll	kuyruk.scala	1	member-only
 val	çelikMavisi	steelBlue	renk.scala	1	member-only
 def	çerçeveyiKur	setBorder	arayuz.scala	9	member-only
 def	çevir	spin	renk.scala	2
-def	çevir	spin	resim.scala	1
+def	çevir	spin	resim.scala	1	delegates
 def	çevir	towards	trInit.scala	1
 def	çevirOranla	spinBy	renk.scala	1	member-only
 def	çevre	perimeter	resim.scala	1
@@ -2414,7 +2420,7 @@ def	öbekle	groupBy	kuyruk.scala	2	member-only
 def	öbekle	groupBy	miskindizin.scala	1	member-only
 def	öbekle	groupBy	yazi.scala	1	member-only
 def	öbekle	groupBy	yoney.scala	1	member-only
-def	öbekleEsnek	from	dizin.scala	1	member-only
+def	öbekleEsnek	from	dizin.scala	1	delegates,member-only
 def	öbekleİşle	groupMap	dizi.scala	3	member-only
 def	öbekleİşle	groupMap	dizik.scala	2	member-only
 def	öbekleİşle	groupMap	dizin.scala	1	member-only
@@ -2482,10 +2488,10 @@ def	önüneEkleHepsini	prependedAll	kuyruk.scala	1	member-only
 def	önüneEkleHepsini	prependedAll	miskindizin.scala	1	member-only
 def	önüneEkleHepsini	prependedAll	yazi.scala	1	member-only
 def	önüneEkleHepsini	prependedAll	yoney.scala	1	member-only
-def	örgü	weave	resim.scala	1
-def	ötele	trans	resim.scala	6
-def	öteleme	trans	resim.scala	1	deprecated
-def	öteleme	trans	trInit.scala	1	deprecated
+def	örgü	weave	resim.scala	1	delegates
+def	ötele	trans	resim.scala	6	delegates
+def	öteleme	trans	resim.scala	1	delegates,deprecated
+def	öteleme	trans	trInit.scala	1	delegates,deprecated
 def	üste	above	resim.scala	1	member-only
 def	üzerinde	over	resim.scala	1	member-only
 def	üçgenDöşeme	triangulate	trInit.scala	1
@@ -2499,7 +2505,7 @@ type	İmge	Image	data.scala	2
 type	İmge	Image	package.scala	1
 type	İmgeİşlemi	ImageOp	package.scala	1
 type	İmgeİşlemi	ImageOp	turler.scala	1
-def	İngilizce	getTime	buan.scala	1	member-only
+def	İngilizce	getTime	buan.scala	1	delegates,member-only
 type	İriKesir	BigDecimal	data.scala	1
 type	İriKesir	BigDecimal	package.scala	1
 type	İriKesir	BigDecimal	sayi.scala	1
@@ -2516,9 +2522,9 @@ type	İşlev2	Function2	data.scala	1
 type	İşlev2	Function2	turler.scala	1
 type	İşlev3	Function3	data.scala	1
 type	İşlev3	Function3	turler.scala	1
-def	ızgarayıGizle	gridOff	trInit.scala	1
-def	ızgarayıGöster	gridOn	trInit.scala	1
-def	ışıklar	lights	resim.scala	1
+def	ızgarayıGizle	gridOff	trInit.scala	1	delegates
+def	ızgarayıGöster	gridOn	trInit.scala	1	delegates
+def	ışıklar	lights	resim.scala	1	delegates
 def	ışınlarıAç	beamsOn	trInit.scala	1
 def	ışınlarıKapat	beamsOff	trInit.scala	1
 def	şekil	drawShape	tuvalcizim.scala	1	member-only
