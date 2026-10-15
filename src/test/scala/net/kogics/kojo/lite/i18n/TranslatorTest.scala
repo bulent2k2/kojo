@@ -115,6 +115,37 @@ import net.kogics.kojo.lite.i18n.tr.dict
     tr2en("sil()\nresim.sil()") shouldBe "clear()\nresim.erase()"
   }
 
+  test("CanvasDraw receiver (EN->TR): fill, rotate, beginShape and endShape go to the canvas names -- declaration or lambda") {
+    // declared parameter
+    val declared = en2tr("def f(cd: CanvasDraw) { cd.fill(1, 2, 3); cd.rotate(0.5); cd.beginShape(); cd.endShape() }")
+    declared should include("cd.boya(1, 2, 3)")
+    declared should include("cd.döndürRadyan(0.5)")
+    declared should include("cd.şekilBaşla()")
+    declared should include("cd.şekilBitir()")
+    // single-block lambda
+    en2tr("animateWithCanvasDraw { c => c.fill(0, 0, 0, 30) }") should include("c.boya(0, 0, 0, 30)")
+    // setup variant: both blocks
+    val two = en2tr("animateWithSetupCanvasDraw { a => a.fill(1, 1, 1) } { b => b.rotate(1) }")
+    two should include("a.boya(1, 1, 1)")
+    two should include("b.döndürRadyan(1)")
+  }
+
+  test("CanvasDraw receiver (EN->TR): a picture's fill/rotate, and a lambda nested in the canvas lambda, are not touched") {
+    // not a canvas: the old translation
+    val pic = en2tr("def g(p: Picture) { p.rotate(30) }")
+    pic should include("p.döndür(30)")
+    pic should not include "döndürRadyan"
+    // a nested lambda's parameter is not the canvas
+    val nested = en2tr("animateWithCanvasDraw { c => items.foreach { p => p.rotate(1) } }")
+    nested should include("p.döndür(1)")
+    nested should not include "p.döndürRadyan"
+  }
+
+  test("CanvasDraw receiver round trip: TuvalÇizim fill/rotate survive TR->EN->TR") {
+    val tr = "tanım f(tuval: TuvalÇizim) { tuval.boya(1, 2, 3); tuval.döndürRadyan(0.5); tuval.şekilBaşla(); tuval.şekilBitir() }"
+    en2tr(tr2en(tr)) shouldBe tr
+  }
+
   test("Eskiz: TR->EN drops `extends Eskiz` and renames kurulum/çizimDöngüsü to setup/drawLoop inside the class") {
     val tr =
       """sınıf Gezginler yayar Eskiz {
