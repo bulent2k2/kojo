@@ -2,6 +2,7 @@
 // oyunun kahramanlarını da tangram parçalarıyla oluşturalım
 
 tümEkranTuval
+yaklaşmayaİzinVerme() // parmakla ya da tekerlekle yakınlaşıp sahneyi bozmasın
 
 dez oyunSüresi = 20
 
@@ -72,13 +73,17 @@ silVeÇizimBiriminiKur(santim)
 dez ta = tuvalAlanı
 dez enİriX = ta.x.mutlakDeğer
 dez enİriY = ta.y.mutlakDeğer
-dez kaçan = boyaRengi(sarı) * götür(enİriX / 3, 2) * büyüt(0.3) -> tangram
+// kaçan sağ alt köşede başlasın: kovalayanların ortasında başlarsa hemen çarpıp oyun biter
+dez kaçan = boyaRengi(sarı) * götür(enİriX - 3, 4 - enİriY) * büyüt(0.3) -> tangram
 dez kovalayan = boyaRengi(siyah) * büyüt(0.3) -> tangram
 dez kovalayan2 = boyaRengi(siyah) * götür(-enİriX / 2, 0) * büyüt(0.3) -> tangram
 dez kovalayan3 = boyaRengi(siyah) * götür(2 * enİriX / 3, 0) * büyüt(0.3) -> tangram
 dez kovalayan4 = boyaRengi(siyah) * götür(-enİriX / 2, enİriY / 2) * büyüt(0.3) -> tangram
 dez kovalayan5 = boyaRengi(siyah) * götür(2 * enİriX / 3, enİriY / 2) * büyüt(0.3) -> tangram
 
+// bas davul sesi ilk kez kenarda çalınırken yüklenirse oyun bir an donuyor ("Loading...");
+// o yüzden baştan yüklüyoruz
+yeniMp3Çalar.önyükle(Ses.basDavulVuruşları)
 müzikMp3üÇalDöngülü(Ses.mağarada)
 gizle()
 çizSahne(Renk(150, 150, 255))
@@ -105,27 +110,51 @@ canlandırmaBaşlayınca {
     )
 }
 
+// Cep telefonu için kumanda kolu (sol altta). Bilgisayarda klavye de çalışıyor.
+// Kolu çekince kaçan, klavyedeki ok tuşlarıyla aynı hızda o yöne gider.
+dez kolYarıçapı = 1.8
+dez kol = kumandaKolu(kolYarıçapı)
+kol.çevreKalemRenginiKur(saydam) // kalem kalınlığı santim biriminde çok kalın olurdu
+kol.konumuKur(-enİriX + 3, 3 - enİriY)
+kol.çiz()
+
+// kaçan ekranın dışına çıkamasın: kenara değen adım geri alınıyor.
+// Yatay ve dikey adımlar ayrı denendiği için kenar boyunca kayılabiliyor.
+den kenardaMı = yanlış
+
 kaçan.canlan { r =>
+    kenardaMı = yanlış
+    tanım adımAt(dx: Kesir, dy: Kesir) {
+        r.götür(dx, dy)
+        eğer (r.çarptıMı(Resim.tuvalinSınırları)) {
+            r.götür(-dx, -dy)
+            kenardaMı = doğru
+        }
+    }
     eğer (tuşaBasılıMı(tuşlar.sağ)) {
-        r.götür(hız * hızOranı, 0)
+        adımAt(hız * hızOranı, 0)
     }
     eğer (tuşaBasılıMı(tuşlar.sol)) {
-        r.götür(-hız * hızOranı, 0)
+        adımAt(-hız * hızOranı, 0)
     }
     eğer (tuşaBasılıMı(tuşlar.yukarı)) {
-        r.götür(0, hız * hızOranı)
+        adımAt(0, hız * hızOranı)
     }
     eğer (tuşaBasılıMı(tuşlar.aşağı)) {
-        r.götür(0, -hız * hızOranı)
+        adımAt(0, -hız * hızOranı)
     }
+    dez kolYöneyi = kol.yöney
+    dez kolÖlçeği = hız * hızOranı / (kolYarıçapı / 2) // kolu sonuna çekince klavyedeki hız
+    adımAt(kolYöneyi.x * kolÖlçeği, 0)
+    adımAt(0, kolYöneyi.y * kolÖlçeği)
 }
 
 tanım koşuşturma(r: Resim) {
     den yeniHızYöneyi = hızDefteri(r).döndür(rastgeleKesir(10) - 5)
-    r.hızınıDönüştür(yeniHızYöneyi)
+    r.götür(yeniHızYöneyi)
     eğer (r.çarptıMı(Resim.tuvalinSınırları)) {
         yeniHızYöneyi = sahneKenarındanYansıtma(r, yeniHızYöneyi)
-        r.hızınıDönüştür(yeniHızYöneyi)
+        r.götür(yeniHızYöneyi)
     }
     hızDefteri.eşEkle(r -> yeniHızYöneyi)
 }
@@ -151,7 +180,7 @@ kaçan.canlan { r =>
     }
 
     // oyunda belli durumlarda değişik ses efekti yapmanın başka bir yolu da böyle
-    eğer (kaçan.çarptıMı(Resim.tuvalinSınırları)) {
+    eğer (kenardaMı) {
         eğer (!müzikMp3üÇalıyorMu) {
             müzikMp3üÇal(Ses.basDavulVuruşları)
         }
