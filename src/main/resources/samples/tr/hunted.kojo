@@ -2,6 +2,7 @@
 // oyunun kahramanlarını da tangram parçalarıyla oluşturalım
 
 tümEkranTuval
+yaklaşmayaİzinVerme() // parmakla ya da tekerlekle yakınlaşıp sahneyi bozmasın
 
 dez oyunSüresi = 20
 
@@ -109,6 +110,14 @@ canlandırmaBaşlayınca {
     )
 }
 
+// Cep telefonu için kumanda kolu (sol altta). Bilgisayarda klavye de çalışıyor.
+// Kolu çekince kaçan, klavyedeki ok tuşlarıyla aynı hızda o yöne gider.
+dez kolYarıçapı = 1.8
+dez kol = kumandaKolu(kolYarıçapı)
+kol.çevreKalemRenginiKur(saydam) // kalem kalınlığı santim biriminde çok kalın olurdu
+kol.konumuKur(-enİriX + 3, 3 - enİriY)
+kol.çiz()
+
 // kaçan ekranın dışına çıkamasın: kenara değen adım geri alınıyor.
 // Yatay ve dikey adımlar ayrı denendiği için kenar boyunca kayılabiliyor.
 den kenardaMı = yanlış
@@ -134,6 +143,10 @@ kaçan.canlan { r =>
     eğer (tuşaBasılıMı(tuşlar.aşağı)) {
         adımAt(0, -hız * hızOranı)
     }
+    dez kolYöneyi = kol.yöney
+    dez kolÖlçeği = hız * hızOranı / (kolYarıçapı / 2) // kolu sonuna çekince klavyedeki hız
+    adımAt(kolYöneyi.x * kolÖlçeği, 0)
+    adımAt(0, kolYöneyi.y * kolÖlçeği)
 }
 
 tanım koşuşturma(r: Resim) {
