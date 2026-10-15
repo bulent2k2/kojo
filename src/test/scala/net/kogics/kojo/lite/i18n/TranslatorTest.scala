@@ -115,6 +115,57 @@ import net.kogics.kojo.lite.i18n.tr.dict
     tr2en("sil()\nresim.sil()") shouldBe "clear()\nresim.erase()"
   }
 
+  test("Eskiz: TR->EN drops `extends Eskiz` and renames kurulum/çizimDöngüsü to setup/drawLoop inside the class") {
+    val tr =
+      """sınıf Gezginler yayar Eskiz {
+        |  tanım kurulum(tuval: TuvalÇizim) { tuval.artalan(siyah) }
+        |  tanım çizimDöngüsü(tuval: TuvalÇizim) { kurulum(tuval) }
+        |}
+        |çiz(Resim.eskizden(yeni Gezginler))
+        |""".stripMargin
+    val en = tr2en(tr)
+    en should include("class Gezginler {")
+    en should not include "Eskiz"
+    en should include("def setup(tuval: CanvasDraw)")
+    en should include("def drawLoop(tuval: CanvasDraw)")
+    en should include("setup(tuval)") // the call inside the class is renamed too
+    en should not include "kurulum"
+    en should not include "çizimDöngüsü"
+    en should include("draw(Picture.fromSketch(new Gezginler))")
+  }
+
+  test("Eskiz: EN->TR adds `yayar Eskiz` to a class with setup + drawLoop taking a CanvasDraw, and renames them back") {
+    val en =
+      """class Sketch {
+        |  def setup(cd: CanvasDraw) { cd.background(black) }
+        |  def drawLoop(cd: CanvasDraw) { cd.point(1, 2) }
+        |}
+        |draw(Picture.fromSketch(new Sketch))
+        |""".stripMargin
+    val tr = en2tr(en)
+    tr should include("sınıf Sketch yayar Eskiz {")
+    tr should include("tanım kurulum(cd: TuvalÇizim)")
+    tr should include("tanım çizimDöngüsü(cd: TuvalÇizim)")
+    tr should include("çiz(Resim.eskizden(yeni Sketch))")
+  }
+
+  test("Eskiz: round trip TR->EN->TR keeps the sketch shape") {
+    val tr = "sınıf İzler yayar Eskiz {\n  tanım kurulum(t: TuvalÇizim) { t.artalan(siyah) }\n  tanım çizimDöngüsü(t: TuvalÇizim) { t.nokta(1, 2) }\n}\n"
+    en2tr(tr2en(tr)) shouldBe tr
+  }
+
+  test("Eskiz: only the exact shape is rewritten (other parents, only one method, member access, other classes)") {
+    // another parent clause: left as it is
+    tr2en("sınıf X yayar Eskiz ile Y { tanım kurulum(t: TuvalÇizim) {} }") should include("Eskiz")
+    // EN->TR: setup alone, or a class that already has a parent, is not a sketch
+    en2tr("class A { def setup(cd: CanvasDraw) {} }") should not include "Eskiz"
+    en2tr("class B extends C { def setup(cd: CanvasDraw) {}; def drawLoop(cd: CanvasDraw) {} }") should not include "Eskiz"
+    // a method of the same name in an ordinary class, and a use after a dot, are not renamed
+    val other = tr2en("sınıf Y { tanım kurulum() {} }\nsınıf Z yayar Eskiz { tanım kurulum(t: TuvalÇizim) { y.kurulum() } }")
+    other should include("class Y { def kurulum() {} }")
+    other should include("y.kurulum()")
+  }
+
   test("nokta: point if the receiver is a TuvalÇizim, vertex otherwise -- type declaration or the lambda of canlandırTuvalÇizimle (fireworks-canvas)") {
     // declared parameter
     tr2en("tanım göster(tuval: TuvalÇizim) { tuval.nokta(1, 2) }") should include("tuval.point(1, 2)")
