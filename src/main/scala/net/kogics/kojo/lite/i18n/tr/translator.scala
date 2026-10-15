@@ -204,6 +204,85 @@ object Translator {
         }
         nameSet.result()
       }
+    // Sketch classes. Turkish writes `class X extends Eskiz { def kurulum(tuval: TuvalÇizim) ...
+    // def çizimDöngüsü(tuval: TuvalÇizim) ... }`; English Kojo has no `Eskiz` type: `Picture.fromSketch`
+    // takes any object with `setup(cd: CanvasDraw)` and `drawLoop(cd: CanvasDraw)` (a structural type),
+    // found BY NAME. Without this step the English output kept `extends Eskiz` and the Turkish method
+    // names: it compiled on iKoco only because of an overload for the Turkish trait, and failed on
+    // desktop English Kojo. Edits are computed before the main loop, as token index -> replacement text:
+    //   TR->EN  `extends Eskiz` (the whole parent clause) is dropped, and in the class body
+    //           `kurulum` -> `setup`, `çizimDöngüsü` -> `drawLoop`.
+    //   EN->TR  a class or object with NO parent whose body defines BOTH `def setup(x: CanvasDraw` and
+    //           `def drawLoop(x: CanvasDraw` gets `extends Eskiz` (`yayar Eskiz`), and the names go back.
+    // Only the exact shape is recognized; `extends Eskiz with Other` and the like are left as they are.
+    // A name used after a dot (`o.kurulum`) is not renamed.
+    val sketchEdits: Map[Int, String] = {
+      val sig = tokens.indices.filter(j => isSignificant(tokens(j))).toVector
+      def ty(k: Int) = tokens(sig(k)).tokenType
+      def tx(k: Int) = tokens(sig(k)).text
+      val (turkishNames, englishNames) = (Seq("kurulum", "çizimDöngüsü"), Seq("setup", "drawLoop"))
+      val (fromNames, toNames) = direction match {
+        case TurkishToEnglish => (turkishNames, englishNames)
+        case EnglishToTurkish => (englishNames, turkishNames)
+      }
+      val edits = scala.collection.mutable.Map.empty[Int, String]
+      for (k <- sig.indices if ty(k) == Tokens.CLASS || ty(k) == Tokens.OBJECT) {
+        // the class body: the first `{` outside parentheses, before another definition starts
+        var m = k + 1; var depth = 0; var open = -1; var stop = false
+        while (!stop && m < sig.length) {
+          ty(m) match {
+            case Tokens.LPAREN | Tokens.LBRACKET                 => depth += 1
+            case Tokens.RPAREN | Tokens.RBRACKET                 => depth -= 1
+            case Tokens.LBRACE if depth == 0                     => open = m; stop = true
+            case Tokens.CLASS | Tokens.OBJECT | Tokens.TRAIT |
+                 Tokens.DEF | Tokens.VAL | Tokens.VAR if depth == 0 => stop = true
+            case _                                               =>
+          }
+          if (!stop) m += 1
+        }
+        if (open > 0) {
+          var braces = 0; var close = -1; var q = open
+          while (close < 0 && q < sig.length) {
+            if (ty(q) == Tokens.LBRACE) braces += 1 else if (ty(q) == Tokens.RBRACE) { braces -= 1; if (braces == 0) close = q }
+            q += 1
+          }
+          // `extends Eskiz` as the whole parent clause, right before the body
+          val extendsAt = (k + 1 until open).find(e => ty(e) == Tokens.EXTENDS)
+          val hasSketchParent = extendsAt.exists(e => e + 2 == open && tx(e + 1) == "Eskiz")
+          val hasNoParent = extendsAt.isEmpty && !(k + 1 until open).exists(e => ty(e) == Tokens.WITH)
+          // the body defines `def <name>(x: CanvasDraw` at the top level of the class
+          def definesWithCanvasDraw(name: String): Boolean = close > 0 && {
+            var d = 0
+            (open to close).exists { e =>
+              if (ty(e) == Tokens.LBRACE) d += 1 else if (ty(e) == Tokens.RBRACE) d -= 1
+              d == 1 && ty(e) == Tokens.DEF && e + 5 < sig.length && tx(e + 1) == name && ty(e + 2) == Tokens.LPAREN &&
+                isIdentifier(tokens(sig(e + 3))) && ty(e + 4) == Tokens.COLON && tx(e + 5) == "CanvasDraw"
+            }
+          }
+          val applies = close > 0 && (direction match {
+            case TurkishToEnglish => hasSketchParent
+            case EnglishToTurkish => hasNoParent && englishNames.forall(definesWithCanvasDraw)
+          })
+          if (applies) {
+            direction match {
+              case TurkishToEnglish =>
+                // drop the whitespace before `extends` too: `class X extends Eskiz {` -> `class X {`
+                val e = extendsAt.get
+                val first = if (sig(e) > 0 && tokens(sig(e) - 1).tokenType == Tokens.WS) sig(e) - 1 else sig(e)
+                (first to sig(e + 1)).foreach(edits(_) = "")
+              case EnglishToTurkish =>
+                val bracePrefix = if (sig(open) > 0 && tokens(sig(open) - 1).tokenType == Tokens.WS) "" else " "
+                edits(sig(open)) = s"$bracePrefix${keywordTable(Tokens.EXTENDS)._2} Eskiz {"
+            }
+            for (e <- open + 1 until close if isIdentifier(tokens(sig(e))) && !(ty(e - 1) == Tokens.DOT)) {
+              val i = fromNames.indexOf(tx(e))
+              if (i >= 0) edits(sig(e)) = toNames(i)
+            }
+          }
+        }
+      }
+      edits.toMap
+    }
     var previous: Option[Token] = None // the previous token that is not whitespace/comment
     var beforePrevious: Option[Token] = None
     var swallowed = Set.empty[Int]     // tokens swallowed when receiver+dot+name are replaced together
@@ -301,7 +380,8 @@ object Translator {
       val t = tokens(i)
       val tt = t.tokenType
       val replacement: String =
-        if (swallowed(i)) ""
+        if (sketchEdits.contains(i)) sketchEdits(i)
+        else if (swallowed(i)) ""
         else if (keywordTable.contains(tt)) {
           val (en, tr) = keywordTable(tt)
           direction match {
