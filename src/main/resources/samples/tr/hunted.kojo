@@ -80,6 +80,9 @@ dez kovalayan3 = boyaRengi(siyah) * götür(2 * enİriX / 3, 0) * büyüt(0.3) -
 dez kovalayan4 = boyaRengi(siyah) * götür(-enİriX / 2, enİriY / 2) * büyüt(0.3) -> tangram
 dez kovalayan5 = boyaRengi(siyah) * götür(2 * enİriX / 3, enİriY / 2) * büyüt(0.3) -> tangram
 
+// bas davul sesi ilk kez kenarda çalınırken yüklenirse oyun bir an donuyor ("Loading...");
+// o yüzden baştan yüklüyoruz
+yeniMp3Çalar.önyükle(Ses.basDavulVuruşları)
 müzikMp3üÇalDöngülü(Ses.mağarada)
 gizle()
 çizSahne(Renk(150, 150, 255))
@@ -135,10 +138,10 @@ kaçan.canlan { r =>
 
 tanım koşuşturma(r: Resim) {
     den yeniHızYöneyi = hızDefteri(r).döndür(rastgeleKesir(10) - 5)
-    r.hızınıDönüştür(yeniHızYöneyi)
+    r.götür(yeniHızYöneyi)
     eğer (r.çarptıMı(Resim.tuvalinSınırları)) {
         yeniHızYöneyi = sahneKenarındanYansıtma(r, yeniHızYöneyi)
-        r.hızınıDönüştür(yeniHızYöneyi)
+        r.götür(yeniHızYöneyi)
     }
     hızDefteri.eşEkle(r -> yeniHızYöneyi)
 }
