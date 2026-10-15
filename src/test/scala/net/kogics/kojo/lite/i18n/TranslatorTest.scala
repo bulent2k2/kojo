@@ -115,6 +115,12 @@ import net.kogics.kojo.lite.i18n.tr.dict
     tr2en("sil()\nresim.sil()") shouldBe "clear()\nresim.erase()"
   }
 
+  test("disablePanAndZoom: EN->TR gives the wrapper yaklaşmayaİzinVerme, not its alias tuvaliSabitle; both go back to disablePanAndZoom") {
+    en2tr("disablePanAndZoom()") shouldBe "yaklaşmayaİzinVerme()"
+    tr2en("yaklaşmayaİzinVerme()") shouldBe "disablePanAndZoom()"
+    tr2en("tuvaliSabitle()") shouldBe "disablePanAndZoom()"
+  }
+
   test("CanvasDraw receiver (EN->TR): fill, rotate, beginShape and endShape go to the canvas names -- declaration or lambda") {
     // declared parameter
     val declared = en2tr("def f(cd: CanvasDraw) { cd.fill(1, 2, 3); cd.rotate(0.5); cd.beginShape(); cd.endShape() }")

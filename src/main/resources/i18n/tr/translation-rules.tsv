@@ -248,6 +248,7 @@ en>tr	fill	CanvasDraw.	boya	if the receiver is a CanvasDraw (a `cd: CanvasDraw` 
 en>tr	rotate	CanvasDraw.	döndürRadyan	CanvasDraw.rotate takes radians = döndürRadyan (döndürDerece is rotateDegrees); on a picture rotate is döndür
 en>tr	beginShape	CanvasDraw.	şekilBaşla	CanvasDraw.beginShape = şekilBaşla; bare başla is a different object's member
 en>tr	endShape	CanvasDraw.	şekilBitir	CanvasDraw.endShape = şekilBitir; bare bitir is a different object's member
+en>tr	disablePanAndZoom	*	yaklaşmayaİzinVerme	trInit.scala has two Turkish names for it: yaklaşmayaİzinVerme (the wrapper) and tuvaliSabitle (= yaklaşmayaİzinVerme(), an alias). Counts are equal and the tie fell to alphabetical order, i.e. to the alias; the wrapper is the right one
 en>tr	setHorizontalAlignment	bare	-	new Label { setHorizontalAlignment(...) }: a Swing member; yatayDüzeniKur is in the Turkish UI wrapper
 en>tr	bouncePicVectorOffStage	*	sahneKenarındanYansıtma	resim.scala: Yöney2B(bouncePicOffStage(r.p, v.v)); in English two names do the same job
 tr>en	çalıyorMu	member	isMp3Playing	the implicit class in package.scala (KMp3); the generator takes only type/val from package.scala
