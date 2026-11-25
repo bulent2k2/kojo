@@ -16,9 +16,7 @@ durum sınıf SayıAralığı(a: Kesir, b: Kesir) { require(a <= b)
     yoksa enUfağı(o.b, b) - enİrisi(o.a, a)
 }
 dez nesneler = Diz(Dörtgen(100, 50), Dörtgen(50, 100), Dörtgen(100, 50), Dörtgen(50, 100), Dörtgen(50, 50))
-dez (solK, altK) = (tuvalAlanı.x.toInt, tuvalAlanı.y.toInt)
-dez (sağK, üstK) = (-solK, -altK)
-dez (enK, boyK) = (sağK - solK, üstK - altK)
+dez (enK, boyK) = (tuvalAlanı.en.toInt, tuvalAlanı.boy.toInt) // tuvalin eni ve boyu
 // Enerji: kutunun alanı + örtüşmenin çok ağır cezası
 tanım enerji = 1e5 * kesişim(nesneler) + alan
 tanım kesişim(os: Diz[Dörtgen]): Kesir = eğer (os.boşMu) 0.0 yoksa (os.kuyruğu.işle { o => os.başı.kesişim(o) }).topla + kesişim(os.kuyruğu)
