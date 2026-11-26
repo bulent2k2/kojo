@@ -90,6 +90,7 @@ import net.kogics.kojo.lite.i18n.tr.DictionaryGenerator
     "tr/genart-mondrian.kojo" -> "WRAPPER: `rastgeleKarıştır(EsnekDizim)` -> shuffle(ArrayBuffer) type mismatch",
     "tr/genart-tiled-lines.kojo" -> "USER: `sınıf Köşegen(eni, boyu)`: boyu is a script-command name in both contexts, definition/use diverge",
     "tr/genart-tri-mesh.kojo" -> "RECEIVER: `yol.kondur(x, y)` GeneralPath.moveTo (Dizim.boş[T](n, m) -> Array.ofDim was fixed by a rule, this is the next error)",
+    "tr/hayat-oyunu.kojo" -> "RECEIVER: `yol.kondur(x, y)` GeneralPath.moveTo; the rule says setPosition (Resim/Kaplumbağa). Next: `tuşlar.n/c/r/n0..n9` have no rule (only five keys are mapped by hand)",
     "tr/image-collage.kojo" -> "RECEIVER: `kaplumbağa.yazı(..)` write; the rule binds the member yazı to Picture.text",
     "tr/l-systems.kojo" -> "RECEIVER: `StringBuilder.sayıya` -> toInt; Turkish implicit conversion",
     "tr/lamp-animation.kojo" -> "RECEIVER: `yol.kondur` GeneralPath.moveTo",

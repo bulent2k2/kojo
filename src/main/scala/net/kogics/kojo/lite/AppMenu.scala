@@ -333,6 +333,11 @@ trait AppMenu {
     gamesMenu.add(menuItemForInstalledFile("S_Platformer", "examples/tiledgame/game.kojo"))
     gamesMenu.add(menuItemFor("S_TicTacToe", "tic-tac-toe.kojo"))
     gamesMenu.add(menuItemForInstalledFile("S_Othello", "examples/othello/menu.kojo"))
+    // Hayat Oyunu yalnız Türkçe (samples/tr/), İngilizce karşılığı yok: başka bir dilde menüde
+    // görünseydi tıklanınca "Resource ... should exist" hatası verirdi.
+    if (kojoCtx.userLanguage == "tr") {
+      gamesMenu.add(menuItemFor("S_GameOfLife", "hayat-oyunu.kojo"))
+    }
 
     samplesMenu.add(gamesMenu)
 
