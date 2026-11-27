@@ -388,22 +388,35 @@ object DictionaryGenerator {
   }
 
   /** Constant tables: between `object Çalgı { val AkustikBas = 32 }` (muzik.scala) and
-    * `object Instrument { val ACOUSTIC_BASS = 32 }` (music/Instrument.scala), and between `object Görünüş
-    * { val araba = "/media/costumes/car.png" }` and `class Costume { val car = ... }`
-    * there is no wrapper, the match is made by VALUE (a number or string constant). Names carrying the same value
-    * are matched in order (Piyano/PIANO, AkustikKuyruklu/ACOUSTIC_GRAND); a name beyond the end of the order is bound to the first.
+    * `object Instrument { val ACOUSTIC_BASS = 32 }` (music/Instrument.scala), between `object Görünüş
+    * { val araba = "/media/costumes/car.png" }` and `class Costume { val car = ... }`, and between
+    * `object tuşlar { val n = 0x4e }` (klavye.scala) and `class KeyCodes { val VK_N = 0x4E }` (staging/KeyCodes.scala)
+    * there is no wrapper, the match is made by VALUE (a number, character or string constant; `0x4e`, `78` and
+    * `'N'` are the same value). Names carrying the same value are matched in order (Piyano/PIANO,
+    * AkustikKuyruklu/ACOUSTIC_GRAND); a name beyond the end of the order is bound to the first.
+    * A name defined as another name of the same object (`val gir = enter`) has that name's value.
     * The rows are written qualified on both sides (`Çalgı.AkustikBas` ->
     * `Instrument.ACOUSTIC_BASS`): TR->EN swallows the receiver and writes the full name, EN->TR takes the receiver from the rule
     * (Instrument -> Çalgı) and the member from here. Alias receivers (Çizim = Görünüş) only for
     * TR->EN, with the `alias` note. */
-  private val constantDefinition = "val\\s+([A-Za-zİıŞşĞğÖöÜüÇç_][A-Za-z0-9İıŞşĞğÖöÜüÇç_]*)\\s*(?::\\s*[A-Za-zİıŞşĞğÖöÜüÇç_]+)?\\s*=\\s*(\\d+|\"[^\"]*\")".r
+  private val nameChars = "A-Za-zİıŞşĞğÖöÜüÇç_"
+  private val namePattern = "[" + nameChars + "][0-9" + nameChars + "]*"
+  // value: hex | decimal | "string" | 'c' or '\n' | a name of the same object (an alias). The lookahead keeps
+  // `0x4e` from being read as `0`, and `x.y` or `f(1)` from being read as an alias `x` / `f`.
+  private val constantDefinition = ("val\\s+(" + namePattern + ")\\s*(?::\\s*[" + nameChars + "]+)?\\s*=\\s*" +
+    "(0[xX][0-9a-fA-F]+|\\d+|\"[^\"]*\"|'(?:\\\\.|[^'\\\\])'|" + namePattern + ")(?![0-9" + nameChars + ".(])").r
   /** (Turkish file, Turkish object, aliases, English file, English object). */
   val constantObjectPairs: Seq[(String, String, Seq[String], String, String)] = Seq(
     ("lite/i18n/tr/muzik.scala", "Çalgı", Nil, "music/Instrument.scala", "Instrument"),
     ("lite/i18n/tr/cizim.scala", "Görünüş", Seq("Çizim"), "turtle/TurtleWorldAPI.scala", "Costume"),
     ("lite/i18n/tr/cizim.scala", "Görünüş", Seq("Çizim"), "turtle/TurtleWorldAPI.scala", "Background"),
     ("lite/i18n/tr/cizim.scala", "Artalan", Nil, "turtle/TurtleWorldAPI.scala", "Background"),
-    ("lite/i18n/tr/ses.scala", "Ses", Nil, "turtle/TurtleWorldAPI.scala", "Sound"))
+    ("lite/i18n/tr/ses.scala", "Ses", Nil, "turtle/TurtleWorldAPI.scala", "Sound"),
+    // hayat-oyunu: `tuşlar.n/c/r/n0..n9` had no English counterpart; only five keys were mapped by hand
+    ("lite/i18n/tr/klavye.scala", "tuşlar", Nil, "staging/KeyCodes.scala", "KeyCodes"))
+  /** How an English script names the English object when that is not the class name: CoreBuiltins has
+    * `val Kc = new staging.KeyCodes`, a script writes `Kc.VK_N`, never `KeyCodes.VK_N`. */
+  val englishReceivers: Map[String, String] = Map("KeyCodes" -> "Kc")
   private def objectBody(code: String, objectName: String): Option[(String, Int)] = {
     val startIndex = ("(object|class)\\s+" + java.util.regex.Pattern.quote(objectName) + "\\s*\\{").r.findFirstMatchIn(code).map(_.start).getOrElse(-1)
     if (startIndex < 0) return None
@@ -412,26 +425,58 @@ object DictionaryGenerator {
     while (endIndex < 0 && i < body.length) { body(i) match { case '{' => d += 1; case '}' => d -= 1; if (d == 0) endIndex = i; case _ => }; i += 1 }
     Some((body.substring(0, if (endIndex < 0) body.length else endIndex), code.substring(0, startIndex).count(_ == '\n') + 1))
   }
-  private def constants(file: File, objectName: String): Seq[(String, String, Int)] =
+  /** The value of a constant literal as a comparable key: a number or a character becomes its decimal code
+    * (`0x4E`, `0x4e`, `78` and `'N'` meet), a string stays as written. None for a name (an alias). */
+  def constantValue(literal: String): Option[String] = {
+    val escapes = Map('n' -> '\n', 't' -> '\t', 'b' -> '\b', 'r' -> '\r', 'f' -> '\f', '0' -> '\u0000', '\\' -> '\\', '\'' -> '\'', '"' -> '"')
+    if (literal.startsWith("0x") || literal.startsWith("0X")) Some(java.lang.Long.parseLong(literal.drop(2), 16).toString)
+    else if (literal.nonEmpty && literal.forall(_.isDigit)) Some(BigInt(literal).toString)
+    else if (literal.startsWith("'") && literal.length == 3) Some(literal(1).toInt.toString)
+    else if (literal.startsWith("'\\") && literal.length == 4) escapes.get(literal(2)).map(_.toInt.toString)
+    else if (literal.startsWith("\"")) Some(literal)
+    else None
+  }
+  /** (name, value key, line, literal as written). An alias (`val gir = enter`) takes the value and the literal
+    * of the name it points at, if that is a constant of the same object; otherwise it is left out. */
+  private def constants(file: File, objectName: String): Seq[(String, String, Int, String)] =
     if (!file.exists()) Nil
     else objectBody(readFile(file), objectName).toSeq.flatMap { case (body, startLine) =>
-      constantDefinition.findAllMatchIn(body).toSeq.map(m => (m.group(1), m.group(2), startLine + body.substring(0, m.start).count(_ == '\n')))
+      val definitions = constantDefinition.findAllMatchIn(body).toSeq.map(m => (m.group(1), m.group(2), startLine + body.substring(0, m.start).count(_ == '\n')))
+      val rawValue = definitions.map(d => d._1 -> d._2).toMap
+      def literalOf(name: String, seen: Set[String]): Option[String] = rawValue.get(name).flatMap { v =>
+        if (constantValue(v).isDefined) Some(v) else if (seen(v)) None else literalOf(v, seen + v)
+      }
+      definitions.flatMap { case (name, _, line) => literalOf(name, Set(name)).map(literal => (name, constantValue(literal).get, line, literal)) }
     }
+  /** `backSpace` respells `VK_BACK_SPACE`: the same letters, case and `_` ignored, after an English prefix. */
+  private def respells(trName: String, enName: String): Boolean = {
+    def letters(s: String) = s.filter(_ != '_').toLowerCase(java.util.Locale.ROOT)
+    val words = enName.split('_')
+    words.indices.exists(k => letters(words.drop(k).mkString) == letters(trName))
+  }
   def constantObjects(root: File): Seq[Row] = constantObjectPairs.flatMap { case (trFile, trObject, aliases, enFile, enObject) =>
     val sourceRoot = new File(root, "src/main/scala/net/kogics/kojo")
     val tr = constants(new File(sourceRoot, trFile), trObject)
     val en = constants(new File(sourceRoot, enFile), enObject)
-    val trByValue = tr.groupBy(_._2); val enByValue = en.groupBy(_._2)
-    def ordered(value: String, i: Int, other: Map[String, Seq[(String, String, Int)]]) =
+    val enReceiver = englishReceivers.getOrElse(enObject, enObject)
+    val enByValue = en.groupBy(_._2)
+    // klavye.scala defines the AWT name in camel case (`enter`, `backSpace`, `home`) and a Turkish name next to it
+    // (`val gir = enter`). Both are valid Koco, but EN->TR should write the Turkish one: a Turkish name that only
+    // RESPELLS an English name of the same value goes to the end of its group. Otherwise the order is the source's.
+    val trByValue = tr.groupBy(_._2).map { case (v, entries) =>
+      val enNames = enByValue.getOrElse(v, Nil).map(_._1)
+      v -> entries.sortBy { case (name, _, _, _) => enNames.exists(respells(name, _)) }
+    }
+    def ordered(value: String, i: Int, other: Map[String, Seq[(String, String, Int, String)]]) =
       other.get(value).map(ks => ks(math.min(i, ks.size - 1))._1)
     val trFileName = trFile.substring(trFile.lastIndexOf('/') + 1); val enFileName = enFile.substring(enFile.lastIndexOf('/') + 1)
     // A Turkish constant with no English counterpart (Görünüş.top1: the collidium images are not in Costume):
     // the target is the value itself -- `Görünüş.top1` -> `"/media/collidium/ball1.png"`. A string
     // constant is valid bare in the API; Resim.imge(Görünüş.top1) is written with the path in English anyway.
-    val trSide = trByValue.toSeq.flatMap { case (v, entries) => entries.zipWithIndex.map { case ((name, _, line), i) =>
-      Row("val", trObject + "." + name, ordered(v, i, enByValue).map(enObject + "." + _).getOrElse(v), s"$trFileName:$line") } }
-    val enSide = enByValue.toSeq.flatMap { case (v, entries) => entries.zipWithIndex.flatMap { case ((name, _, line), i) =>
-      ordered(v, i, trByValue).map(t => Row("val", trObject + "." + t, enObject + "." + name, s"$enFileName:$line")) } }
+    val trSide = trByValue.toSeq.flatMap { case (v, entries) => entries.zipWithIndex.map { case ((name, _, line, literal), i) =>
+      Row("val", trObject + "." + name, ordered(v, i, enByValue).map(enReceiver + "." + _).getOrElse(literal), s"$trFileName:$line") } }
+    val enSide = enByValue.toSeq.flatMap { case (v, entries) => entries.zipWithIndex.flatMap { case ((name, _, line, _), i) =>
+      ordered(v, i, trByValue).map(t => Row("val", trObject + "." + t, enReceiver + "." + name, s"$enFileName:$line")) } }
     val baseRows = (trSide ++ enSide).distinct
     baseRows ++ aliases.flatMap(alias => baseRows.map(s => s.copy(tr = alias + s.tr.substring(s.tr.indexOf('.')), note = AliasNote)))
   }

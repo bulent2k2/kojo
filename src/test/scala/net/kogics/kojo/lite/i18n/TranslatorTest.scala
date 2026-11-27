@@ -401,6 +401,79 @@ import net.kogics.kojo.lite.i18n.tr.dict
     en2tr("val a = ColorMaker.khaki\nval b = ColorMaker.hsla(1, 2, 3, 4)") shouldBe "dez a = Renkler.haki\ndez b = Renk.adas(1, 2, 3, 4)"
   }
 
+  // ---- key codes: tuşlar <-> Kc ----------------------------------------------
+
+  // name -> key code of every val of an object, read by REFLECTION from the compiled classes. The oracle
+  // is the value the JVM sees, not the source text the generator parses: if the generator misreads a
+  // literal (`0x4e` taken for `0`) or pairs two names by position, these tests see it.
+  private def keyCodes(o: AnyRef): Map[String, Int] =
+    o.getClass.getDeclaredMethods.toSeq.collect {
+      case m if m.getParameterCount == 0 && java.lang.reflect.Modifier.isPublic(m.getModifiers) &&
+        (m.getReturnType == classOf[Int] || m.getReturnType == classOf[Char]) =>
+        val code = m.invoke(o) match {
+          case c: java.lang.Character => c.charValue.toInt
+          case n: java.lang.Integer   => n.intValue
+        }
+        scala.reflect.NameTransformer.decode(m.getName) -> code
+    }.toMap
+  lazy val turkishKeys: Map[String, Int] = keyCodes((new tr.KeyCodesInTurkish {}).tuşlar)
+  lazy val englishKeys: Map[String, Int] = keyCodes(new net.kogics.kojo.staging.KeyCodes)
+
+  test("tuşlar: every key of tr/klavye.scala goes TR->EN to the Kc.VK_ name with the same key code (n, c, r, n0..n9: hayat-oyunu)") {
+    turkishKeys.keySet should contain allOf ("n", "c", "r", "n0", "n9", "sol", "boşluk", "gir", "sil_geri")
+    // The measured gap (hayat-oyunu.kojo, 7 of its 9 errors): only five keys were mapped by hand.
+    tr2en("dez a = tuşlar.n\ndez b = tuşlar.n0\ndez c = tuşlar.c\ndez d = tuşlar.r\ndez e = tuşlar.n9") shouldBe
+      "val a = Kc.VK_N\nval b = Kc.VK_0\nval c = Kc.VK_C\nval d = Kc.VK_R\nval e = Kc.VK_9"
+    val wrong = turkishKeys.toSeq.sorted.flatMap { case (name, code) =>
+      val out = tr2en(s"tuşlar.$name").trim
+      if (out.startsWith("Kc.") && englishKeys.get(out.stripPrefix("Kc.")).contains(code)) None
+      else Some(s"tuşlar.$name ($code) -> $out")
+    }
+    withClue("Turkish keys without the right English counterpart: ") { wrong shouldBe empty }
+  }
+
+  test("Kc: every English key code goes EN->TR to a tuşlar name with the same code; a Turkish spelling beats an English respelling") {
+    val wrong = englishKeys.toSeq.sorted.flatMap { case (name, code) =>
+      val out = en2tr(s"Kc.$name").trim
+      // `_`: the snake-case spellings are the deprecated ones (klavye.scala); EN->TR must not produce them
+      if (out.startsWith("tuşlar.") && turkishKeys.get(out.stripPrefix("tuşlar.")).contains(code) && !out.contains('_')) None
+      else Some(s"Kc.$name ($code) -> $out")
+    }
+    withClue("English key codes without the right Turkish counterpart: ") { wrong shouldBe empty }
+    // `enter`, `backSpace`, `home`, `escape`, `pageUp` are Turkish vals too (the AWT name in camel case),
+    // but the Turkish alias next to them is what a Koco reader expects.
+    Seq("VK_ENTER" -> "gir", "VK_BACK_SPACE" -> "silGeri", "VK_HOME" -> "satırBaşı", "VK_ESCAPE" -> "çık",
+      "VK_PAGE_UP" -> "sayfaYukarı", "VK_LEFT" -> "sol", "VK_SPACE" -> "boşluk", "VK_N" -> "n", "VK_0" -> "n0").foreach {
+      case (en, tr) => en2tr(s"Kc.$en") shouldBe s"tuşlar.$tr"
+    }
+  }
+
+  // ---- path receiver: GeoYol <-> GeneralPath ---------------------------------
+
+  test("GeoYol receiver: kondur -> moveTo in the lambda of Resim.yoldan or on a declared GeoYol; on a picture it stays setPosition") {
+    // hayat-oyunu, animated-square-creation, genart-tri-mesh, lamp-animation: `yol.kondur` became
+    // `setPosition`, which GeneralPath does not have.
+    val lambda = tr2en("dez r = Resim.yoldan { yol => yol.kondur(0, 0); yol.doğruÇiz(10, 0) }")
+    lambda should include("yol.moveTo(0, 0)")
+    lambda should include("yol.lineTo(10, 0)")
+    lambda should not include "setPosition"
+    tr2en("tanım f(y: GeoYol) { y.kondur(1, 2) }") should include("y.moveTo(1, 2)")
+    // a picture: setPosition as before
+    tr2en("dez r = Resim.daire(5)\nr.kondur(1, 2)") should include("r.setPosition(1, 2)")
+    // the parameter of ANOTHER lambda inside the path lambda is not a path
+    tr2en("Resim.yoldan { yol => resimler.herbiriİçin { r => r.kondur(1, 2) } }") should include("r.setPosition(1, 2)")
+  }
+
+  test("GeneralPath receiver (EN->TR): moveTo/lineTo go to kondur/doğruÇiz, not to the turtle's ilerle/noktayaGit") {
+    val lambda = en2tr("val p = Picture.fromPath { path => path.moveTo(0, 0); path.lineTo(10, 0) }")
+    lambda should include("path.kondur(0, 0)")
+    lambda should include("path.doğruÇiz(10, 0)")
+    en2tr("def f(gp: GeneralPath) { gp.moveTo(1, 2) }") should include("gp.kondur(1, 2)")
+    // round trip
+    val tr = "dez r = Resim.yoldan { yol => yol.kondur(0, 0); yol.doğruÇiz(10, 0) }"
+    en2tr(tr2en(tr)) shouldBe tr
+  }
+
   // ---- round trip ----------------------------------------------------------
 
   test("the core turtle/picture script returns to itself in a round trip") {
