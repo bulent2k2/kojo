@@ -259,6 +259,16 @@ trait AppMenu {
     numProgMenu.add(menuItemFor("S_EstimatingPiMC", "estimating-pi-mc.kojo"))
     samplesMenu.add(numProgMenu)
 
+    // Arama ve eniyileme: aynı yerleştirme sorunu iki yolla (aceleci arama, benzetimli tavlama).
+    // Bu örnekler yalnız Türkçe (samples/tr/), İngilizce karşılıkları yok; başka bir dilde menüde
+    // görünselerdi tıklanınca "Resource ... should exist" hatası verirlerdi.
+    if (kojoCtx.userLanguage == "tr") {
+      val searchMenu = newJMenu(Utils.loadString("S_Search"))
+      searchMenu.add(menuItemFor("S_GreedyPacking", "aceleci-yerlestirme.kojo"))
+      searchMenu.add(menuItemFor("S_SimulatedAnnealing", "benzetimli-tavlama.kojo"))
+      samplesMenu.add(searchMenu)
+    }
+
     val physicsMenu = newJMenu(Utils.loadString("S_Physics"))
     physicsMenu.add(menuItemFor("S_Kinematics", "physics-uvats.kojo"))
     physicsMenu.add(menuItemFor("S_NewtonsSecond", "physics-fma.kojo"))
@@ -323,6 +333,11 @@ trait AppMenu {
     gamesMenu.add(menuItemForInstalledFile("S_Platformer", "examples/tiledgame/game.kojo"))
     gamesMenu.add(menuItemFor("S_TicTacToe", "tic-tac-toe.kojo"))
     gamesMenu.add(menuItemForInstalledFile("S_Othello", "examples/othello/menu.kojo"))
+    // Hayat Oyunu yalnız Türkçe (samples/tr/), İngilizce karşılığı yok: başka bir dilde menüde
+    // görünseydi tıklanınca "Resource ... should exist" hatası verirdi.
+    if (kojoCtx.userLanguage == "tr") {
+      gamesMenu.add(menuItemFor("S_GameOfLife", "hayat-oyunu.kojo"))
+    }
 
     samplesMenu.add(gamesMenu)
 

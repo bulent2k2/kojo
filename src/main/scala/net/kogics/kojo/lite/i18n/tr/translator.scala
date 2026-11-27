@@ -94,6 +94,20 @@ object Translator {
 
   lazy val dictionary: TranslationDictionary.Dictionary = TranslationDictionary.load()
 
+  /** A type whose members the translator looks up under a virtual receiver (`TuvalÇizim.`, `GeoYol.`) when a
+    * variable of that type can be recognized in the script: by a `name: Type` declaration, or as the parameter
+    * of a block handed to one of the lambda functions (function name -> how many blocks it takes, each with a
+    * parameter of that type). See typedReceivers in translateScript. */
+  private final case class ReceiverType(turkish: String, english: String,
+                                        turkishLambdas: Map[String, Int], englishLambdas: Map[String, Int])
+  private val receiverTypes = Seq(
+    ReceiverType("TuvalÇizim", "CanvasDraw",
+      Map("canlandırTuvalÇizimle" -> 1, "canlandırKurulumluTuvalÇizimle" -> 2),
+      Map("animateWithCanvasDraw" -> 1, "animateWithSetupCanvasDraw" -> 2)),
+    // `Resim.yoldan(işlev: GeoYol => Birim)` / `Picture.fromPath(fn: GeneralPath => Unit)`; the members are the
+    // GeoYolYöntemleri wrappers of geo.scala (kondur = moveTo, doğruÇiz = lineTo, yayÇiz = arc, ...)
+    ReceiverType("GeoYol", "GeneralPath", Map("yoldan" -> 1), Map("fromPath" -> 1)))
+
   /**
    * Keyword table: token type -> (English, Turkish). Built from dict.keywordTranslation,
    * but BOTH spellings of every pair are run through the lexer and must give the same
@@ -165,51 +179,61 @@ object Translator {
       }
       nameSet.result()
     }
-    // Variables of the canvas type: `TuvalÇizim` in Turkish, `CanvasDraw` in English -- the declarations
-    // `canvas: TuvalÇizim` / `cd: CanvasDraw` and the lambda parameters of `canlandırTuvalÇizimle { canvas => ... }`
-    // / `animateWithCanvasDraw { cd => ... }` (and of both blocks of the setup variants). Why: the member names
-    // of the canvas collide with other objects' members at word level, where the receiver's type is unknown:
+    // Variables whose TYPE is known from the script itself (see receiverTypes): the declarations `canvas: TuvalÇizim`
+    // / `cd: CanvasDraw`, `yol: GeoYol` / `path: GeneralPath`, and the lambda parameters of the functions that hand
+    // such a value to a block -- `canlandırTuvalÇizimle { canvas => ... }` / `animateWithCanvasDraw { cd => ... }`
+    // (both blocks of the setup variants), `Resim.yoldan { yol => ... }` / `Picture.fromPath { path => ... }`.
+    // Why: the member names of these types collide with other objects' members at word level, where the
+    // receiver's type is unknown:
     //   TR->EN  `tuval.nokta(x, y)` -> point, `GeoNokta.nokta` -> vertex, both are `nokta`; the most frequent
     //           one (vertex) was taken -- the script compiled, but crashed when run, for lack of `beginShape`.
+    //           `yol.kondur(x, y)` -> moveTo, `resim.kondur(x, y)` -> setPosition; setPosition won, and the
+    //           English translation did not compile (`value setPosition is not a member of GeneralPath` --
+    //           measured: hayat-oyunu, animated-square-creation, genart-tri-mesh, lamp-animation).
     //   EN->TR  `cd.fill` -> boya (the canvas), but `fill` is `doldur` for a picture; likewise `rotate`
     //           (döndürRadyan / döndür), `beginShape` (şekilBaşla / başla) and `endShape` (şekilBitir / bitir).
-    // If the receiver is in this set, the member lookup is done first with the virtual receiver `TuvalÇizim.`
-    // / `CanvasDraw.` (translation-rules.tsv: `nokta  TuvalÇizim.  point`, `fill  CanvasDraw.  boya`).
-    // A use without a declaration (a canvas passed on to another function) is not known; in that
-    // case the old receiver-less behaviour applies.
-    val canvasTypeName = direction match { case TurkishToEnglish => "TuvalÇizim"; case EnglishToTurkish => "CanvasDraw" }
-    val canvasReceiverContext = canvasTypeName + "."
-    val (canvasLambdaFunction, canvasSetupLambdaFunction) = direction match {
-      case TurkishToEnglish => ("canlandırTuvalÇizimle", "canlandırKurulumluTuvalÇizimle")
-      case EnglishToTurkish => ("animateWithCanvasDraw", "animateWithSetupCanvasDraw")
-    }
-    val canvasVariables: Set[String] = {
+    //           `path.moveTo` -> kondur, but the turtle's moveTo is ilerle; `path.lineTo` -> doğruÇiz, not noktayaGit.
+    // Variable name -> the virtual receiver of its type (`TuvalÇizim.`, `GeoYol.`, ...). If the receiver of a member
+    // is in this map, the member is looked up first under that virtual receiver (translation-rules.tsv:
+    // `nokta  TuvalÇizim.  point`, `kondur  GeoYol.  moveTo`, `fill  CanvasDraw.  boya`). A use without a
+    // declaration (a value passed on to another function) is not known; in that case the old receiver-less
+    // behaviour applies. Names are not scoped: a name bound to two types in one script keeps the first type
+    // in receiverTypes order.
+    val typedReceivers: Map[String, String] = {
       val sig = tokens.indices.filter(j => isSignificant(tokens(j))).toVector
-      val nameSet = Set.newBuilder[String]
+      val names = scala.collection.mutable.Map.empty[String, String]
       def typeAt(k: Int) = tokens(sig(k)).tokenType
       def textAt(k: Int) = tokens(sig(k)).text
-      for (k <- sig.indices) {
-        // `name: TuvalÇizim` / `name: CanvasDraw`
-        if (k >= 2 && textAt(k) == canvasTypeName && typeAt(k - 1) == Tokens.COLON && isIdentifier(tokens(sig(k - 2)))) nameSet += textAt(k - 2)
-        // `canlandırTuvalÇizimle { name => ...}`; in the setup variant the second block too
-        if (textAt(k) == canvasLambdaFunction || textAt(k) == canvasSetupLambdaFunction) {
-          // take the lambda parameter of the block at m, return the position after the matching closer
-          def scanBlock(m: Int): Int =
-            if (m + 2 < sig.length && (typeAt(m) == Tokens.LBRACE || typeAt(m) == Tokens.LPAREN)) {
-              if (isIdentifier(tokens(sig(m + 1))) && typeAt(m + 2) == Tokens.ARROW) nameSet += textAt(m + 1)
-              val opener = typeAt(m); val closer = if (opener == Tokens.LBRACE) Tokens.RBRACE else Tokens.RPAREN
-              var depth = 0; var n = m
-              do {
-                if (typeAt(n) == opener) depth += 1 else if (typeAt(n) == closer) depth -= 1
-                n += 1
-              } while (depth > 0 && n < sig.length)
-              n
-            } else sig.length
-          val afterFirstBlock = scanBlock(k + 1)
-          if (textAt(k) == canvasSetupLambdaFunction) scanBlock(afterFirstBlock)
+      // take the lambda parameter of the block at m, return the position after the matching closer
+      def scanBlock(m: Int, receiverContext: String): Int =
+        if (m + 2 < sig.length && (typeAt(m) == Tokens.LBRACE || typeAt(m) == Tokens.LPAREN)) {
+          if (isIdentifier(tokens(sig(m + 1))) && typeAt(m + 2) == Tokens.ARROW) names.getOrElseUpdate(textAt(m + 1), receiverContext)
+          val opener = typeAt(m); val closer = if (opener == Tokens.LBRACE) Tokens.RBRACE else Tokens.RPAREN
+          var depth = 0; var n = m
+          do {
+            if (typeAt(n) == opener) depth += 1 else if (typeAt(n) == closer) depth -= 1
+            n += 1
+          } while (depth > 0 && n < sig.length)
+          n
+        } else sig.length
+      for (receiverType <- receiverTypes) {
+        val (typeName, lambdaFunctions) = direction match {
+          case TurkishToEnglish => (receiverType.turkish, receiverType.turkishLambdas)
+          case EnglishToTurkish => (receiverType.english, receiverType.englishLambdas)
+        }
+        val receiverContext = typeName + "."
+        for (k <- sig.indices) {
+          // `name: TuvalÇizim` / `name: GeneralPath`
+          if (k >= 2 && textAt(k) == typeName && typeAt(k - 1) == Tokens.COLON && isIdentifier(tokens(sig(k - 2))))
+            names.getOrElseUpdate(textAt(k - 2), receiverContext)
+          // `canlandırTuvalÇizimle { name => ...}`; in the setup variant the second block too
+          lambdaFunctions.get(textAt(k)).foreach { blocks =>
+            var m = k + 1
+            for (_ <- 1 to blocks) m = scanBlock(m, receiverContext)
+          }
         }
       }
-      nameSet.result()
+      names.toMap
     }
     // Sketch classes. Turkish writes `class X extends Eskiz { def kurulum(tuval: TuvalÇizim) ...
     // def çizimDöngüsü(tuval: TuvalÇizim) ... }`; English Kojo has no `Eskiz` type: `Picture.fromSketch`
@@ -446,8 +470,9 @@ object Translator {
             case None =>
               // Order: the plain rule specific to the receiver (`tuvalAlanı.` -> height), then the receiver/member/bare context.
               val receiverName = if (isMember) beforePrevious.filter(isIdentifier).map(_.text + ".") else None
-              // If the receiver is a canvas, the virtual `TuvalÇizim.` / `CanvasDraw.` receiver is looked up first (see canvasVariables).
-              val isCanvasReceiver = isMember && beforePrevious.exists(a => canvasVariables(a.text))
+              // If the receiver's type is known (a canvas, a path), its virtual receiver (`TuvalÇizim.`, `GeoYol.`, ...)
+              // is looked up first (see typedReceivers).
+              val typedReceiverContext = if (isMember) beforePrevious.flatMap(a => typedReceivers.get(a.text)) else None
               // `r.saydamlık(0.5)` and `r.saydamlık` go to two different English methods of
               // different arity (opacityMod / opacity); if we do not tell them apart by context, a
               // rule at name level cannot distinguish the two (issue #75). It is searched ON THE
@@ -482,7 +507,7 @@ object Translator {
                 if (isUserDefined) Some(userTranslations(t.text))
                 // An explicit "-" rule (vertex bare, setColumns bare) also cuts off the postfix fall-through (measured: tree2).
                 else if (isReceiverSpecificUntouched || dictionary.isLeftUntouched(directionCode, t.text, context)) None
-                else (if (isCanvasReceiver) lookup(t.text, canvasReceiverContext) else None)
+                else typedReceiverContext.flatMap(c => lookup(t.text, c))
                   .orElse(receiverName.flatMap(a => lookup(t.text, a))).orElse(lookup(t.text, context))
                   // The user's own name (TR->EN) is not taken for a postfix and does not look in the member table: `zaman += 1`,
                   // even if the token before it is a value, `zaman` -> `hepsi` must not happen (it stays at the definition, which would be inconsistent).
