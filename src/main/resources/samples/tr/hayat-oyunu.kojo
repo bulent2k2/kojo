@@ -1,11 +1,15 @@
-// Hayat Oyunu (Conway) -- önce fareyle deseni çiz, sonra çalıştır.
+// Hayat Oyunu (Conway) -- önce deseni çiz, sonra çalıştır.
 //
-//   Fare  : boş hücreye bas (ve sürükle) = çiz,  dolu hücreye bas (ve sürükle) = sil
-//   Boşluk: başlat / durdur      N: tek adım (durmuşken)
-//   C     : temizle              R: başa dön (en son düzenlediğin desene)
-//   1..9  : hız (0 = en hızlı)   Fare tekerleği: yakınlaş / uzaklaş
+//   Fare ya da parmak: boş hücreye bas (ve sürükle) = çiz,  dolu hücreye bas (ve sürükle) = sil
+//   Sol alttaki düğmeler (telefonda da çalışır):
+//     Başlat / Durdur : simülasyonu başlatır ya da durdurur
+//     Adım            : durmuşken tek kuşak ilerler
+//     Temizle         : her şeyi siler; çalıştırdıktan sonra adı "Başa dön" olur
+//                       ve en son düzenlediğin desene geri götürür
+//   Klavye (varsa): Boşluk = başlat/durdur, N = adım, C = temizle, R = başa dön,
+//                   1..9 = hız (0 = en hızlı).  Fare tekerleği: yakınlaş / uzaklaş
 //
-// Durdurunca yeniden düzenleyebilirsin. Tuşlar çalışmazsa önce tuvale bir kez tıkla.
+// Durdurunca yeniden düzenleyebilirsin. Klavyeyle tuşlar çalışmazsa önce tuvale bir kez tıkla.
 silVeSakla()
 den canlanmaHızı = 6 // 1-10 arası; rakam tuşlarıyla da değişir
 // ES: 'dünyanın' kenar boyu
@@ -58,27 +62,47 @@ dez ızgara = kalemRengi(açıkGri) * kalemBoyu(1) -> Resim.yoldan { yol =>
     yol.kondur(köşe, köşe + k * 10); yol.doğruÇiz(köşe + kenar, köşe + k * 10)
   }
 }
-dez yardım1 = Resim.yazıRenkli("Fare: boş hücreye bas-sürükle = çiz, dolu hücreye bas-sürükle = sil", 14, koyuGri)
-dez yardım2 = Resim.yazıRenkli("Boşluk: başlat/durdur   N: tek adım   C: temizle   R: başa dön   1-9, 0: hız", 14, koyuGri)
+// yazılar kısa: telefonun dar ekranına da sığsın
+// koyuGri iki platformda farklı (iKoco'da açık gri), o yüzden rengi elle veriyoruz
+dez yazıRengi = Renk(64, 64, 64)
+dez yardım1 = Resim.yazıRenkli("Boş hücreye bas: çiz, dolu hücreye bas: sil", 14, yazıRengi)
+dez yardım2 = Resim.yazıRenkli("Basılı tutup sürükle: çok hücre birden", 14, yazıRengi)
+dez yardım3 = Resim.yazıRenkli("Klavye: Boşluk, N, C, R, hız 1-9", 14, yazıRengi)
 dez durumYazısı = Resim.yazıRenkli("", 16, siyah)
 // kaplama: dünyanın üstünü örten SAYDAM kare. Fare olaylarını o yakalıyor.
 // (Masaüstü Koco'da olayı en üstteki resim alıyor; o yüzden her çizimden sonra öne alıyoruz.)
 dez kaplama = boyaRengi(renksiz) * kalemRengi(renksiz) * götür(köşe, köşe) -> Resim.dikdörtgen(kenar, kenar)
 
-çiz(zemin, ızgara, yardım1, yardım2, durumYazısı, kaplama)
-// Yazılar tuvalin sol üst köşesinde dursun. Tuval açılışta henüz ortalanmamış olabilir,
-// sonra da kaydırılıp yakınlaştırılabilir; o yüzden tuval alanı değişince yeniden yerleştiriyoruz.
-den yazılarınYeri = (0.0, 0.0)
-tanım yazılarıYerleştir() = {
-  dez yer = (tuvalAlanı.x + 10, tuvalAlanı.y + tuvalAlanı.boy - 10)
-  eğer (yer != yazılarınYeri) {
-    yazılarınYeri = yer
-    yardım1.konumuKur(yer._1, yer._2)
-    yardım2.konumuKur(yer._1, yer._2 - 20)
-    durumYazısı.konumuKur(yer._1, yer._2 - 45)
+// düğmeler: bir kutu ve üstünde bir yazı. 44 nokta yüksek: parmakla rahat basılsın.
+dez düğmeBoyu = 44
+tanım düğmeKutusu(en: Sayı) = boyaRengi(Renk(220, 230, 255)) * kalemRengi(yazıRengi) -> Resim.dikdörtgen(en, düğmeBoyu)
+tanım düğmeYazısı(etiket: Yazı) = götür(12, 33) -> Resim.yazıRenkli(etiket, 18, siyah)
+dez başlatYazısı = düğmeYazısı("Başlat")  // çalışırken "Durdur" olur
+dez temizleYazısı = düğmeYazısı("Temizle") // nesil 0 değilse "Başa dön" olur
+dez başlatDüğmesi = Resim.dizi(düğmeKutusu(90), başlatYazısı)
+dez adımDüğmesi = Resim.dizi(düğmeKutusu(70), düğmeYazısı("Adım"))
+dez temizleDüğmesi = Resim.dizi(düğmeKutusu(110), temizleYazısı)
+
+çiz(zemin, ızgara, yardım1, yardım2, yardım3, durumYazısı, kaplama, başlatDüğmesi, adımDüğmesi, temizleDüğmesi)
+// Yazılar tuvalin sol üst, düğmeler sol alt köşesinde dursun. Tuval açılışta henüz ortalanmamış
+// olabilir, sonra da kaydırılıp yakınlaştırılabilir; o yüzden tuval alanı değişince yeniden yerleştiriyoruz.
+den köşelerinYeri = (0.0, 0.0, 0.0)
+tanım yazılarıVeDüğmeleriYerleştir() = {
+  dez sol = tuvalAlanı.x + 10
+  dez tepe = tuvalAlanı.y + tuvalAlanı.boy - 10
+  dez alt = tuvalAlanı.y + 10
+  eğer ((sol, tepe, alt) != köşelerinYeri) {
+    köşelerinYeri = (sol, tepe, alt)
+    yardım1.konumuKur(sol, tepe)
+    yardım2.konumuKur(sol, tepe - 18)
+    yardım3.konumuKur(sol, tepe - 36)
+    durumYazısı.konumuKur(sol, tepe - 60)
+    başlatDüğmesi.konumuKur(sol, alt)
+    adımDüğmesi.konumuKur(sol + 98, alt)
+    temizleDüğmesi.konumuKur(sol + 176, alt)
   }
 }
-yazılarıYerleştir()
+yazılarıVeDüğmeleriYerleştir()
 
 // ---- canlı hücreleri çiz (yalnız bir şey değişince) ----
 den ekrandakiler: Dizin[Resim] = Dizin() // ekrandaki hücre resmi (hiç canlı yoksa boş)
@@ -89,9 +113,13 @@ tanım ekranıTazele() = {
   ekrandakiler = eğer (canlılar.boşMu) Dizin() yoksa Dizin(Resim.dizi(canlılar.işle(i => hücreResmi(i))))
   ekrandakiler.herbiriİçin(r => r.çiz())
   dez kip = eğer (çalışıyor) "ÇALIŞIYOR" yoksa "DÜZENLEME"
-  durumYazısı.güncelle(s"$kip    nesil: $nesil    canlı: ${canlılar.boyu}    hız: $canlanmaHızı")
-  durumYazısı.öneAl()
-  kaplama.öneAl()
+  durumYazısı.güncelle(s"$kip  nesil: $nesil  canlı: ${canlılar.boyu}  hız: $canlanmaHızı")
+  başlatYazısı.güncelle(eğer (çalışıyor) "Durdur" yoksa "Başlat")
+  temizleYazısı.güncelle(eğer (nesil > 0) "Başa dön" yoksa "Temizle")
+  // Sıra önemli (sondaki en üstte): kaplama yazıların, düğmeler de kaplamanın üstünde.
+  // Masaüstünde fare olayını en üstteki resim alıyor: düğmeye basınca alttaki hücre değişmesin.
+  Dizin(yardım1, yardım2, yardım3, durumYazısı, kaplama, başlatDüğmesi, adımDüğmesi, temizleDüğmesi)
+    .herbiriİçin(r => r.öneAl())
 }
 
 // ---- düzenleme: fareyle çiz / sil ----
@@ -137,9 +165,16 @@ tanım başaDön() = {
   v = sonDüzenlenen; nesil = 0
   ekranıTazele()
 }
+tanım tekAdım() = eğer (!çalışıyor) birAdım() // çalışırken Adım işe yaramaz
+tanım temizleYaDaBaşaDön() = eğer (nesil > 0) başaDön() yoksa temizle()
+başlatDüğmesi.fareyeTıklayınca { (x, y) => başlatDurdur() }
+adımDüğmesi.fareyeTıklayınca { (x, y) => tekAdım() }
+temizleDüğmesi.fareyeTıklayınca { (x, y) => temizleYaDaBaşaDön() }
+// düğmeye basıp sürükleyince tuval kaymasın (masaüstünde sürüklemeyi bu boş işleyici yakalıyor)
+Dizin(başlatDüğmesi, adımDüğmesi, temizleDüğmesi).herbiriİçin(d => d.fareyiSürükleyince { (x, y) => })
 tuşaBasınca { tuş =>
   eğer (tuş == tuşlar.boşluk) başlatDurdur()
-  yoksa eğer (tuş == tuşlar.n) { eğer (!çalışıyor) birAdım() }
+  yoksa eğer (tuş == tuşlar.n) tekAdım()
   yoksa eğer (tuş == tuşlar.c) temizle()
   yoksa eğer (tuş == tuşlar.r) başaDön()
   yoksa eğer (tuş == tuşlar.n0) { hızıKur(10); ekranıTazele() }
@@ -147,12 +182,12 @@ tuşaBasınca { tuş =>
 }
 tuvaliEtkinleştir()
 
-satıryaz("Hayat Oyunu: fareyle hücre çiz/sil, Boşluk ile başlat/durdur.")
-satıryaz("N: tek adım   C: temizle   R: başa dön   1-9, 0: hız   (tuşlar için önce tuvale tıkla)")
+satıryaz("Hayat Oyunu: hücreye basarak çiz/sil, sol alttaki düğmelerle başlat/durdur, adım, temizle.")
+satıryaz("Klavye: Boşluk başlat/durdur, N adım, C temizle, R başa dön, 1-9 ve 0 hız (tuşlar için önce tuvale tıkla)")
 ekranıTazele()
 
 canlandır {
-  yazılarıYerleştir()
+  yazılarıVeDüğmeleriYerleştir()
   eğer (çalışıyor) {
     eğer (t % taban == 0) birAdım()
     t += 1
